@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:52.115Z",
+  "updatedAt": "2026-11-25T20:44:13.160Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.packers.com/team/injury-report/",
@@ -35,33 +35,6 @@
       "beatComment": "Parsons remains listed as questionable for Wednesday's game against the Rams, but he's fully expected to play in Week 12 in what will mark his 2026 debut. The five-time Pro Bowler will be making his first appearance since tearing the ACL and meniscus in his left knee Dec. 14, 2025 and requiring season-ending surgery. Parsons has worked exclusively as a limited participant in practice since being designated for return from the PUP list Nov. 4, so the Packers could monitor his snaps closely in his first game action in more than 11 months."
     },
     {
-      "playerId": "4047365",
-      "name": "Josh Jacobs",
-      "position": "RB",
-      "jersey": 8,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047365.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "-",
-      "injuryType": "Finger",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 20,
-      "priorDayPlayProbabilityPct": 69,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "20% • Long Shot",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Consecutive Wed/Thu Limited (LP -> LP) following 2-game absence",
-        "Manageable pain-tolerance injury profile (Finger)",
-        "Beat consensus: unlikely / not expected to suit up"
-      ],
-      "beatComment": "Coming off a bye week, Jacobs went down as a limited participant in all three of the team's Week 12 practice sessions. While the Packers aren't closing the door on Jacobs suiting up Wednesday, head coach Matt LaFleur previously noted Sunday and Monday that the running back was still viewed as unlikely to play against the Rams. Before making a decision on Jacobs' status prior to Wednesday's 8 p.m. ET kickoff, the Packers could put him through a pregame workout to gauge if his surgically repaired right ring finger presents any issues with gripping or securing the football. If Jacobs is forced to miss a second consecutive game, Kaleb Johnson and MarShawn Lloyd would be in line to lead the Green Bay rushing attack for another week."
-    },
-    {
       "playerId": "4426411",
       "name": "Sean Rhyan",
       "position": "G",
@@ -84,7 +57,33 @@
       "factors": [
         "Consecutive Wed/Thu Limited (LP -> LP) following 3-game absence"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Rhyan sat out Green Bay's last three games before the team's Week 11 bye after suffering a high ankle sprain back in Week 7 at Detroit, and now his availability for Week 12 looks like a coin-flip proposition. If he can't suit up Wednesday, 2025 seventh-rounder John Williams may need to make another start at center against the Rams."
+    },
+    {
+      "playerId": "4047365",
+      "name": "Josh Jacobs",
+      "position": "RB",
+      "jersey": 8,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047365.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "-",
+      "injuryType": "Finger",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 71,
+      "priorDayPlayProbabilityPct": 69,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "71% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Consecutive Wed/Thu Limited (LP -> LP) following 2-game absence",
+        "Manageable pain-tolerance injury profile (Finger)"
+      ],
+      "beatComment": "Coming off a bye week, Jacobs went down as a limited participant in all three of the team's Week 12 practice sessions. While the Packers aren't closing the door on Jacobs suiting up Wednesday, head coach Matt LaFleur previously noted Sunday and Monday that the running back was still viewed as unlikely to play against the Rams. Before making a decision on Jacobs' status prior to Wednesday's 8 p.m. ET kickoff, the Packers could put him through a pregame workout to gauge if his surgically repaired right ring finger presents any issues with gripping or securing the football. If Jacobs is forced to miss a second consecutive game, Kaleb Johnson and MarShawn Lloyd would be in line to lead the Green Bay rushing attack for another week."
     },
     {
       "playerId": "3124005",
@@ -100,42 +99,17 @@
       "fri": "-",
       "injuryType": "Shin",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 74,
+      "playProbabilityPct": 73,
       "priorDayPlayProbabilityPct": 68,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "74% • GTD",
+      "playBadgeLabel": "73% • GTD",
       "archetypeNote": "Veteran starter profile (9th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
         "Consecutive Wed/Thu Limited (LP -> LP) following 4-game absence",
-        "Coaching/beat trend: trending upward / making progress ahead of game"
+        "Coaching/beat trend (coaching staff report): trending upward / optimistic to suit up"
       ],
-      "beatComment": "Franklin has missed the Packers' last four games due to the shin injury and isn't yet 100 percent healthy coming out of a Week 11 bye. He was listed as a limited participant Monday for a second straight practice and may need to upgrade to full activity Tuesday to avoid taking a designation into Wednesday."
-    },
-    {
-      "playerId": "4430191",
-      "name": "Skyy Moore",
-      "position": "WR",
-      "jersey": 23,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 76,
-      "priorDayPlayProbabilityPct": 76,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "76% • GTD",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Thursday Limited Participation (LP); player toughness prior = 76%"
-      ],
-      "beatComment": "Moore re-injured his ankle after just three snaps on special teams in the Packers' Week 10 loss to the Vikings. He's been practicing ahead of Wednesday's game against the Rams, but it remains to be seen if Moore will be able to play. His role on offense has mostly evaporated with the return of Savion Williams behind Matthew Golden and Christian Watson."
+      "beatComment": "Franklin was limited in all three practices leading up to Wednesday night's showdown against the Rams. The questionable tag is positive news for the 30-year-old linebacker, as he's missed the past four games due to a shin injury."
     },
     {
       "playerId": "4259305",
@@ -160,7 +134,32 @@
       "factors": [
         "Thursday Limited Participation (LP); player toughness prior = 76%"
       ],
-      "beatComment": "Melton was injured in the Packers' Week 10 loss to the Vikings and has been limited in practice each of the last two days leading up to Wednesday's game against the Rams. The wide receiver has appeared in all 10 games this season, recording five catches for 34 yards on 10 targets across 150 offensive snaps."
+      "beatComment": "Melton had a trio of limited practices leading up to the Packers' Week 12 matchup against the Rams. The 27-year-old injured his thigh in the team's Week 10 loss to the Vikings. The fifth-year pro has appeared in all 10 games for Green Bay this season, catching five of 10 targets for 34 yards."
+    },
+    {
+      "playerId": "4430191",
+      "name": "Skyy Moore",
+      "position": "WR",
+      "jersey": 23,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 76,
+      "priorDayPlayProbabilityPct": 76,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "76% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Thursday Limited Participation (LP); player toughness prior = 76%"
+      ],
+      "beatComment": "Moore was limited in all three practices ahead of Week 12 after re-injuring his ankle in Week 10 against the Vikings. The 26-year-old has had a smaller role on offense since Savion Williams returned from injury, but Moore still plays a key role in the kick return unit on special teams."
     },
     {
       "playerId": "14931",
@@ -185,7 +184,7 @@
       "factors": [
         "Thursday Limited Participation (LP); player toughness prior = 81%"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Zeitler missed Green Bay's last game before the team's Week 11 bye due to ankle and triceps injuries, and it looks like his availability for Week 12 is truly up in the air. If he can't go Wednesday, the Packers could end up being perilously thin on the interior of their offensive line, as starter Sean Rhyan (ankle) and key backup Travis Glover (shoulder) are also questionable."
     },
     {
       "playerId": "4361904",
@@ -211,7 +210,34 @@
         "Thursday Limited Participation (LP); player toughness prior = 82%",
         "Manageable pain-tolerance injury profile (Shoulder)"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Glover appeared on Green Bay's injury report Monday with a shoulder issue, and it seems like he's truly questionable for Week 12. With starters Sean Rhyan (ankle) and Kevin Zeitler (triceps) also questionable, the Packers might be playing with a makeshift offensive line against a stout Rams defense Wednesday, though if Zeitler is able to go, Glover could shift to a backup role."
+    },
+    {
+      "playerId": "5076652",
+      "name": "Brandon Cisse",
+      "position": "CB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5076652.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "Rib",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 88,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "88% • Cleared",
+      "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Logged Full Participation (FP) on Thursday",
+        "Manageable pain-tolerance injury profile (Rib)",
+        "Beat/podium consensus (beat report): on track to suit up"
+      ],
+      "beatComment": "The Packers' rookie cornerback is ready to go for Wednesday's game against the Rams after he exited Week 10 early against the Vikings. Cisse has started all 10 games this season, recording 38 tackles (26 solo), including 1.5 sacks, and nine pass breakups, including an interception, on 83 percent of the defensive snaps."
     },
     {
       "playerId": "4242390",
@@ -263,32 +289,6 @@
         "Manageable pain-tolerance injury profile (Rib)"
       ],
       "beatComment": ""
-    },
-    {
-      "playerId": "5076652",
-      "name": "Brandon Cisse",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5076652.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Rib",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 96,
-      "priorDayPlayProbabilityPct": 95,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "96% • Cleared",
-      "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday",
-        "Manageable pain-tolerance injury profile (Rib)"
-      ],
-      "beatComment": "The Packers' rookie cornerback is ready to go for Wednesday's game against the Rams after he exited Week 10 early against the Vikings. Cisse has started all 10 games this season, recording 38 tackles (26 solo), including 1.5 sacks, and nine pass breakups, including an interception, on 83 percent of the defensive snaps."
     }
   ],
   "irAndReserveTracker": [
@@ -299,7 +299,7 @@
       "jersey": 45,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683059.png",
       "injuryType": "Achilles",
-      "status": "Injured Reserve",
+      "status": "Injured Reserve (Designated)",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
@@ -312,7 +312,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Achilles); awaiting 21-day practice window designation."
+      "beatNote": "Oliver must miss at least the first four games of the regular season on injured reserve before he is eligible to return to the Packers' active roster. This minimum timeframe appears to align well with the linebacker's injury, and the 2025 fifth-rounder should return from IR and suit up shortly after the four-game period ends."
     },
     {
       "playerId": "4428037",
@@ -334,7 +334,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Quadriceps) ahead of Week 8; must miss at least 4 games (earliest eligible Week 13)."
+      "beatNote": "A fifth-round pick in 2024, Monk started the first three games of the season at right guard and was called upon to man center Sunday against the Lions after Sean Rhyan exited with an ankle injury. With Rhyan out multiple weeks and Monk slated to miss at least four games, the Packers will likely turn to John Williams at center after he came on to play the first 58 offensive snaps of his career against Detroit on Sunday."
     },
     {
       "playerId": "4259762",
@@ -356,7 +356,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Calf); awaiting 21-day practice window designation."
+      "beatNote": "Ford emerged from this past Sunday's win over Chicago with a calf injury and didn't practice at all this week. He's now slated to miss a minimum of four contests while on IR. Ford has been working in a rotational role along Green Bay's defensive line this season and has amassed five tackles, including 0.5 sacks, through five contests."
     },
     {
       "playerId": "4429136",
@@ -378,7 +378,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Calf) ahead of Week 8; must miss at least 4 games (earliest eligible Week 13)."
+      "beatNote": "Brinson suffered a calf injury during the preseason that forced him to miss the Packers' first three regular-season games before he was ultimately sent to injured reserve in early October. LaFleur also said Thursday that Brinson is recovering from a groin surgery, which could be a factor in his extended absence. Until he comes back from IR, Anthony Campbell figures to continue to see increased reps on the defensive line in his stead."
     },
     {
       "playerId": "4360086",
@@ -400,7 +400,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Concussion) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
+      "beatNote": "Whyle suffered a concussion in Week 8 against Carolina and missed last Sunday's win over the Patriots. He had already been ruled for Sunday's contest against Minnesota before the Packers decided to place him on IR. Whyle didn't log a catch or target during his eight contests before getting hurt, so his blocking and work on special teams will be the primary voids during his absence."
     },
     {
       "playerId": "4430438",
@@ -408,21 +408,21 @@
       "position": "LB",
       "jersey": 56,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430438.png",
-      "injuryType": "Achilles",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
+      "injuryType": "Achilles (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 9,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Achilles); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Cooper suffered a torn Achilles in Sunday's win over the Buccaneers, and he will now spend the rest of the season on IR. In his absence, Zaire Franklin and Isaiah McDuffie will operate as the team's primary options at inside linebacker."
     },
     {
       "playerId": "2983055",
@@ -430,21 +430,21 @@
       "position": "DT",
       "jersey": 98,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2983055.png",
-      "injuryType": "Achilles",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
+      "injuryType": "Achilles (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 6,
-      "earliestEligibleWeek": 10,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Achilles); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Hargrave suffered a season-ending torn Achilles in last Sunday's win over the Bears, so this move is a mere formality. Green Bay's defense continues to be hit by injuries, as the unit awaits Micah Parsons' (knee) season debut. Chris McClellan and Anthony Campbell (ankle) will be next up for heavier snap loads up front on the defensive line."
     },
     {
       "playerId": "4362249",
@@ -452,43 +452,21 @@
       "position": "WR",
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362249.png",
-      "injuryType": "Neck",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
+      "injuryType": "Neck (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 9,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Neck); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4240435",
-      "name": "Zach Bako-Bewele",
-      "position": "OT",
-      "jersey": 50,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240435.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 9,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Reed remains without a clear timeline for a return after sustaining a neck injury that resulted in a brief stay in the hospital in the Packers' Week 2 win over the Jets, but his impending move to IR ensures that he'll remain out for at least Green Bay's next four games. With Reed out indefinitely, second-year player Matthew Golden should be further insulated as the Packers' No. 2 receiver, while the likes of Skyy Moore, Bo Melton and J. Michael Sturdivant should see more involvement in three- and four-wide sets."
     },
     {
       "playerId": "4709980",
@@ -510,7 +488,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee) on Aug 10, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
     },
     {
       "playerId": "4428085",
@@ -533,6 +511,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
       "beatNote": "LaFleur acknowledged that Musgrove is still in the process of rehabbing the neck injury he sustained during OTAs in June, and the Packers haven't yet prepared for the tight end to resume practicing. Barring dramatic progress in his recovery over the next month, Musgrave looks like he'll be sidelined for the final season of his rookie deal before hitting free agency in the spring."
+    },
+    {
+      "playerId": "4240435",
+      "name": "Zach Bako-Bewele",
+      "position": "OT",
+      "jersey": 50,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240435.png",
+      "injuryType": "Knee (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Bako-Bewele sustained a complete tear of his right patellar tendon in the Packers' Week 2 overtime win over the Jets. The right tackle is out for the season and has thus been placed on injured reserve. Laken Tomlinson is the new reserve offensive lineman for the team, and Anthony Belton is expected to be the starting right tackle for the remainder of the 2026 season."
     }
   ]
 }

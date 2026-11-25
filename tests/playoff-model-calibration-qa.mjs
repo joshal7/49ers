@@ -197,7 +197,7 @@ test('12-Season Synthetic NFL League Backtest (384 team-seasons): Hierarchical B
 });
 
 test('Live 2026 data/seasonal.json uses upgraded PLAYOFF_MODEL_VERSION with 32-team priors, remaining SOS, and <150ms 10k runtime', () => {
-  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'seasonal.json'), 'utf8'));
   const simIn = seasonal.playoffPicture?.simulatorInputs;
   assert.ok(simIn, 'simulatorInputs must exist in data/seasonal.json');
   assert.equal(simIn.modelVersion, PLAYOFF_MODEL_VERSION, `Expected modelVersion=${PLAYOFF_MODEL_VERSION}`);

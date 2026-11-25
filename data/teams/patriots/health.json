@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:26.352Z",
+  "updatedAt": "2026-11-25T20:44:41.752Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.patriots.com/team/injury-report/",
@@ -17,7 +17,7 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
+      "sustainedInLastGame": true,
       "wed": "-",
       "thu": "-",
       "fri": "-",
@@ -58,7 +58,33 @@
         "Official Doubtful tag (NFL historical base ~10–14%)",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "Patriots head coach Mike Vrabel said earlier Monday that he doesn't anticipate Brown being available for Sunday's game against the Chargers, so the veteran wideout's absence from practice hardly comes as a surprise. The Patriots likely will wait until they post their final Week 12 injury report Friday before formally ruling Brown out in what would mark his seventh missed game of the season. Brown was previously sidelined from Weeks 2 through 5 due to a right high-ankle sprain and Weeks 8 and 9 after a knee issue flared up."
+      "beatComment": "Coming out of a Week 11 bye, Brown didn't take any reps during the two bonus practices the Patriots held Monday and Tuesday, so it comes as little surprise that he was absent from the team's first official practice of Week 12. Head coach Mike Vrabel has already acknowledged that Brown isn't expected to play Sunday versus the Chargers, but the Patriots will likely wait until after Friday's practice before officially ruling the receiver out for that contest."
+    },
+    {
+      "playerId": "4240391",
+      "name": "Tommy DeVito",
+      "position": "QB",
+      "jersey": 16,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Lower Leg",
+      "gameStatus": "Doubtful",
+      "playProbabilityPct": 10,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "10% • Doubtful",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Official Doubtful tag (NFL historical base ~10–14%)",
+        "Post-game diagnosis (15 corroborated reports): multi-week / surgical timeline"
+      ],
+      "beatComment": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions."
     },
     {
       "playerId": "4428394",
@@ -164,6 +190,34 @@
       "beatComment": "questionable"
     },
     {
+      "playerId": "4361432",
+      "name": "Romeo Doubs",
+      "position": "WR",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
+      "rosterBucket": "ir",
+      "isIrReturnWindow": true,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Shoulder",
+      "gameStatus": "IR — 21-Day Window Open",
+      "playProbabilityPct": 54,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "54% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "21-day IR practice window open (Week 1); awaiting current-week practice ramp",
+        "Starter / core rotational role increases 53-man roster activation priority (+3%)",
+        "Beat practice observation (beat report): practicing in 21-day window",
+        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
+      ],
+      "beatComment": "Doubs has missed the Patriots' last four games while recovering from the shoulder issue, but the team's decision to open his 21-day evaluation window will give him a chance at returning to action as soon as this Sunday versus the Chargers. Coming off a Week 11 bye, the Patriots will post their first Week 12 injury report Wednesday, when it will be known whether Doubs was a limited or full participant in his return to practice. After joining New England on a four-year, $68 million deal, Doubs had gotten off to a disappointing start before going down with the shoulder injury, recording 14 receptions for 261 yards and three touchdowns on 24 targets through the club's first six games."
+    },
+    {
       "playerId": "4047941",
       "name": "Brenden Schooler",
       "position": "S",
@@ -264,6 +318,28 @@
       "beatNote": "The move opens Vera-Tucker's 21-day practice window. The oft-injured offensive lineman went down in the Patriots' Week 6 win over the Jets. Greg Van Roten started New England's last game at left guard."
     },
     {
+      "playerId": "4361432",
+      "name": "Romeo Doubs",
+      "position": "WR",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
+      "injuryType": "Shoulder",
+      "status": "IR — 21-Day Window Open",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 7,
+      "earliestEligibleWeek": 12,
+      "projectedReturnWeek": "Week 12 Activation Window",
+      "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
+      "playProbabilityPct": 54,
+      "playBadgeLabel": "54% • GTD",
+      "beatNote": "The Patriots designated Doubs (shoulder) for return from injured reserve Wednesday. Doubs has missed the Patriots' last four games while recovering from the shoulder issue, but the team's decision to open his 21-day evaluation window will give him a chance at returning to action as soon as this Sunday v Doubs has missed the Patriots' last four games while recovering from the shoulder issue, but the team's decision to open his 21-day evaluation window will give him a chance at returning to action as soon as this Sunday versus the Chargers. Coming off a Week 11 bye, the Patriots will post their first Week 12 injury report Wednesday, when it will be known whether Doubs was a limited or full participant in his return to practice. After joining New England on a four-year, $68 million deal, Doubs had gotten off to a disappointing start before going down with the shoulder injury, recording 14 receptions for 261 yards and three touchdowns on 24 targets through the club's first six games."
+    },
+    {
       "playerId": "4432710",
       "name": "TreVeyon Henderson",
       "position": "RB",
@@ -283,7 +359,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Illness) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
+      "beatNote": "Henderson was already ruled out for Sunday's game against the Lions in Munich, and now that he's on IR, the second-year running back will be required to miss at least the next four games. Henderson's next opportunity to play is Week 15 against the Chiefs on Monday, Dec. 21, although there's no timetable for his return, as he is recovering from \"an unexpected and unusual medical emergency involving a series of neurological symptoms.\" If Rhamondre Stevenson (knee) cannot play Sunday, then the Patriots' backfield will be led by Corey Kiner and Lan Larison."
     },
     {
       "playerId": "4428232",
@@ -305,7 +381,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
+      "beatNote": "Pettus exited the second quarter of Sunday's 20-3 win over the Steelers with an ankle injury, and he'll now have to miss at least the next four games while on IR. With Craig Woodson (shoulder) also injured, the team will likely look to sign or elevate a player from the practice squad for Sunday's Week 3 matchup against the Jaguars."
     },
     {
       "playerId": "3122793",
@@ -327,7 +403,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Reserve/PUP",
-      "beatNote": "4-game minimum satisfied on Reserve / PUP (Undisclosed); awaiting 21-day practice window designation."
+      "beatNote": "Landry spent the entirety of training camp and the preseason on the active/PUP list with an undisclosed injury. The 30-year-old will now be sidelined for at least four contests to open the 2026 campaign, and the earliest he'd be able to return to action is Week 5 against the Raiders on Oct. 11. In his absence, Elijah Ponder is a top candidate to start opposite of Dre'Mont Jones at outside linebacker."
     },
     {
       "playerId": "4912116",
@@ -349,7 +425,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
+      "beatNote": "Jacobs participated in the first two preseason games for the Patriots before succumbing to injury, accumulating eight tackles (four solo). The linebacker will need to miss the first four games of the regular season on IR before he is eligible to return to the active roster. While Jacobs is sidelined, Darius Muasau will likely be the first depth option behind starting inside linebackers Christian Elliss and Robert Spillane."
     },
     {
       "playerId": "4046545",
@@ -357,7 +433,7 @@
       "position": "G",
       "jersey": 71,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046545.png",
-      "injuryType": "Ankle",
+      "injuryType": "Ankle (Fracture)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -371,7 +447,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
+      "beatNote": "Onwenu suffered a broken right ankle in the Patriots' win over the Steelers on Sunday, and he appears likely to miss the remainder of the 2026 season. Greg Van Roten is likely the next man up at right guard for New England."
     },
     {
       "playerId": "4698181",
@@ -393,29 +469,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4361432",
-      "name": "Romeo Doubs",
-      "position": "WR",
-      "jersey": 87,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
-      "injuryType": "Shoulder",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 7,
-      "earliestEligibleWeek": 12,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "Doubs, who last suited up Week 6, is eligible to return from injured reserve at any point, but Vrabel's comments suggests that the wideout isn't a lock to be reinstated ahead of Sunday's game against the Chargers. With fellow wideout A.J. Brown (hamstring) unlikely to play Week 12 and potentially set to miss additional time beyond that, a prominent role in the passing attack could be available for Doubs once's he ready to play. However, Doubs will eventually make his return to an offense missing Drake Maye (fibula), with Tommy DeVito in line to replace Maye as the team's starting quarterback beginning this Sunday."
+      "beatNote": "Hutchins appeared in both of the Patriots' first two games of the 2026 campaign, accumulating three total tackles. The rookie will now miss at least four games while tending to a knee injury. While Hutchins has played sparingly, his absence will still allow Gabe Jacas and Jose Ramirez to see a little more action."
     },
     {
       "playerId": "4365395",
@@ -437,7 +491,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee) on Jun 2, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Hill joined the Patriots back in March on a three-year deal, but an unspecified injury now will sideline the tight end for the season. For now, Eli Raridon, CJ Dippre and Tanner Arkin are in the mix behind top TE Hunter Henry, but there's a solid chance the team will bring in added depth at the position in the wake of Hill's injury."
     },
     {
       "playerId": "4676889",

@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:09:06.036Z",
+  "updatedAt": "2026-11-25T20:36:15.792Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -29,16 +29,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "4426535",
-              "name": "Theo Wease Jr.",
-              "jersey": 82,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426535.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -58,16 +48,6 @@
               "jersey": 12,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362477.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4426535",
-              "name": "Theo Wease Jr.",
-              "jersey": 82,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426535.png",
-              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -126,7 +106,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4686612",
@@ -697,7 +677,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4241263",
@@ -835,7 +815,7 @@
         },
         {
           "slotKey": "fb",
-          "slotLabel": "FB",
+          "slotLabel": "FB (21 Personnel)",
           "baselineChain": [
             {
               "playerId": "4373684",
@@ -887,11 +867,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4374269",
@@ -940,7 +920,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "5089178",
@@ -989,7 +969,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4567138",
@@ -1205,7 +1185,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "16710",
@@ -1511,7 +1491,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4432571",

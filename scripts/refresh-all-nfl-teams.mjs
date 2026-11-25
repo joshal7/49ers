@@ -94,7 +94,7 @@ async function runTeamsInParallelShards(teams, { concurrency = 4, extraArgs = []
 }
 
 async function syncPowerRankingsAll32(teams, seasonYear = 2026) {
-  const sfMetaPath = path.join(ROOT, 'data', 'meta.json');
+  const sfMetaPath = path.join(ROOT, 'data', 'teams', '49ers', 'meta.json');
   const sfMeta = fs.existsSync(sfMetaPath) ? JSON.parse(fs.readFileSync(sfMetaPath, 'utf8')) : {};
   const probeWeek = Number(sfMeta.currentWeek) || 12;
   console.log(`[all-32:power] Fetching 6 league-wide power rankings sources once (week~${probeWeek})...`);
@@ -104,7 +104,7 @@ async function syncPowerRankingsAll32(teams, seasonYear = 2026) {
   });
   const nowMs = Date.now();
   for (const team of teams) {
-    const dir = team.abbr === 'SF' ? path.join(ROOT, 'data') : path.join(ROOT, 'data', 'teams', team.slug);
+    const dir = path.join(ROOT, 'data', 'teams', team.slug);
     const smPath = path.join(dir, 'schedule-matchup.json');
     const metaPath = path.join(dir, 'meta.json');
     if (!fs.existsSync(smPath)) continue;

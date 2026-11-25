@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:48.668Z",
+  "updatedAt": "2026-11-25T20:36:15.810Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/indianapolis-colts",
   "spotracUrl": "https://www.spotrac.com/nfl/indianapolis-colts/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 303064022,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 265984130,
+      "totalCapLiabilities": 266112580,
       "top51": 183105406,
-      "teamCapSpace": 37079892,
-      "otcRawTeamCapSpace": 37079892,
-      "effectiveCapSpace": 37079892,
-      "activeCapSpending": 191867788,
-      "offenseSpend": 78517187,
+      "teamCapSpace": 36951442,
+      "otcRawTeamCapSpace": 36951442,
+      "effectiveCapSpace": 36951442,
+      "activeCapSpending": 191996238,
+      "offenseSpend": 78645637,
       "defenseSpend": 106820601,
       "specialSpend": 6530000,
       "deadMoneyTotal": 74116342,
       "injuredReserveTotal": 22240615,
-      "practiceSquadTotal": 3143494,
+      "practiceSquadTotal": 3271944,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 25384109,
+      "reserveAndPsTotal": 25512559,
       "topDeadMoneyEntries": [
         {
           "name": "DeForest Buckner",
@@ -134,8 +134,8 @@
           "otcUrl": "https://overthecap.com/player/nick-westbrook-ikhine/9304/"
         }
       ],
-      "contractedCount": 51,
-      "totalSignedCount": 76
+      "contractedCount": 52,
+      "totalSignedCount": 77
     },
     "2027": {
       "year": 2027,
@@ -258,7 +258,161 @@
     }
   },
   "blueprint": {
-    "summary": "Indianapolis Colts hold $37.08M in 2026 OverTheCap space and $59.60M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/indianapolis-colts",
+    "summary": "Indianapolis Colts hold $36.95M in 2026 OverTheCap space ($36.95M effective) and +$59.60M projected for 2027.",
+    "executiveSummary": "Ed Dodds and the Colts front office hold $36.95M in gross 2026 cap space ($36.95M effective), while 2027 currently projects at +$59.60M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($30M–$34M target) helps manage scheduled cap escalations for Charvarius Ward, Jonathan Taylor, Cam Bynum, Grover Stewart.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($30M–$34M Target vs. +$59.60M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Indianapolis's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "4037361",
+        "name": "Charvarius Ward",
+        "position": "CB",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037361.png",
+        "otcUrl": "https://overthecap.com/player/charvarius-ward/7354/",
+        "capHit2026": 19886666,
+        "baseSalary2026": 12980000,
+        "maxRestructureSavings": 5840000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4242335",
+        "name": "Jonathan Taylor",
+        "position": "RB",
+        "jersey": 28,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242335.png",
+        "otcUrl": "https://overthecap.com/player/jonathan-taylor/8781/",
+        "capHit2026": 16187000,
+        "baseSalary2026": 6980000,
+        "maxRestructureSavings": 4260000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4035861",
+        "name": "Cam Bynum",
+        "position": "S",
+        "jersey": 0,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035861.png",
+        "otcUrl": "https://overthecap.com/player/cam-bynum/9589/",
+        "capHit2026": 15010000,
+        "baseSalary2026": 10000000,
+        "maxRestructureSavings": 5856667,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4427250",
+        "name": "Sauce Gardner",
+        "position": "CB",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427250.png",
+        "otcUrl": "https://overthecap.com/player/ahmad-gardner/10049/",
+        "capHit2026": 9500000,
+        "baseSalary2026": 5250000,
+        "maxRestructureSavings": 3428000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3914922",
+        "name": "Rigoberto Sanchez",
+        "position": "P",
+        "jersey": 8,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3914922.png",
+        "otcUrl": "https://overthecap.com/player/rigoberto-sanchez/5989/",
+        "capHit2026": 3550000,
+        "baseSalary2026": 2500000,
+        "maxRestructureSavings": 1500000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "4037361",
+        "name": "Charvarius Ward",
+        "position": "CB",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037361.png",
+        "otcUrl": "https://overthecap.com/player/charvarius-ward/7354/",
+        "capHit2026": 19886666,
+        "postJune1CutSavings": 240000,
+        "postJune1TradeSavings": 13220000,
+        "preJune1DeadMoney": 26313334,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4242335",
+        "name": "Jonathan Taylor",
+        "position": "RB",
+        "jersey": 28,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242335.png",
+        "otcUrl": "https://overthecap.com/player/jonathan-taylor/8781/",
+        "capHit2026": 16187000,
+        "postJune1CutSavings": 625000,
+        "postJune1TradeSavings": 8625000,
+        "preJune1DeadMoney": 25562000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4035861",
+        "name": "Cam Bynum",
+        "position": "S",
+        "jersey": 0,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035861.png",
+        "otcUrl": "https://overthecap.com/player/cam-bynum/9589/",
+        "capHit2026": 15010000,
+        "postJune1CutSavings": 510000,
+        "postJune1TradeSavings": 10510000,
+        "preJune1DeadMoney": 23500000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4058825",
+        "name": "Grover Stewart",
+        "position": "DT",
+        "jersey": 90,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4058825.png",
+        "otcUrl": "https://overthecap.com/player/grover-stewart/5730/",
+        "capHit2026": 14250000,
+        "postJune1CutSavings": 12250000,
+        "postJune1TradeSavings": 12250000,
+        "preJune1DeadMoney": 2000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4429084",
+        "name": "Anthony Richardson Sr.",
+        "position": "QB",
+        "jersey": 5,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png",
+        "otcUrl": "https://overthecap.com/player/anthony-richardson/10828/",
+        "capHit2026": 10816282,
+        "postJune1CutSavings": 0,
+        "postJune1TradeSavings": 5385549,
+        "preJune1DeadMoney": 10816282,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4427250",
+        "name": "Sauce Gardner",
+        "position": "CB",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427250.png",
+        "otcUrl": "https://overthecap.com/player/ahmad-gardner/10049/",
+        "capHit2026": 9500000,
+        "postJune1CutSavings": -24953473,
+        "postJune1TradeSavings": 5500000,
+        "preJune1DeadMoney": 50453473,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {
@@ -5318,6 +5472,33 @@
       }
     },
     {
+      "id": "4039034",
+      "otcId": "9819",
+      "otcSlug": null,
+      "otcUrl": "https://overthecap.com/player/shane-buechele/9819/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4039034/shane-buechele",
+      "pfrUrl": "https://www.pro-football-reference.com/players/B/BuecSh00.htm",
+      "name": "Shane Buechele",
+      "position": "QB",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039034.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 840000,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 840000,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 840000,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 840000,
+          "guaranteedSalary": 0
+        }
+      }
+    },
+    {
       "id": "2971281",
       "otcId": "6080",
       "otcSlug": "pharaoh-brown",
@@ -5362,64 +5543,6 @@
             "june_1_trade": {
               "deadMoney": 0,
               "capSavings": 776389
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 0
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "3895840",
-      "otcId": "8866",
-      "otcSlug": "charlie-heck",
-      "otcUrl": "https://overthecap.com/player/charlie-heck/8866/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3895840/charlie-heck",
-      "pfrUrl": "https://www.pro-football-reference.com/players/H/HeckCh00.htm",
-      "name": "Charlie Heck",
-      "position": "OT",
-      "jersey": 73,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895840.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1215000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 656944,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 656944
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 656944
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 656944
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 656944
             },
             "restructure": {
               "deadMoney": 0,
@@ -5778,6 +5901,33 @@
               "capSavings": 0
             }
           }
+        }
+      }
+    },
+    {
+      "id": "3051911",
+      "otcId": "5702",
+      "otcSlug": "carl-lawson",
+      "otcUrl": "https://overthecap.com/player/carl-lawson/5702/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/3051911/carl-lawson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/L/LawsCa00.htm",
+      "name": "Carl Lawson",
+      "position": "DE",
+      "jersey": 96,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051911.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 356772,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 356772,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 356772,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 356772,
+          "guaranteedSalary": 0
         }
       }
     },

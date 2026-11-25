@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:08:19.759Z",
+  "updatedAt": "2026-11-25T20:44:55.881Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -16,8 +16,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685472.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 87,
+              "statusBadge": "87% • Cleared",
               "isAvailable": true
             },
             {
@@ -38,8 +38,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685472.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 87,
+              "statusBadge": "87% • Cleared",
               "isAvailable": true
             },
             {
@@ -65,9 +65,9 @@
               "jersey": 18,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695883.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
+              "isAvailable": false
             },
             {
               "playerId": "4430034",
@@ -82,16 +82,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4695883",
-              "name": "Jalen Coker",
-              "jersey": 18,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695883.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4430034",
               "name": "Xavier Legette",
               "jersey": 17,
@@ -100,13 +90,24 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4695883",
+              "name": "Jalen Coker",
+              "jersey": 18,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695883.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4567096",
@@ -484,7 +485,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2973051.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -516,7 +517,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2973051.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -594,7 +595,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4372780",
@@ -814,11 +815,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4035495",
@@ -867,7 +868,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "4431551",
@@ -896,7 +897,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4687513.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -928,7 +929,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4687513.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -937,7 +938,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4058925",
@@ -1174,7 +1175,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "4242975",
@@ -1202,9 +1203,9 @@
               "jersey": 48,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714157.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false
+              "playProbabilityPct": 40,
+              "statusBadge": "40% • Long Shot",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1234,10 +1235,9 @@
               "jersey": 48,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714157.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 40,
+              "statusBadge": "40% • Long Shot",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -1482,7 +1482,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4697636",
@@ -1643,9 +1643,9 @@
               "jersey": 18,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695883.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
+              "isAvailable": false
             },
             {
               "playerId": "4430034",
@@ -1670,16 +1670,6 @@
               "isAvailable": true
             },
             {
-              "playerId": "4695883",
-              "name": "Jalen Coker",
-              "jersey": 18,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695883.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4430034",
               "name": "Xavier Legette",
               "jersey": 17,
@@ -1688,6 +1678,17 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4695883",
+              "name": "Jalen Coker",
+              "jersey": 18,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695883.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false

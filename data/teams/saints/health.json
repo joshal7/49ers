@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:11.541Z",
+  "updatedAt": "2026-11-25T20:44:25.232Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.neworleanssaints.com/team/injury-report/",
@@ -160,56 +160,6 @@
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
       "beatComment": "questionable"
-    },
-    {
-      "playerId": "4685260",
-      "name": "Kelvin Banks Jr.",
-      "position": "OT",
-      "jersey": 71,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685260.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Banks was able to avoid an injury tag after logging a full practice Friday. Sunday's game will be his second since being activated from injured reserve Nov. 7 due to a high-ankle sprain that he suffered in Week 2 against the Ravens."
-    },
-    {
-      "playerId": "3917660",
-      "name": "David Edwards",
-      "position": "G",
-      "jersey": 76,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917660.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Edwards' practice reps were limited Wednesday and Thursday due to a knee injury, but he avoided an injury tag for Week 10 after logging a full session Friday. He has started in each of the Saints' first eight games of the regular season."
     }
   ],
   "irAndReserveTracker": [
@@ -255,51 +205,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Reserve/PUP",
-      "beatNote": "4-game minimum satisfied on Reserve / PUP (Leg); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4432731",
-      "name": "Moliki Matavao",
-      "position": "TE",
-      "jersey": 80,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432731.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4242431",
-      "name": "Ty Chandler",
-      "position": "RB",
-      "jersey": 32,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242431.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
+      "beatNote": "Tipton underwent tibia surgery in the offseason, and as a result, he opened training camp on the active/PUP list, ultimately failing to play during the preseason. The wide receiver will now be forced to miss at least four contests to open the regular season, and the earliest he'd be able to return to action is Week 5 versus the Vikings on Oct. 11."
     },
     {
       "playerId": "4428988",
@@ -307,7 +213,7 @@
       "position": "DT",
       "jersey": 90,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428988.png",
-      "injuryType": "Knee - ACL",
+      "injuryType": "Knee - ACL (Surgery)",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
@@ -321,7 +227,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee - ACL) on Aug 7, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
     },
     {
       "playerId": "4040945",
@@ -343,7 +249,29 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee - ACL) on Aug 12, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
+    },
+    {
+      "playerId": "4432731",
+      "name": "Moliki Matavao",
+      "position": "TE",
+      "jersey": 80,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432731.png",
+      "injuryType": "Knee",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Matavao sustained a knee injury during Saturday's 34-0 preseason loss to the Rams. The tight end's placement on IR means he will miss the entirety of the 2026 regular season unless he is waived with an injury settlement. Matavao logged three catches for 34 yards in Saturday's game and seemed to have a good chance to make the 53-man roster."
     },
     {
       "playerId": "4361600",
@@ -365,7 +293,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee) on May 13, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Saldiveri is apparently still working his way back onto the field from the knee injury he suffered back in December of 2024. As it stands, he'll now have to miss at least the first four weeks of the 2026 campaign."
     },
     {
       "playerId": "4696043",
@@ -387,7 +315,29 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Hip) on Aug 24, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "The cornerback suffered a hip injury earlier in training camp that will now require season-ending surgery. White logged 35 special-teams snaps for New Orleans in 2025, but he did not record a tackle."
+    },
+    {
+      "playerId": "4242431",
+      "name": "Ty Chandler",
+      "position": "RB",
+      "jersey": 32,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242431.png",
+      "injuryType": "Knee",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Chandler suffered a season-ending knee injury during Saturday's preseason game against the Rams. The running back has been placed on injured reserve and will miss the entirety of the 2026 season. The Saints added Zamir White in a trade with the 49ers to make up for the loss of Chandler."
     }
   ]
 }

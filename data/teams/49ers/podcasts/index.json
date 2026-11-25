@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:00:56.896Z",
+  "updatedAt": "2026-11-25T20:43:28.359Z",
   "episodes": [
     {
       "id": "ep-week9-raiders-film",
@@ -23,7 +23,7 @@
           "url": "https://www.49ers.com/team/injury-report/"
         }
       ],
-      "audioUrl": "./data/podcasts/ep-week9-raiders-film.m4a",
+      "audioUrl": "./data/teams/49ers/podcasts/ep-week9-raiders-film.m4a",
       "durationSec": 166,
       "fileSizeBytes": 2153109,
       "transcript": [
@@ -127,7 +127,7 @@
           "url": "https://nflpa.com/reports/public-salary-cap-report"
         }
       ],
-      "audioUrl": "./data/podcasts/ep-cap-aiyuk-blueprint.m4a",
+      "audioUrl": "./data/teams/49ers/podcasts/ep-cap-aiyuk-blueprint.m4a",
       "durationSec": 124,
       "fileSizeBytes": 1606477,
       "transcript": [
@@ -227,7 +227,7 @@
           "url": "https://www.espn.com/nfl/standings"
         }
       ],
-      "audioUrl": "./data/podcasts/ep-trade-deadline-seeding.m4a",
+      "audioUrl": "./data/teams/49ers/podcasts/ep-trade-deadline-seeding.m4a",
       "durationSec": 160,
       "fileSizeBytes": 2080656,
       "transcript": [

@@ -69,9 +69,12 @@ import { buildTeamDraftPrep2027 } from './lib/teamDraftIntelBuilder.mjs';
 import { attachDraftClassHighlightVideos } from './lib/draftVideoResolver.mjs';
 import {
   NATIONAL_FILM_ANALYTICS_X_HANDLES,
+  OFFICIAL_TEAM_X_HANDLES_BY_ABBR,
+  fetchBeatArticleHtmlForXEmbeds,
   fetchXTimelinesBatch,
   filterXTimelineItemsForTeam,
   harvestEmbeddedXForTeamRss,
+  selectRotatingXHandleSlice,
   selectTeamLocalXHandles
 } from './lib/xBeatMediaFetcher.mjs';
 import {
@@ -86,7 +89,9 @@ import {
 import {
   fetchCuratedYouTubeChannelVideos,
   fetchLive2027ConsensusBigBoardAndMocks,
-  searchYouTubeChannelVideos
+  parseRelativePublishedAgoToIso,
+  searchYouTubeChannelVideos,
+  verifyYouTubeEmbeddable
 } from './lib/seasonalContentBuilder.mjs';
 import {
   buildTeamTradeWindow,
@@ -157,12 +162,14 @@ import {
   buildOtcPlayerUrl,
   createPlayerIdentityResolver,
   decodeHtmlEntities,
+  extractBlueskyEmbedImages,
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   isLeagueWideFilmAnalyticsTweet,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
+  normalizeMultilineSocialText,
   normalizePlayerKey,
   sanitizeExternalUrl,
   stripHtmlAndDecodeEntities
@@ -224,11 +231,11 @@ async function fetchJsonSafe(url, timeoutMs = 12000) {
 }
 
 function getTeamOutDir(team) {
-  return team?.abbr === 'SF' ? path.join(ROOT, 'data') : path.join(ROOT, 'data', 'teams', team.slug);
+  return path.join(ROOT, 'data', 'teams', team.slug);
 }
 
 function getTeamDataRelUrl(team, fileName) {
-  return team?.abbr === 'SF' ? `data/${fileName}` : `data/teams/${team.slug}/${fileName}`;
+  return `data/teams/${team.slug}/${fileName}`;
 }
 
 function upgradeHttpUrlsDeep(val) {
@@ -420,6 +427,7 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     ytNflXml,
     ytQbSchoolXml,
     ytKollmannXml,
+    ytChaseDanielXml,
     nflverse,
     statsTeamReg,
     statsTeamWeek,
@@ -439,6 +447,7 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCDVYQ4Zhbm3S2dlz7P1GBDg', 10000),
     fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCGfxHp2yuimtLsFaq1r7aIQ', 10000),
     fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCYzfVBuCfGz-oF3aOCGgOmw', 10000),
+    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCSnTko7TBHGlGlA7yvzQVpA', 10000),
     loadSharedNflversePlayerContext(seasonYear),
     fetchCsvGzSafe(
       `${NFLVERSE_BASE}/stats_team/stats_team_reg_${seasonYear}.csv.gz`,
@@ -452,12 +461,22 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     fetchTextSafe(`https://www.drafttek.com/${nextDraftYear}-NFL-Mock-Draft/${nextDraftYear}-NFL-Mock-Draft-Round-1.asp`, 14000),
     fetchTextSafe(`https://walterfootball.com/draft${nextDraftYear}.php`, 14000),
     fetchTextSafe(`https://walterfootball.com/draft${nextDraftYear}_1.php`, 14000),
-    fetchXTimelinesBatch(NATIONAL_FILM_ANALYTICS_X_HANDLES, {
-      concurrency: 6,
-      timeoutMs: 4200,
-      maxAgeHours: 120,
-      maxItems: 14
-    }).catch(() => []),
+    fetchXTimelinesBatch(
+      process.env.X_BEARER_TOKEN
+        ? NATIONAL_FILM_ANALYTICS_X_HANDLES
+        : selectRotatingXHandleSlice(NATIONAL_FILM_ANALYTICS_X_HANDLES, {
+            maxPerRun: 4,
+            bucketMinutes: 30,
+            seedOffset: 0
+          }),
+      {
+        concurrency: 1,
+        spacingMs: 450,
+        timeoutMs: 4500,
+        maxAgeHours: 120,
+        maxItems: 14
+      }
+    ).catch(() => []),
     fetchLive2027ConsensusBigBoardAndMocks({
       draftYear: nextDraftYear,
       nowMs: Date.now()
@@ -519,8 +538,8 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
 
   // Pull shared league artifacts (260-prospect 3-Lens Draft Big Board, Combine Leaderboard,
   // 272-game league schedule & 32-team base metrics) from existing verified data if present
-  const sfSeasonalPath = path.join(ROOT, 'data', 'seasonal.json');
-  const sfMatchupPath = path.join(ROOT, 'data', 'schedule-matchup.json');
+  const sfSeasonalPath = path.join(ROOT, 'data', 'teams', '49ers', 'seasonal.json');
+  const sfMatchupPath = path.join(ROOT, 'data', 'teams', '49ers', 'schedule-matchup.json');
   const sfSeasonal = fs.existsSync(sfSeasonalPath) ? JSON.parse(fs.readFileSync(sfSeasonalPath, 'utf8')) : null;
   const sfMatchup = fs.existsSync(sfMatchupPath) ? JSON.parse(fs.readFileSync(sfMatchupPath, 'utf8')) : null;
 
@@ -724,6 +743,40 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
       ? liveDraftBigBoardIntel.consensusBigBoard
       : sfSeasonal?.draftPrep2027?.consensusBigBoard || liveDraftBigBoardIntel?.consensusBigBoard || [];
 
+  const youtubeFeeds = [
+    { id: 'nfl_official', name: 'NFL', handle: '@NFL', xml: ytNflXml, category: 'highlights', embeddable: false },
+    { id: 'the_qb_school', name: 'The QB School', handle: '@TheQBSchool', xml: ytQbSchoolXml, category: 'film', embeddable: true },
+    { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', xml: ytKollmannXml, category: 'film', embeddable: true },
+    { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', xml: ytChaseDanielXml, category: 'film', embeddable: true }
+  ];
+
+  // Stage-1 deduplicated embeddability verification for all national film YouTube videos (detects NFL Content ID blocks once for all 32 teams!)
+  const nationalFilmVidIds = new Set();
+  const stage1CutoffMs = Date.now() - 62 * 86_400_000;
+  for (const ytFeed of youtubeFeeds) {
+    if (ytFeed.embeddable === false) continue;
+    for (const m of (ytFeed.xml || '').matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
+      const b = m[0];
+      const vid = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
+      const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
+      const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
+      if (vid && Number.isFinite(pubMs) && pubMs >= stage1CutoffMs) {
+        nationalFilmVidIds.add(vid);
+      }
+    }
+  }
+  const youtubeEmbeddableById = new Map();
+  const vidIdList = [...nationalFilmVidIds];
+  for (let i = 0; i < vidIdList.length; i += 8) {
+    const chunk = vidIdList.slice(i, i + 8);
+    const checks = await Promise.all(
+      chunk.map(async vid => [vid, await verifyYouTubeEmbeddable(vid)])
+    );
+    for (const [vid, check] of checks) {
+      youtubeEmbeddableById.set(vid, check);
+    }
+  }
+
   return {
     seasonYear,
     aiModelDiscovery,
@@ -732,11 +785,8 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     rotowireXml,
     pftRssXml,
     nfltrRssXml,
-    youtubeFeeds: [
-      { id: 'nfl_official', name: 'NFL', handle: '@NFL', xml: ytNflXml, category: 'highlights', embeddable: false },
-      { id: 'the_qb_school', name: 'The QB School', handle: '@TheQBSchool', xml: ytQbSchoolXml, category: 'film', embeddable: true },
-      { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', xml: ytKollmannXml, category: 'film', embeddable: true }
-    ],
+    youtubeFeeds,
+    youtubeEmbeddableById,
     nflverse,
     leagueTradeCtx,
     powerRankingsPayloads,
@@ -1088,7 +1138,7 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
     const post = entry?.post;
     const rec = post?.record;
     if (!post || !rec?.text) continue;
-    const text = decodeHtmlEntities(String(rec.text)).replace(/\s+/g, ' ').trim();
+    const text = normalizeMultilineSocialText(decodeHtmlEntities(String(rec.text)));
     const vidEmbed =
       post.embed?.$type === 'app.bsky.embed.video#view'
         ? post.embed
@@ -1103,13 +1153,12 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
       vidDid && vidCid
         ? `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${encodeURIComponent(vidDid)}&cid=${encodeURIComponent(vidCid)}`
         : '';
-    const embedPhoto =
-      post.embed?.images?.[0]?.fullsize ||
-      post.embed?.media?.images?.[0]?.fullsize ||
-      post.embed?.images?.[0]?.thumb ||
-      post.embed?.media?.images?.[0]?.thumb ||
-      '';
+    const embedPhotos = extractBlueskyEmbedImages(post);
+    const embedPhoto = embedPhotos[0] || '';
     const embedImg = vidEmbed?.thumbnail || embedPhoto || post.embed?.external?.thumb || '';
+    const distinctEmbedPhotos = vidEmbed?.thumbnail
+      ? embedPhotos.filter(u => u !== vidEmbed.thumbnail)
+      : embedPhotos;
     const extUrl = sanitizeExternalUrl(post.embed?.external?.uri || '', null);
     const isTenorGif = Boolean(extUrl && /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(extUrl));
     const resolvedVideoStreamUrl = isTenorGif ? extUrl : bskyVideoMp4Url || undefined;
@@ -1174,11 +1223,16 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
       isFullTweet: tweetDisplay.isFullTweet,
       summary: '',
       imageUrl: embedImg,
+      ...(distinctEmbedPhotos.length > (resolvedVideoStreamUrl ? 0 : 1) ? { imageUrls: distinctEmbedPhotos } : {}),
       videoStreamUrl: resolvedVideoStreamUrl,
       isAnimatedGif: isTenorGif || undefined,
       embeddable: Boolean(resolvedVideoStreamUrl) || undefined,
       isHighlightClip: Boolean(resolvedVideoStreamUrl) && resolvedCategory !== 'film' ? true : undefined,
-      hasInlineChartImage: Boolean(embedPhoto && (isLeagueWideChart || isFilmAnalystRep || resolvedCategory === 'film')) || undefined,
+      hasInlineChartImage:
+        Boolean(
+          distinctEmbedPhotos.length > 1 ||
+            (embedPhoto && (isLeagueWideChart || isFilmAnalystRep || resolvedCategory === 'film'))
+        ) || undefined,
       isLeagueWideFilmChart: isLeagueWideChart || undefined,
       filmOnlyScope: filmOnlyScope || undefined,
       imageAlt: `${rep.name} post`,
@@ -2837,10 +2891,15 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
     return found;
   };
+  const seenXStatusIds = new Set();
+  const extractXSid = u => (String(u || '').match(/https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/[^/]+\/status\/(\d{15,22})/i) || [])[1] || '';
   const pushNewsItem = item => {
     const cleanUrl = sanitizeExternalUrl(item?.url || '', null);
-    if (!cleanUrl || isPaywalledPublisher(cleanUrl) || seenNewsUrls.has(cleanUrl)) return;
-    seenNewsUrls.add(cleanUrl);
+    const normUrlKey = cleanUrl ? cleanUrl.toLowerCase() : '';
+    const xSid = extractXSid(cleanUrl);
+    if (!cleanUrl || isPaywalledPublisher(cleanUrl) || seenNewsUrls.has(normUrlKey) || (xSid && seenXStatusIds.has(xSid))) return;
+    seenNewsUrls.add(normUrlKey);
+    if (xSid) seenXStatusIds.add(xSid);
     if (isOpposingTeamOnlyInjuryOrRosterStory(item, team)) return;
     const decTitle = decodeHtmlEntities(String(item.title || '')).trim();
     const decSummary = decodeHtmlEntities(String(item.summary || '')).trim();
@@ -2851,16 +2910,57 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       type: item.type || ''
     });
     if (sig.isClickbait) return;
-    const cleanImg = item.imageUrl ? decodeHtmlEntities(String(item.imageUrl)).trim() : '';
+    const cleanImg = item.imageUrl
+      ? decodeHtmlEntities(String(item.imageUrl)).trim()
+      : item.thumbnailUrl
+        ? decodeHtmlEntities(String(item.thumbnailUrl)).trim()
+        : '';
+    const genericBeatLabel = `${team.nickname} Beat`;
+    const isGenericBeatAuthor = v => {
+      const s = String(v || '').trim().toLowerCase();
+      return !s || s === genericBeatLabel.toLowerCase() || s === '49ers beat' || s === 'nfl beat';
+    };
+    const rawAuthorCand = decodeHtmlEntities(String(item.author || '')).trim();
+    const rawReporterCand = decodeHtmlEntities(String(item.reporterName || '')).trim();
+    const rawChannelCand = decodeHtmlEntities(String(item.channel || '')).trim();
+    const rawOutletCand = decodeHtmlEntities(String(item.outletName || '')).trim();
+    const resolvedAuthor =
+      (!isGenericBeatAuthor(rawAuthorCand) ? rawAuthorCand : '') ||
+      (!isGenericBeatAuthor(rawReporterCand) ? rawReporterCand : '') ||
+      (!isGenericBeatAuthor(rawChannelCand) ? rawChannelCand : '') ||
+      (!isGenericBeatAuthor(rawOutletCand) ? rawOutletCand : '') ||
+      rawAuthorCand ||
+      rawOutletCand ||
+      genericBeatLabel;
+    const resolvedOutlet =
+      (!isGenericBeatAuthor(rawOutletCand) ? rawOutletCand : '') ||
+      (!isGenericBeatAuthor(rawChannelCand) ? rawChannelCand : '') ||
+      rawOutletCand ||
+      resolvedAuthor;
+    const resolvedReporter = (!isGenericBeatAuthor(rawReporterCand) ? rawReporterCand : '') || resolvedAuthor;
+    const resolvedId =
+      String(item.id || '').trim() ||
+      (item.videoId ? `${team.abbr.toLowerCase()}_yt_${item.videoId}` : `${team.abbr.toLowerCase()}_item_${hashShort(cleanUrl)}`);
+    const cleanImgUrls = Array.isArray(item.imageUrls)
+      ? Array.from(
+          new Set(
+            item.imageUrls
+              .map(u => decodeHtmlEntities(String(u || '')).trim())
+              .filter(u => /^https:\/\//i.test(u))
+          )
+        ).slice(0, 4)
+      : [];
     const decodedItem = {
       ...item,
+      id: resolvedId,
       title: decTitle,
       summary: decSummary,
       ...(cleanImg ? { imageUrl: cleanImg } : {}),
+      ...(cleanImgUrls.length > 0 ? { imageUrls: cleanImgUrls } : {}),
       ...(decFull !== undefined ? { fullText: decFull } : {}),
-      author: decodeHtmlEntities(String(item.author || item.outletName || `${team.nickname} Beat`)).trim(),
-      outletName: decodeHtmlEntities(String(item.outletName || '')).trim(),
-      reporterName: decodeHtmlEntities(String(item.reporterName || item.author || '')).trim(),
+      author: resolvedAuthor,
+      outletName: resolvedOutlet,
+      reporterName: resolvedReporter,
       ...(item.imageCaption ? { imageCaption: decodeHtmlEntities(String(item.imageCaption)).trim() } : {}),
       ...(item.imageAlt ? { imageAlt: decodeHtmlEntities(String(item.imageAlt)).trim() } : {})
     };
@@ -2877,8 +2977,16 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           }
         : {})
     };
-    const pubIso = enrichedItem.publishedAt || nowIso;
-    const brk = classifyBreakingItem(enrichedItem, Date.now(), { team, rosterPlayers: players });
+    const rawPubCandidate =
+      enrichedItem.publishedAt ||
+      enrichedItem.publishedAtIso ||
+      enrichedItem.published ||
+      parseRelativePublishedAgoToIso(enrichedItem.publishedAgo, Date.now());
+    const parsedPubMs = rawPubCandidate ? Date.parse(rawPubCandidate) : NaN;
+    const pubIso = Number.isFinite(parsedPubMs)
+      ? new Date(Math.min(Date.now(), parsedPubMs)).toISOString()
+      : nowIso;
+    const brk = classifyBreakingItem({ ...enrichedItem, publishedAt: pubIso }, Date.now(), { team, rosterPlayers: players });
     const cat = classifyNewsItemCategory(enrichedItem);
     rawStream.push({
       ...enrichedItem,
@@ -3159,28 +3267,42 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   }
 
-  // 9e-3. Stage-1 Shared YouTube Atom Feeds (NFL Highlights, The QB School, Brett Kollmann) filtered per team
+  // 9e-3. Stage-1 Shared YouTube Atom Feeds (NFL Highlights, The QB School, Brett Kollmann, Chase Daniel) filtered per team
+  const atomPubByVideoId = new Map();
   for (const ytFeed of leagueCtx.youtubeFeeds || []) {
     for (const m of (ytFeed.xml || '').matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
       const b = m[0];
       const videoId = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
       const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const xmlCreator = decodeXmlEntities((b.match(/<author>[\s\S]*?<name>([\s\S]*?)<\/name>/i) || [])[1] || '').trim();
       const desc = decodeXmlEntities((b.match(/<media:description>([\s\S]*?)<\/media:description>/i) || [])[1] || '')
         .replace(/\s+/g, ' ')
         .trim();
       const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
-      if (!videoId || !title || !teamOrStarRe.test(`${title} ${desc.slice(0, 220)}`)) continue;
+      if (!videoId || !title) continue;
+      if (/#shorts\b/i.test(title) || /youtube\.com\/shorts\//i.test(b)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
+      if (Number.isFinite(pubMs)) atomPubByVideoId.set(videoId, new Date(pubMs).toISOString());
+      if (!teamOrStarRe.test(`${title} ${desc.slice(0, 220)}`)) continue;
       if (ytFeed.category !== 'film' && isOpposingTeamSubjectLead(title, {}, team)) continue;
-      const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
       const maxAgeDays = ytFeed.category === 'film' ? 60 : 21;
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
+      const embCheck = ytFeed.embeddable === false ? null : leagueCtx.youtubeEmbeddableById?.get(videoId) || null;
+      if (embCheck && embCheck.exists === false) continue;
+      const resolvedEmbeddable =
+        ytFeed.embeddable === false
+          ? false
+          : embCheck
+            ? Boolean(embCheck.embeddable)
+            : false;
+      const creatorName = ytFeed.name || xmlCreator || embCheck?.authorName || 'YouTube';
       const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
       pushNewsItem({
         id: `${team.abbr.toLowerCase()}_yt_${videoId}`,
         type: 'video',
         category: ytFeed.category,
         videoId,
-        embeddable: ytFeed.embeddable,
+        embeddable: resolvedEmbeddable,
         title,
         summary: desc.slice(0, 220),
         imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
@@ -3188,11 +3310,12 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         publishedAt: new Date(pubMs).toISOString(),
         url: watchUrl,
         externalVideoUrl: watchUrl,
+        channel: creatorName,
         outletId: ytFeed.id,
-        outletName: ytFeed.name,
+        outletName: creatorName,
         reporterId: ytFeed.id,
-        reporterName: ytFeed.name,
-        author: ytFeed.name,
+        reporterName: creatorName,
+        author: creatorName,
         authorHandle: ytFeed.handle,
         authorProfileUrl: `https://www.youtube.com/${ytFeed.handle}`,
         trustTier: 1,
@@ -3244,12 +3367,22 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         fetchTextSafe(`https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(ch.id)}`, 7500).catch(() => '')
       )
     ),
-    fetchXTimelinesBatch(selectTeamLocalXHandles(team, reportersData, 12), {
-      concurrency: 6,
-      timeoutMs: 4000,
-      maxAgeHours: 120,
-      maxItems: 12
-    }).catch(() => []),
+    fetchXTimelinesBatch(
+      process.env.X_BEARER_TOKEN
+        ? selectTeamLocalXHandles(team, reportersData, 12)
+        : selectRotatingXHandleSlice(selectTeamLocalXHandles(team, reportersData, 12), {
+            maxPerRun: 3,
+            bucketMinutes: 30,
+            seedOffset: (team.abbr.charCodeAt(0) || 0) + (team.abbr.charCodeAt(1) || 0)
+          }),
+      {
+        concurrency: 1,
+        spacingMs: 450,
+        timeoutMs: 4200,
+        maxAgeHours: 120,
+        maxItems: 12
+      }
+    ).catch(() => []),
     team.abbr === 'SF'
       ? fetchCuratedYouTubeChannelVideos({
           qbNames: players.filter(p => p.position === 'QB' && p.rosterBucket === 'active').map(p => p.name),
@@ -3263,8 +3396,10 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   localBeatRssSpecs.forEach((spec, idx) => {
     const xml = localBeatRssXmls[idx] || '';
     if (!xml) return;
-    const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
-    for (const b of blocks.slice(0, 14)) {
+    const blocks = (xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || []).slice(0, 14);
+    const parsedEntries = [];
+    const descFreq = new Map();
+    for (const b of blocks) {
       const title = decodeXmlEntities((b.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
       const desc = decodeXmlEntities(
         (b.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || ''
@@ -3286,6 +3421,27 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           ''
       );
       if (!title || !/^https?:\/\//i.test(link)) continue;
+      const descKey = desc.slice(0, 120).toLowerCase();
+      if (descKey.length >= 24) {
+        descFreq.set(descKey, (descFreq.get(descKey) || 0) + 1);
+      }
+      parsedEntries.push({ b, title, desc, descKey, link, pubRaw, creator });
+    }
+    for (const entry of parsedEntries) {
+      const { b, title, link, pubRaw, creator } = entry;
+      // Guard against CMS RSS bugs (e.g. NBC Sports Regional ?rss=1) where >=3 distinct articles
+      // repeat item #1's description verbatim — keep the description only on an item whose headline matches it.
+      let desc = entry.desc;
+      if (entry.descKey && (descFreq.get(entry.descKey) || 0) >= 3) {
+        const titleWords = title
+          .toLowerCase()
+          .replace(/[^a-z0-9\s]/g, ' ')
+          .split(/\s+/)
+          .filter(w => w.length >= 5 && !/^(?:49ers|niners|eagles|patriots|bears|commanders|report|source|after|about|their|before|could|would|should|season|former)$/.test(w));
+        const descLower = desc.toLowerCase();
+        const overlapCount = titleWords.filter(w => descLower.includes(w)).length;
+        if (overlapCount < 2) desc = '';
+      }
       if (spec.filterByTeam && !teamOrStarRe.test(`${title} ${desc}`)) continue;
       if (isOpposingTeamSubjectLead(`${title} ${desc}`, {}, team)) continue;
       const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
@@ -3320,47 +3476,67 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   });
 
-  // Parse Per-Team Curated YouTube Channels (official + local All-22 film)
+  // Parse Per-Team Curated YouTube Channels (official + local All-22 film) with live per-video embeddability verification
+  const teamYtPending = [];
   teamCuratedYtSpecs.forEach((ytCh, idx) => {
     const xml = teamYtXmls[idx] || '';
     for (const m of xml.matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
       const b = m[0];
       const videoId = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
       const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const xmlCreator = decodeXmlEntities((b.match(/<author>[\s\S]*?<name>([\s\S]*?)<\/name>/i) || [])[1] || '').trim();
       const desc = decodeXmlEntities((b.match(/<media:description>([\s\S]*?)<\/media:description>/i) || [])[1] || '')
         .replace(/\s+/g, ' ')
         .trim();
       const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
       if (!videoId || !title) continue;
-      const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+      if (/#shorts\b/i.test(title) || /youtube\.com\/shorts\//i.test(b)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
+      if (Number.isFinite(pubMs)) atomPubByVideoId.set(videoId, new Date(pubMs).toISOString());
       const maxAgeDays = ytCh.category === 'film' ? 60 : 21;
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
-      const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
-      pushNewsItem({
-        id: `${team.abbr.toLowerCase()}_tyt_${videoId}`,
-        type: 'video',
-        category: ytCh.category,
-        videoId,
-        embeddable: ytCh.embeddable,
-        title,
-        summary: desc.slice(0, 220),
-        imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-        imageAlt: title,
-        publishedAt: new Date(pubMs).toISOString(),
-        url: watchUrl,
-        externalVideoUrl: watchUrl,
-        outletId: ytCh.id,
-        outletName: ytCh.name,
-        reporterId: ytCh.id,
-        reporterName: ytCh.name,
-        author: ytCh.name,
-        authorHandle: ytCh.handle,
-        authorProfileUrl: `https://www.youtube.com/${ytCh.handle}`,
-        trustTier: ytCh.trustTier || 2,
-        wireSource: 'team_youtube_atom'
-      });
+      teamYtPending.push({ ytCh, videoId, title, xmlCreator, desc, pubIso: new Date(pubMs).toISOString() });
     }
   });
+  const verifiedTeamYtItems = await Promise.all(
+    teamYtPending.map(async entry => {
+      const check =
+        entry.ytCh.embeddable === false
+          ? { exists: true, embeddable: false, authorName: entry.ytCh.name }
+          : await verifyYouTubeEmbeddable(entry.videoId);
+      return { ...entry, check };
+    })
+  );
+  for (const entry of verifiedTeamYtItems) {
+    if (entry.check?.exists === false) continue;
+    const { ytCh, videoId, title, xmlCreator, desc, pubIso, check } = entry;
+    const creatorName = ytCh.name || xmlCreator || check?.authorName || 'YouTube';
+    const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+    pushNewsItem({
+      id: `${team.abbr.toLowerCase()}_tyt_${videoId}`,
+      type: 'video',
+      category: ytCh.category,
+      videoId,
+      embeddable: ytCh.embeddable === false ? false : Boolean(check?.embeddable),
+      title,
+      summary: desc.slice(0, 220),
+      imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+      imageAlt: title,
+      publishedAt: pubIso,
+      url: watchUrl,
+      externalVideoUrl: watchUrl,
+      channel: creatorName,
+      outletId: ytCh.id,
+      outletName: creatorName,
+      reporterId: ytCh.id,
+      reporterName: creatorName,
+      author: creatorName,
+      authorHandle: ytCh.handle,
+      authorProfileUrl: `https://www.youtube.com/${ytCh.handle}`,
+      trustTier: ytCh.trustTier || 2,
+      wireSource: 'team_youtube_atom'
+    });
+  }
   // Also search official NFL YouTube channel for recent player & game highlight cutups across ALL 32 clubs
   const latestCompForYt = [...schedule].reverse().find(g => g.completed && !g.isByeWeek) || null;
   const officialTeamYtCh = teamCuratedYtSpecs.find(c => c.category !== 'film') || null;
@@ -3383,40 +3559,98 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   for (const hv of [...clubHighlightVids, ...nflHighlightVids]) {
     if (!hv?.videoId || !hv?.title) continue;
     if (!teamOrStarRe.test(hv.title) && hv.channel !== officialTeamYtCh?.name) continue;
+    const resolvedPubIso =
+      atomPubByVideoId.get(hv.videoId) ||
+      hv.publishedAt ||
+      hv.publishedAtIso ||
+      parseRelativePublishedAgoToIso(hv.publishedAgo, Date.now());
+    // Never falsely stamp an undated channel-search result as "just now" (nowIso)
+    if (!resolvedPubIso) continue;
+    const creatorName = hv.channel || hv.author || (officialTeamYtCh ? officialTeamYtCh.name : 'NFL');
+    const isClubOfficial = Boolean(officialTeamYtCh && creatorName === officialTeamYtCh.name);
+    const isOfficialNflChannel = !isClubOfficial && /^nfl$/i.test(String(creatorName || '').trim());
     pushNewsItem({
       id: `${team.abbr.toLowerCase()}_yts_${hv.videoId}`,
       type: 'video',
       videoId: hv.videoId,
-      embeddable: hv.embeddable !== undefined ? hv.embeddable : false,
+      embeddable: isOfficialNflChannel ? false : hv.embeddable !== undefined ? hv.embeddable : false,
       title: hv.title,
       summary: hv.summary || '',
+      duration: hv.duration || '',
       imageUrl: `https://i.ytimg.com/vi/${hv.videoId}/hqdefault.jpg`,
       imageAlt: hv.title,
-      publishedAt: hv.publishedAt || nowIso,
+      publishedAt: resolvedPubIso,
       url: `https://www.youtube.com/watch?v=${encodeURIComponent(hv.videoId)}`,
       externalVideoUrl: `https://www.youtube.com/watch?v=${encodeURIComponent(hv.videoId)}`,
-      outletId: officialTeamYtCh && hv.channel === officialTeamYtCh.name ? `${team.slug}_official` : 'nfl_official',
-      outletName: hv.channel || 'NFL',
-      reporterId: officialTeamYtCh && hv.channel === officialTeamYtCh.name ? `${team.slug}_official` : 'nfl_official',
-      reporterName: hv.channel || 'NFL',
-      author: hv.channel || 'NFL',
+      channel: creatorName,
+      outletId: isClubOfficial ? `${team.slug}_official` : 'nfl_official',
+      outletName: creatorName,
+      reporterId: isClubOfficial ? `${team.slug}_official` : 'nfl_official',
+      reporterName: creatorName,
+      author: creatorName,
+      authorHandle: isClubOfficial ? officialTeamYtCh.handle : '@NFL',
+      authorProfileUrl: isClubOfficial
+        ? `https://www.youtube.com/${officialTeamYtCh.handle}`
+        : 'https://www.youtube.com/@NFL',
       trustTier: 1,
       wireSource: 'youtube_search'
     });
   }
 
   for (const cv of Array.isArray(curatedSfYtVideos) ? curatedSfYtVideos : []) {
-    if (cv?.videoId && cv?.title) pushNewsItem({ ...cv, type: 'video' });
+    if (!cv?.videoId || !cv?.title) continue;
+    const cvPubIso =
+      atomPubByVideoId.get(cv.videoId) ||
+      cv.publishedAt ||
+      cv.publishedAtIso ||
+      parseRelativePublishedAgoToIso(cv.publishedAgo, Date.now());
+    if (!cvPubIso) continue;
+    const creatorName = cv.author || cv.channel || cv.outletName || 'YouTube';
+    const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(cv.videoId)}`;
+    pushNewsItem({
+      ...cv,
+      id: `${team.abbr.toLowerCase()}_cyt_${cv.videoId}`,
+      type: 'video',
+      videoId: cv.videoId,
+      embeddable: cv.embeddable === true,
+      url: watchUrl,
+      externalVideoUrl: watchUrl,
+      imageUrl: cv.imageUrl || cv.thumbnailUrl || `https://i.ytimg.com/vi/${cv.videoId}/hqdefault.jpg`,
+      imageAlt: cv.title,
+      publishedAt: cvPubIso,
+      channel: creatorName,
+      author: creatorName,
+      reporterName: creatorName,
+      outletName: creatorName,
+      authorHandle: cv.authorHandle || '',
+      authorProfileUrl: cv.authorProfileUrl || watchUrl,
+      wireSource: cv.wireSource || 'curated_youtube_atom'
+    });
   }
 
   const bskyPosts = filterRawBlueskyPostsForTeam(rawBskyEntries || [], team, players);
+  // Deep Beat-Article HTML Embed Harvesting (100% free via api.fxtwitter.com across ALL 32 clubs):
+  // Fetch public HTML of up to 10 recent film/takeaway/grade local beat articles to extract embedded X clips/GIFs/charts
+  const recentLocalBeatArticlesForEmbeds = rawStream.filter(
+    it =>
+      it &&
+      it.type === 'article' &&
+      (it.wireSource === 'local_beat_rss' || it.wireSource === 'club_official_rss') &&
+      it.url
+  );
+  const beatArticleHtmlPayloads = await fetchBeatArticleHtmlForXEmbeds(recentLocalBeatArticlesForEmbeds, {
+    maxArticles: 10,
+    concurrency: 5,
+    timeoutMs: 4500
+  }).catch(() => []);
   const embeddedXItems = await harvestEmbeddedXForTeamRss(
-    [clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {}), ...localBeatRssXmls],
+    [clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {}), ...localBeatRssXmls, ...beatArticleHtmlPayloads],
     {
       team,
       rosterPlayers: players,
       reportersData,
-      maxHydrate: 24
+      maxHydrate: 28,
+      allowEmbeddedBeatQuotes: true
     }
   ).catch(() => []);
   const localXItems = filterXTimelineItemsForTeam(localXRaw, {
@@ -3431,30 +3665,63 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     reportersData,
     isNationalPool: true
   });
-  // Preserve recent (<=96h) previously harvested X film/GIF/chart timeline clips when X syndication transiently 429s
+  // Accumulative 96-hour carry-forward across rotating 30-minute X slices (and transient 429s):
+  // preserves valid recent harvested X clips, GIFs, charts & beat tweets from handles not polled in this bucket!
+  const freshXUrls = new Set(
+    [...localXItems, ...embeddedXItems, ...nationalFilmXForTeam]
+      .map(it => String(it?.url || '').trim().toLowerCase())
+      .filter(Boolean)
+  );
+  const freshXStatusIds = new Set(
+    [...localXItems, ...embeddedXItems, ...nationalFilmXForTeam]
+      .map(it => extractXSid(it?.url || ''))
+      .filter(Boolean)
+  );
+  const currentRosterIds = new Set(players.map(p => String(p.id || '')).filter(Boolean));
   const carriedXItems = [];
-  if (localXItems.length === 0 && nationalFilmXForTeam.length === 0) {
-    try {
-      const prevNewsPath = path.join(getTeamOutDir(team), 'news.json');
-      if (fs.existsSync(prevNewsPath)) {
-        const prevNews = JSON.parse(fs.readFileSync(prevNewsPath, 'utf8'));
-        const carryCutoffMs = Date.now() - 96 * 3_600_000;
-        for (const it of prevNews?.rawStream || []) {
-          if (it?.wireSource !== 'x_timeline_live') continue;
-          const pubMs = Date.parse(it.publishedAt || '');
-          if (!Number.isFinite(pubMs) || pubMs < carryCutoffMs) continue;
-          if (it.videoStreamUrl || it.isAnimatedGif || it.hasInlineChartImage || it.category === 'film') {
-            carriedXItems.push(it);
-          }
-        }
+  try {
+    const prevNewsPath = path.join(getTeamOutDir(team), 'news.json');
+    if (fs.existsSync(prevNewsPath)) {
+      const prevNews = JSON.parse(fs.readFileSync(prevNewsPath, 'utf8'));
+      const carryCutoffMs = Date.now() - 96 * 3_600_000;
+      const otherTeamHandlesLow = new Set(
+        Object.entries(OFFICIAL_TEAM_X_HANDLES_BY_ABBR)
+          .filter(([abbr]) => abbr !== team.abbr)
+          .map(([, h]) => String(h || '').toLowerCase())
+          .filter(Boolean)
+      );
+      const localKnownLow = new Set([
+        ...selectTeamLocalXHandles(team, reportersData, 32).map(h => h.toLowerCase()),
+        ...NATIONAL_FILM_ANALYTICS_X_HANDLES.map(h => h.toLowerCase()),
+        'nfl', 'espnnfl', 'nflnetwork', 'adamschefter', 'rapsheet', 'tompelissero', 'mikegarafolo', 'dmrussini', 'fieldyates', 'jayglazer', 'profootballtalk'
+      ]);
+      for (const it of prevNews?.rawStream || []) {
+        if (it?.wireSource !== 'x_timeline_live') continue;
+        const uKey = String(it.url || '').trim().toLowerCase();
+        const sid = extractXSid(uKey);
+        if (!uKey || freshXUrls.has(uKey) || (sid && freshXStatusIds.has(sid))) continue;
+        const pubMs = Date.parse(it.publishedAt || '');
+        if (!Number.isFinite(pubMs) || pubMs < carryCutoffMs) continue;
+        if (isPromotionalAdvertisement(it)) continue;
+        const hLow = String(it.authorHandle || '').replace(/^@/, '').trim().toLowerCase();
+        if (hLow && (otherTeamHandlesLow.has(hLow) || (/(?:comms|pr)$/i.test(hLow) && !localKnownLow.has(hLow)))) continue;
+        const hasRichFilmOrClip = Boolean(
+          it.videoStreamUrl || it.isAnimatedGif || (it.hasInlineChartImage && it.category === 'film')
+        );
+        if (!it.reporterId && !localKnownLow.has(hLow) && !hasRichFilmOrClip) continue;
+        // Prune stale mentionedPlayers whose IDs are no longer on the live roster (e.g. post-waiver/trade)
+        const prunedMentions = Array.isArray(it.mentionedPlayers)
+          ? it.mentionedPlayers.filter(mp => mp?.id && currentRosterIds.has(String(mp.id)))
+          : [];
+        carriedXItems.push({ ...it, mentionedPlayers: prunedMentions });
       }
-    } catch {}
-  }
+    }
+  } catch {}
   const combinedDirectSocial = [
     ...localXItems,
     ...embeddedXItems,
     ...nationalFilmXForTeam,
-    ...carriedXItems,
+    ...carriedXItems.slice(0, 40),
     ...bskyPosts
   ];
   for (const xi of combinedDirectSocial) pushNewsItem(xi);
@@ -4378,6 +4645,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         title: item.title || '',
         fullText: item.fullText || undefined,
         summary: item.summary || '',
+        ...(item.imageUrl ? { imageUrl: item.imageUrl } : {}),
+        ...(Array.isArray(item.imageUrls) && item.imageUrls.length > 0 ? { imageUrls: item.imageUrls } : {}),
+        ...(item.hasInlineChartImage ? { hasInlineChartImage: true } : {}),
         url: item.url,
         author: item.author || item.outletName || `${team.nickname} Beat`,
         outletName: item.outletName || `${team.nickname} Beat`,

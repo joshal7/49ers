@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:09:05.049Z",
+  "updatedAt": "2026-11-25T20:36:15.792Z",
   "windowDays": 7,
   "totalEpisodes": 14,
   "shows": [
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/4e/af/f6/4eaff656-8e7d-e737-b547-6a5ac414d552/mza_12149479948034064833.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "chargers_guilty_as_charged",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/5NvjSmVV",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/guilty-as-charged-an-la-chargers-podcast/id1497748763?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/98/19/f5/9819f55f-1c0a-5ada-fd65-3d0573643ba5/mza_18273074095950804128.jpeg/600x600bb.jpg",
-      "episodeCount7d": 1
+      "episodeCount7d": 2
     },
     {
       "id": "chargers_chargers_podcast_network",
@@ -53,6 +53,66 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_chargers_locked_on_chargers_1000803967178",
+      "trackId": 1000803967178,
+      "collectionId": 1151558476,
+      "showId": "chargers_locked_on_chargers",
+      "showName": "Locked On Chargers",
+      "showFullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
+      "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
+      "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
+      "title": "PERFECT FIT: Chargers Should HIRE Shane Steichen and Reunite him with Justin Herbert",
+      "summary": "Los Angeles Chargers fans ignite debate as Shane Steichen is linked to a return as offensive coordinator, potentially reuniting with Justin Herbert in 2027. Can Steichen, lauded for his work with Jalen Hurts and Daniel Jones, revive Herbert’s rookie-year magic and reshape th",
+      "publishedAt": "2026-11-25T11:00:00.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/45/da/44/45da44b7-7769-8b27-7b30-e07b5744b2ad/mza_13826372405563413707.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/perfect-fit-chargers-should-hire-shane-steichen-and/id1151558476?i=1000803967178&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/63565354-52b5-42b8-9235-da360b3d0830/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=63565354-52b5-42b8-9235-da360b3d0830&feed=A8M6ytRb"
+    },
+    {
+      "id": "pod_chargers_guilty_as_charged_1000803900233",
+      "trackId": 1000803900233,
+      "collectionId": 1497748763,
+      "showId": "chargers_guilty_as_charged",
+      "showName": "Guilty As Charged",
+      "showFullTitle": "Guilty As Charged: An LA Chargers Podcast",
+      "hosts": "Blue Wire",
+      "network": "Blue Wire",
+      "title": "Evaluating Chargers Rookies After 10 Games",
+      "summary": "Join us LIVE as we review the Chargers' 2026 rookie class following the first 10 weeks of the season. Visit https://prizepicks.onelink.me/LME0/KFTV and use code KFTV to get $25 instantly in Packs after you rip your first $5 Pack Make sure to join up as channel members at: ht",
+      "publishedAt": "2026-11-25T03:18:46.000Z",
+      "durationMinutes": 97,
+      "durationDisplay": "97 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/98/19/f5/9819f55f-1c0a-5ada-fd65-3d0573643ba5/mza_18273074095950804128.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/evaluating-chargers-rookies-after-10-games/id1497748763?i=1000803900233&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/guilty-as-charged-an-la-chargers-podcast/id1497748763?uo=4",
+      "feedUrl": "https://feeds.simplecast.com/5NvjSmVV",
+      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/256/bluewire.simplecastaudio.com/e1b5417e-8424-47af-a7fa-61b85b66c61a/episodes/4a3b4a42-47c6-459b-b499-334bf88ddf81/audio/128/default.mp3?aid=rss_feed&awCollectionId=e1b5417e-8424-47af-a7fa-61b85b66c61a&awEpisodeId=4a3b4a42-47c6-459b-b499-334bf88ddf81&feed=5NvjSmVV"
+    },
+    {
+      "id": "pod_chargers_locked_on_chargers_1000803770270",
+      "trackId": 1000803770270,
+      "collectionId": 1151558476,
+      "showId": "chargers_locked_on_chargers",
+      "showName": "Locked On Chargers",
+      "showFullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
+      "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
+      "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
+      "title": "MISTAKE: Jim Harbaugh Admits HUGE Error in Omarion Hampton's Usage in the Chargers Offense",
+      "summary": "Los Angeles Chargers admit major missteps as Jim Harbaugh reveals Omarion Hampton should have been the bell cow RB from the start. Has this late-season rushing surge come too late to salvage the Chargers offense? Daniel Wade and David Droegemeier dissect the fallout from Har",
+      "publishedAt": "2026-11-24T11:00:00.000Z",
+      "durationMinutes": 32,
+      "durationDisplay": "32 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ab/23/0f/ab230f3d-e5cb-0807-961b-c1ccd47a4b02/mza_11961710851308663438.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/mistake-jim-harbaugh-admits-huge-error-in-omarion-hamptons/id1151558476?i=1000803770270&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/8015d47d-1e2e-46e1-a161-e05e66a84fda/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=8015d47d-1e2e-46e1-a161-e05e66a84fda&feed=A8M6ytRb"
+    },
     {
       "id": "pod_chargers_locked_on_chargers_1000803687812",
       "trackId": 1000803687812,
@@ -272,66 +332,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
       "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/3b72f231-746f-468c-bcc4-5c03230c5f8b/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=3b72f231-746f-468c-bcc4-5c03230c5f8b&feed=A8M6ytRb"
-    },
-    {
-      "id": "pod_chargers_locked_on_chargers_1000802784326",
-      "trackId": 1000802784326,
-      "collectionId": 1151558476,
-      "showId": "chargers_locked_on_chargers",
-      "showName": "Locked On Chargers",
-      "showFullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
-      "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "title": "CHARGERS SQUAD: Chargers looking for 2 in a row as they face the Jets",
-      "summary": "Los Angeles Chargers look to build momentum and notch a second straight win as they square off against the New York Jets. With Omarion Hampton powering a revitalized ground game and Justin Herbert’s role evolving under a simplified offensive scheme, can the Chargers’ shift f",
-      "publishedAt": "2026-11-18T20:32:19.000Z",
-      "durationMinutes": 63,
-      "durationDisplay": "63 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c7/e3/af/c7e3af55-79c8-09c6-0897-b2d6c8448947/mza_5870640148041586657.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/chargers-squad-chargers-looking-for-2-in-a-row-as/id1151558476?i=1000802784326&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/f2469142-edd0-480c-9130-e4f0699c3bdd/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=f2469142-edd0-480c-9130-e4f0699c3bdd&feed=A8M6ytRb"
-    },
-    {
-      "id": "pod_chargers_locked_on_chargers_1000802682068",
-      "trackId": 1000802682068,
-      "collectionId": 1151558476,
-      "showId": "chargers_locked_on_chargers",
-      "showName": "Locked On Chargers",
-      "showFullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
-      "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "title": "AWKWARD: Chargers' Justin Herbert SNUBS Jim Harbaugh as Locker Room Celebrations SPARK Debate",
-      "summary": "Awkward postgame locker room vibes raise questions: Has Justin Herbert lost patience with Jim Harbaugh’s quirky leadership in a season marred by losses? Los Angeles Chargers fans saw an icy high-five snub, fueling speculation that morale is wearing thin amid a disappointing ",
-      "publishedAt": "2026-11-18T11:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e2/f3/63/e2f363be-778b-00b3-edc3-624ab5ab2a29/mza_2737747854057814514.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/awkward-chargers-justin-herbert-snubs-jim-harbaugh/id1151558476?i=1000802682068&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/c2f8b130-78d9-4fc4-8065-445395679275/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=c2f8b130-78d9-4fc4-8065-445395679275&feed=A8M6ytRb"
-    },
-    {
-      "id": "pod_chargers_locked_on_chargers_1000802559709",
-      "trackId": 1000802559709,
-      "collectionId": 1151558476,
-      "showId": "chargers_locked_on_chargers",
-      "showName": "Locked On Chargers",
-      "showFullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
-      "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "title": "Tank Crisis: Chargers REWRITE Draft Odds After Win, Jeremiah Smith Dreams Fade",
-      "summary": "Los Angeles Chargers break their losing streak with a dramatic win, sparking debate on the true cost of victory for a struggling franchise. Can game-changing plays from Tre’ Harris, Derius Davis, and Tarheeb Still outweigh the long-term implications for the Chargers’ 2027 NF",
-      "publishedAt": "2026-11-17T22:00:00.000Z",
-      "durationMinutes": 23,
-      "durationDisplay": "23 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/13/7e/c6/137ec66d-cf0e-c802-5975-73051ebcc66d/mza_11976558084533203801.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/tank-crisis-chargers-rewrite-draft-odds-after-win-jeremiah/id1151558476?i=1000802559709&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/f52657d6-15eb-4338-8376-6108be5a716e/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=f52657d6-15eb-4338-8376-6108be5a716e&feed=A8M6ytRb"
     }
   ]
 }

@@ -45,6 +45,7 @@ import {
   isAllowedInlineVideoStreamUrl,
   isLeagueWideFilmAnalyticsTweet,
   isPromotionalAdvertisement,
+  normalizeMultilineSocialText,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import {
@@ -775,21 +776,38 @@ export function parseOfficialXSyndicationTimelineHtml(
       : null;
 
   const pickBestMp4FromTweet = tw => {
-    const mediaSources = [
+    const ownMedia = [
       ...(Array.isArray(tw?.extended_entities?.media) ? tw.extended_entities.media : []),
-      ...(Array.isArray(tw?.entities?.media) ? tw.entities.media : []),
-      ...(Array.isArray(tw?.quoted_status?.extended_entities?.media) ? tw.quoted_status.extended_entities.media : []),
-      ...(Array.isArray(tw?.retweeted_status?.extended_entities?.media) ? tw.retweeted_status.extended_entities.media : [])
+      ...(Array.isArray(tw?.entities?.media) ? tw.entities.media : [])
     ];
+    const mediaSources =
+      ownMedia.length > 0
+        ? ownMedia
+        : [
+            ...(Array.isArray(tw?.quoted_status?.extended_entities?.media) ? tw.quoted_status.extended_entities.media : []),
+            ...(Array.isArray(tw?.retweeted_status?.extended_entities?.media) ? tw.retweeted_status.extended_entities.media : [])
+          ];
     const vidMedia = mediaSources.find(m => m && (m.type === 'video' || m.type === 'animated_gif') && m.video_info?.variants);
+    const photoUrls = [];
+    const seenPhotos = new Set();
+    for (const m of mediaSources) {
+      if (photoUrls.length >= 4) break;
+      if (!m || m.type !== 'photo') continue;
+      const u = String(m.media_url_https || '').trim();
+      if (!u || !u.startsWith('https://') || seenPhotos.has(u)) continue;
+      seenPhotos.add(u);
+      photoUrls.push(u);
+    }
     const photoMedia = mediaSources.find(m => m && m.media_url_https);
     if (!vidMedia) {
+      const thumbUrl = photoUrls[0] || String(photoMedia?.media_url_https || '');
       return {
         mp4Url: '',
         isAnimatedGif: false,
         durationMs: 0,
-        thumbUrl: String(photoMedia?.media_url_https || ''),
-        isPhoto: Boolean(photoMedia?.media_url_https)
+        thumbUrl,
+        imageUrls: photoUrls,
+        isPhoto: Boolean(thumbUrl)
       };
     }
     const mp4Variants = (Array.isArray(vidMedia.video_info.variants) ? vidMedia.video_info.variants : [])
@@ -802,11 +820,13 @@ export function parseOfficialXSyndicationTimelineHtml(
     const crispMobile = mp4Variants.find(v => (Number(v.bitrate) || 0) > 0 && Number(v.bitrate) <= 2_400_000) || mp4Variants[0];
     const mp4Url = String(crispMobile?.url || crispMobile?.src || '');
     const isAnimatedGif = Boolean(mp4Url && (vidMedia.type === 'animated_gif' || /\/tweet_video\//i.test(mp4Url)));
+    const thumbUrl = String(vidMedia.media_url_https || photoUrls[0] || photoMedia?.media_url_https || '');
     return {
       mp4Url,
       isAnimatedGif,
       durationMs: Number(vidMedia.video_info?.duration_millis || 0),
-      thumbUrl: String(vidMedia.media_url_https || photoMedia?.media_url_https || ''),
+      thumbUrl,
+      imageUrls: photoUrls.filter(u => u !== thumbUrl),
       isPhoto: false
     };
   };
@@ -825,15 +845,16 @@ export function parseOfficialXSyndicationTimelineHtml(
     const pubMs = Date.parse(tw.created_at || '');
     if (!Number.isFinite(pubMs) || nowMs - pubMs > maxAgeMs) continue;
 
-    const rawText = decodeHtmlEntities(String(tw.full_text || tw.text || ''))
-      .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-    const quotedText = decodeHtmlEntities(String(tw.quoted_status?.full_text || tw.quoted_status?.text || ''))
-      .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-    const { mp4Url, isAnimatedGif, durationMs, thumbUrl, isPhoto } = pickBestMp4FromTweet(tw);
+    const rawText = normalizeMultilineSocialText(
+      decodeHtmlEntities(String(tw.full_text || tw.text || '')).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+    );
+    const quotedText = normalizeMultilineSocialText(
+      decodeHtmlEntities(String(tw.quoted_status?.full_text || tw.quoted_status?.text || '')).replace(
+        /https?:\/\/t\.co\/[A-Za-z0-9]+/gi,
+        ''
+      )
+    );
+    const { mp4Url, isAnimatedGif, durationMs, thumbUrl, imageUrls, isPhoto } = pickBestMp4FromTweet(tw);
     const caption = rawText || quotedText;
     if (!caption || (caption.length < (mp4Url || thumbUrl ? 6 : 12) && !mp4Url)) continue;
     const expandedTweetUrls = [
@@ -925,11 +946,16 @@ export function parseOfficialXSyndicationTimelineHtml(
       summary: quotedText && quotedText !== caption ? quotedText.slice(0, 220) : '',
       url: postUrl,
       imageUrl: /^https:\/\//i.test(thumbUrl) ? thumbUrl : '',
+      ...(Array.isArray(imageUrls) && imageUrls.length > (hasVideo ? 0 : 1) ? { imageUrls } : {}),
       videoStreamUrl: hasVideo ? mp4Url : undefined,
       isAnimatedGif: isAnimatedGif || undefined,
       isHighlightClip: isHighlightVideo,
       isLiveGameHighlight: Boolean(hasVideo && liveMode),
-      hasInlineChartImage: Boolean(isPhoto && (isLeagueWideFilmChart || allowLeagueWideFilmCharts || isBeatOrFilmAccount)) || undefined,
+      hasInlineChartImage:
+        Boolean(
+          (Array.isArray(imageUrls) && imageUrls.length > 1) ||
+            (isPhoto && (isLeagueWideFilmChart || allowLeagueWideFilmCharts || isBeatOrFilmAccount))
+        ) || undefined,
       isLeagueWideFilmChart: isLeagueWideFilmChart || undefined,
       filmOnlyScope: filmOnlyScope || undefined,
       duration: durFmt || undefined,
@@ -1131,9 +1157,7 @@ export default {
     if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname === '/apple-touch-icon.png') {
       const iconPath = hubHost
         ? '/nfl-apple-touch-icon.png'
-        : team.abbr === 'SF'
-          ? '/apple-touch-icon.png'
-          : `/assets/teams/${team.slug}/apple-touch-icon.png`;
+        : `/assets/teams/${team.slug}/apple-touch-icon.png`;
       if (env.ASSETS) {
         const iconReq = new Request(new URL(iconPath, url.origin), request);
         const assetRes = await env.ASSETS.fetch(iconReq);
@@ -1335,7 +1359,7 @@ export default {
         // Load the active club's own static `reporters.json` & `roster.json` directly from local Pages ASSETS (0ms!)
         // so ALL 32 clubs get identical data-driven local beat/film X polling, dynamic player @handle matching,
         // and embedded X allowlisting with zero SF-only hardcoding.
-        const teamDataBasePath = isSfTeam ? '/data' : `/data/teams/${team.slug}`;
+        const teamDataBasePath = `/data/teams/${team.slug}`;
         const readLocalTeamJson = async fileName => {
           if (!env?.ASSETS) return null;
           try {
@@ -1560,14 +1584,17 @@ export default {
               title,
               summary: desc.slice(0, 220),
               url: ytUrl,
+              externalVideoUrl: ytUrl,
               imageUrl: `https://i.ytimg.com/vi/${vidId}/hqdefault.jpg`,
-              embeddable: true,
+              embeddable: false,
               isHighlightClip: true,
               isLiveGameHighlight: liveMode,
               outletId: 'nfl_official',
               outletName: 'NFL',
+              reporterName: 'NFL',
               author: 'NFL',
               authorHandle: '@NFL',
+              authorProfileUrl: 'https://www.youtube.com/@NFL',
               trustTier: 1,
               publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date(nowEdgeMs).toISOString()
             });
@@ -1821,7 +1848,7 @@ export default {
                 });
                 if (!sr.ok) return;
                 const syn = await sr.json();
-                const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
+                const txt = typeof syn?.text === 'string' ? normalizeMultilineSocialText(decodeHtmlEntities(syn.text)) : '';
                 const synMedia = extractXSyndicationMedia(syn);
                 if (!txt || txt.length < (synMedia.mp4Url || synMedia.imageUrl ? 6 : 16)) return;
                 const synExpandedUrls = Array.isArray(syn?.entities?.urls)
@@ -1849,11 +1876,14 @@ export default {
                   fullText: txt,
                   url: postUrl,
                   imageUrl: thumb.startsWith('https://') ? thumb : '',
+                  ...(Array.isArray(synMedia.imageUrls) && synMedia.imageUrls.length > (bestMp4 ? 0 : 1)
+                    ? { imageUrls: synMedia.imageUrls }
+                    : {}),
                   videoStreamUrl: bestMp4 || undefined,
                   isAnimatedGif: synMedia.isAnimatedGif || undefined,
                   isHighlightClip: Boolean(bestMp4 && (synMedia.isAnimatedGif || durMs >= 4000 || durMs === 0)),
                   isLiveGameHighlight: Boolean(liveMode && bestMp4 && (synMedia.isAnimatedGif || durMs >= 4000 || durMs === 0)),
-                  hasInlineChartImage: synMedia.isPhoto || undefined,
+                  hasInlineChartImage: Boolean(synMedia.isPhoto || (synMedia.imageUrls && synMedia.imageUrls.length > 1)) || undefined,
                   duration: durFmt || undefined,
                   embeddable: true,
                   outletId: 'x_beat',

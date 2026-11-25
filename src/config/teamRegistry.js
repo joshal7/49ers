@@ -228,19 +228,12 @@ function makeTeamEntry(raw) {
         swCachePrefix: `${slug}-hq-`
       };
 
-  const assets = isSf
-    ? {
-        crestSvg: './assets/sf-crest.svg?v=1',
-        appIconSvg: './assets/app-icon.svg?v=6',
-        appleTouchIconPng: './apple-touch-icon.png?v=6',
-        appleTouchIcon180Png: './apple-touch-icon.png?v=6'
-      }
-    : {
-        crestSvg: `./assets/teams/${slug}/crest.svg?v=1`,
-        appIconSvg: `./assets/teams/${slug}/app-icon.svg?v=1`,
-        appleTouchIconPng: `./assets/teams/${slug}/apple-touch-icon.png?v=1`,
-        appleTouchIcon180Png: `./assets/teams/${slug}/apple-touch-icon-180.png?v=1`
-      };
+  const assets = {
+    crestSvg: `./assets/teams/${slug}/crest.svg?v=1`,
+    appIconSvg: `./assets/teams/${slug}/app-icon.svg?v=1`,
+    appleTouchIconPng: `./assets/teams/${slug}/apple-touch-icon.png?v=1`,
+    appleTouchIcon180Png: `./assets/teams/${slug}/apple-touch-icon-180.png?v=1`
+  };
 
   const brandName = raw.brandName || (isSf ? '49ers Faithful' : `${raw.nickname} HQ`);
   const shortTitle = raw.shortTitle || raw.nickname;
@@ -2258,13 +2251,10 @@ export function getActiveTeamConfig() {
 }
 
 /**
- * Resolves the data base URL for a given team config.
- * - `SF` on `49ers.joshal.com` or default localhost keeps `./data` verbatim (zero regression).
- * - Other teams (`lions`, `bills`, etc.) load from `./data/teams/{slug}` (served from R2 via Worker or local disk).
+ * Resolves the unified data base URL for all 32 NFL teams (`./data/teams/{slug}`).
  */
 export function resolveTeamDataBasePath(teamInput = null) {
   const team = resolveTeamConfig(teamInput);
-  if (team.abbr === 'SF') return './data';
   return `./data/teams/${team.slug}`;
 }
 

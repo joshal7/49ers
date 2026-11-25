@@ -333,8 +333,11 @@ export async function verifyYouTubeEmbeddable(videoId, { refererUrl = 'https://4
           !embRes.ok ||
           embHtml.includes('emb_err_woyt') ||
           embHtml.includes('blocked it from display') ||
+          embHtml.includes('Playback on other websites has been disabled') ||
           embHtml.includes('"Video unavailable"') ||
-          embHtml.includes('UNPLAYABLE');
+          embHtml.includes('UNPLAYABLE') ||
+          embHtml.includes('LOGIN_REQUIRED') ||
+          embHtml.includes('"playableInEmbed":false');
         result = {
           exists: true,
           embeddable: !isBlocked,

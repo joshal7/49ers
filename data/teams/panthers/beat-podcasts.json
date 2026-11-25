@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-24T20:08:19.243Z",
+  "updatedAt": "2026-11-25T20:44:41.946Z",
   "windowDays": 7,
-  "totalEpisodes": 12,
+  "totalEpisodes": 11,
   "shows": [
     {
       "id": "panthers_locked_on_panthers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/1d/a1/17/1da1178e-87ed-440c-a844-2a2471ca7a8f/mza_4393349406579144163.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "panthers_panthers_playbook",
@@ -41,6 +41,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_panthers_locked_on_panthers_1000803936687",
+      "trackId": 1000803936687,
+      "collectionId": 1150966073,
+      "showId": "panthers_locked_on_panthers",
+      "showName": "Locked On Panthers",
+      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
+      "hosts": "Locked On Podcast Network, Julian Council",
+      "network": "Locked On Podcast Network, Julian Council",
+      "title": "MAILBAG: Is Monday a MUST-WIN game for the Carolina Panthers against the Tampa Bay Buccaneers?",
+      "summary": "The Carolina Panthers face a season-defining clash with the Tampa Bay Buccaneers. Will a win solidify their NFC South ambitions, or will Carolina’s playoff hopes slip away? Julian Council lays out what’s at stake, analyzing the Bucs’ favorable schedule, the Panthers’ must-wi",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "durationMinutes": 32,
+      "durationDisplay": "32 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c1/31/a6/c131a68e-e349-4e1f-3fd2-311973e333a5/mza_7218021682255310500.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/mailbag-is-monday-a-must-win-game-for-the/id1150966073?i=1000803936687&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/027326ef-8cd5-4034-b204-dd3cab0fae13/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=027326ef-8cd5-4034-b204-dd3cab0fae13&feed=3JTeh8Y2"
+    },
     {
       "id": "pod_panthers_locked_on_panthers_1000803743758",
       "trackId": 1000803743758,
@@ -240,46 +260,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/panthers-playbook/id1697162650?uo=4",
       "feedUrl": "https://feed.cdnstream1.com/zjb/feed/download/99/c9/e8/99c9e89a-3322-4455-8c08-b882e03ba2af.xml",
       "audioStreamUrl": "https://pds.cdnstream1.com/p/capitolbroadcasting/panthers-playbook/carolina-panthers-need-t-e26720/audio.mp3"
-    },
-    {
-      "id": "pod_panthers_locked_on_panthers_1000802750030",
-      "trackId": 1000802750030,
-      "collectionId": 1150966073,
-      "showId": "panthers_locked_on_panthers",
-      "showName": "Locked On Panthers",
-      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
-      "hosts": "Locked On Podcast Network, Julian Council",
-      "network": "Locked On Podcast Network, Julian Council",
-      "title": "MAILBAG: Is Dave Canales the Right Coach to GUIDE the Carolina Panthers to Long-Term SUCCESS?",
-      "summary": "Carolina Panthers fans are asking: Is Dave Canales the coach to lead this team to a Super Bowl? Julian Council breaks down Canales’ controversial moves, from benching Bryce Young to finally parting ways with Ejiro Evero, and questions whether his coaching decisions have the ",
-      "publishedAt": "2026-11-18T17:00:00.000Z",
-      "durationMinutes": 35,
-      "durationDisplay": "35 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/f1/07/3d/f1073d2b-7c60-7382-a60e-6601e87038ea/mza_15710687038009014109.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/mailbag-is-dave-canales-the-right-coach-to-guide/id1150966073?i=1000802750030&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/9c842cd1-3a15-4b07-977d-c035828d231b/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=9c842cd1-3a15-4b07-977d-c035828d231b&feed=3JTeh8Y2"
-    },
-    {
-      "id": "pod_panthers_locked_on_panthers_1000802560198",
-      "trackId": 1000802560198,
-      "collectionId": 1150966073,
-      "showId": "panthers_locked_on_panthers",
-      "showName": "Locked On Panthers",
-      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
-      "hosts": "Locked On Podcast Network, Julian Council",
-      "network": "Locked On Podcast Network, Julian Council",
-      "title": "TURNAROUND: Carolina Panthers Run Defense STIFLES Opponents—Will Success CONTINUE vs Ravens?",
-      "summary": "Carolina Panthers run defense dominates under Todd Wash—have they finally solved their ground-game woes? As the Panthers secure a 20-17 walk-off win over the New Orleans Saints, questions swirl about whether this sudden turnaround is sustainable, with powerhouses like the Ba",
-      "publishedAt": "2026-11-17T22:08:51.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e3/63/26/e363263e-ced9-bf8a-8803-12fd856a657e/mza_14554005628272981677.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/turnaround-carolina-panthers-run-defense-stifles-opponents/id1150966073?i=1000802560198&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/94bc9905-18f6-42f2-b2a7-6d505b7d572d/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=94bc9905-18f6-42f2-b2a7-6d505b7d572d&feed=3JTeh8Y2"
     }
   ]
 }

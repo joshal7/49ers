@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-24T20:08:39.425Z",
+  "updatedAt": "2026-11-25T20:35:52.258Z",
   "windowDays": 7,
-  "totalEpisodes": 9,
+  "totalEpisodes": 11,
   "shows": [
     {
       "id": "browns_locked_on_browns",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/10/6d/43/106d43ad-fd8c-6e60-5dda-6fe02d487ee8/mza_12975464127955923763.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 6
     },
     {
       "id": "browns_orange_and_brown_report",
@@ -37,10 +37,90 @@
       "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 5
     }
   ],
   "episodes": [
+    {
+      "id": "pod_browns_locked_on_browns_1000803963979",
+      "trackId": 1000803963979,
+      "collectionId": 1149989450,
+      "showId": "browns_locked_on_browns",
+      "showName": "Locked On Browns",
+      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
+      "hosts": "Locked On Podcast Network, Spencer German",
+      "network": "Locked On Podcast Network, Spencer German",
+      "title": "leveland Browns Put TRUST On The Line In Sunday Night Showdown With Raiders | AFC North Crumbling?",
+      "summary": "Cleveland Browns face a trust-defining moment on Sunday Night Football as their playoff dreams hang in the balance. Can Todd Monken's squad continue to silence doubters and prove they’re legitimate AFC contenders, or will old narratives resurface under the primetime lights a",
+      "publishedAt": "2026-11-25T10:30:00.000Z",
+      "durationMinutes": 29,
+      "durationDisplay": "29 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/24/ae/29/24ae29f5-b2fc-f340-ec35-8d8972027e60/mza_13583125735892185015.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/leveland-browns-put-trust-on-the-line-in-sunday-night/id1149989450?i=1000803963979&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/43b5ea23-1f2d-4ab5-95f0-a27dedd1bafe/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=43b5ea23-1f2d-4ab5-95f0-a27dedd1bafe&feed=KHgFdYZS"
+    },
+    {
+      "id": "pod_browns_orange_and_brown_talk_1000803911908",
+      "trackId": 1000803911908,
+      "collectionId": 1334701895,
+      "showId": "browns_orange_and_brown_talk",
+      "showName": "Orange and Brown Talk",
+      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
+      "hosts": "Cleveland.com - Advance Local",
+      "network": "Cleveland.com - Advance Local",
+      "title": "Can the Browns win the AFC North? + Areas of improvement for second half",
+      "summary": "The Browns’ bye week went about as well as a bye week can go. All the other teams in the AFC North lost, leaving the Browns sixth in the AFC Playoff picture and second in the division, a game behind the Bengals. Mary Kay Cabot, Ashley Bastock and Dan Labbe start Wednesday’s ",
+      "publishedAt": "2026-11-25T05:01:00.000Z",
+      "durationMinutes": 50,
+      "durationDisplay": "50 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/can-the-browns-win-the-afc-north-areas-of/id1334701895?i=1000803911908&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
+      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
+      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM3997403393.mp3"
+    },
+    {
+      "id": "pod_browns_locked_on_browns_1000803766071",
+      "trackId": 1000803766071,
+      "collectionId": 1149989450,
+      "showId": "browns_locked_on_browns",
+      "showName": "Locked On Browns",
+      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
+      "hosts": "Locked On Podcast Network, Spencer German",
+      "network": "Locked On Podcast Network, Spencer German",
+      "title": "Cleveland Browns' Most Valuable Player Revealed | The Fernando Mendoza Scouting Report",
+      "summary": "Cleveland Browns’ defensive dominance powers a surprising 6-4 start—is a postseason run in the making? Spencer German and Lance Reisland spotlight the team's MVP and hand out a few other accolades before exploring how the team can correct some of their biggest flaws down the",
+      "publishedAt": "2026-11-24T10:30:00.000Z",
+      "durationMinutes": 33,
+      "durationDisplay": "33 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/b3/7f/c9/b37fc9c2-f5ac-1323-40fe-131f96bcf503/mza_15033684059982971610.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/cleveland-browns-most-valuable-player-revealed-the/id1149989450?i=1000803766071&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/c2ffd54d-fad4-40d2-a70a-49cdcd89238c/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=c2ffd54d-fad4-40d2-a70a-49cdcd89238c&feed=KHgFdYZS"
+    },
+    {
+      "id": "pod_browns_orange_and_brown_talk_1000803720065",
+      "trackId": 1000803720065,
+      "collectionId": 1334701895,
+      "showId": "browns_orange_and_brown_talk",
+      "showName": "Orange and Brown Talk",
+      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
+      "hosts": "Cleveland.com - Advance Local",
+      "network": "Cleveland.com - Advance Local",
+      "title": "Are the Browns a lock for the playoffs? Hey, Mary Kay!",
+      "summary": "The Browns moved into the sixth seed on Sunday when the Steelers lost to the Eagles. The playoff picture in the AFC is becoming clearer and it looks like the Browns might be on their way to the postseason. On Tuesday’s Orange and Brown Talk podcast, Mary Kay Cabot and Dan La",
+      "publishedAt": "2026-11-24T05:01:00.000Z",
+      "durationMinutes": 38,
+      "durationDisplay": "38 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/are-the-browns-a-lock-for-the-playoffs-hey-mary-kay/id1334701895?i=1000803720065&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
+      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
+      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM6024678663.mp3"
+    },
     {
       "id": "pod_browns_locked_on_browns_1000803650663",
       "trackId": 1000803650663,
@@ -180,46 +260,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
       "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM5984669451.mp3"
-    },
-    {
-      "id": "pod_browns_locked_on_browns_1000802746063",
-      "trackId": 1000802746063,
-      "collectionId": 1149989450,
-      "showId": "browns_locked_on_browns",
-      "showName": "Locked On Browns",
-      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
-      "hosts": "Locked On Podcast Network, Spencer German",
-      "network": "Locked On Podcast Network, Spencer German",
-      "title": "One Day Coach Of The Year Debates WON'T MATTER In Cleveland | Browns EARN Ultimate Sign Of Respect",
-      "summary": "Cleveland Browns earn primetime respect as Todd Monken emerges as a top Coach of the Year contender. Is the narrative shifting from underdog story to sustained excellence? Spencer German explains why, despite Monken being worthy of the Coach of the Year Award, the debate als",
-      "publishedAt": "2026-11-18T16:30:54.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ea/1a/b3/ea1ab332-0b60-a9bf-2a29-452d2ec63b7f/mza_15251769584817524517.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/one-day-coach-of-the-year-debates-wont-matter/id1149989450?i=1000802746063&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/a07f5ad3-fd6c-4f6c-bc0e-ca075ec4f9e9/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=a07f5ad3-fd6c-4f6c-bc0e-ca075ec4f9e9&feed=KHgFdYZS"
-    },
-    {
-      "id": "pod_browns_orange_and_brown_talk_1000802631289",
-      "trackId": 1000802631289,
-      "collectionId": 1334701895,
-      "showId": "browns_orange_and_brown_talk",
-      "showName": "Orange and Brown Talk",
-      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
-      "hosts": "Cleveland.com - Advance Local",
-      "network": "Cleveland.com - Advance Local",
-      "title": "What should the Browns focus on in their self-scout and breaking down Texans film",
-      "summary": "The Browns have hit their bye week and that means it’s time for Todd Monken and Co. to conduct their self-scout and figure out what they can do better over the seasons’ final seven games. Mary Kay Cabot, Ashley Bastock and Dan Labbe start this edition of the Orange and Brown",
-      "publishedAt": "2026-11-18T05:01:00.000Z",
-      "durationMinutes": 62,
-      "durationDisplay": "62 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/what-should-the-browns-focus-on-in-their-self-scout/id1334701895?i=1000802631289&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
-      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM8475956615.mp3"
     }
   ]
 }

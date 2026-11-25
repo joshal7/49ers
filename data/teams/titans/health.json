@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:57.188Z",
+  "updatedAt": "2026-11-25T20:36:12.901Z",
   "week": 12,
   "byeWeek": 9,
   "sourceUrl": "https://www.tennesseetitans.com/team/injury-report/",
@@ -21,7 +21,7 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Ankle",
+      "injuryType": "Ankle (Sprain)",
       "gameStatus": "IR — 21-Day Window Open",
       "playProbabilityPct": 65,
       "priorDayPlayProbabilityPct": null,
@@ -34,7 +34,7 @@
         "Starter / core rotational role increases 53-man roster activation priority (+3%)",
         "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
       ],
-      "beatComment": "21-day practice window opened; eligible for 53-man roster activation (Ankle)."
+      "beatComment": "Carmona returned to practice Wednesday as a limited participant in what was his first workout with the team since sustaining an ankle sprain in the Titans' Sept. 27 loss to the Giants. The Titans will have a 21-day window to evaluate him in practice, but once Carmona is deemed ready to return from IR, he could step into a starting role at either left or right guard."
     },
     {
       "playerId": "4240532",
@@ -61,6 +61,31 @@
         "Multi-week illness absence (missed prior game); elevated systemic recovery caution"
       ],
       "beatComment": "Adams was added to the Titans' injury report right before the 1 p.m. ET kickoff due to the illness, and the veteran safety wasn't able to take any snaps before being ruled out for Sunday's contest. Terrell Burgess drew the start at safety alongside Kevin Winston in Adams' absence, per Terry McCormick of TitanInsider.com."
+    },
+    {
+      "playerId": "4429607",
+      "name": "Cor'Dale Flott",
+      "position": "CB",
+      "jersey": 18,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429607.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Neck",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 78,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "78% • GTD",
+      "archetypeNote": "Every-down starter workload (89% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Active in prior game; day-to-day evaluation ahead of Wednesday practice (base prior 82%)"
+      ],
+      "beatComment": "Flott was hurt with just under six minutes remaining in the first half while tackling CeeDee Lamb. He was evaluated on the sideline and subsequently deemed questionable to return. Micah Robinson entered at cornerback in Flott's stead."
     },
     {
       "playerId": "4035663",
@@ -111,81 +136,6 @@
         "Questionable tag adjusted by player career prior (82%)"
       ],
       "beatComment": "Moore may have picked up the injury during the third quarter, and he's being evaluated by medical staff to determine whether he can return. James Hudson figures to take over at left tackle in Moore's absence."
-    },
-    {
-      "playerId": "4429607",
-      "name": "Cor'Dale Flott",
-      "position": "CB",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429607.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Neck",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 82,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "82% • GTD",
-      "archetypeNote": "Every-down starter workload (89% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Questionable tag adjusted by player career prior (82%)"
-      ],
-      "beatComment": "Flott was hurt with just under six minutes remaining in the first half while tackling CeeDee Lamb. He was evaluated on the sideline and subsequently deemed questionable to return. Micah Robinson entered at cornerback in Flott's stead."
-    },
-    {
-      "playerId": "4870805",
-      "name": "Anthony Hill Jr.",
-      "position": "LB",
-      "jersey": 53,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870805.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Neck",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Hill didn't play in Week 10 against the Jaguars, marking his first absence of the 2026 campaign. He logged a full practice Friday but still couldn't avoid a questionable designation. However, the rookie is cleared to suit up in Week 11 for the meeting with the Cowboys, potentially resulting in fewer snaps for Dorian Mausi."
-    },
-    {
-      "playerId": "4685617",
-      "name": "Kevin Winston Jr.",
-      "position": "S",
-      "jersey": 23,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685617.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Shoulder",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (99% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Winston's practice reps were limited Thursday due to a shoulder issue, but he was a full participant in Friday's session, which was enough for him to avoid an injury tag heading into the weekend. The second-year safety has 56 tackles (31 solo), one forced fumble and one fumble recovery across seven regular-season games."
     }
   ],
   "irAndReserveTracker": [
@@ -195,7 +145,7 @@
       "position": "G",
       "jersey": 66,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710000.png",
-      "injuryType": "Ankle",
+      "injuryType": "Ankle (Sprain)",
       "status": "IR — 21-Day Window Open",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
@@ -205,11 +155,11 @@
       "fri": "-",
       "placedBeforeWeek": 5,
       "earliestEligibleWeek": 10,
-      "projectedReturnWeek": "Week 12 Activation Window",
+      "projectedReturnWeek": "Week 12 Activation Window (Nov 29)",
       "byeWeekNote": "Week 9 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 65,
       "playBadgeLabel": "65% • GTD",
-      "beatNote": "21-day practice window opened; eligible for 53-man roster activation (Ankle)."
+      "beatNote": "Carmona returned to practice Wednesday as a limited participant in what was his first workout with the team since sustaining an ankle sprain in the Titans' Sept. 27 loss to the Giants. The Titans will have a 21-day window to evaluate him in practice, but once Carmona is deemed ready to return from IR, he could step into a starting role at either left or right guard."
     },
     {
       "playerId": "4431613",
@@ -231,7 +181,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Groin) ahead of Week 10; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "In a corresponding transaction, Tennessee activated linebacker Dorian Mausi from injured reserve. Williams won't be able to return to game action until Week 14 against the Lions at the earliest. In the meantime, Mausi figures to assume the small role Williams was occupying."
     },
     {
       "playerId": "4429100",
@@ -253,7 +203,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Hamstring) ahead of Week 10; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "Skoronski was already ruled out for Sunday's game against the Jaguars due to a hamstring injury that he picked up in Week 8 against the Bengals. Now that he's on IR, the fourth-year offensive lineman will be required to miss at least the next four games, so the earliest he can return is Week 14 against the Lions on Sunday, Dec. 13. James Hudson and Garrett Dellinger figure to be the top candidates to start at left guard in Skoronski's absence."
     },
     {
       "playerId": "3915398",
@@ -275,7 +225,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Knee) ahead of Week 10; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "Townsend suffered a knee injury during the Week 7 loss to Cleveland and is also now dealing with an Achilles issue. His placement on IR means he'll be sidelined for at least four games. Thomas Morstead was signed by Tennessee from the practice squad to the active roster to take Townsend's role as the team's punter."
     },
     {
       "playerId": "4428557",
@@ -300,28 +250,6 @@
       "beatNote": "Spears was sidelined for Weeks 7 and 8 due to a knee injury but was cleared to play against the Jaguars in Week 10, when he turned four carries into 28 yards and failed to haul in his lone target. He was initially listed as questionable for Sunday's game against the Cowboys after logging a full practice Friday, but the Titans have determined that a stint on injured reserve is warranted for the fourth-year running back. Spears will be required to miss at least the next four games, so his next chance to play is Week 15 against the Colts on Sunday, Dec. 20. Tony Pollard will continue to be the workhorse running back for the Titans while Julius Chestnut and rookie fifth-rounder Nicholas Singleton provide depth out of the backfield."
     },
     {
-      "playerId": "4569587",
-      "name": "Wan'Dale Robinson",
-      "position": "WR",
-      "jersey": 4,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569587.png",
-      "injuryType": "Ankle",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 11,
-      "earliestEligibleWeek": 15,
-      "projectedReturnWeek": "Est. Week 15 (Dec 20)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Ankle) ahead of Week 11; must miss at least 4 games (earliest eligible Week 15)."
-    },
-    {
       "playerId": "4876319",
       "name": "Jackson Slater",
       "position": "G",
@@ -341,51 +269,7 @@
       "byeWeekNote": "Week 9 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Foot); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4585317",
-      "name": "Kendell Brooks",
-      "position": "S",
-      "jersey": 30,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4585317.png",
-      "injuryType": "Undisclosed",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "2982313",
-      "name": "Tanoh Kpassagnon",
-      "position": "DE",
-      "jersey": 58,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2982313.png",
-      "injuryType": "Undisclosed",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
+      "beatNote": "Slater sustained a serious foot injury during Sunday's game against the Giants, and his immediate backup, Fernando Carmona (ankle), was also hurt when he stepped into Slater's place. Both will have to miss at least Tennessee's next four games, potentially leaving free-agent acquisition Atonio Mafi or rookie sixth-rounder Pat Coogan as starting options at right guard."
     },
     {
       "playerId": "4877034",
@@ -407,7 +291,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Pectoral) on Aug 16, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
     },
     {
       "playerId": "4429058",
@@ -432,11 +316,11 @@
       "beatNote": "Harrell is being monitored following Saturday's accident. The third-year pro tore his ACL in a preseason game against the 49ers in mid-August, which led to him being placed on season-ending injured reserve."
     },
     {
-      "playerId": "4371940",
-      "name": "Milo Eifler",
-      "position": "LB",
-      "jersey": 45,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4371940.png",
+      "playerId": "4585317",
+      "name": "Kendell Brooks",
+      "position": "S",
+      "jersey": 30,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4585317.png",
       "injuryType": "Undisclosed",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
@@ -451,7 +335,51 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 24, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "It's currently unclear what issue Brooks is dealing with, but he was waived/injured Sunday and subsequently cleared waivers. As such, he's been placed on season-ending IR. Brooks could still play in 2026, though, if he works out an injury settlement with the Titans."
+    },
+    {
+      "playerId": "2982313",
+      "name": "Tanoh Kpassagnon",
+      "position": "DE",
+      "jersey": 58,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2982313.png",
+      "injuryType": "Undisclosed",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Kpassagnon is suffering from an unknown issue. The defensive end will now spend the entirety of the 2026 regular season on injured reserve unless he is waived with an injury settlement."
+    },
+    {
+      "playerId": "4569587",
+      "name": "Wan'Dale Robinson",
+      "position": "WR",
+      "jersey": 4,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569587.png",
+      "injuryType": "Ankle",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 11,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Meanwhile Carnell Tate (shoulder) is slated to practice this week, and his potential return to action this weekend against Dallas figures to impact the playing time of Elic Ayomanor and Chimere Dike. Robinson's looming absence will free up snaps/targets in the slot, with Saleh noting Wednesday that he's looking forward to seeing what rookie slot option Xavier Restrepo can do with added opportunities going forward."
     }
   ]
 }

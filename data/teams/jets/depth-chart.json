@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:08:32.027Z",
+  "updatedAt": "2026-11-25T20:35:52.212Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -37,7 +37,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429105.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -69,7 +69,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429105.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -127,7 +127,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4723820",
@@ -512,7 +512,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4808766",
@@ -545,20 +545,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "4241410",
-              "name": "Jelani Woods",
-              "jersey": 86,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241410.png",
+              "playerId": "3125107",
+              "name": "Andrew Beck",
+              "jersey": 47,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125107.png",
               "baselineRank": 4,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3125107",
-              "name": "Andrew Beck",
-              "jersey": 47,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125107.png",
+              "playerId": "4241410",
+              "name": "Jelani Woods",
+              "jersey": 86,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241410.png",
               "baselineRank": 5,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -597,20 +597,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "4241410",
-              "name": "Jelani Woods",
-              "jersey": 86,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241410.png",
+              "playerId": "3125107",
+              "name": "Andrew Beck",
+              "jersey": 47,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125107.png",
               "baselineRank": 4,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3125107",
-              "name": "Andrew Beck",
-              "jersey": 47,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125107.png",
+              "playerId": "4241410",
+              "name": "Jelani Woods",
+              "jersey": 86,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241410.png",
               "baselineRank": 5,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -670,7 +670,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430893.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -722,7 +722,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430893.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -733,11 +733,11 @@
     },
     {
       "id": "16",
-      "unitName": "Defense (Base 4-3 D)",
+      "unitName": "Defense (Wide-9 Base 4-3 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (Wide-9)",
           "baselineChain": [
             {
               "playerId": "4685248",
@@ -827,7 +827,7 @@
         },
         {
           "slotKey": "ldt",
-          "slotLabel": "LDT",
+          "slotLabel": "LDT (1/2i)",
           "baselineChain": [
             {
               "playerId": "4612836",
@@ -897,7 +897,7 @@
         },
         {
           "slotKey": "rdt",
-          "slotLabel": "RDT",
+          "slotLabel": "RDT (3-Tech)",
           "baselineChain": [
             {
               "playerId": "4426676",
@@ -966,7 +966,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (Wide-9)",
           "baselineChain": [
             {
               "playerId": "4362840",
@@ -995,7 +995,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429005.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             },
             {
@@ -1005,7 +1005,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240405.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1037,7 +1037,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429005.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -1048,7 +1048,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240405.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1176,7 +1176,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "4683815",
@@ -1422,7 +1422,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4692024",
@@ -1642,7 +1642,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429105.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1674,7 +1674,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429105.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

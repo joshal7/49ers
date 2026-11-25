@@ -723,15 +723,72 @@ export function hasSafeStandaloneSurnameMatch(rawText = '', surname = '', player
 }
 
 /**
+ * Normalizes tweet / Bluesky prose while strictly preserving author carriage returns
+ * (`\r\n` / `\r` -> `\n`, max 2 consecutive newlines for paragraph breaks) and collapsing
+ * only horizontal whitespace so multi-paragraph social posts render faithfully.
+ */
+export function normalizeMultilineSocialText(raw = '') {
+  const s = String(raw ?? '');
+  if (!s) return '';
+  return s
+    .replace(/\r\n?/g, '\n')
+    .replace(/[ \t\f\v\u00A0]+/g, ' ')
+    .replace(/[ \t]*\n[ \t]*/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+/**
+ * Extracts all unique valid HTTPS image URLs (up to 4) from a Bluesky `post` view,
+ * covering `app.bsky.embed.images#view`, `app.bsky.embed.recordWithMedia#view`,
+ * and (only when the outer post attaches no own images/video) quoted-post image embeds.
+ */
+export function extractBlueskyEmbedImages(post = null) {
+  if (!post || typeof post !== 'object') return [];
+  const out = [];
+  const seen = new Set();
+  const pushImgList = list => {
+    if (!Array.isArray(list)) return;
+    for (const img of list) {
+      if (out.length >= 4) break;
+      const cand = String(img?.fullsize || img?.thumb || '').trim();
+      if (!cand || !/^https:\/\//i.test(cand) || seen.has(cand)) continue;
+      seen.add(cand);
+      out.push(cand);
+    }
+  };
+
+  pushImgList(post?.embed?.images);
+  pushImgList(post?.embed?.media?.images);
+
+  const hasOwnVideo =
+    post?.embed?.$type === 'app.bsky.embed.video#view' ||
+    post?.embed?.media?.$type === 'app.bsky.embed.video#view' ||
+    Boolean(post?.embed?.video);
+
+  if (out.length === 0 && !hasOwnVideo) {
+    const quotedEmbeds = [
+      ...(Array.isArray(post?.embed?.record?.embeds) ? post.embed.record.embeds : []),
+      ...(Array.isArray(post?.embed?.record?.record?.embeds) ? post.embed.record.record.embeds : [])
+    ];
+    for (const qe of quotedEmbeds) {
+      if (out.length >= 4) break;
+      pushImgList(qe?.images);
+      pushImgList(qe?.media?.images);
+    }
+  }
+  return out;
+}
+
+/**
  * Strips WordPress / RSS syndication footers (`The post ... appeared first on NFLTradeRumors.co.`)
  * so aggregator domain names never trigger false trade/roster classifications or relevance hits.
  */
-export function stripAggregatorBoilerplate(text = '') {
-  return String(text || '')
+export function stripAggregatorBoilerplate(text = '', { preserveNewlines = false } = {}) {
+  const stripped = String(text || '')
     .replace(/\s*The post [\s\S]*? appeared first on [^\n.]+(?:\.[a-z]{2,4})?\.?/gi, '')
-    .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+    .replace(/\s*appeared first on (?:NFLTradeRumors\.co|Pro Football Rumors|ProFootballRumors\.com)[^.\n]*\.?/gi, '');
+  return preserveNewlines ? normalizeMultilineSocialText(stripped) : stripped.replace(/\s+/g, ' ').trim();
 }
 
 /**
@@ -983,13 +1040,19 @@ export function is49ersRelevantWireItem({
 
 /**
  * Formats ambiguous aggregator publisher names as explicit web domains (`NFLTradeRumors.co`,
- * `ProFootballRumors.com`) so non-trade stories from those outlets never read like a
- * "Trade Rumors" category heading in wire cards.
+ * `ProFootballRumors.com`) and recovers true video/channel creator names (`item.channel` /
+ * `item.outletName` / `item.reporterName`) whenever `authorName` fell back to generic `"<Team> Beat"`.
  */
 export function formatWireSourceDisplayName(authorName = '', item = null) {
   const active = getActiveTeamConfig();
   const defaultBeat = `${active?.nickname || '49ers'} Beat`;
-  const raw = String(authorName || item?.author || item?.reporterName || item?.outletName || defaultBeat).trim();
+  const isGenericBeat = v => {
+    const s = String(v || '').trim().toLowerCase();
+    return !s || s === defaultBeat.toLowerCase() || s === '49ers beat' || s === 'nfl beat';
+  };
+  const candidates = [authorName, item?.author, item?.reporterName, item?.channel, item?.outletName];
+  const nonGeneric = candidates.map(v => String(v || '').trim()).find(v => !isGenericBeat(v));
+  const raw = nonGeneric || String(authorName || item?.author || item?.reporterName || item?.channel || item?.outletName || defaultBeat).trim();
   const lower = raw.toLowerCase();
   if (lower === 'nfl trade rumors' || lower === 'nfltraderumors') return 'NFLTradeRumors.co';
   if (lower === 'pro football rumors' || lower === 'profootballrumors') return 'ProFootballRumors.com';
@@ -1611,7 +1674,15 @@ export function isAllowedInlineVideoStreamUrl(rawUrl) {
  */
 export function extractXSyndicationMedia(syn) {
   if (!syn || typeof syn !== 'object') {
-    return { mp4Url: '', isAnimatedGif: false, durationMs: 0, posterUrl: '', imageUrl: '', isPhoto: false };
+    return {
+      mp4Url: '',
+      isAnimatedGif: false,
+      durationMs: 0,
+      posterUrl: '',
+      imageUrl: '',
+      imageUrls: [],
+      isPhoto: false
+    };
   }
   const mp4Url = selectBestXSyndicationMp4(syn);
   const mediaDetails = Array.isArray(syn.mediaDetails) ? syn.mediaDetails : [];
@@ -1629,18 +1700,32 @@ export function extractXSyndicationMedia(syn) {
   const posterUrl = String(
     vidMedia?.media_url_https || syn.video?.poster || mediaDetails[0]?.media_url_https || ''
   ).trim();
-  const photoUrl = String(
-    syn.photos?.[0]?.url ||
-      mediaDetails.find(m => m?.type === 'photo')?.media_url_https ||
-      ''
-  ).trim();
+
+  const photoUrls = [];
+  const seenPhotos = new Set();
+  const pushPhoto = raw => {
+    const clean = String(raw || '').trim();
+    if (!clean || !clean.startsWith('https://') || seenPhotos.has(clean) || photoUrls.length >= 4) return;
+    seenPhotos.add(clean);
+    photoUrls.push(clean);
+  };
+  if (Array.isArray(syn.photos)) {
+    for (const p of syn.photos) pushPhoto(p?.url);
+  }
+  for (const m of mediaDetails) {
+    if (m?.type === 'photo') pushPhoto(m?.media_url_https);
+  }
+
+  const photoUrl = photoUrls[0] || '';
   const imageUrl = (mp4Url ? posterUrl || photoUrl : photoUrl || posterUrl) || '';
+  const distinctPhotoUrls = mp4Url ? photoUrls.filter(u => u !== posterUrl) : photoUrls;
   return {
     mp4Url,
     isAnimatedGif,
     durationMs: Number.isFinite(durationMs) ? durationMs : 0,
     posterUrl: posterUrl.startsWith('https://') ? posterUrl : '',
     imageUrl: imageUrl.startsWith('https://') ? imageUrl : '',
+    imageUrls: distinctPhotoUrls,
     isPhoto: Boolean(!mp4Url && photoUrl.startsWith('https://'))
   };
 }
@@ -1993,7 +2078,7 @@ export function decodeHtmlEntities(str = '', { maxPasses = 2 } = {}) {
  * conditional comments `<!--[if IE 9]><video ...><![endif]-->`), and HTML tags (both raw and RSS-escaped)
  * while decoding all HTML/XML entities without corrupting literal comparisons (`3 < 5 && 7 > 4`, `>>>`).
  */
-export function stripHtmlAndDecodeEntities(str = '') {
+export function stripHtmlAndDecodeEntities(str = '', { preserveNewlines = false } = {}) {
   const raw = String(str ?? '');
   if (!raw) return '';
   let out = raw
@@ -2002,7 +2087,7 @@ export function stripHtmlAndDecodeEntities(str = '') {
     .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
     .replace(HTML_COMMENT_RE, ' ')
     .replace(IE_CONDITIONAL_COMMENT_RE, ' ')
-    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<br\s*\/?>/gi, preserveNewlines ? '\n' : ' ')
     .replace(REAL_HTML_TAG_RE, ' ');
   if (out.includes('&')) {
     out = decodeHtmlEntities(out, { maxPasses: 2 });
@@ -2015,7 +2100,7 @@ export function stripHtmlAndDecodeEntities(str = '') {
         .replace(KNOWN_ESCAPED_HTML_TAG_RE, ' ');
     }
   }
-  return out.replace(/\s+/g, ' ').trim();
+  return preserveNewlines ? normalizeMultilineSocialText(out) : out.replace(/\s+/g, ' ').trim();
 }
 
 /**

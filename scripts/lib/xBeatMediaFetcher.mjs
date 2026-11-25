@@ -22,6 +22,7 @@ import {
   isLeagueWideFilmAnalyticsTweet,
   isPaywalledPublisher,
   isPromotionalAdvertisement,
+  normalizeMultilineSocialText,
   sanitizeExternalUrl,
   stripAggregatorBoilerplate,
   stripNon49ersEntityContexts
@@ -147,29 +148,45 @@ function stripPlayerSuffix(name = '') {
 }
 
 function pickBestMediaFromTimelineTweet(tw = {}) {
-  const mediaSources = [
+  const ownMedia = [
     ...(Array.isArray(tw?.extended_entities?.media) ? tw.extended_entities.media : []),
-    ...(Array.isArray(tw?.entities?.media) ? tw.entities.media : []),
-    ...(Array.isArray(tw?.quoted_status?.extended_entities?.media)
-      ? tw.quoted_status.extended_entities.media
-      : []),
-    ...(Array.isArray(tw?.retweeted_status?.extended_entities?.media)
-      ? tw.retweeted_status.extended_entities.media
-      : [])
+    ...(Array.isArray(tw?.entities?.media) ? tw.entities.media : [])
   ];
+  const fallbackMedia =
+    ownMedia.length > 0
+      ? []
+      : [
+          ...(Array.isArray(tw?.quoted_status?.extended_entities?.media)
+            ? tw.quoted_status.extended_entities.media
+            : []),
+          ...(Array.isArray(tw?.retweeted_status?.extended_entities?.media)
+            ? tw.retweeted_status.extended_entities.media
+            : [])
+        ];
+  const mediaSources = ownMedia.length > 0 ? ownMedia : fallbackMedia;
   const vidMedia = mediaSources.find(
     m => m && (m.type === 'video' || m.type === 'animated_gif') && m.video_info?.variants
   );
-  const photoMedia = mediaSources.find(m => m && m.type === 'photo' && m.media_url_https) ||
-    mediaSources.find(m => m && m.media_url_https);
+  const photoUrls = [];
+  const seenPhotos = new Set();
+  for (const m of mediaSources) {
+    if (photoUrls.length >= 4) break;
+    if (!m || m.type !== 'photo') continue;
+    const u = String(m.media_url_https || '').trim();
+    if (!u || !u.startsWith('https://') || seenPhotos.has(u)) continue;
+    seenPhotos.add(u);
+    photoUrls.push(u);
+  }
+  const fallbackPhotoMedia = mediaSources.find(m => m && m.media_url_https);
 
   if (!vidMedia) {
-    const imgUrl = String(photoMedia?.media_url_https || '').trim();
+    const imgUrl = photoUrls[0] || String(fallbackPhotoMedia?.media_url_https || '').trim();
     return {
       mp4Url: '',
       isAnimatedGif: false,
       durationMs: 0,
       thumbUrl: imgUrl.startsWith('https://') ? imgUrl : '',
+      imageUrls: photoUrls,
       isPhoto: Boolean(imgUrl.startsWith('https://'))
     };
   }
@@ -188,13 +205,15 @@ function pickBestMediaFromTimelineTweet(tw = {}) {
   const isAnimatedGif = Boolean(
     mp4Url && (vidMedia.type === 'animated_gif' || /\/tweet_video\//i.test(mp4Url))
   );
-  const thumbUrl = String(vidMedia.media_url_https || photoMedia?.media_url_https || '').trim();
+  const thumbUrl = String(vidMedia.media_url_https || photoUrls[0] || fallbackPhotoMedia?.media_url_https || '').trim();
+  const distinctPhotoUrls = photoUrls.filter(u => u !== thumbUrl);
 
   return {
     mp4Url,
     isAnimatedGif,
     durationMs: Number(vidMedia.video_info?.duration_millis || 0),
     thumbUrl: thumbUrl.startsWith('https://') ? thumbUrl : '',
+    imageUrls: distinctPhotoUrls,
     isPhoto: false
   };
 }
@@ -236,17 +255,18 @@ export function parseXTimelineHtml(
     const pubMs = Date.parse(baseTw.created_at || tw.created_at || '');
     if (!Number.isFinite(pubMs) || nowMs - pubMs > maxAgeMs) continue;
 
-    const rawText = decodeHtmlEntities(String(baseTw.full_text || baseTw.text || ''))
-      .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-    const quotedText = decodeHtmlEntities(String(baseTw.quoted_status?.full_text || baseTw.quoted_status?.text || ''))
-      .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    const rawText = normalizeMultilineSocialText(
+      decodeHtmlEntities(String(baseTw.full_text || baseTw.text || '')).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+    );
+    const quotedText = normalizeMultilineSocialText(
+      decodeHtmlEntities(String(baseTw.quoted_status?.full_text || baseTw.quoted_status?.text || '')).replace(
+        /https?:\/\/t\.co\/[A-Za-z0-9]+/gi,
+        ''
+      )
+    );
     const media = pickBestMediaFromTimelineTweet(baseTw);
     const caption = rawText || quotedText;
-    const hasMedia = Boolean(media.mp4Url || media.thumbUrl);
+    const hasMedia = Boolean(media.mp4Url || media.thumbUrl || (media.imageUrls && media.imageUrls.length > 0));
     if (!caption || caption.length < (hasMedia ? 6 : 16)) continue;
 
     const expandedUrls = [
@@ -293,6 +313,7 @@ export function parseXTimelineHtml(
       durationMs: media.durationMs,
       durationFmt: durFmt,
       imageUrl: media.thumbUrl,
+      imageUrls: Array.isArray(media.imageUrls) && media.imageUrls.length > (media.mp4Url ? 0 : 1) ? media.imageUrls : undefined,
       isPhoto: media.isPhoto,
       publishedAt: new Date(Math.min(nowMs, pubMs)).toISOString()
     });
@@ -333,13 +354,16 @@ async function fetchXTimelinesViaOfficialApiV2(
         const mediaByKey = new Map((twJson?.includes?.media || []).map(m => [m.media_key, m]));
         for (const tw of twJson?.data || []) {
           const idStr = String(tw.id || '').trim();
-          const rawText = decodeHtmlEntities(String(tw.text || ''))
-            .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
-            .replace(/\s+/g, ' ')
-            .trim();
+          const rawText = normalizeMultilineSocialText(
+            decodeHtmlEntities(String(tw.text || '')).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+          );
           const mediaList = (tw.attachments?.media_keys || []).map(k => mediaByKey.get(k)).filter(Boolean);
           const vid = mediaList.find(m => m.type === 'video' || m.type === 'animated_gif');
-          const photo = mediaList.find(m => m.type === 'photo' && m.url);
+          const photos = mediaList
+            .filter(m => m.type === 'photo' && typeof m.url === 'string' && m.url.startsWith('https://'))
+            .map(m => m.url.trim())
+            .slice(0, 4);
+          const photo = photos[0] ? { url: photos[0] } : null;
           const mp4s = (vid?.variants || [])
             .filter(v => v?.content_type === 'video/mp4' && /^https:\/\/video\.twimg\.com\//i.test(String(v?.url || '')))
             .sort((a, b) => (Number(b.bit_rate) || 0) - (Number(a.bit_rate) || 0));
@@ -352,6 +376,7 @@ async function fetchXTimelinesViaOfficialApiV2(
               ? `${Math.floor(durationMs / 60000)}:${String(Math.round((durationMs % 60000) / 1000)).padStart(2, '0')}`
               : '';
           const imageUrl = String(vid?.preview_image_url || photo?.url || '').trim();
+          const distinctPhotos = mp4Url ? photos.filter(u => u !== imageUrl) : photos;
           if (!rawText || rawText.length < (mp4Url || imageUrl ? 6 : 16)) continue;
           const expandedUrls = (tw.entities?.urls || []).map(x => x.expanded_url || '').filter(Boolean);
           const nonSocialExt = expandedUrls.find(x => !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(x)) || '';
@@ -370,6 +395,7 @@ async function fetchXTimelinesViaOfficialApiV2(
             durationMs,
             durationFmt: durFmt,
             imageUrl: imageUrl.startsWith('https://') ? imageUrl : '',
+            imageUrls: distinctPhotos.length > (mp4Url ? 0 : 1) ? distinctPhotos : undefined,
             isPhoto: Boolean(!mp4Url && photo?.url),
             publishedAt: new Date(Math.min(nowMs, pubMs)).toISOString()
           });
@@ -386,9 +412,117 @@ async function fetchXTimelinesViaOfficialApiV2(
 
 let syndicationRateLimitedUntilMs = 0;
 
+/**
+ * Deterministic time-bucketed rotating slice selector for card-free X syndication pulls.
+ * Ensures a single scheduled runner IP only queries `maxPerRun` (e.g. 3–4) handles per run
+ * to stay under X's per-IP 429 threshold, while covering the entire handle roster every few runs
+ * as our 96h carry-forward accumulates harvested tweets across runs.
+ */
+export function selectRotatingXHandleSlice(
+  handles = [],
+  { maxPerRun = 4, bucketMinutes = 30, nowMs = Date.now(), seedOffset = 0 } = {}
+) {
+  const clean = Array.from(
+    new Set(
+      (Array.isArray(handles) ? handles : [])
+        .map(h => String(h || '').replace(/^@/, '').trim())
+        .filter(h => /^[A-Za-z0-9_]{2,25}$/.test(h))
+    )
+  );
+  if (clean.length <= maxPerRun || maxPerRun <= 0) return clean;
+  const bucketIdx = Math.floor(nowMs / (Math.max(5, Number(bucketMinutes) || 30) * 60_000));
+  const start = ((bucketIdx * maxPerRun) + Math.abs(Number(seedOffset) || 0)) % clean.length;
+  const slice = [];
+  for (let i = 0; i < maxPerRun; i += 1) {
+    slice.push(clean[(start + i) % clean.length]);
+  }
+  return slice;
+}
+
+/**
+ * Fetches full public HTML for up to `maxArticles` recent, non-paywalled local beat articles
+ * (prioritizing film/takeaway/grade/reaction/notebook headlines that commonly embed X clips/GIFs/charts).
+ * Never bypasses paywalls or anti-bot gates; skips non-200 responses cleanly.
+ */
+export async function fetchBeatArticleHtmlForXEmbeds(
+  articles = [],
+  { maxArticles = 10, concurrency = 5, timeoutMs = 4500, nowMs = Date.now(), fetchImpl = globalThis.fetch } = {}
+) {
+  const maxAgeMs = 96 * 3_600_000;
+  const priorityScore = a => {
+    const t = `${a?.title || ''} ${a?.summary || ''}`;
+    let sc = 0;
+    if (/\b(film|all-?22|tape|grade[sd]?|pff|snap\s*count|takeaway|reaction|trench|breakdown|stats|highlights?|watch|video|clip|notebook|stock\s+up|winners?\s+and\s+losers?|observation|review)\b/i.test(t)) {
+      sc += 25;
+    }
+    if (/\b(niners\s*nation|49ers\s*webzone|wire|pride\s+of\s+detroit|bleeding\s+green|buffalo\s+rumblings|arrowhead|field\s+gulls|nbc\s+sports)\b/i.test(String(a?.outletName || ''))) {
+      sc += 10;
+    }
+    const pubMs = Date.parse(a?.publishedAt || '');
+    if (Number.isFinite(pubMs)) {
+      const ageHrs = Math.max(0, (nowMs - pubMs) / 3_600_000);
+      sc += Math.max(0, 20 - ageHrs * 0.25);
+    }
+    return sc;
+  };
+
+  const seenUrls = new Set();
+  const candidates = (Array.isArray(articles) ? articles : [])
+    .filter(a => {
+      const u = String(a?.url || '').trim();
+      if (!u.startsWith('https://') || seenUrls.has(u)) return false;
+      if (isPaywalledPublisher(u)) return false;
+      if (/^https?:\/\/(?:www\.)?(?:x|twitter|bsky|youtube|youtu\.be)\./i.test(u)) return false;
+      const pubMs = Date.parse(a?.publishedAt || '');
+      if (Number.isFinite(pubMs) && nowMs - pubMs > maxAgeMs) return false;
+      seenUrls.add(u);
+      return true;
+    })
+    .sort((a, b) => priorityScore(b) - priorityScore(a))
+    .slice(0, maxArticles);
+
+  if (candidates.length === 0) return [];
+  const htmlList = [];
+  for (let i = 0; i < candidates.length; i += concurrency) {
+    const batch = candidates.slice(i, i + concurrency);
+    const settled = await Promise.allSettled(
+      batch.map(async art => {
+        try {
+          const res = await fetchImpl(art.url, {
+            headers: {
+              'User-Agent': X_SYNDICATION_HEADERS['User-Agent'],
+              Accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8'
+            },
+            signal: AbortSignal.timeout(timeoutMs)
+          });
+          if (!res.ok) return '';
+          const ct = String(res.headers?.get?.('content-type') || '');
+          if (ct && !/html|xml|text/i.test(ct)) return '';
+          let txt = await res.text();
+          if (txt.length > 450_000) txt = txt.slice(0, 450_000);
+          // Focus on primary article body when present and strip sidebar/footer/nav chrome so
+          // unrelated "Trending" widget tweets cannot consume the hydration cap.
+          const articleMatch = txt.match(/<article\b[\s\S]*?<\/article>/i) || txt.match(/<main\b[\s\S]*?<\/main>/i);
+          if (articleMatch && articleMatch[0].length >= 120) {
+            txt = articleMatch[0];
+          }
+          txt = txt.replace(/<(script|style|nav|aside|footer)\b[\s\S]*?<\/\1>/gi, ' ');
+          return txt.length > 350_000 ? txt.slice(0, 350_000) : txt;
+        } catch {
+          return '';
+        }
+      })
+    );
+    for (const s of settled) {
+      if (s.status === 'fulfilled' && s.value) htmlList.push(s.value);
+    }
+  }
+  return htmlList;
+}
+
 export async function fetchXTimelinesBatch(
   handles = [],
-  { concurrency = 2, timeoutMs = 4500, maxAgeHours = 120, maxItems = 16, nowMs = Date.now(), bearerToken = process.env.X_BEARER_TOKEN || '' } = {}
+  { concurrency = 1, spacingMs = 450, timeoutMs = 4500, maxAgeHours = 120, maxItems = 16, nowMs = Date.now(), bearerToken = process.env.X_BEARER_TOKEN || '' } = {}
 ) {
   const cleanHandles = Array.from(
     new Set(
@@ -415,11 +549,12 @@ export async function fetchXTimelinesBatch(
   if (Date.now() < syndicationRateLimitedUntilMs) return [];
 
   const all = [];
-  const safeConc = Math.max(1, Math.min(2, Number(concurrency) || 2));
+  const safeConc = Math.max(1, Math.min(2, Number(concurrency) || 1));
+  const safeSpacing = Math.max(150, Number(spacingMs) || 450);
   let hitRateLimit = false;
   for (let i = 0; i < cleanHandles.length; i += safeConc) {
     if (hitRateLimit) break;
-    if (i > 0) await new Promise(r => setTimeout(r, 250));
+    if (i > 0) await new Promise(r => setTimeout(r, safeSpacing));
     const slice = cleanHandles.slice(i, i + safeConc);
     const settled = await Promise.allSettled(
       slice.map(async h => {
@@ -728,9 +863,16 @@ export function filterXTimelineItemsForTeam(
 
   const normalized = [];
   const seenUrls = new Set();
+  const seenStatusIds = new Set();
 
   for (const raw of Array.isArray(rawItems) ? rawItems : []) {
-    if (!raw || !raw.url || seenUrls.has(raw.url)) continue;
+    if (!raw || !raw.url) continue;
+    const normUrlKey = String(raw.url).trim().toLowerCase();
+    const normSid =
+      String(raw.statusId || '').trim() ||
+      (String(raw.url).match(/\/status\/(\d{15,22})/) || [])[1] ||
+      '';
+    if (seenUrls.has(normUrlKey) || (normSid && seenStatusIds.has(normSid))) continue;
     const handleLower = String(raw.handle || '').toLowerCase();
     const isOfficialTeamAccount = Boolean(officialHandle && handleLower === officialHandle);
     const isLocalBeatOrFilm = !isNationalPool && localHandles.has(handleLower);
@@ -785,7 +927,10 @@ export function filterXTimelineItemsForTeam(
     const outletName = dirEntry?.outletName || (isOfficialTeamAccount ? `@${raw.handle} Official` : 'X Beat');
     const trustTier = isOfficialTeamAccount ? 1 : Number(dirEntry?.trustTier) || 2;
 
-    const cleanBody = cleanSensationalistText(stripAggregatorBoilerplate(raw.text || ''));
+    const cleanBody = cleanSensationalistText(
+      stripAggregatorBoilerplate(raw.text || '', { preserveNewlines: true }),
+      { preserveNewlines: true }
+    );
     if (!cleanBody) continue;
     const formatted = formatTweetBodyForDisplay(cleanBody);
     const sig = scoreContentSignal(formatted.text, raw.quotedText || '', {
@@ -821,11 +966,15 @@ export function filterXTimelineItemsForTeam(
         resolvedCategory !== 'film' &&
         (raw.isAnimatedGif || raw.durationMs === 0 || raw.durationMs >= 4000)
     );
+    const rawImageUrls = Array.isArray(raw.imageUrls)
+      ? raw.imageUrls.filter(u => typeof u === 'string' && u.startsWith('https://')).slice(0, 4)
+      : [];
     const hasInlineChartImage = Boolean(
-      hasPhoto &&
-        (resolvedCategory === 'film' ||
-          isLeagueWideChart ||
-          LEAGUE_WIDE_FILM_ANALYTICS_HANDLES.has(handleLower))
+      rawImageUrls.length > 1 ||
+        (hasPhoto &&
+          (resolvedCategory === 'film' ||
+            isLeagueWideChart ||
+            LEAGUE_WIDE_FILM_ANALYTICS_HANDLES.has(handleLower)))
     );
 
     const brk = classifyBreakingItem(
@@ -840,7 +989,8 @@ export function filterXTimelineItemsForTeam(
       { team: active, rosterPlayers }
     );
 
-    seenUrls.add(raw.url);
+    seenUrls.add(normUrlKey);
+    if (normSid) seenStatusIds.add(normSid);
     const built = {
       id: `x_tl_${handleLower}_${raw.statusId}`,
       type: 'tweet',
@@ -849,6 +999,7 @@ export function filterXTimelineItemsForTeam(
       isFullTweet: formatted.isFullTweet,
       summary: raw.quotedText ? cleanSensationalistText(raw.quotedText).slice(0, 220) : '',
       imageUrl: raw.imageUrl || '',
+      ...(rawImageUrls.length > (raw.mp4Url ? 0 : 1) ? { imageUrls: rawImageUrls } : {}),
       imageAlt: `${authorName} post`,
       videoStreamUrl: raw.mp4Url || undefined,
       isAnimatedGif: raw.isAnimatedGif || undefined,
@@ -896,7 +1047,7 @@ export function filterXTimelineItemsForTeam(
  */
 export async function harvestEmbeddedXForTeamRss(
   rawPayloads = [],
-  { team = null, rosterPlayers = [], reportersData = null, nowMs = Date.now(), maxHydrate = 14 } = {}
+  { team = null, rosterPlayers = [], reportersData = null, nowMs = Date.now(), maxHydrate = 24, allowEmbeddedBeatQuotes = false } = {}
 ) {
   const active = resolveTeamConfig(team);
   const sevenDaysAgoMs = nowMs - 7 * 86_400_000;
@@ -913,8 +1064,18 @@ export async function harvestEmbeddedXForTeamRss(
     'mikegarafolo',
     'dmrussini',
     'fieldyates',
-    'profootballtalk'
+    'jayglazer',
+    'profootballtalk',
+    'mysportsupdate',
+    'nfl_dovkleiman'
   ]);
+
+  const otherTeamOfficialHandles = new Set(
+    Object.entries(OFFICIAL_TEAM_X_HANDLES_BY_ABBR)
+      .filter(([abbr]) => abbr !== active.abbr)
+      .map(([, h]) => String(h || '').toLowerCase())
+      .filter(Boolean)
+  );
 
   const candById = new Map();
   for (const raw of rawPayloads) {
@@ -922,124 +1083,162 @@ export async function harvestEmbeddedXForTeamRss(
     const decoded = raw.replace(/\\\//g, '/').replace(/&amp;/gi, '&');
     for (const m of decoded.matchAll(statusRegex)) {
       const handle = m[1];
+      const handleLow = handle.toLowerCase();
       const sid = m[2];
       if (/^(i|intent|share|hashtag|search)$/i.test(handle)) continue;
-      if (!allowedHandles.has(handle.toLowerCase()) && !resolveReporterFromNameOrHandle(handle, active)) continue;
+      // Never pull other clubs' official or PR/Comms accounts from roundup/tribute articles
+      if (otherTeamOfficialHandles.has(handleLow)) continue;
+      if (/(?:comms|pr)$/i.test(handleLow) && !allowedHandles.has(handleLow)) continue;
+      const isKnownRep = allowedHandles.has(handleLow) || Boolean(resolveReporterFromNameOrHandle(handle, active));
+      if (!isKnownRep && !allowEmbeddedBeatQuotes) continue;
       const snowMs = extractXSnowflakeTimestampMs(sid);
       if (!snowMs || snowMs < sevenDaysAgoMs || snowMs > nowMs + 6 * 3_600_000) continue;
-      if (!candById.has(sid)) candById.set(sid, { handle, statusId: sid, snowMs });
+      if (!candById.has(sid)) candById.set(sid, { handle, statusId: sid, snowMs, isKnownRep });
     }
   }
 
   const batch = [...candById.values()]
-    .sort((a, b) => b.snowMs - a.snowMs)
+    .sort((a, b) => Number(b.isKnownRep) - Number(a.isKnownRep) || b.snowMs - a.snowMs)
     .slice(0, maxHydrate);
   if (batch.length === 0) return [];
 
   const hydratedRaw = [];
-  await Promise.allSettled(
-    batch.map(async cand => {
-      try {
-        let hydrated = null;
-        // 1. Primary: cdn.syndication.twimg.com/tweet-result
+  const hydrateConcurrency = 4;
+  for (let i = 0; i < batch.length; i += hydrateConcurrency) {
+    if (i > 0) await new Promise(r => setTimeout(r, 150));
+    const microBatch = batch.slice(i, i + hydrateConcurrency);
+    await Promise.allSettled(
+      microBatch.map(async cand => {
         try {
-          const res = await fetch(
-            `https://cdn.syndication.twimg.com/tweet-result?id=${encodeURIComponent(cand.statusId)}&token=x`,
-            { signal: AbortSignal.timeout(3800) }
-          );
-          if (res.ok) {
-            const syn = await res.json();
-            const txt =
-              typeof syn?.text === 'string'
-                ? decodeHtmlEntities(syn.text).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '').replace(/\s+/g, ' ').trim()
-                : '';
-            const media = extractXSyndicationMedia(syn);
-            if (txt && txt.length >= (media.mp4Url || media.imageUrl ? 6 : 16)) {
-              const screenName = syn.user?.screen_name || cand.handle;
+          let hydrated = null;
+          // 1. Primary: cdn.syndication.twimg.com/tweet-result (skip immediately when 429 circuit-breaker is active)
+          if (Date.now() >= syndicationRateLimitedUntilMs) {
+            try {
+              const res = await fetch(
+                `https://cdn.syndication.twimg.com/tweet-result?id=${encodeURIComponent(cand.statusId)}&token=x`,
+                { signal: AbortSignal.timeout(3800) }
+              );
+              if (res.status === 429) {
+                syndicationRateLimitedUntilMs = Date.now() + 5 * 60_000;
+              } else if (res.ok) {
+                const syn = await res.json();
+                const txt =
+                  typeof syn?.text === 'string'
+                    ? normalizeMultilineSocialText(
+                        decodeHtmlEntities(syn.text).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+                      )
+                    : '';
+                const media = extractXSyndicationMedia(syn);
+                if (txt && txt.length >= (media.mp4Url || media.imageUrl ? 6 : 16)) {
+                  const screenName = syn.user?.screen_name || cand.handle;
+                  const durFmt =
+                    !media.isAnimatedGif && media.durationMs >= 4000
+                      ? `${Math.floor(media.durationMs / 60000)}:${String(Math.round((media.durationMs % 60000) / 1000)).padStart(2, '0')}`
+                      : '';
+                  const extUrls = Array.isArray(syn?.entities?.urls)
+                    ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
+                    : [];
+                  const nonSocialExt = extUrls.find(u => !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u)) || '';
+                  hydrated = {
+                    statusId: cand.statusId,
+                    handle: screenName,
+                    sourceHandle: screenName,
+                    userName: decodeHtmlEntities(syn.user?.name || `@${screenName}`),
+                    text: txt,
+                    quotedText: syn.quoted_tweet?.text ? decodeHtmlEntities(syn.quoted_tweet.text).replace(/\s+/g, ' ').trim() : '',
+                    url: `https://x.com/${screenName}/status/${cand.statusId}`,
+                    externalUrl: nonSocialExt,
+                    mp4Url: media.mp4Url,
+                    isAnimatedGif: media.isAnimatedGif,
+                    durationMs: media.durationMs,
+                    durationFmt: durFmt,
+                    imageUrl: media.imageUrl,
+                    imageUrls:
+                      Array.isArray(media.imageUrls) && media.imageUrls.length > (media.mp4Url ? 0 : 1)
+                        ? media.imageUrls
+                        : undefined,
+                    isPhoto: media.isPhoto,
+                    publishedAt: new Date(Math.min(nowMs, cand.snowMs)).toISOString()
+                  };
+                }
+              }
+            } catch {
+              // Fall through to api.fxtwitter.com
+            }
+          }
+
+          // 2. Resilient fallback: public api.fxtwitter.com/<user>/status/<id> (returns full video.twimg.com MP4/GIF/chart media even when syndication 429s)
+          if (!hydrated) {
+            const fxRes = await fetch(
+              `https://api.fxtwitter.com/${encodeURIComponent(cand.handle)}/status/${encodeURIComponent(cand.statusId)}`,
+              { signal: AbortSignal.timeout(4200), headers: { Accept: 'application/json' } }
+            );
+            if (fxRes.ok) {
+              const fxJson = await fxRes.json();
+              const tw = fxJson?.tweet;
+              const txt = normalizeMultilineSocialText(
+                decodeHtmlEntities(String(tw?.text || '')).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+              );
+              const fxVid = Array.isArray(tw?.media?.videos) ? tw.media.videos[0] : null;
+              const fxPhotoUrls = (Array.isArray(tw?.media?.photos) ? tw.media.photos : [])
+                .map(p => String(p?.url || '').trim())
+                .filter(u => u.startsWith('https://'))
+                .slice(0, 4);
+              const fxPhoto = fxPhotoUrls[0] ? { url: fxPhotoUrls[0] } : null;
+              const mp4Url =
+                fxVid?.url && /^https:\/\/video\.twimg\.com\//i.test(String(fxVid.url)) ? String(fxVid.url) : '';
+              const isAnimatedGif = Boolean(mp4Url && (fxVid?.type === 'gif' || /\/tweet_video\//i.test(mp4Url)));
+              const durationMs = Math.round(Number(fxVid?.duration || 0) * 1000);
               const durFmt =
-                !media.isAnimatedGif && media.durationMs >= 4000
-                  ? `${Math.floor(media.durationMs / 60000)}:${String(Math.round((media.durationMs % 60000) / 1000)).padStart(2, '0')}`
+                !isAnimatedGif && durationMs >= 4000
+                  ? `${Math.floor(durationMs / 60000)}:${String(Math.round((durationMs % 60000) / 1000)).padStart(2, '0')}`
                   : '';
-              const extUrls = Array.isArray(syn?.entities?.urls)
-                ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
-                : [];
-              const nonSocialExt = extUrls.find(u => !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u)) || '';
-              hydrated = {
-                statusId: cand.statusId,
-                handle: screenName,
-                sourceHandle: screenName,
-                userName: decodeHtmlEntities(syn.user?.name || `@${screenName}`),
-                text: txt,
-                quotedText: syn.quoted_tweet?.text ? decodeHtmlEntities(syn.quoted_tweet.text).replace(/\s+/g, ' ').trim() : '',
-                url: `https://x.com/${screenName}/status/${cand.statusId}`,
-                externalUrl: nonSocialExt,
-                mp4Url: media.mp4Url,
-                isAnimatedGif: media.isAnimatedGif,
-                durationMs: media.durationMs,
-                durationFmt: durFmt,
-                imageUrl: media.imageUrl,
-                isPhoto: media.isPhoto,
-                publishedAt: new Date(Math.min(nowMs, cand.snowMs)).toISOString()
-              };
+              const imageUrl = String(fxVid?.thumbnail_url || fxPhoto?.url || '').trim();
+              const distinctFxPhotos = mp4Url ? fxPhotoUrls.filter(u => u !== imageUrl) : fxPhotoUrls;
+              if (txt && txt.length >= (mp4Url || imageUrl ? 6 : 16)) {
+                const screenName = tw?.author?.screen_name || cand.handle;
+                hydrated = {
+                  statusId: cand.statusId,
+                  handle: screenName,
+                  sourceHandle: screenName,
+                  userName: decodeHtmlEntities(tw?.author?.name || `@${screenName}`),
+                  text: txt,
+                  quotedText: tw?.quote?.text ? decodeHtmlEntities(tw.quote.text).replace(/\s+/g, ' ').trim() : '',
+                  url: `https://x.com/${screenName}/status/${cand.statusId}`,
+                  externalUrl: '',
+                  mp4Url,
+                  isAnimatedGif,
+                  durationMs,
+                  durationFmt: durFmt,
+                  imageUrl: imageUrl.startsWith('https://') ? imageUrl : '',
+                  imageUrls: distinctFxPhotos.length > (mp4Url ? 0 : 1) ? distinctFxPhotos : undefined,
+                  isPhoto: Boolean(!mp4Url && fxPhoto?.url),
+                  publishedAt: new Date(Math.min(nowMs, cand.snowMs)).toISOString()
+                };
+              }
+            }
+          }
+
+          // For unregistered handles embedded inside beat articles, require inline video/GIF OR a football analytics/film chart photo
+          // so random text-only fan quotes or personal condolence photos never dilute the team wire.
+          if (hydrated) {
+            const hasInlineClip = Boolean(hydrated.mp4Url || hydrated.isAnimatedGif);
+            const hasAnalyticsChartPhoto = Boolean(
+              hydrated.isPhoto &&
+                /\b(epa|cpoe|pff|grade[sd]?|chart|scatter|efficiency|separation|pressure|pass[- ]?rush|coverage|snap\s*count|all-?22|film|tape|next\s+gen|yards\/|passer\s+rating|ranking|percentile|trench)\b/i.test(
+                  hydrated.text || ''
+                )
+            );
+            if (cand.isKnownRep || hasInlineClip || hasAnalyticsChartPhoto) {
+              hydratedRaw.push(hydrated);
             }
           }
         } catch {
-          // Fall through to api.fxtwitter.com
+          // Ignore single status timeout
         }
-
-        // 2. Resilient fallback: public api.fxtwitter.com/<user>/status/<id> (returns full video.twimg.com MP4/GIF/chart media even when syndication 429s)
-        if (!hydrated) {
-          const fxRes = await fetch(
-            `https://api.fxtwitter.com/${encodeURIComponent(cand.handle)}/status/${encodeURIComponent(cand.statusId)}`,
-            { signal: AbortSignal.timeout(4200), headers: { Accept: 'application/json' } }
-          );
-          if (fxRes.ok) {
-            const fxJson = await fxRes.json();
-            const tw = fxJson?.tweet;
-            const txt = decodeHtmlEntities(String(tw?.text || ''))
-              .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
-              .replace(/\s+/g, ' ')
-              .trim();
-            const fxVid = Array.isArray(tw?.media?.videos) ? tw.media.videos[0] : null;
-            const fxPhoto = Array.isArray(tw?.media?.photos) ? tw.media.photos[0] : null;
-            const mp4Url =
-              fxVid?.url && /^https:\/\/video\.twimg\.com\//i.test(String(fxVid.url)) ? String(fxVid.url) : '';
-            const isAnimatedGif = Boolean(mp4Url && (fxVid?.type === 'gif' || /\/tweet_video\//i.test(mp4Url)));
-            const durationMs = Math.round(Number(fxVid?.duration || 0) * 1000);
-            const durFmt =
-              !isAnimatedGif && durationMs >= 4000
-                ? `${Math.floor(durationMs / 60000)}:${String(Math.round((durationMs % 60000) / 1000)).padStart(2, '0')}`
-                : '';
-            const imageUrl = String(fxVid?.thumbnail_url || fxPhoto?.url || '').trim();
-            if (txt && txt.length >= (mp4Url || imageUrl ? 6 : 16)) {
-              const screenName = tw?.author?.screen_name || cand.handle;
-              hydrated = {
-                statusId: cand.statusId,
-                handle: screenName,
-                sourceHandle: screenName,
-                userName: decodeHtmlEntities(tw?.author?.name || `@${screenName}`),
-                text: txt,
-                quotedText: tw?.quote?.text ? decodeHtmlEntities(tw.quote.text).replace(/\s+/g, ' ').trim() : '',
-                url: `https://x.com/${screenName}/status/${cand.statusId}`,
-                externalUrl: '',
-                mp4Url,
-                isAnimatedGif,
-                durationMs,
-                durationFmt: durFmt,
-                imageUrl: imageUrl.startsWith('https://') ? imageUrl : '',
-                isPhoto: Boolean(!mp4Url && fxPhoto?.url),
-                publishedAt: new Date(Math.min(nowMs, cand.snowMs)).toISOString()
-              };
-            }
-          }
-        }
-
-        if (hydrated) hydratedRaw.push(hydrated);
-      } catch {
-        // Ignore single status timeout
-      }
-    })
-  );
+      })
+    );
+  }
 
   return filterXTimelineItemsForTeam(hydratedRaw, {
     team: active,

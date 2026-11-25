@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:07:46.730Z",
+  "updatedAt": "2026-11-25T20:43:45.861Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -65,8 +65,8 @@
               "jersey": 3,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429205.png",
               "baselineRank": 1,
-              "playProbabilityPct": 11,
-              "statusBadge": "11% • Doubtful",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false
             },
             {
@@ -97,8 +97,8 @@
               "jersey": 3,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429205.png",
               "baselineRank": 1,
-              "playProbabilityPct": 11,
-              "statusBadge": "11% • Doubtful",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -107,7 +107,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "3886598",
@@ -552,7 +552,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4036133",
@@ -732,7 +732,7 @@
         },
         {
           "slotKey": "fb",
-          "slotLabel": "FB",
+          "slotLabel": "FB (21 Personnel)",
           "baselineChain": [
             {
               "playerId": "4878695",
@@ -763,11 +763,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "5093973",
@@ -816,7 +816,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "4602019",
@@ -865,7 +865,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4360277",
@@ -1103,7 +1103,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "4565190",
@@ -1132,7 +1132,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608794.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1164,7 +1164,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608794.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1230,8 +1230,8 @@
               "jersey": 44,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046537.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1262,8 +1262,8 @@
               "jersey": 44,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046537.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1409,7 +1409,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4038999",

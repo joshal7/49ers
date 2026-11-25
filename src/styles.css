@@ -1481,6 +1481,10 @@ body.sheet-open {
   pointer-events: none;
 }
 
+.tweet-preserved-text {
+  white-space: pre-line;
+}
+
 .wire-inline-photo-box {
   display: block;
   width: 100%;
@@ -1501,6 +1505,109 @@ body.sheet-open {
   max-height: 460px;
   object-fit: contain;
   margin: 0 auto;
+}
+
+.wire-inline-photo-box.is-compact .wire-inline-photo-img {
+  max-height: 300px;
+}
+
+.wire-inline-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 6px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--border-subtle);
+  box-sizing: border-box;
+}
+
+.wire-inline-photo-tile {
+  position: relative;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-card-alt);
+  text-decoration: none;
+}
+
+.wire-inline-photo-grid.photo-count-3 {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.wire-inline-photo-grid.photo-count-3 > .wire-inline-photo-tile:first-child {
+  grid-row: span 2;
+  aspect-ratio: auto;
+  height: 100%;
+}
+
+.wire-inline-photo-grid.is-compact .wire-inline-photo-tile {
+  aspect-ratio: 4 / 3;
+  max-height: 190px;
+}
+
+.wire-inline-photo-grid.is-compact.photo-count-3 > .wire-inline-photo-tile:first-child {
+  max-height: none;
+}
+
+.wire-inline-photo-tile-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.18s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wire-inline-photo-tile:hover .wire-inline-photo-tile-img {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 480px) {
+  .wire-inline-photo-grid.photo-count-2 .wire-inline-photo-tile {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.wire-inline-photo-more {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 10, 14, 0.56);
+  color: #F6F8FB;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.salient-thumb-photo-count {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 2;
+  min-width: 18px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 10, 14, 0.78);
+  color: #F6F8FB;
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  pointer-events: none;
 }
 
 .similar-story-play-btn {

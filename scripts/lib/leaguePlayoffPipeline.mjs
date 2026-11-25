@@ -55,7 +55,6 @@ const ESPN_TEAM_NICK_TO_ABBR = new Map([
 
 export function getTeamDataDir(rootDir, team) {
   const abbr = normalizeAnyTeamAbbr(team?.abbr || 'SF');
-  if (abbr === 'SF') return path.join(rootDir, 'data');
   const slug = team?.slug || TEAM_BY_ABBR.get(abbr)?.slug || abbr.toLowerCase();
   return path.join(rootDir, 'data', 'teams', slug);
 }
@@ -763,7 +762,7 @@ export async function syncAll32TeamsSeasonalPlayoffData({
   }
 
   // Gather richest existing schedule, preseason priors & weekly stats from disk (preferring whichever has more completed games)
-  const sfSeasonal = readJsonSafe(path.join(rootDir, 'data', 'seasonal.json'));
+  const sfSeasonal = readJsonSafe(path.join(rootDir, 'data', 'teams', '49ers', 'seasonal.json'));
   const detSeasonal = readJsonSafe(path.join(rootDir, 'data', 'teams', 'lions', 'seasonal.json'));
   const seedCandidates = [sfSeasonal, detSeasonal].filter(Boolean);
 

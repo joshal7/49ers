@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:09:02.923Z",
+  "updatedAt": "2026-11-25T20:36:21.755Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/denver-broncos",
   "spotracUrl": "https://www.spotrac.com/nfl/denver-broncos/cap/",
@@ -265,7 +265,173 @@
     }
   },
   "blueprint": {
-    "summary": "Denver Broncos hold $7.88M in 2026 OverTheCap space and $23.25M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/denver-broncos",
+    "summary": "Denver Broncos hold $7.88M in 2026 OverTheCap space ($7.88M effective) and +$23.25M projected for 2027.",
+    "executiveSummary": "George Paton and the Broncos front office hold $7.88M in gross 2026 cap space ($7.88M effective), while 2027 currently projects at +$23.25M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Mike McGlinchey, Courtland Sutton, Zach Allen, D.J. Jones.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$23.25M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Denver's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "3052885",
+        "name": "Mike McGlinchey",
+        "position": "OT",
+        "jersey": 69,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052885.png",
+        "otcUrl": "https://overthecap.com/player/mike-mcglinchey/6894/",
+        "capHit2026": 23775000,
+        "baseSalary2026": 16990000,
+        "maxRestructureSavings": 10460000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3128429",
+        "name": "Courtland Sutton",
+        "position": "WR",
+        "jersey": 14,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3128429.png",
+        "otcUrl": "https://overthecap.com/player/courtland-sutton/6925/",
+        "capHit2026": 23575000,
+        "baseSalary2026": 17500000,
+        "maxRestructureSavings": 12150000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3915282",
+        "name": "Zach Allen",
+        "position": "DE",
+        "jersey": 99,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915282.png",
+        "otcUrl": "https://overthecap.com/player/zach-allen/7856/",
+        "capHit2026": 20865000,
+        "baseSalary2026": 6785000,
+        "maxRestructureSavings": 4388000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3894915",
+        "name": "D.J. Jones",
+        "position": "DT",
+        "jersey": 93,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3894915.png",
+        "otcUrl": "https://overthecap.com/player/d-j-jones/5784/",
+        "capHit2026": 14570000,
+        "baseSalary2026": 12490000,
+        "maxRestructureSavings": 8392500,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3051876",
+        "name": "Evan Engram",
+        "position": "TE",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051876.png",
+        "otcUrl": "https://overthecap.com/player/evan-engram/5607/",
+        "capHit2026": 14136666,
+        "baseSalary2026": 10990000,
+        "maxRestructureSavings": 4845000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4035662",
+        "name": "Garett Bolles",
+        "position": "OT",
+        "jersey": 72,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035662.png",
+        "otcUrl": "https://overthecap.com/player/garett-bolles/5604/",
+        "capHit2026": 13200000,
+        "baseSalary2026": 8235000,
+        "maxRestructureSavings": 5548000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "3052885",
+        "name": "Mike McGlinchey",
+        "position": "OT",
+        "jersey": 69,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052885.png",
+        "otcUrl": "https://overthecap.com/player/mike-mcglinchey/6894/",
+        "capHit2026": 23775000,
+        "postJune1CutSavings": 17500000,
+        "postJune1TradeSavings": 17500000,
+        "preJune1DeadMoney": 15325000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3128429",
+        "name": "Courtland Sutton",
+        "position": "WR",
+        "jersey": 14,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3128429.png",
+        "otcUrl": "https://overthecap.com/player/courtland-sutton/6925/",
+        "capHit2026": 23575000,
+        "postJune1CutSavings": 0,
+        "postJune1TradeSavings": 17500000,
+        "preJune1DeadMoney": 39425000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3915282",
+        "name": "Zach Allen",
+        "position": "DE",
+        "jersey": 99,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915282.png",
+        "otcUrl": "https://overthecap.com/player/zach-allen/7856/",
+        "capHit2026": 20865000,
+        "postJune1CutSavings": 0,
+        "postJune1TradeSavings": 7550000,
+        "preJune1DeadMoney": 48675000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3894915",
+        "name": "D.J. Jones",
+        "position": "DT",
+        "jersey": 93,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3894915.png",
+        "otcUrl": "https://overthecap.com/player/d-j-jones/5784/",
+        "capHit2026": 14570000,
+        "postJune1CutSavings": -30000,
+        "postJune1TradeSavings": 12970000,
+        "preJune1DeadMoney": 19400000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3051876",
+        "name": "Evan Engram",
+        "position": "TE",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051876.png",
+        "otcUrl": "https://overthecap.com/player/evan-engram/5607/",
+        "capHit2026": 14136666,
+        "postJune1CutSavings": 6470000,
+        "postJune1TradeSavings": 11470000,
+        "preJune1DeadMoney": 10333334,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4035662",
+        "name": "Garett Bolles",
+        "position": "OT",
+        "jersey": 72,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035662.png",
+        "otcUrl": "https://overthecap.com/player/garett-bolles/5604/",
+        "capHit2026": 13200000,
+        "postJune1CutSavings": -9235000,
+        "postJune1TradeSavings": 9000000,
+        "preJune1DeadMoney": 36435000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {

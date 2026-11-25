@@ -30,6 +30,7 @@ import {
 import {
   decodeHtmlEntities,
   isPaywalledPublisher,
+  normalizeMultilineSocialText,
   sanitizeExternalUrl,
   stripAggregatorBoilerplate
 } from './linkIntegrity.js';
@@ -4965,10 +4966,19 @@ export function deduplicateAndGroupWireItems(
         : isEditorialPhotoUrl(demotedPrev.imageUrl)
           ? demotedPrev.imageUrl
           : item.imageUrl || demotedPrev.imageUrl || '';
+      const bestClusterImageUrls =
+        Array.isArray(item.imageUrls) && item.imageUrls.length > 0
+          ? item.imageUrls
+          : Array.isArray(demotedPrev.imageUrls) &&
+              demotedPrev.imageUrls.length > 0 &&
+              (!item.imageUrl || bestClusterImg === demotedPrev.imageUrl)
+            ? demotedPrev.imageUrls
+            : undefined;
       const inheritPrevBadge = !candIsSpeculativeInj && !item.breakingBadge && Boolean(demotedPrev.breakingBadge);
       matchedCluster.lead = {
         ...item,
         imageUrl: bestClusterImg,
+        ...(bestClusterImageUrls ? { imageUrls: bestClusterImageUrls } : {}),
         videoStreamUrl: item.videoStreamUrl || demotedPrev.videoStreamUrl || undefined,
         isAnimatedGif: Boolean(item.isAnimatedGif || (!item.videoStreamUrl && demotedPrev.isAnimatedGif)) || undefined,
         hasInlineChartImage: Boolean(item.hasInlineChartImage || demotedPrev.hasInlineChartImage) || undefined,
@@ -5302,7 +5312,7 @@ export function stripRedundantAuthorBoilerplate(rawText = '', authorName = '') {
   if (cleaned.length > 1) {
     cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
   }
-  return cleaned.replace(/\s+/g, ' ').trim();
+  return normalizeMultilineSocialText(cleaned);
 }
 
 function canonicalComparableUrl(raw = '') {
@@ -5649,9 +5659,15 @@ export function isArticleLinkDropTweet(item = {}) {
     isDirectXStatusUrl(item.url);
   if (!isSocial) return noPromote;
 
-  // Never demote playable video / highlight clips to plain articles
-  if (item.videoId || item.videoStreamUrl || item.externalVideoUrl || item.isHighlightClip) {
-    return { ...noPromote, reason: 'playable_video' };
+  // Never demote playable video / highlight clips or multi-photo social galleries to plain articles
+  if (
+    item.videoId ||
+    item.videoStreamUrl ||
+    item.externalVideoUrl ||
+    item.isHighlightClip ||
+    (Array.isArray(item.imageUrls) && item.imageUrls.length >= 2)
+  ) {
+    return { ...noPromote, reason: 'playable_video_or_multi_media' };
   }
 
   const targetUrl = sanitizeExternalUrl(item.externalUrl, null);
@@ -6225,14 +6241,14 @@ export function resolveTweetLinkedArticlePreview(
 
 /**
  * Formats a tweet's body so short tweets (<= 320 chars) preserve 100% of their full text
- * without mid-sentence truncation, while stripping Bluesky mirror-bot "Original post" boilerplate
- * and trimming very long posts cleanly at a word boundary.
+ * and original author carriage returns (`\n` / `\n\n`) without mid-sentence truncation,
+ * while stripping Bluesky mirror-bot "Original post" boilerplate and trimming very long posts
+ * cleanly at a word or line boundary.
  */
 export function formatTweetBodyForDisplay(rawText = '', limit = SHORT_TWEET_FULL_TEXT_LIMIT) {
-  const cleaned = decodeHtmlEntities(String(rawText || ''))
-    .replace(/\s+/g, ' ')
-    .replace(/\s*(?:Original post|View original post)\s*$/i, '')
-    .trim();
+  const cleaned = normalizeMultilineSocialText(
+    decodeHtmlEntities(String(rawText || '')).replace(/\s*(?:Original post|View original post)\s*$/i, '')
+  );
   if (!cleaned) {
     return { text: '', isFullTweet: true, originalLength: 0 };
   }
@@ -6240,8 +6256,8 @@ export function formatTweetBodyForDisplay(rawText = '', limit = SHORT_TWEET_FULL
     return { text: cleaned, isFullTweet: true, originalLength: cleaned.length };
   }
   const sliced = cleaned.slice(0, limit - 1);
-  const lastSpace = sliced.lastIndexOf(' ');
-  const neat = (lastSpace > limit * 0.7 ? sliced.slice(0, lastSpace) : sliced).trim();
+  const lastBreak = Math.max(sliced.lastIndexOf(' '), sliced.lastIndexOf('\n'));
+  const neat = (lastBreak > limit * 0.7 ? sliced.slice(0, lastBreak) : sliced).trim();
   return { text: `${neat}…`, isFullTweet: false, originalLength: cleaned.length };
 }
 

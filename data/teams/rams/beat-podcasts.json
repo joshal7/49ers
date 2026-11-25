@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:33.061Z",
+  "updatedAt": "2026-11-25T20:43:37.027Z",
   "windowDays": 7,
   "totalEpisodes": 8,
   "shows": [
@@ -53,6 +53,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_rams_locked_on_rams_1000803861462",
+      "trackId": 1000803861462,
+      "collectionId": 1148968947,
+      "showId": "rams_locked_on_rams",
+      "showName": "Locked On Rams",
+      "showFullTitle": "Locked On Rams - Daily Podcast On The Los Angeles Rams",
+      "hosts": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
+      "network": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
+      "title": "MUST-WIN: Micah Parsons RETURN, Rams' ELITE Defense Will Decide DO or DIE vs Packers | Injury CRISIS",
+      "summary": "Are injuries derailing the Los Angeles Rams’ playoff hopes—or is Sean McVay’s approach to player health to blame? Gavin Carlson spotlights the latest turbulent chapter, dissecting Terrance Ferguson’s season-ending setback and raising tough questions about the Rams’ injury ma",
+      "publishedAt": "2026-11-24T20:42:29.000Z",
+      "durationMinutes": 36,
+      "durationDisplay": "36 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/00/88/8e/00888e5c-287d-7f27-2cd9-fa530f2d5981/mza_5396726408017298124.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/must-win-micah-parsons-return-rams-elite-defense-will/id1148968947?i=1000803861462&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-rams-daily-podcast-on-the-los-angeles-rams/id1148968947?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/3fd73b/feeds.simplecast.com/a4Q6EDeU",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3fd73b/lockedon.simplecastaudio.com/8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc/episodes/04607f0d-592b-4c6f-9c4f-eeb41874cc84/audio/128/default.mp3?aid=rss_feed&awCollectionId=8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc&awEpisodeId=04607f0d-592b-4c6f-9c4f-eeb41874cc84&feed=a4Q6EDeU"
+    },
     {
       "id": "pod_rams_rams_brothers_1000803674653",
       "trackId": 1000803674653,
@@ -192,26 +212,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-rams-daily-podcast-on-the-los-angeles-rams/id1148968947?uo=4",
       "feedUrl": "https://rss.pdrl.fm/3fd73b/feeds.simplecast.com/a4Q6EDeU",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3fd73b/lockedon.simplecastaudio.com/8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc/episodes/1b982088-9607-4400-a1df-124f36b9862b/audio/128/default.mp3?aid=rss_feed&awCollectionId=8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc&awEpisodeId=1b982088-9607-4400-a1df-124f36b9862b&feed=a4Q6EDeU"
-    },
-    {
-      "id": "pod_rams_locked_on_rams_1000802746889",
-      "trackId": 1000802746889,
-      "collectionId": 1148968947,
-      "showId": "rams_locked_on_rams",
-      "showName": "Locked On Rams",
-      "showFullTitle": "Locked On Rams - Daily Podcast On The Los Angeles Rams",
-      "hosts": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
-      "network": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
-      "title": "REPORT CARD: Matthew Stafford = C+? Grading Sean McVay, Aaron Donald, Quentin Lake, and More Rams!",
-      "summary": "Are the Los Angeles Rams still playoff contenders with Matthew Stafford’s midseason performance? Offensive grades take center stage as the hosts debate whether Stafford’s turnovers outweigh his yardage and arm talent, while giving props to Puka Nacua and the quietly dominant",
-      "publishedAt": "2026-11-18T16:36:32.000Z",
-      "durationMinutes": 33,
-      "durationDisplay": "33 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/00/88/8e/00888e5c-287d-7f27-2cd9-fa530f2d5981/mza_5396726408017298124.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/report-card-matthew-stafford-c-grading-sean-mcvay-aaron/id1148968947?i=1000802746889&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-rams-daily-podcast-on-the-los-angeles-rams/id1148968947?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/3fd73b/feeds.simplecast.com/a4Q6EDeU",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3fd73b/lockedon.simplecastaudio.com/8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc/episodes/4caa038c-dcfd-4292-b24e-bd3d03a4403a/audio/128/default.mp3?aid=rss_feed&awCollectionId=8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc&awEpisodeId=4caa038c-dcfd-4292-b24e-bd3d03a4403a&feed=a4Q6EDeU"
     }
   ]
 }

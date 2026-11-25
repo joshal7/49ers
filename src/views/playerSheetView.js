@@ -8,8 +8,8 @@
  * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
-import { esc, escJargon, jargonTerm, jargonInfoIcon, formatRelativeAge, playProbBadgeClass, resolvePlayerPlayBadgeLabel, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
-import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
+import { esc, escJargon, jargonTerm, jargonInfoIcon, formatRelativeAge, playProbBadgeClass, resolvePlayerPlayBadgeLabel, rankBadgeClass, renderExpandableSummaryHtml, renderInlineSocialPhotoGalleryHtml, renderPlayerAvatarHtml, renderPreservedTweetTextHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { getItemInlineSocialPhotoUrls, isInlineFilmPhotoOrChartTweet, resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
@@ -75,7 +75,7 @@ export function renderInjuryNewsItemCardHtml(
   const defaultBeatFallback = teamContext?.isRemoteTeam
     ? `${teamContext.nickname || teamContext.abbr || 'NFL'} Beat`
     : `${getActiveTeamConfig().nickname} Beat`;
-  const rawAuthorName = n.author || n.reporterName || n.outletName || defaultBeatFallback;
+  const rawAuthorName = n.author || n.reporterName || n.channel || n.outletName || defaultBeatFallback;
   const authorName = formatWireSourceDisplayName(rawAuthorName, n);
   const resolvedMentionUrl = isTweet
     ? sanitizeExternalUrl(
@@ -96,8 +96,16 @@ export function renderInjuryNewsItemCardHtml(
   const effectiveStreamOrCardUrl = safeStreamCandidate || externalVideoCardUrl;
   const effectiveEmbeddable = safeStreamCandidate || n.videoId ? n.embeddable !== false : false;
   const hasPlayableVideo = Boolean(n.videoId || effectiveStreamOrCardUrl);
-  const vidKey = hasPlayableVideo ? `dossier_vid_${n.id || ''}` : null;
+  const uniqueMentionVidKey =
+    String(n.id || '').trim() ||
+    (n.videoId ? `yt_${n.videoId}` : '') ||
+    resolvedMentionUrl ||
+    effectiveStreamOrCardUrl ||
+    '';
+  const vidKey = hasPlayableVideo && uniqueMentionVidKey ? `dossier_vid_${uniqueMentionVidKey}` : null;
   const isVidOpen = Boolean(vidKey && activeVideosSet instanceof Set && activeVideosSet.has(vidKey));
+  const mentionInlinePhotos = getItemInlineSocialPhotoUrls(n);
+  const mentionHasMultiPhotos = mentionInlinePhotos.length >= 2;
   const mentionLinkedPreview =
     isTweet && !hasPlayableVideo
       ? resolveTweetLinkedArticlePreview(n, {
@@ -107,12 +115,25 @@ export function renderInjuryNewsItemCardHtml(
       : null;
   const mentionLinkedCardHtml = mentionLinkedPreview
     ? renderTweetLinkedArticleCardHtml(mentionLinkedPreview, {
-        variant: mentionLinkedPreview.imageUrl ? 'card' : 'compact',
+        variant: mentionLinkedPreview.imageUrl && !mentionHasMultiPhotos ? 'card' : 'compact',
         markReadKey: itemReadKey
       })
     : '';
+  const showMentionInlineGallery = Boolean(
+    !isVideo &&
+      (!mentionLinkedPreview?.imageUrl || mentionHasMultiPhotos) &&
+      isInlineFilmPhotoOrChartTweet(n)
+  );
+  const mentionInlineGalleryHtml = showMentionInlineGallery
+    ? renderInlineSocialPhotoGalleryHtml(n, {
+        fallbackHref: resolvedMentionUrl !== '#' ? resolvedMentionUrl : '',
+        altText: n.fullText || n.headline || n.title || '',
+        markReadKey: itemReadKey,
+        compact: true
+      })
+    : '';
   const salientVisual =
-    !isVideo && !hasPlayableVideo && !mentionLinkedPreview?.imageUrl
+    !isVideo && !hasPlayableVideo && !mentionLinkedPreview?.imageUrl && !mentionInlineGalleryHtml
       ? resolveSalientCardVisual(n, {
           rosterPlayers,
           excludePlayerId,
@@ -297,7 +318,7 @@ export function renderInjuryNewsItemCardHtml(
         <div class="wire-card-body-col">
           ${
             isTweet
-              ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body" data-mark-read-key="${esc(itemReadKey)}">${esc(tweetFormatted.text)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>
+              ? `<a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="player-mention-tweet-body" data-mark-read-key="${esc(itemReadKey)}">${renderPreservedTweetTextHtml(tweetFormatted.text)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>
                  ${!mentionLinkedCardHtml && tweetLinkContext ? `<div class="wire-card-summary" style="margin-top:2px">${escJargon(tweetLinkContext, { excludePlayerId })}</div>` : ''}
                  ${mentionLinkedCardHtml}
                  ${
@@ -313,10 +334,12 @@ export function renderInjuryNewsItemCardHtml(
               : `<div class="player-mention-headline"><a href="${esc(resolvedMentionUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(itemReadKey)}">${esc(headlineText)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a></div>
                  ${cleanSummary ? renderExpandableSummaryHtml(cleanSummary, { className: 'wire-card-summary player-mention-summary', jargonOptions: { excludePlayerId } }) : ''}`
           }
-          ${!hasPlayableVideo ? similarStoriesDrawerHtml : ''}
+          ${!hasPlayableVideo && !mentionInlineGalleryHtml ? similarStoriesDrawerHtml : ''}
         </div>
         ${thumbHtml}
       </div>
+      ${mentionInlineGalleryHtml}
+      ${!hasPlayableVideo && mentionInlineGalleryHtml ? similarStoriesDrawerHtml : ''}
       ${
         hasPlayableVideo
           ? `<div style="margin-top:6px">
@@ -325,7 +348,7 @@ export function renderInjuryNewsItemCardHtml(
                 n.videoId || '',
                 0,
                 headlineText || `Watch Clip (${n.duration || 'Video'})`,
-                n.outletName || authorName,
+                authorName || n.channel || n.outletName || 'YouTube',
                 isVidOpen,
                 effectiveEmbeddable,
                 {
@@ -335,7 +358,8 @@ export function renderInjuryNewsItemCardHtml(
                   externalWatchUrl:
                     sanitizeExternalUrl(n.externalVideoUrl, null) ||
                     (resolvedMentionUrl !== '#' ? resolvedMentionUrl : '') ||
-                    ''
+                    '',
+                  durationLabel: n.duration || ''
                 }
               )}
             </div>

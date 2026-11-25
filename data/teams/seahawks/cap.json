@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:30.082Z",
+  "updatedAt": "2026-11-25T20:43:27.887Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/seattle-seahawks",
   "spotracUrl": "https://www.spotrac.com/nfl/seattle-seahawks/cap/",
@@ -134,7 +134,7 @@
           "otcUrl": "https://overthecap.com/player/velus-jones-jr/10116/"
         }
       ],
-      "contractedCount": 50,
+      "contractedCount": 53,
       "totalSignedCount": 77
     },
     "2027": {
@@ -189,7 +189,7 @@
           "otcUrl": "https://overthecap.com/player/andre-fuller/13380/"
         }
       ],
-      "contractedCount": 38,
+      "contractedCount": 37,
       "totalSignedCount": 38
     },
     "2028": {
@@ -215,7 +215,7 @@
       "suspendedTotal": 0,
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
-      "contractedCount": 25,
+      "contractedCount": 24,
       "totalSignedCount": 25
     },
     "2029": {
@@ -272,7 +272,173 @@
     }
   },
   "blueprint": {
-    "summary": "Seattle Seahawks hold $13.77M in 2026 OverTheCap space and $31.79M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/seattle-seahawks",
+    "summary": "Seattle Seahawks hold $13.77M in 2026 OverTheCap space ($13.77M effective) and +$31.79M projected for 2027.",
+    "executiveSummary": "John Schneider and the Seahawks front office hold $13.77M in gross 2026 cap space ($13.77M effective), while 2027 currently projects at +$31.79M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($7M–$11M target) helps manage scheduled cap escalations for Sam Darnold, Leonard Williams, Uchenna Nwosu, Cooper Kupp.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($7M–$11M Target vs. +$31.79M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Seattle's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "3912547",
+        "name": "Sam Darnold",
+        "position": "QB",
+        "jersey": 14,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
+        "otcUrl": "https://overthecap.com/player/sam-darnold/6888/",
+        "capHit2026": 33500000,
+        "baseSalary2026": 6800000,
+        "maxRestructureSavings": 19760000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "2971622",
+        "name": "Leonard Williams",
+        "position": "DT",
+        "jersey": 99,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971622.png",
+        "otcUrl": "https://overthecap.com/player/leonard-williams/3854/",
+        "capHit2026": 22036250,
+        "baseSalary2026": 3800000,
+        "maxRestructureSavings": 2000000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "2977187",
+        "name": "Cooper Kupp",
+        "position": "WR",
+        "jersey": 10,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2977187.png",
+        "otcUrl": "https://overthecap.com/player/cooper-kupp/5655/",
+        "capHit2026": 17470000,
+        "baseSalary2026": 12990000,
+        "maxRestructureSavings": 5845000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4575431",
+        "name": "Devon Witherspoon",
+        "position": "CB",
+        "jersey": 21,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575431.png",
+        "otcUrl": "https://overthecap.com/player/devon-witherspoon/10829/",
+        "capHit2026": 15337639,
+        "baseSalary2026": 1145000,
+        "maxRestructureSavings": 3159762,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "16802",
+        "name": "DeMarcus Lawrence",
+        "position": "LB",
+        "jersey": 0,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16802.png",
+        "otcUrl": "https://overthecap.com/player/demarcus-lawrence/2973/",
+        "capHit2026": 11783333,
+        "baseSalary2026": 8150000,
+        "maxRestructureSavings": 3675000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4245171",
+        "name": "Abraham Lucas",
+        "position": "OT",
+        "jersey": 72,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4245171.png",
+        "otcUrl": "https://overthecap.com/player/abraham-lucas/10117/",
+        "capHit2026": 10418500,
+        "baseSalary2026": 6596000,
+        "maxRestructureSavings": 3587333,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "3912547",
+        "name": "Sam Darnold",
+        "position": "QB",
+        "jersey": 14,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
+        "otcUrl": "https://overthecap.com/player/sam-darnold/6888/",
+        "capHit2026": 33500000,
+        "postJune1CutSavings": 19200000,
+        "postJune1TradeSavings": 26000000,
+        "preJune1DeadMoney": 37900000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "2971622",
+        "name": "Leonard Williams",
+        "position": "DT",
+        "jersey": 99,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971622.png",
+        "otcUrl": "https://overthecap.com/player/leonard-williams/3854/",
+        "capHit2026": 22036250,
+        "postJune1CutSavings": -10730000,
+        "postJune1TradeSavings": 4650000,
+        "preJune1DeadMoney": 59738750,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3120358",
+        "name": "Uchenna Nwosu",
+        "position": "LB",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3120358.png",
+        "otcUrl": "https://overthecap.com/player/uchenna-nwosu/6933/",
+        "capHit2026": 20018334,
+        "postJune1CutSavings": 11510000,
+        "postJune1TradeSavings": 11510000,
+        "preJune1DeadMoney": 8508334,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "2977187",
+        "name": "Cooper Kupp",
+        "position": "WR",
+        "jersey": 10,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2977187.png",
+        "otcUrl": "https://overthecap.com/player/cooper-kupp/5655/",
+        "capHit2026": 17470000,
+        "postJune1CutSavings": 4470000,
+        "postJune1TradeSavings": 13470000,
+        "preJune1DeadMoney": 17000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4575431",
+        "name": "Devon Witherspoon",
+        "position": "CB",
+        "jersey": 21,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575431.png",
+        "otcUrl": "https://overthecap.com/player/devon-witherspoon/10829/",
+        "capHit2026": 15337639,
+        "postJune1CutSavings": -24211298,
+        "postJune1TradeSavings": 5094702,
+        "preJune1DeadMoney": 60348937,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "16802",
+        "name": "DeMarcus Lawrence",
+        "position": "LB",
+        "jersey": 0,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16802.png",
+        "otcUrl": "https://overthecap.com/player/demarcus-lawrence/2973/",
+        "capHit2026": 11783333,
+        "postJune1CutSavings": 4650000,
+        "postJune1TradeSavings": 9650000,
+        "preJune1DeadMoney": 9266667,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {
@@ -5616,6 +5782,33 @@
       }
     },
     {
+      "id": "4592837",
+      "otcId": "11632",
+      "otcSlug": "terrion-arnold",
+      "otcUrl": "https://overthecap.com/player/terrion-arnold/11632/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4592837/terrion-arnold",
+      "pfrUrl": "https://www.pro-football-reference.com/players/A/ArnoTe00.htm",
+      "name": "Terrion Arnold",
+      "position": "CB",
+      "jersey": 17,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4592837.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 1075000,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 1075000,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 1075000,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 1075000,
+          "guaranteedSalary": 0
+        }
+      }
+    },
+    {
       "id": "4592823",
       "otcId": "13292",
       "otcSlug": "beau-stephens",
@@ -6058,144 +6251,83 @@
       }
     },
     {
-      "id": "5082331",
-      "otcId": "13599",
-      "otcSlug": "avery-smith",
-      "otcUrl": "https://overthecap.com/player/avery-smith/13599/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5082331/avery-smith",
-      "pfrUrl": "https://www.pro-football-reference.com/players/S/SmitAv00.htm",
-      "name": "Avery Smith",
+      "id": "4427843",
+      "otcId": "12566",
+      "otcSlug": null,
+      "otcUrl": "https://overthecap.com/player/chase-lundt/12566/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427843/chase-lundt",
+      "pfrUrl": "https://www.pro-football-reference.com/players/L/LundCh00.htm",
+      "name": "Chase Lundt",
+      "position": "OT",
+      "jersey": 77,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427843.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 840000,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 840000,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 840000,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 840000,
+          "guaranteedSalary": 0
+        }
+      }
+    },
+    {
+      "id": "2576789",
+      "otcId": "4074",
+      "otcSlug": "bobby-hart",
+      "otcUrl": "https://overthecap.com/player/bobby-hart/4074/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/2576789/bobby-hart",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HartBo00.htm",
+      "name": "Bobby Hart",
+      "position": "OT",
+      "jersey": 68,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2576789.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 521916,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 521916,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 521916,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 521916,
+          "guaranteedSalary": 0
+        }
+      }
+    },
+    {
+      "id": "4040966",
+      "otcId": "8791",
+      "otcSlug": "trevon-diggs",
+      "otcUrl": "https://overthecap.com/player/trevon-diggs/8791/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4040966/trevon-diggs",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DiggTr00.htm",
+      "name": "Trevon Diggs",
       "position": "CB",
-      "jersey": 27,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5082331.png",
+      "jersey": 16,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
       "unit": "Defense",
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 885000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
+          "baseSalary": 288222,
           "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 247500,
-          "capNumber": 885000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 247500,
-              "capSavings": 637500
-            },
-            "june_1_cut": {
-              "deadMoney": 247500,
-              "capSavings": 637500
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 885000
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 885000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 0
-            }
-          }
-        },
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1050000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1050000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 1050000
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 1050000
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 1050000
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 1050000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 60000
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 96000
-            }
-          }
-        },
-        "2028": {
-          "year": 2028,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1165000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1165000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 1165000
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 1165000
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 1165000
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 1165000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 152000
-            }
-          }
+          "rosterBonus": 0,
+          "capNumber": 288222,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 288222,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 288222,
+          "guaranteedSalary": 0
         }
       }
     },

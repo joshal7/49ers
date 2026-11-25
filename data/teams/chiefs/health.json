@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:59.943Z",
+  "updatedAt": "2026-11-25T20:36:15.267Z",
   "week": 12,
   "byeWeek": 5,
   "sourceUrl": "https://www.chiefs.com/team/injury-report/",
@@ -10,29 +10,29 @@
   "gameDayRoster": null,
   "practiceReport": [
     {
-      "playerId": "4242459",
-      "name": "Trey Smith",
-      "position": "G",
-      "jersey": 65,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242459.png",
+      "playerId": "4043041",
+      "name": "Jaylon Moore",
+      "position": "OT",
+      "jersey": 77,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043041.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Concussion",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 18,
-      "priorDayPlayProbabilityPct": null,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Ankle",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 22,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "18% • Doubtful",
-      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Every-down starter workload (87% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Remains in early stages of NFL 5-Step Concussion Protocol"
+        "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "questionable"
+      "beatComment": "out"
     },
     {
       "playerId": "4567048",
@@ -44,71 +44,20 @@
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "DNP",
-      "thu": "-",
-      "fri": "-",
+      "thu": "LP",
+      "fri": "DNP",
       "injuryType": "Groin",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 24,
-      "priorDayPlayProbabilityPct": null,
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 50,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "24% • Long Shot",
+      "playBadgeLabel": "0% • Out",
       "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice",
-        "Soft-tissue re-aggravation caution (Groin)"
+        "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Walker has been sidelined for the Chiefs' last two games due to a sore groin and was listed as a non-participant in Monday's practice. Though the running back appears poised to take a step forward in terms of activity Tuesday, Reid's comments suggest that Walker will likely be a limited participant. The Chiefs will wait and see how Walker responds to practice Tuesday before having a better feel for his status for Thursday's game against the Bills."
-    },
-    {
-      "playerId": "4240472",
-      "name": "Noah Gray",
-      "position": "TE",
-      "jersey": 83,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240472.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ribs",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 36,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "36% • Long Shot",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Did Not Participate (DNP) on Wednesday"
-      ],
-      "beatComment": "Kansas City didn't actually practice Monday, but Gray's DNP tag is nonetheless concerning with the club set to take the field Thursday versus Buffalo. Gray was injured late in Sunday's win over Arizona and didn't re-enter the contest. If the veteran tight end isn't able to suit up against the Bills, Jake Briningstool could see more work on offense as Travis Kelce's backup."
-    },
-    {
-      "playerId": "4043041",
-      "name": "Jaylon Moore",
-      "position": "OT",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043041.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 49,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "49% • Long Shot",
-      "archetypeNote": "Every-down starter workload (87% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
-      ],
-      "beatComment": "questionable"
+      "beatComment": "Though Walker was able to log a limited practice Tuesday, he was listed as a non-participant Wednesday and will wind up missing a third straight contest while he continues to nurse a sore groin. With Walker sidelined, rookie Emmett Johnson is set for another turn as the Chiefs' lead back, with Jaydn Ott serving as his top backup and Nate Carter a possible practice-squad elevation. Given that the Chiefs on are on a short week, Walker -- who last saw game action Nov. 8 -- will have added time to heal before the team's next contest Dec. 3 against the Rams."
     },
     {
       "playerId": "4591008",
@@ -119,21 +68,21 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "FP",
+      "wed": "LP",
       "thu": "LP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Knee",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 67,
-      "priorDayPlayProbabilityPct": 91,
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 81,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "67% • GTD",
+      "playBadgeLabel": "0% • Out",
       "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Mid-week downgrade (Wed FP -> Thu LP); monitoring Friday clearance"
+        "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Norman-Lott missed Sunday's win over the Cardinals due to a knee injury. The defensive tackle was activated from the Chiefs' reserve/PUP list Wednesday and logged three limited practices during Week 11 prep. The upgrade to full participation, even for an estimated practice, is a strong sign Norman-Lott will be set to suit up for Thursday night's showdown with the Bills."
+      "beatComment": "out"
     },
     {
       "playerId": "4871063",
@@ -145,20 +94,146 @@
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "FP",
-      "thu": "-",
-      "fri": "-",
+      "thu": "FP",
+      "fri": "FP",
       "injuryType": "Neck",
-      "gameStatus": "Active",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 93,
+      "priorDayPlayProbabilityPct": 92,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "93% • Cleared",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Logged Full Participation (FP) on Friday"
+      ],
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "3139477",
+      "name": "Patrick Mahomes",
+      "position": "QB",
+      "jersey": 15,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Knee / Right Elbow",
+      "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
+      "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "archetypeNote": "Veteran starter profile (10th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
-      "beatComment": "Woods ended Week 11 prep as a limited participant and did not play in Sunday's win over the Cardinals. The defensive tackle has now been listed as limited or better in four straight sessions, making a compelling case for his return to the field for Thursday night's primetime showdown with the Bills."
+      "beatComment": "Mahomes was clicking early against the Cardinals' defense, capping off the opening possession of the game with an eight-yard touchdown toss to Travis Kelce. The prolific signal-caller went on to add a 22-yard scoring pass to Kelce shortly before the end of the first half, and he capped off his day with an 18-yarder to Xavier Worthy on which the speedy receiver raced up the right sideline and into the end zone. Mahomes now has consecutive 300-yard efforts and has accomplished the feat in three of the past four games overall, affording him plenty of momentum heading into a Week 12 showdown with Josh Allen and the Bills on Thanksgiving night."
+    },
+    {
+      "playerId": "4242459",
+      "name": "Trey Smith",
+      "position": "G",
+      "jersey": 65,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242459.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Concussion",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Smith has logged two consecutive full practices, and while Smith is in the league's concussion protocol, head coach Andy Reid said Tuesday that he anticipates that Smith will be available for Thursday's game against the Bills, per Sam McDowell of The Kansas City Star. If he's cleared to play Thanksgiving Day, Smith would likely reclaim his starting job at right guard while Mike Caliendo reverts to a depth role."
+    },
+    {
+      "playerId": "4880124",
+      "name": "Mansoor Delane",
+      "position": "CB",
+      "jersey": 5,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4880124.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Shoulder",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Every-down starter workload (75% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4428331",
+      "name": "Rashee Rice",
+      "position": "WR",
+      "jersey": 4,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428331.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Knee",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Rice tied for the team lead in receptions and finished as the runner-up in targets to Travis Kelce. The veteran receiver averaged a modest 8.8 yards per catch, his third game in the last four with under 10.0 yards per reception. Rice has at least five catches in four consecutive contests heading into Thursday's Week 12 Thanksgiving showdown against the Bills in Buffalo."
+    },
+    {
+      "playerId": "4240472",
+      "name": "Noah Gray",
+      "position": "TE",
+      "jersey": 83,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240472.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Rib",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 97,
+      "priorDayPlayProbabilityPct": 96,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "97% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Logged Full Participation (FP) on Friday",
+        "Manageable pain-tolerance injury profile (Rib)"
+      ],
+      "beatComment": "Though Gray was listed as a full participant on both Tuesday and Wednesday's injury reports, the Chiefs' TE2 will nonetheless carry a 'questionable\" designation ahead of Week 12 action. With a 10/211/1 receiving line through 10 contests thus far, Gray is only an option in the deepest of fantasy formats, at least as long as Travis Kelce is available."
     }
   ],
   "irAndReserveTracker": [
@@ -182,7 +257,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Hamstring); awaiting 21-day practice window designation."
+      "beatNote": "Smith sustained a hamstring injury in Thursday's practice session and has promptly been transitioned to IR as he manages the issue. Running back Jaydn Ott has been signed to the active roster to be the No. 3 option behind Kenneth Walker and Emmett Johnson while Smith recovers."
     },
     {
       "playerId": "4569659",
@@ -204,7 +279,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Back); awaiting 21-day practice window designation."
+      "beatNote": "Though he had been on the Chiefs' 53-man roster all season, Simmons had yet to make his 2026 debut while working his way back from a bulging and herniated disc in his lower back. Simmons appeared to be making strides in his recovery after he returned to practice last week as a limited participant, but he downgraded to no participation Wednesday after head trainer Rick Burkholder said that the second-year left tackle \"plateaued in the rehab process,\" per Nate Taylor of ESPN.com. As a result, the Chiefs have opted to deactivate Simmons, who won't be eligible to play until Week 11 versus the Cardinals. Undrafted rookie Kahlil Benson should continue to start at left tackle in Simmons' absence."
     },
     {
       "playerId": "4040432",
@@ -226,7 +301,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
+      "beatNote": "Sneed was initially given the questionable tag for Sunday's game against the Broncos. He's been able to play through a lingering knee issue, but his placement on IR indicates that the injury has gotten to the point that an extended absence is warranted for the seventh-year defensive back. Sneed will be required to miss at least four games, so the earliest he can return is Week 12 against the Bills on Thursday, Nov. 26. Jaden Hicks, Jadon Canady, Kristian Fulton and Christian Roland-Wallace are all candidates to see more work in the secondary due to the absences of both Sneed and Mansoor Delane (shoulder) for Sunday's AFC West tilt."
     },
     {
       "playerId": "4430723",
@@ -270,51 +345,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "ir"
-    },
-    {
-      "playerId": "4885466",
-      "name": "Jeff Caldwell",
-      "position": "WR",
-      "jersey": 8,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4885466.png",
-      "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 6,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "Week 5 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4431142",
-      "name": "Jimmy Holiday",
-      "position": "WR",
-      "jersey": 82,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431142.png",
-      "injuryType": "Undisclosed",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 6,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "Week 5 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
+      "beatNote": "VanSumeren didn't practice Tuesday due to a sprained knee that will now keep him out for at least the next four weeks, according to Matt McMullen of the Chiefs' official site. In six regular-season games in 2026, the fourth-year pro played a majority of his reps on special teams, with just six of 104 total snaps coming on offense."
     },
     {
       "playerId": "4362921",
@@ -322,7 +353,7 @@
       "position": "WR",
       "jersey": 2,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362921.png",
-      "injuryType": "Ankle",
+      "injuryType": "Ankle (Surgery)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -336,7 +367,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
+      "beatNote": "The transaction frees up a spot on the 53-man roster for linebacker Cam Jones, who was signed off the practice squad. After dislocating his left ankle in the Chiefs' Oct. 4 win over the Raiders and requiring surgery, Thornton is facing an estimated recovery timeline of 3-to-4 months, which means that he'll likely be sidelined until at least Week 17 or 18 in a best-case scenario. While Thornton is out, the Chiefs are expected to lean on Jalen Royals and Cyrus Allen to handle more reps in three-receiver sets alongside starters Rashee Rice (hamstring) and Xavier Worthy."
     },
     {
       "playerId": "4431534",
@@ -344,7 +375,7 @@
       "position": "LB",
       "jersey": 40,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431534.png",
-      "injuryType": "Knee - ACL",
+      "injuryType": "Knee - ACL (Surgery)",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
@@ -358,7 +389,51 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee - ACL) on Jul 28, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Downs' season is over after he tore his ACL during Tuesday's practice session. The 23-year-old will now shift his focus to getting healthy, and he will look to make his NFL debut during the 2027 campaign."
+    },
+    {
+      "playerId": "4885466",
+      "name": "Jeff Caldwell",
+      "position": "WR",
+      "jersey": 8,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4885466.png",
+      "injuryType": "Knee (Soreness)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Caldwell hyperextended his left knee during Wednesday's practice and was promptly waived with an injury designation. The wide receiver will now spend the entirety of the 2026 regular season on injured reserve unless he is waived with an injury settlement."
+    },
+    {
+      "playerId": "4431142",
+      "name": "Jimmy Holiday",
+      "position": "WR",
+      "jersey": 82,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431142.png",
+      "injuryType": "Undisclosed",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Holiday is dealing with an undisclosed injury, and he did not play during the preseason. The wide receiver will now be forced to miss the entire 2026 campaign while on IR, unless he is able to reach an injury settlement with Kansas City."
     },
     {
       "playerId": "4708490",
@@ -402,7 +477,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 21, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Waletzko did not get claimed after the Chiefs waived him with an undisclosed injury Thursday, and he's now in line to spend the entire 2026 on IR. He last suited up for a regular-season contest back in 2024 with the Cowboys."
     }
   ]
 }

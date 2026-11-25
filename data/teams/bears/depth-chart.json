@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:07:55.173Z",
+  "updatedAt": "2026-11-25T20:44:12.783Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -106,7 +106,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "2973405",
@@ -143,9 +143,9 @@
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5125873.png",
               "baselineRank": 1,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
-              "isAvailable": false
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
             },
             {
               "playerId": "4432595",
@@ -164,31 +164,30 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4251007.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
           "projectedActiveChain": [
-            {
-              "playerId": "4432595",
-              "name": "Ozzy Trapilo",
-              "jersey": 75,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432595.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
             {
               "playerId": "5125873",
               "name": "Theo Benedet",
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5125873.png",
               "baselineRank": 1,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4432595",
+              "name": "Ozzy Trapilo",
+              "jersey": 75,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432595.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4251007",
@@ -197,12 +196,12 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4251007.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "lg",
@@ -371,9 +370,9 @@
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5125873.png",
               "baselineRank": 2,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
-              "isAvailable": false
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -393,10 +392,9 @@
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5125873.png",
               "baselineRank": 2,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -472,7 +470,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4723086",
@@ -521,7 +519,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258595.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             },
             {
@@ -584,7 +582,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258595.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -632,8 +630,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426386.png",
               "baselineRank": 3,
-              "playProbabilityPct": 35,
-              "statusBadge": "35% • Long Shot",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false
             },
             {
@@ -653,7 +651,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036032.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -684,8 +682,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426386.png",
               "baselineRank": 3,
-              "playProbabilityPct": 35,
-              "statusBadge": "35% • Long Shot",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -707,7 +705,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036032.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -718,11 +716,11 @@
     },
     {
       "id": "16",
-      "unitName": "Defense (Base 4-3 D)",
+      "unitName": "Defense (Wide-9 Base 4-3 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (Wide-9)",
           "baselineChain": [
             {
               "playerId": "3134690",
@@ -791,7 +789,7 @@
         },
         {
           "slotKey": "ldt",
-          "slotLabel": "LDT",
+          "slotLabel": "LDT (1/2i)",
           "baselineChain": [
             {
               "playerId": "2576492",
@@ -880,7 +878,7 @@
         },
         {
           "slotKey": "rdt",
-          "slotLabel": "RDT",
+          "slotLabel": "RDT (3-Tech)",
           "baselineChain": [
             {
               "playerId": "4035369",
@@ -909,7 +907,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116726.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -941,7 +939,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116726.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -950,7 +948,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (Wide-9)",
           "baselineChain": [
             {
               "playerId": "4259181",
@@ -1029,7 +1027,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241611.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1062,7 +1060,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241611.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1140,7 +1138,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "4241007",
@@ -1148,8 +1146,8 @@
               "jersey": 48,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241007.png",
               "baselineRank": 1,
-              "playProbabilityPct": 91,
-              "statusBadge": "91% • Cleared",
+              "playProbabilityPct": 93,
+              "statusBadge": "93% • Cleared",
               "isAvailable": true
             },
             {
@@ -1169,7 +1167,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429970.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1180,8 +1178,8 @@
               "jersey": 48,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241007.png",
               "baselineRank": 1,
-              "playProbabilityPct": 91,
-              "statusBadge": "91% • Cleared",
+              "playProbabilityPct": 93,
+              "statusBadge": "93% • Cleared",
               "isAvailable": true
             },
             {
@@ -1201,7 +1199,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429970.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1223,20 +1221,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "4240459",
-              "name": "Josh Blackwell",
-              "jersey": 39,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240459.png",
+              "playerId": "4429067",
+              "name": "Clark Phillips III",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429067.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4429067",
-              "name": "Clark Phillips III",
-              "jersey": 20,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429067.png",
+              "playerId": "3122797",
+              "name": "Isaac Yiadom",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122797.png",
               "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1255,20 +1253,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "4240459",
-              "name": "Josh Blackwell",
-              "jersey": 39,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240459.png",
+              "playerId": "4429067",
+              "name": "Clark Phillips III",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429067.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4429067",
-              "name": "Clark Phillips III",
-              "jersey": 20,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429067.png",
+              "playerId": "3122797",
+              "name": "Isaac Yiadom",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122797.png",
               "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1297,9 +1295,9 @@
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242402.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1319,9 +1317,10 @@
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242402.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -1406,8 +1405,8 @@
               "jersey": 29,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426374.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 65,
+              "statusBadge": "65% • GTD",
               "isAvailable": true
             },
             {
@@ -1438,8 +1437,8 @@
               "jersey": 29,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426374.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 65,
+              "statusBadge": "65% • GTD",
               "isAvailable": true
             },
             {
@@ -1468,7 +1467,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4361093",
@@ -1476,25 +1475,45 @@
               "jersey": 6,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361093.png",
               "baselineRank": 1,
-              "playProbabilityPct": 28,
-              "statusBadge": "28% • Long Shot",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false
+            },
+            {
+              "playerId": "4240459",
+              "name": "Josh Blackwell",
+              "jersey": 39,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240459.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
+            {
+              "playerId": "4240459",
+              "name": "Josh Blackwell",
+              "jersey": 39,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240459.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
             {
               "playerId": "4361093",
               "name": "Kyler Gordon",
               "jersey": 6,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361093.png",
               "baselineRank": 1,
-              "playProbabilityPct": 28,
-              "statusBadge": "28% • Long Shot",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         }
       ]
     },

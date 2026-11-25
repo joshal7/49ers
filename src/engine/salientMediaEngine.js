@@ -679,19 +679,56 @@ function classifyTeamEmblemTag(text = '', author = '') {
 const INLINE_SOCIAL_PHOTO_HOST_RE = /^https:\/\/(?:pbs\.twimg\.com\/media\/|cdn\.bsky\.app\/img\/)/i;
 
 /**
- * Returns true when a tweet carries a genuine social photo or analytics scatter chart
+ * Returns all unique valid inline social photo URLs (`pbs.twimg.com/media/...` or
+ * `cdn.bsky.app/img/...`) attached to a tweet or Bluesky post (up to 4).
+ *
+ * For mixed-media posts that carry both a playable video/GIF AND separate attached photos
+ * (e.g., X mixed media), only returns distinct photos that differ from the video poster.
+ */
+export function getItemInlineSocialPhotoUrls(item = {}) {
+  if (!item || typeof item !== 'object') return [];
+  const isTw = item.type === 'tweet' || item.type === 'social';
+  if (!isTw) return [];
+
+  const hasVideo = Boolean(item.videoId || item.videoStreamUrl);
+  const posterNorm = hasVideo ? String(item.imageUrl || '').trim() : '';
+  const candidates = [];
+  if (Array.isArray(item.imageUrls)) {
+    candidates.push(...item.imageUrls);
+  }
+  if (!hasVideo && item.imageUrl) {
+    candidates.push(item.imageUrl);
+  }
+
+  const out = [];
+  const seen = new Set();
+  for (const raw of candidates) {
+    if (out.length >= 4) break;
+    const url = String(raw || '').trim();
+    if (!url || seen.has(url)) continue;
+    if (hasVideo && posterNorm && url === posterNorm) continue;
+    if (!INLINE_SOCIAL_PHOTO_HOST_RE.test(url)) continue;
+    if (LOW_SALIENCE_URL_RE.test(url)) continue;
+    seen.add(url);
+    out.push(url);
+  }
+  return out;
+}
+
+/**
+ * Returns true when a tweet carries genuine social photos or analytics scatter charts
  * (`pbs.twimg.com/media/...` or `cdn.bsky.app/img/...`) that should render as a crisp,
- * readable full-width inline image card inside `Film & Trench` / `Tweets` / `All`
- * instead of getting cropped into an 84x84 square thumbnail.
+ * readable inline single-photo or multi-photo gallery card inside `Film & Trench` / `Tweets` / `All`
+ * instead of getting cropped into a single 84x84 square thumbnail.
  */
 export function isInlineFilmPhotoOrChartTweet(item = {}) {
   if (!item || typeof item !== 'object') return false;
-  const isTw = item.type === 'tweet' || item.type === 'social';
-  if (!isTw) return false;
-  if (item.videoId || item.videoStreamUrl) return false;
-  const img = String(item.imageUrl || '').trim();
-  if (!img || !INLINE_SOCIAL_PHOTO_HOST_RE.test(img)) return false;
-  if (LOW_SALIENCE_URL_RE.test(img)) return false;
+  const photos = getItemInlineSocialPhotoUrls(item);
+  if (photos.length === 0) return false;
+  // Multi-file posts (2-4 attached images) or mixed-media posts (video + separate photos)
+  // always render inline so no attached file is ever hidden behind a single thumbnail.
+  if (photos.length >= 2) return true;
+  if (item.videoId || item.videoStreamUrl) return true;
   if (item.hasInlineChartImage || item.isLeagueWideFilmChart) return true;
   return item.category === 'film';
 }

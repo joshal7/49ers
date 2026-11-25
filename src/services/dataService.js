@@ -94,6 +94,7 @@ import {
   buildEspnTeamLogoUrl,
   buildPfrHeadToHeadUrl,
   decodeHtmlEntities,
+  extractBlueskyEmbedImages,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
@@ -102,6 +103,7 @@ import {
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPromotionalAdvertisement,
+  normalizeMultilineSocialText,
   sanitizeExternalUrl,
   sanitizePlayerDisplayName,
   stripAggregatorBoilerplate,
@@ -720,6 +722,10 @@ function compactWireItemForBootSnapshot(it) {
   if (it.externalTitle) out.externalTitle = String(it.externalTitle).slice(0, 180);
   if (it.externalDomain) out.externalDomain = it.externalDomain;
   if (it.imageUrl) out.imageUrl = it.imageUrl;
+  if (Array.isArray(it.imageUrls) && it.imageUrls.length > 0) {
+    out.imageUrls = it.imageUrls.filter(u => typeof u === 'string' && /^https:\/\//i.test(u)).slice(0, 4);
+  }
+  if (it.hasInlineChartImage) out.hasInlineChartImage = true;
   if (it.authorHandle) out.authorHandle = it.authorHandle;
   if (it.authorProfileUrl) out.authorProfileUrl = it.authorProfileUrl;
   if (it.outletId) out.outletId = it.outletId;
@@ -1949,6 +1955,90 @@ function decodeItemHtmlEntitiesInPlace(item) {
   return next;
 }
 
+/**
+ * Normalizes media/video wire items (including cached or legacy static JSON bundles) so that:
+ * 1) Every item has a deterministic non-empty `id` (preventing `raw_undefined` video-key collisions).
+ * 2) Generic `"<Team> Beat"` fallbacks never overwrite real creator/channel names (`item.channel` / `outletName`).
+ * 3) Valid `publishedAtIso` timestamps override stale build-time `publishedAt` stamps so sorting & ages stay exact.
+ */
+export function normalizeWireMediaMetadata(item, { bundleUpdatedAt = '', activeTeam = null } = {}) {
+  if (!item || typeof item !== 'object') return item;
+  const team = activeTeam || getActiveTeamConfig();
+  const genericBeatLower = `${team?.nickname || '49ers'} beat`.toLowerCase();
+  const isGenericBeat = v => {
+    const s = String(v || '').trim().toLowerCase();
+    return !s || s === genericBeatLower || s === '49ers beat' || s === 'nfl beat';
+  };
+
+  let next = item;
+  const ensureCopy = () => {
+    if (next === item) next = { ...item };
+    return next;
+  };
+
+  // 1. Deterministic non-empty id
+  if (!String(item.id || '').trim()) {
+    const fallbackId = item.videoId
+      ? `yt_${String(item.videoId).trim()}`
+      : `item_${hashWireKey(item.url || item.videoStreamUrl || item.title || '')}`;
+    ensureCopy().id = fallbackId;
+  }
+
+  // 2. Recover real creator/channel attribution when author fell back to generic "<Team> Beat"
+  const rawChannel = String(item.channel || '').trim();
+  const rawAuthor = String(item.author || '').trim();
+  const rawReporter = String(item.reporterName || '').trim();
+  const rawOutlet = String(item.outletName || '').trim();
+  if (isGenericBeat(rawAuthor)) {
+    const betterCreator =
+      (!isGenericBeat(rawReporter) ? rawReporter : '') ||
+      (!isGenericBeat(rawChannel) ? rawChannel : '') ||
+      (!isGenericBeat(rawOutlet) ? rawOutlet : '');
+    if (betterCreator) {
+      const c = ensureCopy();
+      c.author = betterCreator;
+      if (isGenericBeat(c.reporterName)) c.reporterName = betterCreator;
+      if (isGenericBeat(c.outletName)) c.outletName = betterCreator;
+    }
+  } else if (rawChannel && !rawOutlet) {
+    ensureCopy().outletName = rawChannel;
+  }
+
+  // 3. Recover true publication timestamp if `publishedAtIso` is valid and `publishedAt` was stamped at build time
+  const isoCandidate = String(item.publishedAtIso || '').trim();
+  if (isoCandidate) {
+    const isoMs = Date.parse(isoCandidate);
+    const pubMs = item.publishedAt ? Date.parse(item.publishedAt) : NaN;
+    const buildMs = bundleUpdatedAt ? Date.parse(bundleUpdatedAt) : NaN;
+    const pubMatchesBuild =
+      Number.isFinite(pubMs) &&
+      Number.isFinite(buildMs) &&
+      Math.abs(pubMs - buildMs) <= 120_000;
+    const pubLooksNewerThanExactIso = Number.isFinite(pubMs) && pubMs - isoMs > 60_000;
+    if (Number.isFinite(isoMs) && (!Number.isFinite(pubMs) || pubMatchesBuild || pubLooksNewerThanExactIso)) {
+      ensureCopy().publishedAt = new Date(isoMs).toISOString();
+    }
+  }
+
+  // 4. Thumbnail fallback
+  if (!next.imageUrl && item.thumbnailUrl && /^https:\/\//i.test(String(item.thumbnailUrl))) {
+    ensureCopy().imageUrl = String(item.thumbnailUrl).trim();
+  }
+
+  // 5. Avoid raw YouTube watch URL as authorProfileUrl when a real channel/creator profile exists
+  if (
+    !next.authorProfileUrl ||
+    /^https?:\/\/(?:www\.)?youtube\.com\/watch\?/i.test(String(next.authorProfileUrl))
+  ) {
+    const resolvedProf = resolveItemAuthorProfileUrl(next, null);
+    if (resolvedProf && resolvedProf !== next.authorProfileUrl) {
+      ensureCopy().authorProfileUrl = resolvedProf;
+    }
+  }
+
+  return next;
+}
+
 function hydrateBundlePostLoad(rawFiles) {
   const {
     meta,
@@ -1964,6 +2054,8 @@ function hydrateBundlePostLoad(rawFiles) {
     beatPodcasts
   } = rawFiles;
 
+  const activeTeamCfg = resolveTeamConfig(meta?.teamAbbr || getActiveTeamConfig());
+  const bundleUpdatedAt = news?.updatedAt || meta?.updatedAt || '';
   const bootCtxStub = { meta, scheduleMatchup };
   const directPosts = Array.isArray(news?.rawStream)
     ? news.rawStream.filter(
@@ -1984,7 +2076,10 @@ function hydrateBundlePostLoad(rawFiles) {
             })
         )
         .map(rawIt => {
-          const it = sanitizeOversizedDirectArticleSummary(decodeItemHtmlEntitiesInPlace(rawIt));
+          const it = normalizeWireMediaMetadata(
+            sanitizeOversizedDirectArticleSummary(decodeItemHtmlEntitiesInPlace(rawIt)),
+            { bundleUpdatedAt, activeTeam: activeTeamCfg }
+          );
           const isSoc =
             it?.type === 'tweet' || it?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(it?.url || ''));
           if (!isSoc) return it;
@@ -2013,6 +2108,30 @@ function hydrateBundlePostLoad(rawFiles) {
       Date.now(),
       { appData: bootCtxStub }
     );
+    // Repair any generic "<Team> Beat" labels in dailyTopNewsBrief / synthesisBriefs sources from normalized rawStream
+    const streamByLowerUrl = new Map();
+    for (const it of news.rawStream) {
+      if (it?.url) streamByLowerUrl.set(String(it.url).trim().toLowerCase(), it);
+    }
+    const genericBeatLower = `${activeTeamCfg?.nickname || '49ers'} beat`.toLowerCase();
+    const repairSourceList = list => {
+      if (!Array.isArray(list)) return;
+      for (const s of list) {
+        if (!s || !s.url) continue;
+        const matched = streamByLowerUrl.get(String(s.url).trim().toLowerCase());
+        if (!matched) continue;
+        const realCreator = String(matched.author || matched.channel || matched.outletName || '').trim();
+        if (!realCreator || realCreator.toLowerCase() === genericBeatLower) continue;
+        if (!s.label || String(s.label).trim().toLowerCase() === genericBeatLower) s.label = realCreator;
+        if (!s.author || String(s.author).trim().toLowerCase() === genericBeatLower) s.author = realCreator;
+        if (!s.outlet || String(s.outlet).trim().toLowerCase() === genericBeatLower) s.outlet = realCreator;
+        if (matched.publishedAt) s.publishedAt = matched.publishedAt;
+      }
+    };
+    repairSourceList(news.dailyTopNewsBrief?.sources);
+    if (Array.isArray(news.synthesisBriefs)) {
+      for (const b of news.synthesisBriefs) repairSourceList(b?.sources);
+    }
   }
   if (roster && Array.isArray(roster.players)) {
     for (const p of roster.players) {
@@ -2374,8 +2493,7 @@ export async function fetchFresherUpstreamData(currentUpdatedAt = '') {
   const curMs = Date.parse(currentUpdatedAt || '') || 0;
   const candidates = [basePath];
   if (isProductionHostedOrigin()) {
-    const rawFallbackBase =
-      activeTeam.abbr === 'SF' ? GITHUB_RAW_DATA_BASE : `${GITHUB_RAW_DATA_BASE}/teams/${activeTeam.slug}`;
+    const rawFallbackBase = `${GITHUB_RAW_DATA_BASE}/teams/${activeTeam.slug}`;
     candidates.push(rawFallbackBase);
   }
 
@@ -2743,17 +2861,58 @@ export async function hydrateLiveBlueskyBeatWire(
   const teamAccounts = getLiveBlueskyBeatAccountsForTeam(appData);
   const clubVideoPrefixRe = new RegExp(`^https:\\/\\/www\\.${escapeClientRegex(activeTeam.clubDomain)}\\/video\\/`, 'i');
   const normUrlKey = u => String(u || '').trim().replace(/\/+$/, '');
-  const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
-  const existingUrls = new Set(
-    appData.news.rawStream
-      .flatMap(it => [it.url, it.promotedFromSocialUrl])
-      .filter(Boolean)
-      .map(normUrlKey)
-  );
-  const existingTextKeys = new Set(
-    appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
-  );
+  const normTextKey = t =>
+    String(t || '')
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 90);
+  const existingById = new Map();
+  const existingByUrl = new Map();
+  const existingByTextKey = new Map();
+  for (const it of appData.news.rawStream) {
+    if (!it || typeof it !== 'object') continue;
+    if (it.id) existingById.set(it.id, it);
+    for (const u of [it.url, it.promotedFromSocialUrl]) {
+      const k = normUrlKey(u);
+      if (k && !existingByUrl.has(k)) existingByUrl.set(k, it);
+    }
+    const tk = normTextKey(it.fullText || it.title || '');
+    if (tk && !existingByTextKey.has(tk)) existingByTextKey.set(tk, it);
+  }
+  const existingIds = new Set(existingById.keys());
+  const existingUrls = new Set(existingByUrl.keys());
+  const existingTextKeys = new Set(existingByTextKey.keys());
   const rosterPlayers = appData.roster?.players || [];
+  let upgradedExistingCount = 0;
+
+  const tryUpgradeExistingSocialItem = (existing, { cleanFull, tweetDisplay, bskyPhotos, imgThumb, hasVideo }) => {
+    if (!existing || typeof existing !== 'object') return false;
+    let changed = false;
+    const prevCount = Array.isArray(existing.imageUrls)
+      ? existing.imageUrls.length
+      : existing.imageUrl
+        ? 1
+        : 0;
+    const distinctPhotos = hasVideo && imgThumb ? bskyPhotos.filter(u => u !== imgThumb) : bskyPhotos;
+    if (distinctPhotos.length > prevCount && distinctPhotos.length > (hasVideo ? 0 : 1)) {
+      existing.imageUrls = distinctPhotos;
+      if (!existing.imageUrl && distinctPhotos[0]) existing.imageUrl = distinctPhotos[0];
+      if (distinctPhotos.length > 1) existing.hasInlineChartImage = true;
+      changed = true;
+    }
+    if (cleanFull && cleanFull.includes('\n')) {
+      const prevFull = String(existing.fullText || existing.title || '');
+      if (!prevFull.includes('\n') && normTextKey(prevFull) === normTextKey(cleanFull)) {
+        existing.fullText = cleanFull;
+        existing.title = tweetDisplay.text;
+        existing.isFullTweet = tweetDisplay.isFullTweet;
+        changed = true;
+      }
+    }
+    if (changed) upgradedExistingCount += 1;
+    return changed;
+  };
 
   const pendingItems = [];
   const shortUrlsToExpand = new Set();
@@ -2777,16 +2936,11 @@ export async function hydrateLiveBlueskyBeatWire(
             continue;
           }
           const extLink = extractBlueskyBestExternalLink(post, rec);
-          const rawOrig = String(rec?.text || extLink.title || '')
-            .replace(/\s+/g, ' ')
-            .replace(/\s*(?:Original post|View original post)\s*$/i, '')
-            .trim();
-          const bskyPhotoPre =
-            post?.embed?.images?.[0]?.fullsize ||
-            post?.embed?.media?.images?.[0]?.fullsize ||
-            post?.embed?.images?.[0]?.thumb ||
-            post?.embed?.media?.images?.[0]?.thumb ||
-            '';
+          const rawOrig = normalizeMultilineSocialText(
+            String(rec?.text || extLink.title || '').replace(/\s*(?:Original post|View original post)\s*$/i, '')
+          );
+          const bskyPhotos = extractBlueskyEmbedImages(post);
+          const bskyPhotoPre = bskyPhotos[0] || '';
           const bskyHasMediaPre = Boolean(
             bskyPhotoPre ||
               post?.embed?.$type === 'app.bsky.embed.video#view' ||
@@ -2795,7 +2949,10 @@ export async function hydrateLiveBlueskyBeatWire(
           if (!rawOrig || rawOrig.length < (bskyHasMediaPre ? 6 : 18)) continue;
 
           const parsedAttr = extractBeatAttributionFromText(rawOrig, acct);
-          const cleanFull = stripAggregatorBoilerplate(cleanSensationalistText(parsedAttr.cleanedText || rawOrig));
+          const cleanFull = stripAggregatorBoilerplate(
+            cleanSensationalistText(parsedAttr.cleanedText || rawOrig, { preserveNewlines: true }),
+            { preserveNewlines: true }
+          );
           const cleanExtTitle = extLink.title ? stripAggregatorBoilerplate(cleanSensationalistText(extLink.title)) : '';
           const cleanExtDesc = extLink.description
             ? stripAggregatorBoilerplate(cleanSensationalistText(extLink.description)).slice(0, 320)
@@ -2925,13 +3082,36 @@ export async function hydrateLiveBlueskyBeatWire(
           const rkey = String(post?.uri || '').split('/').pop();
           if (!rkey) continue;
           const postId = `bsky_live_${parsedAttr.reporterId}_${rkey}`;
-          const textKey = cleanFull.toLowerCase().slice(0, 90);
-          if (existingIds.has(postId) || existingTextKeys.has(textKey)) continue;
+          const textKey = normTextKey(cleanFull);
+          const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
+          const vidEmbed =
+            post?.embed?.$type === 'app.bsky.embed.video#view'
+              ? post.embed
+              : post?.embed?.media?.$type === 'app.bsky.embed.video#view'
+                ? post.embed.media
+                : post?.embed?.video || null;
+          const imgThumb = vidEmbed?.thumbnail || bskyPhotoPre || extLink.thumb || '';
+          const bskyPostHandlePre = post?.author?.handle || acct.actor;
+          const bskyPermalinkPre = `https://bsky.app/profile/${bskyPostHandlePre}/post/${rkey}`;
+          const existingMatch =
+            existingById.get(postId) ||
+            existingByUrl.get(normUrlKey(bskyPermalinkPre)) ||
+            existingByTextKey.get(textKey) ||
+            null;
+          if (existingMatch) {
+            tryUpgradeExistingSocialItem(existingMatch, {
+              cleanFull,
+              tweetDisplay,
+              bskyPhotos,
+              imgThumb,
+              hasVideo: Boolean(vidEmbed)
+            });
+            continue;
+          }
 
           const sig = scoreContentSignal(cleanFull, cleanExtDesc);
           if (sig.isClickbait) continue;
 
-          const tweetDisplay = formatTweetBodyForDisplay(cleanFull, SHORT_TWEET_FULL_TEXT_LIMIT);
           const pubIso = rec?.createdAt || post?.indexedAt || new Date().toISOString();
           const bskyCand = {
             type: 'tweet',
@@ -2949,13 +3129,6 @@ export async function hydrateLiveBlueskyBeatWire(
           if (acct.isNationalInsider && isOpposingTeamOnlyInjuryOrRosterStory(bskyCand, activeTeam)) continue;
           const brk = classifyBreakingItem(bskyCand, Date.now(), { appData });
 
-          const vidEmbed =
-            post?.embed?.$type === 'app.bsky.embed.video#view'
-              ? post.embed
-              : post?.embed?.media?.$type === 'app.bsky.embed.video#view'
-                ? post.embed.media
-                : post?.embed?.video || null;
-          const imgThumb = vidEmbed?.thumbnail || bskyPhotoPre || extLink.thumb || '';
           const rawExtUri = extLink.uri || '';
           const isTenorGif = /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(rawExtUri);
           const isSportsShortener =
@@ -2997,6 +3170,13 @@ export async function hydrateLiveBlueskyBeatWire(
             appData.news.rawStream
           );
           if (postUrl && !postUrl.includes('x.com/search?') && existingUrls.has(normUrlKey(postUrl))) {
+            tryUpgradeExistingSocialItem(existingByUrl.get(normUrlKey(postUrl)), {
+              cleanFull,
+              tweetDisplay,
+              bskyPhotos,
+              imgThumb,
+              hasVideo: Boolean(vidEmbed)
+            });
             continue;
           }
 
@@ -3024,6 +3204,9 @@ export async function hydrateLiveBlueskyBeatWire(
                 mentionedPlayers: mentioned,
                 isLeagueWideFilmChart: isLeagueWideChart
               });
+          const distinctBskyPhotos = vidEmbed?.thumbnail
+            ? bskyPhotos.filter(u => u !== vidEmbed.thumbnail)
+            : bskyPhotos;
           pendingItems.push({
             _rawExtUri: rawExtUri,
             _cleanExtTitle: cleanExtTitle,
@@ -3042,10 +3225,15 @@ export async function hydrateLiveBlueskyBeatWire(
               embeddable: Boolean(extractedYtVideoId || isTenorGif || bskyVideoMp4Url),
               isHighlightClip:
                 Boolean(extractedYtVideoId || isTenorGif || bskyVideoMp4Url || resolvedExternalVideoUrl) && resolvedCategory !== 'film',
-              hasInlineChartImage: Boolean(bskyPhotoPre && (resolvedCategory === 'film' || isLeagueWideChart)) || undefined,
+              hasInlineChartImage:
+                Boolean(
+                  distinctBskyPhotos.length > 1 ||
+                    (bskyPhotoPre && (resolvedCategory === 'film' || isLeagueWideChart))
+                ) || undefined,
               isLeagueWideFilmChart: isLeagueWideChart || undefined,
               filmOnlyScope: filmOnlyScope || undefined,
               imageUrl: typeof imgThumb === 'string' && imgThumb.startsWith('https://') ? imgThumb : '',
+              ...(distinctBskyPhotos.length > (resolvedVideoStreamUrl ? 0 : 1) ? { imageUrls: distinctBskyPhotos } : {}),
               imageAlt: `${parsedAttr.reporterName} update`,
               mentionedPlayers: mentioned,
               publishedAt: pubIso,
@@ -3108,7 +3296,7 @@ export async function hydrateLiveBlueskyBeatWire(
     const finalized = promoteLinkDropTweetToArticle(built);
     const finalUrlKey = normUrlKey(finalized.url);
     const origUrlKey = normUrlKey(built.url);
-    const finalTextKey = String(finalized.fullText || finalized.title || '').toLowerCase().slice(0, 90);
+    const finalTextKey = normTextKey(finalized.fullText || finalized.title || '');
     if (existingIds.has(finalized.id)) continue;
     if (finalUrlKey && !finalUrlKey.includes('x.com/search?') && existingUrls.has(finalUrlKey)) {
       continue;
@@ -3137,7 +3325,7 @@ export async function hydrateLiveBlueskyBeatWire(
     }
     propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
   }
-  return discovered.length;
+  return discovered.length + upgradedExistingCount;
 }
 
 let espnPlayerSweepCursor = 0;
@@ -4009,7 +4197,37 @@ export function dedupeRawStreamAtomically(items = []) {
   const seenUrlMap = new Map();
   const seenVideoIds = new Set();
   const seenStreamUrls = new Set();
-  const seenTextKeys = new Set();
+  const enrichKeptDuplicate = (kept, incoming) => {
+    if (!kept || !incoming) return;
+    if (!kept.imageUrl && incoming.imageUrl && /^https:\/\//i.test(incoming.imageUrl)) {
+      kept.imageUrl = incoming.imageUrl;
+    }
+    const keptImgCount = Array.isArray(kept.imageUrls) ? kept.imageUrls.length : kept.imageUrl ? 1 : 0;
+    const incImgs = Array.isArray(incoming.imageUrls)
+      ? incoming.imageUrls.filter(u => typeof u === 'string' && /^https:\/\//i.test(u)).slice(0, 4)
+      : [];
+    if (incImgs.length > keptImgCount) {
+      kept.imageUrls = incImgs;
+      if (!kept.imageUrl && incImgs[0]) kept.imageUrl = incImgs[0];
+      if (incImgs.length > 1) kept.hasInlineChartImage = true;
+    }
+    const keptText = String(kept.fullText || kept.title || '');
+    const incText = String(incoming.fullText || incoming.title || '');
+    if (!keptText.includes('\n') && incText.includes('\n')) {
+      if (incoming.fullText) kept.fullText = incoming.fullText;
+      if (incoming.title) kept.title = incoming.title;
+    }
+    if (!kept.summary && incoming.summary) {
+      kept.summary = incoming.summary;
+    }
+    if (!kept.promotedFromSocialUrl && incoming.promotedFromSocialUrl) {
+      kept.promotedFromSocialUrl = incoming.promotedFromSocialUrl;
+    }
+    if ((!kept.mentionedPlayers || kept.mentionedPlayers.length === 0) && incoming.mentionedPlayers?.length) {
+      kept.mentionedPlayers = incoming.mentionedPlayers;
+    }
+  };
+  const seenTextMap = new Map();
   const deduped = [];
   for (const it of items) {
     if (!it || typeof it !== 'object') continue;
@@ -4030,22 +4248,7 @@ export function dedupeRawStreamAtomically(items = []) {
         ? u.replace(/^https:\/\/(?:www\.)?twitter\.com\//i, 'https://x.com/').split('?')[0].replace(/\/+$/, '').toLowerCase()
         : u.replace(/\/+$/, '');
       if (seenUrlMap.has(normU)) {
-        // Enrich the kept item with any missing thumbnail, summary, or social-upgrade provenance
-        const kept = seenUrlMap.get(normU);
-        if (kept) {
-          if (!kept.imageUrl && it.imageUrl && /^https:\/\//i.test(it.imageUrl)) {
-            kept.imageUrl = it.imageUrl;
-          }
-          if (!kept.summary && it.summary) {
-            kept.summary = it.summary;
-          }
-          if (!kept.promotedFromSocialUrl && it.promotedFromSocialUrl) {
-            kept.promotedFromSocialUrl = it.promotedFromSocialUrl;
-          }
-          if ((!kept.mentionedPlayers || kept.mentionedPlayers.length === 0) && it.mentionedPlayers?.length) {
-            kept.mentionedPlayers = it.mentionedPlayers;
-          }
-        }
+        enrichKeptDuplicate(seenUrlMap.get(normU), it);
         continue;
       }
       seenUrlMap.set(normU, it);
@@ -4056,8 +4259,11 @@ export function dedupeRawStreamAtomically(items = []) {
       .trim()
       .slice(0, 96);
     if (textKey && textKey.length >= 24 && !vid && !it.videoStreamUrl) {
-      if (seenTextKeys.has(textKey)) continue;
-      seenTextKeys.add(textKey);
+      if (seenTextMap.has(textKey)) {
+        enrichKeptDuplicate(seenTextMap.get(textKey), it);
+        continue;
+      }
+      seenTextMap.set(textKey, it);
     }
     deduped.push(it);
   }
@@ -4688,7 +4894,9 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
     if (rawItems.length === 0) return 0;
 
     const rosterPlayers = appData.roster?.players || [];
-    const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
+    const extractEdgeXSid = u => (String(u || '').match(/https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/[^/]+\/status\/(\d{15,22})/i) || [])[1] || '';
+    const existingUrls = new Set(appData.news.rawStream.map(it => String(it.url || '').toLowerCase()).filter(Boolean));
+    const existingXStatusIds = new Set(appData.news.rawStream.map(it => extractEdgeXSid(it.url)).filter(Boolean));
     const existingVidIds = new Set(appData.news.rawStream.map(it => it.videoId).filter(Boolean));
     const existingStreams = new Set(
       appData.news.rawStream.map(it => String(it.videoStreamUrl || '').split('?')[0].toLowerCase()).filter(Boolean)
@@ -4700,14 +4908,28 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
       if (!raw || typeof raw !== 'object') continue;
       const type = raw.type === 'video' ? 'video' : raw.type === 'tweet' ? 'tweet' : 'article';
       const url = sanitizeExternalUrl(raw.url, null);
-      if (type !== 'video' && (!url || existingUrls.has(url))) continue;
-      if (type === 'video' && url && existingUrls.has(url)) continue;
+      const urlLow = url ? url.toLowerCase() : '';
+      const rawXSid = extractEdgeXSid(url);
+      if (type !== 'video' && (!url || existingUrls.has(urlLow))) continue;
+      if (type === 'video' && url && existingUrls.has(urlLow)) continue;
+      if (rawXSid && existingXStatusIds.has(rawXSid)) continue;
       if (raw.videoId && existingVidIds.has(raw.videoId)) continue;
       const normRawStream = String(raw.videoStreamUrl || '').split('?')[0].toLowerCase();
       if (normRawStream && existingStreams.has(normRawStream)) continue;
+      if (urlLow) existingUrls.add(urlLow);
+      if (rawXSid) existingXStatusIds.add(rawXSid);
 
-      const title = stripAggregatorBoilerplate(cleanSensationalistText(raw.title || ''));
-      const fullText = raw.fullText ? stripAggregatorBoilerplate(cleanSensationalistText(raw.fullText)) : undefined;
+      const preserveEdgeNewlines = type === 'tweet';
+      const title = stripAggregatorBoilerplate(
+        cleanSensationalistText(raw.title || '', { preserveNewlines: preserveEdgeNewlines }),
+        { preserveNewlines: preserveEdgeNewlines }
+      );
+      const fullText = raw.fullText
+        ? stripAggregatorBoilerplate(
+            cleanSensationalistText(raw.fullText, { preserveNewlines: preserveEdgeNewlines }),
+            { preserveNewlines: preserveEdgeNewlines }
+          )
+        : undefined;
       const summary = raw.summary ? stripAggregatorBoilerplate(cleanSensationalistText(raw.summary)) : '';
       if (!title && !fullText) continue;
 
@@ -4799,6 +5021,11 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
       const rawExtDesc = raw.externalDescription
         ? stripAggregatorBoilerplate(cleanSensationalistText(raw.externalDescription)).slice(0, 320)
         : null;
+      const edgeImageUrls = Array.isArray(raw.imageUrls)
+        ? Array.from(
+            new Set(raw.imageUrls.map(u => String(u || '').trim()).filter(u => /^https:\/\//i.test(u)))
+          ).slice(0, 4)
+        : [];
       const itemBuilt = {
         id: raw.id || `edge_wire_${hashWireKey(url || raw.videoId || title)}`,
         type,
@@ -4811,13 +5038,14 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         isAnimatedGif: Boolean(raw.isAnimatedGif || /\/tweet_video\//i.test(safeStream || '')) || undefined,
         isHighlightClip: Boolean(raw.isHighlightClip && (safeStream || raw.externalVideoUrl)),
         isLiveGameHighlight: Boolean(raw.isLiveGameHighlight),
-        hasInlineChartImage: Boolean(raw.hasInlineChartImage) || undefined,
+        hasInlineChartImage: Boolean(raw.hasInlineChartImage || edgeImageUrls.length > 1) || undefined,
         isLeagueWideFilmChart: Boolean(raw.isLeagueWideFilmChart) || undefined,
         filmOnlyScope: Boolean(raw.filmOnlyScope) || undefined,
         externalVideoUrl: raw.externalVideoUrl && /^https:\/\//i.test(raw.externalVideoUrl) ? raw.externalVideoUrl : undefined,
         duration: raw.duration || undefined,
         embeddable: typeof raw.embeddable === 'boolean' ? raw.embeddable : true,
-        imageUrl: raw.imageUrl && /^https:\/\//i.test(raw.imageUrl) ? raw.imageUrl : '',
+        imageUrl: raw.imageUrl && /^https:\/\//i.test(raw.imageUrl) ? raw.imageUrl : edgeImageUrls[0] || '',
+        ...(edgeImageUrls.length > (safeStream ? 0 : 1) ? { imageUrls: edgeImageUrls } : {}),
         imageAlt: title,
         mentionedPlayers: mentioned,
         publishedAt: pubIso,

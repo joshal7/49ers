@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-24T20:08:25.477Z",
+  "updatedAt": "2026-11-25T20:44:31.407Z",
   "windowDays": 7,
-  "totalEpisodes": 8,
+  "totalEpisodes": 11,
   "shows": [
     {
       "id": "patriots_locked_on_patriots",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/54/72/a1/5472a1aa-a46f-2c70-0d72-3044482eaccd/mza_5379826296413758334.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 6
     },
     {
       "id": "patriots_patriots_unfiltered",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/05/dc/f7/05dcf76f-0d78-4aa9-5949-488b1c2754e9/mza_11752285431019223546.jpg/600x600bb.jpg",
-      "episodeCount7d": 2
+      "episodeCount7d": 3
     },
     {
       "id": "patriots_patriots_catch",
@@ -37,7 +37,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c2/e4/0d/c2e40da1-4fd3-83a5-3493-9e6fa79f6e82/mza_5230631419629437128.jpg/600x600bb.jpg",
-      "episodeCount7d": 1
+      "episodeCount7d": 2
     },
     {
       "id": "patriots_patriots_postgame_show",
@@ -53,6 +53,106 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_patriots_patriots_unfiltered_1000804047811",
+      "trackId": 1000804047811,
+      "collectionId": 187310910,
+      "showId": "patriots_patriots_unfiltered",
+      "showName": "Patriots Unfiltered",
+      "showFullTitle": "Patriots Unfiltered",
+      "hosts": "New England Patriots",
+      "network": "New England Patriots",
+      "title": "Patriots Unfiltered 11/25: Chargers Preview, Team/Practice Updates, Week 12 NFL Picks",
+      "summary": "Tune in as the PU Crew previews the Patriots Week 12 matchup against the Los Angeles Chargers! They talk about keys to the game, matchups to watch, and more as the Patriots look to get back on track after two straight losses. They review any reports and practice updates surr",
+      "publishedAt": "2026-11-25T18:56:34.000Z",
+      "durationMinutes": 117,
+      "durationDisplay": "117 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/05/dc/f7/05dcf76f-0d78-4aa9-5949-488b1c2754e9/mza_11752285431019223546.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered-11-25-chargers-preview-team-practice/id187310910?i=1000804047811&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
+      "audioStreamUrl": "https://traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/cba6255c-e961-4019-9387-b50d012e1aca/audio.mp3?utm_source=Podcast&in_playlist=fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7"
+    },
+    {
+      "id": "pod_patriots_locked_on_patriots_1000803937547",
+      "trackId": 1000803937547,
+      "collectionId": 1140512627,
+      "showId": "patriots_locked_on_patriots",
+      "showName": "Locked On Patriots",
+      "showFullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
+      "hosts": "Locked On Podcast Network, Mike D’Abate",
+      "network": "Locked On Podcast Network, Mike D’Abate",
+      "title": "Hunt: New England Patriots’ Season Not Dead, Wild Card Still in Sight",
+      "summary": "New England Patriots refuse to count themselves out, keeping playoff dreams alive despite Drake Maye’s injury setback. Can Tommy DeVito lead the charge as AFC rivals falter down the stretch? Nick Cattles breaks down the Patriots’ postseason path, analyzing key matchups, quar",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "durationMinutes": 31,
+      "durationDisplay": "31 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/f9/a5/32/f9a532be-ee07-dc0b-b0bc-8e48589a3d99/mza_17225210725519099067.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/hunt-new-england-patriots-season-not-dead-wild-card/id1140512627?i=1000803937547&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/bb44711e-c111-41ea-af1c-6da0676a25a7/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=bb44711e-c111-41ea-af1c-6da0676a25a7&feed=wbru9pmV"
+    },
+    {
+      "id": "pod_patriots_patriots_unfiltered_1000803849830",
+      "trackId": 1000803849830,
+      "collectionId": 187310910,
+      "showId": "patriots_patriots_unfiltered",
+      "showName": "Patriots Unfiltered",
+      "showFullTitle": "Patriots Unfiltered",
+      "hosts": "New England Patriots",
+      "network": "New England Patriots",
+      "title": "Patriots Unfiltered 11/24: Bye Week Review, Latest Team/League Buzz, On To the Chargers",
+      "summary": "Tune in as the PU Crew returns from the bye week with plenty to talk about inside Pats Nation and the NFL! They open by recapping the biggest games, plays, and more to come from Week 12. They discuss the latest reports about Drake Maye and his injury, who returned to Patriot",
+      "publishedAt": "2026-11-24T19:16:54.000Z",
+      "durationMinutes": 116,
+      "durationDisplay": "116 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/05/dc/f7/05dcf76f-0d78-4aa9-5949-488b1c2754e9/mza_11752285431019223546.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered-11-24-bye-week-review-latest-team/id187310910?i=1000803849830&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
+      "audioStreamUrl": "https://traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/0b9dc9fa-008d-46aa-b995-b50c012d5ff8/audio.mp3?utm_source=Podcast&in_playlist=fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7"
+    },
+    {
+      "id": "pod_patriots_patriots_catch_1000803825815",
+      "trackId": 1000803825815,
+      "collectionId": 1648381074,
+      "showId": "patriots_patriots_catch",
+      "showName": "Patriots Catch-22",
+      "showFullTitle": "Patriots Catch-22",
+      "hosts": "New England Patriots",
+      "network": "New England Patriots",
+      "title": "Patriots Catch-22 11/24: Bye Week Notes, Latest Team Reports, Chargers Preview",
+      "summary": "Tune in as Evan Lazar and Alex Barth return from the Patriots' bye week with fresh takes on the Patriots and the NFL! They review performances from around the league and share notes on the AFC playoff picture after Week 11. They discuss the latest reports from inside Pats Na",
+      "publishedAt": "2026-11-24T16:26:25.000Z",
+      "durationMinutes": 57,
+      "durationDisplay": "57 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c2/e4/0d/c2e40da1-4fd3-83a5-3493-9e6fa79f6e82/mza_5230631419629437128.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22-11-24-bye-week-notes-latest-team/id1648381074?i=1000803825815&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
+      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/85d56efd-53af-4227-a06d-b50c010cad22/audio.mp3?utm_source=Podcast&in_playlist=c0ed4fea-6fcc-49d3-a960-af2001232f20"
+    },
+    {
+      "id": "pod_patriots_locked_on_patriots_1000803744682",
+      "trackId": 1000803744682,
+      "collectionId": 1140512627,
+      "showId": "patriots_locked_on_patriots",
+      "showName": "Locked On Patriots",
+      "showFullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
+      "hosts": "Locked On Podcast Network, Mike D’Abate",
+      "network": "Locked On Podcast Network, Mike D’Abate",
+      "title": "Missing Maye: New England Patriots Must Transform Offense to Compete",
+      "summary": "New England Patriots brace for life without Drake Maye as their offense faces a daunting test against the Los Angeles Chargers. Can Rhamondre Stevenson and a revamped run game carry the load, or will big-play threats vanish without the NFL’s top deep passer under center? Nic",
+      "publishedAt": "2026-11-24T08:00:00.000Z",
+      "durationMinutes": 29,
+      "durationDisplay": "29 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/0a/a1/f4/0aa1f4cc-1a8e-0a69-0e36-6c33410ae833/mza_18038920935758758946.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/missing-maye-new-england-patriots-must-transform-offense/id1140512627?i=1000803744682&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/056118eb-8077-49a5-9789-6cb88efd59ba/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=056118eb-8077-49a5-9789-6cb88efd59ba&feed=wbru9pmV"
+    },
     {
       "id": "pod_patriots_locked_on_patriots_1000803550533",
       "trackId": 1000803550533,
@@ -147,7 +247,7 @@
       "publishedAt": "2026-11-19T16:52:47.000Z",
       "durationMinutes": 58,
       "durationDisplay": "58 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/1e/0f/fa/1e0ffabe-fa71-738a-f1ae-4deec8175d04/mza_960897493484635553.jpg/160x160bb.jpg",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c2/e4/0d/c2e40da1-4fd3-83a5-3493-9e6fa79f6e82/mza_5230631419629437128.jpg/160x160bb.jpg",
       "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22-11-19-week-1-10-standouts-listener/id1648381074?i=1000802962608&uo=4",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
@@ -172,46 +272,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
       "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/13122293-c43f-41f2-965c-a20d7d0c1a36/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=13122293-c43f-41f2-965c-a20d7d0c1a36&feed=wbru9pmV"
-    },
-    {
-      "id": "pod_patriots_patriots_unfiltered_1000802769399",
-      "trackId": 1000802769399,
-      "collectionId": 187310910,
-      "showId": "patriots_patriots_unfiltered",
-      "showName": "Patriots Unfiltered",
-      "showFullTitle": "Patriots Unfiltered",
-      "hosts": "New England Patriots",
-      "network": "New England Patriots",
-      "title": "Patriots Unfiltered 11/18: Season/Roster Review, Team Observations, NFL Standings",
-      "summary": "Tune in as the PU Crew reviews the Patriots 2026 season through 10 weeks and hypothesizes what may come in the second half of the season. They talk about both sides of the ball, disappointments in offseason acquisitions, and discuss whether the performance of the Patriots sc",
-      "publishedAt": "2026-11-18T18:53:26.000Z",
-      "durationMinutes": 121,
-      "durationDisplay": "121 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/05/dc/f7/05dcf76f-0d78-4aa9-5949-488b1c2754e9/mza_11752285431019223546.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered-11-18-season-roster-review-team/id187310910?i=1000802769399&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
-      "audioStreamUrl": "https://traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/08d3e35c-f3b0-4a6f-b86d-b5060130848c/audio.mp3?utm_source=Podcast&in_playlist=fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7"
-    },
-    {
-      "id": "pod_patriots_locked_on_patriots_1000802654087",
-      "trackId": 1000802654087,
-      "collectionId": 1140512627,
-      "showId": "patriots_locked_on_patriots",
-      "showName": "Locked On Patriots",
-      "showFullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
-      "hosts": "Locked On Podcast Network, Mike D’Abate",
-      "network": "Locked On Podcast Network, Mike D’Abate",
-      "title": "Heat: Patriots Defense Under Fire—Should Zak Kuhr Pay the Price?",
-      "summary": "New England Patriots fans are feeling the heat after a crushing defeat by the Detroit Lions, sparking questions about Defensive Coordinator Zak Kuhr’s future and Head Coach Mike Vrabel's leadership. Are calls for major changes justified, or is it too soon to blow everything ",
-      "publishedAt": "2026-11-18T08:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/23/45/4d/23454ddc-5536-487e-b2c9-9cf777f3b6a1/mza_4572230110149062690.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/heat-patriots-defense-under-fire-should-zak-kuhr-pay/id1140512627?i=1000802654087&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/36b39b73-7572-4d2a-95b8-2b0a04594550/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=36b39b73-7572-4d2a-95b8-2b0a04594550&feed=wbru9pmV"
     }
   ]
 }

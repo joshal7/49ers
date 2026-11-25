@@ -161,7 +161,9 @@ import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js
 import { iconSvg } from './views/icons.js';
 import { renderHomeDashboardHtml } from './views/homeView.js';
 import {
+  markYouTubeVideoBlocked,
   renderNewsViewHtml,
+  renderVideoEmbedOrFacade,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js';
@@ -1201,7 +1203,7 @@ async function sendTestQuietAlert() {
           ? '7:00 PM CT'
           : '8:00 PM ET';
   const body = `High-signal alerts only (Tier-1 breaking & ${tzDailyLabel} daily brief). Zero score spam.`;
-  const alertIcon = ACTIVE_TEAM.assets?.appleTouchIconPng || './apple-touch-icon.png';
+  const alertIcon = ACTIVE_TEAM.assets?.appleTouchIconPng || `./assets/teams/${ACTIVE_TEAM.slug || '49ers'}/apple-touch-icon.png`;
   try {
     const reg = await navigator.serviceWorker?.ready;
     if (reg?.showNotification) {
@@ -2112,21 +2114,112 @@ function bindInlineVideoFallbacks(videoEl) {
   });
 }
 
+let youtubeEmbedErrorListenerBound = false;
+
+function replaceBlockedYouTubeIframeWithCard(iframeEl) {
+  if (!iframeEl || iframeEl.dataset.ytFallbackApplied === '1') return;
+  iframeEl.dataset.ytFallbackApplied = '1';
+  const videoId = iframeEl.getAttribute('data-yt-video-id') || '';
+  const vidKey = iframeEl.getAttribute('data-vid-key') || '';
+  const title = iframeEl.getAttribute('data-yt-title') || 'Watch Video';
+  const channel = iframeEl.getAttribute('data-yt-channel') || 'YouTube';
+  const compactFooter = iframeEl.getAttribute('data-yt-compact') === '1';
+  if (videoId) markYouTubeVideoBlocked(videoId);
+  if (vidKey) state.activeVideosSet.delete(vidKey);
+  const box = iframeEl.closest('.video-embed-box');
+  if (box && videoId) {
+    box.outerHTML = renderVideoEmbedOrFacade(
+      vidKey || `yt_${videoId}`,
+      videoId,
+      0,
+      title,
+      channel,
+      false,
+      false,
+      { compactFooter }
+    );
+  }
+}
+
+function subscribeYouTubeIframeErrors(iframeEl) {
+  if (!iframeEl || iframeEl.dataset.ytApiBound === '1') return;
+  iframeEl.dataset.ytApiBound = '1';
+  const vidKey = iframeEl.getAttribute('data-vid-key') || iframeEl.getAttribute('data-yt-video-id') || 'yt';
+  const sendHandshake = () => {
+    try {
+      const win = iframeEl.contentWindow;
+      if (!win || typeof win.postMessage !== 'function') return;
+      win.postMessage(JSON.stringify({ event: 'listening', id: vidKey, channel: 'widget' }), '*');
+      win.postMessage(
+        JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onError'], id: vidKey, channel: 'widget' }),
+        '*'
+      );
+    } catch {}
+  };
+  iframeEl.addEventListener('load', sendHandshake, { once: true });
+  setTimeout(sendHandshake, 450);
+}
+
+function bindYouTubeEmbedErrorListener() {
+  if (youtubeEmbedErrorListenerBound || typeof window === 'undefined') return;
+  youtubeEmbedErrorListenerBound = true;
+  window.addEventListener('message', ev => {
+    if (!/^https:\/\/(?:www\.)?youtube(?:-nocookie)?\.com$/i.test(String(ev.origin || ''))) return;
+    let payload = ev.data;
+    if (typeof payload === 'string') {
+      if (!payload.startsWith('{')) return;
+      try {
+        payload = JSON.parse(payload);
+      } catch {
+        return;
+      }
+    }
+    if (!payload || typeof payload !== 'object') return;
+    const isErrorEvent =
+      payload.event === 'onError' ||
+      (payload.event === 'infoDelivery' && payload.info && typeof payload.info.errorCode === 'number');
+    if (!isErrorEvent) return;
+    const code = Number(payload.event === 'onError' ? payload.info : payload.info?.errorCode);
+    // 2=invalid param, 5=HTML5 error, 100=not found/private, 101/150/153=embed blocked by owner/NFL Content ID
+    if (![2, 5, 100, 101, 150, 153].includes(code)) return;
+    const iframes = document.querySelectorAll('iframe[data-yt-iframe="1"]');
+    for (const ifr of iframes) {
+      if (ifr.contentWindow === ev.source || (payload.id && ifr.getAttribute('data-vid-key') === String(payload.id))) {
+        replaceBlockedYouTubeIframeWithCard(ifr);
+        return;
+      }
+    }
+  });
+}
+
 function bindAllMountedInlineVideos() {
   if (typeof document === 'undefined') return;
+  bindYouTubeEmbedErrorListener();
   const videos = document.querySelectorAll('.video-iframe-wrap video, .gc-inline-clip-stage video');
   for (const v of videos) {
     bindInlineVideoFallbacks(v);
+  }
+  const ytIframes = document.querySelectorAll('iframe[data-yt-iframe="1"]');
+  for (const ifr of ytIframes) {
+    subscribeYouTubeIframeErrors(ifr);
   }
 }
 
 function activateInlineVideoElement(vidKey) {
   if (!vidKey || typeof document === 'undefined') return;
+  bindYouTubeEmbedErrorListener();
   const videos = document.querySelectorAll('.video-iframe-wrap video, .gc-inline-clip-stage video');
   for (const v of videos) {
     if (v.getAttribute('data-vid-key') === vidKey) {
       bindInlineVideoFallbacks(v);
       safePlayInlineVideo(v);
+      return;
+    }
+  }
+  const ytIframes = document.querySelectorAll('iframe[data-yt-iframe="1"]');
+  for (const ifr of ytIframes) {
+    if (ifr.getAttribute('data-vid-key') === vidKey) {
+      subscribeYouTubeIframeErrors(ifr);
       return;
     }
   }
@@ -6796,7 +6889,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=128', { updateViaCache: 'none' })
+        .register('./sw.js?v=130', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

@@ -189,19 +189,11 @@ export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null, brows
         : '';
 
   if (resolvedBrowserOrigin) {
-    const sameOriginPath =
-      team.abbr === 'SF'
-        ? `${resolvedBrowserOrigin}/data`
-        : `${resolvedBrowserOrigin}/data/teams/${team.slug}`;
-    urls.push(sameOriginPath);
+    urls.push(`${resolvedBrowserOrigin}/data/teams/${team.slug}`);
   }
 
-  if (team.abbr === 'SF') {
-    urls.push('https://49ers.joshal.com/data');
-  } else {
-    urls.push(`https://${team.slug}.joshal.com/data/teams/${team.slug}`);
-    urls.push(`https://${team.slug}.joshal.com/data`);
-  }
+  urls.push(`https://${team.slug}.joshal.com/data/teams/${team.slug}`);
+  urls.push(`https://${team.slug}.joshal.com/data`);
 
   return Array.from(new Set(urls));
 }

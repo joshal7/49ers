@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:13.996Z",
+  "updatedAt": "2026-11-25T20:44:39.187Z",
   "windowDays": 7,
   "totalEpisodes": 9,
   "shows": [
@@ -41,6 +41,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_falcons_locked_on_falcons_1000803915003",
+      "trackId": 1000803915003,
+      "collectionId": 1147245791,
+      "showId": "falcons_locked_on_falcons",
+      "showName": "Locked On Falcons",
+      "showFullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
+      "hosts": "Locked On Podcast Network, Aaron Freeman",
+      "network": "Locked On Podcast Network, Aaron Freeman",
+      "title": "Michael Penix vs. Kirk Cousins Could Force an Atlanta Falcons QB REFERENDUM",
+      "summary": "Falcons vs. Vikings preview: Michael Penix faces Kirk Cousins in Minneapolis, and A.J. Terrell draws Justin Jefferson as the Atlanta Falcons hit the road. Aaron Freeman is joined by Jarvis Davis (Locked On Georgia Tech) to discuss whether Sunday's game could force a referend",
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "durationMinutes": 31,
+      "durationDisplay": "31 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/89/29/87/89298782-15ef-c66e-cf6d-3ebd3e5b95ea/mza_5400817572344300680.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/michael-penix-vs-kirk-cousins-could-force-an-atlanta/id1147245791?i=1000803915003&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/d9fdefb5-0e42-4936-a596-4043ddac62e7/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=d9fdefb5-0e42-4936-a596-4043ddac62e7&feed=l96cnojt"
+    },
     {
       "id": "pod_falcons_bleav_in_falcons_1000803818771",
       "trackId": 1000803818771,
@@ -200,26 +220,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
       "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/b1c66887-f219-4ec9-85e8-bcd54a89b77d/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=b1c66887-f219-4ec9-85e8-bcd54a89b77d&feed=l96cnojt"
-    },
-    {
-      "id": "pod_falcons_locked_on_falcons_1000802632710",
-      "trackId": 1000802632710,
-      "collectionId": 1147245791,
-      "showId": "falcons_locked_on_falcons",
-      "showName": "Locked On Falcons",
-      "showFullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
-      "hosts": "Locked On Podcast Network, Aaron Freeman",
-      "network": "Locked On Podcast Network, Aaron Freeman",
-      "title": "Can the Atlanta Falcons SURVIVE Michael Penix’s SLOW Starts? Week 10 All-22 Review",
-      "summary": "Atlanta Falcons All-22 review of the Week 10 loss to the Chiefs: Michael Penix’s slow starts, Corey Levin’s debut at center and life without Jessie Bates. Aaron Freeman breaks down the film against Kansas City, where Penix struggled to operate from clean pockets and has prod",
-      "publishedAt": "2026-11-18T05:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e1/d7/bc/e1d7bca6-c83f-d67a-85f0-69d865e3c713/mza_14913385954256674462.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/can-the-atlanta-falcons-survive-michael-penixs-slow/id1147245791?i=1000802632710&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/44f56edc-fbae-47fd-8513-d7f3fac26114/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=44f56edc-fbae-47fd-8513-d7f3fac26114&feed=l96cnojt"
     }
   ]
 }

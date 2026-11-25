@@ -7,7 +7,11 @@ import {
   isAcuteInjuryOrAvailabilityScoop,
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
-import { isPromotionalAdvertisement, stripHtmlAndDecodeEntities } from './linkIntegrity.js';
+import {
+  isPromotionalAdvertisement,
+  normalizeMultilineSocialText,
+  stripHtmlAndDecodeEntities
+} from './linkIntegrity.js';
 
 export { isPromotionalAdvertisement };
 
@@ -175,14 +179,14 @@ export function scoreContentSignal(title = '', body = '', { url = '', externalUr
 
 /**
  * Cleans sensationalist framing or promo boilerplate from raw RSS/article blurbs.
+ * Pass `{ preserveNewlines: true }` for tweets and Bluesky posts to retain author carriage returns.
  */
-export function cleanSensationalistText(rawText = '') {
-  return stripHtmlAndDecodeEntities(rawText)
+export function cleanSensationalistText(rawText = '', { preserveNewlines = false } = {}) {
+  const cleaned = stripHtmlAndDecodeEntities(rawText, { preserveNewlines })
     .replace(/\b(SHOCKING|BREAKING|UNBELIEVABLE|BOMBSHELL):\s*/gi, '')
-    .replace(/\s*(Subscribe|Click here|Follow us on|Download the app|Visit RotoWire\.com).*$/i, '')
-    .replace(/!{2,}/g, '.')
-    .replace(/\s+/g, ' ')
-    .trim();
+    .replace(/\s*(Subscribe|Click here|Follow us on|Download the app|Visit RotoWire\.com)[\s\S]*$/i, '')
+    .replace(/!{2,}/g, '.');
+  return preserveNewlines ? normalizeMultilineSocialText(cleaned) : cleaned.replace(/\s+/g, ' ').trim();
 }
 
 const PODIUM_FALLBACK_IDS = new Set(['kyle_shanahan', 'john_lynch']);

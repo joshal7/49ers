@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:32.027Z",
+  "updatedAt": "2026-11-25T20:35:52.212Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-york-jets",
   "spotracUrl": "https://www.spotrac.com/nfl/new-york-jets/cap/",
@@ -160,7 +160,7 @@
       "suspendedTotal": 0,
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
-      "contractedCount": 43,
+      "contractedCount": 42,
       "totalSignedCount": 44
     },
     "2028": {
@@ -243,7 +243,173 @@
     }
   },
   "blueprint": {
-    "summary": "New York Jets hold $9.39M in 2026 OverTheCap space and $85.71M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/new-york-jets",
+    "summary": "New York Jets hold $9.39M in 2026 OverTheCap space ($9.39M effective) and +$85.71M projected for 2027.",
+    "executiveSummary": "Darren Mougey and the Jets front office hold $9.39M in gross 2026 cap space ($9.39M effective), while 2027 currently projects at +$85.71M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Brandon Stephens, Jamien Sherwood, Breece Hall, Garrett Wilson.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$85.71M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering New York's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "4035824",
+        "name": "Brandon Stephens",
+        "position": "CB",
+        "jersey": 21,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035824.png",
+        "otcUrl": "https://overthecap.com/player/brandon-stephens/9568/",
+        "capHit2026": 13970000,
+        "baseSalary2026": 11490000,
+        "maxRestructureSavings": 8220000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4361331",
+        "name": "Jamien Sherwood",
+        "position": "LB",
+        "jersey": 44,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361331.png",
+        "otcUrl": "https://overthecap.com/player/jamien-sherwood/9610/",
+        "capHit2026": 11500000,
+        "baseSalary2026": 7500000,
+        "maxRestructureSavings": 5028000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4427366",
+        "name": "Breece Hall",
+        "position": "RB",
+        "jersey": 20,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427366.png",
+        "otcUrl": "https://overthecap.com/player/breece-hall/10081/",
+        "capHit2026": 11480000,
+        "baseSalary2026": 5160000,
+        "maxRestructureSavings": 7156000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4569618",
+        "name": "Garrett Wilson",
+        "position": "WR",
+        "jersey": 5,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569618.png",
+        "otcUrl": "https://overthecap.com/player/garrett-wilson/10055/",
+        "capHit2026": 10074819,
+        "baseSalary2026": 3074819,
+        "maxRestructureSavings": 1687855,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3925345",
+        "name": "Minkah Fitzpatrick",
+        "position": "S",
+        "jersey": 29,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3925345.png",
+        "otcUrl": "https://overthecap.com/player/minkah-fitzpatrick/6896/",
+        "capHit2026": 7411765,
+        "baseSalary2026": 5500000,
+        "maxRestructureSavings": 3360000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4362094",
+        "name": "Joseph Ossai",
+        "position": "DE",
+        "jersey": 46,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362094.png",
+        "otcUrl": "https://overthecap.com/player/joseph-ossai/9533/",
+        "capHit2026": 5455000,
+        "baseSalary2026": 3495000,
+        "maxRestructureSavings": 1824000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "4035824",
+        "name": "Brandon Stephens",
+        "position": "CB",
+        "jersey": 21,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035824.png",
+        "otcUrl": "https://overthecap.com/player/brandon-stephens/9568/",
+        "capHit2026": 13970000,
+        "postJune1CutSavings": 480000,
+        "postJune1TradeSavings": 11970000,
+        "preJune1DeadMoney": 19490000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4361331",
+        "name": "Jamien Sherwood",
+        "position": "LB",
+        "jersey": 44,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361331.png",
+        "otcUrl": "https://overthecap.com/player/jamien-sherwood/9610/",
+        "capHit2026": 11500000,
+        "postJune1CutSavings": -6000000,
+        "postJune1TradeSavings": 9000000,
+        "preJune1DeadMoney": 25000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4427366",
+        "name": "Breece Hall",
+        "position": "RB",
+        "jersey": 20,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427366.png",
+        "otcUrl": "https://overthecap.com/player/breece-hall/10081/",
+        "capHit2026": 11480000,
+        "postJune1CutSavings": -13520000,
+        "postJune1TradeSavings": 10480000,
+        "preJune1DeadMoney": 29000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4569618",
+        "name": "Garrett Wilson",
+        "position": "WR",
+        "jersey": 5,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569618.png",
+        "otcUrl": "https://overthecap.com/player/garrett-wilson/10055/",
+        "capHit2026": 10074819,
+        "postJune1CutSavings": -24500000,
+        "postJune1TradeSavings": 3324819,
+        "preJune1DeadMoney": 58824819,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3117255",
+        "name": "Harrison Phillips",
+        "position": "DT",
+        "jersey": 97,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117255.png",
+        "otcUrl": "https://overthecap.com/player/harrison-phillips/6981/",
+        "capHit2026": 7500000,
+        "postJune1CutSavings": 7500000,
+        "postJune1TradeSavings": 7500000,
+        "preJune1DeadMoney": 0,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3925345",
+        "name": "Minkah Fitzpatrick",
+        "position": "S",
+        "jersey": 29,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3925345.png",
+        "otcUrl": "https://overthecap.com/player/minkah-fitzpatrick/6896/",
+        "capHit2026": 7411765,
+        "postJune1CutSavings": -6588235,
+        "postJune1TradeSavings": 5911765,
+        "preJune1DeadMoney": 20000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {
@@ -6191,6 +6357,33 @@
       }
     },
     {
+      "id": "4837388",
+      "otcId": null,
+      "otcSlug": null,
+      "otcUrl": "https://overthecap.com/salary-cap/new-york-jets",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4837388/vj-payne",
+      "pfrUrl": "https://www.pro-football-reference.com/players/P/PaynVJ00.htm",
+      "name": "VJ Payne",
+      "position": "S",
+      "jersey": 34,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837388.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 840000,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 840000,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 840000,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 840000,
+          "guaranteedSalary": 0
+        }
+      }
+    },
+    {
       "id": "4682509",
       "otcId": "13451",
       "otcSlug": "malik-mcclain",
@@ -6443,106 +6636,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 0
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "4431582",
-      "otcId": "12817",
-      "otcSlug": "payton-page",
-      "otcUrl": "https://overthecap.com/player/payton-page/12817/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431582/payton-page",
-      "pfrUrl": "https://www.pro-football-reference.com/players/P/PagePa00.htm",
-      "name": "Payton Page",
-      "position": "DT",
-      "jersey": 98,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431582.png",
-      "unit": "Defense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1005000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 614167,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 614167
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 614167
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 614167
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 614167
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 60000
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 96000
-            }
-          }
-        },
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1120000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1120000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 1120000
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 1120000
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 1120000
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 1120000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 152000
             }
           }
         }

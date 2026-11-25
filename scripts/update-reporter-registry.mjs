@@ -14,7 +14,7 @@ import { getReporterTrustTier, TRUST_TIER_LABELS } from '../src/engine/beatAttri
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
-const dataDir = path.join(rootDir, 'data');
+const dataDir = path.join(rootDir, 'data', 'teams', '49ers');
 
 export const OUTLETS = [
   { id: '49ers_official', name: '49ers.com / Official Team', tier: 1, type: 'official', url: 'https://www.49ers.com/news/' },

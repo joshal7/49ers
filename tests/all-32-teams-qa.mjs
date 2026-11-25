@@ -39,6 +39,7 @@ import {
   isNflHubHost,
   isOfficialTeamHost,
   resolveExplicitQueryTeam,
+  resolveTeamDataBasePath,
   resolveTeamFromHostname,
   setActiveTeamConfig
 } from '../src/config/teamRegistry.js';
@@ -261,23 +262,38 @@ await test('1. All 32 teams have complete registry entries, concise shortcut tit
     assert.equal(resolveTeamFromHostname(`${team.slug}.joshal.com`).abbr, team.abbr);
     assert.equal(team.shortTitle, team.nickname, `${team.abbr} Home Screen shortTitle must be concise team nickname`);
     assert.ok(team.coachesSeed?.hc && team.coachesSeed?.oc && team.coachesSeed?.dc && team.coachesSeed?.gm, `${team.abbr} missing 2026 coachesSeed`);
+    const repPath = path.join(ROOT, 'config', 'reporters', `${team.abbr.toLowerCase()}.json`);
+    assert.ok(fs.existsSync(repPath), `Missing config/reporters/${team.abbr.toLowerCase()}.json`);
+    const repCfg = JSON.parse(fs.readFileSync(repPath, 'utf8'));
+    assert.equal(repCfg.teamAbbr, team.abbr);
+    assert.ok((repCfg.reporters || []).length >= 8, `${team.abbr} reporter config needs >= 8 local voices`);
+    for (const f of ['crest.svg', 'app-icon.svg', 'apple-touch-icon.png', 'apple-touch-icon-180.png']) {
+      assert.ok(fs.existsSync(path.join(ROOT, 'assets', 'teams', team.slug, f)), `Missing icon ${team.slug}/${f}`);
+    }
+    assert.equal(resolveTeamDataBasePath(team), `./data/teams/${team.slug}`, `${team.abbr} must resolve unified data/teams/${team.slug} path`);
+    assert.equal(team.assets.crestSvg, `./assets/teams/${team.slug}/crest.svg?v=1`, `${team.abbr} must use unified assets/teams/${team.slug}/crest.svg`);
     if (team.abbr !== 'SF') {
       assert.ok((team.beatPodcastShows || []).length >= 1, `${team.abbr} missing verified Apple Podcasts shows`);
-      const repPath = path.join(ROOT, 'config', 'reporters', `${team.abbr.toLowerCase()}.json`);
-      assert.ok(fs.existsSync(repPath), `Missing config/reporters/${team.abbr.toLowerCase()}.json`);
-      const repCfg = JSON.parse(fs.readFileSync(repPath, 'utf8'));
-      assert.equal(repCfg.teamAbbr, team.abbr);
-      assert.ok((repCfg.reporters || []).length >= 8, `${team.abbr} reporter config needs >= 8 local voices`);
-      for (const f of ['crest.svg', 'app-icon.svg', 'apple-touch-icon.png', 'apple-touch-icon-180.png']) {
-        assert.ok(fs.existsSync(path.join(ROOT, 'assets', 'teams', team.slug, f)), `Missing icon ${team.slug}/${f}`);
-      }
     }
+  }
+  // Structural consolidation regression guard: zero SF-only files outside unified 32-team folders
+  assert.equal(fs.existsSync(path.join(ROOT, 'assets', 'sf-crest.svg')), false, 'Legacy assets/sf-crest.svg must stay consolidated into assets/teams/49ers/crest.svg');
+  assert.equal(fs.existsSync(path.join(ROOT, 'assets', 'app-icon.svg')), false, 'Legacy assets/app-icon.svg must stay consolidated into assets/teams/49ers/app-icon.svg');
+  assert.equal(fs.existsSync(path.join(ROOT, 'assets', 'apple-touch-icon.png')), false, 'Legacy assets/apple-touch-icon.png must stay consolidated into assets/teams/49ers/');
+  assert.equal(fs.existsSync(path.join(ROOT, 'apple-touch-icon.png')), false, 'Legacy root apple-touch-icon.png must stay consolidated into assets/teams/49ers/');
+  assert.equal(fs.existsSync(path.join(ROOT, 'apple-touch-icon-precomposed.png')), false, 'Legacy root apple-touch-icon-precomposed.png must stay removed');
+  assert.equal(fs.existsSync(path.join(ROOT, 'scripts', 'fetch-live-49ers-data.mjs')), false, 'Legacy scripts/fetch-live-49ers-data.mjs must stay consolidated into scripts/fetch-live-data.mjs');
+  for (const looseJson of fs.readdirSync(path.join(ROOT, 'data'))) {
+    assert.ok(
+      looseJson === 'league' || looseJson === 'teams',
+      `Unexpected root data/ entry "${looseJson}" — all 32 teams must live under data/teams/<slug>/`
+    );
   }
 });
 
 await test('2. All 32 teams have valid live 11-file 2026 JSON bundles with zero cross-team 49ers contamination', () => {
   for (const team of ALL_NFL_TEAMS) {
-    const baseDir = team.abbr === 'SF' ? path.join(ROOT, 'data') : path.join(ROOT, 'data', 'teams', team.slug);
+    const baseDir = path.join(ROOT, 'data', 'teams', team.slug);
     for (const rel of REQUIRED_DATA_FILES) {
       const full = path.join(baseDir, rel);
       assert.ok(fs.existsSync(full), `${team.abbr} missing ${rel}`);
@@ -402,7 +418,7 @@ await test('2a. Power Rankings form a clean 1..32 rank bijection across all 6 ve
   const expectedIds = ['inpredictable', 'nfelo', 'rbsdm', 'cbs', 'espn_fpi', 'espn_panel'];
   const ranksBySource = Object.fromEntries(expectedIds.map(id => [id, new Map()]));
   for (const team of ALL_NFL_TEAMS) {
-    const baseDir = team.abbr === 'SF' ? path.join(ROOT, 'data') : path.join(ROOT, 'data', 'teams', team.slug);
+    const baseDir = path.join(ROOT, 'data', 'teams', team.slug);
     const sm = JSON.parse(fs.readFileSync(path.join(baseDir, 'schedule-matchup.json'), 'utf8'));
     const all = sm.powerRankings?.allSources || [];
     for (const id of expectedIds) {
@@ -729,7 +745,7 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
     const testTeams = ['49ers', 'broncos', 'lions', 'bills', 'vikings'];
     for (const slug of testTeams) {
       const targetTeam = ALL_NFL_TEAMS.find(t => t.slug === slug);
-      const dataBase = slug === '49ers' ? 'data' : `data/teams/${slug}`;
+      const dataBase = `data/teams/${slug}`;
       const smJson = JSON.parse(fs.readFileSync(path.join(ROOT, dataBase, 'schedule-matchup.json'), 'utf8'));
       const oppAbbr = String(smJson.upcomingMatchup?.oppAbbr || '').toUpperCase();
 
@@ -1255,15 +1271,12 @@ await test('7. Consolidated 32-team playoff pipeline parity (all 32 seasonal.jso
   const models = new Set();
   const compCounts = new Set();
   const remCounts = new Set();
-  const sfSeasonal = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'seasonal.json'), 'utf8'));
+  const sfSeasonal = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', '49ers', 'seasonal.json'), 'utf8'));
   const sfAllTeamOdds = sfSeasonal?.playoffPicture?.baselineSimulation?.allTeamOdds || [];
   assert.equal(sfAllTeamOdds.length, 16, 'SF seasonal.json must contain all 16 NFC team odds');
 
   for (const t of ALL_NFL_TEAMS) {
-    const seasonalPath =
-      t.abbr === 'SF'
-        ? path.join(ROOT, 'data', 'seasonal.json')
-        : path.join(ROOT, 'data', 'teams', t.slug, 'seasonal.json');
+    const seasonalPath = path.join(ROOT, 'data', 'teams', t.slug, 'seasonal.json');
     const seasonal = JSON.parse(fs.readFileSync(seasonalPath, 'utf8'));
     const pp = seasonal?.playoffPicture;
     const si = pp?.simulatorInputs;
@@ -1333,6 +1346,76 @@ await test('7. Consolidated 32-team playoff pipeline parity (all 32 seasonal.jso
   );
   assert.equal(sfPic.baselineSimulation.targetTeam, 'SF');
   assert.equal(detPic.baselineSimulation.targetTeam, 'DET');
+});
+
+await test('8. All-32-Team YouTube Video Attribution, Authentic Timestamps, Unique IDs & Embeddability Invariants', async () => {
+  for (const t of ALL_NFL_TEAMS) {
+    const newsPath = path.join(ROOT, 'data', 'teams', t.slug, 'news.json');
+    const news = JSON.parse(fs.readFileSync(newsPath, 'utf8'));
+    const buildMs = Date.parse(news.updatedAt || '');
+    const genericBeatLower = `${t.nickname} beat`.toLowerCase();
+    const seenVideoIds = new Set();
+
+    for (const it of news.rawStream || []) {
+      if (!it.videoId && it.type !== 'video') continue;
+      assert.ok(
+        typeof it.id === 'string' && it.id.trim().length > 0,
+        `${t.abbr}: Video "${it.title}" (${it.videoId || it.url}) must have a non-empty deterministic id (no raw_undefined collisions)`
+      );
+      if (it.videoId) {
+        assert.equal(
+          seenVideoIds.has(it.videoId),
+          false,
+          `${t.abbr}: Duplicate videoId ${it.videoId} in rawStream`
+        );
+        seenVideoIds.add(it.videoId);
+      }
+      if (it.channel) {
+        const authLower = String(it.author || '').trim().toLowerCase();
+        assert.notEqual(
+          authLower,
+          genericBeatLower,
+          `${t.abbr}: Video "${it.title}" has channel="${it.channel}" but author fell back to "${it.author}"`
+        );
+        assert.notEqual(
+          authLower,
+          '49ers beat',
+          `${t.abbr}: Video "${it.title}" has channel="${it.channel}" but author fell back to "49ers Beat"`
+        );
+      }
+      if (it.publishedAtIso) {
+        const pubMs = Date.parse(it.publishedAt || '');
+        const isoMs = Date.parse(it.publishedAtIso);
+        if (Number.isFinite(isoMs)) {
+          assert.ok(
+            Number.isFinite(pubMs) && Math.abs(pubMs - isoMs) <= 60_000,
+            `${t.abbr}: Video "${it.title}" publishedAt (${it.publishedAt}) drifted from publishedAtIso (${it.publishedAtIso})`
+          );
+        }
+      }
+      if (it.wireSource === 'youtube_search' && Number.isFinite(buildMs)) {
+        const pubMs = Date.parse(it.publishedAt || '');
+        assert.ok(
+          Number.isFinite(pubMs) && Math.abs(pubMs - buildMs) > 60_000,
+          `${t.abbr}: youtube_search video "${it.title}" must use authentic age, not build timestamp (${it.publishedAt})`
+        );
+      }
+      if (it.videoId) {
+        assert.equal(
+          typeof it.embeddable,
+          'boolean',
+          `${t.abbr}: YouTube video ${it.videoId} must declare explicit boolean embeddable`
+        );
+      }
+      if (it.videoId && ['xcmg7-tqG3s', 'qvztmeBT8R8'].includes(it.videoId)) {
+        assert.equal(
+          it.embeddable,
+          false,
+          `${t.abbr}: Known NFL Content-ID blocked video ${it.videoId} must have embeddable: false`
+        );
+      }
+    }
+  }
 });
 
 console.log(`\n==============================================================`);

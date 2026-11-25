@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:46.730Z",
+  "updatedAt": "2026-11-25T20:43:45.861Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.vikings.com/team/injury-report/",
@@ -18,21 +18,21 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Thumb",
-      "gameStatus": "Doubtful",
-      "playProbabilityPct": 11,
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "11% • Doubtful",
+      "playBadgeLabel": "0% • Out",
       "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Official Doubtful tag (NFL historical base ~10–14%)"
+        "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Addison injured his thumb during a Week 10 practice and was sidelined for the Vikings' Nov. 15 win over the Packers before undergoing surgery this past week. He remained out for Sunday's 35-10 loss to the 49ers and looks headed for a third straight absence this weekend, but Addison avoided placement on injured reserve and could have a realistic chance at returning to action in Week 13. Jauan Jennings and Tai Felton are likely to be the main beneficiaries from playing-time standpoints while Addison is unavailable."
+      "beatComment": "Addison is in recovery mode from the thumb injury that required surgery following a Nov. 15 practice, missing the last two games as a result. While an IR stint has been ruled out for Addison, O'Connell relayed Monday that the wide receiver is \"progressing really well\" but also isn't expected to play Sunday against the Falcons, according to Goessling. As long as Addison is sidelined, some combination of Jauan Jennings, Tai Felton and Myles Price will operate alonside top WR Justin Jefferson."
     },
     {
       "playerId": "3917315",
@@ -121,7 +121,7 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Quadriceps",
@@ -136,31 +136,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Van Ginkel's practice reps were limited Wednesday and Thursday while managing a quadriceps injury that he sustained in Week 10 against the Packers. He was a full participant in Friday's session, which was enough for the veteran edge rusher to avoid an injury tag for Sunday's contest. In Van Ginkel's four outings since the Vikings' Week 6 bye, he has accumulated 14 tackles (eight solo), including 4.5 sacks, one forced fumble and one fumble recovery."
-    },
-    {
-      "playerId": "4036133",
-      "name": "T.J. Hockenson",
-      "position": "TE",
-      "jersey": 87,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036133.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Wrist",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "In his return from a one-game absence, Hockenson finished second on the team in receiving yards behind Justin Jefferson's 86. Hockenson showed promising chemistry with Kirk Cousins after the veteran TE sat out Cousins' return to Minnesota during the Week 10 win over Green Bay. Cousins was under center for the Vikings in the 2023 regular season, when Hockenson set career highs with 95 catches for 960 yards. Hockenson hasn't surpassed 455 yards in a regular season since, though he's on pace to do so this year, with 41 catches for 383 yards and three touchdowns through nine appearances heading into a Week 12 home game against the Falcons."
     },
     {
       "playerId": "4361985",
@@ -188,31 +163,6 @@
       "beatComment": "Darrisaw was sidelined with a shoulder injury prior to halftime, but he was able to return to the field following the break. The 27-year-old is back in his starting role at left tackle against the 49ers."
     },
     {
-      "playerId": "4046537",
-      "name": "Joshua Metellus",
-      "position": "S",
-      "jersey": 44,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046537.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Shoulder",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (7th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Metellus was added to the Vikings' practice report Friday due to a shoulder issue, but the injury won't prevent the seventh-year pro from suiting up for Sunday's NFC North showdown. He has 58 tackles (29 solo), including 0.5 sacks, and four pass defenses through eight regular-season games."
-    },
-    {
       "playerId": "4360637",
       "name": "Jeshaun Jones",
       "position": "WR",
@@ -236,6 +186,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Jones -- who was managing a shoulder injury during Week 11 prep -- was a full participant in Friday's session, which was enough for him to avoid an injury tag for Sunday's contest. He was signed to the Vikings' 53-man roster Wednesday to give the team more depth at wide receiver while Jordan Addison recovers from a thumb injury. Jones figures to be limited to a rotational role on offense while serving as a contributor on special teams."
+    },
+    {
+      "playerId": "4036133",
+      "name": "T.J. Hockenson",
+      "position": "TE",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036133.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Wrist",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "In his return from a one-game absence, Hockenson finished second on the team in receiving yards behind Justin Jefferson's 86. Hockenson showed promising chemistry with Kirk Cousins after the veteran TE sat out Cousins' return to Minnesota during the Week 10 win over Green Bay. Cousins was under center for the Vikings in the 2023 regular season, when Hockenson set career highs with 95 catches for 960 yards. Hockenson hasn't surpassed 455 yards in a regular season since, though he's on pace to do so this year, with 41 catches for 383 yards and three touchdowns through nine appearances heading into a Week 12 home game against the Falcons."
     }
   ],
   "irAndReserveTracker": [
@@ -259,7 +234,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Knee) ahead of Week 9; must miss at least 4 games (earliest eligible Week 13)."
+      "beatNote": "Claiborne suffered a knee injury during a recent practice. While head coach Kevin O'Connell stated he doesn't believe Claiborne will require surgery, the injury is severe enough to keep him off the field for at least four games. The 23-year-old hasn't done much from a statistical standpoint throughout the 2026 campaign, amassing just 13 yards off six carries while garnering two catches for eight yards."
     },
     {
       "playerId": "4875564",
@@ -289,7 +264,7 @@
       "position": "G",
       "jersey": 74,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431553.png",
-      "injuryType": "Knee - Meniscus",
+      "injuryType": "Knee - Meniscus (Surgery)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -303,7 +278,7 @@
       "byeWeekNote": "Week 6 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee - Meniscus); awaiting 21-day practice window designation."
+      "beatNote": "Jackson suffered a torn meniscus during Sunday's 15-10 win over Miami, and he was already set to miss the rest of the regular season, so Tuesday's move to the IR comes as no surprise. Joe Huber is the top candidate to take over as Minnesota's starting left guard in Jackson's absence."
     },
     {
       "playerId": "4429128",
@@ -333,7 +308,7 @@
       "position": "TE",
       "jersey": 84,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3921690.png",
-      "injuryType": "Biceps",
+      "injuryType": "Biceps (Surgery)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -347,7 +322,7 @@
       "byeWeekNote": "Week 6 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Biceps); awaiting 21-day practice window designation."
+      "beatNote": "Oliver's move to IR was expected after the tight end was diagnosed with a torn bicep Monday. The tight end will likely miss most, if not all, of the 2026 season as he recovers from surgery. T.J. Hockenson and Gavin Bartholomew are now the only tight ends on the Vikings' roster, meaning practice-squad elevations ahead of Week 4 will likely include at least one more option at the position. The Vikings signed linebacker Kyle Van Noy to the 53-man roster in a corresponding move."
     },
     {
       "playerId": "4428421",
@@ -369,29 +344,7 @@
       "byeWeekNote": "Week 6 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4608794",
-      "name": "Tyler Batty",
-      "position": "LB",
-      "jersey": 92,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608794.png",
-      "injuryType": "Knee - ACL",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee - ACL); awaiting 21-day practice window designation."
+      "beatNote": "Samac appeared on the Vikings' injury report during Week 3 prep with a new knee injury. The backup center's issue must be significant, as he was promptly moved to IR. Samac will need to miss at least four games on IR before becoming eligible to return to the Vikings' active roster."
     },
     {
       "playerId": "3115373",
@@ -413,7 +366,29 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Quadriceps) on Aug 17, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
+    },
+    {
+      "playerId": "4608794",
+      "name": "Tyler Batty",
+      "position": "LB",
+      "jersey": 92,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608794.png",
+      "injuryType": "Knee - ACL (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Batty suffered a torn ACL during Friday's preseason loss to the Broncos and will now be forced to miss the upcoming season. He logged 12 tackles (nine solo) across 12 games with Minnesota last season and will now shift his focus to getting healthy for the 2027 campaign."
     }
   ]
 }

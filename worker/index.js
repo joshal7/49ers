@@ -928,7 +928,15 @@ async function collectEdgeLiveWire(
           });
           if (!sr.ok) return;
           const syn = await sr.json();
-          const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
+          const txt =
+            typeof syn?.text === 'string'
+              ? decodeHtmlEntities(syn.text)
+                  .replace(/\r\n?/g, '\n')
+                  .replace(/[ \t\f\v\u00A0]+/g, ' ')
+                  .replace(/[ \t]*\n[ \t]*/g, '\n')
+                  .replace(/\n{3,}/g, '\n\n')
+                  .trim()
+              : '';
           if (!txt || txt.length < 16) return;
           const synExpandedUrls = Array.isArray(syn?.entities?.urls)
             ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
@@ -952,12 +960,21 @@ async function collectEdgeLiveWire(
             synCardBv.thumbnail_image_large?.image_value?.url ||
             synCardBv.thumbnail_image?.image_value?.url ||
             '';
+          const synPhotoUrls = Array.from(
+            new Set([
+              ...(Array.isArray(syn.photos) ? syn.photos.map(p => String(p?.url || '').trim()) : []),
+              ...(Array.isArray(syn.mediaDetails)
+                ? syn.mediaDetails.filter(m => m?.type === 'photo').map(m => String(m?.media_url_https || '').trim())
+                : [])
+            ].filter(u => u.startsWith('https://')))
+          ).slice(0, 4);
           const thumb =
-            syn.photos?.[0]?.url ||
+            synPhotoUrls[0] ||
             syn.mediaDetails?.[0]?.media_url_https ||
             syn.video?.poster ||
             synCardThumb ||
             '';
+          const distinctSynPhotos = bestMp4 ? synPhotoUrls.filter(u => u !== thumb) : synPhotoUrls;
           const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
           const synUrls = Array.isArray(syn.entities?.urls) ? syn.entities.urls : [];
           const rawExtU =
@@ -999,6 +1016,7 @@ async function collectEdgeLiveWire(
             externalTitle: resolvedExtU ? synCardTitle : null,
             externalDescription: resolvedExtU ? synCardDesc : null,
             imageUrl: thumb.startsWith('https://') ? thumb : '',
+            ...(distinctSynPhotos.length > (bestMp4 ? 0 : 1) ? { imageUrls: distinctSynPhotos } : {}),
             videoStreamUrl: bestMp4 || undefined,
             isHighlightClip: Boolean(bestMp4 && durMs >= 8000),
             duration: durFmt || undefined,
@@ -1210,7 +1228,7 @@ export async function runScheduledDailyNewsBrief(
 
   // 1. Lightweight schedule + live ESPN status check (2 subrequests) before doing any heavy work
   const [scheduleMatchup, espnScheduleJson] = await Promise.all([
-    fetchJsonSafeEdge(`${siteOrigin}/data/schedule-matchup.json`, 6000),
+    fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/schedule-matchup.json`, 6000),
     fetchJsonSafeEdge('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule', 5000)
   ]);
 
@@ -1244,7 +1262,7 @@ export async function runScheduledDailyNewsBrief(
   if (!force) {
     const existing = await env.SHARED_CACHE.get(preCacheKey, 'json');
     if (existing && (existing.data || existing.rawText)) {
-      prefetchedHealth = await fetchJsonSafeEdge(`${siteOrigin}/data/health.json`, 5000);
+      prefetchedHealth = await fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/health.json`, 5000);
       const existingBriefObj = existing.data || null;
       const stale = existingBriefObj
         ? isDailyBriefStaleForLiveState(existingBriefObj, { scheduleMatchup, health: prefetchedHealth }, nowMs)
@@ -1275,12 +1293,12 @@ export async function runScheduledDailyNewsBrief(
   try {
     // 4. Hydrate remaining lightweight canonical data + fresh ESPN/RSS wire (stays well under 50 subrequests)
     const [meta, news, healthFresh, cap, depthChart, seasonal, espnNewsJson, edgeWire] = await Promise.all([
-      fetchJsonSafeEdge(`${siteOrigin}/data/meta.json`, 5500),
-      fetchJsonSafeEdge(`${siteOrigin}/data/news.json`, 6500),
-      prefetchedHealth ? Promise.resolve(prefetchedHealth) : fetchJsonSafeEdge(`${siteOrigin}/data/health.json`, 5500),
-      fetchJsonSafeEdge(`${siteOrigin}/data/cap.json`, 6000),
-      fetchJsonSafeEdge(`${siteOrigin}/data/depth-chart.json`, 5500),
-      fetchJsonSafeEdge(`${siteOrigin}/data/seasonal.json`, 6000),
+      fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/meta.json`, 5500),
+      fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/news.json`, 6500),
+      prefetchedHealth ? Promise.resolve(prefetchedHealth) : fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/health.json`, 5500),
+      fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/cap.json`, 6000),
+      fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/depth-chart.json`, 5500),
+      fetchJsonSafeEdge(`${siteOrigin}/data/teams/49ers/seasonal.json`, 6000),
       fetchJsonSafeEdge('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25', 5000),
       collectEdgeLiveWire(env, { maxXHydrate: 4, includeYouTube: false, useCache: true, writeCache: false }).catch(
         () => ({ items: [] })

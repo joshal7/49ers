@@ -8018,7 +8018,28 @@ export function rankPlayerOverviewMentions(
     });
   }
 
-  return enforcedDeduped.slice(0, maxItems);
+  const sliced = enforcedDeduped.slice(0, maxItems);
+  // Format balance on default `Top` view: when breaking article syndication fills all `maxItems` slots,
+  // guarantee at least 1-2 highest-ranked beat tweets remain visible if present in the 7d pool (all 32 teams).
+  if (activeSort === 'top' && maxItems >= 4 && sliced.length >= maxItems) {
+    const hasTweetInSlice = sliced.some(it => it?.type === 'tweet');
+    if (!hasTweetInSlice) {
+      const topPoolTweets = enforcedDeduped.slice(maxItems).filter(it => it?.type === 'tweet').slice(0, 2);
+      if (topPoolTweets.length > 0) {
+        let replaceIdx = sliced.length - 1;
+        for (const tw of topPoolTweets) {
+          while (replaceIdx >= 2 && sliced[replaceIdx]?.isInGameInjury && isUrgentBreakingBadge(sliced[replaceIdx]?.breakingBadge)) {
+            replaceIdx--;
+          }
+          if (replaceIdx >= 2) {
+            sliced[replaceIdx] = tw;
+            replaceIdx--;
+          }
+        }
+      }
+    }
+  }
+  return sliced;
 }
 
 /**

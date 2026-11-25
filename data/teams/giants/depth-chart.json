@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:08:03.604Z",
+  "updatedAt": "2026-11-25T20:44:32.555Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -37,7 +37,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123075.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -69,7 +69,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123075.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -148,7 +148,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4040655",
@@ -167,7 +167,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243389.png",
               "baselineRank": 2,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -189,7 +189,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243389.png",
               "baselineRank": 2,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -534,7 +534,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4361050",
@@ -713,7 +713,7 @@
         },
         {
           "slotKey": "fb",
-          "slotLabel": "FB",
+          "slotLabel": "FB (21 Personnel)",
           "baselineChain": [
             {
               "playerId": "2975417",
@@ -744,11 +744,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "16837",
@@ -777,7 +777,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2574891.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -809,7 +809,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2574891.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -818,7 +818,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "2977670",
@@ -867,7 +867,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "5159928",
@@ -930,13 +930,23 @@
               "isAvailable": true
             },
             {
+              "playerId": "3042476",
+              "name": "Dawuane Smoot",
+              "jersey": 96,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3042476.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4035631",
               "name": "Brian Burns",
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035631.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -952,13 +962,23 @@
               "isAvailable": true
             },
             {
+              "playerId": "3042476",
+              "name": "Dawuane Smoot",
+              "jersey": 96,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3042476.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4035631",
               "name": "Brian Burns",
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035631.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1065,7 +1085,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929950.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1097,7 +1117,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929950.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1106,7 +1126,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "4725996",
@@ -1168,14 +1188,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4242547",
-              "name": "Paulson Adebo",
-              "jersey": 21,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242547.png",
+              "playerId": "4429281",
+              "name": "Korie Black",
+              "jersey": 38,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429281.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
             },
             {
               "playerId": "5151880",
@@ -1210,14 +1230,15 @@
               "isAvailable": true
             },
             {
-              "playerId": "4242547",
-              "name": "Paulson Adebo",
-              "jersey": 21,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242547.png",
+              "playerId": "4429281",
+              "name": "Korie Black",
+              "jersey": 38,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429281.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             },
             {
               "playerId": "5151880",
@@ -1367,14 +1388,14 @@
           "slotLabel": "RCB",
           "baselineChain": [
             {
-              "playerId": "4361266",
-              "name": "Greg Newsome II",
-              "jersey": 20,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361266.png",
+              "playerId": "4242547",
+              "name": "Paulson Adebo",
+              "jersey": 21,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242547.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4921249",
@@ -1387,10 +1408,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429281",
-              "name": "Korie Black",
-              "jersey": 38,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429281.png",
+              "playerId": "4361266",
+              "name": "Greg Newsome II",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361266.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
@@ -1409,6 +1430,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "4242547",
+              "name": "Paulson Adebo",
+              "jersey": 21,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242547.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4921249",
               "name": "Colton Hood",
               "jersey": 12,
@@ -1423,17 +1454,6 @@
               "name": "Greg Newsome II",
               "jersey": 20,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361266.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
-              "playerId": "4429281",
-              "name": "Korie Black",
-              "jersey": 38,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429281.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
@@ -1452,11 +1472,11 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4431321",
@@ -1647,7 +1667,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243389.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             },
             {
@@ -1657,7 +1677,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123075.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             },
             {
@@ -1699,7 +1719,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243389.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -1710,7 +1730,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123075.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -1779,7 +1799,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123075.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1832,7 +1852,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123075.png",
               "baselineRank": 5,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

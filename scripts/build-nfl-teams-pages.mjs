@@ -45,30 +45,21 @@ export function buildNflTeamsPagesDist() {
   fs.mkdirSync(DIST, { recursive: true });
 
   // 1. Core PWA shell files
-  for (const rel of ['index.html', 'manifest.json', 'sw.js', 'apple-touch-icon.png']) {
+  for (const rel of ['index.html', 'manifest.json', 'sw.js']) {
     copyRecursive(path.join(ROOT, rel), path.join(DIST, rel));
   }
 
-  // 2. Shared frontend modules & ALL 32 team assets
+  // 2. Shared frontend modules, shared assets & ALL 32 team icon assets (`assets/teams/{slug}/`)
   copyRecursive(path.join(ROOT, 'src'), path.join(DIST, 'src'));
-  for (const sfAsset of ['sf-crest.svg', 'app-icon.svg', 'gemini-key-walkthrough.gif']) {
-    copyRecursive(path.join(ROOT, 'assets', sfAsset), path.join(DIST, 'assets', sfAsset));
-  }
-  const nonSfTeams = ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF');
-  for (const team of nonSfTeams) {
+  copyRecursive(path.join(ROOT, 'assets', 'gemini-key-walkthrough.gif'), path.join(DIST, 'assets', 'gemini-key-walkthrough.gif'));
+  for (const team of ALL_NFL_TEAMS) {
     copyRecursive(path.join(ROOT, 'assets', 'teams', team.slug), path.join(DIST, 'assets', 'teams', team.slug));
   }
 
-  // 3. 49ers live JSON data + studio `.m4a` podcasts + league data + ALL 31 non-SF team JSON feeds (minified for fast mobile loads)
+  // 3. League metadata + ALL 32 team JSON feeds & podcasts (`data/teams/{slug}/`, minified for fast mobile loads)
   const rootDataDir = path.join(ROOT, 'data');
-  for (const entry of fs.readdirSync(rootDataDir, { withFileTypes: true })) {
-    if (entry.isFile() && entry.name.endsWith('.json')) {
-      copyRecursive(path.join(rootDataDir, entry.name), path.join(DIST, 'data', entry.name), { minifyJson: true });
-    }
-  }
-  copyRecursive(path.join(rootDataDir, 'podcasts'), path.join(DIST, 'data', 'podcasts'), { minifyJson: true });
   copyRecursive(path.join(rootDataDir, 'league'), path.join(DIST, 'data', 'league'), { minifyJson: true });
-  for (const team of nonSfTeams) {
+  for (const team of ALL_NFL_TEAMS) {
     copyRecursive(path.join(rootDataDir, 'teams', team.slug), path.join(DIST, 'data', 'teams', team.slug), { minifyJson: true });
   }
 

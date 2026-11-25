@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:37.440Z",
+  "updatedAt": "2026-11-25T20:36:10.428Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/cincinnati-bengals",
   "spotracUrl": "https://www.spotrac.com/nfl/cincinnati-bengals/cap/",
@@ -237,7 +237,173 @@
     }
   },
   "blueprint": {
-    "summary": "Cincinnati Bengals hold $7.52M in 2026 OverTheCap space and $48.85M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/cincinnati-bengals",
+    "summary": "Cincinnati Bengals hold $7.52M in 2026 OverTheCap space ($7.52M effective) and +$48.85M projected for 2027.",
+    "executiveSummary": "Duke Tobin and the Bengals front office hold $7.52M in gross 2026 cap space ($7.52M effective), while 2027 currently projects at +$48.85M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Joe Burrow, Tee Higgins, Ja'Marr Chase, Orlando Brown Jr..",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$48.85M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Cincinnati's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "3915511",
+        "name": "Joe Burrow",
+        "position": "QB",
+        "jersey": 9,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915511.png",
+        "otcUrl": "https://overthecap.com/player/joe-burrow/8741/",
+        "capHit2026": 37599784,
+        "baseSalary2026": 12250000,
+        "maxRestructureSavings": 8828000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4239993",
+        "name": "Tee Higgins",
+        "position": "WR",
+        "jersey": 5,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239993.png",
+        "otcUrl": "https://overthecap.com/player/tee-higgins/8773/",
+        "capHit2026": 26514706,
+        "baseSalary2026": 10900000,
+        "maxRestructureSavings": 13190000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4362628",
+        "name": "Ja'Marr Chase",
+        "position": "WR",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362628.png",
+        "otcUrl": "https://overthecap.com/player/jamarr-chase/9469/",
+        "capHit2026": 26171176,
+        "baseSalary2026": 17730000,
+        "maxRestructureSavings": 13292000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3116370",
+        "name": "Orlando Brown Jr.",
+        "position": "OT",
+        "jersey": 75,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116370.png",
+        "otcUrl": "https://overthecap.com/player/orlando-brown-jr/6968/",
+        "capHit2026": 19291666,
+        "baseSalary2026": 3500000,
+        "maxRestructureSavings": 11033333,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4240754",
+        "name": "Boye Mafe",
+        "position": "DE",
+        "jersey": 53,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240754.png",
+        "otcUrl": "https://overthecap.com/player/boye-mafe/10085/",
+        "capHit2026": 17000000,
+        "baseSalary2026": 7400000,
+        "maxRestructureSavings": 6856667,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4035483",
+        "name": "Dexter Lawrence II",
+        "position": "DT",
+        "jersey": 97,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035483.png",
+        "otcUrl": "https://overthecap.com/player/dexter-lawrence/7808/",
+        "capHit2026": 15333333,
+        "baseSalary2026": 11000000,
+        "maxRestructureSavings": 13133333,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "3915511",
+        "name": "Joe Burrow",
+        "position": "QB",
+        "jersey": 9,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915511.png",
+        "otcUrl": "https://overthecap.com/player/joe-burrow/8741/",
+        "capHit2026": 37599784,
+        "postJune1CutSavings": -18300000,
+        "postJune1TradeSavings": 12250000,
+        "preJune1DeadMoney": 110049568,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4239993",
+        "name": "Tee Higgins",
+        "position": "WR",
+        "jersey": 5,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239993.png",
+        "otcUrl": "https://overthecap.com/player/tee-higgins/8773/",
+        "capHit2026": 26514706,
+        "postJune1CutSavings": 12764706,
+        "postJune1TradeSavings": 22764706,
+        "preJune1DeadMoney": 21250000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4362628",
+        "name": "Ja'Marr Chase",
+        "position": "WR",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362628.png",
+        "otcUrl": "https://overthecap.com/player/jamarr-chase/9469/",
+        "capHit2026": 26171176,
+        "postJune1CutSavings": -30058824,
+        "postJune1TradeSavings": 18771176,
+        "preJune1DeadMoney": 81430000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3116370",
+        "name": "Orlando Brown Jr.",
+        "position": "OT",
+        "jersey": 75,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116370.png",
+        "otcUrl": "https://overthecap.com/player/orlando-brown-jr/6968/",
+        "capHit2026": 19291666,
+        "postJune1CutSavings": 6850000,
+        "postJune1TradeSavings": 6850000,
+        "preJune1DeadMoney": 21775000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4240754",
+        "name": "Boye Mafe",
+        "position": "DE",
+        "jersey": 53,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240754.png",
+        "otcUrl": "https://overthecap.com/player/boye-mafe/10085/",
+        "capHit2026": 17000000,
+        "postJune1CutSavings": 12000000,
+        "postJune1TradeSavings": 12000000,
+        "preJune1DeadMoney": 15000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4035483",
+        "name": "Dexter Lawrence II",
+        "position": "DT",
+        "jersey": 97,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035483.png",
+        "otcUrl": "https://overthecap.com/player/dexter-lawrence/7808/",
+        "capHit2026": 15333333,
+        "postJune1CutSavings": 12000000,
+        "postJune1TradeSavings": 12000000,
+        "preJune1DeadMoney": 10000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {

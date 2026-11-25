@@ -1,152 +1,425 @@
 {
-  "updatedAt": "2026-11-24T20:08:34.892Z",
+  "updatedAt": "2026-11-25T20:44:59.669Z",
   "dailyTopNewsBrief": {
-    "id": "brief_bal_2ebf06dd2f29",
-    "cycleKey": "2026-11-23@17ET",
+    "id": "daily_brief_2026-11-24_17ET",
+    "cycleKey": "2026-11-24@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-7",
-    "generatedAt": "2026-11-24T20:08:36.004Z",
-    "modelUsed": "gemini-4-hydrogen",
-    "thinkingLevel": "XHIGH",
-    "source": "deterministic-digest",
-    "wordCount": 60,
-    "headline": "Baltimore Ravens Daily Briefing — Week 12",
-    "summary": "Baltimore Ravens (4-7, 4th in AFC North • #11 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
+    "generatedAt": "2026-11-25T20:44:59.669Z",
+    "modelUsed": "deterministic-grounded",
+    "thinkingLevel": "NONE",
+    "source": "pipeline-grounded",
+    "practiceReportCoverage": {
+      "hasThu": false,
+      "hasFri": false
+    },
+    "wordCount": 196,
+    "headline": "Ravens (4-7) Week 12 Briefing: Wednesday Injury Report Ahead of Texans",
+    "summary": "",
     "bullets": [
-      "Ravens Cutting WR LaJohntay Wester ([NFL Trade Rumors](https://nfltraderumors.co/ravens-cutting-wr-lajohntay-wester/))",
-      "LIVE: Ravens Daily - Nov, 24th, 2026 ([baltimoreravens.com Video](https://www.baltimoreravens.com/video/live-ravens-daily-nov-24th-2026))",
-      "Late for Work: Mark Andrews Listed Among Players With Most at Stake Over Rest of Season ([baltimoreravens.com Official](https://www.baltimoreravens.com/news/mark-andrews-most-at-stake-daniel-jones-tj-tampa-devontez-walker-ravens))",
-      "Around the AFC North: DK Metcalf's Struggles Are Concern for Steelers ([baltimoreravens.com Official](https://www.baltimoreravens.com/news/dk-metcalf-struggles-steelers-concern-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north))",
-      "News & Notes: Jesse Minter Gives Update on Marlon Humphrey ([baltimoreravens.com Official](https://www.baltimoreravens.com/news/jesse-minter-marlon-humphrey-update-tj-tampa-highest-defensive-grade-carolina-panthers-minter-two-minute-blunders))"
+      "Injury & Practice Status: RB Derrick Henry (concussion) and G Olaivavega Ioane (shoulder/knee) logged limited practice reps Wednesday [Cordell Woodland](https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that).",
+      "Week 12 Texans Outlook: Jesse Minter and DC Anthony Weaver open installation for the Houston Texans (4-6, HOU -7, HC DeMeco Ryans, OC Nick Caley & DC Matt Burke (Road Test))—a unit ranked #3 in Field Goal % (95.2%) as Baltimore prepares for a pivotal AFC matchup [baltimoreravens.com Official](https://www.baltimoreravens.com/news/power-rankings-ravens-nfl-week-12) [Jamison Hensley](https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday).",
+      "AFC Playoff Trajectory: Entering Week 12 at 4-7 (4th in AFC North • #11 Seed in AFC), Baltimore carries a 5.7% postseason projection, 0.4% AFC North division title mark, and 0% #1 Seed Bye equity into the conference stretch [Frank Platko](https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling).",
+      "Around the Beat: Three Ravens, including defensive tackle Nnamdi Madubuike, were not on the field at the start of Wednesday’s practice [baltimoreravens.com Official](https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Baltimore ranks #19 in Points / Game (22.0), #26 in Points Allowed / Game (26.7), #28 in Turnover Differential (-7), giving Jesse Minter and Anthony Weaver a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Houston Texans [Frank Platko](https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role)."
     ],
     "coveredStoryKeys": [
-      "bal_nfltr_9cac69635c74",
-      "bal_vid_6046d6c02121",
-      "bal_rss_1f4a07eaff45",
-      "bal_rss_18960d2d67e8",
-      "bal_rss_0bf462efd2e6"
+      "derrickhenry::diagnostic_result",
+      "team::watch_guide",
+      "team::power_rankings",
+      "aaronrodgers::in_game_injury_status"
     ],
     "coveredUrls": [
-      "https://nfltraderumors.co/ravens-cutting-wr-lajohntay-wester/",
-      "https://www.baltimoreravens.com/video/live-ravens-daily-nov-24th-2026",
-      "https://www.baltimoreravens.com/news/mark-andrews-most-at-stake-daniel-jones-tj-tampa-devontez-walker-ravens",
-      "https://www.baltimoreravens.com/news/dk-metcalf-struggles-steelers-concern-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north",
-      "https://www.baltimoreravens.com/news/jesse-minter-marlon-humphrey-update-tj-tampa-highest-defensive-grade-carolina-panthers-minter-two-minute-blunders"
+      "https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
+      "https://www.baltimoreravens.com/news/power-rankings-ravens-nfl-week-12",
+      "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
+      "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling",
+      "https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell",
+      "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role",
+      "https://x.com/jamisonhensley/status/2125651163060085119",
+      "https://www.baltimoreravens.com/news/devontez-walker-afc-special-teams-player-of-the-week-11-kickoff-return",
+      "https://www.baltimoreravens.com/news/ravens-offseason-roster-questions-aaron-rodgers-zion-young-carson-vinson-adam-randall-2026",
+      "https://www.espn.com/nfl/story/_/id/50585397/source-ravens-cut-punt-returner-wester-two-muffs-loss",
+      "https://x.com/jeffzrebiec/status/2125316383130972208",
+      "https://www.baltimoreravens.com/news/how-to-watch-listen-live-stream-ravens-vs-texans-week-12",
+      "https://www.baltimorebeatdown.com/baltimore-ravens-news/88186/ravens-cut-wr-lajohntay-wester-after-2-fumbled-punts-in-carolina",
+      "https://www.baltimoreravens.com/news/steelers-bench-aaron-rodgers-wont-return-pat-mcafee-mason-rudolph-named-starter-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north",
+      "https://www.espn.com/nfl/player/_/id/3126356/marlon-humphrey#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20Monday",
+      "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88139/winners-and-losers-from-ravens-week-11-loss-to-the-panthers"
     ],
     "sources": [
       {
-        "sid": "S1",
-        "title": "Ravens Cutting WR LaJohntay Wester",
-        "url": "https://nfltraderumors.co/ravens-cutting-wr-lajohntay-wester/",
-        "author": "NFL Trade Rumors",
-        "outlet": "NFL Trade Rumors",
-        "publishedAt": "2026-11-24T20:00:49.000Z"
+        "type": "article",
+        "author": "Cordell Woodland",
+        "outlet": "105.7 The Fan Baltimore",
+        "title": "Ravens head coach Jesse Minter said that Henry was a limited participant in Wednesday's practice after being placed back in concussion protocol, but the running back is",
+        "url": "https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
+        "publishedAt": "2026-11-25T19:55:19.000Z"
       },
       {
-        "sid": "S2",
-        "title": "LIVE: Ravens Daily - Nov, 24th, 2026",
-        "url": "https://www.baltimoreravens.com/video/live-ravens-daily-nov-24th-2026",
-        "author": "baltimoreravens.com Video",
-        "outlet": "baltimoreravens.com Video",
-        "publishedAt": "2026-11-24T19:45:09.000Z"
-      },
-      {
-        "sid": "S3",
-        "title": "Late for Work: Mark Andrews Listed Among Players With Most at Stake Over Rest of Season",
-        "url": "https://www.baltimoreravens.com/news/mark-andrews-most-at-stake-daniel-jones-tj-tampa-devontez-walker-ravens",
+        "type": "article",
         "author": "baltimoreravens.com Official",
         "outlet": "baltimoreravens.com Official",
-        "publishedAt": "2026-11-24T14:38:32.000Z"
+        "title": "Power Rankings: Ravens Rise After Tight Loss in Carolina",
+        "url": "https://www.baltimoreravens.com/news/power-rankings-ravens-nfl-week-12",
+        "publishedAt": "2026-11-25T14:00:00.000Z"
       },
       {
-        "sid": "S4",
-        "title": "Around the AFC North: DK Metcalf's Struggles Are Concern for Steelers",
-        "url": "https://www.baltimoreravens.com/news/dk-metcalf-struggles-steelers-concern-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north",
-        "author": "baltimoreravens.com Official",
-        "outlet": "baltimoreravens.com Official",
-        "publishedAt": "2026-11-24T17:03:11.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "News & Notes: Jesse Minter Gives Update on Marlon Humphrey",
-        "url": "https://www.baltimoreravens.com/news/jesse-minter-marlon-humphrey-update-tj-tampa-highest-defensive-grade-carolina-panthers-minter-two-minute-blunders",
-        "author": "baltimoreravens.com Official",
-        "outlet": "baltimoreravens.com Official",
-        "publishedAt": "2026-11-23T23:56:41.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans",
-        "url": "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
+        "type": "article",
         "author": "Jamison Hensley",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T23:38:39Z"
+        "title": "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans",
+        "url": "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
+        "publishedAt": "2026-11-23T23:38:39.000Z"
       },
       {
-        "sid": "S7",
-        "title": "Jesse Minter Discusses Ravens' Defense, Marlon Humphrey's Status",
-        "url": "https://www.baltimoreravens.com/video/jesse-minter-discusses-ravens-defense-marlon-humphrey-s-status-ravens-press-conferences",
-        "author": "baltimoreravens.com Video",
-        "outlet": "baltimoreravens.com Video",
-        "publishedAt": "2026-11-23T21:57:42.000Z"
+        "type": "article",
+        "author": "Frank Platko",
+        "outlet": "Baltimore Beatdown",
+        "title": "AFC North Preview, Week 12: Browns off their bye week, Steelers and Ravens reeling",
+        "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling",
+        "publishedAt": "2026-11-25T17:22:41.000Z"
       },
       {
-        "sid": "S8",
-        "title": "Final Drive: Time to 'Get Up Off the Mat'",
-        "url": "https://www.baltimoreravens.com/video/ravens-get-off-the-mat-jesse-minter-final-drive-2026",
-        "author": "baltimoreravens.com Video",
-        "outlet": "baltimoreravens.com Video",
-        "publishedAt": "2026-11-23T21:00:10.000Z"
+        "type": "article",
+        "author": "baltimoreravens.com Official",
+        "outlet": "baltimoreravens.com Official",
+        "title": "Marlon Humphrey Returns to Practice After Absence From Ravens",
+        "url": "https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell",
+        "publishedAt": "2026-11-25T18:47:55.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Frank Platko",
+        "outlet": "Baltimore Beatdown",
+        "title": "Ravens Snap Count Analysis, Week 11: Mike Green shines again, T.J. Tampa steps into larger role",
+        "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role",
+        "publishedAt": "2026-11-25T16:06:01.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Jamison Hensley",
+        "outlet": "ESPN Baltimore Ravens Beat",
+        "title": "Ravens CB Marlon Humphrey returned to practice Wednesday. Humphrey was sent home last week after he made a derogatory remark about Baltimore on his podcast.",
+        "url": "https://x.com/jamisonhensley/status/2125651163060085119",
+        "publishedAt": "2026-11-25T18:01:44.619Z"
+      },
+      {
+        "type": "article",
+        "author": "baltimoreravens.com Official",
+        "outlet": "baltimoreravens.com Official",
+        "title": "Devontez Walker Named AFC Special Teams Player of the Week",
+        "url": "https://www.baltimoreravens.com/news/devontez-walker-afc-special-teams-player-of-the-week-11-kickoff-return",
+        "publishedAt": "2026-11-25T17:00:06.000Z"
+      },
+      {
+        "type": "article",
+        "author": "baltimoreravens.com Official",
+        "outlet": "baltimoreravens.com Official",
+        "title": "Late for Work: Three Young Players Who Could See More Playing Time",
+        "url": "https://www.baltimoreravens.com/news/ravens-offseason-roster-questions-aaron-rodgers-zion-young-carson-vinson-adam-randall-2026",
+        "publishedAt": "2026-11-25T14:49:30.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Jamison Hensley",
+        "outlet": "ESPN",
+        "title": "Ravens cut punt returner LaJohntay Wester after his two muffs in loss",
+        "url": "https://www.espn.com/nfl/story/_/id/50585397/source-ravens-cut-punt-returner-wester-two-muffs-loss",
+        "publishedAt": "2026-11-24T21:05:41.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Jeff Zrebiec",
+        "outlet": "The Athletic Baltimore",
+        "title": "Per sources, the Ravens are cutting WR/RS LaJohntay Wester. He fumbled two punts (losing one of them) in Sunday's loss to the Panthers.",
+        "url": "https://x.com/jeffzrebiec/status/2125316383130972208",
+        "publishedAt": "2026-11-24T19:51:26.864Z"
+      },
+      {
+        "type": "article",
+        "author": "baltimoreravens.com Official",
+        "outlet": "baltimoreravens.com Official",
+        "title": "How to Watch, Listen, Live Stream Ravens vs. Texans, Week 12",
+        "url": "https://www.baltimoreravens.com/news/how-to-watch-listen-live-stream-ravens-vs-texans-week-12",
+        "publishedAt": "2026-11-25T14:13:01.000Z"
       }
     ]
   },
-  "clusteredBriefs": [],
+  "clusteredBriefs": [
+    {
+      "id": "bal_cl_top",
+      "category": "beat",
+      "headline": "Baltimore Ravens Week 12 Top Headlines (4-7)",
+      "summary": "Ravens head coach Jesse Minter said that Henry was a limited participant in Wednesday's practice after being placed back in concussion protocol, but the running back is expected to be available for Sunday's game against the Texans. — Marlon Humphrey Returns to",
+      "updatedAt": "2026-11-25T19:55:19.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Cordell Woodland",
+          "title": "Ravens head coach Jesse Minter said that Henry was a limited participant in Wednesday's practice after being placed back in concussion protocol, but the running back is expected to be available for Sunday's game against the Texans.",
+          "url": "https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
+          "publishedAt": "2026-11-25T19:55:19.000Z"
+        },
+        {
+          "label": "baltimoreravens.com Official",
+          "title": "Marlon Humphrey Returns to Practice After Absence From Ravens",
+          "url": "https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell",
+          "publishedAt": "2026-11-25T18:47:55.000Z"
+        },
+        {
+          "label": "Jamison Hensley",
+          "title": "Ravens CB Marlon Humphrey returned to practice Wednesday.\n\nHumphrey was sent home last week after he made a derogatory remark about Baltimore on his podcast.",
+          "url": "https://x.com/jamisonhensley/status/2125651163060085119",
+          "publishedAt": "2026-11-25T18:01:44.619Z"
+        },
+        {
+          "label": "Frank Platko",
+          "title": "Ravens Snap Count Analysis, Week 11: Mike Green shines again, T.J. Tampa steps into larger role",
+          "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role",
+          "publishedAt": "2026-11-25T16:06:01.000Z"
+        },
+        {
+          "label": "Frank Platko",
+          "title": "AFC North Preview, Week 12: Browns off their bye week, Steelers and Ravens reeling",
+          "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling",
+          "publishedAt": "2026-11-25T17:22:41.000Z"
+        },
+        {
+          "label": "baltimoreravens.com Official",
+          "title": "Devontez Walker Named AFC Special Teams Player of the Week",
+          "url": "https://www.baltimoreravens.com/news/devontez-walker-afc-special-teams-player-of-the-week-11-kickoff-return",
+          "publishedAt": "2026-11-25T17:00:06.000Z"
+        }
+      ]
+    },
+    {
+      "id": "bal_cl_health",
+      "category": "injury",
+      "headline": "Ravens Practice Report, Injury & IR Availability",
+      "summary": "Ravens head coach Jesse Minter said that Henry was a limited participant in Wednesday's practice after being placed back in concussion protocol, but the running back is expected to be available for Sunday's game against the Texans. — Marlon Humphrey Returns to",
+      "updatedAt": "2026-11-25T19:55:19.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Cordell Woodland",
+          "title": "Ravens head coach Jesse Minter said that Henry was a limited participant in Wednesday's practice after being placed back in concussion protocol, but the running back is expected to be available for Sunday's game against the Texans.",
+          "url": "https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
+          "publishedAt": "2026-11-25T19:55:19.000Z"
+        },
+        {
+          "label": "baltimoreravens.com Official",
+          "title": "Marlon Humphrey Returns to Practice After Absence From Ravens",
+          "url": "https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell",
+          "publishedAt": "2026-11-25T18:47:55.000Z"
+        },
+        {
+          "label": "Jamison Hensley",
+          "title": "Ravens CB Marlon Humphrey returned to practice Wednesday.\n\nHumphrey was sent home last week after he made a derogatory remark about Baltimore on his podcast.",
+          "url": "https://x.com/jamisonhensley/status/2125651163060085119",
+          "publishedAt": "2026-11-25T18:01:44.619Z"
+        },
+        {
+          "label": "baltimoreravens.com Video",
+          "title": "Mike Green Analyzes His Year 2 Breakout",
+          "url": "https://www.baltimoreravens.com/video/mike-green-analyzes-his-year-2-breakout-ravens-press-conferences",
+          "publishedAt": "2026-11-25T17:31:00.000Z"
+        },
+        {
+          "label": "Frank Platko",
+          "title": "AFC North Preview, Week 12: Browns off their bye week, Steelers and Ravens reeling",
+          "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling",
+          "publishedAt": "2026-11-25T17:22:41.000Z"
+        },
+        {
+          "label": "baltimoreravens.com Official",
+          "title": "Around the AFC North: Aaron Rodgers Says He Won't Return to Steelers After Being Benched",
+          "url": "https://www.baltimoreravens.com/news/steelers-bench-aaron-rodgers-wont-return-pat-mcafee-mason-rudolph-named-starter-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north",
+          "publishedAt": "2026-11-25T15:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "bal_cl_film",
+      "category": "film",
+      "headline": "Ravens All-22 Film, Trench & Efficiency Breakdowns",
+      "summary": "Ravens Snap Count Analysis, Week 11: Mike Green shines again, T.J. Tampa steps into larger role — Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
+      "updatedAt": "2026-11-25T16:06:01.000Z",
+      "itemCount": 2,
+      "sourceLinks": [
+        {
+          "label": "Frank Platko",
+          "title": "Ravens Snap Count Analysis, Week 11: Mike Green shines again, T.J. Tampa steps into larger role",
+          "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role",
+          "publishedAt": "2026-11-25T16:06:01.000Z"
+        },
+        {
+          "label": "The QB School",
+          "title": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
+          "url": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
+          "publishedAt": "2026-11-06T18:57:40.000Z"
+        }
+      ]
+    },
+    {
+      "id": "bal_cl_roster",
+      "category": "roster",
+      "headline": "Ravens Roster Moves, Trades & Salary Cap Desk",
+      "summary": "Ravens Waive LaJohntay Wester — Ravens Waive LaJohntay Wester and Kedon Slovis",
+      "updatedAt": "2026-11-24T23:44:55.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Pro Football Rumors",
+          "title": "Ravens Waive LaJohntay Wester",
+          "url": "https://www.profootballrumors.com/2026/11/ravens-waive-lajohntay-wester",
+          "publishedAt": "2026-11-24T23:44:55.000Z"
+        },
+        {
+          "label": "baltimoreravens.com Official",
+          "title": "Ravens Waive LaJohntay Wester and Kedon Slovis",
+          "url": "https://www.baltimoreravens.com/news/ravens-waive-lajohntay-wester-kedon-slovis-returner-quarterback",
+          "publishedAt": "2026-11-24T21:00:10.000Z"
+        },
+        {
+          "label": "Baltimore Ravens Official",
+          "title": "Ravens roster move: Waived QB Kedon Slovis and WR LaJohntay Wester.",
+          "url": "https://www.baltimoreravens.com/team/transactions/#tx-01c69bd6b5d5",
+          "publishedAt": "2026-11-24T08:00:00.000Z"
+        },
+        {
+          "label": "baltimoreravens.com Official",
+          "title": "Ravens Elevate Two Players From Practice Squad",
+          "url": "https://www.baltimoreravens.com/news/ravens-elevate-practice-squad-nick-vannett-david-olajiga-2026",
+          "publishedAt": "2026-11-21T21:00:16.000Z"
+        },
+        {
+          "label": "Pro Football Rumors",
+          "title": "Colts Waive QB Daniel Jones",
+          "url": "https://www.profootballrumors.com/2026/11/colts-release-qb-daniel-jones",
+          "publishedAt": "2026-11-21T16:00:28.000Z"
+        },
+        {
+          "label": "Baltimore Ravens Official",
+          "title": "Ravens roster move: Elevated TE Nick Vannett and DT David Olajiga.",
+          "url": "https://www.baltimoreravens.com/team/transactions/#tx-0329aa061dee",
+          "publishedAt": "2026-11-21T08:00:00.000Z"
+        }
+      ]
+    }
+  ],
   "rawStream": [
     {
-      "id": "bal_nfltr_9cac69635c74",
+      "id": "bal_pwire_3043078_64973928",
       "type": "article",
-      "title": "Ravens Cutting WR LaJohntay Wester",
-      "summary": "Jeff Zrebiec of The Athletic reports the Ravens are waiving WR LaJohntay Wester. Wester muffed two punts in Week 11’s loss to the Panthers and lost one. Wester, 24, was a sixth-round pick by the Ravens in the 2025 draft out of Colorado. He ",
-      "imageUrl": "",
-      "imageAlt": "Ravens Cutting WR LaJohntay Wester",
-      "publishedAt": "2026-11-24T20:00:49.000Z",
-      "url": "https://nfltraderumors.co/ravens-cutting-wr-lajohntay-wester/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
+      "title": "Ravens head coach Jesse Minter said that Henry was a limited participant in Wednesday's practice after being placed back in concussion protocol, but the running back is expected to be available for Sunday's game against the Texans.",
+      "summary": "The Ravens had previously announced that Henry cleared the five-step protocol after being checked for a concussion late in Sunday's 35-33 loss to Carolina. However, Minter noted that the running back later had \"a couple",
+      "publishedAt": "2026-11-25T19:55:19.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
+      "outletId": "espn",
+      "outletName": "105.7 The Fan Baltimore",
+      "reporterId": "ext_cordell_woodland",
+      "reporterName": "Cordell Woodland",
+      "author": "Cordell Woodland",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
       "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "3043078",
+          "name": "Derrick Henry",
+          "shortName": "D. Henry",
+          "position": "RB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043078.png"
+        }
+      ],
+      "isBreaking": true,
+      "isInGameInjury": true,
+      "breakingBadge": "LIVE INJURY UPDATE",
+      "breakingPriority": 3.29,
+      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "in_game_injury",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "injurySeverityScore": 0.82,
+      "injurySeverityTier": "serious",
+      "playerValueScore": 0.27,
+      "playerValueTier": "rotational",
+      "injuryImpactScore": 0.6,
+      "storyRank": 87.3365
+    },
+    {
+      "id": "bal_rss_9dadc039c43a",
+      "type": "article",
+      "title": "Marlon Humphrey Returns to Practice After Absence From Ravens",
+      "summary": "Three Ravens, including defensive tackle Nnamdi Madubuike, were not on the field at the start of Wednesday’s practice.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/tydvzpyagvvecuzggfeu.png",
+      "imageAlt": "Marlon Humphrey Returns to Practice After Absence From Ravens",
+      "publishedAt": "2026-11-25T18:47:55.000Z",
+      "url": "https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        },
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 1.486,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "practice_injury",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 45.4252
+      "storyRank": 23.1326
     },
     {
-      "id": "bal_vid_6046d6c02121",
+      "id": "bal_vid_99933fad683c",
       "type": "video",
-      "title": "LIVE: Ravens Daily - Nov, 24th, 2026",
-      "summary": "The play-by-play Voice of the Ravens, Kyle Youmans, former Ravens defensive tackle Michael Pierce, and WBAL's Nick Testoni dig deep into the film from the Ravens' Week 11 matchup with the Carolina Panthers. Former Ravens",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/jdib8mn6moeypx1izgbd.png",
-      "imageAlt": "LIVE: Ravens Daily - Nov, 24th, 2026",
-      "publishedAt": "2026-11-24T19:45:09.000Z",
-      "url": "https://www.baltimoreravens.com/video/live-ravens-daily-nov-24th-2026",
-      "externalVideoUrl": "https://www.baltimoreravens.com/video/live-ravens-daily-nov-24th-2026",
+      "title": "LIVE: Ravens Daily - Nov. 25th, 2026",
+      "summary": "Ravens running back Justice Hill joins Ravens Daily for a special guest appearance with former Ravens defensive lineman Michael Pierce and WBAL's Valerie Preactor. Hill shares his insights as the crew breaks down film fr",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/vjt4rhpv7pu1c81fu3l7.png",
+      "imageAlt": "LIVE: Ravens Daily - Nov. 25th, 2026",
+      "publishedAt": "2026-11-25T19:45:08.000Z",
+      "url": "https://www.baltimoreravens.com/video/live-ravens-daily-11-25",
+      "externalVideoUrl": "https://www.baltimoreravens.com/video/live-ravens-daily-11-25",
       "outletId": "ravens_official",
       "outletName": "baltimoreravens.com Video",
       "reporterId": "ravens_official",
@@ -156,6 +429,17 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4038441",
+          "name": "Justice Hill",
+          "shortName": "J. Hill",
+          "position": "RB",
+          "jersey": 43,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038441.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -169,7 +453,769 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 35.1342
+      "storyRank": 21.6419
+    },
+    {
+      "id": "bal_yt_YHHIsspyM2w",
+      "type": "video",
+      "category": "beat",
+      "videoId": "YHHIsspyM2w",
+      "embeddable": false,
+      "title": "Baltimore Ravens vs Houston Texans | 2026 Week 12 Game Preview",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
+      "imageUrl": "https://i.ytimg.com/vi/YHHIsspyM2w/hqdefault.jpg",
+      "imageAlt": "Baltimore Ravens vs Houston Texans | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:00:10.000Z",
+      "url": "https://www.youtube.com/watch?v=YHHIsspyM2w",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=YHHIsspyM2w",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.0647
+    },
+    {
+      "id": "x_tl_jamisonhensley_2125651163060085119",
+      "type": "tweet",
+      "title": "Ravens CB Marlon Humphrey returned to practice Wednesday.\n\nHumphrey was sent home last week after he made a derogatory remark about Baltimore on his podcast.",
+      "fullText": "Ravens CB Marlon Humphrey returned to practice Wednesday.\n\nHumphrey was sent home last week after he made a derogatory remark about Baltimore on his podcast.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125651071322230784/img/DxaoQlrTh9yj5gIk.jpg",
+      "imageAlt": "Jamison Hensley post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125651071322230784/vid/avc1/1920x1080/0IiQWbYHcCfJid3v.mp4?tag=29",
+      "isHighlightClip": true,
+      "duration": "0:19",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
+      "publishedAt": "2026-11-25T18:01:44.619Z",
+      "url": "https://x.com/jamisonhensley/status/2125651163060085119",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.2201
+    },
+    {
+      "id": "bal_brss_baltimore_beatdown_3a5e3bedb563",
+      "type": "article",
+      "title": "Ravens Snap Count Analysis, Week 11: Mike Green shines again, T.J. Tampa steps into larger role",
+      "summary": "Offense The Ravens played 65 total offensive snaps and, in what has been a rare occasion this season, the starting quarterback and all five offensive linemen played all of them. The five-man group up front had a better performance than in r",
+      "imageUrl": "",
+      "imageAlt": "Ravens Snap Count Analysis, Week 11: Mike Green shines again, T.J. Tampa steps into larger role",
+      "publishedAt": "2026-11-25T16:06:01.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Frank Platko",
+      "author": "Frank Platko",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4683188",
+          "name": "Mike Green",
+          "shortName": "M. Green",
+          "position": "LB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683188.png"
+        },
+        {
+          "id": "4575483",
+          "name": "T.J. Tampa",
+          "shortName": "T.J. Tampa",
+          "position": "CB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575483.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.656,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.8155
+    },
+    {
+      "id": "bal_vid_fe4ad7748f96",
+      "type": "video",
+      "title": "Mike Green Analyzes His Year 2 Breakout",
+      "summary": "OLB Mike Green on his pass rush technique, his mindset, and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/bh60czaiouvv416bjl3o.png",
+      "imageAlt": "Mike Green Analyzes His Year 2 Breakout",
+      "publishedAt": "2026-11-25T17:31:00.000Z",
+      "url": "https://www.baltimoreravens.com/video/mike-green-analyzes-his-year-2-breakout-ravens-press-conferences",
+      "externalVideoUrl": "https://www.baltimoreravens.com/video/mike-green-analyzes-his-year-2-breakout-ravens-press-conferences",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Video",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Video",
+      "author": "baltimoreravens.com Video",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4683188",
+          "name": "Mike Green",
+          "shortName": "M. Green",
+          "position": "LB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683188.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.7874
+    },
+    {
+      "id": "bal_vid_f00335ae8f36",
+      "type": "video",
+      "title": "Justice Hill Breaks Down Baltimore's Run Game",
+      "summary": "RB Justice Hill on Baltimore bouncing back on the ground against Carolina, his goal-line fumble, and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/azpjquzdvfj7ghvzgk93.png",
+      "imageAlt": "Justice Hill Breaks Down Baltimore's Run Game",
+      "publishedAt": "2026-11-25T17:30:03.000Z",
+      "url": "https://www.baltimoreravens.com/video/justice-hill-breaks-down-baltimore-s-run-game-ravens-press-conferences",
+      "externalVideoUrl": "https://www.baltimoreravens.com/video/justice-hill-breaks-down-baltimore-s-run-game-ravens-press-conferences",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Video",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Video",
+      "author": "baltimoreravens.com Video",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4038441",
+          "name": "Justice Hill",
+          "shortName": "J. Hill",
+          "position": "RB",
+          "jersey": 43,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038441.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.7476
+    },
+    {
+      "id": "bal_vid_e9b261f11108",
+      "type": "video",
+      "title": "Jacoby Brissett on Progress in Ravens Offense, Facing the Texans",
+      "summary": "QB Jacoby Brissett discusses acclimating to Baltimore's offense, Texans star defensive end Will Anderson Jr., and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/ghzheda6rmfhgqqhe6ny.png",
+      "imageAlt": "Jacoby Brissett on Progress in Ravens Offense, Facing the Texans",
+      "publishedAt": "2026-11-25T17:29:19.000Z",
+      "url": "https://www.baltimoreravens.com/video/jacoby-brissett-on-progress-in-ravens-offense-facing-the-texans-ravens-press-conferences",
+      "externalVideoUrl": "https://www.baltimoreravens.com/video/jacoby-brissett-on-progress-in-ravens-offense-facing-the-texans-ravens-press-conferences",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Video",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Video",
+      "author": "baltimoreravens.com Video",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.7171
+    },
+    {
+      "id": "bal_brss_baltimore_beatdown_c98ddc6407ba",
+      "type": "article",
+      "title": "AFC North Preview, Week 12: Browns off their bye week, Steelers and Ravens reeling",
+      "summary": "Updated Standings: Pittsburgh Steelers Matchup: vs. Denver Broncos, 3:00pm EST (Friday) The Steelers were upset by the Philadelphia Eagles last week, dropping their second straight game and falling to 6-4 on the season. Looking to right the",
+      "imageUrl": "",
+      "imageAlt": "AFC North Preview, Week 12: Browns off their bye week, Steelers and Ravens reeling",
+      "publishedAt": "2026-11-25T17:22:41.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Frank Platko",
+      "author": "Frank Platko",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.3267
+    },
+    {
+      "id": "bal_rss_970882856377",
+      "type": "article",
+      "title": "Devontez Walker Named AFC Special Teams Player of the Week",
+      "summary": "Walker’s kickoff return touchdown against the Carolina Panthers earned him AFC Special Teams Player of the Week honors.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/y2zsrghszis3sk2gtcgl.jpg",
+      "imageAlt": "Devontez Walker Named AFC Special Teams Player of the Week",
+      "publishedAt": "2026-11-25T17:00:06.000Z",
+      "url": "https://www.baltimoreravens.com/news/devontez-walker-afc-special-teams-player-of-the-week-11-kickoff-return",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4696882",
+          "name": "Devontez Walker",
+          "shortName": "D. Walker",
+          "position": "WR",
+          "jersey": 81,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696882.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.6502
+    },
+    {
+      "id": "bal_rss_81206790dfa8",
+      "type": "article",
+      "title": "Late for Work: Three Young Players Who Could See More Playing Time",
+      "summary": "Pundit looks ahead to offseason roster decisions. The Steelers bench Aaron Rodgers for Friday’s game against the Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/diua5ouffiakb85th1cb.png",
+      "imageAlt": "Late for Work: Three Young Players Who Could See More Playing Time",
+      "publishedAt": "2026-11-25T14:49:30.000Z",
+      "url": "https://www.baltimoreravens.com/news/ravens-offseason-roster-questions-aaron-rodgers-zion-young-carson-vinson-adam-randall-2026",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.9503
+    },
+    {
+      "id": "bal_rss_2d3ef708a3b1",
+      "type": "article",
+      "title": "How to Watch, Listen, Live Stream Ravens vs. Texans, Week 12",
+      "summary": "The Ravens head to Houston looking to end a six-game losing streak.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/rphgvzbqluouswaulijc.jpg",
+      "imageAlt": "How to Watch, Listen, Live Stream Ravens vs. Texans, Week 12",
+      "publishedAt": "2026-11-25T14:13:01.000Z",
+      "url": "https://www.baltimoreravens.com/news/how-to-watch-listen-live-stream-ravens-vs-texans-week-12",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.5158
+    },
+    {
+      "id": "bal_rss_6f22b3da66d9",
+      "type": "article",
+      "title": "Power Rankings: Ravens Rise After Tight Loss in Carolina",
+      "summary": "The Ravens’ sixth straight loss kept them toward the bottom of this week’s pundit power rankings.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/rorxdugzg3ji6cwba2fm.png",
+      "imageAlt": "Power Rankings: Ravens Rise After Tight Loss in Carolina",
+      "publishedAt": "2026-11-25T14:00:00.000Z",
+      "url": "https://www.baltimoreravens.com/news/power-rankings-ravens-nfl-week-12",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.3803
+    },
+    {
+      "id": "bal_rss_9fd73245413b",
+      "type": "article",
+      "title": "Around the AFC North: Aaron Rodgers Says He Won't Return to Steelers After Being Benched",
+      "summary": "Cincinnati's last-second loss to Washington keeps the AFC North race tight. Deshaun Watson is leaving the door open for a contract extension with Cleveland.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/kl9jbbzjvd8houe8bwoa.png",
+      "imageAlt": "Around the AFC North: Aaron Rodgers Says He Won't Return to Steelers After Being Benched",
+      "publishedAt": "2026-11-25T15:30:00.000Z",
+      "url": "https://www.baltimoreravens.com/news/steelers-bench-aaron-rodgers-wont-return-pat-mcafee-mason-rudolph-named-starter-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1381
+    },
+    {
+      "id": "bal_pfr_25b58917e59d",
+      "type": "article",
+      "title": "Ravens Waive LaJohntay Wester",
+      "summary": "In the wake of LaJohntay Wester’s mistake-filled outing in Week 11, the Ravens have cut the returner/receiver, the team announced. Baltimore also waived quarterback Kedon Slovis. Wester, a 2025 sixth-round pick from Colorado, was the Ravens",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T23:44:55.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/ravens-waive-lajohntay-wester",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7787
+    },
+    {
+      "id": "bal_brss_baltimore_beatdown_8a01df3ccfa6",
+      "type": "article",
+      "title": "Ravens cut WR LaJohntay Wester after 2 muffed punts in Carolina",
+      "summary": "The Baltimore Ravens are waiving second-year wide receiver/returner LaJohntay Wester after two muffed punts in Sunday’s loss to the Carolina Panthers, per Jeff Zrebiec of The Athletic. Wester, 24, let his first punt return go into the end z",
+      "imageUrl": "",
+      "imageAlt": "Ravens cut WR LaJohntay Wester after 2 muffed punts in Carolina",
+      "publishedAt": "2026-11-24T21:32:19.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-news/88186/ravens-cut-wr-lajohntay-wester-after-2-fumbled-punts-in-carolina",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Nikhil Mehta",
+      "author": "Nikhil Mehta",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-news/88186/ravens-cut-wr-lajohntay-wester-after-2-fumbled-punts-in-carolina",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6814
+    },
+    {
+      "id": "bal_espn_0c47334020a84",
+      "type": "article",
+      "title": "Ravens cut punt returner LaJohntay Wester after his two muffs in loss",
+      "summary": "The Ravens waived returner LaJohntay Wester after he muffed two punts in Sunday's loss at Carolina.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1124/r1750741_1296x729_16-9.jpg",
+      "imageCaption": "LaJohntay Wester [1296x729]",
+      "imageAlt": "Ravens cut punt returner LaJohntay Wester after his two muffs in loss",
+      "publishedAt": "2026-11-24T21:05:41.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50585397/source-ravens-cut-punt-returner-wester-two-muffs-loss",
+      "outletId": "espn_bal",
+      "outletName": "ESPN",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6755
+    },
+    {
+      "id": "bal_rss_060a17d921e7",
+      "type": "article",
+      "title": "Ravens Waive LaJohntay Wester and Kedon Slovis",
+      "summary": "The Ravens have parted ways with WR/RS LaJohntay Wester following two muffed punts against Carolina.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/swz2qrbw6kvwkghozso5.jpg",
+      "imageAlt": "Ravens Waive LaJohntay Wester and Kedon Slovis",
+      "publishedAt": "2026-11-24T21:00:10.000Z",
+      "url": "https://www.baltimoreravens.com/news/ravens-waive-lajohntay-wester-kedon-slovis-returner-quarterback",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.672
+    },
+    {
+      "id": "bal_espn_61911afc2caa4",
+      "type": "video",
+      "title": "Are trust issues to blame for the Ravens loss?",
+      "summary": "Jamison Hensley on Kyle Hamilton's comments concerning the Ravens loss to the Panthers.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_16x9_Ravens_IA/dm_261122_16x9_Ravens_IA.jpg",
+      "imageCaption": "Jamison Hensley on Kyle Hamilton's comments concerning the Ravens loss to the Panthers.",
+      "imageAlt": "Are trust issues to blame for the Ravens loss?",
+      "publishedAt": "2026-11-24T20:40:09.000Z",
+      "url": "https://www.espn.com/video/clip/_/id/50569224/are-trust-issues-blame-ravens-loss",
+      "outletId": "espn_bal",
+      "outletName": "ESPN",
+      "reporterId": "espn_bal",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4575517",
+          "name": "Kyle Hamilton",
+          "shortName": "K. Hamilton",
+          "position": "S",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575517.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6596
+    },
+    {
+      "id": "x_tl_jeffzrebiec_2125316383130972208",
+      "type": "tweet",
+      "title": "Per sources, the Ravens are cutting WR/RS LaJohntay Wester. He fumbled two punts (losing one of them) in Sunday's loss to the Panthers.",
+      "fullText": "Per sources, the Ravens are cutting WR/RS LaJohntay Wester. He fumbled two punts (losing one of them) in Sunday's loss to the Panthers.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jeff Zrebiec post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-24T19:51:26.864Z",
+      "url": "https://x.com/jeffzrebiec/status/2125316383130972208",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "the_athletic_baltimore_public_beat_wire_",
+      "outletName": "The Athletic Baltimore",
+      "reporterId": "jeff_zrebiec",
+      "reporterName": "Jeff Zrebiec",
+      "author": "Jeff Zrebiec",
+      "authorHandle": "@jeffzrebiec",
+      "authorProfileUrl": "https://x.com/jeffzrebiec",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6937
+    },
+    {
+      "id": "bal_vid_bd0c8e383d15",
+      "type": "video",
+      "title": "Final Drive: Two Ravens Who Have Earned More Opportunities",
+      "summary": "Ravens CB T.J. Tampa Jr. and WR Devontez Walker flashed against Carolina and could be in line for bigger roles moving forward.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/eesfnun5ulud6symafv1.png",
+      "imageAlt": "Final Drive: Two Ravens Who Have Earned More Opportunities",
+      "publishedAt": "2026-11-24T19:27:39.000Z",
+      "url": "https://www.baltimoreravens.com/video/tj-tampa-devontez-walker-ravens-earned-more-opportunities-final-drive",
+      "externalVideoUrl": "https://www.baltimoreravens.com/video/tj-tampa-devontez-walker-ravens-earned-more-opportunities-final-drive",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Video",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Video",
+      "author": "baltimoreravens.com Video",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4696882",
+          "name": "Devontez Walker",
+          "shortName": "D. Walker",
+          "position": "WR",
+          "jersey": 81,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696882.png"
+        },
+        {
+          "id": "4575483",
+          "name": "T.J. Tampa",
+          "shortName": "T.J. Tampa",
+          "position": "CB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575483.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6177
     },
     {
       "id": "bal_rss_1f4a07eaff45",
@@ -189,6 +1235,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3116365",
+          "name": "Mark Andrews",
+          "shortName": "M. Andrews",
+          "position": "TE",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116365.png"
+        },
+        {
+          "id": "4696882",
+          "name": "Devontez Walker",
+          "shortName": "D. Walker",
+          "position": "WR",
+          "jersey": 81,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696882.png"
+        },
+        {
+          "id": "4575483",
+          "name": "T.J. Tampa",
+          "shortName": "T.J. Tampa",
+          "position": "CB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575483.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -202,31 +1274,33 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3122
+      "storyRank": 0.4883
     },
     {
-      "id": "bal_rss_18960d2d67e8",
-      "type": "article",
-      "title": "Around the AFC North: DK Metcalf's Struggles Are Concern for Steelers",
-      "summary": "Cincinnati's last-second loss to Washington keeps the AFC North race tight. Deshaun Watson is leaving the door open for a contract extension with Cleveland.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/o7urmchexfgkyo7jnlu9.png",
-      "imageAlt": "Around the AFC North: DK Metcalf's Struggles Are Concern for Steelers",
-      "publishedAt": "2026-11-24T17:03:11.000Z",
-      "url": "https://www.baltimoreravens.com/news/dk-metcalf-struggles-steelers-concern-commanders-snap-bengals-winning-streak-deshaun-watson-talks-next-contract-around-afc-north",
+      "id": "bal_tx_01c69bd6b5d5",
+      "type": "tweet",
+      "title": "Ravens roster move: Waived QB Kedon Slovis and WR LaJohntay Wester.",
+      "fullText": "Ravens roster move: Waived QB Kedon Slovis and WR LaJohntay Wester.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T08:00:00.000Z",
+      "url": "https://www.baltimoreravens.com/team/transactions/#tx-01c69bd6b5d5",
       "outletId": "ravens_official",
       "outletName": "baltimoreravens.com Official",
       "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
+      "reporterName": "Baltimore Ravens Official",
+      "author": "Baltimore Ravens Official",
       "authorHandle": "@Ravens",
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
-      "wireSource": "club_official_rss",
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -235,7 +1309,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0419
+      "storyRank": 0.3727
+    },
+    {
+      "id": "bal_pwire_3126356_64941128",
+      "type": "article",
+      "title": "Ravens head coach Jesse Minter said Monday that Humphrey has returned to the team's facility, but a decision hasn't been made regarding the defensive back's status for Sunday's game against the Texans.",
+      "summary": "The Ravens sent Humphrey home Thursday and made him a healthy inactive for this past Sunday's 35-33 loss to the Panthers after he made a negative comment about the city of Baltimore on his podcast. Though Humphrey is exp",
+      "publishedAt": "2026-11-24T00:07:26.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/3126356/marlon-humphrey#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20Monday",
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0379
     },
     {
       "id": "bal_rss_0bf462efd2e6",
@@ -255,6 +1370,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4696882",
+          "name": "Devontez Walker",
+          "shortName": "D. Walker",
+          "position": "WR",
+          "jersey": 81,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696882.png"
+        },
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -268,7 +1401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8341
+      "storyRank": 0.2844
     },
     {
       "id": "bal_espn_da80639075b30",
@@ -278,7 +1411,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1750398_600x600_1-1.jpg",
       "imageCaption": "Marlon Humphrey [600x600]",
       "imageAlt": "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans",
-      "publishedAt": "2026-11-23T23:38:39Z",
+      "publishedAt": "2026-11-23T23:38:39.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -289,6 +1422,16 @@
       "authorProfileUrl": "https://x.com/jamisonhensley",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -302,27 +1445,36 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8178
+      "storyRank": 0.2818
     },
     {
-      "id": "bal_vid_b5fba1050c69",
-      "type": "video",
-      "title": "Jesse Minter Discusses Ravens' Defense, Marlon Humphrey's Status",
-      "summary": "Head Coach Jesse Minter on Baltimore's Week 11 loss to the Carolina Panthers, the defense, and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/kiadolkg38fl9ar3qzu1.png",
-      "imageAlt": "Jesse Minter Discusses Ravens' Defense, Marlon Humphrey's Status",
-      "publishedAt": "2026-11-23T21:57:42.000Z",
-      "url": "https://www.baltimoreravens.com/video/jesse-minter-discusses-ravens-defense-marlon-humphrey-s-status-ravens-press-conferences",
-      "externalVideoUrl": "https://www.baltimoreravens.com/video/jesse-minter-discusses-ravens-defense-marlon-humphrey-s-status-ravens-press-conferences",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Video",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Video",
-      "author": "baltimoreravens.com Video",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "id": "bal_brss_baltimore_beatdown_9d2d5c7571d4",
+      "type": "article",
+      "title": "Winners and losers from Ravens’ Week 11 loss to the Panthers",
+      "summary": "The Baltimore Ravens lost their sixth consecutive game with a 35-33 loss to the Carolina Panthers, and we all lost by watching it. Winners WR Devontez Walker: The third-year receiver got his first shot as a kick returner this week, and he m",
+      "imageUrl": "",
+      "imageAlt": "Winners and losers from Ravens’ Week 11 loss to the Panthers",
+      "publishedAt": "2026-11-23T21:27:38.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88139/winners-and-losers-from-ravens-week-11-loss-to-the-panthers",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Dustin Cox",
+      "author": "Dustin Cox",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88139/winners-and-losers-from-ravens-week-11-loss-to-the-panthers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4696882",
+          "name": "Devontez Walker",
+          "shortName": "D. Walker",
+          "position": "WR",
+          "jersey": 81,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696882.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -336,27 +1488,32 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7362
+      "storyRank": 0.2598
     },
     {
-      "id": "bal_vid_8193f2f1d958",
+      "id": "bal_yts_wdlsXc0by8U",
       "type": "video",
-      "title": "Final Drive: Time to 'Get Up Off the Mat'",
-      "summary": "With a must-win game in Houston up next, the Ravens need to rebound quickly from a tough loss in Carolina.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/vv9fx77yp20xnrhodmid.png",
-      "imageAlt": "Final Drive: Time to 'Get Up Off the Mat'",
-      "publishedAt": "2026-11-23T21:00:10.000Z",
-      "url": "https://www.baltimoreravens.com/video/ravens-get-off-the-mat-jesse-minter-final-drive-2026",
-      "externalVideoUrl": "https://www.baltimoreravens.com/video/ravens-get-off-the-mat-jesse-minter-final-drive-2026",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Video",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Video",
-      "author": "baltimoreravens.com Video",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "videoId": "wdlsXc0by8U",
+      "embeddable": false,
+      "title": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "16:17",
+      "imageUrl": "https://i.ytimg.com/vi/wdlsXc0by8U/hqdefault.jpg",
+      "imageAlt": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-23T20:45:00.767Z",
+      "url": "https://www.youtube.com/watch?v=wdlsXc0by8U",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=wdlsXc0by8U",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -370,7 +1527,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6958
+      "storyRank": 0.2588
+    },
+    {
+      "id": "bal_brss_baltimore_beatdown_eaa5cea5a609",
+      "type": "article",
+      "title": "Ravens drop 6th straight to Panthers, put season on life support",
+      "summary": "The Baltimore Ravens dropped their sixth straight game in a rollicking, back-and-forth 35-33 loss to the Carolina Panthers on Sunday afternoon. After a wild 58 minutes that included seven lead changes and no less than a dozen jaw-dropping p",
+      "imageUrl": "",
+      "imageAlt": "Ravens drop 6th straight to Panthers, put season on life support",
+      "publishedAt": "2026-11-23T19:29:32.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-news/88128/ravens-drop-6th-straight-to-panthers-put-season-on-life-support",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Nikhil Mehta",
+      "author": "Nikhil Mehta",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-news/88128/ravens-drop-6th-straight-to-panthers-put-season-on-life-support",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2457
     },
     {
       "id": "bal_rss_f79d10809a3f",
@@ -390,6 +1581,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        },
+        {
+          "id": "4361178",
+          "name": "Cam Jurgens",
+          "shortName": "C. Jurgens",
+          "position": "C",
+          "jersey": 64,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361178.png"
+        },
+        {
+          "id": "4575483",
+          "name": "T.J. Tampa",
+          "shortName": "T.J. Tampa",
+          "position": "CB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575483.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -403,7 +1620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5582
+      "storyRank": 0.2327
     },
     {
       "id": "bal_espn_92501318f9b5b",
@@ -413,7 +1630,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1750160_1296x729_16-9.jpg",
       "imageCaption": "Derrick Henry [1296x729]",
       "imageAlt": "Turnovers, penalties, time management: Ravens are NFL's best at beating themselves",
-      "publishedAt": "2026-11-23T16:44:57Z",
+      "publishedAt": "2026-11-23T16:44:57.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50573132/ravens-nfl-best-beating-week-11-panthers",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -424,6 +1641,7 @@
       "authorProfileUrl": "https://x.com/jamisonhensley",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -437,7 +1655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5547
+      "storyRank": 0.2319
     },
     {
       "id": "bal_rss_f2d89141419a",
@@ -457,6 +1675,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -470,27 +1689,27 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5009
+      "storyRank": 0.2194
     },
     {
-      "id": "bal_espn_61911afc2caa4",
-      "type": "video",
-      "title": "Are trust issues to blame for the Ravens loss?",
-      "summary": "Jamison Hensley on Kyle Hamilton's comments concerning the Ravens loss to the Panthers.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_16x9_Ravens_IA/dm_261122_16x9_Ravens_IA.jpg",
-      "imageCaption": "Jamison Hensley on Kyle Hamilton's comments concerning the Ravens loss to the Panthers.",
-      "imageAlt": "Are trust issues to blame for the Ravens loss?",
-      "publishedAt": "2026-11-23T03:23:38Z",
-      "url": "https://www.espn.com/video/clip/_/id/50569224/are-trust-issues-blame-ravens-loss",
-      "outletId": "espn_bal",
-      "outletName": "ESPN",
-      "reporterId": "espn_bal",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "id": "bal_brss_baltimore_beatdown_c2e718e02ebb",
+      "type": "article",
+      "title": "Ravens Report Card, Week 11: Mistakes and miscues mount in sixth straight loss",
+      "summary": "The Baltimore Ravens dropped their fifth consecutive game on Monday night, losing to the previously winless Los Angeles Chargers by three points (23-20). Here are report card grades for the team’s position groups from another disheartening",
+      "imageUrl": "",
+      "imageAlt": "Ravens Report Card, Week 11: Mistakes and miscues mount in sixth straight loss",
+      "publishedAt": "2026-11-23T03:58:42.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88140/ravens-report-card-week-11-mistakes-and-miscues-mount-in-sixth-straight-loss",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Frank Platko",
+      "author": "Frank Platko",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88140/ravens-report-card-week-11-mistakes-and-miscues-mount-in-sixth-straight-loss",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -504,7 +1723,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3238
+      "storyRank": 0.1687
+    },
+    {
+      "id": "bal_pwire_4038441_50563318",
+      "type": "article",
+      "title": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
+      "summary": "After watching the Thursday night game , I was all set to do a \"Colts need to cut Daniel Jones \" item for the Week 11 overreactions column, but Indianapolis went ahead and beat me to it . I'm not sure it would have been",
+      "publishedAt": "2026-11-23T02:41:09.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50563318/week-11-overreactions-2026-graziano-bills-eagles-nfc-east",
+      "outletId": "espn_national",
+      "outletName": "ESPN NFL Insiders",
+      "reporterId": "dan_graziano",
+      "reporterName": "Dan Graziano",
+      "author": "Dan Graziano",
+      "authorHandle": "@DanGrazianoESPN",
+      "authorProfileUrl": "https://x.com/DanGrazianoESPN",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.041
     },
     {
       "id": "bal_espn_43feb3a96b1bc",
@@ -514,17 +1765,18 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749877_1296x729_16-9.jpg",
       "imageCaption": "Bryce Young [1296x729]",
       "imageAlt": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
-      "publishedAt": "2026-11-23T01:28:16Z",
+      "publishedAt": "2026-11-23T01:28:16.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567146/young-authors-game-winning-drive-first-place-panthers",
-      "outletId": "charlotte_observer_public_beat_wire_car",
+      "outletId": "espn_bal",
       "outletName": "ESPN",
-      "reporterId": "mike_kaye",
+      "reporterId": "espn_bal",
       "reporterName": "Mike Kaye",
       "author": "Mike Kaye",
-      "authorHandle": "@mike_e_kaye",
-      "authorProfileUrl": "https://x.com/mike_e_kaye",
-      "trustTier": 3,
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
+      "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -533,12 +1785,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 78,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2587
+      "storyRank": 0.1628
     },
     {
       "id": "bal_espn_69b128e169263",
@@ -548,7 +1800,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749903_2_600x600_1-1.jpg",
       "imageCaption": "Minter [600x600]",
       "imageAlt": "Jesse Minter: I take responsibility for latest Ravens loss",
-      "publishedAt": "2026-11-23T00:50:05Z",
+      "publishedAt": "2026-11-23T00:50:05.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567139/jesse-minter-take-responsibility-latest-ravens-loss",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -559,6 +1811,7 @@
       "authorProfileUrl": "https://x.com/jamisonhensley",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -572,7 +1825,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2979
+      "storyRank": 0.1607
     },
     {
       "id": "bal_espn_a0caad20a15b2",
@@ -582,7 +1835,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
       "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "imageAlt": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
-      "publishedAt": "2026-11-23T00:34:34Z",
+      "publishedAt": "2026-11-23T00:34:34.000Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873068",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -593,6 +1846,7 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -606,7 +1860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0739
+      "storyRank": 0.04
     },
     {
       "id": "bal_rss_4374fcb620e1",
@@ -626,6 +1880,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -639,7 +1894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2887
+      "storyRank": 0.1574
     },
     {
       "id": "bal_rss_cd23233b5f38",
@@ -659,6 +1914,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -672,61 +1928,104 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2855
+      "storyRank": 0.1563
     },
     {
-      "id": "bal_vid_286bbb69c671",
-      "type": "video",
-      "title": "Mark Andrews: Ravens 'Fought Hard' in Loss to Panthers",
-      "summary": "TE Mark Andrews on Baltimore's offense, managing the up-and-down nature of Sunday's game, and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/ldujm3xlatvwru0mwlqx.jpg",
-      "imageAlt": "Mark Andrews: Ravens 'Fought Hard' in Loss to Panthers",
-      "publishedAt": "2026-11-22T22:13:00.000Z",
-      "url": "https://www.baltimoreravens.com/video/mark-andrews-panthers-ravens-week-11-press-conferences",
-      "externalVideoUrl": "https://www.baltimoreravens.com/video/mark-andrews-panthers-ravens-week-11-press-conferences",
+      "id": "bal_brss_baltimore_beatdown_cf57764cfb3a",
+      "type": "article",
+      "title": "Ravens discussion: instant reactions to rollercoaster loss to Panthers",
+      "summary": "The Baltimore Ravens lost their sixth straight game on Sunday afternoon, falling to the Carolina Panthers by a score of 35-33. A back-and-forth matchup came down to the final drives, and once again, Baltimore’s defense could not get off the",
+      "imageUrl": "",
+      "imageAlt": "Ravens discussion: instant reactions to rollercoaster loss to Panthers",
+      "publishedAt": "2026-11-22T22:00:25.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-discussion/88118/ravens-discussion-instant-reactions-to-rollercoaster-loss-to-panthers",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Nikhil Mehta",
+      "author": "Nikhil Mehta",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-discussion/88118/ravens-discussion-instant-reactions-to-rollercoaster-loss-to-panthers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1494
+    },
+    {
+      "id": "x_tl_ravens_2124580003002089680",
+      "type": "tweet",
+      "title": "THE TARHEEL TEZ BACK IN CAROLINA WITH THE KICK RETURN TUDDY.\n\nTUNE IN ON FOX!",
+      "fullText": "THE TARHEEL TEZ BACK IN CAROLINA WITH THE KICK RETURN TUDDY.\n\nTUNE IN ON FOX!",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124579761947127808/img/_a4rzCNZ2tg8krn1.jpg",
+      "imageAlt": "Eric DeCosta post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124579761947127808/vid/avc1/1920x1080/__6Tjzz1du4kPkkM.mp4?tag=29",
+      "isHighlightClip": true,
+      "duration": "0:21",
+      "embeddable": true,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-22T19:05:20.160Z",
+      "url": "https://x.com/Ravens/status/2124580003002089680",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
       "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Video",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Video",
-      "author": "baltimoreravens.com Video",
+      "outletName": "BaltimoreRavens.com / Official Team",
+      "reporterId": "eric_decosta",
+      "reporterName": "Eric DeCosta",
+      "author": "Eric DeCosta",
       "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "authorProfileUrl": "https://x.com/Ravens",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 0,
+      "fluffScore": 25,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 98,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.275
+      "storyRank": 0.0343
     },
     {
-      "id": "bal_vid_38b6c9c90f9e",
-      "type": "video",
-      "title": "Roger Rosengarten: Week 11 Was 'Identity Game' for Offensive Line",
-      "summary": "T Roger Rosengarten on Baltimore's offensive line, QB Jacoby Brissett, and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/c4q9toov8brpo6ba9ulk.jpg",
-      "imageAlt": "Roger Rosengarten: Week 11 Was 'Identity Game' for Offensive Line",
-      "publishedAt": "2026-11-22T22:11:00.000Z",
-      "url": "https://www.baltimoreravens.com/video/roger-rosengarten-panthers-ravens-week-11-press-conferences",
-      "externalVideoUrl": "https://www.baltimoreravens.com/video/roger-rosengarten-panthers-ravens-week-11-press-conferences",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Video",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Video",
-      "author": "baltimoreravens.com Video",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "id": "bal_brss_baltimore_beatdown_0ed24784d55d",
+      "type": "article",
+      "title": "Batlimore Ravens vs. Carolina Panthers game discussion, chat",
+      "summary": "The Baltimore Ravens (4-6) are down in Charlotte to take on the Carolina Panthers (4-5) at Bank of America Stadium at 1:00 p.m. ET! The Ravens are in the midsts of one of the worst stretches in franchise history. Monday night’s disaster aga",
+      "imageUrl": "",
+      "imageAlt": "Batlimore Ravens vs. Carolina Panthers game discussion, chat",
+      "publishedAt": "2026-11-22T17:43:37.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-discussion/88108/batlimore-ravens-vs-carolina-panthers-game-discussion-chat",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Nikhil Mehta",
+      "author": "Nikhil Mehta",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-discussion/88108/batlimore-ravens-vs-carolina-panthers-game-discussion-chat",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -740,41 +2039,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2747
-    },
-    {
-      "id": "bal_espn_671a45fa034bb",
-      "type": "video",
-      "title": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "summary": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
-      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "imageAlt": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "publishedAt": "2026-11-22T21:40:55Z",
-      "url": "https://www.espn.com/video/clip/_/id/50565408/game-highlights",
-      "outletId": "espn_bal",
-      "outletName": "ESPN",
-      "reporterId": "espn_bal",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2707
+      "storyRank": 0.0661
     },
     {
       "id": "bal_pfr_d3775005498d",
@@ -793,6 +2058,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -806,7 +2081,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0991
+      "storyRank": 0.0657
     },
     {
       "id": "bal_rss_ed6787f68a96",
@@ -826,6 +2101,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -839,7 +2115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0899
+      "storyRank": 0.0618
     },
     {
       "id": "bal_rss_6deb198b0397",
@@ -859,6 +2135,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -872,7 +2149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0899
+      "storyRank": 0.0618
     },
     {
       "id": "bal_rss_7426ee678ab7",
@@ -892,6 +2169,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -905,7 +2183,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0152
+    },
+    {
+      "id": "bal_brss_baltimore_beatdown_1926ebde440f",
+      "type": "article",
+      "title": "Ravens at Panthers: Kickoff time, TV channel, odds, and more",
+      "summary": "The Baltimore Ravens (4-6) are visiting the Carolina Panthers (4-5) in Week 11. Here’s how to tune in: How to Watch Kickoff: Sunday, Nov. 22, 1:00 p.m. ETLocation: Bank of America Stadium, Charlotte, N.C.TV Channel: FOX / WBFF 45 in Baltimo",
+      "imageUrl": "",
+      "imageAlt": "Ravens at Panthers: Kickoff time, TV channel, odds, and more",
+      "publishedAt": "2026-11-22T08:09:02.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-game-information/88097/ravens-at-panthers-kickoff-time-tv-channel-odds-and-more",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Nikhil Mehta",
+      "author": "Nikhil Mehta",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-game-information/88097/ravens-at-panthers-kickoff-time-tv-channel-odds-and-more",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 75,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.057
+    },
+    {
+      "id": "bal_brss_baltimore_beatdown_8de17a2dc36c",
+      "type": "article",
+      "title": "Ravens Discussion: Predictions for Week 11 matchup vs. Panthers",
+      "summary": "The Baltimore Ravens will face the Carolina Panthers on the road in Week 11, looking to snap a five-game losing streak and keep their slim hopes of a late-season turnaround alive. Here are Baltimore Beatdown’s predictions for this contest.",
+      "imageUrl": "",
+      "imageAlt": "Ravens Discussion: Predictions for Week 11 matchup vs. Panthers",
+      "publishedAt": "2026-11-22T03:22:31.000Z",
+      "url": "https://www.baltimorebeatdown.com/baltimore-ravens-discussion/88094/ravens-discussion-predictions-for-week-11-matchup-vs-panthers",
+      "outletId": "baltimore_beatdown",
+      "outletName": "Baltimore Beatdown",
+      "reporterId": "baltimore_beatdown",
+      "reporterName": "Frank Platko",
+      "author": "Frank Platko",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.baltimorebeatdown.com/baltimore-ravens-discussion/88094/ravens-discussion-predictions-for-week-11-matchup-vs-panthers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0519
     },
     {
       "id": "bal_pfr_e4b84b9ab405",
@@ -924,6 +2270,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -937,7 +2284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0653
+      "storyRank": 0.0489
     },
     {
       "id": "bal_rss_7991c38701a6",
@@ -957,6 +2304,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -970,7 +2318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0633
+      "storyRank": 0.048
     },
     {
       "id": "bal_rss_53ee2c8a75f9",
@@ -990,6 +2338,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1003,7 +2352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.0473
     },
     {
       "id": "bal_pfr_7890a695a61a",
@@ -1022,6 +2371,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1035,7 +2394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.011
     },
     {
       "id": "bal_rss_948618da3da1",
@@ -1055,6 +2414,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3043078",
+          "name": "Derrick Henry",
+          "shortName": "D. Henry",
+          "position": "RB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043078.png"
+        },
+        {
+          "id": "4683188",
+          "name": "Mike Green",
+          "shortName": "M. Green",
+          "position": "LB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683188.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1068,7 +2445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0556
+      "storyRank": 0.0435
     },
     {
       "id": "bal_espn_6819f9aff567e",
@@ -1078,7 +2455,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1013/r1729943_600x400_3-2.jpg",
       "imageCaption": "Carmelo Anthony [600x400]",
       "imageAlt": "Carmelo Anthony calls out Ravens' Humphrey over Baltimore 'criminals' remark",
-      "publishedAt": "2026-11-21T13:35:36Z",
+      "publishedAt": "2026-11-21T13:35:36.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50548223/carmelo-anthony-calls-ravens-humphrey-baltimore-remark",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -1089,6 +2466,16 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1102,7 +2489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0552
+      "storyRank": 0.0433
     },
     {
       "id": "bal_tx_0329aa061dee",
@@ -1123,6 +2510,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1136,7 +2524,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0402
     },
     {
       "id": "bal_rss_54cd1deb961c",
@@ -1156,6 +2544,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1169,27 +2567,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0421
+      "storyRank": 0.035
     },
     {
-      "id": "bal_espn_b4e72a2d2eb82",
-      "type": "article",
-      "title": "Can Ravens keep the Marlon Humphrey controversy from becoming a distraction?",
-      "summary": "While there's more to the cornerback's story, one Baltimore teammate says: \"We have enough things to worry about.\"",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748551_1296x729_16-9.jpg",
-      "imageCaption": "Marlon Humphrey [1296x729]",
-      "imageAlt": "Can Ravens keep the Marlon Humphrey controversy from becoming a distraction?",
-      "publishedAt": "2026-11-20T17:12:30Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50541178/ravens-avoid-marlon-humphrey-controversy-distraction",
-      "outletId": "espn_bal",
-      "outletName": "ESPN",
-      "reporterId": "jamison_hensley",
-      "reporterName": "Jamison Hensley",
-      "author": "Jamison Hensley",
-      "authorHandle": "@jamisonhensley",
-      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "id": "x_tl_albertbreer_2123842243647971491",
+      "type": "tweet",
+      "title": "Daniel Jones will go on waivers. Just a couple notes …\n\n• The Ravens made a play for him before trading for Jacoby Brissett.\n\n• His background with Brian Daboll could make him a fit for Patriots OC Josh McDaniels.",
+      "fullText": "Daniel Jones will go on waivers. Just a couple notes …\n\n• The Ravens made a play for him before trading for Jacoby Brissett.\n\n• His background with Brian Daboll could make him a fit for Patriots OC Josh McDaniels.",
+      "isFullTweet": true,
+      "summary": "The Colts have released QB Daniel Jones, per the team.",
+      "imageUrl": "",
+      "imageAlt": "Albert Breer post",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
+      "publishedAt": "2026-11-20T18:13:44.623Z",
+      "url": "https://x.com/AlbertBreer/status/2123842243647971491",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "nfl_network",
+      "outletName": "MMQB / SI",
+      "reporterId": "albert_breer",
+      "reporterName": "Albert Breer",
+      "author": "Albert Breer",
+      "authorHandle": "@AlbertBreer",
+      "authorProfileUrl": "https://x.com/AlbertBreer",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1198,12 +2610,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 95,
+      "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0401
+      "storyRank": 0.0375
     },
     {
       "id": "bal_rss_9eca636d1591",
@@ -1223,6 +2635,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1236,7 +2649,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0386
+      "storyRank": 0.0327
     },
     {
       "id": "bal_rss_334f8ad65d9b",
@@ -1256,6 +2669,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1269,7 +2683,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0096
+      "storyRank": 0.0081
     },
     {
       "id": "bal_pfr_61caf6149550",
@@ -1288,6 +2702,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1301,32 +2725,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0334
+      "storyRank": 0.029
     },
     {
-      "id": "bal_espn_87934e12e2247",
+      "id": "bal_pwire_4832793_64872128",
       "type": "article",
-      "title": "Panthers aim to hold NFC South lead while Ravens look to keep playoffs hopes alive, end 5-game skid",
-      "summary": "— The Carolina Panthers needed a walk-off 54-yard field goal from Ryan Fitzgerald to beat the New Orleans Saints 20-17 last Sunday and remain in first...",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
-      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "imageAlt": "Panthers aim to hold NFC South lead while Ravens look to keep playoffs hopes alive, end 5-game skid",
-      "publishedAt": "2026-11-20T00:49:33Z",
-      "url": "https://www.espn.com/nfl/preview?gameId=401873068",
-      "outletId": "espn_bal",
-      "outletName": "ESPN",
-      "reporterId": "espn_bal",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "title": "Ioane (shoulder/knee) was a full participant in Thursday's practice.",
+      "summary": "The offensive guard was limited during Wednesday's session. Ioane left Monday's loss to the Chargers with a shoulder injury and didn't return. The first-round pick out of Penn State has started all nine games he's played",
+      "publishedAt": "2026-11-20T00:37:01.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4832793/olaivavega-ioane#:~:text=Ioane%20(shoulder%2Fknee)%20was%20a%20full%20participant%20in",
+      "outletId": "espn",
+      "outletName": "105.7 The Fan Baltimore",
+      "reporterId": "ext_cordell_woodland",
+      "reporterName": "Cordell Woodland",
+      "author": "Cordell Woodland",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4832793/olaivavega-ioane#:~:text=Ioane%20(shoulder%2Fknee)%20was%20a%20full%20participant%20in",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4832793",
+          "name": "Olaivavega Ioane",
+          "shortName": "O. Ioane",
+          "position": "G",
+          "jersey": 71,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832793.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1335,7 +2766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0278
     },
     {
       "id": "bal_rss_9e2aaa345621",
@@ -1355,6 +2786,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1368,7 +2809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0314
+      "storyRank": 0.0276
     },
     {
       "id": "bal_rss_e541ddea98f1",
@@ -1388,6 +2829,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1401,7 +2852,104 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0738
+      "storyRank": 0.0662
+    },
+    {
+      "id": "bal_pwire_4035245_64866828",
+      "type": "article",
+      "title": "Madubuike (hamstring) remained sidelined for Thursday's practice.",
+      "summary": "Madubuike was injured in Monday night's loss to the Chargers and has logged back-to-back DNPs to open Week 11 prep work. Veteran John Jenkins would likely see a spike in defensive snaps if Madubuike is unable to play Sun",
+      "publishedAt": "2026-11-19T20:19:44.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4035245/nnamdi-madubuike#:~:text=Madubuike%20(hamstring)%20remained%20sidelined%20for%20Thursday's%20practice",
+      "outletId": "the_baltimore_banner_bal",
+      "outletName": "The Baltimore Banner",
+      "reporterId": "jonas_shaffer",
+      "reporterName": "Jonas Shaffer",
+      "author": "Jonas Shaffer",
+      "authorHandle": "@jonas_shaffer",
+      "authorProfileUrl": "https://x.com/jonas_shaffer",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "15846",
+          "name": "John Jenkins",
+          "shortName": "J. Jenkins",
+          "position": "DT",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15846.png"
+        },
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0271
+    },
+    {
+      "id": "x_tl_jamisonhensley_2123500794540617785",
+      "type": "tweet",
+      "title": "Correction: Humphrey would still earn $847,222 for not playing Sunday",
+      "fullText": "Correction: Humphrey would still earn $847,222 for not playing Sunday",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jamison Hensley post",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
+      "publishedAt": "2026-11-19T19:36:56.812Z",
+      "url": "https://x.com/jamisonhensley/status/2123500794540617785",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0296
     },
     {
       "id": "bal_rss_a32ca69e8e9a",
@@ -1421,6 +2969,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1434,7 +2983,107 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0303
+      "storyRank": 0.0268
+    },
+    {
+      "id": "x_tl_jamisonhensley_2123469187439853714",
+      "type": "tweet",
+      "title": "Before the Marlon Humphrey situation, the last time I can remember the Ravens deactivating a player as a disciplinary measure was 23 years ago, when Baltimore benched cornerback Chris McAlister.\n\nIn 2003, when the Ravens were practicing in San Diego because of a hurricane in Baltimore, McAlister missed curfew one…",
+      "fullText": "Before the Marlon Humphrey situation, the last time I can remember the Ravens deactivating a player as a disciplinary measure was 23 years ago, when Baltimore benched cornerback Chris McAlister.\n\nIn 2003, when the Ravens were practicing in San Diego because of a hurricane in Baltimore, McAlister missed curfew one night and then skipped a morning team meeting. He reported back just as the team was prepared to leave the hotel for practice and was notified by coach Brian Billick that he would not accompany the team for the rest of the weekend.",
+      "isFullTweet": false,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jamison Hensley post",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
+      "publishedAt": "2026-11-19T17:31:21.092Z",
+      "url": "https://x.com/jamisonhensley/status/2123469187439853714",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.029
+    },
+    {
+      "id": "x_tl_ravens_2123460128628199528",
+      "type": "tweet",
+      "title": "Coach Minter on Marlon Humphrey",
+      "fullText": "Coach Minter on Marlon Humphrey",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HXgMt7VXYAAnhTG.jpg",
+      "imageAlt": "Eric DeCosta post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123460005219209216/vid/avc1/1280x720/_W-zZMm2HgEMWzrs.mp4?tag=29",
+      "isHighlightClip": true,
+      "duration": "2:16",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
+      "publishedAt": "2026-11-19T16:55:21.303Z",
+      "url": "https://x.com/Ravens/status/2123460128628199528",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "ravens_official",
+      "outletName": "BaltimoreRavens.com / Official Team",
+      "reporterId": "eric_decosta",
+      "reporterName": "Eric DeCosta",
+      "author": "Eric DeCosta",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://x.com/Ravens",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0289
     },
     {
       "id": "bal_rss_21028eb691a2",
@@ -1454,6 +3103,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1467,7 +3126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0263
     },
     {
       "id": "bal_rss_872f6427a8f3",
@@ -1487,6 +3146,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1500,7 +3160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0288
+      "storyRank": 0.0257
     },
     {
       "id": "bal_pfr_70041b3c4411",
@@ -1519,6 +3179,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1532,7 +3193,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0225
+    },
+    {
+      "id": "bal_pwire_3858276_64858628",
+      "type": "article",
+      "title": "Hawkins (knee) was a limited participant in Wednesday's practice.",
+      "summary": "Hawkins has missed the Ravens' last four games while working through a knee injury. He was able to log some limited practices during Week 10 prep, and if he can increase his practice participation over the next couple of",
+      "publishedAt": "2026-11-19T01:20:22.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/3858276/jaylinn-hawkins#:~:text=Hawkins%20(knee)%20was%20a%20limited%20participant%20in",
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "3858276",
+          "name": "Jaylinn Hawkins",
+          "shortName": "J. Hawkins",
+          "position": "S",
+          "jersey": 21,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3858276.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0229
     },
     {
       "id": "bal_pfr_d6e9815eec79",
@@ -1551,6 +3253,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685526",
+          "name": "Adam Randall",
+          "shortName": "A. Randall",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685526.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1564,7 +3276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0245
+      "storyRank": 0.0224
     },
     {
       "id": "bal_rss_9c7d97318855",
@@ -1584,6 +3296,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1597,7 +3319,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0244
+      "storyRank": 0.0224
     },
     {
       "id": "bal_rss_f611b04f2828",
@@ -1617,6 +3339,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429615",
+          "name": "Zay Flowers",
+          "shortName": "Z. Flowers",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429615.png"
+        },
+        {
+          "id": "4430831",
+          "name": "Trenton Simpson",
+          "shortName": "T. Simpson",
+          "position": "LB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430831.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1630,7 +3370,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.024
+      "storyRank": 0.022
+    },
+    {
+      "id": "bal_yts_axRtyvgNbkI",
+      "type": "video",
+      "videoId": "axRtyvgNbkI",
+      "embeddable": false,
+      "title": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:31",
+      "imageUrl": "https://i.ytimg.com/vi/axRtyvgNbkI/hqdefault.jpg",
+      "imageAlt": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T20:45:00.767Z",
+      "url": "https://www.youtube.com/watch?v=axRtyvgNbkI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=axRtyvgNbkI",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
     },
     {
       "id": "bal_rss_a31ce6130ed6",
@@ -1650,6 +3429,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685526",
+          "name": "Adam Randall",
+          "shortName": "A. Randall",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685526.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1663,7 +3452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0235
+      "storyRank": 0.0216
     },
     {
       "id": "bal_rss_c07075ffe890",
@@ -1683,6 +3472,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2980153",
+          "name": "Ronnie Stanley",
+          "shortName": "R. Stanley",
+          "position": "OT",
+          "jersey": 79,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2980153.png"
+        },
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        },
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1696,7 +3511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0209
     },
     {
       "id": "bal_rss_7f5d73487c4d",
@@ -1716,6 +3531,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1729,7 +3545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0208
     },
     {
       "id": "bal_tx_8da951402c51",
@@ -1750,6 +3566,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4685526",
+          "name": "Adam Randall",
+          "shortName": "A. Randall",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685526.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1763,7 +3589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
+      "storyRank": 0.0199
     },
     {
       "id": "bal_pfr_b8ba66f816a2",
@@ -1782,6 +3608,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1795,7 +3622,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.019
     },
     {
       "id": "bal_rss_22e305c9998f",
@@ -1815,6 +3642,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1828,7 +3656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0184
     },
     {
       "id": "bal_rss_41fd1d3fc898",
@@ -1848,6 +3676,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4243371",
+          "name": "Riley Patterson",
+          "shortName": "R. Patterson",
+          "position": "PK",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243371.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1861,7 +3699,85 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0184
+    },
+    {
+      "id": "bal_yts_cyQ2OqTC6C4",
+      "type": "video",
+      "videoId": "cyQ2OqTC6C4",
+      "embeddable": false,
+      "title": "Ravens NEED A Play, WHO WILL STEP UP?! Chargers vs Ravens Week 10 Ending",
+      "summary": "",
+      "duration": "17:13",
+      "imageUrl": "https://i.ytimg.com/vi/cyQ2OqTC6C4/hqdefault.jpg",
+      "imageAlt": "Ravens NEED A Play, WHO WILL STEP UP?! Chargers vs Ravens Week 10 Ending",
+      "publishedAt": "2026-11-17T20:45:00.767Z",
+      "url": "https://www.youtube.com/watch?v=cyQ2OqTC6C4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=cyQ2OqTC6C4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
+    },
+    {
+      "id": "bal_yts_iXTg27Lenug",
+      "type": "video",
+      "videoId": "iXTg27Lenug",
+      "embeddable": false,
+      "title": "Los Angeles Chargers vs Baltimore Ravens Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "17:43",
+      "imageUrl": "https://i.ytimg.com/vi/iXTg27Lenug/hqdefault.jpg",
+      "imageAlt": "Los Angeles Chargers vs Baltimore Ravens Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-17T20:45:00.767Z",
+      "url": "https://www.youtube.com/watch?v=iXTg27Lenug",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=iXTg27Lenug",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
     },
     {
       "id": "bal_rss_1eec177c3bc3",
@@ -1881,6 +3797,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        },
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1894,7 +3828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
+      "storyRank": 0.0182
     },
     {
       "id": "bal_rss_7ca05c04872d",
@@ -1914,6 +3848,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1927,7 +3862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
+      "storyRank": 0.0179
     },
     {
       "id": "bal_rss_3b994be874a2",
@@ -1947,6 +3882,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3116365",
+          "name": "Mark Andrews",
+          "shortName": "M. Andrews",
+          "position": "TE",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116365.png"
+        },
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        },
+        {
+          "id": "4683188",
+          "name": "Mike Green",
+          "shortName": "M. Green",
+          "position": "LB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683188.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1960,7 +3921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
+      "storyRank": 0.0175
     },
     {
       "id": "bal_tx_497265eeb443",
@@ -1981,6 +3942,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1994,7 +3956,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0167
     },
     {
       "id": "bal_rss_4d90e06afc26",
@@ -2014,6 +3976,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429615",
+          "name": "Zay Flowers",
+          "shortName": "Z. Flowers",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429615.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2027,7 +3999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0174
+      "storyRank": 0.0166
     },
     {
       "id": "bal_rss_c6e88dd7ac66",
@@ -2047,6 +4019,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3116365",
+          "name": "Mark Andrews",
+          "shortName": "M. Andrews",
+          "position": "TE",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116365.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2060,7 +4042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0173
+      "storyRank": 0.0165
     },
     {
       "id": "bal_rss_f1b50ef76e46",
@@ -2080,6 +4062,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2093,7 +4076,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0165
     },
     {
       "id": "bal_pfr_a4cc4de4dc87",
@@ -2112,6 +4095,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2125,7 +4109,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0039
     },
     {
       "id": "bal_rss_09b794e61a9a",
@@ -2145,6 +4129,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2158,7 +4143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0153
     },
     {
       "id": "bal_rss_7523b9d893ee",
@@ -2178,6 +4163,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2191,7 +4177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0038
     },
     {
       "id": "bal_rss_13419a289638",
@@ -2211,6 +4197,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2224,7 +4220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.015
     },
     {
       "id": "bal_rss_606d567b9797",
@@ -2244,6 +4240,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3116365",
+          "name": "Mark Andrews",
+          "shortName": "M. Andrews",
+          "position": "TE",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116365.png"
+        },
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2257,7 +4271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "bal_rss_57493b913aa3",
@@ -2277,6 +4291,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2290,7 +4305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0148
     },
     {
       "id": "bal_tx_f625c9fae3bd",
@@ -2311,6 +4326,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "3701582",
+          "name": "Chuma Edoga",
+          "shortName": "C. Edoga",
+          "position": "OT",
+          "jersey": 62,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3701582.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2324,7 +4349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0143
     },
     {
       "id": "bal_pfr_bad179ee9831",
@@ -2343,6 +4368,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2356,7 +4382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0137
+      "storyRank": 0.0135
     },
     {
       "id": "bal_rss_4425905e24d1",
@@ -2376,6 +4402,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        },
+        {
+          "id": "4429615",
+          "name": "Zay Flowers",
+          "shortName": "Z. Flowers",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429615.png"
+        },
+        {
+          "id": "3043078",
+          "name": "Derrick Henry",
+          "shortName": "D. Henry",
+          "position": "RB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043078.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2389,7 +4441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0129
     },
     {
       "id": "bal_rss_6f673ddd7772",
@@ -2409,6 +4461,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        },
+        {
+          "id": "4243371",
+          "name": "Riley Patterson",
+          "shortName": "R. Patterson",
+          "position": "PK",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243371.png"
+        },
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2422,7 +4500,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0118
+      "storyRank": 0.0117
     },
     {
       "id": "bal_rss_e3516e7a326c",
@@ -2442,6 +4520,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3858276",
+          "name": "Jaylinn Hawkins",
+          "shortName": "J. Hawkins",
+          "position": "S",
+          "jersey": 21,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3858276.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2455,7 +4543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0117
+      "storyRank": 0.0116
     },
     {
       "id": "bal_rss_4a22ca3cdd3b",
@@ -2475,6 +4563,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2507,6 +4596,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2540,6 +4639,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2553,7 +4653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0026
     },
     {
       "id": "bal_rss_22db26070f13",
@@ -2573,6 +4673,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2586,7 +4687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0101
     },
     {
       "id": "bal_rss_0bf195d4e12a",
@@ -2606,6 +4707,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2619,7 +4730,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0101
     },
     {
       "id": "bal_pfr_2b5016db5b0f",
@@ -2638,6 +4749,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2651,7 +4763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0094
     },
     {
       "id": "bal_rss_09c7b1d0313e",
@@ -2671,6 +4783,32 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        },
+        {
+          "id": "4575517",
+          "name": "Kyle Hamilton",
+          "shortName": "K. Hamilton",
+          "position": "S",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575517.png"
+        },
+        {
+          "id": "4243371",
+          "name": "Riley Patterson",
+          "shortName": "R. Patterson",
+          "position": "PK",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243371.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2684,7 +4822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0094
     },
     {
       "id": "bal_rss_4b2ff85a2ad7",
@@ -2704,6 +4842,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2717,39 +4865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
-    },
-    {
-      "id": "bal_pfr_c71fbd02e419",
-      "type": "article",
-      "title": "Ravens To Sign K Harrison Mevis To Practice Squad",
-      "summary": "With Jake Moody electing to join the Falcons, the Ravens find themselves in need of a new Tyler Loop replacement. Kicker Riley Patterson took part in a workout on Wednesday, and he landed a deal. Patterson is now on Baltimore’s 53-man roste",
-      "imageUrl": "",
-      "publishedAt": "2026-11-12T14:59:28.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/ravens-to-sign-k-harrison-mevis-to-practice-squad",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0094
     },
     {
       "id": "bal_rss_9e2ab1a53664",
@@ -2769,6 +4885,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2782,7 +4908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.009
     },
     {
       "id": "bal_rss_bc64246747bb",
@@ -2802,6 +4928,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4243371",
+          "name": "Riley Patterson",
+          "shortName": "R. Patterson",
+          "position": "PK",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243371.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2815,7 +4951,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.009
     },
     {
       "id": "bal_tx_458f79f4e4f2",
@@ -2836,6 +4972,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4243371",
+          "name": "Riley Patterson",
+          "shortName": "R. Patterson",
+          "position": "PK",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243371.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2849,7 +4995,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0088
     },
     {
       "id": "bal_rss_00003c591e9c",
@@ -2869,6 +5015,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4243371",
+          "name": "Riley Patterson",
+          "shortName": "R. Patterson",
+          "position": "PK",
+          "jersey": 35,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243371.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2882,7 +5038,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0085
     },
     {
       "id": "bal_rss_38e3a1b901ad",
@@ -2902,6 +5058,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4036444",
+          "name": "Ryan Neuzil",
+          "shortName": "R. Neuzil",
+          "position": "C",
+          "jersey": 58,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036444.png"
+        },
+        {
+          "id": "3858276",
+          "name": "Jaylinn Hawkins",
+          "shortName": "J. Hawkins",
+          "position": "S",
+          "jersey": 21,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3858276.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2915,139 +5089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
-    },
-    {
-      "id": "bal_rss_76af3e97270a",
-      "type": "article",
-      "title": "Kyle Hamilton Practicing, Jaylinn Hawkins Returns",
-      "summary": "The Ravens had all 50 players on the 53-man roster on the field at the start of practice Wednesday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/u5voi16qlijt0ufkrbhr.png",
-      "imageAlt": "Kyle Hamilton Practicing, Jaylinn Hawkins Returns",
-      "publishedAt": "2026-11-11T18:47:35.000Z",
-      "url": "https://www.baltimoreravens.com/news/ravens-injury-report-kyle-hamilton-jaylinn-hawkins-jacoby-brissett-ryan-neuziel",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Official",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
-    },
-    {
-      "id": "bal_rss_10e3c84e7f85",
-      "type": "article",
-      "title": "Mailbag: Will Jacoby Brissett Turn the Ravens' Season Around?",
-      "summary": "What is the plan for Ryan Neuzil? Do the Ravens need another pass rusher? Who will kick on Monday night?",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/hfowd5s1vhp8pisbsrmd.png",
-      "imageAlt": "Mailbag: Will Jacoby Brissett Turn the Ravens' Season Around?",
-      "publishedAt": "2026-11-11T17:14:07.000Z",
-      "url": "https://www.baltimoreravens.com/news/jacoby-brissett-save-ravens-season-mailbag-2026",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Official",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.008
-    },
-    {
-      "id": "bal_rss_b8962a0b5205",
-      "type": "article",
-      "title": "Late for Work: Pundits Grade Trade for Offensive Lineman Ryan Neuzil",
-      "summary": "The two players who will benefit the most from the Jacoby Brissett addition. Vega Ioane makes The Athletic’s Midseason All-Rookie First Team.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/ipamyqkj11pq5pspjqnw.png",
-      "imageAlt": "Late for Work: Pundits Grade Trade for Offensive Lineman Ryan Neuzil",
-      "publishedAt": "2026-11-11T14:32:43.000Z",
-      "url": "https://www.baltimoreravens.com/news/ravens-trade-ryan-neuzil-grades-jacoby-brissett-vega-ioane-all-rookie-team",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Official",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
-    },
-    {
-      "id": "bal_rss_4dcb53c8a2e0",
-      "type": "article",
-      "title": "Power Rankings: Ravens Drop After Fourth Straight Loss",
-      "summary": "The Ravens’ lopsided defeat last Thursday night pushed them further down pundit power rankings.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/hr2v2v9hwidtbplkqvzx.png",
-      "imageAlt": "Power Rankings: Ravens Drop After Fourth Straight Loss",
-      "publishedAt": "2026-11-11T14:00:00.000Z",
-      "url": "https://www.baltimoreravens.com/news/power-rankings-ravens-nfl-week-10",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Official",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0084
     },
     {
       "id": "bal_tx_ae856245353d",
@@ -3068,6 +5110,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3081,73 +5124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0077
-    },
-    {
-      "id": "bal_rss_d4d529d75ae6",
-      "type": "article",
-      "title": "Ravens Release Blocking Tight End Among Several Roster Moves",
-      "summary": "The Ravens have released veteran tight end Nick Vannett and brought back fullback Lucas Scott to the practice squad.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/gdjkjrrmbmvocckxnxy0.png",
-      "imageAlt": "Ravens Release Blocking Tight End Among Several Roster Moves",
-      "publishedAt": "2026-11-10T21:49:32.000Z",
-      "url": "https://www.baltimoreravens.com/news/ravens-roster-moves-nick-vannett-kyle-hergel-michael-jordan-lucas-scott",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Official",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
-    },
-    {
-      "id": "bal_rss_deff3866ba21",
-      "type": "article",
-      "title": "Ravens Trade for Offensive Lineman Ryan Neuzil",
-      "summary": "The Ravens bolstered their offensive line at the trade deadline.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/mqq0ckcbqvxkakue8cdv.png",
-      "imageAlt": "Ravens Trade for Offensive Lineman Ryan Neuzil",
-      "publishedAt": "2026-11-10T21:31:07.000Z",
-      "url": "https://www.baltimoreravens.com/news/ravens-trade-ryan-neuzil-andrew-vorhees-offensive-lineman-atlanta-falcons",
-      "outletId": "ravens_official",
-      "outletName": "baltimoreravens.com Official",
-      "reporterId": "ravens_official",
-      "reporterName": "baltimoreravens.com Official",
-      "author": "baltimoreravens.com Official",
-      "authorHandle": "@Ravens",
-      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0079
     },
     {
       "id": "bal_tx_908df3fb6a99",
@@ -3168,6 +5145,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3181,14 +5159,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0072
     },
     {
       "id": "bal_yt_9wZLTOLaWUY",
       "type": "video",
       "category": "film",
       "videoId": "9wZLTOLaWUY",
-      "embeddable": true,
+      "embeddable": false,
       "title": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
       "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
       "imageUrl": "https://i.ytimg.com/vi/9wZLTOLaWUY/hqdefault.jpg",
@@ -3196,6 +5174,7 @@
       "publishedAt": "2026-11-06T18:57:40.000Z",
       "url": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
       "externalVideoUrl": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
+      "channel": "The QB School",
       "outletId": "the_qb_school",
       "outletName": "The QB School",
       "reporterId": "the_qb_school",
@@ -3205,6 +5184,7 @@
       "authorProfileUrl": "https://x.com/theqbschool",
       "trustTier": 1,
       "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3217,7 +5197,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0054
     },
     {
       "id": "bal_tx_ece5c1f79bc1",
@@ -3238,6 +5218,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "2578570",
+          "name": "Jacoby Brissett",
+          "shortName": "J. Brissett",
+          "position": "QB",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2578570.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3251,7 +5241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0053
     },
     {
       "id": "bal_tx_4c2c34fedd3a",
@@ -3272,6 +5262,24 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4035671",
+          "name": "Tyler Huntley",
+          "shortName": "T. Huntley",
+          "position": "QB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035671.png"
+        },
+        {
+          "id": "3916387",
+          "name": "Lamar Jackson",
+          "shortName": "L. Jackson",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916387.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3285,7 +5293,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.0049
     },
     {
       "id": "bal_rss_f8349df1467c",
@@ -3305,6 +5313,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685526",
+          "name": "Adam Randall",
+          "shortName": "A. Randall",
+          "position": "RB",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685526.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3328,7 +5346,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748634_1296x729_16-9.jpg",
       "imageCaption": "Nnamdi Madubuike",
       "imageAlt": "Ravens rule out DT Nnamdi Madubuike (hamstring) vs Panthers",
-      "publishedAt": "2026-11-20T21:59:11Z",
+      "publishedAt": "2026-11-20T21:59:11.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50542891/ravens-rule-dt-nnamdi-madubuike-hamstring-vs-panthers",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -3339,6 +5357,16 @@
       "authorProfileUrl": "https://x.com/jamisonhensley",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3372,6 +5400,7 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3381,6 +5410,88 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
+      "storyTier": "stale_pregame",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": true,
+      "storyRank": -1000
+    },
+    {
+      "id": "bal_pwire_3126356_64865228",
+      "type": "article",
+      "title": "Ravens head coach Jesse Minter said that Humphrey won't play Sunday against the Panthers after the defensive back made a derogatory comment about the city of Baltimore in an episode of his podcast released Wednesday.",
+      "summary": "Minter noted that after holding \"internal conversations,\" he and the Ravens' brain trust decided to deactivate Humphrey for Week 11. Per Hensley, Humphrey acknowledged after Wednesday's practice that he regretted the com",
+      "publishedAt": "2026-11-19T17:07:38.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/3126356/marlon-humphrey#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that",
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "3126356",
+          "name": "Marlon Humphrey",
+          "shortName": "M. Humphrey",
+          "position": "CB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": -10,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "stale_pregame",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": true,
+      "storyRank": -1000
+    },
+    {
+      "id": "bal_pwire_4035245_64858228",
+      "type": "article",
+      "title": "Madubuike (hamstring) did not participate at practice Wednesday.",
+      "summary": "Madubuike sustained a hamstring injury during Monday's game versus the Chargers, and now his status for Week 11 is up in the air. He'll probably have to practice in some capacity Thursday or Friday to have a realistic ch",
+      "publishedAt": "2026-11-19T01:11:19.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4035245/nnamdi-madubuike#:~:text=Madubuike%20(hamstring)%20did%20not%20participate%20at%20practice",
+      "outletId": "espn_bal",
+      "outletName": "ESPN Baltimore Ravens Beat",
+      "reporterId": "jamison_hensley",
+      "reporterName": "Jamison Hensley",
+      "author": "Jamison Hensley",
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": -10,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
       "storyTier": "stale_pregame",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
@@ -3405,6 +5516,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035245",
+          "name": "Nnamdi Madubuike",
+          "shortName": "N. Madubuike",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035245.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3438,6 +5559,16 @@
       "authorProfileUrl": "https://www.baltimoreravens.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4702918",
+          "name": "Chandler Rivers",
+          "shortName": "C. Rivers",
+          "position": "CB",
+          "jersey": 29,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702918.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,

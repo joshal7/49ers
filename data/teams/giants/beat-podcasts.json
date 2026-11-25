@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:03.478Z",
+  "updatedAt": "2026-11-25T20:44:18.681Z",
   "windowDays": 7,
   "totalEpisodes": 17,
   "shows": [
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/Zc7GfsBY",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-banter-a-new-york-giants-football-podcast/id1387339234?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/df/21/10/df2110c1-96e2-7501-b3c6-6e4e92224dde/mza_10534507066797445972.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "giants_big_blue_kickoff_live",
@@ -37,10 +37,50 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/f0/fc/96/f0fc96e9-6b51-1003-fe74-b18d0e4a0776/mza_3277246942374449183.jpg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 5
     }
   ],
   "episodes": [
+    {
+      "id": "pod_giants_locked_on_giants_1000803894087",
+      "trackId": 1000803894087,
+      "collectionId": 1144941431,
+      "showId": "giants_locked_on_giants",
+      "showName": "Locked On Giants",
+      "showFullTitle": "Locked On Giants - Daily Podcast On The New York Giants",
+      "hosts": "Locked On Podcast Network",
+      "network": "Locked On Podcast Network",
+      "title": "New York Giants: Big Gains, Big Growth",
+      "summary": "The New York Giants are 6-3-1 and firmly in the NFC playoff race, with cleaner football driving a noticeable surge. Patricia Traina breaks down the gains behind the record and where there is still room to grow. Which offensive lineman gets selected by the Big Blue Board for ",
+      "publishedAt": "2026-11-25T02:17:50.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ee/9e/d8/ee9ed8b3-6973-3929-e4f4-867d8546c736/mza_2904559235558610663.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/new-york-giants-big-gains-big-growth/id1144941431?i=1000803894087&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-giants-daily-podcast-on-the-new-york-giants/id1144941431?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/da64a7/feeds.simplecast.com/Iu3ZtP7n",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/da64a7/lockedon.simplecastaudio.com/a0c4a01b-f272-405f-be6b-073a8233e67a/episodes/287db75f-61e6-4a56-8e7c-98afe6d9bdec/audio/128/default.mp3?aid=rss_feed&awCollectionId=a0c4a01b-f272-405f-be6b-073a8233e67a&awEpisodeId=287db75f-61e6-4a56-8e7c-98afe6d9bdec&feed=Iu3ZtP7n"
+    },
+    {
+      "id": "pod_giants_big_blue_kickoff_live_1000803865137",
+      "trackId": 1000803865137,
+      "collectionId": 1486876072,
+      "showId": "giants_big_blue_kickoff_live",
+      "showName": "Big Blue Kickoff Live",
+      "showFullTitle": "Big Blue Kickoff Live | New York Giants",
+      "hosts": "New York Giants",
+      "network": "New York Giants",
+      "title": "Big Blue Kickoff Live 11/24 I Standouts from the Win over the Jaguars",
+      "summary": "John Schmeelk and Marc Malusis discuss standouts in the Giants’ win over the Jaguars, talk about the playoff picture, and take calls from fans.0:00 – Standouts from the win over the Jaguars 26:05 - Calls 38:05 - More on the Jags game 48:50 - The playoff picture 56:45 - The t",
+      "publishedAt": "2026-11-24T21:27:17.000Z",
+      "durationMinutes": 68,
+      "durationDisplay": "68 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/c9/b3/6e/c9b36e92-17fe-971c-d16f-fd646db71f1e/mza_17423604613671711276.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-11-24-i-standouts-from-the-win/id1486876072?i=1000803865137&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
+      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/35a29d8f-e52b-4302-acbb-b50c015a3a42/audio.mp3?utm_source=Podcast&in_playlist=e0103b25-98cc-437f-9cfc-aea90025666b"
+    },
     {
       "id": "pod_giants_locked_on_giants_1000803837664",
       "trackId": 1000803837664,
@@ -340,46 +380,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/cf9b91d3-da34-4ea7-b651-b5060165d614/audio.mp3?utm_source=Podcast&in_playlist=e0103b25-98cc-437f-9cfc-aea90025666b"
-    },
-    {
-      "id": "pod_giants_locked_on_giants_1000802617598",
-      "trackId": 1000802617598,
-      "collectionId": 1144941431,
-      "showId": "giants_locked_on_giants",
-      "showName": "Locked On Giants",
-      "showFullTitle": "Locked On Giants - Daily Podcast On The New York Giants",
-      "hosts": "Locked On Podcast Network",
-      "network": "Locked On Podcast Network",
-      "title": "DIVISION OR BUST: New York Giants Playoff Path REVEALED—John Harbaugh’s 2026 Must-Win Scenario",
-      "summary": "The New York Giants’ playoff push comes down to one number: four wins. With the NFC East at stake and no realistic Wild Card route, the Giants must navigate a difficult stretch featuring the Jaguars, Colts, 49ers, Seahawks, Browns, Lions, Cowboys, and Eagles. The discussion ",
-      "publishedAt": "2026-11-18T03:02:20.000Z",
-      "durationMinutes": 30,
-      "durationDisplay": "30 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/06/73/11/06731115-07aa-88ba-bd36-587db454c62e/mza_5753485956857684009.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/division-or-bust-new-york-giants-playoff-path-revealed/id1144941431?i=1000802617598&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-giants-daily-podcast-on-the-new-york-giants/id1144941431?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/da64a7/feeds.simplecast.com/Iu3ZtP7n",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/da64a7/lockedon.simplecastaudio.com/a0c4a01b-f272-405f-be6b-073a8233e67a/episodes/27f15abc-a902-4ec3-b844-5ed3da43fa58/audio/128/default.mp3?aid=rss_feed&awCollectionId=a0c4a01b-f272-405f-be6b-073a8233e67a&awEpisodeId=27f15abc-a902-4ec3-b844-5ed3da43fa58&feed=Iu3ZtP7n"
-    },
-    {
-      "id": "pod_giants_big_blue_banter_1000802587368",
-      "trackId": 1000802587368,
-      "collectionId": 1387339234,
-      "showId": "giants_big_blue_banter",
-      "showName": "Big Blue Banter",
-      "showFullTitle": "Big Blue Banter: A New York Giants Football Podcast",
-      "hosts": "Blue Wire",
-      "network": "Blue Wire",
-      "title": "The sky is NOT falling: Why Giants fans can’t panic now",
-      "summary": "Dan and Nick discuss the current state of the Giants after an annoying Thursday Night Football loss to the Washington Commanders. Is the sky falling!? PLEASE SUBSCRIBE to Dan’s Beyond the Boxscore channel! https://www.youtube.com/@FFTBeyondTheBoxScore Buy me a coffee, please",
-      "publishedAt": "2026-11-17T23:56:37.000Z",
-      "durationMinutes": 38,
-      "durationDisplay": "38 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/df/21/10/df2110c1-96e2-7501-b3c6-6e4e92224dde/mza_10534507066797445972.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-sky-is-not-falling-why-giants-fans-cant-panic-now/id1387339234?i=1000802587368&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-banter-a-new-york-giants-football-podcast/id1387339234?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/Zc7GfsBY",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/256/clrtpod.com/m/bluewire.simplecastaudio.com/484211d1-c756-422c-a41e-946a847c294e/episodes/88a26ebf-661a-4042-9588-bdfacca8bfb4/audio/128/default.mp3?aid=rss_feed&awCollectionId=484211d1-c756-422c-a41e-946a847c294e&awEpisodeId=88a26ebf-661a-4042-9588-bdfacca8bfb4&feed=Zc7GfsBY"
     }
   ]
 }

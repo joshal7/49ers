@@ -8,7 +8,7 @@
  *   node scripts/build-team-icons.mjs --teams=lions,bills
  *   node scripts/build-team-icons.mjs --all
  *
- * Note: Never touches `assets/sf-crest.svg`, `assets/app-icon.svg`, or `apple-touch-icon.png`.
+ * Note: Preserves custom flagship `assets/teams/49ers/{crest.svg,app-icon.svg,apple-touch-icon*.png}` artwork by default.
  */
 
 import fs from 'node:fs';

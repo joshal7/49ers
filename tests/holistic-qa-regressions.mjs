@@ -158,9 +158,9 @@ async function testAsync(name, fn) {
 console.log('\n=== Holistic QA Regression Suite (Rollovers, Live Telemetry & Edge Invariants) ===');
 
 test('Grounding snapshot injects real OverTheCap deadMoneyTotal ($46M+, never $0) and pivots cleanly on 2027+ rollover', () => {
-  const meta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
-  const cap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
-  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const meta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'meta.json'), 'utf8'));
+  const cap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'cap.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
 
   const snap2026 = buildAuthoritativeLiveContextSnapshot({ meta, cap, roster });
   assert.ok(
@@ -186,7 +186,7 @@ test('Grounding snapshot injects real OverTheCap deadMoneyTotal ($46M+, never $0
 });
 
 test('Hallucination sanitizer maps departed former 49ers to position-matched active 49ers instead of replacing QBs/DBs with EDGE rushers', () => {
-  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
   const activeQbs = roster.players.filter(p => p.rosterBucket === 'active' && p.position === 'QB').map(p => p.name);
   const activeDbs = roster.players
     .filter(p => p.rosterBucket === 'active' && ['CB', 'S', 'DB', 'FS', 'SS'].includes(p.position))
@@ -345,13 +345,13 @@ test('Breaking badge expires cleanly after activeWindowHours while recent breaki
 
 await testAsync('hydrateLiveEspnOverlay prunes completed NFC rival games (preventing 18-game double-counting), updates seedPathCards.currentProbPct, and resolves suffix-safe player chips + reporter bylines', async () => {
   const mockAppData = {
-    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
-    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8')),
-    reporters: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'reporters.json'), 'utf8')),
-    health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8')),
-    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8')),
-    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8')),
-    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'))
+    meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'meta.json'), 'utf8')),
+    roster: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8')),
+    reporters: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'reporters.json'), 'utf8')),
+    health: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'health.json'), 'utf8')),
+    news: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8')),
+    scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8')),
+    seasonal: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'seasonal.json'), 'utf8'))
   };
 
   const simIn = mockAppData.seasonal.playoffPicture.simulatorInputs;
@@ -568,9 +568,9 @@ await testAsync('Link scrub & attribution integrity: zero dead 404s, zero opaque
   );
 
   // 5. Compiled data/news.json, data/roster.json & data/schedule-matchup.json scrub assertions
-  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
-  const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
-  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8'));
+  const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
+  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
 
   for (const src of smJson.powerRankings?.sources || []) {
     assert.ok(!src.url.includes('nflpowerrankings'), `Dead ESPN power rankings URL remained: ${src.url}`);
@@ -737,7 +737,7 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
     const rep = resolveReporterFromNameOrHandle(voice);
     assert.ok(rep?.xUrl?.startsWith('https://x.com/'), `Missing verified X handle for ${voice}`);
   }
-  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const newsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8'));
   const directPosts = (newsJson.rawStream || []).filter(
     it => (it.type === 'tweet' || it.type === 'social') && isDirectSocialPostUrl(it.url || '')
   );
@@ -826,7 +826,7 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
   );
 
   // 5. Inline roster player linker & multi-delimiter reporter link helper
-  const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const rosterJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
   registerRosterPlayersForInlineLinks(rosterJson.players);
   const annotatedHtml = escJargon('Brock Purdy hit George Kittle on a Wide-9 hot read.', {
     excludePlayerId: '4361741'
@@ -839,11 +839,11 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
   assert.equal(buildEspnNflTeamUrl('WAS'), 'https://www.espn.com/nfl/team/_/name/wsh/washington-commanders');
 
   // 6. Compiled JSON entity-link & playerId integrity across roster, cap, health, depth, matchup & seasonal
-  const capJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
-  const healthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
-  const depthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'depth-chart.json'), 'utf8'));
-  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
-  const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const capJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'cap.json'), 'utf8'));
+  const healthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'health.json'), 'utf8'));
+  const depthJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'depth-chart.json'), 'utf8'));
+  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
+  const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'seasonal.json'), 'utf8'));
 
   const validPlayerIds = new Set();
   for (const p of rosterJson.players || []) {
@@ -1315,8 +1315,8 @@ await testAsync('Trust-weighted corroborated news & prior-week absence calibrati
 });
 
 test('4-Unit Team Stats, Overall Composite Rank Jargon Tooltips, Positional Leaderboards & Position-Specific Career Tables validate cleanly', () => {
-  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
-  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
 
   // 1. Exact 4-unit card order & Offense <-> Defense symmetry
   assert.deepEqual(
@@ -1410,8 +1410,8 @@ test('4-Unit Team Stats, Overall Composite Rank Jargon Tooltips, Positional Lead
 });
 
 test('Statistical datasource refresh cadences (Thursday PFR charting, Tuesday nflverse/NGS, real-time ESPN) isolate denominators & sync live', () => {
-  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
-  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
 
   // 1. Live dataset check: Fred Warner PFR coverage metrics must aggregate weekly PFR charting (qualified across >40 NFL LBs, never frozen at Week 3 g=3)
   const warner = roster.players.find(p => p.name === 'Fred Warner');
@@ -1833,10 +1833,10 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
   assert.ok(thuSetback.probabilityPct <= 42, `Wed FP -> Thu DNP setback should drop <=42%, got ${thuSetback.probabilityPct}%`);
 
   // Verify live generated `data/health.json` snapshot invariants AND 100% direct Injury News link integrity
-  const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
-  const liveRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
-  const liveNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
-  const liveSm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'health.json'), 'utf8'));
+  const liveRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
+  const liveNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8'));
+  const liveSm = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
   const liveDeebo = liveHealth.practiceReport.find(r => r.name === 'Deebo Samuel Sr.');
   const liveGreen = liveHealth.practiceReport.find(r => r.name === 'Renardo Green');
   if (liveDeebo && liveGreen && liveDeebo.wed === 'LP' && liveGreen.wed === 'DNP') {
@@ -2247,7 +2247,7 @@ test('Daily Top News Brief inline citations: handles parenthesized URLs (#:~:tex
   );
 
   // 5. Verify live data/news.json dailyTopNewsBrief renders with zero leaked %XX or URL fragments
-  const liveNewsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const liveNewsJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8'));
   const liveBriefHtml = renderDailyTopNewsBriefHtml(liveNewsJson.dailyTopNewsBrief, {
     rawStream: liveNewsJson.rawStream
   });
@@ -2259,9 +2259,9 @@ test('Daily Top News Brief inline citations: handles parenthesized URLs (#:~:tex
 });
 
 await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Preseason-to-Combine Blank Window, and 1-Month In-Season vs 1-Week Post-Elimination First-Pick Mock Database', async () => {
-  const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
-  const metaJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
-  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const seasonalJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'seasonal.json'), 'utf8'));
+  const metaJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'meta.json'), 'utf8'));
+  const smJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
   const dp = seasonalJson.draftPrep2027;
 
   // 1. 3-Lens NFL Draft Big Board integrity (250+ prospects across 7 rounds, zero 2026 draftees, zero paywalls)
@@ -2979,7 +2979,7 @@ test('Power Rankings: verified live parsers (Inpredictable, nfelo, RBSDM, CBS, E
   assert.equal(resolvedPreCutoffPromote.disregardedStaleCount, 2);
 
   // Case E: Compiled data/schedule-matchup.json verified accuracy & week-consistency audit
-  const smCompiled = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const smCompiled = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'schedule-matchup.json'), 'utf8'));
   const compiledPwr = smCompiled.powerRankings || {};
   assert.ok(Array.isArray(compiledPwr.sources) && compiledPwr.sources.length >= 3, 'Compiled powerRankings must have verified live sources');
   for (const s of compiledPwr.sources) {
@@ -3108,7 +3108,7 @@ test('Power Rankings: verified live parsers (Inpredictable, nfelo, RBSDM, CBS, E
 });
 
 test('Holistic Regression: Link-drop tweets in compiled data/news.json promote cleanly to direct Articles while preserving salient tweets', () => {
-  const compiledNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const compiledNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8'));
   const reconciled = reconcileLinkDropTweetsWithArticles(compiledNews.rawStream || []);
 
   // Zero remaining link-drop tweets should exist after reconciliation
@@ -3134,7 +3134,7 @@ test('Holistic Regression: Link-drop tweets in compiled data/news.json promote c
 });
 
 test('Holistic Regression: Compiled news.json has zero unbounded full-article summary dumps and rare expandable-summary rate (<5%)', () => {
-  const compiledNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'news.json'), 'utf8'));
+  const compiledNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'news.json'), 'utf8'));
   const stream = compiledNews.rawStream || [];
 
   const oversizedDirectStories = stream.filter(
@@ -3531,8 +3531,8 @@ await testAsync(
     );
     assert.ok(!ghostClientApp.roster.players.some(p => p.id === '3116136'), 'Client live sync must not resurrect excludedGhostIds');
 
-    const liveSfRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
-    const liveSfCap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+    const liveSfRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'roster.json'), 'utf8'));
+    const liveSfCap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'cap.json'), 'utf8'));
     const sfActiveNoCap = (liveSfRoster.players || []).filter(p => p.rosterBucket === 'active' && !(p.capHit2026 > 0));
     assert.equal(sfActiveNoCap.length, 0, `49ers active players missing capHit2026: ${sfActiveNoCap.map(p => p.name).join(', ')}`);
     const sfPsPlayers = (liveSfRoster.players || []).filter(p => p.rosterBucket === 'practice_squad');
@@ -3896,7 +3896,7 @@ await test(
   'All-32-Team News Data Integrity: zero obvious promotional ads or sponsor discount posts exist in any club rawStream',
   async () => {
     const { isPromotionalAdvertisement } = await import('../src/engine/linkIntegrity.js');
-    const newsFiles = [path.join(rootDir, 'data', 'news.json')];
+    const newsFiles = [];
     const teamsRoot = path.join(rootDir, 'data', 'teams');
     for (const slug of fs.readdirSync(teamsRoot)) {
       const p = path.join(teamsRoot, slug, 'news.json');

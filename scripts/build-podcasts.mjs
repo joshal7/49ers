@@ -32,7 +32,9 @@ import {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
-const dataDir = path.join(rootDir, 'data');
+const teamArg = process.argv.find(a => a.startsWith('--team='));
+const teamSlug = (teamArg ? teamArg.replace('--team=', '').trim().toLowerCase() : '49ers') || '49ers';
+const dataDir = path.join(rootDir, 'data', 'teams', teamSlug);
 const podcastDir = path.join(dataDir, 'podcasts');
 
 function readJsonSafe(fileName, fallback = {}) {
@@ -583,7 +585,7 @@ async function main() {
         createdBy: ep.createdBy,
         createdAt: ep.createdAt,
         sourceLinks: (ep.sourceLinks || []).filter(s => sanitizeExternalUrl(s?.url, null)),
-        audioUrl: `./data/podcasts/${ep.id}.m4a`,
+        audioUrl: `./data/teams/${teamSlug}/podcasts/${ep.id}.m4a`,
         durationSec,
         fileSizeBytes,
         transcript: timedTranscript
@@ -604,7 +606,7 @@ async function main() {
 
   fs.writeFileSync(path.join(podcastDir, 'index.json'), JSON.stringify(indexPayload, null, 2));
   console.log(
-    `[podcast] Wrote ${episodesMeta.length} studio-mastered neural episodes & ${verifiedAnalyses.length} deep analyses -> data/podcasts/index.json`
+    `[podcast] Wrote ${episodesMeta.length} studio-mastered neural episodes & ${verifiedAnalyses.length} deep analyses -> data/teams/${teamSlug}/podcasts/index.json`
   );
 }
 

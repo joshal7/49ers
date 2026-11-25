@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:45.704Z",
+  "updatedAt": "2026-11-25T20:36:09.819Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/houston-texans",
   "spotracUrl": "https://www.spotrac.com/nfl/houston-texans/cap/",
@@ -258,7 +258,125 @@
     }
   },
   "blueprint": {
-    "summary": "Houston Texans hold $7.76M in 2026 OverTheCap space and $-40.47M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/houston-texans",
+    "summary": "Houston Texans hold $7.76M in 2026 OverTheCap space ($7.76M effective) and -$40.47M projected for 2027.",
+    "executiveSummary": "Nick Caserio and the Texans front office hold $7.76M in gross 2026 cap space ($7.76M effective), while 2027 currently projects at -$40.47M over an estimated $326M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Danielle Hunter, Nico Collins, Will Anderson Jr., C.J. Stroud.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$40.47M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Houston's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "4432577",
+        "name": "C.J. Stroud",
+        "position": "QB",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png",
+        "otcUrl": "https://overthecap.com/player/c-j-stroud/10826/",
+        "capHit2026": 11543396,
+        "baseSalary2026": 1145000,
+        "maxRestructureSavings": 2276085,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3117256",
+        "name": "Dalton Schultz",
+        "position": "TE",
+        "jersey": 86,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117256.png",
+        "otcUrl": "https://overthecap.com/player/dalton-schultz/7022/",
+        "capHit2026": 9549000,
+        "baseSalary2026": 2600000,
+        "maxRestructureSavings": 1040000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "4258173",
+        "name": "Nico Collins",
+        "position": "WR",
+        "jersey": 12,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png",
+        "otcUrl": "https://overthecap.com/player/nico-collins/9553/",
+        "capHit2026": 14939529,
+        "postJune1CutSavings": -27176471,
+        "postJune1TradeSavings": 2823529,
+        "preJune1DeadMoney": 75364000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4432577",
+        "name": "C.J. Stroud",
+        "position": "QB",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png",
+        "otcUrl": "https://overthecap.com/player/c-j-stroud/10826/",
+        "capHit2026": 11543396,
+        "postJune1CutSavings": -25904001,
+        "postJune1TradeSavings": 5697170,
+        "preJune1DeadMoney": 37447397,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3117256",
+        "name": "Dalton Schultz",
+        "position": "TE",
+        "jersey": 86,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117256.png",
+        "otcUrl": "https://overthecap.com/player/dalton-schultz/7022/",
+        "capHit2026": 9549000,
+        "postJune1CutSavings": -4500000,
+        "postJune1TradeSavings": 3100000,
+        "preJune1DeadMoney": 27896000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "16734",
+        "name": "Jadeveon Clowney",
+        "position": "DE",
+        "jersey": 90,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16734.png",
+        "otcUrl": "https://overthecap.com/player/jadeveon-clowney/2940/",
+        "capHit2026": 5264706,
+        "postJune1CutSavings": 764706,
+        "postJune1TradeSavings": 3264706,
+        "preJune1DeadMoney": 4500000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4242546",
+        "name": "Davis Mills",
+        "position": "QB",
+        "jersey": 10,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242546.png",
+        "otcUrl": "https://overthecap.com/player/davis-mills/9531/",
+        "capHit2026": 5147666,
+        "postJune1CutSavings": 450000,
+        "postJune1TradeSavings": 2728333,
+        "preJune1DeadMoney": 7675000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3043109",
+        "name": "Trent Brown",
+        "position": "OT",
+        "jersey": 77,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043109.png",
+        "otcUrl": "https://overthecap.com/player/trent-brown/4092/",
+        "capHit2026": 5088235,
+        "postJune1CutSavings": 3338235,
+        "postJune1TradeSavings": 4338235,
+        "preJune1DeadMoney": 1750000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {

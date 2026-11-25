@@ -74,7 +74,7 @@ export const EXTRA_TEAM_BEAT_RSS_BY_ABBR = Object.freeze({
 export const TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR = Object.freeze({
   SF: [
     { id: 'UCeIOarQkwmGhimim9cDUTng', name: 'San Francisco 49ers', handle: '@49ers', category: 'beat', embeddable: false, trustTier: 1 },
-    { id: 'UC7697-d8iF3qW8252-rL37w', name: "Jonnydel's Football Academy", handle: '@jonnydels', category: 'film', embeddable: true, trustTier: 2 }
+    { id: 'UCt1LfHRE5eGiacPVtiaC10w', name: "Jonnydel's Football Academy", handle: '@jonnydels', category: 'film', embeddable: true, trustTier: 2 }
   ]
 });
 

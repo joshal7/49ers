@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:14.410Z",
+  "updatedAt": "2026-11-25T20:44:53.025Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.atlantafalcons.com/team/injury-report/",
@@ -33,7 +33,7 @@
         "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "questionable"
+      "beatComment": "It's unclear how much work Branch was able to get in Monday, but his presence alone opens the door for a Week 12 return. The Falcons will provide an official update on his status when they release their first injury report of the week Wednesday."
     },
     {
       "playerId": "4037626",
@@ -129,7 +129,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Hamstring) ahead of Week 9; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "Robinson already has missed two games due to a lingering hamstring injury and now must miss at least the next four outings, meaning his next chance for game action is Sunday, Dec. 13 at Cleveland. In a corresponding move, the Falcons are signing Khalil Herbert from the practice squad to the active roster to continue serving as the No. 2 RB behind workhorse Bijan Robinson."
     },
     {
       "playerId": "3045527",
@@ -151,29 +151,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Hamstring) ahead of Week 9; must miss at least 4 games (earliest eligible Week 14)."
-    },
-    {
-      "playerId": "3126352",
-      "name": "Da'Shawn Hand",
-      "position": "DT",
-      "jersey": 90,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126352.png",
-      "injuryType": "Quadriceps",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 9,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Quadriceps); awaiting 21-day practice window designation."
+      "beatNote": "Ebukam suffered a hamstring injury in Week 9 versus the Buccaneers, and he will now be forced to miss at least four contests as a result of the injury. In his absence, Za'Darius Smith is a top candidate to operate in a more prominent role at outside linebacker."
     },
     {
       "playerId": "4428872",
@@ -195,7 +173,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
+      "beatNote": "The nature of Bertrand's injury is not clear, but the move to IR means the third-year pro will be forced to miss at least the first four games of the regular season, making Week 5 against the Ravens on Sunday, Oct. 11 the earliest he can return. He logged 35 tackles (13 solo) and two pass defenses across 15 regular-season games in 2025, contributing both on defense and special teams."
     },
     {
       "playerId": "5209093",
@@ -217,29 +195,29 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Biceps); awaiting 21-day practice window designation."
+      "beatNote": "Jerrell was already ruled out for Sunday's game against the 49ers due to a biceps injury. He's now required to miss at least four games, so the next time he's eligible to play is Week 12 against the Vikings on Sunday, Nov. 29. Jerrell's absence leaves the Falcons with less depth on the offensive line."
     },
     {
-      "playerId": "2973014",
-      "name": "Storm Norton",
-      "position": "OT",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2973014.png",
-      "injuryType": "Foot",
-      "status": "Reserve / PUP",
-      "isSeasonEnding": false,
+      "playerId": "3126352",
+      "name": "Da'Shawn Hand",
+      "position": "DT",
+      "jersey": 90,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126352.png",
+      "injuryType": "Quadriceps (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Reserve/PUP",
-      "beatNote": "4-game minimum satisfied on Reserve / PUP (Foot); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Hand's move to injured reserve comes as no surprise since it was previously announced that he'd miss the remainder of the season due to a torn quadriceps suffered during the team's Week 1 loss to the Steelers. The 30-year-old played just seven defensive snaps and failed to log any stats before getting hurt and will now shift his focus to getting healthy for the 2027 campaign."
     },
     {
       "playerId": "4243457",
@@ -261,7 +239,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 4, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Malone was initially placed on the active/PUP list this past Wednesday due to an undisclosed injury. Now that he's on the reserve/PUP, Malone will be required to miss the entire 2026 season unless he reaches an injury settlement with the Falcons. He appeared in nine regular-season games for Atlanta last year and finished with eight tackles (two solo) and one interception."
     },
     {
       "playerId": "4685597",
@@ -269,7 +247,7 @@
       "position": "LB",
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685597.png",
-      "injuryType": "Knee - ACL",
+      "injuryType": "Knee - ACL (Surgery)",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
@@ -283,7 +261,29 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee - ACL) on Aug 19, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
+    },
+    {
+      "playerId": "2973014",
+      "name": "Storm Norton",
+      "position": "OT",
+      "jersey": 77,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2973014.png",
+      "injuryType": "Foot (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "out"
     },
     {
       "playerId": "4241401",
@@ -305,7 +305,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 18, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
     }
   ]
 }

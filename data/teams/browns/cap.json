@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:40.209Z",
+  "updatedAt": "2026-11-25T20:35:52.714Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/cleveland-browns",
   "spotracUrl": "https://www.spotrac.com/nfl/cleveland-browns/cap/",
@@ -265,7 +265,113 @@
     }
   },
   "blueprint": {
-    "summary": "Cleveland Browns hold $12.14M in 2026 OverTheCap space and $61.25M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/cleveland-browns",
+    "summary": "Cleveland Browns hold $12.14M in 2026 OverTheCap space ($12.14M effective) and +$61.25M projected for 2027.",
+    "executiveSummary": "Andrew Berry and the Browns front office hold $12.14M in gross 2026 cap space ($12.14M effective), while 2027 currently projects at +$61.25M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($5M–$9M target) helps manage scheduled cap escalations for Deshaun Watson, Denzel Ward, Jerry Jeudy, Mason Graham.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($5M–$9M Target vs. +$61.25M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Cleveland's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "4873232",
+        "name": "Mason Graham",
+        "position": "DT",
+        "jersey": 94,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4873232.png",
+        "otcUrl": "https://overthecap.com/player/mason-graham/12365/",
+        "capHit2026": 9289589,
+        "baseSalary2026": 1005000,
+        "maxRestructureSavings": 1128612,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "4241463",
+        "name": "Jerry Jeudy",
+        "position": "WR",
+        "jersey": 3,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241463.png",
+        "otcUrl": "https://overthecap.com/player/jerry-jeudy/8755/",
+        "capHit2026": 10372400,
+        "postJune1CutSavings": -2102600,
+        "postJune1TradeSavings": 3897400,
+        "preJune1DeadMoney": 28325000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4873232",
+        "name": "Mason Graham",
+        "position": "DT",
+        "jersey": 94,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4873232.png",
+        "otcUrl": "https://overthecap.com/player/mason-graham/12365/",
+        "capHit2026": 9289589,
+        "postJune1CutSavings": -10969590,
+        "postJune1TradeSavings": 2697918,
+        "preJune1DeadMoney": 33442521,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3040471",
+        "name": "Maliek Collins",
+        "position": "DT",
+        "jersey": 96,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3040471.png",
+        "otcUrl": "https://overthecap.com/player/maliek-collins/4780/",
+        "capHit2026": 6947824,
+        "postJune1CutSavings": -5335620,
+        "postJune1TradeSavings": 2458824,
+        "preJune1DeadMoney": 28730444,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3131498",
+        "name": "Tytus Howard",
+        "position": "OT",
+        "jersey": 71,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3131498.png",
+        "otcUrl": "https://overthecap.com/player/tytus-howard/7814/",
+        "capHit2026": 5981176,
+        "postJune1CutSavings": -13558824,
+        "postJune1TradeSavings": 2241176,
+        "preJune1DeadMoney": 34500000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4379397",
+        "name": "Tyson Campbell",
+        "position": "CB",
+        "jersey": 7,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4379397.png",
+        "otcUrl": "https://overthecap.com/player/tyson-campbell/9497/",
+        "capHit2026": 4916000,
+        "postJune1CutSavings": -7884000,
+        "postJune1TradeSavings": 2616000,
+        "preJune1DeadMoney": 22000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4427963",
+        "name": "Isaiah McGuire",
+        "position": "DE",
+        "jersey": 57,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427963.png",
+        "otcUrl": "https://overthecap.com/player/isaiah-mcguire/10950/",
+        "capHit2026": 3851982,
+        "postJune1CutSavings": 3674000,
+        "postJune1TradeSavings": 3674000,
+        "preJune1DeadMoney": 177982,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {

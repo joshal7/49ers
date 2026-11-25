@@ -6,12 +6,12 @@ const IS_NFL_HUB_HOST =
 const SW_SUB_MATCH = SW_HOST.match(/^([a-z0-9-]+)\.joshal\.com$/);
 const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
-const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
+const SW_DATA_BASE = `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v34'
+  ? 'nfl-hub-v37'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v191'
-    : `${SW_TEAM_SLUG}-hq-v62`;
+    ? '49ers-faithful-v194'
+    : `${SW_TEAM_SLUG}-hq-v65`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']
@@ -66,8 +66,7 @@ const CORE_ASSETS = [
   './src/views/seasonMatchupView.js',
   './src/views/audioAiView.js',
   './src/views/settingsArchiveView.js',
-  './assets/gemini-key-walkthrough.gif',
-  './apple-touch-icon.png'
+  './assets/gemini-key-walkthrough.gif'
 ];
 
 const TEAM_DYNAMIC_ASSETS = IS_NFL_HUB_HOST
@@ -84,9 +83,9 @@ const TEAM_DYNAMIC_ASSETS = IS_NFL_HUB_HOST
       `${SW_DATA_BASE}/seasonal.json`,
       `${SW_DATA_BASE}/beat-podcasts.json`,
       `${SW_DATA_BASE}/podcasts/index.json`,
-      SW_TEAM_SLUG === '49ers' ? './assets/app-icon.svg' : `./assets/teams/${SW_TEAM_SLUG}/app-icon.svg`,
-      SW_TEAM_SLUG === '49ers' ? './assets/sf-crest.svg' : `./assets/teams/${SW_TEAM_SLUG}/crest.svg`,
-      SW_TEAM_SLUG === '49ers' ? './apple-touch-icon.png' : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`
+      `./assets/teams/${SW_TEAM_SLUG}/app-icon.svg`,
+      `./assets/teams/${SW_TEAM_SLUG}/crest.svg`,
+      `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`
     ];
 
 function resolveRootHtmlCacheKey(url) {
@@ -414,11 +413,9 @@ function formatSwTeamDisplay(slug = '49ers') {
   return `${slug.charAt(0).toUpperCase()}${slug.slice(1)} HQ`;
 }
 const SW_PUSH_ICON =
-  SW_TEAM_SLUG === '49ers'
-    ? './apple-touch-icon.png'
-    : SW_TEAM_SLUG === 'nfl'
-      ? './nfl-apple-touch-icon.png'
-      : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`;
+  SW_TEAM_SLUG === 'nfl'
+    ? './nfl-apple-touch-icon.png'
+    : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`;
 
 self.addEventListener('push', event => {
   const teamLabel = formatSwTeamDisplay(SW_TEAM_SLUG);

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:09:09.279Z",
+  "updatedAt": "2026-11-25T20:36:18.672Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.raiders.com/team/injury-report/",
@@ -157,7 +157,7 @@
       "factors": [
         "Questionable tag adjusted by player career prior (90%)"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Before sitting out this past Sunday's 38-24 loss to the Broncos, Bowers was a limited participant for the Raiders' final two practices of Week 11. Though it's unclear if Bowers will be upgraded to full participation for the team's first practice of Week 12, McFadden notes that the tight end didn't have any wrapping or tape on his ankle, which seemingly indicates improvement with his condition. Assuming Bowers steers clear of setbacks and is able to practice in some capacity throughout the week, he should have a good shot at returning to action this Sunday at Cleveland."
     },
     {
       "playerId": "4429086",
@@ -183,32 +183,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Mayer missed out on a prime opportunity with top TE Brock Bowers (ankle/quadriceps) inactive in Week 11. When Bowers was out in Weeks 1 and 2 as he recovered from a meniscus trim in his left knee, Mayer went for a combined 9-55-0 line on 11 targets in those contests, but the latter also missed a stretch in the fourth quarter this Sunday due to a back injury. Bowers' status will be worth monitoring this week, as an absence from him next Sunday in Cleveland will set up Mayer for another key chance to produce."
-    },
-    {
-      "playerId": "4360749",
-      "name": "Thomas Booker IV",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360749.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation",
-        "Beat/podium consensus: on track to suit up"
-      ],
-      "beatComment": "An ankle injury has sidelined Booker for each of the Raiders' last two games. However, his full session Wednesday indicates that he's recovered from his injury and on track to play in Sunday's AFC West tilt against the Broncos. Booker has accumulated 13 tackles (nine solo) across seven regular-season games."
     },
     {
       "playerId": "3045172",
@@ -238,34 +212,12 @@
   ],
   "irAndReserveTracker": [
     {
-      "playerId": "4911904",
-      "name": "Keyron Crawford",
-      "position": "DE",
-      "jersey": 42,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4911904.png",
-      "injuryType": "Ankle",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
-    },
-    {
       "playerId": "4243916",
       "name": "Patrick Johnson",
       "position": "DE",
       "jersey": 93,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243916.png",
-      "injuryType": "Neck",
+      "injuryType": "Neck (Stinger)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -279,7 +231,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Neck); awaiting 21-day practice window designation."
+      "beatNote": "Johnson was already ruled out for Sunday's game against the Jets due to a neck injury. He'll now be required to miss at least four games, and his next chance to play is Week 12 against the Browns on Sunday, Nov. 29. His absence means the Raiders will have one less regular contributor on special teams and not as much depth at the linebacker position."
     },
     {
       "playerId": "4373471",
@@ -301,7 +253,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 15, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
     },
     {
       "playerId": "4360475",
@@ -323,7 +275,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee) on Aug 22, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Anusiem will be forced to miss the entire upcoming season after suffering a knee injury during Thursday's preseason game versus the Texans. The 25-year-old will now shift his focus to getting healthy for the 2027 campaign."
     },
     {
       "playerId": "4688538",
@@ -346,6 +298,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
       "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 13, 2026; ineligible to return in 2026 under NFL CBA rules."
+    },
+    {
+      "playerId": "4911904",
+      "name": "Keyron Crawford",
+      "position": "DE",
+      "jersey": 42,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4911904.png",
+      "injuryType": "Ankle",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Crawford was not given a tag that designated his return during 2026, meaning the rookie third-rounder will spend the entirety of his first season on IR. The linebacker will need to look toward 2027 to make his NFL debut. With Crawford out, Malcolm Koonce becomes the primary depth option at outside linebacker behind Kwity Paye and Maxx Crosby."
     }
   ]
 }

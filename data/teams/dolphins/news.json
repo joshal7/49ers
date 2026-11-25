@@ -1,109 +1,731 @@
 {
-  "updatedAt": "2026-11-24T20:08:29.160Z",
+  "updatedAt": "2026-11-25T20:35:47.070Z",
   "dailyTopNewsBrief": {
-    "id": "brief_mia_2ebf06dd2f29",
-    "cycleKey": "2026-11-23@17ET",
+    "id": "daily_brief_2026-11-24_17ET",
+    "cycleKey": "2026-11-24@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-24T20:08:30.266Z",
-    "modelUsed": "gemini-4-hydrogen",
-    "thinkingLevel": "XHIGH",
-    "source": "deterministic-digest",
-    "wordCount": 57,
-    "headline": "Miami Dolphins Daily Briefing — Week 12",
-    "summary": "Miami Dolphins (1-9, 4th in AFC East • #15 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
+    "generatedAt": "2026-11-25T20:35:47.070Z",
+    "modelUsed": "deterministic-grounded",
+    "thinkingLevel": "NONE",
+    "source": "pipeline-grounded",
+    "practiceReportCoverage": {
+      "hasThu": false,
+      "hasFri": false
+    },
+    "wordCount": 190,
+    "headline": "Dolphins (1-9) Week 12 Briefing: Injury Updates Ahead of Jets",
+    "summary": "",
     "bullets": [
-      "S Zayne Anderson - Nov 24 | Press Conference ([miamidolphins.com Video](https://www.miamidolphins.com/video/s-zayne-anderson-nov-24-press-conference))",
-      "G/T Kadyn Proctor - Nov 24 | Press Conference ([miamidolphins.com Video](https://www.miamidolphins.com/video/g-t-kadyn-proctor-nov-24-press-conference))",
-      "FB DJ Herman - Nov 24 | Press Conference ([miamidolphins.com Video](https://www.miamidolphins.com/video/fb-dj-herman-nov-24-press-conference))",
-      "CB Chris Johnson - Nov 24 | Press Conference ([miamidolphins.com Video](https://www.miamidolphins.com/video/cb-chris-johnson-nov-24-press-conference))",
-      "Inside the Numbers: Dolphins defense rises to the challenge in Buffalo ([miamidolphins.com Official](https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo))"
+      "Roster & Front Office: Miami signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad [Miami Dolphins Official](https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a).",
+      "Injury & Practice Status: Entering Week 12 preparation, head coach Jeff Hafley and the medical staff evaluate P Bradley Pinion (groin), WR Jared Wayne (quadriceps), S Dante Trader Jr. (shoulder), and WR Chris Bell (knee) ahead of Wednesday's initial participation report. LB Ronnie Harrison Jr. (hamstring) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins).",
+      "Week 12 Jets Outlook: Jeff Hafley and DC Sean Duggan open installation for the New York Jets (3-8, NYJ -3.5, HC Aaron Glenn, OC Frank Reich & DC Brian Duker (Hard Rock Stadium))—a unit ranked #4 in Pass Yards Allowed / Gm (188.3 yds) as Miami prepares for a pivotal AFC matchup [miamidolphins.com Official](https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets) [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins).",
+      "AFC Playoff Trajectory: Entering Week 12 at 1-9 (4th in AFC East • #15 Seed in AFC), Miami carries a 0% postseason projection, 0% AFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [James McKinney](https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition)."
     ],
     "coveredStoryKeys": [
-      "mia_vid_78f7c08f36c4",
-      "mia_vid_e1c4814bf001",
-      "mia_vid_e081cf362c91",
-      "mia_vid_a9e67a7bdc6b",
-      "mia_rss_99e3333ab8aa"
+      "minortransactions::ir_roster_move",
+      "jujubrents::recovery_timeline"
     ],
     "coveredUrls": [
-      "https://www.miamidolphins.com/video/s-zayne-anderson-nov-24-press-conference",
-      "https://www.miamidolphins.com/video/g-t-kadyn-proctor-nov-24-press-conference",
-      "https://www.miamidolphins.com/video/fb-dj-herman-nov-24-press-conference",
-      "https://www.miamidolphins.com/video/cb-chris-johnson-nov-24-press-conference",
-      "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo"
+      "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+      "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
+      "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins",
+      "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
+      "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+      "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
+      "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
+      "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
+      "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+      "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
+      "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+      "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-23-26",
+      "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
+      "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Dolphins%20head%20coach%20Jeff%20Hafley%20said%20Monday",
+      "https://www.espn.com/nfl/player/_/id/4242512/malik-willis#:~:text=Head%20coach%20Jeff%20Hafley%20said%20Monday%20that"
     ],
     "sources": [
       {
-        "sid": "S1",
-        "title": "S Zayne Anderson - Nov 24 | Press Conference",
-        "url": "https://www.miamidolphins.com/video/s-zayne-anderson-nov-24-press-conference",
-        "author": "miamidolphins.com Video",
-        "outlet": "miamidolphins.com Video",
-        "publishedAt": "2026-11-24T19:50:33.000Z"
+        "type": "tweet",
+        "author": "Miami Dolphins Official",
+        "outlet": "miamidolphins.com Official",
+        "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+        "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+        "publishedAt": "2026-11-25T08:00:00.000Z"
       },
       {
-        "sid": "S2",
-        "title": "G/T Kadyn Proctor - Nov 24 | Press Conference",
-        "url": "https://www.miamidolphins.com/video/g-t-kadyn-proctor-nov-24-press-conference",
-        "author": "miamidolphins.com Video",
-        "outlet": "miamidolphins.com Video",
-        "publishedAt": "2026-11-24T19:48:06.000Z"
-      },
-      {
-        "sid": "S3",
-        "title": "FB DJ Herman - Nov 24 | Press Conference",
-        "url": "https://www.miamidolphins.com/video/fb-dj-herman-nov-24-press-conference",
-        "author": "miamidolphins.com Video",
-        "outlet": "miamidolphins.com Video",
-        "publishedAt": "2026-11-24T19:40:05.000Z"
-      },
-      {
-        "sid": "S4",
-        "title": "CB Chris Johnson - Nov 24 | Press Conference",
-        "url": "https://www.miamidolphins.com/video/cb-chris-johnson-nov-24-press-conference",
-        "author": "miamidolphins.com Video",
-        "outlet": "miamidolphins.com Video",
-        "publishedAt": "2026-11-24T19:34:23.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "Inside the Numbers: Dolphins defense rises to the challenge in Buffalo",
-        "url": "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
+        "type": "article",
         "author": "miamidolphins.com Official",
         "outlet": "miamidolphins.com Official",
+        "title": "Aqua Archives: Home History vs. the Jets",
+        "url": "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
+        "publishedAt": "2026-11-25T20:26:22.000Z"
+      },
+      {
+        "type": "article",
+        "author": "ProFootballTalk",
+        "outlet": "ProFootballTalk",
+        "title": "PFT Week 12 Preview 2026: New York Jets vs. Miami Dolphins",
+        "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins",
+        "publishedAt": "2026-11-25T20:05:02.000Z"
+      },
+      {
+        "type": "article",
+        "author": "James McKinney",
+        "outlet": "The Phinsider",
+        "title": "Miami Dolphins Discussion: Week 12 Game Vs NY Jets Predictions Edition",
+        "url": "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
+        "publishedAt": "2026-11-24T20:01:19.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Kevin Nogle",
+        "outlet": "The Phinsider",
+        "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
+        "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+        "publishedAt": "2026-11-25T19:36:30.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Kevin Nogle",
+        "outlet": "The Phinsider",
+        "title": "Miami Dolphins fan confidence survey – Week 12 2026",
+        "url": "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
+        "publishedAt": "2026-11-25T19:05:37.000Z"
+      },
+      {
+        "type": "article",
+        "author": "miamidolphins.com Official",
+        "outlet": "miamidolphins.com Official",
+        "title": "Dolphins make roster moves",
+        "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
+        "publishedAt": "2026-11-25T15:30:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Marek Brave",
+        "outlet": "The Phinsider",
+        "title": "Jacob Rodriguez coming for Dolphins record held by Zach Thomas",
+        "url": "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
+        "publishedAt": "2026-11-25T15:53:26.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Liz Loza",
+        "outlet": "ESPN / X Beat Wire",
+        "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
+        "url": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+        "publishedAt": "2026-11-25T15:22:54.000Z"
+      },
+      {
+        "type": "article",
+        "author": "miamidolphins.com Official",
+        "outlet": "miamidolphins.com Official",
+        "title": "Inside the Numbers: Dolphins defense rises to the challenge in Buffalo",
+        "url": "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
         "publishedAt": "2026-11-24T15:29:32.000Z"
       },
       {
-        "sid": "S6",
-        "title": "Miami Dolphins Celebrate the Future of Football with 2026 High School Playoff Teams at Sunday's Game",
-        "url": "https://www.miamidolphins.com/news/miami-dolphins-celebrate-the-future-of-football-with-2026-high-school-playoff-teams-at-sunday-s-game",
-        "author": "miamidolphins.com Official",
-        "outlet": "miamidolphins.com Official",
-        "publishedAt": "2026-11-24T15:15:07.000Z"
+        "type": "article",
+        "author": "Kevin Nogle",
+        "outlet": "The Phinsider",
+        "title": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
+        "url": "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+        "publishedAt": "2026-11-25T12:45:28.000Z"
       },
       {
-        "sid": "S7",
-        "title": "Minor NFL Transactions: 11/23/26",
-        "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-23-26",
+        "type": "article",
         "author": "Pro Football Rumors",
         "outlet": "Pro Football Rumors",
+        "title": "Minor NFL Transactions: 11/23/26",
+        "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-23-26",
         "publishedAt": "2026-11-24T00:22:43.000Z"
-      },
-      {
-        "sid": "S8",
-        "title": "Dolphins make roster moves",
-        "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x6155",
-        "author": "miamidolphins.com Official",
-        "outlet": "miamidolphins.com Official",
-        "publishedAt": "2026-11-23T21:00:03.000Z"
       }
     ]
   },
-  "clusteredBriefs": [],
+  "clusteredBriefs": [
+    {
+      "id": "mia_cl_top",
+      "category": "beat",
+      "headline": "Miami Dolphins Week 12 Top Headlines (1-9)",
+      "summary": "Aqua Archives: Home History vs. the Jets — PFT Week 12 Preview 2026: New York Jets vs. Miami Dolphins",
+      "updatedAt": "2026-11-25T20:26:22.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "miamidolphins.com Official",
+          "title": "Aqua Archives: Home History vs. the Jets",
+          "url": "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
+          "publishedAt": "2026-11-25T20:26:22.000Z"
+        },
+        {
+          "label": "ProFootballTalk",
+          "title": "PFT Week 12 Preview 2026: New York Jets vs. Miami Dolphins",
+          "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins",
+          "publishedAt": "2026-11-25T20:05:02.000Z"
+        },
+        {
+          "label": "Kevin Nogle",
+          "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
+          "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+          "publishedAt": "2026-11-25T19:36:30.000Z"
+        },
+        {
+          "label": "Kevin Nogle",
+          "title": "Miami Dolphins fan confidence survey – Week 12 2026",
+          "url": "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
+          "publishedAt": "2026-11-25T19:05:37.000Z"
+        },
+        {
+          "label": "Marek Brave",
+          "title": "Jacob Rodriguez coming for Dolphins record held by Zach Thomas",
+          "url": "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
+          "publishedAt": "2026-11-25T15:53:26.000Z"
+        },
+        {
+          "label": "miamidolphins.com Official",
+          "title": "Dolphins make roster moves",
+          "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
+          "publishedAt": "2026-11-25T15:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "mia_cl_health",
+      "category": "injury",
+      "headline": "Dolphins Practice Report, Injury & IR Availability",
+      "summary": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision. — Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "updatedAt": "2026-11-25T15:22:54.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Liz Loza",
+          "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
+          "url": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+          "publishedAt": "2026-11-25T15:22:54.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Designated LB Ronnie Harrison to return from injured reserve.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-edc11cd77e06",
+          "publishedAt": "2026-11-24T08:00:00.000Z"
+        },
+        {
+          "label": "Barry Jackson",
+          "title": "Dolphins head coach Jeff Hafley said Monday that Brents is day-to-day with a shoulder injury.",
+          "url": "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Dolphins%20head%20coach%20Jeff%20Hafley%20said%20Monday",
+          "publishedAt": "2026-11-23T20:38:47.000Z"
+        },
+        {
+          "label": "miamidolphins.com Video",
+          "title": "Jeff Hafley gives injury update including QB Malik Willis",
+          "url": "https://www.miamidolphins.com/video/jeff-hafley-gives-injury-update-including-qb-malik-willis",
+          "publishedAt": "2026-11-23T20:35:34.000Z"
+        },
+        {
+          "label": "Joe Schad",
+          "title": "Head coach Jeff Hafley said Monday that, at this time, surgery to address Willis' groin/core injury is not foreseen.",
+          "url": "https://www.espn.com/nfl/player/_/id/4242512/malik-willis#:~:text=Head%20coach%20Jeff%20Hafley%20said%20Monday%20that",
+          "publishedAt": "2026-11-23T17:19:11.000Z"
+        }
+      ]
+    },
+    {
+      "id": "mia_cl_film",
+      "category": "film",
+      "headline": "Dolphins All-22 Film, Trench & Efficiency Breakdowns",
+      "summary": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027 — Dolphins considering offensive line change as Austin Jackson struggles",
+      "updatedAt": "2026-11-25T12:45:28.000Z",
+      "itemCount": 3,
+      "sourceLinks": [
+        {
+          "label": "Kevin Nogle",
+          "title": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
+          "url": "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+          "publishedAt": "2026-11-25T12:45:28.000Z"
+        },
+        {
+          "label": "Kevin Nogle",
+          "title": "Dolphins considering offensive line change as Austin Jackson struggles",
+          "url": "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
+          "publishedAt": "2026-11-24T13:12:23.000Z"
+        },
+        {
+          "label": "Kevin Nogle",
+          "title": "Miami Dolphins news: Bills review, Jets preview, and a change coming to the offensive line?",
+          "url": "https://www.thephinsider.com/miami-dolphins-news/125243/miami-dolphins-news-kadyn-proctor-austin-jackson-tackle-malik-willis-injury-update-jets-preview",
+          "publishedAt": "2026-11-24T12:48:35.000Z"
+        }
+      ]
+    },
+    {
+      "id": "mia_cl_roster",
+      "category": "roster",
+      "headline": "Dolphins Roster Moves, Trades & Salary Cap Desk",
+      "summary": "Dolphins make roster moves — Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "updatedAt": "2026-11-25T15:30:00.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "miamidolphins.com Official",
+          "title": "Dolphins make roster moves",
+          "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
+          "publishedAt": "2026-11-25T15:30:00.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Designated LB Ronnie Harrison to return from injured reserve.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-edc11cd77e06",
+          "publishedAt": "2026-11-24T08:00:00.000Z"
+        },
+        {
+          "label": "miamidolphins.com Official",
+          "title": "Dolphins make roster moves",
+          "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x6155",
+          "publishedAt": "2026-11-23T21:00:03.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Waived LB Shaka Heyward and DE Max Llewellyn.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-117fe0a7a57c",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Activated CB Darrell Baker Jr. from PUP list. Elevated K Daniel Carlson and P Jack Browning from the practice squad.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-bd383f2e0632",
+          "publishedAt": "2026-11-21T08:00:00.000Z"
+        }
+      ]
+    }
+  ],
   "rawStream": [
+    {
+      "id": "mia_rss_8ec04da79958",
+      "type": "article",
+      "title": "Aqua Archives: Home History vs. the Jets",
+      "summary": "Take a look back at some of the most notable chapters in Dolphins-Jets history:",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/dolphins/j9xt1edfi2fw5kxlrsv4.jpg",
+      "imageAlt": "Aqua Archives: Home History vs. the Jets",
+      "publishedAt": "2026-11-25T20:26:22.000Z",
+      "url": "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
+      "outletId": "dolphins_official",
+      "outletName": "miamidolphins.com Official",
+      "reporterId": "dolphins_official",
+      "reporterName": "miamidolphins.com Official",
+      "author": "miamidolphins.com Official",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1977
+    },
+    {
+      "id": "mia_pft_a9cca81b4ff7",
+      "type": "article",
+      "title": "PFT Week 12 Preview 2026: New York Jets vs. Miami Dolphins",
+      "summary": "Mike Florio backs the Dolphins to pile onto the Jets' Miami misery and hand Aaron Glenn's squad another demoralizing defeat in Week 12.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/gS9BQYZZ943_?auto=true",
+      "imageAlt": "PFT Week 12 Preview 2026: New York Jets vs. Miami Dolphins",
+      "publishedAt": "2026-11-25T20:05:02.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 30.8836
+    },
+    {
+      "id": "mia_brss_the_phinsider_cd8f67f170b4",
+      "type": "article",
+      "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
+      "summary": "The Miami Dolphins lost their ninth game of the 2026 NFL season in Week 11 when they visited the Buffalo Bills. Miami has struggled throughout the season, often keeping games close but unable to come away with a win. In fact, the team has o",
+      "imageUrl": "",
+      "imageAlt": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
+      "publishedAt": "2026-11-25T19:36:30.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Kevin Nogle",
+      "author": "Kevin Nogle",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.427
+    },
+    {
+      "id": "mia_brss_the_phinsider_c9b8351333aa",
+      "type": "article",
+      "title": "Miami Dolphins fan confidence survey – Week 12 2026",
+      "summary": "Welcome to SB Nation Reacts, a survey of fans across the NFL. Throughout the year we ask questions of the most plugged-in Dolphins fans and fans across the country. The Miami Dolphins fell to 1-9 for the 2026 season with a Week 11 loss to t",
+      "imageUrl": "",
+      "imageAlt": "Miami Dolphins fan confidence survey – Week 12 2026",
+      "publishedAt": "2026-11-25T19:05:37.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Kevin Nogle",
+      "author": "Kevin Nogle",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.6992
+    },
+    {
+      "id": "mia_yt_vplFhoV0C9M",
+      "type": "video",
+      "category": "beat",
+      "videoId": "vplFhoV0C9M",
+      "embeddable": false,
+      "title": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
+      "imageUrl": "https://i.ytimg.com/vi/vplFhoV0C9M/hqdefault.jpg",
+      "imageAlt": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:00:32.000Z",
+      "url": "https://www.youtube.com/watch?v=vplFhoV0C9M",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=vplFhoV0C9M",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.2589
+    },
+    {
+      "id": "mia_brss_the_phinsider_62e5cccb16c0",
+      "type": "article",
+      "title": "Jacob Rodriguez coming for Dolphins record held by Zach Thomas",
+      "summary": "Great linebacker play has been a staple of the Miami Dolphins throughout the history of the franchise. From Nick Buoniconti, A.J. Duhe, John Offerdahl and Bryan Cox, all the way up to Zach Thomas, Junior Seau, Joey Porter and now Jordyn Bro",
+      "imageUrl": "",
+      "imageAlt": "Jacob Rodriguez coming for Dolphins record held by Zach Thomas",
+      "publishedAt": "2026-11-25T15:53:26.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Marek Brave",
+      "author": "Marek Brave",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4566094",
+          "name": "Jacob Rodriguez",
+          "shortName": "J. Rodriguez",
+          "position": "LB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566094.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.0772
+    },
+    {
+      "id": "mia_rss_0778aea2baaa",
+      "type": "article",
+      "title": "Dolphins make roster moves",
+      "summary": "The Miami Dolphins announced today that they have signed punter Jack Browning to the active roster off the practice squad and signed edge Max Llewellyn to the practice squad.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/dolphins/lxvxgb0ddb0oqc3kamu9.png",
+      "imageAlt": "Dolphins make roster moves",
+      "publishedAt": "2026-11-25T15:30:00.000Z",
+      "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
+      "outletId": "dolphins_official",
+      "outletName": "miamidolphins.com Official",
+      "reporterId": "dolphins_official",
+      "reporterName": "miamidolphins.com Official",
+      "author": "miamidolphins.com Official",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4876013",
+          "name": "Jack Browning",
+          "shortName": "J. Browning",
+          "position": "P",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4876013.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.7117
+    },
+    {
+      "id": "mia_brss_the_phinsider_1e2b922f8ff9",
+      "type": "article",
+      "title": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
+      "summary": "Miami Dolphins right tackle Austin Jackson has struggled this season, and the coaching staff could be considering making a change. In a season when winning is secondary to the growth and development of the league’s youngest roster, the team",
+      "imageUrl": "",
+      "imageAlt": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
+      "publishedAt": "2026-11-25T12:45:28.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Kevin Nogle",
+      "author": "Kevin Nogle",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4271632",
+          "name": "Austin Jackson",
+          "shortName": "A. Jackson",
+          "position": "OT",
+          "jersey": 73,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4271632.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.537,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.9601
+    },
+    {
+      "id": "mia_pwire_4869645_50588158",
+      "type": "article",
+      "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
+      "summary": "Greetings from above the clouds! Jan from Milford, a librarian and gardening enthusiast, has just nodded off and the plane's Wi-Fi has finally decided to connect. It's been another action-packed few days in Bristol and I",
+      "publishedAt": "2026-11-25T15:22:54.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Liz Loza",
+      "author": "Liz Loza",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5121
+    },
+    {
+      "id": "mia_tx_f7f351f4753a",
+      "type": "tweet",
+      "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "fullText": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+      "outletId": "dolphins_official",
+      "outletName": "miamidolphins.com Official",
+      "reporterId": "dolphins_official",
+      "reporterName": "Miami Dolphins Official",
+      "author": "Miami Dolphins Official",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4876013",
+          "name": "Jack Browning",
+          "shortName": "J. Browning",
+          "position": "P",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4876013.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.77,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.4393
+    },
+    {
+      "id": "mia_brss_the_phinsider_2c69e56a3b4b",
+      "type": "article",
+      "title": "Miami Dolphins Discussion: Week 12 Game Vs NY Jets Predictions Edition",
+      "summary": "Our Miami Dolphins get to play another divisional rival this week, but at home this weekend, with the hated New York Jets coming to town. I suspect that the Buffalo Bills game this past week, at least score-wise, went about how most Dolphin",
+      "imageUrl": "",
+      "imageAlt": "Miami Dolphins Discussion: Week 12 Game Vs NY Jets Predictions Edition",
+      "publishedAt": "2026-11-24T20:01:19.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "James McKinney",
+      "author": "James McKinney",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6312
+    },
     {
       "id": "mia_vid_78f7c08f36c4",
       "type": "video",
@@ -123,6 +745,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3932335",
+          "name": "Zayne Anderson",
+          "shortName": "Z. Anderson",
+          "position": "S",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932335.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -136,7 +769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 38.4435
+      "storyRank": 0.6357
     },
     {
       "id": "mia_vid_e1c4814bf001",
@@ -157,6 +790,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4870976",
+          "name": "Kadyn Proctor",
+          "shortName": "K. Proctor",
+          "position": "OT",
+          "jersey": 74,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870976.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -170,7 +814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 36.9049
+      "storyRank": 0.6343
     },
     {
       "id": "mia_vid_e081cf362c91",
@@ -191,6 +835,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685116",
+          "name": "DJ Herman",
+          "shortName": "D. Herman",
+          "position": "FB",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685116.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -204,7 +859,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 32.5395
+      "storyRank": 0.6297
     },
     {
       "id": "mia_vid_a9e67a7bdc6b",
@@ -225,6 +880,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869579",
+          "name": "Chris Johnson",
+          "shortName": "C. Johnson",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869579.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -238,7 +904,84 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 29.9451
+      "storyRank": 0.6265
+    },
+    {
+      "id": "mia_brss_the_phinsider_5d84a6980d8d",
+      "type": "article",
+      "title": "Dolphins considering offensive line change as Austin Jackson struggles",
+      "summary": "Miami Dolphins offensive tackle Austin Jackson has struggled this season. While the primary concern with Jackson since Miami selected him in the first round of the 2020 NFL Draft has been his availability, his on-field play in 2026 has not",
+      "imageUrl": "",
+      "imageAlt": "Dolphins considering offensive line change as Austin Jackson struggles",
+      "publishedAt": "2026-11-24T13:12:23.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Kevin Nogle",
+      "author": "Kevin Nogle",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4271632",
+          "name": "Austin Jackson",
+          "shortName": "A. Jackson",
+          "position": "OT",
+          "jersey": 73,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4271632.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9247
+    },
+    {
+      "id": "mia_brss_the_phinsider_8a5516a1c94a",
+      "type": "article",
+      "title": "Miami Dolphins news: Bills review, Jets preview, and a change coming to the offensive line?",
+      "summary": "The Miami Dolphins lost for the ninth time this year this past Sunday when they visited the Buffalo Bills. It was clearly a matchup between a team working their way through the first year of a complete franchise rebuild versus a team hoping",
+      "imageUrl": "",
+      "imageAlt": "Miami Dolphins news: Bills review, Jets preview, and a change coming to the offensive line?",
+      "publishedAt": "2026-11-24T12:48:35.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-news/125243/miami-dolphins-news-kadyn-proctor-austin-jackson-tackle-malik-willis-injury-update-jets-preview",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Kevin Nogle",
+      "author": "Kevin Nogle",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-news/125243/miami-dolphins-news-kadyn-proctor-austin-jackson-tackle-malik-willis-injury-update-jets-preview",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9102
     },
     {
       "id": "mia_rss_99e3333ab8aa",
@@ -258,6 +1001,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -271,7 +1015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2354
+      "storyRank": 0.5112
     },
     {
       "id": "mia_rss_410c32ba79cb",
@@ -291,6 +1035,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -304,7 +1049,153 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9428
+      "storyRank": 0.5056
+    },
+    {
+      "id": "mia_brss_the_phinsider_156e16ff854a",
+      "type": "article",
+      "title": "Miami Dolphins’ Most Valuable Player | Week Eleven | Spark",
+      "summary": "The Miami Dolphins played their signature brand of scrappy defense on Sunday against Josh Allen and the Buffalo Bills — holding their AFC East rivals to the third lowest point total the Bills have score in a single game this season. Unfortu",
+      "imageUrl": "",
+      "imageAlt": "Miami Dolphins’ Most Valuable Player | Week Eleven | Spark",
+      "publishedAt": "2026-11-24T14:00:36.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-analysis/24480832/miami-dolphins-most-valuable-player-week-eleven-spark",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Marek Brave",
+      "author": "Marek Brave",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-analysis/24480832/miami-dolphins-most-valuable-player-week-eleven-spark",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4701
+    },
+    {
+      "id": "mia_brss_the_phinsider_07843ff48968",
+      "type": "article",
+      "title": "Miami Dolphins – On the Wings of Maybe",
+      "summary": "“But on the phins of maybe, downing bison on the range, kinda makes me feel sometimes, didn’t have to go, But as the aquatic mammal leaves the nest, got so far to go” paraphrased from “Ten Years Gone” by Led Zeppelin. We lost this game due",
+      "imageUrl": "",
+      "imageAlt": "Miami Dolphins – On the Wings of Maybe",
+      "publishedAt": "2026-11-24T13:55:20.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-coaching-staff/125217/miami-dolphins-vs-buffalo-bills-week-11-review-key-plays",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Paul Fields",
+      "author": "Paul Fields",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-coaching-staff/125217/miami-dolphins-vs-buffalo-bills-week-11-review-key-plays",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4683
+    },
+    {
+      "id": "mia_brss_the_phinsider_554fe8743736",
+      "type": "article",
+      "title": "Tuesday Miami Dolphins Thoughts With The Earl",
+      "summary": "The result of the game was expected. The mechanics of how it got there were not expected, however. Once again, the game was a tale of uncomplimentary football, with one side showing up to play and the other failing to show up. Let’s get int",
+      "imageUrl": "",
+      "imageAlt": "Tuesday Miami Dolphins Thoughts With The Earl",
+      "publishedAt": "2026-11-24T13:52:12.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-analysis/125229/tuesday-miami-dolphins-thoughts-with-the-earl",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Chris Early",
+      "author": "Chris Early",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-analysis/125229/tuesday-miami-dolphins-thoughts-with-the-earl",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4672
+    },
+    {
+      "id": "mia_tx_edc11cd77e06",
+      "type": "tweet",
+      "title": "Dolphins roster move: Designated LB Ronnie Harrison to return from injured reserve.",
+      "fullText": "Dolphins roster move: Designated LB Ronnie Harrison to return from injured reserve.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T08:00:00.000Z",
+      "url": "https://www.miamidolphins.com/team/transactions/#tx-edc11cd77e06",
+      "outletId": "dolphins_official",
+      "outletName": "miamidolphins.com Official",
+      "reporterId": "dolphins_official",
+      "reporterName": "Miami Dolphins Official",
+      "author": "Miami Dolphins Official",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "3859006",
+          "name": "Ronnie Harrison Jr.",
+          "shortName": "R. Harrison Jr.",
+          "position": "LB",
+          "jersey": 56,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3859006.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3748
     },
     {
       "id": "mia_pfr_3f25ec249d90",
@@ -323,6 +1214,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -336,7 +1228,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8443
+      "storyRank": 0.2848
     },
     {
       "id": "mia_rss_744c97882539",
@@ -356,6 +1248,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -369,7 +1262,87 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6957
+      "storyRank": 0.2619
+    },
+    {
+      "id": "mia_pwire_4360488_64937928",
+      "type": "article",
+      "title": "Dolphins head coach Jeff Hafley said Monday that Brents is day-to-day with a shoulder injury.",
+      "summary": "Brents didn't return to Sunday's loss to the Bills after sustaining a shoulder injury. The 26-year-old is still expected to undergo further tests but appears to have avoided anything serious. Brents has 36 tackles (21 so",
+      "publishedAt": "2026-11-23T20:38:47.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Dolphins%20head%20coach%20Jeff%20Hafley%20said%20Monday",
+      "outletId": "miami_herald_public_beat_wire_mia",
+      "outletName": "Miami Herald",
+      "reporterId": "barry_jackson",
+      "reporterName": "Barry Jackson",
+      "author": "Barry Jackson",
+      "authorHandle": "@flasportsbuzz",
+      "authorProfileUrl": "https://x.com/flasportsbuzz",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4360488",
+          "name": "JuJu Brents",
+          "shortName": "J. Brents",
+          "position": "CB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360488.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2592
+    },
+    {
+      "id": "mia_yts_F69kepglAY0",
+      "type": "video",
+      "videoId": "F69kepglAY0",
+      "embeddable": false,
+      "title": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
+      "summary": "",
+      "duration": "15:19",
+      "imageUrl": "https://i.ytimg.com/vi/F69kepglAY0/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
+      "publishedAt": "2026-11-23T20:35:47.758Z",
+      "url": "https://www.youtube.com/watch?v=F69kepglAY0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=F69kepglAY0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
     },
     {
       "id": "mia_vid_e971863354f1",
@@ -390,6 +1363,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4242512",
+          "name": "Malik Willis",
+          "shortName": "M. Willis",
+          "position": "QB",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242512.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -403,7 +1387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6797
+      "storyRank": 0.2588
     },
     {
       "id": "mia_rss_3aa03423228d",
@@ -423,6 +1407,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -436,7 +1421,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6566
+      "storyRank": 0.2543
     },
     {
       "id": "mia_vid_2080cf40272d",
@@ -457,6 +1442,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -470,7 +1457,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5943
+      "storyRank": 0.2416
     },
     {
       "id": "mia_vid_6de712b408ca",
@@ -491,6 +1478,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4711533",
+          "name": "Ollie Gordon II",
+          "shortName": "O. Gordon II",
+          "position": "RB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4711533.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -504,7 +1502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5938
+      "storyRank": 0.2415
     },
     {
       "id": "mia_vid_26a618baecfe",
@@ -525,6 +1523,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4894654",
+          "name": "Kenneth Grant",
+          "shortName": "K. Grant",
+          "position": "DT",
+          "jersey": 78,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4894654.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -538,7 +1547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5936
+      "storyRank": 0.2414
     },
     {
       "id": "mia_vid_91123f5a0b64",
@@ -559,6 +1568,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431586",
+          "name": "Chop Robinson",
+          "shortName": "C. Robinson",
+          "position": "LB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431586.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -572,7 +1592,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5935
+      "storyRank": 0.2414
+    },
+    {
+      "id": "mia_pwire_4242512_64935228",
+      "type": "article",
+      "title": "Head coach Jeff Hafley said Monday that, at this time, surgery to address Willis' groin/core injury is not foreseen.",
+      "summary": "That said, per Marcel Louis-Jacques of ESPN.com, Hafley added that the Dolphins will evaluate the QB's status again depending on how he feels at the end of his minimum required stay on IR. For now, Willis is out for at l",
+      "publishedAt": "2026-11-23T17:19:11.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4242512/malik-willis#:~:text=Head%20coach%20Jeff%20Hafley%20said%20Monday%20that",
+      "outletId": "palm_beach_post_mia",
+      "outletName": "Palm Beach Post",
+      "reporterId": "joe_schad",
+      "reporterName": "Joe Schad",
+      "author": "Joe Schad",
+      "authorHandle": "@schadjoe",
+      "authorProfileUrl": "https://x.com/schadjoe",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2365
     },
     {
       "id": "mia_vid_88efefc446d1",
@@ -593,6 +1645,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -606,7 +1669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4842
+      "storyRank": 0.2161
     },
     {
       "id": "mia_tx_117fe0a7a57c",
@@ -627,6 +1690,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -640,7 +1704,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3812
+      "storyRank": 0.188
     },
     {
       "id": "mia_espn_49aad16c52007",
@@ -650,7 +1714,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_IA_Dolphins_16x9/dm_261122_IA_Dolphins_16x9.jpg",
       "imageCaption": "Marcel Louis-Jacques weighs the positives and negatives of the Dolphins' Week 11 loss.",
       "imageAlt": "The positives and negatives from Miami's loss to Buffalo",
-      "publishedAt": "2026-11-23T03:48:33Z",
+      "publishedAt": "2026-11-23T03:48:33.000Z",
       "url": "https://www.espn.com/video/clip/_/id/50569481/the-positives-negatives-miami-loss-buffalo",
       "outletId": "espn_mia",
       "outletName": "ESPN",
@@ -661,6 +1725,8 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -674,7 +1740,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3283
+      "storyRank": 0.1715
+    },
+    {
+      "id": "x_tl_davidfurones__2124675406494331065",
+      "type": "tweet",
+      "title": "Dolphins safety Zayne Anderson, on Sunday against Buffalo, became the first defensive back this millennium to total at least 11 tackles, a sack, an interception and three passes defensed in a game.",
+      "fullText": "Dolphins safety Zayne Anderson, on Sunday against Buffalo, became the first defensive back this millennium to total at least 11 tackles, a sack, an interception and three passes defensed in a game.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "David Furones post",
+      "mentionedPlayers": [
+        {
+          "id": "3932335",
+          "name": "Zayne Anderson",
+          "shortName": "Z. Anderson",
+          "position": "S",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932335.png"
+        }
+      ],
+      "publishedAt": "2026-11-23T01:24:26.125Z",
+      "url": "https://x.com/DavidFurones_/status/2124675406494331065",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "south_florida_sun_sentinel_mia",
+      "outletName": "South Florida Sun Sentinel",
+      "reporterId": "david_furones",
+      "reporterName": "David Furones",
+      "author": "David Furones",
+      "authorHandle": "@DavidFurones_",
+      "authorProfileUrl": "https://x.com/DavidFurones_",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1793
     },
     {
       "id": "mia_vid_a640d715cb79",
@@ -695,6 +1809,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -708,7 +1833,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2948
+      "storyRank": 0.1601
     },
     {
       "id": "mia_espn_bfaeeeaa3d280",
@@ -718,7 +1843,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/5f96096cd71d45e8aac119c197cf86901076/5f96096cd71d45e8aac119c197cf86901076.jpg",
       "imageCaption": "Miami Dolphins vs. Buffalo Bills Game Highlights",
       "imageAlt": "Bills' defense feasts in 26-9 win over injury-depleted Dolphins",
-      "publishedAt": "2026-11-22T23:30:32Z",
+      "publishedAt": "2026-11-22T23:30:32.000Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873070",
       "outletId": "espn_mia",
       "outletName": "ESPN",
@@ -729,6 +1854,7 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -742,7 +1868,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2859
+      "storyRank": 0.1569
     },
     {
       "id": "mia_vid_11621c02e017",
@@ -763,6 +1889,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -776,41 +1904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2814
-    },
-    {
-      "id": "mia_espn_71e8d5804a03d",
-      "type": "video",
-      "title": "Miami Dolphins vs. Buffalo Bills Game Highlights",
-      "summary": "Miami Dolphins vs. Buffalo Bills Game Highlights",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/5f96096cd71d45e8aac119c197cf86901076/5f96096cd71d45e8aac119c197cf86901076.jpg",
-      "imageCaption": "Miami Dolphins vs. Buffalo Bills Game Highlights",
-      "imageAlt": "Miami Dolphins vs. Buffalo Bills Game Highlights",
-      "publishedAt": "2026-11-22T22:58:23Z",
-      "url": "https://www.espn.com/video/clip/_/id/50565047/miami-dolphins-vs-buffalo-bills-game-highlights",
-      "outletId": "espn_mia",
-      "outletName": "ESPN",
-      "reporterId": "espn_mia",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2813
+      "storyRank": 0.1553
     },
     {
       "id": "mia_rss_deb85865defe",
@@ -830,6 +1924,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -843,7 +1938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2791
+      "storyRank": 0.1545
     },
     {
       "id": "mia_vid_a206291005bb",
@@ -864,6 +1959,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        },
+        {
+          "id": "4569603",
+          "name": "Malik Washington",
+          "shortName": "M. Washington",
+          "position": "WR",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569603.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -877,7 +1991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0647
+      "storyRank": 0.147
     },
     {
       "id": "mia_vid_f5fe4b711b2f",
@@ -898,6 +2012,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4711533",
+          "name": "Ollie Gordon II",
+          "shortName": "O. Gordon II",
+          "position": "RB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4711533.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -911,7 +2036,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
+      "storyRank": 0.147
+    },
+    {
+      "id": "mia_pwire_4869961_64912528",
+      "type": "article",
+      "title": "Bell (chest) has returned to Sunday's Week 11 matchup against the Bills.",
+      "summary": "Bell suffered a chest injury late in the first half and was subsequently deemed questionable to return. However, the rookie wideout got back into the game shortly after halftime. Bell will look to be more productive afte",
+      "publishedAt": "2026-11-22T20:01:09.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4869961/chris-bell#:~:text=Bell%20(chest)%20has%20returned%20to%20Sunday's%20Week",
+      "outletId": "south_florida_sun_sentinel_mia",
+      "outletName": "South Florida Sun Sentinel",
+      "reporterId": "david_furones",
+      "reporterName": "David Furones",
+      "author": "David Furones",
+      "authorHandle": "@DavidFurones_",
+      "authorProfileUrl": "https://x.com/DavidFurones_",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0042
     },
     {
       "id": "mia_vid_08972143590f",
@@ -932,6 +2089,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3932335",
+          "name": "Zayne Anderson",
+          "shortName": "Z. Anderson",
+          "position": "S",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932335.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -945,7 +2113,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2553
+      "storyRank": 0.1456
     },
     {
       "id": "mia_vid_2fe8b109ca37",
@@ -966,6 +2134,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4566094",
+          "name": "Jacob Rodriguez",
+          "shortName": "J. Rodriguez",
+          "position": "LB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566094.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -979,7 +2158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2541
+      "storyRank": 0.1452
     },
     {
       "id": "mia_vid_677e66575c26",
@@ -1000,6 +2179,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1013,7 +2194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2517
+      "storyRank": 0.1443
     },
     {
       "id": "mia_vid_2579e0b1b5cc",
@@ -1034,6 +2215,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4569603",
+          "name": "Malik Washington",
+          "shortName": "M. Washington",
+          "position": "WR",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569603.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1047,7 +2239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0629
+      "storyRank": 0.1442
     },
     {
       "id": "mia_vid_37c27616880f",
@@ -1068,6 +2260,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4043130",
+          "name": "Jordyn Brooks",
+          "shortName": "J. Brooks",
+          "position": "LB",
+          "jersey": 20,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043130.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1081,41 +2284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.246
-    },
-    {
-      "id": "mia_espn_4a5a96658cd23",
-      "type": "video",
-      "title": "Dolphins' defensive line hit hard by season-ending injuries",
-      "summary": "Marcel Louis-Jacques explains how three season-ending injuries put pressure on Kenneth Grant ahead of the Bills matchup.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1121/dm_261121_dolphinia/dm_261121_dolphinia.jpg",
-      "imageCaption": "Marcel Louis-Jacques explains how three season-ending injuries put pressure on Kenneth Grant ahead of the Bills matchup.",
-      "imageAlt": "Dolphins' defensive line hit hard by season-ending injuries",
-      "publishedAt": "2026-11-22T06:46:57Z",
-      "url": "https://www.espn.com/video/clip/_/id/50558032/dolphins-defensive-line-hit-hard-season-ending-injuries",
-      "outletId": "espn_mia",
-      "outletName": "ESPN",
-      "reporterId": "espn_mia",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0776
+      "storyRank": 0.142
     },
     {
       "id": "mia_pfr_9af26dfbd9be",
@@ -1134,6 +2303,24 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4837188",
+          "name": "Jordan Phillips",
+          "shortName": "J. Phillips",
+          "position": "DT",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png"
+        },
+        {
+          "id": "3057956",
+          "name": "Zach Sieler",
+          "shortName": "Z. Sieler",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3057956.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1147,40 +2334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0716
-    },
-    {
-      "id": "mia_rss_0778aea2baaa",
-      "type": "article",
-      "title": "Dolphins make roster moves",
-      "summary": "The Miami Dolphins announced today that they have activated cornerback Darrell Baker Jr. off the reserve/physically unable to perform list and elevated kicker Daniel Carlson and punter Jack Browning to the active roster for Sunday’s game.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/dolphins/lxvxgb0ddb0oqc3kamu9.png",
-      "imageAlt": "Dolphins make roster moves",
-      "publishedAt": "2026-11-21T18:15:01.000Z",
-      "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
-      "outletId": "dolphins_official",
-      "outletName": "miamidolphins.com Official",
-      "reporterId": "dolphins_official",
-      "reporterName": "miamidolphins.com Official",
-      "author": "miamidolphins.com Official",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.miamidolphins.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0601
+      "storyRank": 0.0524
     },
     {
       "id": "mia_vid_cee7474d9ede",
@@ -1201,6 +2355,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1214,7 +2370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0148
+      "storyRank": 0.0114
     },
     {
       "id": "mia_rss_f19ca1eddc43",
@@ -1234,6 +2390,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1247,7 +2404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0576
+      "storyRank": 0.0448
     },
     {
       "id": "mia_tx_bd383f2e0632",
@@ -1268,6 +2425,24 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4036660",
+          "name": "Darrell Baker Jr.",
+          "shortName": "D. Baker Jr.",
+          "position": "CB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036660.png"
+        },
+        {
+          "id": "4876013",
+          "name": "Jack Browning",
+          "shortName": "J. Browning",
+          "position": "P",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4876013.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1281,7 +2456,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0403
     },
     {
       "id": "mia_rss_8e2c80cf1ae4",
@@ -1301,6 +2476,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1314,7 +2490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0357
     },
     {
       "id": "mia_rss_877795445afb",
@@ -1334,6 +2510,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1347,7 +2524,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0972
+      "storyRank": 0.0829
     },
     {
       "id": "mia_vid_01bb7de96eb6",
@@ -1368,6 +2545,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1381,7 +2560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0337
     },
     {
       "id": "mia_rss_f380d9d25730",
@@ -1401,6 +2580,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1414,7 +2594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0392
+      "storyRank": 0.0331
     },
     {
       "id": "mia_rss_fd776c8b05e5",
@@ -1434,6 +2614,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1447,7 +2628,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0391
+      "storyRank": 0.0331
     },
     {
       "id": "mia_vid_82c6423d1f86",
@@ -1468,6 +2649,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1481,7 +2664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0387
+      "storyRank": 0.0328
     },
     {
       "id": "mia_vid_9a171fdebe82",
@@ -1502,6 +2685,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1515,7 +2700,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0387
+      "storyRank": 0.0328
     },
     {
       "id": "mia_vid_6ccf4a75696d",
@@ -1536,6 +2721,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1549,7 +2736,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0387
+      "storyRank": 0.0328
     },
     {
       "id": "mia_vid_f6a8be6d6ade",
@@ -1570,6 +2757,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1583,7 +2772,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0386
+      "storyRank": 0.0327
     },
     {
       "id": "mia_vid_3b83a5d47106",
@@ -1604,6 +2793,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1617,7 +2808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0386
+      "storyRank": 0.0327
     },
     {
       "id": "mia_espn_e65125cb896f7",
@@ -1627,7 +2818,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/5f96096cd71d45e8aac119c197cf86901076/5f96096cd71d45e8aac119c197cf86901076.jpg",
       "imageCaption": "Miami Dolphins vs. Buffalo Bills Game Highlights",
       "imageAlt": "Bills get chance to feast on another backup QB with Kyle McCord and Miami Dolphins up next",
-      "publishedAt": "2026-11-19T22:24:33Z",
+      "publishedAt": "2026-11-19T22:24:33.000Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873070",
       "outletId": "espn_mia",
       "outletName": "ESPN",
@@ -1638,6 +2829,16 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1651,40 +2852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
-    },
-    {
-      "id": "mia_rss_d556438a0fa7",
-      "type": "article",
-      "title": "Aqua Archives: Buffalo Bills Battles",
-      "summary": "Take a look back at some of the most notable chapters in Dolphins-Bills history:",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/dolphins/vworetzfplvkt9wr0j7g.jpg",
-      "imageAlt": "Aqua Archives: Buffalo Bills Battles",
-      "publishedAt": "2026-11-19T20:27:18.000Z",
-      "url": "https://www.miamidolphins.com/news/aqua-archives-buffalo-bills-battles",
-      "outletId": "dolphins_official",
-      "outletName": "miamidolphins.com Official",
-      "reporterId": "dolphins_official",
-      "reporterName": "miamidolphins.com Official",
-      "author": "miamidolphins.com Official",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.miamidolphins.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0077
+      "storyRank": 0.0277
     },
     {
       "id": "mia_vid_75282241f46a",
@@ -1705,6 +2873,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869961",
+          "name": "Chris Bell",
+          "shortName": "C. Bell",
+          "position": "WR",
+          "jersey": 18,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869961.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1718,7 +2897,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0308
+      "storyRank": 0.0272
     },
     {
       "id": "mia_pfr_70041b3c4411",
@@ -1737,6 +2916,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1750,7 +2930,89 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0225
+    },
+    {
+      "id": "mia_pwire_4430681_64857728",
+      "type": "article",
+      "title": "Wayne (quadriceps) did not participate at practice Wednesday.",
+      "summary": "Wayne sat out Sunday's game at Indianapolis with a quad injury, and his availability for Week 11 is now in question. If he's not able to get back onto the practice field Thursday or Friday, he'll be trending toward missi",
+      "publishedAt": "2026-11-19T01:00:41.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4430681/jared-wayne#:~:text=Wayne%20(quadriceps)%20did%20not%20participate%20at%20practice",
+      "outletId": "south_florida_sun_sentinel_mia",
+      "outletName": "South Florida Sun Sentinel",
+      "reporterId": "david_furones",
+      "reporterName": "David Furones",
+      "author": "David Furones",
+      "authorHandle": "@DavidFurones_",
+      "authorProfileUrl": "https://x.com/DavidFurones_",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4430681",
+          "name": "Jared Wayne",
+          "shortName": "J. Wayne",
+          "position": "WR",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430681.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0228
+    },
+    {
+      "id": "mia_pwire_4431664_64856828",
+      "type": "article",
+      "title": "Trader (shoulder/groin) did not participate in Wednesday's practice.",
+      "summary": "Trader may have picked up the injuries during the Dolphins' 24-22 loss to the Colts in Week 10, when he played every defensive snap and finished with six tackles (four solo). The second-year defensive back will have two",
+      "publishedAt": "2026-11-19T00:47:53.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4431664/dante-trader-jr#:~:text=Trader%20(shoulder%2Fgroin)%20did%20not%20participate%20in%20Wednesday's",
+      "outletId": "south_florida_sun_sentinel_mia",
+      "outletName": "South Florida Sun Sentinel",
+      "reporterId": "david_furones",
+      "reporterName": "David Furones",
+      "author": "David Furones",
+      "authorHandle": "@DavidFurones_",
+      "authorProfileUrl": "https://x.com/DavidFurones_",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4431664",
+          "name": "Dante Trader Jr.",
+          "shortName": "D. Trader Jr.",
+          "position": "S",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431664.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0228
     },
     {
       "id": "mia_pfr_d6e9815eec79",
@@ -1769,6 +3031,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1782,7 +3045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0245
+      "storyRank": 0.0224
     },
     {
       "id": "mia_vid_ecd3413261d7",
@@ -1803,6 +3066,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4711533",
+          "name": "Ollie Gordon II",
+          "shortName": "O. Gordon II",
+          "position": "RB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4711533.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1816,7 +3090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0225
     },
     {
       "id": "mia_vid_7e58913e6e6e",
@@ -1837,6 +3111,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4894654",
+          "name": "Kenneth Grant",
+          "shortName": "K. Grant",
+          "position": "DT",
+          "jersey": 78,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4894654.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1850,7 +3135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0225
     },
     {
       "id": "mia_vid_0abc7f5cb383",
@@ -1871,6 +3156,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1884,7 +3180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0245
+      "storyRank": 0.0224
     },
     {
       "id": "mia_vid_9e9ab2c8d931",
@@ -1905,6 +3201,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4566094",
+          "name": "Jacob Rodriguez",
+          "shortName": "J. Rodriguez",
+          "position": "LB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566094.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1918,7 +3225,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0244
+      "storyRank": 0.0223
     },
     {
       "id": "mia_vid_77325a3e5cd6",
@@ -1939,6 +3246,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1952,7 +3261,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.024
+      "storyRank": 0.022
+    },
+    {
+      "id": "mia_yts_dqRYfzOLzA8",
+      "type": "video",
+      "videoId": "dqRYfzOLzA8",
+      "embeddable": false,
+      "title": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:01",
+      "imageUrl": "https://i.ytimg.com/vi/dqRYfzOLzA8/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T20:35:47.758Z",
+      "url": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
     },
     {
       "id": "mia_vid_f598baa1fd16",
@@ -1973,6 +3321,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360488",
+          "name": "JuJu Brents",
+          "shortName": "J. Brents",
+          "position": "CB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360488.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1986,7 +3345,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0217
     },
     {
       "id": "mia_vid_14be7844a959",
@@ -2007,6 +3366,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2020,7 +3381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0236
+      "storyRank": 0.0217
     },
     {
       "id": "mia_espn_2174513a3461e",
@@ -2030,17 +3391,18 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747125_608x342_16-9.jpg",
       "imageCaption": "Jeff Hafley",
       "imageAlt": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
-      "publishedAt": "2026-11-18T13:32:42Z",
+      "publishedAt": "2026-11-18T13:32:42.000Z",
       "url": "https://www.espn.com/nfl/draft2027/story/_/id/50510863/2027-nfl-draft-top-pick-dolphins-titans-eagles-jets-chargers",
-      "outletId": "espn_mia",
+      "outletId": "espn_national",
       "outletName": "ESPN",
-      "reporterId": "espn_mia",
-      "reporterName": "NFL Nation, Jordan Reid and Seth Walder",
-      "author": "NFL Nation, Jordan Reid and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
-      "trustTier": 1,
+      "reporterId": "seth_walder",
+      "reporterName": "Seth Walder",
+      "author": "Seth Walder",
+      "authorHandle": "@SethWalder",
+      "authorProfileUrl": "https://x.com/SethWalder",
+      "trustTier": 2,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2049,12 +3411,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 91,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0533
+      "storyRank": 0.0425
     },
     {
       "id": "mia_tx_ef558f440a5c",
@@ -2075,6 +3437,16 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4876013",
+          "name": "Jack Browning",
+          "shortName": "J. Browning",
+          "position": "P",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4876013.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2088,7 +3460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
+      "storyRank": 0.0199
     },
     {
       "id": "mia_pfr_7952893c8067",
@@ -2107,6 +3479,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2120,7 +3493,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0184
     },
     {
       "id": "mia_espn_05ae0694fd1e1",
@@ -2130,7 +3503,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747266_1296x729_16-9.jpg",
       "imageCaption": "Jordan Phillips [1296x729]",
       "imageAlt": "Source: Jordan Phillips latest Dolphins DT to suffer season-ending injury",
-      "publishedAt": "2026-11-17T22:30:15Z",
+      "publishedAt": "2026-11-17T22:30:15.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50513896/source-dolphins-jordan-phillips-miss-rest-season",
       "outletId": "espn_mia",
       "outletName": "ESPN",
@@ -2141,6 +3514,16 @@
       "authorProfileUrl": "https://x.com/Marcel_LJ",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4837188",
+          "name": "Jordan Phillips",
+          "shortName": "J. Phillips",
+          "position": "DT",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2154,7 +3537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0185
     },
     {
       "id": "mia_pfr_e05aa9e7b04d",
@@ -2173,6 +3556,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4837188",
+          "name": "Jordan Phillips",
+          "shortName": "J. Phillips",
+          "position": "DT",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2186,7 +3579,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
+      "storyRank": 0.0181
     },
     {
       "id": "mia_espn_97009130fefc4",
@@ -2196,7 +3589,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746265_608x342_16-9.jpg",
       "imageCaption": "QB Kyle McCord picked up a rushing touchdown in his Dolphins debut.",
       "imageAlt": "Miami Dolphins backup QB Kyle McCord showed poise in debut vs. Indianapolis Colts",
-      "publishedAt": "2026-11-17T16:48:42Z",
+      "publishedAt": "2026-11-17T16:48:42.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50505347/miami-dolphins-quarterback-kyle-mccord-debut-colts",
       "outletId": "espn_mia",
       "outletName": "ESPN",
@@ -2207,6 +3600,32 @@
       "authorProfileUrl": "https://x.com/Marcel_LJ",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        },
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        },
+        {
+          "id": "4569603",
+          "name": "Malik Washington",
+          "shortName": "M. Washington",
+          "position": "WR",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569603.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2220,7 +3639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0178
     },
     {
       "id": "mia_tx_f8b282b7530c",
@@ -2241,6 +3660,48 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4429435",
+          "name": "Brady Cook",
+          "shortName": "B. Cook",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429435.png"
+        },
+        {
+          "id": "4569448",
+          "name": "Jordan Jefferson",
+          "shortName": "J. Jefferson",
+          "position": "DT",
+          "jersey": 98,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569448.png"
+        },
+        {
+          "id": "4569016",
+          "name": "Eric Watts",
+          "shortName": "E. Watts",
+          "position": "DE",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569016.png"
+        },
+        {
+          "id": "4683276",
+          "name": "Zeek Biggers",
+          "shortName": "Z. Biggers",
+          "position": "DT",
+          "jersey": 93,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683276.png"
+        },
+        {
+          "id": "4837188",
+          "name": "Jordan Phillips",
+          "shortName": "J. Phillips",
+          "position": "DT",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2254,7 +3715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0167
     },
     {
       "id": "mia_pfr_e257073d17c2",
@@ -2273,6 +3734,24 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4683276",
+          "name": "Zeek Biggers",
+          "shortName": "Z. Biggers",
+          "position": "DT",
+          "jersey": 93,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683276.png"
+        },
+        {
+          "id": "3057956",
+          "name": "Zach Sieler",
+          "shortName": "Z. Sieler",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3057956.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2286,13 +3765,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0159
+    },
+    {
+      "id": "mia_espn_150285e97a503",
+      "type": "article",
+      "title": "Dolphins cut kicker Zane Gonzalez a day after costly misses in loss to Colts",
+      "summary": "The Dolphins waived kicker Zane Gonzalez on Monday, a day after he missed two field goals and an extra point in a 24-22 loss to the Colts.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746667_1296x729_16-9.jpg",
+      "imageCaption": "Zane Gonzalez [1296x729]",
+      "imageAlt": "Dolphins cut kicker Zane Gonzalez a day after costly misses in loss to Colts",
+      "publishedAt": "2026-11-17T02:33:27.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50502391/dolphins-cut-kicker-zane-gonzalez-day-costly-misses",
+      "outletId": "espn_mia",
+      "outletName": "ESPN",
+      "reporterId": "marcel_louis_jacques",
+      "reporterName": "Marcel Louis-Jacques",
+      "author": "Marcel Louis-Jacques",
+      "authorHandle": "@Marcel_LJ",
+      "authorProfileUrl": "https://x.com/Marcel_LJ",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0161
     },
     {
       "id": "mia_pfr_e6aa64d4de47",
       "type": "article",
       "title": "Minor NFL Transactions: 11/16/26",
-      "summary": "Today’s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards Miami ",
+      "summary": "Today’s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards Miami",
       "imageUrl": "",
       "publishedAt": "2026-11-17T00:52:07.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-16-26",
@@ -2305,6 +3819,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2318,7 +3833,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0157
+    },
+    {
+      "id": "mia_yts_8qPlVF26TS4",
+      "type": "video",
+      "videoId": "8qPlVF26TS4",
+      "embeddable": false,
+      "title": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "13:40",
+      "imageUrl": "https://i.ytimg.com/vi/8qPlVF26TS4/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T20:35:47.758Z",
+      "url": "https://www.youtube.com/watch?v=8qPlVF26TS4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=8qPlVF26TS4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0155
     },
     {
       "id": "mia_vid_79159664df40",
@@ -2339,6 +3893,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2352,7 +3917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0155
     },
     {
       "id": "mia_vid_45acc9d936bb",
@@ -2373,6 +3938,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431664",
+          "name": "Dante Trader Jr.",
+          "shortName": "D. Trader Jr.",
+          "position": "S",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431664.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2386,7 +3962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0154
     },
     {
       "id": "mia_vid_aed0b841b976",
@@ -2407,6 +3983,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4249417",
+          "name": "Jalen Tolbert",
+          "shortName": "J. Tolbert",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249417.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2420,7 +4007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0153
     },
     {
       "id": "mia_vid_a2a36c3dd9f4",
@@ -2441,6 +4028,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4259804",
+          "name": "Willie Gay Jr.",
+          "shortName": "W. Gay Jr.",
+          "position": "LB",
+          "jersey": 40,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259804.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2454,7 +4052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0153
     },
     {
       "id": "mia_vid_415a448b49e0",
@@ -2475,6 +4073,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4362064",
+          "name": "Andrew Meyer",
+          "shortName": "A. Meyer",
+          "position": "C",
+          "jersey": 60,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362064.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2488,7 +4097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0153
     },
     {
       "id": "mia_vid_2d21b937702d",
@@ -2509,6 +4118,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2522,7 +4133,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0153
     },
     {
       "id": "mia_pfr_1cd79c58968f",
@@ -2541,6 +4152,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2554,7 +4166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0148
     },
     {
       "id": "mia_vid_ce9cc06f417a",
@@ -2575,6 +4187,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4569603",
+          "name": "Malik Washington",
+          "shortName": "M. Washington",
+          "position": "WR",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569603.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2588,7 +4211,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0038
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_62ad0de25908",
@@ -2609,6 +4232,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2622,7 +4256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_5f89cc4d4826",
@@ -2643,6 +4277,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4567493",
+          "name": "Patrick Paul",
+          "shortName": "P. Paul",
+          "position": "OT",
+          "jersey": 52,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567493.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2656,7 +4301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_fcdf6b052202",
@@ -2677,6 +4322,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4880346",
+          "name": "Michael Taaffe",
+          "shortName": "M. Taaffe",
+          "position": "S",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4880346.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2690,7 +4346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_545f2947eeb4",
@@ -2711,6 +4367,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2724,7 +4391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_86bc2d028fe7",
@@ -2745,6 +4412,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4043130",
+          "name": "Jordyn Brooks",
+          "shortName": "J. Brooks",
+          "position": "LB",
+          "jersey": 20,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043130.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2758,7 +4436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_338f56fbeeaa",
@@ -2779,6 +4457,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4046528",
+          "name": "Josh Uche",
+          "shortName": "J. Uche",
+          "position": "LB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046528.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2792,7 +4481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_d08cbb2f9d2a",
@@ -2813,6 +4502,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4894654",
+          "name": "Kenneth Grant",
+          "shortName": "K. Grant",
+          "position": "DT",
+          "jersey": 78,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4894654.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2826,7 +4526,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_01ab027b007a",
@@ -2847,6 +4547,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360488",
+          "name": "JuJu Brents",
+          "shortName": "J. Brents",
+          "position": "CB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360488.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2860,7 +4571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_d31f977b6cce",
@@ -2881,6 +4592,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869579",
+          "name": "Chris Johnson",
+          "shortName": "C. Johnson",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869579.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2894,7 +4616,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_vid_121553093af8",
@@ -2915,6 +4637,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2928,7 +4652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0149
     },
     {
       "id": "mia_tx_f4e88fb0b899",
@@ -2949,6 +4673,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2962,7 +4687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0143
     },
     {
       "id": "mia_vid_5cebb6bff01b",
@@ -2983,6 +4708,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        },
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2996,7 +4740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0134
     },
     {
       "id": "mia_vid_e7e2ef38a9bf",
@@ -3017,6 +4761,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431586",
+          "name": "Chop Robinson",
+          "shortName": "C. Robinson",
+          "position": "LB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431586.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3030,7 +4785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0134
     },
     {
       "id": "mia_vid_9216885c4ab1",
@@ -3051,6 +4806,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3064,7 +4830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0134
     },
     {
       "id": "mia_vid_803b4c29ff42",
@@ -3085,6 +4851,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        },
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3098,7 +4883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0134
     },
     {
       "id": "mia_vid_08b16cf4301b",
@@ -3119,6 +4904,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869579",
+          "name": "Chris Johnson",
+          "shortName": "C. Johnson",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869579.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3132,7 +4928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0134
     },
     {
       "id": "mia_vid_70f49799b44e",
@@ -3153,6 +4949,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3166,7 +4964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_7b712733194b",
@@ -3187,6 +4985,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        },
+        {
+          "id": "4569603",
+          "name": "Malik Washington",
+          "shortName": "M. Washington",
+          "position": "WR",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569603.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3200,7 +5017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_635563c72013",
@@ -3221,6 +5038,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4880346",
+          "name": "Michael Taaffe",
+          "shortName": "M. Taaffe",
+          "position": "S",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4880346.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3234,7 +5062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_9a62fc4999a7",
@@ -3255,6 +5083,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4249417",
+          "name": "Jalen Tolbert",
+          "shortName": "J. Tolbert",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249417.png"
+        },
+        {
+          "id": "4569603",
+          "name": "Malik Washington",
+          "shortName": "M. Washington",
+          "position": "WR",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569603.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3268,7 +5115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_0e33ce2e7cc6",
@@ -3289,6 +5136,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        },
+        {
+          "id": "4249417",
+          "name": "Jalen Tolbert",
+          "shortName": "J. Tolbert",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249417.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3302,7 +5168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0133
     },
     {
       "id": "mia_pfr_961cee39ef8b",
@@ -3321,6 +5187,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3334,7 +5201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
+      "storyRank": 0.0113
     },
     {
       "id": "mia_tx_847127f90112",
@@ -3355,6 +5222,16 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4429435",
+          "name": "Brady Cook",
+          "shortName": "B. Cook",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429435.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3368,7 +5245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.011
     },
     {
       "id": "mia_vid_1f8dab0412d3",
@@ -3389,6 +5266,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4043130",
+          "name": "Jordyn Brooks",
+          "shortName": "J. Brooks",
+          "position": "LB",
+          "jersey": 20,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043130.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3402,7 +5290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0104
     },
     {
       "id": "mia_vid_67af614fdf17",
@@ -3423,6 +5311,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4894654",
+          "name": "Kenneth Grant",
+          "shortName": "K. Grant",
+          "position": "DT",
+          "jersey": 78,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4894654.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3436,7 +5335,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0103
     },
     {
       "id": "mia_vid_97af8b155917",
@@ -3457,6 +5356,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3470,7 +5371,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0103
     },
     {
       "id": "mia_vid_1ce36d3ca6e8",
@@ -3491,6 +5392,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3525,6 +5428,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3538,7 +5443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0101
     },
     {
       "id": "mia_vid_3d6fbc05958f",
@@ -3559,6 +5464,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3572,7 +5479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0094
     },
     {
       "id": "mia_vid_20c6484086a3",
@@ -3593,6 +5500,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3606,7 +5515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_ccc66cd316a9",
@@ -3627,6 +5536,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3640,7 +5551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_9c1fa75ce30e",
@@ -3661,6 +5572,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3674,7 +5587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_4b8835c2ff63",
@@ -3695,6 +5608,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4362064",
+          "name": "Andrew Meyer",
+          "shortName": "A. Meyer",
+          "position": "C",
+          "jersey": 60,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362064.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3708,7 +5632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_70721cc4c812",
@@ -3729,6 +5653,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360488",
+          "name": "JuJu Brents",
+          "shortName": "J. Brents",
+          "position": "CB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360488.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3742,7 +5677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_f7145556eeac",
@@ -3763,6 +5698,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3776,7 +5722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_c1a84443dbee",
@@ -3797,6 +5743,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4566094",
+          "name": "Jacob Rodriguez",
+          "shortName": "J. Rodriguez",
+          "position": "LB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566094.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3810,7 +5767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_00176a7019cd",
@@ -3831,6 +5788,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431586",
+          "name": "Chop Robinson",
+          "shortName": "C. Robinson",
+          "position": "LB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431586.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3844,7 +5812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0084
     },
     {
       "id": "mia_vid_35419a947a48",
@@ -3865,6 +5833,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3878,7 +5857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0084
     },
     {
       "id": "mia_vid_16d162ad5d71",
@@ -3899,6 +5878,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3912,7 +5893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0083
     },
     {
       "id": "mia_vid_0b6faabd0833",
@@ -3933,6 +5914,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3946,7 +5929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0083
     },
     {
       "id": "mia_vid_c3a93b99f5cf",
@@ -3967,6 +5950,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4837188",
+          "name": "Jordan Phillips",
+          "shortName": "J. Phillips",
+          "position": "DT",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3980,7 +5974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.002
+      "storyRank": 0.0083
     },
     {
       "id": "mia_tx_df3d8d5988b0",
@@ -4001,6 +5995,16 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4712462",
+          "name": "Keith Cooper Jr.",
+          "shortName": "K. Cooper Jr.",
+          "position": "DT",
+          "jersey": 97,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4712462.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4014,7 +6018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0077
+      "storyRank": 0.008
     },
     {
       "id": "mia_tx_c823d582359e",
@@ -4035,6 +6039,24 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "3057956",
+          "name": "Zach Sieler",
+          "shortName": "Z. Sieler",
+          "position": "DT",
+          "jersey": 92,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3057956.png"
+        },
+        {
+          "id": "4242512",
+          "name": "Malik Willis",
+          "shortName": "M. Willis",
+          "position": "QB",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242512.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4048,7 +6070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0072
     },
     {
       "id": "mia_vid_3bac4a48fe6a",
@@ -4069,6 +6091,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431586",
+          "name": "Chop Robinson",
+          "shortName": "C. Robinson",
+          "position": "LB",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431586.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4082,7 +6115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0069
     },
     {
       "id": "mia_vid_83abce95ec07",
@@ -4103,6 +6136,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431664",
+          "name": "Dante Trader Jr.",
+          "shortName": "D. Trader Jr.",
+          "position": "S",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431664.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4116,7 +6160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0069
     },
     {
       "id": "mia_vid_78f553f30b91",
@@ -4137,6 +6181,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4711533",
+          "name": "Ollie Gordon II",
+          "shortName": "O. Gordon II",
+          "position": "RB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4711533.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4150,7 +6205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0069
     },
     {
       "id": "mia_vid_9653bdbe69ce",
@@ -4171,6 +6226,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4040537",
+          "name": "Aaron Brewer",
+          "shortName": "A. Brewer",
+          "position": "C",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040537.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4184,7 +6250,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0069
     },
     {
       "id": "mia_vid_5d2523eec5f1",
@@ -4205,6 +6271,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4218,7 +6286,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0069
     },
     {
       "id": "mia_vid_978e427757aa",
@@ -4239,6 +6307,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4252,7 +6322,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_a48eca448254",
@@ -4273,6 +6343,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685307",
+          "name": "Kevin Coleman Jr.",
+          "shortName": "K. Coleman Jr.",
+          "position": "WR",
+          "jersey": 21,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685307.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4286,7 +6367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_9c7663f9bd69",
@@ -4307,6 +6388,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4320,7 +6412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_73bd42915dd5",
@@ -4341,6 +6433,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4043130",
+          "name": "Jordyn Brooks",
+          "shortName": "J. Brooks",
+          "position": "LB",
+          "jersey": 20,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043130.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4354,7 +6457,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_f28b2ea3af83",
@@ -4375,6 +6478,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4566094",
+          "name": "Jacob Rodriguez",
+          "shortName": "J. Rodriguez",
+          "position": "LB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566094.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4388,7 +6502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_66ba13962580",
@@ -4409,6 +6523,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4046528",
+          "name": "Josh Uche",
+          "shortName": "J. Uche",
+          "position": "LB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046528.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4422,7 +6547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_09e7cea7f246",
@@ -4443,6 +6568,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869579",
+          "name": "Chris Johnson",
+          "shortName": "C. Johnson",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869579.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4456,7 +6592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_aee7cc31112e",
@@ -4477,6 +6613,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4242512",
+          "name": "Malik Willis",
+          "shortName": "M. Willis",
+          "position": "QB",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242512.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4490,7 +6637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_68b94fcf6926",
@@ -4511,6 +6658,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685307",
+          "name": "Kevin Coleman Jr.",
+          "shortName": "K. Coleman Jr.",
+          "position": "WR",
+          "jersey": 21,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685307.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4524,7 +6682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_6f28375180be",
@@ -4545,6 +6703,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4566094",
+          "name": "Jacob Rodriguez",
+          "shortName": "J. Rodriguez",
+          "position": "LB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566094.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4558,7 +6727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_04247795ff8d",
@@ -4579,6 +6748,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4683276",
+          "name": "Zeek Biggers",
+          "shortName": "Z. Biggers",
+          "position": "DT",
+          "jersey": 93,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683276.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4592,7 +6772,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0063
     },
     {
       "id": "mia_vid_8f18e7d315cb",
@@ -4613,6 +6793,25 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        },
+        {
+          "id": "4242512",
+          "name": "Malik Willis",
+          "shortName": "M. Willis",
+          "position": "QB",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242512.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4626,7 +6825,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0063
     },
     {
       "id": "mia_vid_352dfe38ea99",
@@ -4647,6 +6846,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4660,7 +6861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0063
     },
     {
       "id": "mia_vid_8a8c50c10878",
@@ -4681,6 +6882,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4869579",
+          "name": "Chris Johnson",
+          "shortName": "C. Johnson",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869579.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4694,7 +6906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0063
     },
     {
       "id": "mia_vid_45aae2d7f738",
@@ -4715,6 +6927,17 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4046528",
+          "name": "Josh Uche",
+          "shortName": "J. Uche",
+          "position": "LB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4046528.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4728,7 +6951,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0063
     },
     {
       "id": "mia_tx_f52abd5c34d9",
@@ -4749,6 +6972,7 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4762,7 +6986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0057
     },
     {
       "id": "mia_vid_7e033eb36001",
@@ -4783,6 +7007,8 @@
       "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4796,7 +7022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0014
     }
   ]
 }

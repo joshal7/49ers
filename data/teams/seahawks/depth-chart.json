@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:07:30.082Z",
+  "updatedAt": "2026-11-25T20:43:27.887Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -86,7 +86,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "2977187",
@@ -244,7 +244,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432525.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -287,7 +287,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432525.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -415,6 +415,16 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4427843",
+              "name": "Chase Lundt",
+              "jersey": 77,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427843.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -437,6 +447,16 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4427843",
+              "name": "Chase Lundt",
+              "jersey": 77,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427843.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -451,8 +471,8 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
               "baselineRank": 1,
-              "playProbabilityPct": 45,
-              "statusBadge": "45% • Long Shot",
+              "playProbabilityPct": 64,
+              "statusBadge": "64% • GTD",
               "isAvailable": true
             },
             {
@@ -483,8 +503,8 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
               "baselineRank": 1,
-              "playProbabilityPct": 45,
-              "statusBadge": "45% • Long Shot",
+              "playProbabilityPct": 64,
+              "statusBadge": "64% • GTD",
               "isAvailable": true
             },
             {
@@ -512,7 +532,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4576297",
@@ -551,7 +571,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4678006.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -593,7 +613,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4678006.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -692,7 +712,7 @@
         },
         {
           "slotKey": "fb",
-          "slotLabel": "FB",
+          "slotLabel": "FB (21 Personnel)",
           "baselineChain": [
             {
               "playerId": "4243176",
@@ -744,11 +764,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "2971622",
@@ -797,7 +817,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "4570040",
@@ -846,7 +866,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "3115312",
@@ -1062,7 +1082,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "3120358",
@@ -1154,21 +1174,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4040966",
-              "name": "Trevon Diggs",
-              "jersey": 16,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4592837",
               "name": "Terrion Arnold",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4592837.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false
@@ -1196,21 +1206,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4040966",
-              "name": "Trevon Diggs",
-              "jersey": 16,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4592837",
               "name": "Terrion Arnold",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4592837.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false,
@@ -1333,10 +1333,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "5082331",
-              "name": "Avery Smith",
-              "jersey": 27,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5082331.png",
+              "playerId": "4040966",
+              "name": "Trevon Diggs",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1365,10 +1365,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "5082331",
-              "name": "Avery Smith",
-              "jersey": 27,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5082331.png",
+              "playerId": "4040966",
+              "name": "Trevon Diggs",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1390,7 +1390,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4869523",

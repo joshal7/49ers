@@ -1,109 +1,789 @@
 {
-  "updatedAt": "2026-11-24T20:08:14.410Z",
+  "updatedAt": "2026-11-25T20:44:53.025Z",
   "dailyTopNewsBrief": {
-    "id": "brief_atl_2ebf06dd2f29",
-    "cycleKey": "2026-11-23@17ET",
+    "id": "daily_brief_2026-11-24_17ET",
+    "cycleKey": "2026-11-24@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-24T20:08:17.797Z",
-    "modelUsed": "gemini-4-hydrogen",
-    "thinkingLevel": "XHIGH",
-    "source": "deterministic-digest",
-    "wordCount": 63,
-    "headline": "Atlanta Falcons Daily Briefing — Week 12",
-    "summary": "Atlanta Falcons (3-7, 4th in NFC South • #13 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
+    "generatedAt": "2026-11-25T20:44:53.025Z",
+    "modelUsed": "deterministic-grounded",
+    "thinkingLevel": "NONE",
+    "source": "pipeline-grounded",
+    "practiceReportCoverage": {
+      "hasThu": false,
+      "hasFri": false
+    },
+    "wordCount": 206,
+    "headline": "Falcons (3-7) Week 12 Briefing: Injury Updates Ahead of Vikings",
+    "summary": "",
     "bullets": [
-      "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending ([atlantafalcons.com Official](https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars))",
-      "Falcons Waive LB Christian Harris ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris))",
-      "Tracking the NFC South: Panthers build 2-game lead in division ([atlantafalcons.com Official](https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints))",
-      "Head Coach Kevin Stefanski on team preparations for Week 12 matchup vs. Vikings | Press Conference ([atlantafalcons.com Video](https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference))",
-      "Falcons release LB Christian Harris, sign S Jammie Robinson ([atlantafalcons.com Official](https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson))"
+      "Roster & Front Office: Atlanta signed CB Terell Smith to the practice squad [Dave Choate](https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter).",
+      "Injury & Practice Status: Entering Week 12 preparation, head coach Kevin Stefanski and the medical staff evaluate WR Zachariah Branch (hamstring), LB Divine Deablo (forearm), and LB Kendal Daniels (Achilles) ahead of Wednesday's initial participation report [Daniel Flick](https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20%28hamstring%29%20went%20through%20warmups%20during%20the).",
+      "Week 12 Vikings Outlook: Kevin Stefanski and DC Jeff Ulbrich open installation for the Minnesota Vikings (7-3, MIN -7, HC Kevin O'Connell, OC Wes Phillips & DC Brian Flores (Road Test))—a unit ranked #1 in Points Allowed / Game (16.1) as Atlanta prepares for a pivotal NFC matchup [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total) [atlantafalcons.com Official](https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC South • #13 Seed in NFC), Atlanta carries a 8.8% postseason projection, 8.7% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Aaron Freeman](https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Atlanta ranks #23 in Points / Game (20.1), #24 in Points Allowed / Game (25.8), #30 in Turnover Differential (-10), giving Kevin Stefanski and Jeff Ulbrich a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Minnesota Vikings [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026)."
     ],
     "coveredStoryKeys": [
-      "atl_rss_ef487570b9ea",
-      "atl_pfr_6022e65677ca",
-      "atl_rss_755f7c5a75e4",
-      "atl_vid_f571667ef4c7",
-      "atl_rss_efd5b2e015e7"
+      "team::power_rankings",
+      "falconswaive::roster_departure"
     ],
     "coveredUrls": [
+      "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
+      "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+      "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
       "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
+      "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
+      "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
+      "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+      "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
+      "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
+      "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
       "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+      "https://www.atlantafalcons.com/news/atlanta-falcons-week-12-depth-chart-vs-minnesota-vikings",
       "https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints",
-      "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
-      "https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson"
+      "https://www.thefalcoholic.com/atlanta-falcons-history/98627/where-is-2026-tracking-compared-to-previous-years-in-atlantas-miserable-run"
     ],
     "sources": [
       {
-        "sid": "S1",
-        "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
-        "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
+        "type": "article",
+        "author": "Dave Choate",
+        "outlet": "The Falcoholic",
+        "title": "Breaking down Falcons 2026 acquisitions through the bye",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
+        "publishedAt": "2026-11-24T21:37:32.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Daniel Flick",
+        "outlet": "Atlanta Journal-Constitution",
+        "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
+        "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+        "publishedAt": "2026-11-24T23:21:51.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Kevin Knight",
+        "outlet": "The Falcoholic",
+        "title": "Falcons vs. Vikings odds: Opening lines for Week 12 matchup",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
+        "publishedAt": "2026-11-24T20:47:03.000Z"
+      },
+      {
+        "type": "article",
         "author": "atlantafalcons.com Official",
         "outlet": "atlantafalcons.com Official",
+        "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
+        "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
         "publishedAt": "2026-11-24T15:56:24.000Z"
       },
       {
-        "sid": "S2",
-        "title": "Falcons Waive LB Christian Harris",
-        "url": "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "publishedAt": "2026-11-24T14:58:42.000Z"
+        "type": "article",
+        "author": "Aaron Freeman",
+        "outlet": "The Falcoholic",
+        "title": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
+        "publishedAt": "2026-11-25T15:22:52.000Z"
       },
       {
-        "sid": "S3",
-        "title": "Tracking the NFC South: Panthers build 2-game lead in division",
-        "url": "https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints",
-        "author": "atlantafalcons.com Official",
-        "outlet": "atlantafalcons.com Official",
-        "publishedAt": "2026-11-24T14:17:02.000Z"
+        "type": "article",
+        "author": "Kevin Knight",
+        "outlet": "The Falcoholic",
+        "title": "What do we need to see from the Falcons over the final games of 2026?",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
+        "publishedAt": "2026-11-24T19:22:58.000Z"
       },
       {
-        "sid": "S4",
-        "title": "Head Coach Kevin Stefanski on team preparations for Week 12 matchup vs. Vikings | Press Conference",
-        "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
-        "author": "atlantafalcons.com Video",
-        "outlet": "atlantafalcons.com Video",
-        "publishedAt": "2026-11-23T18:35:00.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "Falcons release LB Christian Harris, sign S Jammie Robinson",
-        "url": "https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson",
-        "author": "atlantafalcons.com Official",
-        "outlet": "atlantafalcons.com Official",
-        "publishedAt": "2026-11-23T16:58:19.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Falcons roster move: Released LB Christian Harris. Signed S Jammie Robinson from the practice squad to the active roster. Signed CB Terell Smith to the practice squad.",
-        "url": "https://www.atlantafalcons.com/team/transactions/#tx-504fed1c7c04",
-        "author": "Atlanta Falcons Official",
-        "outlet": "atlantafalcons.com Official",
-        "publishedAt": "2026-11-23T08:00:00.000Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Falcons insist winning still the goal despite trading Jessie Bates III",
-        "url": "https://www.espn.com/nfl/story/_/id/50473666/atlanta-falcons-trade-deadline-jessie-bates-morale",
+        "type": "article",
         "author": "Marc Raimondi",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-21T11:59:54Z"
+        "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+        "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+        "publishedAt": "2026-11-25T20:08:06.000Z"
       },
       {
-        "sid": "S8",
-        "title": "Falcons Extend OLB Cameron Thomas",
-        "url": "https://www.profootballrumors.com/2026/11/falcons-to-extend-olb-cameron-thomas",
+        "type": "article",
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "title": "Where to watch Atlanta Falcons vs. Minnesota Vikings",
+        "url": "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
+        "publishedAt": "2026-11-25T17:27:38.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Evan Birchfield",
+        "outlet": "The Falcoholic",
+        "title": "Three former Falcons advance in Pro Football Hall of Fame voting",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
+        "publishedAt": "2026-11-24T21:39:12.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Eric Karabell",
+        "outlet": "ESPN / X Beat Wire",
+        "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+        "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+        "publishedAt": "2026-11-24T20:18:57.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Tristan H. Cockcroft",
+        "outlet": "ESPN / X Beat Wire",
+        "title": "As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
+        "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
+        "publishedAt": "2026-11-24T18:17:33.000Z"
+      },
+      {
+        "type": "article",
         "author": "Pro Football Rumors",
         "outlet": "Pro Football Rumors",
-        "publishedAt": "2026-11-20T15:50:11.000Z"
+        "title": "Falcons Waive LB Christian Harris",
+        "url": "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+        "publishedAt": "2026-11-24T14:58:42.000Z"
       }
     ]
   },
-  "clusteredBriefs": [],
+  "clusteredBriefs": [
+    {
+      "id": "atl_cl_top",
+      "category": "beat",
+      "headline": "Atlanta Falcons Week 12 Top Headlines (3-7)",
+      "summary": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson — Where to watch Atlanta Falcons vs. Minnesota Vikings",
+      "updatedAt": "2026-11-25T20:08:06.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Marc Raimondi",
+          "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+          "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+          "publishedAt": "2026-11-25T20:08:06.000Z"
+        },
+        {
+          "label": "atlantafalcons.com Official",
+          "title": "Where to watch Atlanta Falcons vs. Minnesota Vikings",
+          "url": "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
+          "publishedAt": "2026-11-25T17:27:38.000Z"
+        },
+        {
+          "label": "Aaron Freeman",
+          "title": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
+          "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
+          "publishedAt": "2026-11-25T15:22:52.000Z"
+        },
+        {
+          "label": "Daniel Flick",
+          "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
+          "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+          "publishedAt": "2026-11-24T23:21:51.000Z"
+        },
+        {
+          "label": "Evan Birchfield",
+          "title": "Three former Falcons advance in Pro Football Hall of Fame voting",
+          "url": "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
+          "publishedAt": "2026-11-24T21:39:12.000Z"
+        },
+        {
+          "label": "Dave Choate",
+          "title": "Breaking down Falcons 2026 acquisitions through the bye",
+          "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
+          "publishedAt": "2026-11-24T21:37:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": "atl_cl_health",
+      "category": "injury",
+      "headline": "Falcons Practice Report, Injury & IR Availability",
+      "summary": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session. — As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
+      "updatedAt": "2026-11-24T23:21:51.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Daniel Flick",
+          "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
+          "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+          "publishedAt": "2026-11-24T23:21:51.000Z"
+        },
+        {
+          "label": "Tristan H. Cockcroft",
+          "title": "As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
+          "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
+          "publishedAt": "2026-11-24T18:17:33.000Z"
+        },
+        {
+          "label": "Atlanta Falcons Official",
+          "title": "Falcons roster move: Released LB Christian Harris. Signed S Jammie Robinson from the practice squad to the active roster. Signed CB Terell Smith to the practice squad.",
+          "url": "https://www.atlantafalcons.com/team/transactions/#tx-504fed1c7c04",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
+        },
+        {
+          "label": "Ben Solak",
+          "title": "SEVEN THINGS I THINK\n\n🔸Joe Burrow was right about the Bengals' pass rate\n🔸Tyler Shough and Michael Penix ... clock is ticking\n🔸Vikings v. 49ers Week 11 is the schemewar of the year\n🔸 Very little to take away from Fernando Mendoza's first start\n\nMORE:\nwww.espn.com/nfl/story/_/...",
+          "url": "https://bsky.app/profile/benjaminsolak.bsky.social/post/3n2jeul5n2s23",
+          "publishedAt": "2026-11-17T15:40:00.383Z"
+        },
+        {
+          "label": "Marc Raimondi",
+          "title": "Falcons WR Drake London cleared after being checked for concussion",
+          "url": "https://www.espn.com/nfl/story/_/id/50503127/falcons-drake-london-cleared-being-checked-concussion",
+          "publishedAt": "2026-11-16T19:03:09.000Z"
+        },
+        {
+          "label": "atlantafalcons.com Video",
+          "title": "Can't-Miss Play: Best onside kick in NFL history? Jake Moody might have it as he sets up Blair for toe-tap catch",
+          "url": "https://www.atlantafalcons.com/video/can-t-miss-play-best-onside-kick-in-nfl-history-jake-moody-might-have-it-as-he-sets-up-blair-for-toe-tap-catch",
+          "publishedAt": "2026-11-15T20:57:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "atl_cl_film",
+      "category": "film",
+      "headline": "Falcons All-22 Film, Trench & Efficiency Breakdowns",
+      "summary": "The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things. — SEVEN THINGS I THINK\n\n🔸Joe Burrow was right about the Bengals' pass rate\n🔸Tyler Shough and Michael Penix ... clock is ticking",
+      "updatedAt": "2026-11-21T23:39:03.339Z",
+      "itemCount": 3,
+      "sourceLinks": [
+        {
+          "label": "Doug Farrar ✍",
+          "title": "The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things.",
+          "url": "https://x.com/NFL_DougFarrar/status/2124286498942116210",
+          "publishedAt": "2026-11-21T23:39:03.339Z"
+        },
+        {
+          "label": "Ben Solak",
+          "title": "SEVEN THINGS I THINK\n\n🔸Joe Burrow was right about the Bengals' pass rate\n🔸Tyler Shough and Michael Penix ... clock is ticking\n🔸Vikings v. 49ers Week 11 is the schemewar of the year\n🔸 Very little to take away from Fernando Mendoza's first start\n\nMORE:\nwww.espn.com/nfl/story/_/...",
+          "url": "https://bsky.app/profile/benjaminsolak.bsky.social/post/3n2jeul5n2s23",
+          "publishedAt": "2026-11-17T15:40:00.383Z"
+        },
+        {
+          "label": "atlantafalcons.com Video",
+          "title": "Breaking down what makes Kyle Pitts Sr. & Travis Kelce a nightmare for defenses | Film Review",
+          "url": "https://www.atlantafalcons.com/video/breaking-down-what-makes-kyle-pitts-sr-travis-kelce-a-nightmare-for-defenses-film-review",
+          "publishedAt": "2026-11-10T19:17:28.000Z"
+        }
+      ]
+    },
+    {
+      "id": "atl_cl_roster",
+      "category": "roster",
+      "headline": "Falcons Roster Moves, Trades & Salary Cap Desk",
+      "summary": "Michael Penix’s fifth-year option is now a coin flip for the Falcons — Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "updatedAt": "2026-11-25T15:22:52.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Aaron Freeman",
+          "title": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
+          "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
+          "publishedAt": "2026-11-25T15:22:52.000Z"
+        },
+        {
+          "label": "Eric Karabell",
+          "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+          "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "publishedAt": "2026-11-24T20:18:57.000Z"
+        },
+        {
+          "label": "Pro Football Rumors",
+          "title": "Falcons Waive LB Christian Harris",
+          "url": "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+          "publishedAt": "2026-11-24T14:58:42.000Z"
+        },
+        {
+          "label": "Dave Choate",
+          "title": "Falcons cut LB Christian Harris, promote S Jammie Robinson to roster",
+          "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98660/falcons-cut-lb-christian-harris-promote-s-jammie-robinson-to-roster",
+          "publishedAt": "2026-11-23T19:21:06.000Z"
+        },
+        {
+          "label": "Atlanta Falcons Official",
+          "title": "Falcons roster move: Released LB Christian Harris. Signed S Jammie Robinson from the practice squad to the active roster. Signed CB Terell Smith to the practice squad.",
+          "url": "https://www.atlantafalcons.com/team/transactions/#tx-504fed1c7c04",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
+        },
+        {
+          "label": "Pro Football Rumors",
+          "title": "Falcons Extend OLB Cameron Thomas",
+          "url": "https://www.profootballrumors.com/2026/11/falcons-to-extend-olb-cameron-thomas",
+          "publishedAt": "2026-11-20T15:50:11.000Z"
+        }
+      ]
+    }
+  ],
   "rawStream": [
+    {
+      "id": "atl_espn_e136351fbccec",
+      "type": "article",
+      "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+      "summary": "Kevin Stefanski said he and the team are aware of assertions made by Rickea Jackson that insinuated James Pearce Jr. is still trying to contact her.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1125/r1751172_1296x729_16-9.jpg",
+      "imageCaption": "Falcons edge rusher James Pearce Jr. returned to the field with the Falcons in Week 9 after serving an eight-game NFL suspension for violating the league's personal conduct policy.",
+      "imageAlt": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+      "publishedAt": "2026-11-25T20:08:06.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+      "outletId": "espn_atl",
+      "outletName": "ESPN",
+      "reporterId": "marc_raimondi",
+      "reporterName": "Marc Raimondi",
+      "author": "Marc Raimondi",
+      "authorHandle": "@marcraimondi",
+      "authorProfileUrl": "https://x.com/marcraimondi",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 89,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 28.8243
+    },
+    {
+      "id": "atl_vid_282070c32113",
+      "type": "video",
+      "title": "Head Coach Kevin Stefanski on Sunday's Week 12 matchup against Vikings | Press Conference",
+      "summary": "Atlanta Falcons Head Coach Kevin Stefanski speaks with the media as the Falcons continue their preparations for their Week 12 road matchup against the Minnesota Vikings.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/laapmndn0nhct5dvjjb4.jpg",
+      "imageAlt": "Head Coach Kevin Stefanski on Sunday's Week 12 matchup against Vikings | Press Conference",
+      "publishedAt": "2026-11-25T19:55:00.000Z",
+      "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-sunday-s-week-12-matchup-against-vikings-press-conference",
+      "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-sunday-s-week-12-matchup-against-vikings-press-conference",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Video",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Video",
+      "author": "atlantafalcons.com Video",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 24.3253
+    },
+    {
+      "id": "atl_yt_YfqLn_nqbWs",
+      "type": "video",
+      "category": "beat",
+      "videoId": "YfqLn_nqbWs",
+      "embeddable": false,
+      "title": "Atlanta Falcons vs Minnesota Vikings | 2026 Week 12 Game Preview",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
+      "imageUrl": "https://i.ytimg.com/vi/YfqLn_nqbWs/hqdefault.jpg",
+      "imageAlt": "Atlanta Falcons vs Minnesota Vikings | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:00:39.000Z",
+      "url": "https://www.youtube.com/watch?v=YfqLn_nqbWs",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=YfqLn_nqbWs",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.1357
+    },
+    {
+      "id": "atl_rss_b83c64598135",
+      "type": "article",
+      "title": "Where to watch Atlanta Falcons vs. Minnesota Vikings",
+      "summary": "All the information you need to watch, stream or listen to the Falcons' game against the Minnesota Vikings.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/jhyjkeuvycqf6r2xqnam.jpg",
+      "imageAlt": "Where to watch Atlanta Falcons vs. Minnesota Vikings",
+      "publishedAt": "2026-11-25T17:27:38.000Z",
+      "url": "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.653
+    },
+    {
+      "id": "atl_brss_the_falcoholic_87d9c63cbd0b",
+      "type": "article",
+      "title": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
+      "summary": "When Michael Penix earned NFC Offensive Player of the Week honors after Week 7, the debate over his future as the Atlanta Falcons’ franchise quarterback seemed settled. Yet a month later, the conversation has shifted entirely, with the pivo",
+      "imageUrl": "",
+      "imageAlt": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
+      "publishedAt": "2026-11-25T15:22:52.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "aaron_freeman",
+      "reporterName": "Aaron Freeman",
+      "author": "Aaron Freeman",
+      "authorHandle": "@falcfans",
+      "authorProfileUrl": "https://x.com/falcfans",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.4372
+    },
+    {
+      "id": "atl_pwire_4870612_64962528",
+      "type": "article",
+      "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
+      "summary": "It's unclear how much work Branch was able to get in Monday, but his presence alone opens the door for a Week 12 return. The Falcons will provide an official update on his status when they release their first injury repo",
+      "publishedAt": "2026-11-24T23:21:51.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+      "outletId": "espn",
+      "outletName": "Atlanta Journal-Constitution",
+      "reporterId": "ext_daniel_flick",
+      "reporterName": "Daniel Flick",
+      "author": "Daniel Flick",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4870612",
+          "name": "Zachariah Branch",
+          "shortName": "Z. Branch",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7602
+    },
+    {
+      "id": "atl_brss_the_falcoholic_937c57dddcc0",
+      "type": "article",
+      "title": "Three former Falcons advance in Pro Football Hall of Fame voting",
+      "summary": "The voting process for the Pro Football Hall of Fame’s Class of 2027 is underway, as the Hall continues to narrow down its list of candidates ahead of February’s NFL Honors. On Tuesday, the Hall announced that 52 players have advanced to th",
+      "imageUrl": "",
+      "imageAlt": "Three former Falcons advance in Pro Football Hall of Fame voting",
+      "publishedAt": "2026-11-24T21:39:12.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Evan Birchfield",
+      "author": "Evan Birchfield",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.686
+    },
+    {
+      "id": "atl_brss_the_falcoholic_252516bd4ec3",
+      "type": "article",
+      "title": "Breaking down Falcons 2026 acquisitions through the bye",
+      "summary": "The Atlanta Falcons made a lot of roster moves this offseason. I bet you forgot about several of the players on the list I’m about to roll out. With the bye over and Week 12 looming, I thought I’d look back at everyone the Falcons acquired",
+      "imageUrl": "",
+      "imageAlt": "Breaking down Falcons 2026 acquisitions through the bye",
+      "publishedAt": "2026-11-24T21:37:32.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Dave Choate",
+      "author": "Dave Choate",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6849
+    },
+    {
+      "id": "atl_rss_a4a133dec5d5",
+      "type": "article",
+      "title": "Atlanta Falcons Week 12 depth chart vs. Minnesota Vikings",
+      "summary": "The Falcons travel north to face the Vikings at U.S. Bank Stadium this Sunday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/lbkrvw4tc3czgs0pgm03.jpg",
+      "imageAlt": "Atlanta Falcons Week 12 depth chart vs. Minnesota Vikings",
+      "publishedAt": "2026-11-24T20:59:25.000Z",
+      "url": "https://www.atlantafalcons.com/news/atlanta-falcons-week-12-depth-chart-vs-minnesota-vikings",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6716
+    },
+    {
+      "id": "atl_brss_the_falcoholic_dd7e6953567d",
+      "type": "article",
+      "title": "Falcons vs. Vikings odds: Opening lines for Week 12 matchup",
+      "summary": "The Falcons are going to be well rested coming off their bye week, but unfortunately things don’t get any easier for the team in Week 12. Atlanta travels to Minnesota to take on the Vikings, who possess the NFL’s best defense and now have f",
+      "imageUrl": "",
+      "imageAlt": "Falcons vs. Vikings odds: Opening lines for Week 12 matchup",
+      "publishedAt": "2026-11-24T20:47:03.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Kevin Knight",
+      "author": "Kevin Knight",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6529
+    },
+    {
+      "id": "atl_pwire_4430807_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6362
+    },
+    {
+      "id": "atl_brss_the_falcoholic_095aaa3aa4c6",
+      "type": "article",
+      "title": "What do we need to see from the Falcons over the final games of 2026?",
+      "summary": "The Falcons exit their bye week at 3-7 and staring down a series of matchups with NFC contenders. With Atlanta’s playoff hopes dwindling, what do we need to see from the team over the final seven games? Kevin Knight brings you his list, inc",
+      "imageUrl": "",
+      "imageAlt": "What do we need to see from the Falcons over the final games of 2026?",
+      "publishedAt": "2026-11-24T19:22:58.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Kevin Knight",
+      "author": "Kevin Knight",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.605
+    },
+    {
+      "id": "atl_pwire_4430807_50583834",
+      "type": "article",
+      "title": "As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
+      "summary": "A huge name is out there in 16.7% of Knockout leagues this week: Josh Allen , fantasy football's No. 1 overall scorer since the beginning of the 2023 season. And yet, Allen isn't -- and shouldn't be -- the all-in player",
+      "publishedAt": "2026-11-24T18:17:33.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Tristan H. Cockcroft",
+      "author": "Tristan H. Cockcroft",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5717
+    },
     {
       "id": "atl_rss_ef487570b9ea",
       "type": "article",
@@ -122,6 +802,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -135,7 +816,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8726
+      "storyRank": 0.5183
+    },
+    {
+      "id": "atl_brss_the_falcoholic_c25bc21b7ba8",
+      "type": "article",
+      "title": "Where is 2026 tracking compared to previous years in Atlanta’s miserable run?",
+      "summary": "During this nearly decade-long run of ineptitude and frustration that we hope to escape someday, the Atlanta Falcons have 58 wins and 85 losses. They have mixed the occasional triumph over a contender with abysmal losses at the last moment,",
+      "imageUrl": "",
+      "imageAlt": "Where is 2026 tracking compared to previous years in Atlanta’s miserable run?",
+      "publishedAt": "2026-11-24T15:35:21.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-history/98627/where-is-2026-tracking-compared-to-previous-years-in-atlantas-miserable-run",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Dave Choate",
+      "author": "Dave Choate",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-history/98627/where-is-2026-tracking-compared-to-previous-years-in-atlantas-miserable-run",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5015
     },
     {
       "id": "atl_pfr_6022e65677ca",
@@ -154,6 +869,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -163,13 +879,11 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5688
+      "storyRank": 0.4876
     },
     {
       "id": "atl_rss_755f7c5a75e4",
@@ -189,6 +903,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -202,7 +917,84 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.002
+      "storyRank": 0.1202
+    },
+    {
+      "id": "atl_brss_the_falcoholic_2ba9fe6aeb27",
+      "type": "article",
+      "title": "Falcons cut LB Christian Harris, promote S Jammie Robinson to roster",
+      "summary": "Quite often, stories in the NFL that seem destined to unfold one way veer off in a very different direction. When Christian Harris was signed this offseason, the athletic but inconsistent linebacker seemed like an obvious favorite to start",
+      "imageUrl": "",
+      "imageAlt": "Falcons cut LB Christian Harris, promote S Jammie Robinson to roster",
+      "publishedAt": "2026-11-23T19:21:06.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98660/falcons-cut-lb-christian-harris-promote-s-jammie-robinson-to-roster",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Dave Choate",
+      "author": "Dave Choate",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-roster/98660/falcons-cut-lb-christian-harris-promote-s-jammie-robinson-to-roster",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430411",
+          "name": "Jammie Robinson",
+          "shortName": "J. Robinson",
+          "position": "S",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430411.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2447
+    },
+    {
+      "id": "atl_brss_the_falcoholic_dfe6932f982c",
+      "type": "article",
+      "title": "NFC South Week 11 Review: The division leader no longer has a losing record",
+      "summary": "The division still doesn’t have a winning team, but a .500 lead is all the Panthers need to stand above the rest. The Buccaneers looked no better off their bye week; the Saints continue to sink, and the Falcons managed to gain ground while",
+      "imageUrl": "",
+      "imageAlt": "NFC South Week 11 Review: The division leader no longer has a losing record",
+      "publishedAt": "2026-11-23T18:50:40.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-scores-results/98644/nfc-south-week-11-review-the-division-leader-no-longer-has-a-losing-record-buccaneers-saints-panthers",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Tre'Shon Diaz",
+      "author": "Tre'Shon Diaz",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-scores-results/98644/nfc-south-week-11-review-the-division-leader-no-longer-has-a-losing-record-buccaneers-saints-panthers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2413
     },
     {
       "id": "atl_vid_f571667ef4c7",
@@ -223,6 +1015,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -236,7 +1030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6091
+      "storyRank": 0.2437
     },
     {
       "id": "atl_rss_efd5b2e015e7",
@@ -256,6 +1050,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430411",
+          "name": "Jammie Robinson",
+          "shortName": "J. Robinson",
+          "position": "S",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430411.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -269,7 +1073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.561
+      "storyRank": 0.2333
     },
     {
       "id": "atl_tx_504fed1c7c04",
@@ -290,6 +1094,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4430411",
+          "name": "Jammie Robinson",
+          "shortName": "J. Robinson",
+          "position": "S",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430411.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -303,7 +1117,187 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3813
+      "storyRank": 0.1873
+    },
+    {
+      "id": "atl_brss_the_falcoholic_9026f8f6bea9",
+      "type": "article",
+      "title": "NFC South standings: Falcons move ahead of the Saints on Atlanta’s bye week",
+      "summary": "The Falcons are on their bye this week, but play continued in Week 11 for the rest of the NFC South — and it did shake up the standings a bit in a good way for the Falcons. The Panthers were the only NFC South team to win on Sunday, escapin",
+      "imageUrl": "",
+      "imageAlt": "NFC South standings: Falcons move ahead of the Saints on Atlanta’s bye week",
+      "publishedAt": "2026-11-23T04:28:53.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-nfl-playoffs/98606/nfc-south-standings-nfl-playoff-picture-falcons-buccaneers-saints-panthers",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Jeanna Kelley",
+      "author": "Jeanna Kelley",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-nfl-playoffs/98606/nfc-south-standings-nfl-playoff-picture-falcons-buccaneers-saints-panthers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1705
+    },
+    {
+      "id": "atl_brss_the_falcoholic_6eeaa128a7d3",
+      "type": "article",
+      "title": "Can Michael Penix be fixed by the Atlanta Falcons?",
+      "summary": "The 2026 Atlanta Falcons have a 3-7 record, a 1-5 home record, a -57 point differential, a -0.14 offensive EPA per play… and because they reside in the NFC South, they are actually one good run away from competing for the division. But if t",
+      "imageUrl": "",
+      "imageAlt": "Can Michael Penix be fixed by the Atlanta Falcons?",
+      "publishedAt": "2026-11-22T18:52:45.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98550/michael-penix-performance-losses-drake-london-kevin-stefanski-tommy-rees",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Doug Farrar",
+      "author": "Doug Farrar",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98550/michael-penix-performance-losses-drake-london-kevin-stefanski-tommy-rees",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1407
+    },
+    {
+      "id": "x_tl_nfl_dougfarrar_2124286498942116210",
+      "type": "tweet",
+      "title": "The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things.",
+      "fullText": "The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124286400891965441/img/mNWnB0Jpj8l1471y.jpg",
+      "imageAlt": "Doug Farrar ✍ post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124286400891965441/vid/avc1/1920x1080/dJXMYO-7K-wu4-jm.mp4?tag=29",
+      "duration": "1:29",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "publishedAt": "2026-11-21T23:39:03.339Z",
+      "url": "https://x.com/NFL_DougFarrar/status/2124286498942116210",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "Doug Farrar ✍",
+      "author": "Doug Farrar ✍",
+      "authorHandle": "@NFL_DougFarrar",
+      "authorProfileUrl": "https://x.com/NFL_DougFarrar",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1126
+    },
+    {
+      "id": "x_tl_nfl_dougfarrar_2124186319316529519",
+      "type": "tweet",
+      "title": "Michael Penix Jr. on October 25. Your NFC Offensive Player of the Week.\n\nWhere did THIS guy go?",
+      "fullText": "Michael Penix Jr. on October 25. Your NFC Offensive Player of the Week.\n\nWhere did THIS guy go?",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124186195429326848/img/kOCEiXApelTib1wQ.jpg",
+      "imageAlt": "Doug Farrar ✍ post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124186195429326848/vid/avc1/1920x1080/_SM5ewUkf1BAgOjp.mp4?tag=29",
+      "isHighlightClip": true,
+      "duration": "0:52",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "publishedAt": "2026-11-21T17:00:58.655Z",
+      "url": "https://x.com/NFL_DougFarrar/status/2124186319316529519",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "Doug Farrar ✍",
+      "author": "Doug Farrar ✍",
+      "authorHandle": "@NFL_DougFarrar",
+      "authorProfileUrl": "https://x.com/NFL_DougFarrar",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1023
     },
     {
       "id": "atl_espn_faaa82c8f2010",
@@ -313,7 +1307,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1113/r1745395_1296x729_16-9.jpg",
       "imageCaption": "Jessie Bates III wasn't just a leader on the field, he was a key veteran voice in the locker room.",
       "imageAlt": "Falcons insist winning still the goal despite trading Jessie Bates III",
-      "publishedAt": "2026-11-21T11:59:54Z",
+      "publishedAt": "2026-11-21T11:59:54.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50473666/atlanta-falcons-trade-deadline-jessie-bates-morale",
       "outletId": "espn_atl",
       "outletName": "ESPN",
@@ -324,6 +1318,7 @@
       "authorProfileUrl": "https://x.com/marcraimondi",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -337,13 +1332,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1279
+      "storyRank": 0.0883
     },
     {
       "id": "atl_pfr_c0947bbebf2d",
       "type": "article",
       "title": "Falcons Extend OLB Cameron Thomas",
-      "summary": "NOVEMBER 20: Thomas’ new deal carries a base value of $27MM, per Spotrac. $9MM is fully locked in at signing, with an additional $5MM guaranteed for injury; incentives could see the pact top out at $33MM. Option bonuses are present in each ",
+      "summary": "NOVEMBER 20: Thomas’ new deal carries a base value of $27MM, per Spotrac. $9MM is fully locked in at signing, with an additional $5MM guaranteed for injury; incentives could see the pact top out at $33MM. Option bonuses are present in each",
       "imageUrl": "",
       "publishedAt": "2026-11-20T15:50:11.000Z",
       "url": "https://www.profootballrumors.com/2026/11/falcons-to-extend-olb-cameron-thomas",
@@ -356,6 +1351,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361510",
+          "name": "Cameron Thomas",
+          "shortName": "C. Thomas",
+          "position": "DE",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -369,7 +1374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0922
+      "storyRank": 0.068
     },
     {
       "id": "atl_espn_7cc8fe35ab6f7",
@@ -379,7 +1384,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747842_1296x729_16-9.jpg",
       "imageCaption": "Can Michael Penix Jr. lift the Falcons out of their duldroms in the second half of the season? It would be hard to draw optimism from history.",
       "imageAlt": "Falcons seek change, but keep ending up in the same spot",
-      "publishedAt": "2026-11-19T11:39:28Z",
+      "publishedAt": "2026-11-19T11:39:28.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50524413/falcons-matt-ryan-michael-penix-kevin-stefanski",
       "outletId": "espn_atl",
       "outletName": "ESPN",
@@ -390,6 +1395,7 @@
       "authorProfileUrl": "https://x.com/marcraimondi",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -403,7 +1409,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0665
+      "storyRank": 0.0521
     },
     {
       "id": "atl_vid_db08ba1e6bae",
@@ -424,6 +1430,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -437,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.046
+      "storyRank": 0.038
     },
     {
       "id": "atl_pfr_3573f91ee6d8",
@@ -456,6 +1464,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240596",
+          "name": "C.J. Henderson",
+          "shortName": "C.J. Henderson",
+          "position": "CB",
+          "jersey": 26,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240596.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -469,7 +1487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0451
+      "storyRank": 0.0373
     },
     {
       "id": "atl_vid_e30bc25c2aa0",
@@ -490,6 +1508,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -503,7 +1532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0459
+      "storyRank": 0.0379
     },
     {
       "id": "atl_vid_a26fb306bec3",
@@ -524,6 +1553,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -537,7 +1577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0458
+      "storyRank": 0.0379
     },
     {
       "id": "atl_vid_afcbfd238320",
@@ -558,6 +1598,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -571,7 +1613,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0458
+      "storyRank": 0.0379
     },
     {
       "id": "atl_rss_e8b1b614b76a",
@@ -591,6 +1633,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -604,7 +1647,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0112
+      "storyRank": 0.0093
+    },
+    {
+      "id": "atl_bsky_02920291fa4f",
+      "type": "tweet",
+      "title": "SEVEN THINGS I THINK\n\n🔸Joe Burrow was right about the Bengals' pass rate\n🔸Tyler Shough and Michael Penix ... clock is ticking\n🔸Vikings v. 49ers Week 11 is the schemewar of the year\n🔸 Very little to take away from Fernando Mendoza's first start\n\nMORE:\nwww.espn.com/nfl/story/_/...",
+      "fullText": "SEVEN THINGS I THINK\n\n🔸Joe Burrow was right about the Bengals' pass rate\n🔸Tyler Shough and Michael Penix ... clock is ticking\n🔸Vikings v. 49ers Week 11 is the schemewar of the year\n🔸 Very little to take away from Fernando Mendoza's first start\n\nMORE:\nwww.espn.com/nfl/story/_/...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:iw7z6n45q5xw2rehw2d3veq3/bafkreifvnp2n3w3hmnlbve7gbne5bnhhoyh2yr4gjiqqvc6l4hpwx55zca",
+      "imageAlt": "Ben Solak post",
+      "publishedAt": "2026-11-17T15:40:00.383Z",
+      "url": "https://bsky.app/profile/benjaminsolak.bsky.social/post/3n2jeul5n2s23",
+      "externalUrl": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions",
+      "externalTitle": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
+      "outletId": "espn_national",
+      "outletName": "Ben Solak",
+      "reporterId": "ben_solak",
+      "reporterName": "Ben Solak",
+      "author": "Ben Solak",
+      "authorHandle": "@BenjaminSolak",
+      "authorProfileUrl": "https://x.com/BenjaminSolak",
+      "trustTier": 1,
+      "category": "film",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 25,
+      "isClickbait": false,
+      "credibilityScore": 91,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0301
     },
     {
       "id": "atl_rss_3d8d94980edb",
@@ -624,6 +1714,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -637,7 +1728,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0438
+      "storyRank": 0.0364
     },
     {
       "id": "atl_vid_d2e49f1f9ee6",
@@ -658,6 +1749,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -671,7 +1773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0391
+      "storyRank": 0.033
     },
     {
       "id": "atl_vid_9038f9cf61b8",
@@ -692,6 +1794,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361409",
+          "name": "Jahan Dotson",
+          "shortName": "J. Dotson",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png"
+        },
+        {
+          "id": "4431005",
+          "name": "Xavier Watts",
+          "shortName": "X. Watts",
+          "position": "S",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431005.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -705,7 +1826,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0386
+      "storyRank": 0.0326
+    },
+    {
+      "id": "atl_yts_IeXG9UkMiI0",
+      "type": "video",
+      "videoId": "IeXG9UkMiI0",
+      "embeddable": false,
+      "title": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "16:50",
+      "imageUrl": "https://i.ytimg.com/vi/IeXG9UkMiI0/hqdefault.jpg",
+      "imageAlt": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T20:44:54.152Z",
+      "url": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0323
     },
     {
       "id": "atl_espn_3ed26fa45e367",
@@ -715,7 +1875,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746719_1296x729_16-9.jpg",
       "imageCaption": "Drake London [1296x729]",
       "imageAlt": "Falcons WR Drake London cleared after being checked for concussion",
-      "publishedAt": "2026-11-16T19:03:09Z",
+      "publishedAt": "2026-11-16T19:03:09.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50503127/falcons-drake-london-cleared-being-checked-concussion",
       "outletId": "espn_atl",
       "outletName": "ESPN",
@@ -726,6 +1886,16 @@
       "authorProfileUrl": "https://x.com/marcraimondi",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -739,7 +1909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0377
+      "storyRank": 0.0319
     },
     {
       "id": "atl_vid_b1a09eb2ea39",
@@ -760,6 +1930,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -773,7 +1945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0377
+      "storyRank": 0.0319
     },
     {
       "id": "atl_rss_f66fa5406769",
@@ -793,6 +1965,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -806,7 +1979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
+      "storyRank": 0.0315
     },
     {
       "id": "atl_espn_9f020e3e0ae5a",
@@ -816,7 +1989,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1115/538055ea-4b87-43d8-9be8-828316a9a8e6/538055ea-4b87-43d8-9be8-828316a9a8e6.jpg",
       "imageCaption": "Kansas City Chiefs vs. Atlanta Falcons: Game Highlights",
       "imageAlt": "Bijan Robinson: Falcons deserved boos in loss to Chiefs",
-      "publishedAt": "2026-11-15T23:38:40Z",
+      "publishedAt": "2026-11-15T23:38:40.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50495406/bijan-robinson-says-falcons-deserved-boos-loss-chiefs",
       "outletId": "espn_atl",
       "outletName": "ESPN",
@@ -827,6 +2000,16 @@
       "authorProfileUrl": "https://x.com/marcraimondi",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -840,7 +2023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.033
+      "storyRank": 0.0284
     },
     {
       "id": "atl_espn_848ebddeec81d",
@@ -850,7 +2033,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1115/538055ea-4b87-43d8-9be8-828316a9a8e6/538055ea-4b87-43d8-9be8-828316a9a8e6.jpg",
       "imageCaption": "Kansas City Chiefs vs. Atlanta Falcons: Game Highlights",
       "imageAlt": "Mahomes throws 5 TD passes and rookie Johnson runs for 101 yards as Chiefs overwhelm Falcons 35-13",
-      "publishedAt": "2026-11-15T23:11:35Z",
+      "publishedAt": "2026-11-15T23:11:35.000Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873058",
       "outletId": "espn_atl",
       "outletName": "ESPN",
@@ -861,6 +2044,7 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -874,7 +2058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0329
+      "storyRank": 0.0283
     },
     {
       "id": "atl_vid_d5056d939b60",
@@ -895,6 +2079,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -908,7 +2103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0328
+      "storyRank": 0.0282
     },
     {
       "id": "atl_vid_1f2b2f4bb4b4",
@@ -929,6 +2124,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -942,7 +2139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0328
+      "storyRank": 0.0282
     },
     {
       "id": "atl_vid_9710be269fe8",
@@ -963,6 +2160,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -976,7 +2175,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.028
     },
     {
       "id": "atl_rss_630fa9ab4ad4",
@@ -996,6 +2195,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1009,7 +2209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0279
     },
     {
       "id": "atl_vid_1de5cb6af681",
@@ -1030,6 +2230,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4369886",
+          "name": "Chris Blair",
+          "shortName": "C. Blair",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4369886.png"
+        },
+        {
+          "id": "4372066",
+          "name": "Jake Moody",
+          "shortName": "J. Moody",
+          "position": "PK",
+          "jersey": 45,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372066.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1043,7 +2262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0279
     },
     {
       "id": "atl_vid_0b127ce6a8c5",
@@ -1064,6 +2283,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1077,7 +2307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0279
     },
     {
       "id": "atl_vid_e4c4e1c496c5",
@@ -1098,6 +2328,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361409",
+          "name": "Jahan Dotson",
+          "shortName": "J. Dotson",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1111,7 +2360,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0324
+      "storyRank": 0.0279
     },
     {
       "id": "atl_vid_71a21c3f0953",
@@ -1132,6 +2381,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1145,7 +2413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0279
     },
     {
       "id": "atl_vid_71e11d547e1a",
@@ -1166,6 +2434,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1179,7 +2466,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0324
+      "storyRank": 0.0278
     },
     {
       "id": "atl_vid_6849242723fa",
@@ -1200,6 +2487,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1213,7 +2511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0278
     },
     {
       "id": "atl_vid_6cc4c7aa99fd",
@@ -1234,6 +2532,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1247,7 +2564,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0278
     },
     {
       "id": "atl_vid_0c9f955ba5a3",
@@ -1268,6 +2585,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429014",
+          "name": "Gervon Dexter Sr.",
+          "shortName": "G. Dexter Sr.",
+          "position": "DT",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429014.png"
+        },
+        {
+          "id": "4427090",
+          "name": "Brandon Dorlus",
+          "shortName": "B. Dorlus",
+          "position": "DT",
+          "jersey": 54,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427090.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1281,7 +2617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0278
     },
     {
       "id": "atl_vid_5946fb31e919",
@@ -1302,6 +2638,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1315,7 +2662,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0276
     },
     {
       "id": "atl_vid_498940465f1e",
@@ -1336,6 +2683,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361409",
+          "name": "Jahan Dotson",
+          "shortName": "J. Dotson",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1349,13 +2715,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.0276
     },
     {
       "id": "atl_pfr_61a6dbaa1f39",
       "type": "article",
       "title": "Minor NFL Transactions: 11/14/26",
-      "summary": "Here are the minor moves and standard gameday practice squad elevations for Week 10’s Sunday slate: Arizona Cardinals Activated from IR: TE Hunter Long Elevated: WR Zay Jones Atlanta Falcons Elevated: LB TJ Quinn, S Jammie Robinson Buffalo ",
+      "summary": "Here are the minor moves and standard gameday practice squad elevations for Week 10’s Sunday slate: Arizona Cardinals Activated from IR: TE Hunter Long Elevated: WR Zay Jones Atlanta Falcons Elevated: LB TJ Quinn, S Jammie Robinson Buffalo",
       "imageUrl": "",
       "publishedAt": "2026-11-14T23:21:04.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-14-26",
@@ -1368,6 +2734,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430411",
+          "name": "Jammie Robinson",
+          "shortName": "J. Robinson",
+          "position": "S",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430411.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1381,7 +2757,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
+      "storyRank": 0.0243
     },
     {
       "id": "atl_rss_e4947d5197cf",
@@ -1401,6 +2777,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4037626",
+          "name": "Divine Deablo",
+          "shortName": "D. Deablo",
+          "position": "LB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1414,7 +2800,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.028
+      "storyRank": 0.0244
     },
     {
       "id": "atl_pfr_7cb59f18ee05",
@@ -1433,6 +2819,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1446,7 +2833,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0069
+      "storyRank": 0.006
     },
     {
       "id": "atl_tx_5b421c082348",
@@ -1467,6 +2854,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4430411",
+          "name": "Jammie Robinson",
+          "shortName": "J. Robinson",
+          "position": "S",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430411.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1480,7 +2877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0229
     },
     {
       "id": "atl_rss_7d49c666a330",
@@ -1500,6 +2897,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1513,7 +2911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0244
+      "storyRank": 0.0215
     },
     {
       "id": "atl_vid_b5e7e908e1df",
@@ -1534,6 +2932,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1547,7 +2947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0243
+      "storyRank": 0.0214
     },
     {
       "id": "atl_rss_c83616257292",
@@ -1567,6 +2967,24 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4870612",
+          "name": "Zachariah Branch",
+          "shortName": "Z. Branch",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png"
+        },
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1580,7 +2998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0618
+      "storyRank": 0.0551
     },
     {
       "id": "atl_rss_1413d95dc2ce",
@@ -1600,6 +3018,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240596",
+          "name": "C.J. Henderson",
+          "shortName": "C.J. Henderson",
+          "position": "CB",
+          "jersey": 26,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240596.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1613,7 +3041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0237
+      "storyRank": 0.0209
     },
     {
       "id": "atl_rss_4ea0b1f46176",
@@ -1633,6 +3061,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361510",
+          "name": "Cameron Thomas",
+          "shortName": "C. Thomas",
+          "position": "DE",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1646,7 +3084,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0237
+      "storyRank": 0.0209
     },
     {
       "id": "atl_tx_01180c486c8b",
@@ -1667,6 +3105,24 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4240596",
+          "name": "C.J. Henderson",
+          "shortName": "C.J. Henderson",
+          "position": "CB",
+          "jersey": 26,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240596.png"
+        },
+        {
+          "id": "4361510",
+          "name": "Cameron Thomas",
+          "shortName": "C. Thomas",
+          "position": "DE",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1680,7 +3136,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0204
     },
     {
       "id": "atl_rss_ef1def40a3e1",
@@ -1700,6 +3156,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1713,7 +3170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0197
     },
     {
       "id": "atl_rss_7ff7091046f3",
@@ -1733,6 +3190,24 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429014",
+          "name": "Gervon Dexter Sr.",
+          "shortName": "G. Dexter Sr.",
+          "position": "DT",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429014.png"
+        },
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1746,7 +3221,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0559
+      "storyRank": 0.0502
     },
     {
       "id": "atl_vid_7b464d4d545d",
@@ -1767,6 +3242,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1780,7 +3257,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0215
+      "storyRank": 0.0192
     },
     {
       "id": "atl_rss_43c5cdd7d26f",
@@ -1800,6 +3277,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1813,7 +3291,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0209
+      "storyRank": 0.0187
     },
     {
       "id": "atl_pfr_b3d410e28479",
@@ -1832,6 +3310,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1845,7 +3333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0035
     },
     {
       "id": "atl_vid_ed78d5a4dce9",
@@ -1866,6 +3354,41 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2973637",
+          "name": "Corey Levin",
+          "shortName": "C. Levin",
+          "position": "G",
+          "jersey": 62,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2973637.png"
+        },
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        },
+        {
+          "id": "4567111",
+          "name": "DeMarcco Hellams",
+          "shortName": "D. Hellams",
+          "position": "S",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png"
+        },
+        {
+          "id": "4431005",
+          "name": "Xavier Watts",
+          "shortName": "X. Watts",
+          "position": "S",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431005.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1879,7 +3402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0178
     },
     {
       "id": "atl_pfr_276dcb2e0086",
@@ -1898,6 +3421,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685590",
+          "name": "Cameron Williams",
+          "shortName": "C. Williams",
+          "position": "OL",
+          "jersey": 73,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685590.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1911,7 +3444,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0194
+      "storyRank": 0.0175
     },
     {
       "id": "atl_vid_158cc9299cd7",
@@ -1932,6 +3465,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1945,7 +3489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0177
     },
     {
       "id": "atl_rss_6cef9df7b9fc",
@@ -1965,6 +3509,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1978,7 +3523,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0175
     },
     {
       "id": "atl_rss_726dcffeda07",
@@ -1998,6 +3543,32 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4870612",
+          "name": "Zachariah Branch",
+          "shortName": "Z. Branch",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png"
+        },
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        },
+        {
+          "id": "3128303",
+          "name": "Josh Woods",
+          "shortName": "J. Woods",
+          "position": "LB",
+          "jersey": 46,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3128303.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2011,7 +3582,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0507
+      "storyRank": 0.0459
     },
     {
       "id": "atl_rss_12604ad7fac4",
@@ -2031,6 +3602,16 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4372066",
+          "name": "Jake Moody",
+          "shortName": "J. Moody",
+          "position": "PK",
+          "jersey": 45,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372066.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2044,73 +3625,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
-    },
-    {
-      "id": "atl_rss_ac3bd81a97c1",
-      "type": "article",
-      "title": "Atlanta Falcons Partner with USO to Honor Georgia National Guardsmen with Surprise Family Reunion in Madrid",
-      "summary": "",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/zx7mzjhki4reyshdgzuw.jpg",
-      "imageAlt": "Atlanta Falcons Partner with USO to Honor Georgia National Guardsmen with Surprise Family Reunion in Madrid",
-      "publishedAt": "2026-11-11T20:00:00.000Z",
-      "url": "https://www.atlantafalcons.com/news/atlanta-falcons-partner-with-uso-to-honor-georgia-national-guardsmen-with-surprise-family-reunion-in-madrid",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0193
-    },
-    {
-      "id": "atl_rss_56485a7a2ee5",
-      "type": "article",
-      "title": "Falcons 'feel good' about Corey Levin stepping in as starting center",
-      "summary": "Head coach Kevin Stefanski explained why the team is confident about Levin taking over at center after Atlanta traded Ryan Neuzil at the trade deadline.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/cpmuxj2fizksxvwdzzhq.jpg",
-      "imageAlt": "Falcons 'feel good' about Corey Levin stepping in as starting center",
-      "publishedAt": "2026-11-11T18:50:43.000Z",
-      "url": "https://www.atlantafalcons.com/news/falcons-feel-good-corey-levin-starting-center",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
+      "storyRank": 0.0175
     },
     {
       "id": "atl_vid_14e310a16f42",
@@ -2131,6 +3646,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2144,40 +3661,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
-    },
-    {
-      "id": "atl_rss_377400c9cc49",
-      "type": "article",
-      "title": "Falcons release kicker Nick Folk, sign Jake Moody",
-      "summary": "Plus, the Falcons have activated offensive lineman Cameron Williams off injured reserve.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/iwle2nwubpoi33stoaag.jpg",
-      "imageAlt": "Falcons release kicker Nick Folk, sign Jake Moody",
-      "publishedAt": "2026-11-11T15:29:11.000Z",
-      "url": "https://www.atlantafalcons.com/news/falcons-release-kicker-nick-folk-sign-jake-moody",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
+      "storyRank": 0.0173
     },
     {
       "id": "atl_tx_74e210c1510b",
@@ -2198,6 +3682,24 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4685590",
+          "name": "Cameron Williams",
+          "shortName": "C. Williams",
+          "position": "OL",
+          "jersey": 73,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685590.png"
+        },
+        {
+          "id": "4372066",
+          "name": "Jake Moody",
+          "shortName": "J. Moody",
+          "position": "PK",
+          "jersey": 45,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372066.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2211,104 +3713,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
-    },
-    {
-      "id": "atl_pfr_02b898129b94",
-      "type": "article",
-      "title": "NFL Practice Squad Updates: 11/10/26",
-      "summary": "Today’s practice squad moves: Arizona Cardinals Signed: WR Phillip Dorsett Released: TE Rivaldo Fairweather, RB Jermar Jefferson Atlanta Falcons Signed: C Gus Hartwig, S Delarrin Turner-Yell Released: DE Drake Jackson Baltimore Ravens Signe",
-      "imageUrl": "",
-      "publishedAt": "2026-11-11T01:37:00.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-10-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
-    },
-    {
-      "id": "atl_rss_e977be8203e5",
-      "type": "article",
-      "title": "The Falcons trade C Ryan Neuzil for G Andrew Vorhees plus undisclosed draft choice",
-      "summary": "Neuzil has started 38 games for Atlanta since signing as an undrafted free agent in 2021.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/tqomll7li5dkhauwffoh.png",
-      "imageAlt": "The Falcons trade C Ryan Neuzil for G Andrew Vorhees plus undisclosed draft choice",
-      "publishedAt": "2026-11-10T21:41:48.000Z",
-      "url": "https://www.atlantafalcons.com/news/the-falcons-trade-c-ryan-neuzil-for-g-andrew-vorhees-plus-undisclosed-draft-choice",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
-    },
-    {
-      "id": "atl_pfr_676d61ed02ff",
-      "type": "article",
-      "title": "Falcons, Ravens Swap OL Ryan Neuzil, Andrew Vorhees",
-      "summary": "The Ravens have agreed to a last-minute trade just before this afternoon’s deadline. Another addition is being made along the offensive line. Center Ryan Neuzil is being acquired from the Falcons, as first reported by NFL insider Jordan Sch",
-      "imageUrl": "",
-      "publishedAt": "2026-11-10T21:16:44.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/falcons-ravens-to-swap-ol-ryan-neuzil-andrew-vorhees",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0166
     },
     {
       "id": "atl_vid_dd655223124f",
@@ -2329,6 +3734,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360248",
+          "name": "Kyle Pitts Sr.",
+          "shortName": "K. Pitts Sr.",
+          "position": "TE",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360248.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2342,7 +3758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0174
+      "storyRank": 0.0157
     },
     {
       "id": "atl_tx_f528c4fe1b37",
@@ -2363,6 +3779,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2376,7 +3793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0151
     },
     {
       "id": "atl_vid_d60ab025a824",
@@ -2397,6 +3814,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2410,7 +3829,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0144
     },
     {
       "id": "atl_vid_2dd4f631a635",
@@ -2431,6 +3850,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2444,7 +3865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0144
     },
     {
       "id": "atl_tx_fc5a0725e987",
@@ -2465,6 +3886,7 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2478,7 +3900,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
+      "storyRank": 0.0138
     },
     {
       "id": "atl_vid_64a8458d4d33",
@@ -2499,6 +3921,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "16713",
+          "name": "Jake Matthews",
+          "shortName": "J. Matthews",
+          "position": "OT",
+          "jersey": 70,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16713.png"
+        },
+        {
+          "id": "4431005",
+          "name": "Xavier Watts",
+          "shortName": "X. Watts",
+          "position": "S",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431005.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2512,7 +3953,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0134
     },
     {
       "id": "atl_vid_b85f1a807407",
@@ -2533,6 +3974,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2546,7 +3998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0133
     },
     {
       "id": "atl_vid_3046ec4d8817",
@@ -2567,6 +4019,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2580,7 +4034,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0133
     },
     {
       "id": "atl_vid_12fcf6f1a764",
@@ -2601,6 +4055,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2614,7 +4070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0132
     },
     {
       "id": "atl_vid_581f35a285b7",
@@ -2635,6 +4091,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2648,7 +4115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0132
     },
     {
       "id": "atl_vid_3f230acb5302",
@@ -2669,6 +4136,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4376288",
+          "name": "LaCale London",
+          "shortName": "L. London",
+          "position": "DE",
+          "jersey": 94,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4376288.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2682,7 +4160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_facbf2e4b5d6",
@@ -2703,6 +4181,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2716,7 +4205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_b5a12ab9561d",
@@ -2737,6 +4226,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        },
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2750,7 +4258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_cd650e6ba285",
@@ -2771,6 +4279,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2784,7 +4303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_25734f1e86df",
@@ -2805,6 +4324,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4595343",
+          "name": "Kendal Daniels",
+          "shortName": "K. Daniels",
+          "position": "LB",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2818,7 +4348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_532f3a87fc73",
@@ -2839,6 +4369,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2852,7 +4393,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_305223f824da",
@@ -2873,6 +4414,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360386",
+          "name": "Sydney Brown",
+          "shortName": "S. Brown",
+          "position": "S",
+          "jersey": 29,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360386.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2886,7 +4438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_8e3114def61f",
@@ -2907,6 +4459,25 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2920,7 +4491,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_993aede9b36b",
@@ -2941,6 +4512,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2954,7 +4527,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.0131
     },
     {
       "id": "atl_vid_72d70aaf36b0",
@@ -2975,6 +4548,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2988,7 +4572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.013
     },
     {
       "id": "atl_vid_a598e1c89a04",
@@ -3009,6 +4593,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035020",
+          "name": "Charlie Woerner",
+          "shortName": "C. Woerner",
+          "position": "TE",
+          "jersey": 89,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035020.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3022,7 +4617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.013
     },
     {
       "id": "atl_vid_6f5cdf3017db",
@@ -3043,6 +4638,17 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3056,7 +4662,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.013
     },
     {
       "id": "atl_vid_45f6f7e2d239",
@@ -3077,6 +4683,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3090,7 +4698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0121
     },
     {
       "id": "atl_tx_a874b8a93a5c",
@@ -3111,6 +4719,48 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4431210",
+          "name": "Beaux Collins",
+          "shortName": "B. Collins",
+          "position": "WR",
+          "jersey": 88,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431210.png"
+        },
+        {
+          "id": "4035886",
+          "name": "Khalil Herbert",
+          "shortName": "K. Herbert",
+          "position": "RB",
+          "jersey": 40,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035886.png"
+        },
+        {
+          "id": "4360807",
+          "name": "Yasir Abdullah",
+          "shortName": "Y. Abdullah",
+          "position": "LB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360807.png"
+        },
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        },
+        {
+          "id": "4241474",
+          "name": "Brian Robinson Jr.",
+          "shortName": "B. Robinson Jr.",
+          "position": "RB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241474.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3124,7 +4774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0124
     },
     {
       "id": "atl_vid_9393787fe4f4",
@@ -3145,6 +4795,41 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3917914",
+          "name": "Olamide Zaccheaus",
+          "shortName": "O. Zaccheaus",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917914.png"
+        },
+        {
+          "id": "4595343",
+          "name": "Kendal Daniels",
+          "shortName": "K. Daniels",
+          "position": "LB",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png"
+        },
+        {
+          "id": "4427090",
+          "name": "Brandon Dorlus",
+          "shortName": "B. Dorlus",
+          "position": "DT",
+          "jersey": 54,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427090.png"
+        },
+        {
+          "id": "4870988",
+          "name": "Avieon Terrell",
+          "shortName": "A. Terrell",
+          "position": "CB",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870988.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3158,7 +4843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0112
     },
     {
       "id": "atl_vid_8f23f97c2b87",
@@ -3179,6 +4864,8 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3192,7 +4879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.0112
     },
     {
       "id": "atl_vid_16e3c14ecc40",
@@ -3213,6 +4900,33 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        },
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        },
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3226,109 +4940,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0112
-    },
-    {
-      "id": "atl_vid_b7e44187b261",
-      "type": "video",
-      "title": "Jahan Dotson and Xavier Watts on preparation for Madrid Bengals matchup | Press Conference",
-      "summary": "Jahan Dotson and Xavier Watts speak with the media immediately following the Atlanta Falcons arrival in Madrid, Spain ahead of their matchup against the Cincinnati Bengals.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/qcmhr5lkmlwq7lkqjwnu.jpg",
-      "imageAlt": "Jahan Dotson and Xavier Watts on preparation for Madrid Bengals matchup | Press Conference",
-      "publishedAt": "2026-11-04T12:28:52.000Z",
-      "url": "https://www.atlantafalcons.com/video/jahan-dotson-and-xavier-watts-on-preparation-for-madrid-bengals-matchup-press-conference",
-      "externalVideoUrl": "https://www.atlantafalcons.com/video/jahan-dotson-and-xavier-watts-on-preparation-for-madrid-bengals-matchup-press-conference",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Video",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Video",
-      "author": "atlantafalcons.com Video",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
-    },
-    {
-      "id": "atl_vid_fa6b5bd3de56",
-      "type": "video",
-      "title": "Kevin Stefanski on Atlanta Falcons arrival in Madrid, Spain | Press Conference",
-      "summary": "Atlanta Falcons Head Coach Kevin Stefanski speaks with the media immediately following the Atlanta Falcons arrival in Madrid, Spain ahead of their matchup against the Cincinnati Bengals.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/ah7uthxnse5l0u32s6us.jpg",
-      "imageAlt": "Kevin Stefanski on Atlanta Falcons arrival in Madrid, Spain | Press Conference",
-      "publishedAt": "2026-11-04T12:20:35.000Z",
-      "url": "https://www.atlantafalcons.com/video/kevin-stefanski-on-atlanta-falcons-arrival-in-madrid-spain-press-conference",
-      "externalVideoUrl": "https://www.atlantafalcons.com/video/kevin-stefanski-on-atlanta-falcons-arrival-in-madrid-spain-press-conference",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Video",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Video",
-      "author": "atlantafalcons.com Video",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
-    },
-    {
-      "id": "atl_tx_c91c06ccefd8",
-      "type": "tweet",
-      "title": "Falcons roster move: Signed LB Jared Ivey to the practice squad.",
-      "fullText": "Falcons roster move: Signed LB Jared Ivey to the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-04T08:00:00.000Z",
-      "url": "https://www.atlantafalcons.com/team/transactions/#tx-c91c06ccefd8",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "Atlanta Falcons Official",
-      "author": "Atlanta Falcons Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0105
     },
     {
       "id": "atl_rss_f8489ea8b6c2",
@@ -3348,6 +4960,24 @@
       "authorProfileUrl": "https://www.atlantafalcons.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429014",
+          "name": "Gervon Dexter Sr.",
+          "shortName": "G. Dexter Sr.",
+          "position": "DT",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429014.png"
+        },
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,

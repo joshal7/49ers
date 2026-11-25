@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:48.668Z",
+  "updatedAt": "2026-11-25T20:36:15.810Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.colts.com/team/injury-report/",
@@ -209,7 +209,7 @@
       "byeWeekNote": "Week 13 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Knee) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
+      "beatNote": "Davis-Gaither was already ruled out for Sunday's game against Miami in what would be his second consecutive missed contest due to a knee injury. Now that he's been placed on IR, the seventh-year pro will be required to miss at least four games, so his next chance to play is Week 15 against the Titans on Sunday, Dec. 20."
     },
     {
       "playerId": "2998565",
@@ -231,7 +231,7 @@
       "byeWeekNote": "Week 13 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Groin) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
+      "beatNote": "Alie-Cox was already ruled out for Sunday's game against the Dolphins, and his groin injury is severe enough for him to warrant a stint on injured reserve. That means he'll be required to miss at least four games, and with the Colts on a bye for Week 13, that means the next time Alie-Cox can play is Week 15 against the Titans on Sunday, Dec. 20. Will Mallory (hamstring) has also been ruled out for Week 10, so Drew Ogletree and Pharaoh Brown will serve as the Colts' backup tight ends behind Tyler Warren against Miami."
     },
     {
       "playerId": "4601021",
@@ -253,15 +253,15 @@
       "byeWeekNote": "Week 13 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Neck) ahead of Week 11; must miss at least 4 games (earliest eligible Week 16)."
+      "beatNote": "Carlies hurt his neck in Week 9 against Dallas and didn't practice at all last week before being ruled out for Sunday's win over the Dolphins. Now that he's landed on IR, the third-year linebacker will need to miss at least the Colts' next four games. Austin Ajiake and West Weeks will likely soak up the rotational defensive snaps that Carlies had been getting."
     },
     {
-      "playerId": "4685324",
-      "name": "Caden Curry",
-      "position": "LB",
-      "jersey": 55,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
-      "injuryType": "Undisclosed",
+      "playerId": "4360078",
+      "name": "Alec Pierce",
+      "position": "WR",
+      "jersey": 14,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360078.png",
+      "injuryType": "Heel",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -269,13 +269,13 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "placedBeforeWeek": 12,
+      "earliestEligibleWeek": 17,
+      "projectedReturnWeek": "Est. Week 18 (Jan 9)",
+      "byeWeekNote": "Week 13 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
+      "beatNote": "Additionally, Pierce acknowledged that playing in Week 1 was a bit lofty, per Bowen, with the WR saying Wednesday that he was still managing some pain at that stage. In any case, Pierce indicated that he's confident that his current recovery plan will lead to a full return to health. When that will be remains to be seen, but the 2022 second-rounder is still on IR ahead of Week 12, with the Colts presumably not planning to rush him back, given the team's 3-8 record in a campaign that's been marked by the team moving several key players ahead of the trade deadline."
     },
     {
       "playerId": "4361196",
@@ -297,51 +297,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Groin); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4702120",
-      "name": "Carson Towt",
-      "position": "TE",
-      "jersey": 45,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702120.png",
-      "injuryType": "Undisclosed",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4249030",
-      "name": "D.J. Montgomery",
-      "position": "WR",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249030.png",
-      "injuryType": "Abdomen",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Abdomen); awaiting 21-day practice window designation."
+      "beatNote": "Taylor-Britt suffered the injury on the first play of the fourth quarter of Sunday's 16-10 loss to the Vikings. It's another blow to the Colts' secondary, given that the team was without Sauce Gardner (calf) during Sunday's game, and fellow defensive back Justin Walley sustained a knee injury during the contest. Taylor-Britt will be required to miss at least the next four games, so the earliest he can return is Week 12 against the Giants on Sunday, Nov. 29. Kenneth Harris and Kapena Gushiken are both in line for more defensive snaps in the absence of Taylor-Britt."
     },
     {
       "playerId": "4240896",
@@ -363,15 +319,15 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Toe); awaiting 21-day practice window designation."
+      "beatNote": "Clemons sustained a toe injury in the team's 33-30 overtime loss against Kansas City on Sunday night, and he will now be forced to miss at least four contests while recovering. His absence won't have a major impact on the team's defensive approach."
     },
     {
-      "playerId": "4360078",
-      "name": "Alec Pierce",
-      "position": "WR",
-      "jersey": 14,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360078.png",
-      "injuryType": "Heel",
+      "playerId": "4685324",
+      "name": "Caden Curry",
+      "position": "LB",
+      "jersey": 55,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+      "injuryType": "Wrist (Surgery)",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
@@ -385,7 +341,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Steichen rebuffed a report Sunday from Ian Rapoport of NFL Network, who relayed that the Colts were planning to \"exercise great caution\" by holding Pierce out for the season as he works his way back from an aggravation of his surgically repaired heel. However, given the 3-8 Colts' place in the standings in addition to their $114 million investment in Pierce, Steichen acknowledged that the 26-year-old wideout still faces an uphill battle to make it back from IR before season's end if he's anything less than 100 percent. According to James Boyd of The Athletic, Steichen said that Pierce currently is \"doing plyometrics\" and \"running\" after landing on IR on Sept. 26, but it's unclear how close Pierce may be to practicing."
+      "beatNote": "In a corresponding move, Indianapolis signed veteran defensive end Carl Lawson from its practice squad to its 53-man roster. Over the first 11 weeks of the regular season, Curry recorded 26 tackles (14 solo) including 1.0 sacks and two fumble recoveries on defense, but most of his snaps came on special teams. He'll have to miss at least the next four games as he recovers."
     },
     {
       "playerId": "4569607",
@@ -407,7 +363,51 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 19, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
+    },
+    {
+      "playerId": "4702120",
+      "name": "Carson Towt",
+      "position": "TE",
+      "jersey": 45,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702120.png",
+      "injuryType": "Undisclosed",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "ir"
+    },
+    {
+      "playerId": "4249030",
+      "name": "D.J. Montgomery",
+      "position": "WR",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249030.png",
+      "injuryType": "Abdomen",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Montgomery signed with the team in early August, ultimately reeling in two of three targets for 21 yards during the preseason. The wide receiver appears to have picked up an abdominal injury at some point during the preseason, and he is now set to miss the entire 2026 campaign while on IR, unless he reaches an injury settlement with Indianapolis."
     }
   ]
 }

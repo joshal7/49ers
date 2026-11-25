@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:07:33.480Z",
+  "updatedAt": "2026-11-25T20:43:50.951Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -128,7 +128,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4360797",
@@ -240,20 +240,20 @@
               "isAvailable": false
             },
             {
-              "playerId": "4567175",
-              "name": "Beaux Limmer",
-              "jersey": 50,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567175.png",
+              "playerId": "3912189",
+              "name": "Bill Murray",
+              "jersey": 66,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3912189",
-              "name": "Bill Murray",
-              "jersey": 66,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
+              "playerId": "4567175",
+              "name": "Beaux Limmer",
+              "jersey": 50,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567175.png",
               "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -262,20 +262,20 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4567175",
-              "name": "Beaux Limmer",
-              "jersey": 50,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567175.png",
+              "playerId": "3912189",
+              "name": "Bill Murray",
+              "jersey": 66,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3912189",
-              "name": "Bill Murray",
-              "jersey": 66,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
+              "playerId": "4567175",
+              "name": "Beaux Limmer",
+              "jersey": 50,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567175.png",
               "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -525,7 +525,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877717.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -567,7 +567,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877717.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -576,7 +576,7 @@
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "2573401",
@@ -778,11 +778,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4362245",
@@ -851,7 +851,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "4431118",
@@ -870,7 +870,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125114.png",
               "baselineRank": 2,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -892,7 +892,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125114.png",
               "baselineRank": 2,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -901,7 +901,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "16716",
@@ -989,7 +989,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695022.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1032,7 +1032,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695022.png",
               "baselineRank": 4,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1139,7 +1139,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "3122132",
@@ -1257,7 +1257,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4697639.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1289,7 +1289,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4697639.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1445,7 +1445,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4249128",
@@ -1529,7 +1529,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259619.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -1561,7 +1561,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259619.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

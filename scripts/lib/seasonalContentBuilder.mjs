@@ -26,6 +26,7 @@ import {
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
   decodeHtmlEntities,
+  extractBlueskyEmbedImages,
   extractXSyndicationMedia,
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
@@ -35,6 +36,7 @@ import {
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledPublisher,
+  normalizeMultilineSocialText,
   normalizePlayerKey,
   sanitizeExternalUrl,
   selectBestXSyndicationMp4,
@@ -57,11 +59,56 @@ import {
 const embedCheckCache = new Map();
 
 /**
- * Verifies that a YouTube video both exists (via oEmbed) AND allows third-party
- * domain embedding on https://49ers.joshal.com/ (detecting NFL / team channel DRM blocks).
+ * Parses YouTube / feed relative age strings (e.g. "7 days ago", "20 hours ago",
+ * "45 minutes ago", "1 week ago", "8d ago", "Premiered Nov 18, 2026", "Streamed 3 days ago")
+ * into a realistic ISO-8601 publication timestamp so search results never falsely stamp `nowIso`.
  */
-export async function verifyYouTubeEmbeddable(videoId) {
-  if (!videoId) return { exists: false, embeddable: false };
+export function parseRelativePublishedAgoToIso(agoStr = '', nowMs = Date.now()) {
+  const raw = String(agoStr || '').replace(/\s+/g, ' ').trim();
+  if (!raw) return null;
+  const cleaned = raw.replace(/^(?:streamed|premiered|updated|published)\s+/i, '').trim();
+  if (!cleaned) return null;
+
+  // Direct ISO or absolute date string (e.g. "Nov 18, 2026" or "2026-11-18T00:30:20Z")
+  if (!/\bago\b/i.test(cleaned) && (/\d{4}/.test(cleaned) || /^[A-Z][a-z]{2,8}\s+\d{1,2},?\s+\d{4}/.test(cleaned))) {
+    const parsedAbs = Date.parse(cleaned);
+    if (Number.isFinite(parsedAbs) && parsedAbs > 946_684_800_000) {
+      return new Date(Math.min(nowMs, parsedAbs)).toISOString();
+    }
+  }
+
+  const m = cleaned.match(
+    /^(\d+)\s*(s|sec|secs|second|seconds|m|min|mins|minute|minutes|h|hr|hrs|hour|hours|d|day|days|w|wk|wks|week|weeks|mo|mos|month|months|y|yr|yrs|year|years)\s*ago$/i
+  );
+  if (m) {
+    const qty = Number(m[1]);
+    const unit = m[2].toLowerCase();
+    if (!Number.isFinite(qty) || qty < 0) return null;
+    let deltaMs = 0;
+    if (unit.startsWith('s')) deltaMs = qty * 1000;
+    else if (unit === 'mo' || unit === 'mos' || unit.startsWith('month')) deltaMs = qty * 30 * 86_400_000;
+    else if (unit.startsWith('m')) deltaMs = qty * 60_000;
+    else if (unit.startsWith('h')) deltaMs = qty * 3_600_000;
+    else if (unit.startsWith('d')) deltaMs = qty * 86_400_000;
+    else if (unit.startsWith('w')) deltaMs = qty * 7 * 86_400_000;
+    else if (unit.startsWith('y')) deltaMs = qty * 365 * 86_400_000;
+    if (deltaMs > 0) {
+      return new Date(Math.max(0, nowMs - deltaMs)).toISOString();
+    }
+  }
+
+  if (/^yesterday$/i.test(cleaned)) {
+    return new Date(nowMs - 86_400_000).toISOString();
+  }
+  return null;
+}
+
+/**
+ * Verifies that a YouTube video both exists (via oEmbed) AND allows third-party
+ * domain embedding on https://49ers.joshal.com/ (detecting NFL / team channel DRM & Content ID blocks).
+ */
+export async function verifyYouTubeEmbeddable(videoId, { refererUrl = 'https://49ers.joshal.com/' } = {}) {
+  if (!videoId) return { exists: false, embeddable: false, authorName: '', title: '' };
   if (embedCheckCache.has(videoId)) return embedCheckCache.get(videoId);
 
   let result = { exists: false, embeddable: false, authorName: '', title: '' };
@@ -72,7 +119,7 @@ export async function verifyYouTubeEmbeddable(videoId) {
       }),
       fetch(`https://www.youtube.com/embed/${videoId}`, {
         headers: {
-          Referer: 'https://49ers.joshal.com/',
+          Referer: refererUrl,
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
         },
         signal: AbortSignal.timeout(5000)
@@ -86,8 +133,11 @@ export async function verifyYouTubeEmbeddable(videoId) {
         !embRes.ok ||
         embHtml.includes('emb_err_woyt') ||
         embHtml.includes('blocked it from display') ||
+        embHtml.includes('Playback on other websites has been disabled') ||
         embHtml.includes('"Video unavailable"') ||
-        embHtml.includes('UNPLAYABLE');
+        embHtml.includes('UNPLAYABLE') ||
+        embHtml.includes('LOGIN_REQUIRED') ||
+        embHtml.includes('"playableInEmbed":false');
       result = {
         exists: true,
         embeddable: !isBlocked,
@@ -96,7 +146,7 @@ export async function verifyYouTubeEmbeddable(videoId) {
       };
     }
   } catch {
-    // On transient network timeout, assume link exists on YouTube watch URL
+    // On transient network timeout, assume link exists on YouTube watch URL (safe non-embeddable fallback)
     result = { exists: true, embeddable: false, authorName: '', title: '' };
   }
 
@@ -106,6 +156,7 @@ export async function verifyYouTubeEmbeddable(videoId) {
 
 export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbeddable = false } = {}) {
   try {
+    const nowMs = Date.now();
     const scanLimit = requireEmbeddable ? Math.max(maxResults * 4, 8) : Math.max(maxResults + 2, 5);
     const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
     const r = await fetch(url, {
@@ -122,12 +173,17 @@ export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbedd
       if (!o || typeof o !== 'object' || candidates.length >= scanLimit) return;
       if (o.videoRenderer && o.videoRenderer.videoId) {
         const vr = o.videoRenderer;
+        const ago = vr.publishedTimeText?.simpleText || '';
+        const parsedIso = parseRelativePublishedAgoToIso(ago, nowMs);
+        const ownerName = vr.ownerText?.runs?.[0]?.text || 'YouTube';
         candidates.push({
           videoId: vr.videoId,
           url: `https://www.youtube.com/watch?v=${vr.videoId}`,
           title: vr.title?.runs?.[0]?.text || vr.title?.simpleText || query,
-          channel: vr.ownerText?.runs?.[0]?.text || 'YouTube',
-          publishedAgo: vr.publishedTimeText?.simpleText || '',
+          channel: ownerName,
+          publishedAgo: ago,
+          publishedAt: parsedIso || undefined,
+          publishedAtIso: parsedIso || undefined,
           duration: vr.lengthText?.simpleText || '',
           thumbnailUrl: `https://i.ytimg.com/vi/${vr.videoId}/hqdefault.jpg`
         });
@@ -140,10 +196,14 @@ export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbedd
     const checked = await Promise.all(
       candidates.map(async c => {
         const check = await verifyYouTubeEmbeddable(c.videoId);
+        const resolvedCreator = (c.channel && c.channel !== 'YouTube' ? c.channel : '') || check.authorName || c.channel || 'YouTube';
         return {
           ...c,
           title: c.title || check.title || query,
-          channel: c.channel || check.authorName || 'YouTube',
+          channel: resolvedCreator,
+          author: resolvedCreator,
+          reporterName: resolvedCreator,
+          outletName: resolvedCreator,
           exists: check.exists,
           embeddable: check.embeddable
         };
@@ -159,13 +219,13 @@ export async function searchYouTubeVideos(query, maxResults = 4, { requireEmbedd
 
 /**
  * Searches directly inside a specific YouTube channel (`https://www.youtube.com/channel/<id>/search?query=...`)
- * so official `@49ers` and `@NFL` player highlight clips (`Brock Purdy's Best Plays`, `CMC Best Plays`,
- * `Forty Niner Way`, `Go Inside the 49ers Locker Room`, `Full Game Highlights`) remain discoverable
- * with exact `MM:SS` durations even after midweek press conferences push Sunday clips past the 15-item Atom XML limit.
+ * so official club and `@NFL` player highlight clips remain discoverable with exact `MM:SS` durations
+ * and authentic publication ages even after midweek press conferences push Sunday clips past the 15-item Atom XML limit.
  */
 export async function searchYouTubeChannelVideos(channelId, channelName, query, maxResults = 8) {
   if (!channelId || !query) return [];
   try {
+    const nowMs = Date.now();
     const scanLimit = Math.max(maxResults + 6, 12);
     const url = `https://www.youtube.com/channel/${encodeURIComponent(channelId)}/search?query=${encodeURIComponent(query)}`;
     const r = await fetch(url, {
@@ -190,12 +250,15 @@ export async function searchYouTubeChannelVideos(channelId, channelName, query, 
         if (/^streamed\b/i.test(ago)) {
           return;
         }
+        const parsedIso = parseRelativePublishedAgoToIso(ago, nowMs);
         candidates.push({
           videoId: vr.videoId,
           url: `https://www.youtube.com/watch?v=${vr.videoId}`,
           title: vr.title?.runs?.[0]?.text || vr.title?.simpleText || query,
           channel: channelName || vr.ownerText?.runs?.[0]?.text || 'YouTube',
           publishedAgo: ago,
+          publishedAt: parsedIso || undefined,
+          publishedAtIso: parsedIso || undefined,
           duration: vr.lengthText?.simpleText || '',
           thumbnailUrl: `https://i.ytimg.com/vi/${vr.videoId}/hqdefault.jpg`
         });
@@ -208,10 +271,14 @@ export async function searchYouTubeChannelVideos(channelId, channelName, query, 
     const checked = await Promise.all(
       candidates.slice(0, maxResults + 3).map(async c => {
         const check = await verifyYouTubeEmbeddable(c.videoId);
+        const resolvedCreator = channelName || (c.channel && c.channel !== 'YouTube' ? c.channel : '') || check.authorName || 'YouTube';
         return {
           ...c,
           title: c.title || check.title || query,
-          channel: channelName || c.channel || check.authorName || 'YouTube',
+          channel: resolvedCreator,
+          author: resolvedCreator,
+          reporterName: resolvedCreator,
+          outletName: resolvedCreator,
           exists: check.exists,
           embeddable: check.embeddable
         };
@@ -284,30 +351,45 @@ export async function fetchCuratedYouTubeChannelVideos({
     {
       channelId: 'UCeIOarQkwmGhimim9cDUTng',
       channelName: 'San Francisco 49ers',
+      handle: '@49ers',
+      category: 'beat',
+      defaultEmbeddable: false,
       filterRe: null,
       limit: 15
     },
     {
       channelId: 'UCDVYQ4Zhbm3S2dlz7P1GBDg',
       channelName: 'NFL',
+      handle: '@NFL',
+      category: 'highlights',
+      defaultEmbeddable: false,
       filterRe: sfTeamFilterRe,
       limit: 15
     },
     {
       channelId: 'UCGfxHp2yuimtLsFaq1r7aIQ',
       channelName: 'The QB School',
+      handle: '@TheQBSchool',
+      category: 'film',
+      defaultEmbeddable: null,
       filterRe: sfQbFilterRe,
       limit: 12
     },
     {
       channelId: 'UCt1LfHRE5eGiacPVtiaC10w',
       channelName: "Jonnydel's Football Academy",
+      handle: '@jonnydels',
+      category: 'film',
+      defaultEmbeddable: null,
       filterRe: sfTeamFilterRe,
       limit: 8
     },
     {
       channelId: 'UCSnTko7TBHGlGlA7yvzQVpA',
       channelName: 'Chase Daniel',
+      handle: '@ChaseDaniel',
+      category: 'film',
+      defaultEmbeddable: null,
       filterRe: sfTeamFilterRe,
       limit: 8
     }
@@ -333,6 +415,7 @@ export async function fetchCuratedYouTubeChannelVideos({
           const block = m[1];
           const videoId = block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i)?.[1]?.trim() || '';
           const rawTitle = decodeHtmlEntities(block.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || '').trim();
+          const xmlAuthor = decodeHtmlEntities(block.match(/<author>[\s\S]*?<name>([\s\S]*?)<\/name>/i)?.[1] || '').trim();
           const pubIso = block.match(/<published>([^<]+)<\/published>/i)?.[1]?.trim() || '';
           const pubMs = pubIso ? Date.parse(pubIso) : NaN;
           if (!videoId || !rawTitle || rawTitle.length < 16) continue;
@@ -349,16 +432,33 @@ export async function fetchCuratedYouTubeChannelVideos({
               : ageHours < 24
                 ? `${Math.round(ageHours)}h ago`
                 : `${Math.round(ageHours / 24)}d ago`;
+          const exactIso = new Date(pubMs).toISOString();
+          const creatorName = ch.channelName || xmlAuthor || 'YouTube';
+          const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
           rawMatches.push({
+            id: `yt_${videoId}`,
             videoId,
-            url: `https://www.youtube.com/watch?v=${videoId}`,
+            url: watchUrl,
+            externalVideoUrl: watchUrl,
             title: rawTitle,
-            channel: ch.channelName,
-            publishedAtIso: new Date(pubMs).toISOString(),
+            channel: creatorName,
+            author: creatorName,
+            reporterName: creatorName,
+            outletName: creatorName,
+            authorHandle: ch.handle || '',
+            authorProfileUrl: ch.handle
+              ? `https://www.youtube.com/${ch.handle}`
+              : `https://www.youtube.com/channel/${ch.channelId}`,
+            category: ch.category,
+            defaultEmbeddable: ch.defaultEmbeddable,
+            publishedAt: exactIso,
+            publishedAtIso: exactIso,
             publishedAgo,
             duration: '',
-            thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+            imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+            thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+            wireSource: 'curated_youtube_atom'
           });
         }
       } catch {
@@ -376,11 +476,19 @@ export async function fetchCuratedYouTubeChannelVideos({
 
   const checked = await Promise.all(
     deduped.map(async c => {
-      const check = await verifyYouTubeEmbeddable(c.videoId);
+      const check =
+        c.defaultEmbeddable === false
+          ? { exists: true, embeddable: false, authorName: c.channel, title: c.title }
+          : await verifyYouTubeEmbeddable(c.videoId);
+      const creatorName = c.channel || check.authorName || 'YouTube';
+      const { defaultEmbeddable: _drop, ...cleanItem } = c;
       return {
-        ...c,
+        ...cleanItem,
         title: c.title || check.title,
-        channel: c.channel || check.authorName || 'YouTube',
+        channel: creatorName,
+        author: creatorName,
+        reporterName: creatorName,
+        outletName: creatorName,
         exists: check.exists,
         embeddable: check.embeddable
       };
@@ -731,9 +839,9 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
           ) {
             continue;
           }
-          const rawText = String(rec?.text || '')
-            .replace(/\s*Original post\s*$/i, '')
-            .trim();
+          const rawText = normalizeMultilineSocialText(
+            String(rec?.text || '').replace(/\s*Original post\s*$/i, '')
+          );
           if (!rawText || rawText.length < 16) continue;
           const pubIso = rec?.createdAt || new Date().toISOString();
           const pubMs = new Date(pubIso).getTime();
@@ -744,12 +852,8 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
           const extDesc = stripAggregatorBoilerplate(extLink.description || '');
           const nonBioExtDesc = stripHistoricalSfBioSentences(extDesc);
           const extUri = extLink.uri || '';
-          const bskyPhotoUrl =
-            post?.embed?.images?.[0]?.fullsize ||
-            post?.embed?.media?.images?.[0]?.fullsize ||
-            post?.embed?.images?.[0]?.thumb ||
-            post?.embed?.media?.images?.[0]?.thumb ||
-            '';
+          const bskyPhotos = extractBlueskyEmbedImages(post);
+          const bskyPhotoUrl = bskyPhotos[0] || '';
           const bskyVidEmbed =
             post?.embed?.$type === 'app.bsky.embed.video#view'
               ? post.embed
@@ -758,6 +862,9 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
                 : null;
           const isTenorGifUri = /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(extUri);
           const extThumb = bskyVidEmbed?.thumbnail || bskyPhotoUrl || extLink.thumb || '';
+          const distinctBskyPhotos = bskyVidEmbed?.thumbnail
+            ? bskyPhotos.filter(u => u !== bskyVidEmbed.thumbnail)
+            : bskyPhotos;
           if (!rawText || rawText.length < (bskyPhotoUrl || bskyVidEmbed || isTenorGifUri ? 6 : 16)) continue;
           const leadExplicitSf = hasExplicit49ersEntity(rawText);
           const bodyExplicitSf = hasExplicit49ersEntity(`${rawText} ${extTitle} ${nonBioExtDesc}`);
@@ -877,9 +984,14 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
             externalTitle: safeExternalUrl ? extTitle || null : null,
             externalDescription: safeExternalUrl && extDesc ? extDesc.slice(0, 320) : null,
             imageUrl: extThumb || '',
+            ...(distinctBskyPhotos.length > (isTenorGifUri ? 0 : 1) ? { imageUrls: distinctBskyPhotos } : {}),
             videoStreamUrl: isTenorGifUri ? extUri : undefined,
             isAnimatedGif: isTenorGifUri || undefined,
-            hasInlineChartImage: Boolean(bskyPhotoUrl && (isLeagueWideChart || acc.allowLeagueWideFilmCharts)) || undefined,
+            hasInlineChartImage:
+              Boolean(
+                distinctBskyPhotos.length > 1 ||
+                  (bskyPhotoUrl && (isLeagueWideChart || acc.allowLeagueWideFilmCharts))
+              ) || undefined,
             isLeagueWideFilmChart: isLeagueWideChart || undefined,
             filmOnlyScope: filmOnlyScope || undefined,
             embeddable: isTenorGifUri ? true : undefined,
@@ -935,7 +1047,12 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
           if (ogTitle && ogTitle.length >= 12) {
             p.externalTitle = stripAggregatorBoilerplate(ogTitle);
           }
-          if (ogImage && /^https:\/\//i.test(ogImage) && (!p.imageUrl || p.imageUrl.includes('cdn.bsky.app'))) {
+          if (
+            ogImage &&
+            /^https:\/\//i.test(ogImage) &&
+            !(Array.isArray(p.imageUrls) && p.imageUrls.length > 1) &&
+            (!p.imageUrl || p.imageUrl.includes('cdn.bsky.app'))
+          ) {
             p.imageUrl = ogImage;
           }
         } catch {
@@ -1941,7 +2058,15 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
         if (kw.rx.test(hay)) kwHitCount += 1;
       }
       if (kwHitCount > 0) {
-        const authorName = it.author || it.reporterName || it.outletName || '49ers Beat';
+        const isGenericBeat = v => !v || /^(?:49ers|nfl)\s+beat$/i.test(String(v).trim());
+        const authorName =
+          (!isGenericBeat(it.author) ? it.author : '') ||
+          (!isGenericBeat(it.reporterName) ? it.reporterName : '') ||
+          (!isGenericBeat(it.channel) ? it.channel : '') ||
+          (!isGenericBeat(it.outletName) ? it.outletName : '') ||
+          it.author ||
+          it.outletName ||
+          '49ers Beat';
         const rawCleanBody = isTw
           ? stripRedundantAuthorBoilerplate(it.fullText || it.title || '', authorName)
           : String(it.externalTitle || it.title || '').trim();
@@ -1963,7 +2088,11 @@ export async function buildClusteredNewsBriefs(liveVideos = [], rawItems = [], r
           (it.isBreaking ? 10 : 0) +
           xSalienceBonus;
         const displayLabel = cleanBody.length > 110 ? `${cleanBody.slice(0, 108).trim()}…` : cleanBody;
-        const resolvedOutletLabel = it.outletName || authorName || '49ers Beat';
+        const resolvedOutletLabel =
+          (!isGenericBeat(it.outletName) ? it.outletName : '') ||
+          (!isGenericBeat(it.channel) ? it.channel : '') ||
+          authorName ||
+          '49ers Beat';
         scoredCandidates.push({
           salience,
           link: {

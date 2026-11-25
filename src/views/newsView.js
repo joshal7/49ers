@@ -12,13 +12,16 @@ import {
   escJargon,
   formatRelativeAge,
   renderExpandableSummaryHtml,
+  renderInlineSocialPhotoGalleryHtml,
   renderPlayerChipsStripHtml,
+  renderPreservedTweetTextHtml,
   renderSalientThumbHtml,
   renderSalientHeroBannerHtml,
   renderTweetLinkedArticleCardHtml,
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import {
+  getItemInlineSocialPhotoUrls,
   isInlineFilmPhotoOrChartTweet,
   optimizeImageUrlForSlot,
   resolveDailyBriefHeroMedia,
@@ -74,6 +77,18 @@ import {
   estimateItemEffortCue,
   matchNewsItemSearchQuery
 } from '../engine/digestExperienceEngine.js';
+
+const runtimeBlockedYouTubeIds = new Set();
+
+export function markYouTubeVideoBlocked(videoId = '') {
+  const id = String(videoId || '').trim();
+  if (id) runtimeBlockedYouTubeIds.add(id);
+}
+
+export function isYouTubeVideoKnownBlocked(videoId = '') {
+  const id = String(videoId || '').trim();
+  return Boolean(id && runtimeBlockedYouTubeIds.has(id));
+}
 
 export const NEWS_NAV_CLUSTERS = [
   {
@@ -652,7 +667,8 @@ function renderRelatedStoriesDrawerHtml(
               : 'Article';
       const badgeCls = crIsGif || crIsVid ? 'badge-scarlet' : crIsTw ? 'badge-gold' : 'badge-neutral';
       const crHasInlineClip = Boolean(cr?.videoId || crStreamUrl);
-      const crVidKey = crHasInlineClip ? `rel_${cr?.id || `${item?.id || 'item'}_${crIdx}`}` : '';
+      const crUniqueKey = cr?.id || (cr?.videoId ? `yt_${cr.videoId}` : `${item?.id || item?.videoId || 'item'}_${crIdx}`);
+      const crVidKey = crHasInlineClip ? `rel_${crUniqueKey}` : '';
       const crVidOpen = Boolean(crVidKey && activeVideosSet.has(crVidKey));
       const rawBody = crIsTw
         ? formatTweetBodyForDisplay(
@@ -701,8 +717,8 @@ function renderRelatedStoriesDrawerHtml(
                 </div>
                 ${
                   isValidLink
-                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
-                    : `<div class="source-row-headline is-tweet-body">${esc(displayHeadline)}</div>`
+                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${renderPreservedTweetTextHtml(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
+                    : `<div class="source-row-headline is-tweet-body">${renderPreservedTweetTextHtml(displayHeadline)}</div>`
                 }
               </div>
               ${effectiveCrThumbHtml}
@@ -753,8 +769,8 @@ function renderRelatedStoriesDrawerHtml(
                 </div>
                 ${
                   isValidLink
-                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''} similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
-                    : `<div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">${esc(displayHeadline)}</div>`
+                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''} similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${crIsTw ? renderPreservedTweetTextHtml(displayHeadline) : esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
+                    : `<div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">${crIsTw ? renderPreservedTweetTextHtml(displayHeadline) : esc(displayHeadline)}</div>`
                 }
               </div>
               ${crVidOpen ? '' : crThumbHtml}
@@ -781,7 +797,7 @@ function renderRelatedStoriesDrawerHtml(
               <span class="mono source-row-age">${cr?.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
             </div>
             <div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">
-              ${esc(displayHeadline)}${isValidLink ? ` <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span>` : ''}
+              ${crIsTw ? renderPreservedTweetTextHtml(displayHeadline) : esc(displayHeadline)}${isValidLink ? ` <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span>` : ''}
             </div>
           </div>
           ${crThumbHtml}
@@ -831,7 +847,7 @@ export function renderWireItemCardHtml(
   const readKey = getItemReadKey(item);
   const itemAlreadyRead = isItemRead(item, readKeysSet);
 
-  const rawAuthorName = item.author || item.reporterName || item.outletName || `${getActiveTeamConfig().nickname} Beat`;
+  const rawAuthorName = item.author || item.reporterName || item.channel || item.outletName || `${getActiveTeamConfig().nickname} Beat`;
   const authorName = formatWireSourceDisplayName(rawAuthorName, item);
   const resolvedItemUrl = isTweet
     ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)
@@ -844,9 +860,18 @@ export function renderWireItemCardHtml(
       ? sanitizeExternalUrl(item.externalVideoUrl || resolvedItemUrl, null)
       : '';
   const effectiveStreamOrCardUrl = safeStreamCandidate || externalVideoCardUrl;
-  const effectiveEmbeddable = safeStreamCandidate || item.videoId ? item.embeddable !== false : false;
+  const effectiveEmbeddable =
+    safeStreamCandidate || item.videoId
+      ? item.embeddable !== false && !(item.videoId && isYouTubeVideoKnownBlocked(item.videoId))
+      : false;
   const hasPlayableVideo = Boolean(item.videoId || effectiveStreamOrCardUrl);
-  const vidKey = hasPlayableVideo ? `raw_${item.id}` : null;
+  const uniqueVidIdentity =
+    String(item.id || '').trim() ||
+    (item.videoId ? `yt_${item.videoId}` : '') ||
+    resolvedItemUrl ||
+    effectiveStreamOrCardUrl ||
+    '';
+  const vidKey = hasPlayableVideo && uniqueVidIdentity ? `raw_${uniqueVidIdentity}` : null;
   const isVidOpen = vidKey && activeVideosSet.has(vidKey);
   const authorHref = sanitizeExternalUrl(
     resolveItemAuthorProfileUrl(item, resolvedItemUrl),
@@ -874,11 +899,14 @@ export function renderWireItemCardHtml(
   const effortCue = estimateItemEffortCue(item);
 
   const safeExtUrl = sanitizeExternalUrl(item.externalUrl, null);
+  const inlineSocialPhotos = getItemInlineSocialPhotoUrls(item);
+  const hasMultiSocialPhotos = inlineSocialPhotos.length >= 2;
   const linkedArticlePreview =
     isTweet && !hasPlayableVideo
       ? resolveTweetLinkedArticlePreview(item, { rawStream: prioritizedRaw, resolvedItemUrl })
       : null;
-  const linkedArticleVariant = isCompactMode || !linkedArticlePreview?.imageUrl ? 'compact' : 'card';
+  const linkedArticleVariant =
+    isCompactMode || hasMultiSocialPhotos || !linkedArticlePreview?.imageUrl ? 'compact' : 'card';
   const linkedArticleCardHtml = linkedArticlePreview
     ? renderTweetLinkedArticleCardHtml(linkedArticlePreview, {
         variant: linkedArticleVariant,
@@ -886,30 +914,22 @@ export function renderWireItemCardHtml(
         eager: eagerImage
       })
     : '';
-  const linkedCardOwnsMedia = Boolean(linkedArticlePreview?.imageUrl && linkedArticleCardHtml);
+  const linkedCardOwnsMedia = Boolean(linkedArticlePreview?.imageUrl && linkedArticleCardHtml && !hasMultiSocialPhotos);
   const thumbTargetHref = resolvedItemUrl || safeExtUrl || '';
   const showInlineChartPhoto = Boolean(
     !isCompactMode &&
       !linkedCardOwnsMedia &&
       !isVideo &&
-      !hasPlayableVideo &&
       isInlineFilmPhotoOrChartTweet(item)
   );
-  const inlineChartPhotoOpt = showInlineChartPhoto
-    ? optimizeImageUrlForSlot(item.imageUrl, 'chart')
-    : { src: '', fallbackSrc: '' };
-  const inlineChartPhotoHtml =
-    showInlineChartPhoto && inlineChartPhotoOpt.src
-      ? (() => {
-          const chartTarget = thumbTargetHref || item.imageUrl;
-          const safeChartHref = sanitizeExternalUrl(chartTarget, null);
-          const loadAttr = eagerImage ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
-          const imgEl = `<img src="${esc(inlineChartPhotoOpt.src)}" ${inlineChartPhotoOpt.fallbackSrc ? `data-fallback-src="${esc(inlineChartPhotoOpt.fallbackSrc)}"` : ''} alt="${esc(displayTitle || `${getActiveTeamConfig().nickname} film chart`)}" class="wire-inline-photo-img" ${loadAttr} decoding="async" />`;
-          return safeChartHref
-            ? `<a href="${esc(safeChartHref)}" target="_blank" rel="noopener noreferrer" class="wire-inline-photo-box" data-inline-chart-media="true" data-mark-read-key="${esc(readKey)}">${imgEl}</a>`
-            : `<div class="wire-inline-photo-box" data-inline-chart-media="true">${imgEl}</div>`;
-        })()
-      : '';
+  const inlineChartPhotoHtml = showInlineChartPhoto
+    ? renderInlineSocialPhotoGalleryHtml(item, {
+        fallbackHref: thumbTargetHref,
+        altText: displayTitle,
+        eager: eagerImage,
+        markReadKey: readKey
+      })
+    : '';
   const wantsLeadHeroSlot = Boolean(
     !isCompactMode &&
       !linkedCardOwnsMedia &&
@@ -1018,8 +1038,10 @@ export function renderWireItemCardHtml(
           <div class="wire-card-headline ${isTweet ? 'is-tweet-body' : ''}">
             ${
               resolvedItemUrl
-                ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(readKey)}">${esc(displayTitle)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
-                : esc(displayTitle)
+                ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(readKey)}">${isTweet ? renderPreservedTweetTextHtml(displayTitle) : esc(displayTitle)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
+                : isTweet
+                  ? renderPreservedTweetTextHtml(displayTitle)
+                  : esc(displayTitle)
             }
           </div>
           ${cleanSummary ? renderExpandableSummaryHtml(cleanSummary, { className: 'wire-card-summary' }) : ''}
@@ -1046,7 +1068,7 @@ export function renderWireItemCardHtml(
               item.videoId || '',
               0,
               item.title || `Watch Clip (${isAnimatedGif ? 'GIF' : item.duration || 'Video'})`,
-              item.outletName,
+              authorName || item.channel || item.outletName || 'YouTube',
               isVidOpen,
               effectiveEmbeddable,
               {
@@ -1584,14 +1606,18 @@ export function renderVideoEmbedOrFacade(
   const watchUrl = `https://www.youtube.com/watch?v=${safeId}${startNum > 0 ? `&t=${startNum}s` : ''}`;
   const thumbUrl = `https://i.ytimg.com/vi/${safeId}/hqdefault.jpg`;
 
-  // Official NFL / San Francisco 49ers videos block 3rd-party domain iframes (emb_err_woyt).
+  // Official NFL / club / Content-ID restricted videos block 3rd-party domain iframes (emb_err_woyt).
   // Render a crisp HD thumbnail preview card that opens cleanly on YouTube instead of a broken iframe!
-  if (embeddable === false) {
+  const ytDurationBadgeHtml = durationLabel
+    ? `<span class="video-dur-badge mono">${esc(durationLabel)}</span>`
+    : '';
+  if (embeddable === false || isYouTubeVideoKnownBlocked(videoId)) {
     return `
-      <div class="video-embed-box">
+      <div class="video-embed-box" data-yt-external-only="true" data-yt-video-id="${esc(videoId)}">
         <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="video-external-card" aria-label="Watch ${esc(label)} on YouTube">
           <div class="video-thumb-stage">
             <img src="${esc(thumbUrl)}" alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />
+            ${ytDurationBadgeHtml}
             <div class="video-thumb-overlay">
               <span class="video-play-pill">
                 ${iconSvg('play', 14)}
@@ -1617,11 +1643,15 @@ export function renderVideoEmbedOrFacade(
   }
 
   if (isPlaying) {
-    const src = `https://www.youtube.com/embed/${safeId}?start=${startNum}&autoplay=1&rel=0&playsinline=1`;
+    const safeOrigin =
+      typeof window !== 'undefined' && window.location?.origin && /^https?:\/\//i.test(window.location.origin)
+        ? `&origin=${encodeURIComponent(window.location.origin)}`
+        : '';
+    const src = `https://www.youtube.com/embed/${safeId}?start=${startNum}&autoplay=1&rel=0&playsinline=1&enablejsapi=1${safeOrigin}`;
     return `
-      <div class="video-embed-box">
+      <div class="video-embed-box" data-yt-embed-box="true" data-yt-video-id="${esc(videoId)}">
         <div class="video-iframe-wrap">
-          <iframe src="${src}" title="${esc(label)}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe src="${src}" title="${esc(label)}" data-yt-iframe="1" data-yt-video-id="${esc(videoId)}" data-vid-key="${esc(vidKey)}" data-watch-url="${esc(watchUrl)}" data-yt-title="${esc(label)}" data-yt-channel="${esc(channel || 'YouTube')}" data-yt-compact="${compactFooter ? '1' : '0'}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="video-launch-bar">
           ${
@@ -1639,6 +1669,7 @@ export function renderVideoEmbedOrFacade(
     <div class="video-embed-box">
       <div class="video-thumb-stage" style="cursor:pointer" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
         <img src="${esc(thumbUrl)}" alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />
+        ${ytDurationBadgeHtml}
         <div class="video-thumb-overlay">
           <button type="button" class="video-play-pill" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
             ${iconSvg('play', 14)}

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:01:03.964Z",
+  "updatedAt": "2026-11-25T20:43:53.598Z",
   "sources": [
     {
       "label": "ESPN Lions Schedule",
@@ -24852,7 +24852,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:01:08.431Z"
+    "fetchedAtIso": "2026-11-25T20:43:56.814Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25627,6 +25627,35 @@
       ],
       "injuryReport": [
         {
+          "playerId": "4426386",
+          "name": "Roschon Johnson",
+          "position": "RB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426386.png",
+          "injuryType": "Ankle",
+          "gameStatus": "Out",
+          "status": "Out",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "DNP",
+          "thu": "DNP",
+          "fri": "DNP",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "archetypeNote": "RB availability projection",
+          "factors": [
+            "Officially ruled Out on weekly game status report"
+          ],
+          "beatComment": "Johnson injured his ankle in Sunday's win over the Saints and with the quick turnaround for Week 12, he won't be available against the Lions. The Bears will roll with D'Andre Swift and Kyle Monangai as their only healthy backs for Thursday's game.",
+          "isStarter": false,
+          "role": "Depth",
+          "priorDayPlayProbabilityPct": 28,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
           "playerId": "4242402",
           "name": "Elijah Hicks",
           "position": "S",
@@ -25652,35 +25681,6 @@
           "isStarter": false,
           "role": "Depth",
           "priorDayPlayProbabilityPct": 18,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4426386",
-          "name": "Roschon Johnson",
-          "position": "RB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426386.png",
-          "injuryType": "Ankle",
-          "gameStatus": "Out",
-          "status": "Out",
-          "isSeasonEnding": false,
-          "isPracticeWindowOpen": false,
-          "earliestEligibleWeek": null,
-          "projectedReturnWeek": null,
-          "byeWeekNote": null,
-          "wed": "DNP",
-          "thu": "DNP",
-          "fri": "DNP",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "archetypeNote": "RB availability projection",
-          "factors": [
-            "Officially ruled Out on weekly game status report"
-          ],
-          "beatComment": "Johnson was considered unavailable for practice for a second straight day as he continues to nurse an ankle injury he suffered in Week 11 against the Saints. If the running back is unable to play Thursday versus the Lions, Salvon Ahmed would be a top candidate to be elevated from the practice squad for a second week in a row.",
-          "isStarter": false,
-          "role": "Depth",
-          "priorDayPlayProbabilityPct": 28,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
@@ -27568,16 +27568,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Blake Miller, Penei Sewell & Tate Ratledge vs. DE Montez Sweat & Bears Simulated Pressures",
+        "unitMatchup": "Blake Miller, Tate Ratledge & Penei Sewell vs. DE Montez Sweat & Bears Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Blake Miller",
-          "Penei Sewell",
-          "Tate Ratledge"
+          "Tate Ratledge",
+          "Penei Sewell"
         ],
         "statComparison": "DET: #16 Pass Protection (6.0%) | CHI: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Blake Miller, Penei Sewell & Tate Ratledge protect Jared Goff (#16 protection at 6.0%) against DE Montez Sweat and Chicago Bears's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Blake Miller (#76) on obvious passing downs—if DE Montez Sweat cannot win clean around the arc, Bears must dial up interior stunts that stress Penei Sewell (#58)."
+        "tacticalDetail": "Blake Miller, Tate Ratledge & Penei Sewell protect Jared Goff (#16 protection at 6.0%) against DE Montez Sweat and Chicago Bears's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Blake Miller (#76) on obvious passing downs—if DE Montez Sweat cannot win clean around the arc, Bears must dial up interior stunts that stress Tate Ratledge (#69)."
       }
     ]
   }

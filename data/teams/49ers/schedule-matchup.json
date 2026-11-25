@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:00:56.896Z",
+  "updatedAt": "2026-11-25T20:43:28.359Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -24879,7 +24879,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:01:08.431Z"
+    "fetchedAtIso": "2026-11-25T20:43:40.308Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24929,7 +24929,7 @@
         "jersey": 13,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png",
         "primarySnapPct": 97,
-        "playProbabilityPct": 84
+        "playProbabilityPct": 39
       },
       {
         "playerId": "3117251",
@@ -24956,7 +24956,7 @@
         "jersey": 5,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
         "primarySnapPct": 52,
-        "playProbabilityPct": 95
+        "playProbabilityPct": 30
       },
       {
         "playerId": "3126486",

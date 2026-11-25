@@ -15,12 +15,14 @@ import {
   renderTeamLogoHtml,
   renderAvatarStackHtml,
   renderPlayerChipsStripHtml,
+  renderPreservedTweetTextHtml,
   renderSalientThumbHtml,
   renderTweetLinkedArticleCardHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import {
+  getItemInlineSocialPhotoUrls,
   optimizeImageUrlForSlot,
   resolveSalientCardVisual
 } from '../engine/salientMediaEngine.js';
@@ -349,13 +351,15 @@ function renderSingleDashboardCard({
                             allowTeamFallback: true
                           })
                         : null;
+                    const twMultiPhotoCount = getItemInlineSocialPhotoUrls(tw).length;
                     const twThumbHtml = twVisual
                       ? renderSalientThumbHtml(twVisual, {
                           href: resolvedTwUrl !== '#' ? resolvedTwUrl : safeTwExt || '',
                           size: 'md',
                           eager: idx === 0,
                           extraClass: 'home-wire-thumb',
-                          markReadKey: twReadKey
+                          markReadKey: twReadKey,
+                          multiPhotoCount: twMultiPhotoCount
                         })
                       : '';
                     return `
@@ -375,10 +379,7 @@ function renderSingleDashboardCard({
                     </div>
                     <div class="home-wire-main-row ${twThumbHtml ? 'media-split-row' : ''}">
                       <div class="wire-card-body-col">
-                        <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link" data-mark-read-key="${esc(twReadKey)}">
-                          ${esc(fullShortTweet)}
-                          <span class="wire-inline-ext">${iconSvg('external', 11)}</span>
-                        </a>
+                        <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link" data-mark-read-key="${esc(twReadKey)}">${renderPreservedTweetTextHtml(fullShortTweet)} <span class="wire-inline-ext">${iconSvg('external', 11)}</span></a>
                         ${twLinkedCardHtml}
                         ${
                           showExtChip

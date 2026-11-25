@@ -497,7 +497,16 @@ const OUTLET_DEFAULT_HUB_URLS = {
  * or "Kerry Crowley" to "@timkawakami", and never treating podium coaches as article authors).
  */
 export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
-  const authorStr = String(item?.author || item?.reporterName || '').trim();
+  const activeTeamInit = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  const genericBeatLower = `${activeTeamInit?.nickname || '49ers'} beat`.toLowerCase();
+  const isGenericAuthor = v => {
+    const s = String(v || '').trim().toLowerCase();
+    return !s || s === genericBeatLower || s === '49ers beat' || s === 'nfl beat';
+  };
+  const rawAuthCandidates = [item?.author, item?.reporterName, item?.channel, item?.outletName]
+    .map(v => String(v || '').trim())
+    .filter(Boolean);
+  const authorStr = rawAuthCandidates.find(v => !isGenericAuthor(v)) || rawAuthCandidates[0] || '';
   const matchedAuthor = authorStr ? resolveReporterFromNameOrHandle(authorStr) : null;
   if (matchedAuthor && !PODIUM_SUBJECT_IDS.has(matchedAuthor.id) && matchedAuthor.xUrl) {
     return matchedAuthor.xUrl;
@@ -507,7 +516,7 @@ export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
   if (/^https?:\/\/bsky\.app\//i.test(rawProfileUrl)) {
     const mappedHandle = extractXHandleFromBskyUrl(rawProfileUrl).replace(/^@/, '');
     if (mappedHandle) return `https://x.com/${mappedHandle}`;
-  } else if (rawProfileUrl && !/\/search\?/i.test(rawProfileUrl)) {
+  } else if (rawProfileUrl && !/\/search\?/i.test(rawProfileUrl) && !/^https?:\/\/(?:www\.)?youtube\.com\/watch\?/i.test(rawProfileUrl)) {
     const xHandleMatch = rawProfileUrl.match(/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/?$/i);
     if (xHandleMatch) {
       const handleOwner = resolveReporterFromNameOrHandle(xHandleMatch[1]);
@@ -551,9 +560,15 @@ export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
 /**
  * Extracts canonical beat reporter / insider attribution from social mirror posts,
  * RotoWire/ESPN Player Wire blurbs, and press-box prose citations.
+ * Preserves author carriage returns (`\n` / `\n\n`) while normalizing horizontal whitespace.
  */
 export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
-  const original = String(rawText || '').replace(/\s+/g, ' ').trim();
+  const original = String(rawText || '')
+    .replace(/\r\n?/g, '\n')
+    .replace(/[ \t\f\v\u00A0]+/g, ' ')
+    .replace(/[ \t]*\n[ \t]*/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
   const activeTeamBeat = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
   const defaultTeamBeatLabel = `${activeTeamBeat?.nickname || 'NFL'} Beat`;
   const defaultTeamWireLabel = `${activeTeamBeat?.nickname || 'NFL'} Beat Wire`;

@@ -1065,7 +1065,7 @@ async function main() {
         `Expected header record ${homeInfo.expectedRecord}, got ${homeInfo.recordText}`
       );
       assert(homeInfo.headerTabAttr === 'home' && homeInfo.headerTitleText === '49ers Faithful', `Unexpected Home header state: ${JSON.stringify(homeInfo)}`);
-      assert(homeInfo.crestSrc.includes('sf-crest.svg') && homeInfo.crestVisibleOnHome, `Expected clean transparent SF crest on Home, got ${homeInfo.crestSrc}`);
+      assert(homeInfo.crestSrc.includes('assets/teams/49ers/crest.svg') && homeInfo.crestVisibleOnHome, `Expected clean transparent SF crest on Home, got ${homeInfo.crestSrc}`);
       assert(homeInfo.recordBg === 'none', `Header record pill must not use loud gradient fill: got ${homeInfo.recordBg}`);
       assert(homeInfo.settingsBtnText === '', `Expected subtle icon-only settings button (no "Tune" label), got "${homeInfo.settingsBtnText}"`);
       assert(homeInfo.subNoTruncation, `Header subtitle truncated on 393px iPhone 16: "${homeInfo.subStatusText}"`);
@@ -4561,7 +4561,7 @@ async function main() {
 
         // 4. Verify non-embeddable videos in news.json never attach [data-action="activate-video"]
         document.querySelector('[data-nav-tab="news"]').click();
-        const newsRes = await fetch('./data/news.json');
+        const newsRes = await fetch('./data/teams/49ers/news.json');
         const newsData = await newsRes.json();
         const blockedIds = new Set();
         for (const c of newsData.clusteredBriefs || []) {

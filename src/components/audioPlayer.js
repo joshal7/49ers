@@ -333,7 +333,13 @@ export class PodcastAudioController {
         title: episode.title || `${activeTeam.brandName} Autopodcast`,
         artist: episode.format || activeTeam.brandName,
         album: activeTeam.abbr === 'SF' ? 'The Faithful Analytical Briefing' : `${activeTeam.brandName} Briefing`,
-        artwork: [{ src: activeTeam.assets?.appleTouchIconPng || './apple-touch-icon.png', sizes: '512x512', type: 'image/png' }]
+        artwork: [
+          {
+            src: activeTeam.assets?.appleTouchIconPng || `./assets/teams/${activeTeam.slug || '49ers'}/apple-touch-icon.png`,
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
       });
 
       navigator.mediaSession.setActionHandler('play', () => this.play());

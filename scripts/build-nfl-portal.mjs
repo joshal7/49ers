@@ -497,30 +497,14 @@ function copyTeamIcons(iconsDir) {
 
   for (const team of ALL_NFL_TEAMS) {
     const destPng = path.join(iconsDir, `${team.slug}.png`);
-    if (team.abbr === 'SF') {
-      const sfSrc = path.join(ROOT, 'apple-touch-icon.png');
-      if (!fs.existsSync(sfSrc)) {
-        missing.push(team.slug);
-        continue;
-      }
-      try {
-        execFileSync('sips', ['-z', '180', '180', sfSrc, '--out', destPng], {
-          stdio: 'pipe',
-          timeout: 10000
-        });
-      } catch {
-        fs.copyFileSync(sfSrc, destPng);
-      }
+    const src180 = path.join(ROOT, 'assets', 'teams', team.slug, 'apple-touch-icon-180.png');
+    const src512 = path.join(ROOT, 'assets', 'teams', team.slug, 'apple-touch-icon.png');
+    if (fs.existsSync(src180)) {
+      fs.copyFileSync(src180, destPng);
+    } else if (fs.existsSync(src512)) {
+      fs.copyFileSync(src512, destPng);
     } else {
-      const src180 = path.join(ROOT, 'assets', 'teams', team.slug, 'apple-touch-icon-180.png');
-      const src512 = path.join(ROOT, 'assets', 'teams', team.slug, 'apple-touch-icon.png');
-      if (fs.existsSync(src180)) {
-        fs.copyFileSync(src180, destPng);
-      } else if (fs.existsSync(src512)) {
-        fs.copyFileSync(src512, destPng);
-      } else {
-        missing.push(team.slug);
-      }
+      missing.push(team.slug);
     }
   }
 

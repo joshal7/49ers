@@ -38,13 +38,11 @@ flowchart TD
     end
 
     subgraph Pipeline["Scheduled Data & Build Pipelines (scripts/)"]
-        SfIngest["scripts/fetch-live-49ers-data.mjs + scripts/lib/* (11 Verified 49ers JSON Feeds)"]
-        TeamIngest["scripts/fetch-team-data.mjs (All 31 Non-SF Team JSON Feeds under data/teams/<slug>/)"]
+        TeamIngest["scripts/fetch-live-data.mjs + scripts/lib/* (All 32 Team JSON Feeds under data/teams/<slug>/)"]
         PortalBuild["scripts/build-nfl-teams-pages.mjs + scripts/build-nfl-portal.mjs + scripts/build-team-icons.mjs"]
         PodBuild["scripts/build-podcasts.mjs + scripts/update-reporter-registry.mjs"]
     end
 
-    SfIngest --> Client
     TeamIngest --> TeamsWorker
     PortalBuild --> TeamsWorker
     PodBuild --> Client
@@ -152,7 +150,7 @@ All time-sensitive engines use deterministic `America/Los_Angeles` (PT) and `Ame
 | :--- | :--- |
 | [`worker/nfl-teams-worker.js`](file:///Users/joshal/workspace/49ers/worker/nfl-teams-worker.js) | Unified 32-Team + NFL Hub Cloudflare Pages `_worker.js`: zero-FOUC `HTMLRewriter` (`/` & `/index.html`, `Cache-Control: public, max-age=0, must-revalidate`, `Vary: Host`), `/manifest.json`, `/apple-touch-icon.png`, `/data/*`, team-aware CORS, explicit `404 JSON` guard on unmatched `/api/*`, `/key-sync` + `/api/key-vault`, `/api/health`, `/api/gamecast` (shared upstream summary cache), `/api/live-wire`, canonical `/api/gameday-inactives`, `caches.default`-cached `/api/expand-urls` (`HEAD -> GET`, 13-host allowlist + UTM strip), `/api/video-stream` (`isAllowedInlineVideoStreamUrl` + post-redirect check + CORP), quota-protected `/api/daily-news-brief` & `/api/matchup-intel`, and BYOK-gated `/api/analyze` & `/api/podcast`. |
 | [`worker/index.js`](file:///Users/joshal/workspace/49ers/worker/index.js) | Dedicated 49ers Cloudflare Worker: `caches.default` caching for high-frequency `/api/live-wire` (bounded `<=14` X hydrates, 0 KV writes), `/api/expand-urls`, and `/api/gameday-inactives`; KV (`expirationTtl >= 60`) for durable `/api/daily-news-brief`, `/api/matchup-intel`, `/api/shared-feed`, `/api/model-status`, `/api/push-config|subscribe|unsubscribe`, `/api/analyze`, and `/api/podcast`; R2 HTTP `Range` `206` `/api/audio/:episodeId`; `/api/gamecast`; `/api/video-stream`; `/api/health`; timeout-guarded Gemini/TTS cascades (`AbortSignal.timeout`); anchored localhost CORS; `404 JSON` on unknown `/api/*`; and 6-hour `/v1beta/models` cron. |
-| [`scripts/fetch-live-49ers-data.mjs`](file:///Users/joshal/workspace/49ers/scripts/fetch-live-49ers-data.mjs) & [`scripts/fetch-team-data.mjs`](file:///Users/joshal/workspace/49ers/scripts/fetch-team-data.mjs) | Compiles verified live JSON feeds for San Francisco (`/data/*.json`) and all 31 other NFL franchises (`/data/teams/<slug>/*.json`). |
+| [`scripts/fetch-live-data.mjs`](file:///Users/joshal/workspace/49ers/scripts/fetch-live-data.mjs) | Unified 32-team pipeline compiling verified live JSON feeds for all 32 NFL franchises (`/data/teams/<slug>/*.json`). |
 | [`scripts/build-nfl-teams-pages.mjs`](file:///Users/joshal/workspace/49ers/scripts/build-nfl-teams-pages.mjs), [`scripts/build-nfl-portal.mjs`](file:///Users/joshal/workspace/49ers/scripts/build-nfl-portal.mjs), [`scripts/build-team-icons.mjs`](file:///Users/joshal/workspace/49ers/scripts/build-team-icons.mjs), [`scripts/build-podcasts.mjs`](file:///Users/joshal/workspace/49ers/scripts/build-podcasts.mjs), [`scripts/update-reporter-registry.mjs`](file:///Users/joshal/workspace/49ers/scripts/update-reporter-registry.mjs) | Builds `dist-nfl-teams/` & `dist-nfl/` Cloudflare Pages bundles, generates 32 team icons & crests, encodes 44.1 kHz studio `.m4a` podcasts, and ranks beat reporters. |
 
 ---

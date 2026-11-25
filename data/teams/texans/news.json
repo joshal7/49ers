@@ -1,109 +1,841 @@
 {
-  "updatedAt": "2026-11-24T20:08:45.704Z",
+  "updatedAt": "2026-11-25T20:36:09.819Z",
   "dailyTopNewsBrief": {
-    "id": "brief_hou_5a8ba833181d",
-    "cycleKey": "2026-11-23@17CT",
+    "id": "daily_brief_2026-11-24_17CT",
+    "cycleKey": "2026-11-24@17CT",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-6",
-    "generatedAt": "2026-11-24T20:08:46.842Z",
-    "modelUsed": "gemini-4-hydrogen",
-    "thinkingLevel": "XHIGH",
-    "source": "deterministic-digest",
-    "wordCount": 62,
-    "headline": "Houston Texans Daily Briefing — Week 12",
-    "summary": "Houston Texans (4-6, 2nd in AFC South • #9 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
+    "generatedAt": "2026-11-25T20:36:09.819Z",
+    "modelUsed": "deterministic-grounded",
+    "thinkingLevel": "NONE",
+    "source": "pipeline-grounded",
+    "practiceReportCoverage": {
+      "hasThu": false,
+      "hasFri": false
+    },
+    "wordCount": 225,
+    "headline": "Texans (4-6) Week 12 Briefing: Injury Updates Ahead of Ravens",
+    "summary": "",
     "bullets": [
-      "NFL Practice Squad Updates: 11/23/26 ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26))",
-      "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans ([Jamison Hensley](https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday))",
-      "Nick Caley on C.J. Stroud's Elite Play, Run Game & Ravens | Full Q&A ([houstontexans.com Video](https://www.houstontexans.com/video/nick-caley-on-c-j-stroud-s-elite-play-run-game-ravens-full-q-a))",
-      "DeMeco Ryans on Will Anderson Jr., C.J. Stroud & Ravens | Full Q&A ([houstontexans.com Video](https://www.houstontexans.com/video/demeco-ryans-on-will-anderson-jr-c-j-stroud-ravens-full-q-a))",
-      "Texans remain alive in the playoff race ([ESPN NFL Nation](https://www.espn.com/video/clip/_/id/50573661/texans-remain-alive-playoff-race))"
+      "Roster & Front Office: Houston signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad and released RB Dare Ogunbowale on Wednesday. We have signed Junior Tafuna and Daniel Sobkowicz to the practice squad [NFL Trade Rumors](https://nfltraderumors.co/texans-announce-three-roster-moves/).",
+      "Injury & Practice Status: Entering Week 12 preparation, head coach DeMeco Ryans and the medical staff evaluate RB Woody Marks (concussion), WR Marvin Harrison Jr. (hamstring), DE Danielle Hunter (hamstring), and TE Brevin Jordan (foot) ahead of Wednesday's initial participation report [Jonathan M. Alexander](https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20%28concussion%29%20was%20on%20the%20practice%20field).",
+      "Week 12 Ravens Outlook: DeMeco Ryans and DC Matt Burke open installation for the Baltimore Ravens (4-7, HOU -7, HC Jesse Minter, OC Declan Doyle & DC Anthony Weaver (NRG Stadium)) as Houston prepares for a pivotal AFC matchup [houstontexans.com Official](https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative) [fizzyjoe](https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12).",
+      "AFC Playoff Trajectory: Entering Week 12 at 4-6 (2nd in AFC South • #9 Seed in AFC), Houston carries a 22.7% postseason projection, 5.4% AFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [houstontexans.com Official](https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Houston ranks #9 in Points / Game (25.9), #17 in Points Allowed / Game (22.2), #10 in Turnover Differential (+4), giving DeMeco Ryans and Matt Burke a clear benchmark ahead of Sun, Nov 29, 12:00 PM CST • NFL TV at [object Object] against the Baltimore Ravens [Scott Barzilla](https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers)."
     ],
     "coveredStoryKeys": [
-      "hou_pfr_2fe42aa5dcec",
-      "hou_espn_da80639075b30",
-      "hou_vid_8585d9c38684",
-      "hou_vid_a328299d188b",
-      "hou_espn_46925ec83b509"
+      "woodymarks::pre_game_availability",
+      "team::power_rankings"
     ],
     "coveredUrls": [
-      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
+      "https://nfltraderumors.co/texans-announce-three-roster-moves/",
+      "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20(concussion)%20was%20on%20the%20practice%20field",
+      "https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative",
+      "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+      "https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week",
       "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
-      "https://www.houstontexans.com/video/nick-caley-on-c-j-stroud-s-elite-play-run-game-ravens-full-q-a",
-      "https://www.houstontexans.com/video/demeco-ryans-on-will-anderson-jr-c-j-stroud-ravens-full-q-a",
-      "https://www.espn.com/video/clip/_/id/50573661/texans-remain-alive-playoff-race"
+      "https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers",
+      "https://www.houstontexans.com/news/houston-texans-transactions-11-25-2026",
+      "https://www.battleredblog.com/houston-texans-analysis/79265/texans-fans-can-give-thanks-for",
+      "https://x.com/TexansCommenter/status/2125378576962691518",
+      "https://www.battleredblog.com/houston-texans-news/79261/houston-texans-news-wednesday-november-25-2026",
+      "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
+      "https://www.houstontexans.com/team/transactions/#tx-21c533294b27",
+      "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Head%20coach%20DeMeco%20Ryans%20said%20Monday%20that"
     ],
     "sources": [
       {
-        "sid": "S1",
-        "title": "NFL Practice Squad Updates: 11/23/26",
-        "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "publishedAt": "2026-11-24T00:46:03.000Z"
+        "type": "article",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "Texans Announce Three Roster Moves",
+        "url": "https://nfltraderumors.co/texans-announce-three-roster-moves/",
+        "publishedAt": "2026-11-25T18:12:32.000Z"
       },
       {
-        "sid": "S2",
-        "title": "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans",
-        "url": "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
-        "author": "Jamison Hensley",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T23:38:39Z"
+        "type": "article",
+        "author": "Jonathan M. Alexander",
+        "outlet": "Houston Chronicle",
+        "title": "Marks (concussion) was on the practice field Wednesday.",
+        "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20(concussion)%20was%20on%20the%20practice%20field",
+        "publishedAt": "2026-11-25T19:00:50.000Z"
       },
       {
-        "sid": "S3",
-        "title": "Nick Caley on C.J. Stroud's Elite Play, Run Game & Ravens | Full Q&A",
-        "url": "https://www.houstontexans.com/video/nick-caley-on-c-j-stroud-s-elite-play-run-game-ravens-full-q-a",
-        "author": "houstontexans.com Video",
-        "outlet": "houstontexans.com Video",
-        "publishedAt": "2026-11-23T19:50:02.000Z"
-      },
-      {
-        "sid": "S4",
-        "title": "DeMeco Ryans on Will Anderson Jr., C.J. Stroud & Ravens | Full Q&A",
-        "url": "https://www.houstontexans.com/video/demeco-ryans-on-will-anderson-jr-c-j-stroud-ravens-full-q-a",
-        "author": "houstontexans.com Video",
-        "outlet": "houstontexans.com Video",
-        "publishedAt": "2026-11-23T19:49:56.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "Texans remain alive in the playoff race",
-        "url": "https://www.espn.com/video/clip/_/id/50573661/texans-remain-alive-playoff-race",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T17:50:55Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Houston Texans Transactions (11-23-2026)",
-        "url": "https://www.houstontexans.com/news/houston-texans-transactions-11-23-2026",
+        "type": "article",
         "author": "houstontexans.com Official",
         "outlet": "houstontexans.com Official",
-        "publishedAt": "2026-11-23T17:30:11.000Z"
+        "title": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative",
+        "url": "https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative",
+        "publishedAt": "2026-11-25T20:29:24.000Z"
       },
       {
-        "sid": "S7",
-        "title": "Texans roster move: Placed DE Chris Braswell on the practice squad injured list.",
-        "url": "https://www.houstontexans.com/team/transactions/#tx-bf0024bf7861",
-        "author": "Houston Texans Official",
+        "type": "article",
+        "author": "fizzyjoe",
+        "outlet": "Battle Red Blog",
+        "title": "Houston Texans NFL Power Rankings: Week 12",
+        "url": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+        "publishedAt": "2026-11-25T16:01:18.000Z"
+      },
+      {
+        "type": "article",
+        "author": "houstontexans.com Official",
         "outlet": "houstontexans.com Official",
-        "publishedAt": "2026-11-23T08:00:00.000Z"
+        "title": "Houston Texans DE Will Anderson Jr. Named AFC Defensive Player Of The Week",
+        "url": "https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week",
+        "publishedAt": "2026-11-25T17:00:00.000Z"
       },
       {
-        "sid": "S8",
-        "title": "Why the Texans' run game can power them to wins",
-        "url": "https://www.espn.com/video/clip/_/id/50554633/why-texans-run-game-power-wins",
-        "author": "ESPN NFL Nation",
+        "type": "article",
+        "author": "Jamison Hensley",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-21T22:16:55Z"
+        "title": "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans",
+        "url": "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
+        "publishedAt": "2026-11-23T23:38:39.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Scott Barzilla",
+        "outlet": "Battle Red Blog",
+        "title": "How much better is the Texans offense than last season?",
+        "url": "https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers",
+        "publishedAt": "2026-11-24T15:29:38.000Z"
+      },
+      {
+        "type": "article",
+        "author": "houstontexans.com Official",
+        "outlet": "houstontexans.com Official",
+        "title": "Houston Texans Transactions (11-25-2026)",
+        "url": "https://www.houstontexans.com/news/houston-texans-transactions-11-25-2026",
+        "publishedAt": "2026-11-25T18:03:47.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Mike Bullock",
+        "outlet": "Battle Red Blog",
+        "title": "Texans fans can give thanks for",
+        "url": "https://www.battleredblog.com/houston-texans-analysis/79265/texans-fans-can-give-thanks-for",
+        "publishedAt": "2026-11-25T12:17:29.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Houston Stressans",
+        "outlet": "X Beat",
+        "title": "All 33 designed runs by the Texans vs. the Colts. By far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season",
+        "url": "https://x.com/TexansCommenter/status/2125378576962691518",
+        "publishedAt": "2026-11-24T23:58:35.029Z"
+      },
+      {
+        "type": "article",
+        "author": "Patrick Haughton",
+        "outlet": "Battle Red Blog",
+        "title": "Houston Texans News: Wednesday November 25, 2026",
+        "url": "https://www.battleredblog.com/houston-texans-news/79261/houston-texans-news-wednesday-november-25-2026",
+        "publishedAt": "2026-11-25T06:36:42.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Eric Karabell",
+        "outlet": "ESPN / X Beat Wire",
+        "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+        "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+        "publishedAt": "2026-11-24T20:18:57.000Z"
       }
     ]
   },
-  "clusteredBriefs": [],
+  "clusteredBriefs": [
+    {
+      "id": "hou_cl_top",
+      "category": "beat",
+      "headline": "Houston Texans Week 12 Top Headlines (4-6)",
+      "summary": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative — Marks (concussion) was on the practice field Wednesday.",
+      "updatedAt": "2026-11-25T20:29:24.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "houstontexans.com Official",
+          "title": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative",
+          "url": "https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative",
+          "publishedAt": "2026-11-25T20:29:24.000Z"
+        },
+        {
+          "label": "Jonathan M. Alexander",
+          "title": "Marks (concussion) was on the practice field Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20(concussion)%20was%20on%20the%20practice%20field",
+          "publishedAt": "2026-11-25T19:00:50.000Z"
+        },
+        {
+          "label": "NFL Trade Rumors",
+          "title": "Texans Announce Three Roster Moves",
+          "url": "https://nfltraderumors.co/texans-announce-three-roster-moves/",
+          "publishedAt": "2026-11-25T18:12:32.000Z"
+        },
+        {
+          "label": "houstontexans.com Official",
+          "title": "Houston Texans Transactions (11-25-2026)",
+          "url": "https://www.houstontexans.com/news/houston-texans-transactions-11-25-2026",
+          "publishedAt": "2026-11-25T18:03:47.000Z"
+        },
+        {
+          "label": "houstontexans.com Official",
+          "title": "Houston Texans DE Will Anderson Jr. Named AFC Defensive Player Of The Week",
+          "url": "https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week",
+          "publishedAt": "2026-11-25T17:00:00.000Z"
+        },
+        {
+          "label": "fizzyjoe",
+          "title": "Houston Texans NFL Power Rankings: Week 12",
+          "url": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+          "publishedAt": "2026-11-25T16:01:18.000Z"
+        }
+      ]
+    },
+    {
+      "id": "hou_cl_health",
+      "category": "injury",
+      "headline": "Texans Practice Report, Injury & IR Availability",
+      "summary": "Marks (concussion) was on the practice field Wednesday. — Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
+      "updatedAt": "2026-11-25T19:00:50.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "Jonathan M. Alexander",
+          "title": "Marks (concussion) was on the practice field Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20(concussion)%20was%20on%20the%20practice%20field",
+          "publishedAt": "2026-11-25T19:00:50.000Z"
+        },
+        {
+          "label": "Houston Texans Official",
+          "title": "Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
+          "url": "https://www.houstontexans.com/team/transactions/#tx-21c533294b27",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
+          "label": "Houston Stressans",
+          "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
+          "url": "https://x.com/TexansCommenter/status/2125378576962691518",
+          "publishedAt": "2026-11-24T23:58:35.029Z"
+        },
+        {
+          "label": "Pro Football Rumors",
+          "title": "NFL Practice Squad Updates: 11/23/26",
+          "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
+          "publishedAt": "2026-11-24T00:46:03.000Z"
+        },
+        {
+          "label": "Aaron Wilson",
+          "title": "Head coach DeMeco Ryans said Monday that Marks (concussion) is \"trending in the right direction,\" and the Texans \"are hopeful to have him\" for Sunday's game against the Ravens.",
+          "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Head%20coach%20DeMeco%20Ryans%20said%20Monday%20that",
+          "publishedAt": "2026-11-23T19:05:14.000Z"
+        },
+        {
+          "label": "Houston Texans Official",
+          "title": "Texans roster move: Placed DE Chris Braswell on the practice squad injured list.",
+          "url": "https://www.houstontexans.com/team/transactions/#tx-bf0024bf7861",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "hou_cl_film",
+      "category": "film",
+      "headline": "Texans All-22 Film, Trench & Efficiency Breakdowns",
+      "summary": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts",
+      "updatedAt": "2026-11-24T23:58:35.029Z",
+      "itemCount": 2,
+      "sourceLinks": [
+        {
+          "label": "Houston Stressans",
+          "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
+          "url": "https://x.com/TexansCommenter/status/2125378576962691518",
+          "publishedAt": "2026-11-24T23:58:35.029Z"
+        },
+        {
+          "label": "houstontexans.com Official",
+          "title": "Texans at Browns: Six Keys For a Week 10 Win in Cleveland",
+          "url": "https://www.houstontexans.com/news/texans-at-browns-six-keys-for-a-week-10-win-in-cleveland",
+          "publishedAt": "2026-11-13T15:16:37.000Z"
+        }
+      ]
+    },
+    {
+      "id": "hou_cl_roster",
+      "category": "roster",
+      "headline": "Texans Roster Moves, Trades & Salary Cap Desk",
+      "summary": "Texans Announce Three Roster Moves — Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
+      "updatedAt": "2026-11-25T18:12:32.000Z",
+      "itemCount": 6,
+      "sourceLinks": [
+        {
+          "label": "NFL Trade Rumors",
+          "title": "Texans Announce Three Roster Moves",
+          "url": "https://nfltraderumors.co/texans-announce-three-roster-moves/",
+          "publishedAt": "2026-11-25T18:12:32.000Z"
+        },
+        {
+          "label": "Houston Texans Official",
+          "title": "Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
+          "url": "https://www.houstontexans.com/team/transactions/#tx-21c533294b27",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
+          "label": "Eric Karabell",
+          "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+          "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "publishedAt": "2026-11-24T20:18:57.000Z"
+        },
+        {
+          "label": "Eric Karabell",
+          "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+          "url": "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "publishedAt": "2026-11-24T20:18:57.000Z"
+        },
+        {
+          "label": "Pro Football Rumors",
+          "title": "NFL Practice Squad Updates: 11/23/26",
+          "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
+          "publishedAt": "2026-11-24T00:46:03.000Z"
+        },
+        {
+          "label": "Houston Texans Official",
+          "title": "Texans roster move: Placed DE Chris Braswell on the practice squad injured list.",
+          "url": "https://www.houstontexans.com/team/transactions/#tx-bf0024bf7861",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
+        }
+      ]
+    }
+  ],
   "rawStream": [
+    {
+      "id": "hou_rss_b3a5caaf9a2a",
+      "type": "article",
+      "title": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative",
+      "summary": "The custom cleats they wear for this Sunday's game against the Baltimore Ravens are inspired by their chosen causes.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/gv3fkvwqpz5l3iweh95n.jpg",
+      "imageAlt": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative",
+      "publishedAt": "2026-11-25T20:29:24.000Z",
+      "url": "https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative",
+      "outletId": "texans_official",
+      "outletName": "houstontexans.com Official",
+      "reporterId": "texans_official",
+      "reporterName": "houstontexans.com Official",
+      "author": "houstontexans.com Official",
+      "authorHandle": "@HoustonTexans",
+      "authorProfileUrl": "https://www.houstontexans.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 47.0553
+    },
+    {
+      "id": "hou_yt_YHHIsspyM2w",
+      "type": "video",
+      "category": "beat",
+      "videoId": "YHHIsspyM2w",
+      "embeddable": false,
+      "title": "Baltimore Ravens vs Houston Texans | 2026 Week 12 Game Preview",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
+      "imageUrl": "https://i.ytimg.com/vi/YHHIsspyM2w/hqdefault.jpg",
+      "imageAlt": "Baltimore Ravens vs Houston Texans | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:00:10.000Z",
+      "url": "https://www.youtube.com/watch?v=YHHIsspyM2w",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=YHHIsspyM2w",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.1598
+    },
+    {
+      "id": "hou_pwire_4429059_64972728",
+      "type": "article",
+      "title": "Marks (concussion) was on the practice field Wednesday.",
+      "summary": "Marks, who was inactive for last Thursday's game against the Colts, was, as of Monday, \"trending in the right direction,\" according to coach DeMeco Ryans, per Aaron Wilson of KPRC 2 Houston. The running back's presence f",
+      "publishedAt": "2026-11-25T19:00:50.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20(concussion)%20was%20on%20the%20practice%20field",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
+      "outletName": "Houston Chronicle",
+      "reporterId": "jonathan_m_alexander",
+      "reporterName": "Jonathan M. Alexander",
+      "author": "Jonathan M. Alexander",
+      "authorHandle": "@jonmalexander",
+      "authorProfileUrl": "https://x.com/jonmalexander",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.1363
+    },
+    {
+      "id": "hou_nfltr_6bd5e1da133c",
+      "type": "article",
+      "title": "Texans Announce Three Roster Moves",
+      "summary": "The Houston Texans signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad and released RB Dare Ogunbowale on Wednesday. We have signed Junior Tafuna and Daniel Sobkowicz to the practice squad and made other roster moves. pic.",
+      "imageUrl": "",
+      "imageAlt": "Texans Announce Three Roster Moves",
+      "publishedAt": "2026-11-25T18:12:32.000Z",
+      "url": "https://nfltraderumors.co/texans-announce-three-roster-moves/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.3689
+    },
+    {
+      "id": "hou_rss_82289e7dcec6",
+      "type": "article",
+      "title": "Houston Texans Transactions (11-25-2026)",
+      "summary": "The Houston Texans made roster moves.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/vcinceg6twjyj3l2qdze.png",
+      "imageAlt": "Houston Texans Transactions (11-25-2026)",
+      "publishedAt": "2026-11-25T18:03:47.000Z",
+      "url": "https://www.houstontexans.com/news/houston-texans-transactions-11-25-2026",
+      "outletId": "texans_official",
+      "outletName": "houstontexans.com Official",
+      "reporterId": "texans_official",
+      "reporterName": "houstontexans.com Official",
+      "author": "houstontexans.com Official",
+      "authorHandle": "@HoustonTexans",
+      "authorProfileUrl": "https://www.houstontexans.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.954
+    },
+    {
+      "id": "hou_rss_287d5188e276",
+      "type": "article",
+      "title": "Houston Texans DE Will Anderson Jr. Named AFC Defensive Player Of The Week",
+      "summary": "Anderson totaled five tackles, four quarterback hits, two tackles for loss and 1.0 sack, which resulted in a Colts safety and the first safety of his career resulting in a 26-3 victory over the Indianapolis Colts.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/gain6jaw4zgvxna6jznm.jpg",
+      "imageAlt": "Houston Texans DE Will Anderson Jr. Named AFC Defensive Player Of The Week",
+      "publishedAt": "2026-11-25T17:00:00.000Z",
+      "url": "https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week",
+      "outletId": "texans_official",
+      "outletName": "houstontexans.com Official",
+      "reporterId": "texans_official",
+      "reporterName": "houstontexans.com Official",
+      "author": "houstontexans.com Official",
+      "authorHandle": "@HoustonTexans",
+      "authorProfileUrl": "https://www.houstontexans.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.9419
+    },
+    {
+      "id": "hou_brss_battle_red_blog_a4cb9f892648",
+      "type": "article",
+      "title": "Houston Texans NFL Power Rankings: Week 12",
+      "summary": "Oh, back for your power rankings fix again? Last week, the Texans inched a hair closer to the AFC playoff bubble with a 26-3 victory over the division rival Indianapolis Colts. Then, on Sunday, they got another boost when the Pittsburgh Ste",
+      "imageUrl": "",
+      "imageAlt": "Houston Texans NFL Power Rankings: Week 12",
+      "publishedAt": "2026-11-25T16:01:18.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "fizzyjoe",
+      "author": "fizzyjoe",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.2346
+    },
+    {
+      "id": "hou_tx_21c533294b27",
+      "type": "tweet",
+      "title": "Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
+      "fullText": "Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.houstontexans.com/team/transactions/#tx-21c533294b27",
+      "outletId": "texans_official",
+      "outletName": "houstontexans.com Official",
+      "reporterId": "texans_official",
+      "reporterName": "Houston Texans Official",
+      "author": "Houston Texans Official",
+      "authorHandle": "@HoustonTexans",
+      "authorProfileUrl": "https://www.houstontexans.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.769,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.4367
+    },
+    {
+      "id": "hou_brss_battle_red_blog_c175b715d16c",
+      "type": "article",
+      "title": "Texans fans can give thanks for…",
+      "summary": "In the spirit of Thanksgiving, let’s put together a list of things Houston Texans fans can and should be thankful for as the team dances around the In/Out line of the 2026 NFL Playoffs. As frustrating as this season has been so far, it coul",
+      "imageUrl": "",
+      "imageAlt": "Texans fans can give thanks for…",
+      "publishedAt": "2026-11-25T12:17:29.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-analysis/79265/texans-fans-can-give-thanks-for",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Mike Bullock",
+      "author": "Mike Bullock",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-analysis/79265/texans-fans-can-give-thanks-for",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.5773
+    },
+    {
+      "id": "x_tl_texanscommenter_2125378576962691518",
+      "type": "tweet",
+      "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
+      "fullText": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125378065152790528/img/yy_C2QR0qbJ_J3c9.jpg",
+      "imageAlt": "Houston Stressans post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125378065152790528/vid/avc1/1280x720/AX-u27k37tSzUjjs.mp4",
+      "duration": "3:05",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "4362478",
+          "name": "Emari Demercado",
+          "shortName": "E. Demercado",
+          "position": "RB",
+          "jersey": 21,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362478.png"
+        },
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        }
+      ],
+      "publishedAt": "2026-11-24T23:58:35.029Z",
+      "url": "https://x.com/TexansCommenter/status/2125378576962691518",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "Houston Stressans",
+      "author": "Houston Stressans",
+      "authorHandle": "@TexansCommenter",
+      "authorProfileUrl": "https://x.com/TexansCommenter",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7804
+    },
+    {
+      "id": "hou_brss_battle_red_blog_1f45d7277ee4",
+      "type": "article",
+      "title": "Houston Texans News: Wednesday November 25, 2026",
+      "summary": "Houston Texans News Texans stock report: With David Montgomery’s performance, is run game on rise? (Houston Chronicle) Texans Got Playoff Chase Help on Sunday From Other Teams (Houston Press) Texans MUST Beat Ravens & Steelers to Keep Playo",
+      "imageUrl": "",
+      "imageAlt": "Houston Texans News: Wednesday November 25, 2026",
+      "publishedAt": "2026-11-25T06:36:42.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-news/79261/houston-texans-news-wednesday-november-25-2026",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Patrick Haughton",
+      "author": "Patrick Haughton",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-news/79261/houston-texans-news-wednesday-november-25-2026",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.3293
+    },
+    {
+      "id": "hou_pwire_4258173_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6413
+    },
+    {
+      "id": "hou_pwire_4035538_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6413
+    },
+    {
+      "id": "hou_brss_battle_red_blog_cb985132b2da",
+      "type": "article",
+      "title": "How much better is the Texans offense than last season?",
+      "summary": "Thursday night games throw off the schedule a little. The rearview mirror feature comes on the previous Friday which opens up a hole in the Value of Things week. However, these holes provide us with a unique opportunity to finish a thought",
+      "imageUrl": "",
+      "imageAlt": "How much better is the Texans offense than last season?",
+      "publishedAt": "2026-11-24T15:29:38.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Scott Barzilla",
+      "author": "Scott Barzilla",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5026
+    },
     {
       "id": "hou_pfr_2fe42aa5dcec",
       "type": "article",
@@ -121,6 +853,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -134,7 +867,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8666
+      "storyRank": 0.2882
     },
     {
       "id": "hou_espn_da80639075b30",
@@ -144,7 +877,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1750398_600x600_1-1.jpg",
       "imageCaption": "Marlon Humphrey [600x600]",
       "imageAlt": "Struggling Ravens noncommittal on whether Humphrey will play Sunday vs. Texans",
-      "publishedAt": "2026-11-23T23:38:39Z",
+      "publishedAt": "2026-11-23T23:38:39.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
       "outletId": "espn_bal",
       "outletName": "ESPN",
@@ -155,6 +888,7 @@
       "authorProfileUrl": "https://x.com/jamisonhensley",
       "trustTier": 3,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -168,7 +902,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5009
+      "storyRank": 0.1734
+    },
+    {
+      "id": "hou_brss_battle_red_blog_d7247a40a607",
+      "type": "article",
+      "title": "Noon kickoff non-Texans live game discussion for Week 11",
+      "summary": "The Texans are off this Sunday but that doesn’t mean football is off. You know you’re gonna watch football. Don’t you deny it. Don’t. You. Deny. It. It is your destiny. Here is where you can talk about the game playing in your area. For tho",
+      "imageUrl": "",
+      "imageAlt": "Noon kickoff non-Texans live game discussion for Week 11",
+      "publishedAt": "2026-11-23T21:32:43.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-discussion/79206/noon-kickoff-non-texans-live-game-discussion-for-week-11",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Patrick Haughton",
+      "author": "Patrick Haughton",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-discussion/79206/noon-kickoff-non-texans-live-game-discussion-for-week-11",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2616
     },
     {
       "id": "hou_vid_8585d9c38684",
@@ -189,6 +957,33 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        },
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -202,7 +997,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6512
+      "storyRank": 0.2533
     },
     {
       "id": "hou_vid_a328299d188b",
@@ -223,6 +1018,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -236,7 +1050,87 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6512
+      "storyRank": 0.2533
+    },
+    {
+      "id": "hou_pwire_4429059_64936228",
+      "type": "article",
+      "title": "Head coach DeMeco Ryans said Monday that Marks (concussion) is \"trending in the right direction,\" and the Texans \"are hopeful to have him\" for Sunday's game against the Ravens.",
+      "summary": "After sustaining a concussion in a Nov. 15 loss to the Browns, Marks was unable to clear the five-step protocol on a short week and ended up sitting out this past Thursday's 26-3 win over the Colts. Since then, Marks app",
+      "publishedAt": "2026-11-23T19:05:14.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Head%20coach%20DeMeco%20Ryans%20said%20Monday%20that",
+      "outletId": "kprc_2_houston_hou",
+      "outletName": "KPRC 2 NFL",
+      "reporterId": "aaron_wilson",
+      "reporterName": "Aaron Wilson",
+      "author": "Aaron Wilson",
+      "authorHandle": "@AaronWilson_NFL",
+      "authorProfileUrl": "https://x.com/AaronWilson_NFL",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2481
+    },
+    {
+      "id": "x_tl_minakimes_2124923169131597890",
+      "type": "tweet",
+      "title": "General Santa Anna on the morning of March 6 1836:",
+      "fullText": "General Santa Anna on the morning of March 6 1836:",
+      "isFullTweet": true,
+      "summary": "The Texans are alive",
+      "imageUrl": "",
+      "imageAlt": "Mina Kimes post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-23T17:48:57.341Z",
+      "url": "https://x.com/minakimes/status/2124923169131597890",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "espn_national",
+      "outletName": "ESPN NFL",
+      "reporterId": "mina_kimes",
+      "reporterName": "Mina Kimes",
+      "author": "Mina Kimes",
+      "authorHandle": "@minakimes",
+      "authorProfileUrl": "https://x.com/minakimes",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 93,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2634
     },
     {
       "id": "hou_espn_46925ec83b509",
@@ -246,7 +1140,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_Texans/dm_261123_Texans.jpg",
       "imageCaption": "DJ Bien-Aime breaks down the Texans' playoff picture after week 11.",
       "imageAlt": "Texans remain alive in the playoff race",
-      "publishedAt": "2026-11-23T17:50:55Z",
+      "publishedAt": "2026-11-23T17:50:55.000Z",
       "url": "https://www.espn.com/video/clip/_/id/50573661/texans-remain-alive-playoff-race",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -257,6 +1151,8 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -270,7 +1166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5861
+      "storyRank": 0.2398
     },
     {
       "id": "hou_rss_130d1bdfa080",
@@ -290,6 +1186,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -303,7 +1200,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5759
+      "storyRank": 0.2376
     },
     {
       "id": "hou_tx_bf0024bf7861",
@@ -324,6 +1221,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -337,27 +1235,27 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3812
+      "storyRank": 0.188
     },
     {
-      "id": "hou_espn_479efe5147a46",
-      "type": "video",
-      "title": "Why the Texans' run game can power them to wins",
-      "summary": "DJ Bien-Aime explains why a positive run game could mean wins for the Texans.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1121/dm_261121_EXANS_WIN_RECAP_IA/dm_261121_EXANS_WIN_RECAP_IA.jpg",
-      "imageCaption": "DJ Bien-Aime explains why a positive run game could mean wins for the Texans.",
-      "imageAlt": "Why the Texans' run game can power them to wins",
-      "publishedAt": "2026-11-21T22:16:55Z",
-      "url": "https://www.espn.com/video/clip/_/id/50554633/why-texans-run-game-power-wins",
-      "outletId": "espn_hou",
-      "outletName": "ESPN",
-      "reporterId": "espn_hou",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "id": "hou_brss_battle_red_blog_8340258c961e",
+      "type": "article",
+      "title": "AFC Playoff Picture: Texans gain a game on the Jaguars in AFC South standings",
+      "summary": "The Houston Texans won on Thursday night and the Jacksonville Jaguars lost. The Texans gained a full game in the AFC South this week. The Texans are still three games behind the Jaguars, but there is hope. The Jaguars still have games again",
+      "imageUrl": "",
+      "imageAlt": "AFC Playoff Picture: Texans gain a game on the Jaguars in AFC South standings",
+      "publishedAt": "2026-11-23T01:53:56.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-nfl-playoffs/79231/afc-playoff-picture-houston-texans-jacksonville-jaguars-afc-south-standings-wild-card",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Matt Warren",
+      "author": "Matt Warren",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-nfl-playoffs/79231/afc-playoff-picture-houston-texans-jacksonville-jaguars-afc-south-standings-wild-card",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -371,7 +1269,135 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1545
+      "storyRank": 0.162
+    },
+    {
+      "id": "hou_brss_battle_red_blog_6c82ac283fad",
+      "type": "article",
+      "title": "Value of Things: By the numbers",
+      "summary": "“I come to praise Caesar, not to bury hom.” — Marc Antony There has been a common refrain this year that the Texans defense is more to blame for their pedestrian record than their offense. After all, the offense is in the top ten in scoring",
+      "imageUrl": "",
+      "imageAlt": "Value of Things: By the numbers",
+      "publishedAt": "2026-11-22T15:45:19.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-analysis/79213/value-of-things-by-the-numbers",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Scott Barzilla",
+      "author": "Scott Barzilla",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-analysis/79213/value-of-things-by-the-numbers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1333
+    },
+    {
+      "id": "hou_brss_battle_red_blog_7bdd9f988b14",
+      "type": "article",
+      "title": "Post-Texans Sunday Schedule: How to watch, TV schedule, and more",
+      "summary": "In case you missed it on Thursday, and guessing by the attendance you probably did, the Houston Texans won their game against the Indianapolis Colts in a laugher 26-3. It directly led to the Colts dropping Daniel Jones as their quarterback.",
+      "imageUrl": "",
+      "imageAlt": "Post-Texans Sunday Schedule: How to watch, TV schedule, and more",
+      "publishedAt": "2026-11-22T08:38:52.000Z",
+      "url": "https://www.battleredblog.com/houston-texans-game-information/79204/post-texans-sunday-schedule-how-to-watch-tv-schedule-and-more",
+      "outletId": "battle_red_blog",
+      "outletName": "Battle Red Blog",
+      "reporterId": "battle_red_blog",
+      "reporterName": "Patrick Haughton",
+      "author": "Patrick Haughton",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.battleredblog.com/houston-texans-game-information/79204/post-texans-sunday-schedule-how-to-watch-tv-schedule-and-more",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1179
+    },
+    {
+      "id": "x_tl_jacobbarzilla_2124201729831084412",
+      "type": "tweet",
+      "title": "Interested to see if David Montgomery can continue his good week into the 2nd half of the year.\n\nNever looked like he lost a step physically but just was having some issues seeing the field and poor OL play.\n\nExcellent run here and blocking downfield from Dalton Schultz & Kayshon",
+      "fullText": "Interested to see if David Montgomery can continue his good week into the 2nd half of the year.\n\nNever looked like he lost a step physically but just was having some issues seeing the field and poor OL play.\n\nExcellent run here and blocking downfield from Dalton Schultz & Kayshon",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124199756855435265/img/PEK8r7ZYrWM6wV7l.jpg",
+      "imageAlt": "Jacob Barzilla post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124199756855435265/vid/avc1/1180x746/LDCR-Nb8LLx3KrlT.mp4",
+      "isHighlightClip": true,
+      "duration": "0:07",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "3117256",
+          "name": "Dalton Schultz",
+          "shortName": "D. Schultz",
+          "position": "TE",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117256.png"
+        }
+      ],
+      "publishedAt": "2026-11-21T18:02:12.808Z",
+      "url": "https://x.com/JacobBarzilla/status/2124201729831084412",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "Jacob Barzilla",
+      "author": "Jacob Barzilla",
+      "authorHandle": "@JacobBarzilla",
+      "authorProfileUrl": "https://x.com/JacobBarzilla",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.104
     },
     {
       "id": "hou_espn_4b15838125df3",
@@ -381,7 +1407,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/0909/r1713543_1296x1296_1-1.jpg",
       "imageCaption": "Arizona Cardinals Week 1 uniforms [1296x1296]",
       "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
+      "publishedAt": "2026-11-20T22:49:33.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -392,6 +1418,7 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -405,7 +1432,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1036
+      "storyRank": 0.075
+    },
+    {
+      "id": "hou_yts_E4M4HIAfJl4",
+      "type": "video",
+      "videoId": "E4M4HIAfJl4",
+      "embeddable": false,
+      "title": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "13:34",
+      "imageUrl": "https://i.ytimg.com/vi/E4M4HIAfJl4/hqdefault.jpg",
+      "imageAlt": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-20T20:36:10.663Z",
+      "url": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0731
     },
     {
       "id": "hou_rss_bc62d0e866ff",
@@ -425,6 +1491,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -438,7 +1505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0991
+      "storyRank": 0.0724
     },
     {
       "id": "hou_rss_f8e7a71d27f7",
@@ -458,6 +1525,24 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -471,7 +1556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0973
+      "storyRank": 0.0714
     },
     {
       "id": "hou_rss_38f299a4829a",
@@ -491,6 +1576,24 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -504,7 +1607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0946
+      "storyRank": 0.0698
     },
     {
       "id": "hou_espn_f5b4a624b92a5",
@@ -514,7 +1617,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/ss_20261120_095509046_3750937/ss_20261120_095509046_3750937.jpg",
       "imageCaption": "Dan Orlovsky: C.J. Stroud is a top-5 AFC QB",
       "imageAlt": "Dan Orlovsky: C.J. Stroud is a top-5 AFC QB",
-      "publishedAt": "2026-11-20T15:35:14Z",
+      "publishedAt": "2026-11-20T15:35:14.000Z",
       "url": "https://www.espn.com/video/clip/_/id/50541129/cj-stroud-top-5-afc-qb",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -525,6 +1628,17 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -538,7 +1652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0934
+      "storyRank": 0.0691
     },
     {
       "id": "hou_rss_303b96b4013e",
@@ -558,6 +1672,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -571,7 +1686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0921
+      "storyRank": 0.0683
     },
     {
       "id": "hou_espn_96b0a67231c07",
@@ -581,7 +1696,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748445_2_600x400_3-2.jpg",
       "imageCaption": "C.J. Stroud [600x400]",
       "imageAlt": "C.J. Stroud stays in 'groove' with another 3-TD night in Texans' blowout of Colts",
-      "publishedAt": "2026-11-20T07:41:39Z",
+      "publishedAt": "2026-11-20T07:41:39.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50538998/cj-stroud-stays-groove-texans-blowout-colts",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -592,6 +1707,16 @@
       "authorProfileUrl": "https://x.com/Djbienaime",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -605,7 +1730,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0841
+      "storyRank": 0.0634
     },
     {
       "id": "hou_espn_8009380056ffb",
@@ -615,7 +1740,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1120/f17721f8-3303-4991-b1fe-d1d3f9a71220/f17721f8-3303-4991-b1fe-d1d3f9a71220.jpg",
       "imageCaption": "Texans improve to 4-6 with easy win over the Colts",
       "imageAlt": "C.J. Stroud throws for 3 TDs as the Texans roll past the Colts 26-3",
-      "publishedAt": "2026-11-20T05:35:32Z",
+      "publishedAt": "2026-11-20T05:35:32.000Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873066",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -626,6 +1751,16 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -639,7 +1774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0819
+      "storyRank": 0.0621
     },
     {
       "id": "hou_rss_5b609087ef14",
@@ -659,6 +1794,16 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -672,7 +1817,59 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0819
+      "storyRank": 0.0621
+    },
+    {
+      "id": "x_tl_nflperformances_2123635833127252076",
+      "type": "tweet",
+      "title": "Will Anderson Jr. was in the Colts backfield all night.\n\n5 TKL, 2 TFL, 1 SACK, 4 QBH, 1 SAFETY.\n\nAnderson is looking more and more like the player to beat for Defensive Player of the Year.",
+      "fullText": "Will Anderson Jr. was in the Colts backfield all night.\n\n5 TKL, 2 TFL, 1 SACK, 4 QBH, 1 SAFETY.\n\nAnderson is looking more and more like the player to beat for Defensive Player of the Year.",
+      "isFullTweet": true,
+      "summary": "NFL DPOY Power Rankings on Kalshi after Week 8: 1. Will Anderson Jr (29%) 2. Jeffery Simmons (14%) 3. Fred Warner (12%) 4. Aidan Hutchinson (11%) 5. TJ Watt (11%) 6. Greg Rousseau (5%) 7. Dexter Lawrence (4%) 8. Dallas T",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2123635512279707649/img/PNSa8YkCj3Acd09A.jpg",
+      "imageAlt": "Football Performances post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123635512279707649/vid/avc1/720x720/EiDFwpdYPKCGBf8n.mp4",
+      "isHighlightClip": true,
+      "duration": "1:36",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
+      "publishedAt": "2026-11-20T04:33:32.520Z",
+      "url": "https://x.com/NFLPerformances/status/2123635833127252076",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "Football Performances",
+      "author": "Football Performances",
+      "authorHandle": "@NFLPerformances",
+      "authorProfileUrl": "https://x.com/NFLPerformances",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0665
     },
     {
       "id": "hou_espn_fc1786a99b942",
@@ -682,7 +1879,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748373_600x600_1-1.jpg",
       "imageCaption": "Braswell  [600x600]",
       "imageAlt": "Texans lose Chris Braswell to serious-looking knee injury",
-      "publishedAt": "2026-11-20T05:03:18Z",
+      "publishedAt": "2026-11-20T05:03:18.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50536083/texans-lose-chris-braswell-serious-looking-knee-injury",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -693,6 +1890,7 @@
       "authorProfileUrl": "https://x.com/Djbienaime",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -706,7 +1904,105 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0814
+      "storyRank": 0.0617
+    },
+    {
+      "id": "x_tl_pff_2123635771701678548",
+      "type": "tweet",
+      "title": "Will Anderson Jr sacks by season\n\nGames\n2023 7.0 13\n2024 11.0 14\n2025 12.0 17\n2026 11.5 10",
+      "fullText": "Will Anderson Jr sacks by season\n\nGames\n2023 7.0 13\n2024 11.0 14\n2025 12.0 17\n2026 11.5 10",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HXirbdrXUAA2osh.jpg",
+      "imageAlt": "PFF post",
+      "hasInlineChartImage": true,
+      "mentionedPlayers": [
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
+      "publishedAt": "2026-11-20T04:33:17.875Z",
+      "url": "https://x.com/PFF/status/2123635771701678548",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "national_film",
+      "outletName": "PFF",
+      "reporterId": "pff_official",
+      "reporterName": "PFF",
+      "author": "PFF",
+      "authorHandle": "@PFF",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0665
+    },
+    {
+      "id": "x_tl_pff_2123635028706144461",
+      "type": "tweet",
+      "title": "C.J. Stroud leads the pack 👀",
+      "fullText": "C.J. Stroud leads the pack 👀",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HXiqzaTbwAAf2hR.jpg",
+      "imageAlt": "PFF post",
+      "hasInlineChartImage": true,
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "publishedAt": "2026-11-20T04:30:20.731Z",
+      "url": "https://x.com/PFF/status/2123635028706144461",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "national_film",
+      "outletName": "PFF",
+      "reporterId": "pff_official",
+      "reporterName": "PFF",
+      "author": "PFF",
+      "authorHandle": "@PFF",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0665
     },
     {
       "id": "hou_espn_7eb40fcb22b0c",
@@ -716,7 +2012,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748413_608x342_16-9.jpg",
       "imageCaption": "C.J. Stroud tossed a pair of first-half touchdowns to jumpstart Houston.",
       "imageAlt": "C.J. Stroud, defense star as Texans get critical win over Colts on TNF",
-      "publishedAt": "2026-11-20T04:45:01Z",
+      "publishedAt": "2026-11-20T04:45:01.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50536733/texans-colts-thursday-night-football-cj-stroud-defense",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -727,6 +2023,16 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -740,7 +2046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0811
+      "storyRank": 0.0615
     },
     {
       "id": "hou_espn_816c979b95571",
@@ -750,7 +2056,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748375_1296x729_16-9.jpg",
       "imageCaption": "Houston Texans quarterback C.J. Stroud (7) scrambles photodesk [1296x729]",
       "imageAlt": "Colts-Texans highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-20T04:35:27Z",
+      "publishedAt": "2026-11-20T04:35:27.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50535018/colts-texans-highlights-best-plays-moments-touchdowns",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -761,6 +2067,16 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -774,7 +2090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0809
+      "storyRank": 0.0614
     },
     {
       "id": "hou_vid_17a8a02adaa2",
@@ -795,6 +2111,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -808,7 +2135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0614
     },
     {
       "id": "hou_vid_264b880400ad",
@@ -829,6 +2156,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -842,7 +2171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0153
     },
     {
       "id": "hou_vid_43acbd1dcf5b",
@@ -863,6 +2192,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -876,7 +2207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0808
+      "storyRank": 0.0614
     },
     {
       "id": "hou_vid_35c1483dc4b3",
@@ -897,6 +2228,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -910,7 +2252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0613
     },
     {
       "id": "hou_vid_d23b2eb3b8a2",
@@ -931,6 +2273,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -944,7 +2288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0807
+      "storyRank": 0.0613
     },
     {
       "id": "hou_vid_b955f742fa67",
@@ -965,6 +2309,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4695705",
+          "name": "Marlin Klein",
+          "shortName": "M. Klein",
+          "position": "TE",
+          "jersey": 83,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695705.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -978,7 +2333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0799
+      "storyRank": 0.0608
     },
     {
       "id": "hou_vid_43027e788de9",
@@ -999,6 +2354,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1012,7 +2378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0798
+      "storyRank": 0.0607
     },
     {
       "id": "hou_vid_a9aff8ab4ada",
@@ -1033,6 +2399,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "16734",
+          "name": "Jadeveon Clowney",
+          "shortName": "J. Clowney",
+          "position": "DE",
+          "jersey": 90,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16734.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1046,7 +2423,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0793
+      "storyRank": 0.0605
     },
     {
       "id": "hou_vid_f3313d8951c7",
@@ -1067,6 +2444,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360189",
+          "name": "Logan Hall",
+          "shortName": "L. Hall",
+          "position": "DE",
+          "jersey": 96,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360189.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1080,7 +2468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0605
     },
     {
       "id": "hou_vid_1428c615e1df",
@@ -1101,6 +2489,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1114,7 +2521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0791
+      "storyRank": 0.0603
     },
     {
       "id": "hou_vid_287749a1ee24",
@@ -1135,6 +2542,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1148,7 +2574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0788
+      "storyRank": 0.0601
     },
     {
       "id": "hou_vid_20df84e78b84",
@@ -1169,6 +2595,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4602699",
+          "name": "Kamari Lassiter",
+          "shortName": "K. Lassiter",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4602699.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1182,7 +2619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0786
+      "storyRank": 0.06
     },
     {
       "id": "hou_vid_8585f22a157d",
@@ -1203,6 +2640,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1216,7 +2672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0785
+      "storyRank": 0.0599
     },
     {
       "id": "hou_vid_6d27701523a3",
@@ -1237,6 +2693,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360189",
+          "name": "Logan Hall",
+          "shortName": "L. Hall",
+          "position": "DE",
+          "jersey": 96,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360189.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1250,7 +2717,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0781
+      "storyRank": 0.0597
     },
     {
       "id": "hou_pfr_998734380091",
@@ -1269,6 +2736,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4594277",
+          "name": "Jaylin Smith",
+          "shortName": "J. Smith",
+          "position": "CB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594277.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1282,7 +2759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0756
+      "storyRank": 0.0278
     },
     {
       "id": "hou_rss_8c072ec92050",
@@ -1302,6 +2779,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1315,7 +2793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0748
+      "storyRank": 0.0276
     },
     {
       "id": "hou_rss_828d38de3e22",
@@ -1335,6 +2813,16 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1348,7 +2836,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0741
+      "storyRank": 0.0274
     },
     {
       "id": "hou_rss_5896a9ef1e98",
@@ -1368,6 +2856,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1381,7 +2870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0732
+      "storyRank": 0.0272
     },
     {
       "id": "hou_espn_0144ed4dabfb9",
@@ -1391,7 +2880,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747688_608x342_16-9.jpg",
       "imageCaption": "Texans quarterback C.J. Stroud reacts after losing a fumble in the fourth quarter against the Buffalo Bills.",
       "imageAlt": "How Houston has banded together through backbreaking losses and adversity",
-      "publishedAt": "2026-11-19T15:06:06Z",
+      "publishedAt": "2026-11-19T15:06:06.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50502967/texans-playoff-hopes-kamari-lassiter-cj-stroud",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -1402,6 +2891,7 @@
       "authorProfileUrl": "https://x.com/Djbienaime",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1415,7 +2905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0691
+      "storyRank": 0.0259
     },
     {
       "id": "hou_tx_58c0295af297",
@@ -1436,6 +2926,16 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4594277",
+          "name": "Jaylin Smith",
+          "shortName": "J. Smith",
+          "position": "CB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594277.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1449,13 +2949,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.064
+      "storyRank": 0.0242
     },
     {
       "id": "hou_pfr_030debdc7a44",
       "type": "article",
       "title": "Texans Getting RB David Montgomery Back In Week 11; Team Rules Out Marvin Harrison Jr., Danielle Hunter",
-      "summary": "After over a month on the injury report, Texans running back David Montgomery had no injury listing after the team’s practices over the short week and appears to be on track to play in his first game since Week 5. Unfortunately, though, as ",
+      "summary": "After over a month on the injury report, Texans running back David Montgomery had no injury listing after the team’s practices over the short week and appears to be on track to play in his first game since Week 5. Unfortunately, though, as",
       "imageUrl": "",
       "publishedAt": "2026-11-19T04:17:00.000Z",
       "url": "https://www.profootballrumors.com/2026/11/texans-getting-rb-david-montgomery-back-in-week-11-rule-out-marvin-harrison-danielle-hunter",
@@ -1468,6 +2968,32 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432708",
+          "name": "Marvin Harrison Jr.",
+          "shortName": "M. Harrison Jr.",
+          "position": "WR",
+          "jersey": 18,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png"
+        },
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "2976560",
+          "name": "Danielle Hunter",
+          "shortName": "D. Hunter",
+          "position": "DE",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1481,7 +3007,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0605
+      "storyRank": 0.0231
+    },
+    {
+      "id": "hou_yts_m6xFWXq-7uM",
+      "type": "video",
+      "videoId": "m6xFWXq-7uM",
+      "embeddable": false,
+      "title": "Indianapolis Colts vs Houston Texans | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "7:01",
+      "imageUrl": "https://i.ytimg.com/vi/m6xFWXq-7uM/hqdefault.jpg",
+      "imageAlt": "Indianapolis Colts vs Houston Texans | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T20:36:10.663Z",
+      "url": "https://www.youtube.com/watch?v=m6xFWXq-7uM",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=m6xFWXq-7uM",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
     },
     {
       "id": "hou_vid_e52554be1391",
@@ -1502,6 +3067,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1515,7 +3082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0055
     },
     {
       "id": "hou_espn_fa26439649e51",
@@ -1525,7 +3092,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1120/f17721f8-3303-4991-b1fe-d1d3f9a71220/f17721f8-3303-4991-b1fe-d1d3f9a71220.jpg",
       "imageCaption": "Texans improve to 4-6 with easy win over the Colts",
       "imageAlt": "Stroud: Texans' home skid and 17-point collapse fuel 'scary' urgency vs Colts",
-      "publishedAt": "2026-11-18T18:58:35Z",
+      "publishedAt": "2026-11-18T18:58:35.000Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873066",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -1536,6 +3103,16 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1549,7 +3126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0561
+      "storyRank": 0.0217
     },
     {
       "id": "hou_pfr_2f1b121c22f2",
@@ -1568,6 +3145,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3919117",
+          "name": "Azeez Al-Shaair",
+          "shortName": "A. Al-Shaair",
+          "position": "LB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3919117.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1581,7 +3168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.046
+      "storyRank": 0.0182
     },
     {
       "id": "hou_vid_e37b5238ebf6",
@@ -1602,6 +3189,33 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "4426350",
+          "name": "Henry To'oTo'o",
+          "shortName": "H. To'oTo'o",
+          "position": "LB",
+          "jersey": 39,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426350.png"
+        },
+        {
+          "id": "3919117",
+          "name": "Azeez Al-Shaair",
+          "shortName": "A. Al-Shaair",
+          "position": "LB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3919117.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1615,7 +3229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0466
+      "storyRank": 0.0185
     },
     {
       "id": "hou_vid_b70a1742b6a2",
@@ -1636,6 +3250,33 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1649,7 +3290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0185
     },
     {
       "id": "hou_rss_4560ad88bfd3",
@@ -1669,6 +3310,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1682,7 +3324,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0445
+      "storyRank": 0.0177
+    },
+    {
+      "id": "hou_bsky_c285b5012c08",
+      "type": "tweet",
+      "title": "Chance to reach the playoffs, according to ESPN's FPI!\n\nThe Browns and Texans are big beneficiaries of the Drake Maye injury.",
+      "fullText": "Chance to reach the playoffs, according to ESPN's FPI!\n\nThe Browns and Texans are big beneficiaries of the Drake Maye injury.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:mbxm4wdmklezjotcqa3g7uto/bafkreigfq5mt7v2yyzmjaye6cmsgtsgf2y5qq4ikrt7gumni5ojktbcbjq",
+      "hasInlineChartImage": true,
+      "imageAlt": "Seth Walder post",
+      "publishedAt": "2026-11-17T14:14:55.958Z",
+      "url": "https://bsky.app/profile/sethwalder.bsky.social/post/3n2ja4h6yy22a",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "espn_national",
+      "outletName": "Seth Walder",
+      "reporterId": "seth_walder",
+      "reporterName": "Seth Walder",
+      "author": "Seth Walder",
+      "authorHandle": "@SethWalder",
+      "authorProfileUrl": "https://x.com/SethWalder",
+      "trustTier": 2,
+      "category": "beat",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 91,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0166
     },
     {
       "id": "hou_tx_cbac39b7e3bf",
@@ -1703,6 +3384,16 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "3919117",
+          "name": "Azeez Al-Shaair",
+          "shortName": "A. Al-Shaair",
+          "position": "LB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3919117.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1716,7 +3407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0416
+      "storyRank": 0.0167
     },
     {
       "id": "hou_rss_12ef84cb004c",
@@ -1736,6 +3427,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1749,7 +3441,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0967
+      "storyRank": 0.0396
+    },
+    {
+      "id": "hou_yts_DJaODmVRaUo",
+      "type": "video",
+      "videoId": "DJaODmVRaUo",
+      "embeddable": false,
+      "title": "Houston Texans vs. Cleveland Browns Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "16:26",
+      "imageUrl": "https://i.ytimg.com/vi/DJaODmVRaUo/hqdefault.jpg",
+      "imageAlt": "Houston Texans vs. Cleveland Browns Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T20:36:10.663Z",
+      "url": "https://www.youtube.com/watch?v=DJaODmVRaUo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=DJaODmVRaUo",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0155
     },
     {
       "id": "hou_rss_56e16f5ffeaa",
@@ -1769,6 +3500,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1782,7 +3514,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0328
+      "storyRank": 0.0135
     },
     {
       "id": "hou_vid_2413c44bc79f",
@@ -1803,6 +3535,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1816,7 +3559,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0135
     },
     {
       "id": "hou_vid_0fe350152376",
@@ -1837,6 +3580,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1850,7 +3604,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0135
     },
     {
       "id": "hou_vid_253c925a5b39",
@@ -1871,6 +3625,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1884,7 +3640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0328
+      "storyRank": 0.0135
     },
     {
       "id": "hou_vid_3c2250d6f71d",
@@ -1905,6 +3661,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1918,7 +3685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0135
     },
     {
       "id": "hou_vid_7b86914b2d16",
@@ -1939,6 +3706,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1952,7 +3730,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0135
     },
     {
       "id": "hou_vid_13d7ce32badf",
@@ -1973,6 +3751,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360189",
+          "name": "Logan Hall",
+          "shortName": "L. Hall",
+          "position": "DE",
+          "jersey": 96,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360189.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1986,7 +3775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0134
     },
     {
       "id": "hou_vid_236b5c68e1e4",
@@ -2007,6 +3796,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431517",
+          "name": "Calen Bullock",
+          "shortName": "C. Bullock",
+          "position": "S",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431517.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2020,7 +3820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0134
     },
     {
       "id": "hou_vid_a874dd33faf5",
@@ -2041,6 +3841,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2054,7 +3865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0324
+      "storyRank": 0.0134
     },
     {
       "id": "hou_vid_3e56bc0a97da",
@@ -2075,6 +3886,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3117256",
+          "name": "Dalton Schultz",
+          "shortName": "D. Schultz",
+          "position": "TE",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117256.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2088,7 +3918,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0324
+      "storyRank": 0.0134
     },
     {
       "id": "hou_vid_451108839cb7",
@@ -2109,6 +3939,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360189",
+          "name": "Logan Hall",
+          "shortName": "L. Hall",
+          "position": "DE",
+          "jersey": 96,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360189.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2122,7 +3963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0133
     },
     {
       "id": "hou_vid_2d77a3abb2a2",
@@ -2143,6 +3984,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2156,7 +4008,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0133
     },
     {
       "id": "hou_vid_0e6dcdc660f1",
@@ -2177,6 +4029,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4686422",
+          "name": "Xavier Hutchinson",
+          "shortName": "X. Hutchinson",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686422.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2190,7 +4061,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0133
     },
     {
       "id": "hou_vid_a0475d882c8f",
@@ -2211,6 +4082,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2224,7 +4114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0132
     },
     {
       "id": "hou_vid_eedc7f3d41dc",
@@ -2245,6 +4135,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2971573",
+          "name": "Ka'imi Fairbairn",
+          "shortName": "K. Fairbairn",
+          "position": "PK",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971573.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2258,7 +4159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0132
     },
     {
       "id": "hou_vid_cb4478539ddc",
@@ -2279,6 +4180,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2292,7 +4204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0132
     },
     {
       "id": "hou_vid_88597bdb7d3b",
@@ -2313,6 +4225,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2326,7 +4257,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0132
     },
     {
       "id": "hou_vid_fcc6d684da8e",
@@ -2347,6 +4278,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4686422",
+          "name": "Xavier Hutchinson",
+          "shortName": "X. Hutchinson",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686422.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2360,7 +4310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0319
+      "storyRank": 0.0132
     },
     {
       "id": "hou_pfr_bfb210c4deff",
@@ -2379,6 +4329,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2392,7 +4343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278
+      "storyRank": 0.0117
     },
     {
       "id": "hou_rss_4b9772a70cc4",
@@ -2412,6 +4363,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2425,7 +4377,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0276
+      "storyRank": 0.0116
     },
     {
       "id": "hou_tx_79795452b322",
@@ -2446,6 +4398,16 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4241250",
+          "name": "Jake Hummel",
+          "shortName": "J. Hummel",
+          "position": "LB",
+          "jersey": 33,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241250.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2459,7 +4421,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.011
     },
     {
       "id": "hou_pfr_28d3063a158b",
@@ -2478,6 +4440,7 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2491,7 +4454,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0243
+      "storyRank": 0.0103
     },
     {
       "id": "hou_rss_be12479ea010",
@@ -2511,6 +4474,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2524,7 +4488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0104
     },
     {
       "id": "hou_rss_08155f828cb4",
@@ -2544,6 +4508,24 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        },
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2557,7 +4539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0243
+      "storyRank": 0.0103
     },
     {
       "id": "hou_rss_3107352d909a",
@@ -2577,6 +4559,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2590,7 +4573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0239
+      "storyRank": 0.0102
     },
     {
       "id": "hou_rss_c934540e4596",
@@ -2610,6 +4593,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2623,7 +4607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0238
+      "storyRank": 0.0101
     },
     {
       "id": "hou_tx_100f208eb2de",
@@ -2644,6 +4628,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2657,7 +4642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0098
     },
     {
       "id": "hou_pfr_5568293dc54d",
@@ -2676,6 +4661,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4372716",
+          "name": "Nikko Remigio",
+          "shortName": "N. Remigio",
+          "position": "WR",
+          "jersey": 88,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372716.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2689,7 +4684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0094
     },
     {
       "id": "hou_vid_1ef37c166cf7",
@@ -2710,6 +4705,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2723,7 +4720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0094
     },
     {
       "id": "hou_vid_ccb8a99af807",
@@ -2744,6 +4741,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2757,7 +4765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0091
     },
     {
       "id": "hou_rss_a1ef63eae842",
@@ -2777,6 +4785,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2790,7 +4799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0091
     },
     {
       "id": "hou_tx_fe0f3a589534",
@@ -2811,6 +4820,16 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4372716",
+          "name": "Nikko Remigio",
+          "shortName": "N. Remigio",
+          "position": "WR",
+          "jersey": 88,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372716.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2824,7 +4843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0088
     },
     {
       "id": "hou_pfr_276dcb2e0086",
@@ -2843,6 +4862,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/houston-texans",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2976560",
+          "name": "Danielle Hunter",
+          "shortName": "D. Hunter",
+          "position": "DE",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2856,7 +4885,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0194
+      "storyRank": 0.0084
     },
     {
       "id": "hou_rss_32967ae69abe",
@@ -2876,6 +4905,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2889,7 +4919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0508
+      "storyRank": 0.0221
     },
     {
       "id": "hou_vid_93c5726d5d26",
@@ -2910,6 +4940,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2923,7 +4972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0084
     },
     {
       "id": "hou_vid_677ab1ceaef6",
@@ -2944,6 +4993,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2957,7 +5025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0084
     },
     {
       "id": "hou_vid_a0620bd02fc7",
@@ -2978,6 +5046,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685724",
+          "name": "Will Anderson Jr.",
+          "shortName": "W. Anderson Jr.",
+          "position": "DE",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685724.png"
+        },
+        {
+          "id": "16734",
+          "name": "Jadeveon Clowney",
+          "shortName": "J. Clowney",
+          "position": "DE",
+          "jersey": 90,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16734.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2991,7 +5078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0084
     },
     {
       "id": "hou_vid_69804e155ef5",
@@ -3012,6 +5099,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3025,73 +5114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0193
-    },
-    {
-      "id": "hou_rss_a9102a82e34e",
-      "type": "article",
-      "title": "Houston Texans QB C.J. Stroud Named AFC Offensive Player Of The Week",
-      "summary": "Stroud earned a 125.5 passer rating while completing 21-of-35 (60.0%) passes for 384 yards and five touchdowns in a 44-22 victory over the Los Angeles Chargers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/oc7nxhijzstu4iy2dlgi.png",
-      "imageAlt": "Houston Texans QB C.J. Stroud Named AFC Offensive Player Of The Week",
-      "publishedAt": "2026-11-11T17:01:07.000Z",
-      "url": "https://www.houstontexans.com/news/houston-texans-qb-c-j-stroud-named-afc-offensive-player-of-the-week",
-      "outletId": "texans_official",
-      "outletName": "houstontexans.com Official",
-      "reporterId": "texans_official",
-      "reporterName": "houstontexans.com Official",
-      "author": "houstontexans.com Official",
-      "authorHandle": "@HoustonTexans",
-      "authorProfileUrl": "https://www.houstontexans.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0191
-    },
-    {
-      "id": "hou_rss_0d6a69d14527",
-      "type": "article",
-      "title": "H-Town History Is About to Light Up the Sky",
-      "summary": "Before Thursday Night Football, 25 seasons of Texans history will take over the sky in a 10-minute drone show created with FlyLight Drones.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/ghyg5tsuogofs3xfbkk3.jpg",
-      "imageAlt": "H-Town History Is About to Light Up the Sky",
-      "publishedAt": "2026-11-11T15:32:34.000Z",
-      "url": "https://www.houstontexans.com/news/texans-reliant-drone-show-thursday-night-football",
-      "outletId": "texans_official",
-      "outletName": "houstontexans.com Official",
-      "reporterId": "texans_official",
-      "reporterName": "houstontexans.com Official",
-      "author": "houstontexans.com Official",
-      "authorHandle": "@HoustonTexans",
-      "authorProfileUrl": "https://www.houstontexans.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
+      "storyRank": 0.0083
     },
     {
       "id": "hou_tx_f9061f281f70",
@@ -3112,6 +5135,24 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4241250",
+          "name": "Jake Hummel",
+          "shortName": "J. Hummel",
+          "position": "LB",
+          "jersey": 33,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241250.png"
+        },
+        {
+          "id": "4594277",
+          "name": "Jaylin Smith",
+          "shortName": "J. Smith",
+          "position": "CB",
+          "jersey": 22,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594277.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3125,13 +5166,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.008
     },
     {
       "id": "hou_vid_4c559ee94404",
       "type": "video",
       "title": "DeMeco Ryans on C.J. Stroud's 5 TDs, Tank Dell & 8-Sack Defense",
-      "summary": "Ryans discusses C.J. Stroud tying his career high with five touchdown passes, Tank Dell going over 100 receiving yards with a touchdown, Kayshon Boutte's 125-yard day and a Houston defense that tied the franchise record ",
+      "summary": "Ryans discusses C.J. Stroud tying his career high with five touchdown passes, Tank Dell going over 100 receiving yards with a touchdown, Kayshon Boutte's 125-yard day and a Houston defense that tied the franchise record",
       "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/soyu8iv8cbf9l3f7kaap.jpg",
       "imageAlt": "DeMeco Ryans on C.J. Stroud's 5 TDs, Tank Dell & 8-Sack Defense",
       "publishedAt": "2026-11-09T01:18:39.000Z",
@@ -3146,6 +5187,33 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3159,7 +5227,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_89acba1dfbf0",
@@ -3180,6 +5248,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3193,7 +5280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_df33773a82b9",
@@ -3214,6 +5301,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3227,7 +5316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_905831723ed1",
@@ -3248,6 +5337,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3261,7 +5352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_feb3c21c913a",
@@ -3282,6 +5373,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3295,7 +5397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_21aec320e8a6",
@@ -3316,6 +5418,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3329,7 +5442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_2b0f897e7579",
@@ -3350,6 +5463,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3363,7 +5487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_a7d6d2b1ce51",
@@ -3384,6 +5508,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3397,7 +5540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_63d6e9a21377",
@@ -3418,6 +5561,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3431,7 +5585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_e6c93bc8f8c5",
@@ -3452,6 +5606,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431517",
+          "name": "Calen Bullock",
+          "shortName": "C. Bullock",
+          "position": "S",
+          "jersey": 2,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431517.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3465,7 +5630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0065
     },
     {
       "id": "hou_vid_7c381339637c",
@@ -3486,6 +5651,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4258173",
+          "name": "Nico Collins",
+          "shortName": "N. Collins",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258173.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3499,7 +5675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_d234e75a9a75",
@@ -3520,6 +5696,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4426434",
+          "name": "Derek Stingley Jr.",
+          "shortName": "D. Stingley Jr.",
+          "position": "CB",
+          "jersey": 24,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426434.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3533,7 +5720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_5eac11f626d2",
@@ -3554,6 +5741,33 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        },
+        {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3567,7 +5781,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_1b370d49676a",
@@ -3588,6 +5802,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3117256",
+          "name": "Dalton Schultz",
+          "shortName": "D. Schultz",
+          "position": "TE",
+          "jersey": 86,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117256.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3601,7 +5834,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_7f061996502f",
@@ -3622,6 +5855,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        },
+        {
+          "id": "4366031",
+          "name": "Tank Dell",
+          "shortName": "T. Dell",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3635,7 +5887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_3725aba30d9d",
@@ -3656,6 +5908,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4241223",
+          "name": "Jalen Pitre",
+          "shortName": "J. Pitre",
+          "position": "S",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241223.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3669,7 +5932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_201dc613ee73",
@@ -3690,6 +5953,17 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2971573",
+          "name": "Ka'imi Fairbairn",
+          "shortName": "K. Fairbairn",
+          "position": "PK",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971573.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3703,7 +5977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0064
     },
     {
       "id": "hou_vid_c748beb6bcfb",
@@ -3724,6 +5998,25 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4686422",
+          "name": "Xavier Hutchinson",
+          "shortName": "X. Hutchinson",
+          "position": "WR",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686422.png"
+        },
+        {
+          "id": "4432577",
+          "name": "C.J. Stroud",
+          "shortName": "C.J. Stroud",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432577.png"
+        }
+      ],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3737,7 +6030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0064
     },
     {
       "id": "hou_tx_368b1741142c",
@@ -3758,6 +6051,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3771,7 +6065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0057
     },
     {
       "id": "hou_vid_3e8c09cef4fd",
@@ -3792,6 +6086,8 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3805,77 +6101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
-    },
-    {
-      "id": "hou_tx_06af9aa034f6",
-      "type": "tweet",
-      "title": "Texans roster move: Signed DT Jaden Crumedy and WR Daniel Sobkowicz to the practice squad. Released DT Kyonte Hamilton and TE Zaire Mitchell-Paden from the practice squad.",
-      "fullText": "Texans roster move: Signed DT Jaden Crumedy and WR Daniel Sobkowicz to the practice squad. Released DT Kyonte Hamilton and TE Zaire Mitchell-Paden from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-04T08:00:00.000Z",
-      "url": "https://www.houstontexans.com/team/transactions/#tx-06af9aa034f6",
-      "outletId": "texans_official",
-      "outletName": "houstontexans.com Official",
-      "reporterId": "texans_official",
-      "reporterName": "Houston Texans Official",
-      "author": "Houston Texans Official",
-      "authorHandle": "@HoustonTexans",
-      "authorProfileUrl": "https://www.houstontexans.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
-    },
-    {
-      "id": "hou_yt_YqH8G0KuHYI",
-      "type": "video",
-      "category": "film",
-      "videoId": "YqH8G0KuHYI",
-      "embeddable": true,
-      "title": "CJ Stroud and the Texans running a perfect mesh traffic 3rd down",
-      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
-      "imageUrl": "https://i.ytimg.com/vi/YqH8G0KuHYI/hqdefault.jpg",
-      "imageAlt": "CJ Stroud and the Texans running a perfect mesh traffic 3rd down",
-      "publishedAt": "2026-10-22T19:26:22.000Z",
-      "url": "https://www.youtube.com/watch?v=YqH8G0KuHYI",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=YqH8G0KuHYI",
-      "outletId": "the_qb_school",
-      "outletName": "The QB School",
-      "reporterId": "the_qb_school",
-      "reporterName": "The QB School",
-      "author": "The QB School",
-      "authorHandle": "@TheQBSchool",
-      "authorProfileUrl": "https://x.com/theqbschool",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 92,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0055
     },
     {
       "id": "hou_rss_9dcbc31b0f5b",
@@ -3895,6 +6121,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3918,7 +6145,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/0306/r1623993_1296x729_16-9.jpg",
       "imageCaption": "Danielle Hunter",
       "imageAlt": "Texans DE Hunter, RB Marks to miss TNF; Colts rule out CB Ward, starting OTs",
-      "publishedAt": "2026-11-19T11:38:18Z",
+      "publishedAt": "2026-11-19T11:38:18.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50524890/texans-rule-hunter-marks-colts-rule-ward-starting-ots",
       "outletId": "espn_hou",
       "outletName": "ESPN",
@@ -3929,6 +6156,24 @@
       "authorProfileUrl": "https://x.com/Djbienaime",
       "trustTier": 1,
       "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        },
+        {
+          "id": "2976560",
+          "name": "Danielle Hunter",
+          "shortName": "D. Hunter",
+          "position": "DE",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3938,6 +6183,83 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
+      "storyTier": "stale_pregame",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": true,
+      "storyRank": -1000
+    },
+    {
+      "id": "x_tl_aaronwilson_nfl_2123157057566019712",
+      "type": "tweet",
+      "title": "David Montgomery as expected no injury listing for #Texans\nGood to go for #Colts game",
+      "fullText": "David Montgomery as expected no injury listing for #Texans\nGood to go for #Colts game",
+      "isFullTweet": true,
+      "summary": "#Texans lineup updates for #Colts game: Veteran running back David Montgomery is expected back from groin injury, per sources Cornerback Kamari Lassiter (wrist) set to play, too Pro Bowl defensive end Danielle Hunter (ha",
+      "imageUrl": "https://pbs.twimg.com/media/HXb4Fd1WsAEIU0C.jpg",
+      "imageUrls": [
+        "https://pbs.twimg.com/media/HXb4Fd1WsAEIU0C.jpg",
+        "https://pbs.twimg.com/media/HXb4FxeW8AAaxD3.jpg"
+      ],
+      "imageAlt": "Aaron Wilson post",
+      "hasInlineChartImage": true,
+      "mentionedPlayers": [
+        {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        },
+        {
+          "id": "4035538",
+          "name": "David Montgomery",
+          "shortName": "D. Montgomery",
+          "position": "RB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "2976560",
+          "name": "Danielle Hunter",
+          "shortName": "D. Hunter",
+          "position": "DE",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png"
+        },
+        {
+          "id": "4602699",
+          "name": "Kamari Lassiter",
+          "shortName": "K. Lassiter",
+          "position": "CB",
+          "jersey": 3,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4602699.png"
+        }
+      ],
+      "publishedAt": "2026-11-18T20:51:03.531Z",
+      "url": "https://x.com/AaronWilson_NFL/status/2123157057566019712",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "kprc_2_houston_hou",
+      "outletName": "KPRC 2 NFL",
+      "reporterId": "aaron_wilson",
+      "reporterName": "Aaron Wilson",
+      "author": "Aaron Wilson",
+      "authorHandle": "@AaronWilson_NFL",
+      "authorProfileUrl": "https://x.com/AaronWilson_NFL",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": -10,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
       "storyTier": "stale_pregame",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
@@ -3962,6 +6284,7 @@
       "authorProfileUrl": "https://www.houstontexans.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,

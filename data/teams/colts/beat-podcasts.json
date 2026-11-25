@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-24T20:08:47.733Z",
+  "updatedAt": "2026-11-25T20:36:15.437Z",
   "windowDays": 7,
-  "totalEpisodes": 10,
+  "totalEpisodes": 9,
   "shows": [
     {
       "id": "colts_locked_on_colts",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/78a347aa-3282-4ac5-837c-a72300032082/e8b83751-d6f4-4639-9a5e-af2c0122e642/8dff4d90-7f00-4069-9cce-af2c0122e654/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/colts-corner-with-kevin-bowen/id1294483334?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/d1/d1/fc/d1d1fc07-e2d0-fec2-e92e-a5263fccc3f2/mza_17359896345902197464.jpg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 2
     },
     {
       "id": "colts_the_blue_horseshoe",
@@ -42,6 +42,26 @@
   ],
   "episodes": [
     {
+      "id": "pod_colts_locked_on_colts_1000803861844",
+      "trackId": 1000803861844,
+      "collectionId": 1151621306,
+      "showId": "colts_locked_on_colts",
+      "showName": "Locked On Colts",
+      "showFullTitle": "Locked On Colts - Daily Podcast On The Indianapolis Colts",
+      "hosts": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
+      "network": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
+      "title": "OPTIONS: How Indianapolis Colts Can Approach QB and Head Coach This Offseason",
+      "summary": "The Indianapolis Colts are set to have vacancies at starting quarterback, general manager, and (potentially) head coach this offseason. Today we dive into how the Colts can approach those holes, including a look at cheaper stop-gaps at quarterback and a big look at the best ",
+      "publishedAt": "2026-11-24T20:55:09.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/68/e6/2b/68e62b33-6304-6506-5840-f4e833cc3c2c/mza_3382147358800697346.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/options-how-indianapolis-colts-can-approach-qb-and/id1151621306?i=1000803861844&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/9766e6/lockedon.simplecastaudio.com/6d6f3aa0-08dc-478e-b916-bfc163c9fc9a/episodes/e77986de-7440-49d0-be69-dc13e673ee73/audio/128/default.mp3?aid=rss_feed&awCollectionId=6d6f3aa0-08dc-478e-b916-bfc163c9fc9a&awEpisodeId=e77986de-7440-49d0-be69-dc13e673ee73&feed=PpDN4Fbf"
+    },
+    {
       "id": "pod_colts_locked_on_colts_1000803669086",
       "trackId": 1000803669086,
       "collectionId": 1151621306,
@@ -50,13 +70,13 @@
       "showFullTitle": "Locked On Colts - Daily Podcast On The Indianapolis Colts",
       "hosts": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
       "network": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
-      "title": "REVIEW: CJ Allen, Seth McGowan Headline Colts' Solid 2026 Draft Class",
-      "summary": "The Indianapolis Colts have had some rough draft classes in recent years, but Chris Ballard may have gifted the team with a decent group in his final year. CJ Allen looks like a future star while Seth McGowan and Caden Curry have provided tremendous value as role players. Th",
+      "title": "REVIEW: CJ Allen, Seth McGowan Headline Indianapolis Colts' Solid 2026 Draft Class",
+      "summary": "The Indianapolis Colts have had some rough draft classes in recent years, but former GM Chris Ballard may have gifted the team with a decent group in his final year. CJ Allen looks like a future star, while Seth McGowan and Caden Curry have provided tremendous value as role ",
       "publishedAt": "2026-11-23T21:10:12.000Z",
       "durationMinutes": 29,
       "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/37/84/f3/3784f37b-4ae1-37e7-be62-8144bd2ae88f/mza_10272553841914315130.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/review-cj-allen-seth-mcgowan-headline-colts-solid-2026/id1151621306?i=1000803669086&uo=4",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/63/b6/f5/63b6f5f2-4f5f-c988-e510-3e336468e4a5/mza_9030660101528790460.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/review-cj-allen-seth-mcgowan-headline-indianapolis/id1151621306?i=1000803669086&uo=4",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
       "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/9766e6/lockedon.simplecastaudio.com/6d6f3aa0-08dc-478e-b916-bfc163c9fc9a/episodes/08152d3e-ae05-4459-bea8-0a4f06c5a3b9/audio/128/default.mp3?aid=rss_feed&awCollectionId=6d6f3aa0-08dc-478e-b916-bfc163c9fc9a&awEpisodeId=08152d3e-ae05-4459-bea8-0a4f06c5a3b9&feed=PpDN4Fbf"
@@ -200,46 +220,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
       "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/9766e6/lockedon.simplecastaudio.com/6d6f3aa0-08dc-478e-b916-bfc163c9fc9a/episodes/77cdea0f-ab99-4f61-b052-be2d5d7d262a/audio/128/default.mp3?aid=rss_feed&awCollectionId=6d6f3aa0-08dc-478e-b916-bfc163c9fc9a&awEpisodeId=77cdea0f-ab99-4f61-b052-be2d5d7d262a&feed=PpDN4Fbf"
-    },
-    {
-      "id": "pod_colts_colts_corner_with_kevin_bowen_1000802746702",
-      "trackId": 1000802746702,
-      "collectionId": 1294483334,
-      "showId": "colts_colts_corner_with_kevin_bowen",
-      "showName": "Colts Corner With Kevin Bowen",
-      "showFullTitle": "Colts Corner With Kevin Bowen",
-      "hosts": "Kevin Bowen",
-      "network": "Kevin Bowen",
-      "title": "Episode 636 | Colts-Texans Preview + Is Carlie Irsay-Gordon Influencing QB Decision?",
-      "summary": "Notable Injuries - 0:00 QB Decision Thoughts - 7:15 Texans Notes - 12:50 Twitter Questions - 16:40 Support the show: https://1075thefan.com/kevin-bowen/ See omnystudio.com/listener for privacy information.",
-      "publishedAt": "2026-11-18T16:42:57.000Z",
-      "durationMinutes": 26,
-      "durationDisplay": "26 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/d1/d1/fc/d1d1fc07-e2d0-fec2-e92e-a5263fccc3f2/mza_17359896345902197464.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/episode-636-colts-texans-preview-is-carlie-irsay-gordon/id1294483334?i=1000802746702&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/colts-corner-with-kevin-bowen/id1294483334?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/78a347aa-3282-4ac5-837c-a72300032082/e8b83751-d6f4-4639-9a5e-af2c0122e642/8dff4d90-7f00-4069-9cce-af2c0122e654/podcast.rss",
-      "audioStreamUrl": "https://prfx.byspotify.com/e/traffic.omny.fm/d/clips/78a347aa-3282-4ac5-837c-a72300032082/e8b83751-d6f4-4639-9a5e-af2c0122e642/708b27aa-161e-46a1-9daf-b506011282c1/audio.mp3?utm_source=Podcast&in_playlist=8dff4d90-7f00-4069-9cce-af2c0122e654"
-    },
-    {
-      "id": "pod_colts_locked_on_colts_1000802621180",
-      "trackId": 1000802621180,
-      "collectionId": 1151621306,
-      "showId": "colts_locked_on_colts",
-      "showName": "Locked On Colts",
-      "showFullTitle": "Locked On Colts - Daily Podcast On The Indianapolis Colts",
-      "hosts": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
-      "network": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
-      "title": "OFFSEASON PLAN: Indianapolis Colts' Free-Agent Priorities, Cap Cuts, and Biggest Needs",
-      "summary": "The Indianapolis Colts don't have many in-house impending free agents who should be much of a priority, but which of them should they attempt to bring back? The Colts are also slated to have about $80 million in salary cap space next offseason, but can create much more with ",
-      "publishedAt": "2026-11-18T03:35:38.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/f4/48/1f/f4481f19-4fae-00d8-3944-c5af1dcc713b/mza_1422126911763642550.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/offseason-plan-indianapolis-colts-free-agent-priorities/id1151621306?i=1000802621180&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/9766e6/lockedon.simplecastaudio.com/6d6f3aa0-08dc-478e-b916-bfc163c9fc9a/episodes/b64d38e9-de62-4c4d-9b20-dbf48a856b9e/audio/128/default.mp3?aid=rss_feed&awCollectionId=6d6f3aa0-08dc-478e-b916-bfc163c9fc9a&awEpisodeId=b64d38e9-de62-4c4d-9b20-dbf48a856b9e&feed=PpDN4Fbf"
     }
   ]
 }

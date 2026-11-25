@@ -5,7 +5,7 @@
 import { annotateJargonPlainText, jargonTerm, jargonInfoIcon } from '../engine/jargonGlossary.js';
 import { resolveReporterFromNameOrHandle } from '../engine/beatAttributionEngine.js';
 import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
-import { optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
+import { getItemInlineSocialPhotoUrls, optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
 import { splitSummaryForExpandableDisplay } from '../engine/breakingClassifier.js';
 import { iconSvg } from './icons.js';
 import { getActiveTeamConfig } from '../config/teamRegistry.js';
@@ -401,6 +401,76 @@ export function esc(str = '') {
     .replace(/"/g, '&quot;');
 }
 
+/**
+ * Escapes tweet / Bluesky body text while preserving author carriage returns (`\n` / `\n\n`)
+ * inside a dedicated inline `<span class="tweet-preserved-text">` (`white-space: pre-line`)
+ * so outer HTML template indentation never introduces unwanted blank lines and trailing icons stay inline.
+ */
+export function renderPreservedTweetTextHtml(text = '') {
+  const str = String(text ?? '');
+  if (!str) return '';
+  if (!str.includes('\n')) return esc(str);
+  return `<span class="tweet-preserved-text">${esc(str)}</span>`;
+}
+
+/**
+ * Renders 1 to 4 inline social photos (All-22 film stills, comparison frames, scatter charts,
+ * or multi-image beat posts from Bluesky / X) in a crisp, responsive layout:
+ * - 1 image: full-width `object-fit: contain` box (never crops chart axes or diagrams)
+ * - 2 images: side-by-side 2-column grid (matching Bluesky/X side-by-side comparisons)
+ * - 3 images: 2-column mosaic (left hero spanning 2 rows + 2 stacked right tiles)
+ * - 4+ images: 2x2 grid (with `+N` overflow badge if >4)
+ * Each tile links directly to its full-resolution image URL for 1-tap inspection.
+ */
+export function renderInlineSocialPhotoGalleryHtml(
+  item = {},
+  { fallbackHref = '', altText = '', eager = false, markReadKey = '', compact = false } = {}
+) {
+  const photos = getItemInlineSocialPhotoUrls(item);
+  if (photos.length === 0) return '';
+
+  const teamNick = getActiveTeamConfig()?.nickname || 'NFL';
+  const safeAlt = String(altText || item?.title || `${teamNick} film photo`)
+    .replace(/\s+/g, ' ')
+    .trim();
+  const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+  const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
+
+  if (photos.length === 1) {
+    const rawUrl = photos[0];
+    const opt = optimizeImageUrlForSlot(rawUrl, 'chart');
+    if (!opt.src) return '';
+    const safeHref = sanitizeExternalUrl(fallbackHref || rawUrl, null);
+    const imgEl = `<img src="${esc(opt.src)}" ${opt.fallbackSrc ? `data-fallback-src="${esc(opt.fallbackSrc)}"` : ''} alt="${esc(safeAlt)}" class="wire-inline-photo-img" ${loadAttr} decoding="async" />`;
+    return safeHref
+      ? `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="wire-inline-photo-box${compact ? ' is-compact' : ''}" data-inline-chart-media="true" data-inline-media-count="1"${readAttr}>${imgEl}</a>`
+      : `<div class="wire-inline-photo-box${compact ? ' is-compact' : ''}" data-inline-chart-media="true" data-inline-media-count="1">${imgEl}</div>`;
+  }
+
+  const visiblePhotos = photos.slice(0, 4);
+  const countClass = `photo-count-${visiblePhotos.length}`;
+  const tilesHtml = visiblePhotos
+    .map((rawUrl, idx) => {
+      const opt = optimizeImageUrlForSlot(rawUrl, 'chart');
+      if (!opt.src) return '';
+      const tileHref = sanitizeExternalUrl(rawUrl, null) || sanitizeExternalUrl(fallbackHref, null);
+      const tileAlt = `${safeAlt} (${idx + 1}/${photos.length})`;
+      const extraBadge =
+        idx === 3 && photos.length > 4
+          ? `<span class="wire-inline-photo-more mono" aria-hidden="true">+${photos.length - 4}</span>`
+          : '';
+      const imgEl = `<img src="${esc(opt.src)}" ${opt.fallbackSrc ? `data-fallback-src="${esc(opt.fallbackSrc)}"` : ''} alt="${esc(tileAlt)}" class="wire-inline-photo-tile-img" ${loadAttr} decoding="async" />${extraBadge}`;
+      return tileHref
+        ? `<a href="${esc(tileHref)}" target="_blank" rel="noopener noreferrer" class="wire-inline-photo-tile" data-inline-photo-tile="${idx}" aria-label="${esc(`Open image ${idx + 1} of ${photos.length}`)}"${readAttr}>${imgEl}</a>`
+        : `<div class="wire-inline-photo-tile" data-inline-photo-tile="${idx}">${imgEl}</div>`;
+    })
+    .filter(Boolean)
+    .join('');
+
+  if (!tilesHtml) return '';
+  return `<div class="wire-inline-photo-grid ${countClass}${compact ? ' is-compact' : ''}" data-inline-chart-media="true" data-inline-media-count="${photos.length}">${tilesHtml}</div>`;
+}
+
 export function formatRelativeAge(isoStr) {
   if (!isoStr) return 'Recently updated';
   const diffMs = Date.now() - new Date(isoStr).getTime();
@@ -669,7 +739,8 @@ export function renderSalientThumbHtml(
     eager = false,
     asStatic = false,
     extraClass = '',
-    markReadKey = ''
+    markReadKey = '',
+    multiPhotoCount = 0
   } = {}
 ) {
   if (!visual || !visual.kind) return '';
@@ -683,7 +754,11 @@ export function renderSalientThumbHtml(
   let innerHtml = '';
 
   if (visual.kind === 'editorial') {
-    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || `${getActiveTeamConfig().nickname} photo`)}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />`;
+    const countBadge =
+      multiPhotoCount > 1
+        ? `<span class="salient-thumb-photo-count mono" aria-label="${esc(`${multiPhotoCount} images`)}">${multiPhotoCount}</span>`
+        : '';
+    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || `${getActiveTeamConfig().nickname} photo`)}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />${countBadge}`;
   } else if (visual.kind === 'player') {
     const showJersey = size !== 'sm' && visual.jersey != null && visual.jersey !== '';
     innerHtml = `

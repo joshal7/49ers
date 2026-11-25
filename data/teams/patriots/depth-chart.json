@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:08:26.352Z",
+  "updatedAt": "2026-11-25T20:44:41.752Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -107,7 +107,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4427095",
@@ -125,9 +125,9 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false
+              "playProbabilityPct": 54,
+              "statusBadge": "54% • GTD",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -147,10 +147,9 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 54,
+              "statusBadge": "54% • GTD",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -492,9 +491,9 @@
               "jersey": 16,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 10,
+              "statusBadge": "10% • Doubtful",
+              "isAvailable": false
             },
             {
               "playerId": "4431465",
@@ -519,16 +518,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4240391",
-              "name": "Tommy DeVito",
-              "jersey": 16,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4431465",
               "name": "Behren Morton",
               "jersey": 15,
@@ -537,6 +526,17 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4240391",
+              "name": "Tommy DeVito",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 10,
+              "statusBadge": "10% • Doubtful",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             },
             {
               "playerId": "4431452",
@@ -550,11 +550,11 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "3046439",
@@ -755,7 +755,7 @@
         },
         {
           "slotKey": "fb",
-          "slotLabel": "FB",
+          "slotLabel": "FB (21 Personnel)",
           "baselineChain": [
             {
               "playerId": "4039505",
@@ -786,11 +786,11 @@
     },
     {
       "id": "15",
-      "unitName": "Defense (Base 3-4 D)",
+      "unitName": "Defense (Base 3-4 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4372030",
@@ -859,7 +859,7 @@
         },
         {
           "slotKey": "nt",
-          "slotLabel": "NT",
+          "slotLabel": "NT (0/1-Tech)",
           "baselineChain": [
             {
               "playerId": "4240042",
@@ -888,7 +888,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (3-4)",
           "baselineChain": [
             {
               "playerId": "4239699",
@@ -1146,7 +1146,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "3915525",
@@ -1473,7 +1473,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4241720",
@@ -1633,9 +1633,9 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false
+              "playProbabilityPct": 54,
+              "statusBadge": "54% • GTD",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1675,10 +1675,9 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 54,
+              "statusBadge": "54% • GTD",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false

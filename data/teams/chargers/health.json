@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:09:06.036Z",
+  "updatedAt": "2026-11-25T20:36:15.792Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.chargers.com/team/injury-report/",
@@ -18,7 +18,7 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Concussion",
@@ -306,7 +306,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Ankle) ahead of Week 10; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "Taylor is battling an ankle injury and was ruled out for the Week 10 meeting with Baltimore. Now on injured reserve, he will be required to miss at least four games before being eligible to return."
     },
     {
       "playerId": "3917668",
@@ -328,7 +328,7 @@
       "byeWeekNote": "Week 7 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Shoulder); awaiting 21-day practice window designation."
+      "beatNote": "Per Noah Furtado of The Athletic, Ingold wasn't included on the Chargers' initial Week 6 injury report Wednesday before being a late addition on account of the shoulder issue. He'll be sidelined for at least the next four games, making him ineligible to play until Week 11 versus the Jets on Nov. 22. The fullback hadn't logged any carries and recorded three receptions for 35 yards on four targets through Los Angeles' first five games."
     },
     {
       "playerId": "3691739",
@@ -350,7 +350,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Hamstring); awaiting 21-day practice window designation."
+      "beatNote": "James missed the Chargers' three games prior to the Week 7 bye due to a hamstring injury. He suffered a setback in his recovery during Week 8 prep, which will require a stint on IR for the veteran safety. James is required to be sidelined for at least four games, so the earliest he can return is Week 12 against the Patriots on Sunday, Nov. 29. Tony Jefferson will continue to operate in an elevated role in the secondary in James' absence."
     },
     {
       "playerId": "5084965",
@@ -380,7 +380,7 @@
       "position": "OT",
       "jersey": 70,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242283.png",
-      "injuryType": "Ankle",
+      "injuryType": "Ankle (Surgery)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -394,7 +394,7 @@
       "byeWeekNote": "Week 7 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
+      "beatNote": "Slater underwent ankle surgery Thursday after suffering a high-ankle sprain during Sunday's loss to the Seahawks. The left tackle will now need to miss at least four games on IR before the Chargers can return him to the active roster. With Slater out, Logan Taylor will be protecting Justin Herbert's blindside in the Chargers' Week 5 matchup against the Broncos."
     },
     {
       "playerId": "4248627",
@@ -416,7 +416,7 @@
       "byeWeekNote": "Week 7 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Concussion); awaiting 21-day practice window designation."
+      "beatNote": "Penning entered the league's concussion protocol following the Chargers' Week 4 loss to the Seahawks. He'll be required to miss at least four games, so Week 10 against the Ravens on Monday, Nov. 16 is the earliest that Penning can return."
     },
     {
       "playerId": "4383351",
@@ -438,7 +438,7 @@
       "byeWeekNote": "Week 7 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Groin); awaiting 21-day practice window designation."
+      "beatNote": "Lance has been on the Chargers' injury report since late September due to a groin issue. He suited up for each of the Chargers' last two games, but it appears his injury has regressed enough for him to warrant a stint on injured reserve. As such, Lance will be sidelined for at least four games, and the next time he can play is Week 10 against the Ravens on Sunday, Nov. 16. DJ Uiagalelei will be the Chargers' backup to Justin Herbert while Lance is sidelined."
     },
     {
       "playerId": "4035788",
@@ -460,7 +460,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee) on Aug 23, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Biadasz's placement on injured reserve means the 2020 fourth-rounder will be sidelined for the entire 2026 season. He suffered multiple injuries to his left knee -- including his ACL -- during Tuesday's training camp practice. There was initial optimism that he would be available toward the tail end of the regular season, but Biadasz will now shift his focus toward being fully healthy for the 2027 campaign. Jake Slaughter figures to serve as the Chargers' starting center moving forward."
     }
   ]
 }

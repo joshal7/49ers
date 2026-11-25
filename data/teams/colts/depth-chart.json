@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-24T20:08:48.668Z",
+  "updatedAt": "2026-11-25T20:36:15.810Z",
   "week": 12,
   "units": [
     {
       "id": "21",
-      "unitName": "Offense (3WR 1TE)",
+      "unitName": "Offense (11 & 21 Personnel)",
       "rows": [
         {
           "slotKey": "wr1",
@@ -37,7 +37,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360078.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
+              "statusBadge": "0% • IR",
               "isAvailable": false
             }
           ],
@@ -69,7 +69,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360078.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
+              "statusBadge": "0% • IR",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -107,7 +107,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249030.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -139,7 +139,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249030.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -148,7 +148,7 @@
         },
         {
           "slotKey": "wr3",
-          "slotLabel": "WR (Slot)",
+          "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
               "playerId": "4429684",
@@ -218,16 +218,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "3895840",
-              "name": "Charlie Heck",
-              "jersey": 73,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895840.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -237,16 +227,6 @@
               "jersey": 67,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361979.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
-              "playerId": "3895840",
-              "name": "Charlie Heck",
-              "jersey": 73,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895840.png",
-              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -524,6 +504,16 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4039034",
+              "name": "Shane Buechele",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039034.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -546,13 +536,23 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4039034",
+              "name": "Shane Buechele",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039034.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
         },
         {
           "slotKey": "te",
-          "slotLabel": "TE",
+          "slotLabel": "TE (Y)",
           "baselineChain": [
             {
               "playerId": "4431459",
@@ -611,7 +611,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702120.png",
               "baselineRank": 6,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -675,7 +675,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702120.png",
               "baselineRank": 6,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -756,11 +756,11 @@
     },
     {
       "id": "16",
-      "unitName": "Defense (Base 4-3 D)",
+      "unitName": "Defense (Wide-9 Base 4-3 & Nickel 4-2-5)",
       "rows": [
         {
           "slotKey": "lde",
-          "slotLabel": "LDE",
+          "slotLabel": "LDE (Wide-9)",
           "baselineChain": [
             {
               "playerId": "3843843",
@@ -829,7 +829,7 @@
         },
         {
           "slotKey": "ldt",
-          "slotLabel": "LDT",
+          "slotLabel": "LDT (1/2i)",
           "baselineChain": [
             {
               "playerId": "4058825",
@@ -878,7 +878,7 @@
         },
         {
           "slotKey": "rdt",
-          "slotLabel": "RDT",
+          "slotLabel": "RDT (3-Tech)",
           "baselineChain": [
             {
               "playerId": "4427635",
@@ -947,7 +947,7 @@
         },
         {
           "slotKey": "rde",
-          "slotLabel": "RDE",
+          "slotLabel": "RDE (Wide-9)",
           "baselineChain": [
             {
               "playerId": "4426473",
@@ -960,14 +960,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4685324",
-              "name": "Caden Curry",
-              "jersey": 55,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+              "playerId": "3051911",
+              "name": "Carl Lawson",
+              "jersey": 96,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051911.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4240896",
@@ -977,6 +977,16 @@
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4685324",
+              "name": "Caden Curry",
+              "jersey": 55,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false
             }
           ],
@@ -992,15 +1002,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4685324",
-              "name": "Caden Curry",
-              "jersey": 55,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+              "playerId": "3051911",
+              "name": "Carl Lawson",
+              "jersey": 96,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051911.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4240896",
@@ -1010,6 +1019,17 @@
               "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4685324",
+              "name": "Caden Curry",
+              "jersey": 55,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1138,7 +1158,7 @@
         },
         {
           "slotKey": "slb",
-          "slotLabel": "SAM LB",
+          "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
               "playerId": "5088571",
@@ -1425,7 +1445,7 @@
         },
         {
           "slotKey": "nb",
-          "slotLabel": "NICKEL CB",
+          "slotLabel": "NICKEL CB (4-2-5)",
           "baselineChain": [
             {
               "playerId": "4682909",

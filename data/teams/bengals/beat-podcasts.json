@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-24T20:08:37.140Z",
+  "updatedAt": "2026-11-25T20:36:09.769Z",
   "windowDays": 7,
-  "totalEpisodes": 12,
+  "totalEpisodes": 13,
   "shows": [
     {
       "id": "bengals_locked_on_bengals",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/30/98/44/30984476-26de-250d-e8e5-f590b3ced6cc/mza_1075762000797244198.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 7
     },
     {
       "id": "bengals_hear_that_podcast_growlin",
@@ -41,6 +41,66 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_bengals_locked_on_bengals_1000803999891",
+      "trackId": 1000803999891,
+      "collectionId": 1159723162,
+      "showId": "bengals_locked_on_bengals",
+      "showName": "Locked On Bengals",
+      "showFullTitle": "Locked On Bengals - Daily Podcast On The Cincinnati Bengals",
+      "hosts": "Locked On Podcast Network, James Rapien, Jake Liscow",
+      "network": "Locked On Podcast Network, James Rapien, Jake Liscow",
+      "title": "BENGALS SQUAD SHOW: BURROW BAD, DEFENSE DREADFUL IN LOSS TO COMMANDERS",
+      "summary": "Support Us By Supporting Our Sponsors! Ethos Take 10 minutes to get covered today, with life insurance through Ethos. Get your free quote at https://ethos.com/lockedonnfl. Amazon However you get the holiday season started, Amazon makes it easier to find something for everyon",
+      "publishedAt": "2026-11-25T14:00:00.000Z",
+      "durationMinutes": 60,
+      "durationDisplay": "60 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ec/7e/ec/ec7eec32-ab32-3c9b-7500-c0e675096e1b/mza_1873842333014522910.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bengals-squad-show-burrow-bad-defense-dreadful-in-loss/id1159723162?i=1000803999891&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8b4258/lockedon.simplecastaudio.com/cc8b7148-cfe3-4578-a7a0-0bd38215a32f/episodes/dc7f8e48-b46e-44c6-858e-9b93fadf518a/audio/128/default.mp3?aid=rss_feed&awCollectionId=cc8b7148-cfe3-4578-a7a0-0bd38215a32f&awEpisodeId=dc7f8e48-b46e-44c6-858e-9b93fadf518a&feed=J1A29rxl"
+    },
+    {
+      "id": "pod_bengals_locked_on_bengals_1000803866065",
+      "trackId": 1000803866065,
+      "collectionId": 1159723162,
+      "showId": "bengals_locked_on_bengals",
+      "showName": "Locked On Bengals",
+      "showFullTitle": "Locked On Bengals - Daily Podcast On The Cincinnati Bengals",
+      "hosts": "Locked On Podcast Network, James Rapien, Jake Liscow",
+      "network": "Locked On Podcast Network, James Rapien, Jake Liscow",
+      "title": "GOOD NEWS: Bengals Had Their WORST Game On MNF, but Joe Burrow WILL Lead BOUNCE BACK",
+      "summary": "Join the Locked On Bengals Everydayer Club! The Everydayer Club brings you access to exclusive video content, the Subtext insider club where you can text Jake and Joe and get Bengals updates in your text messages, ad-free audio, and Joe Goodberry's members-only Discord with ",
+      "publishedAt": "2026-11-24T21:30:00.000Z",
+      "durationMinutes": 32,
+      "durationDisplay": "32 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/7f/2b/32/7f2b327b-8007-1650-41f2-064f9fa8d896/mza_16268655621620588770.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/good-news-bengals-had-their-worst-game-on-mnf-but-joe/id1159723162?i=1000803866065&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8b4258/lockedon.simplecastaudio.com/cc8b7148-cfe3-4578-a7a0-0bd38215a32f/episodes/d0492e76-c147-4be6-8410-b08d21f128f3/audio/128/default.mp3?aid=rss_feed&awCollectionId=cc8b7148-cfe3-4578-a7a0-0bd38215a32f&awEpisodeId=d0492e76-c147-4be6-8410-b08d21f128f3&feed=J1A29rxl"
+    },
+    {
+      "id": "pod_bengals_chatterbox_bengals_1000803857288",
+      "trackId": 1000803857288,
+      "collectionId": 1652732141,
+      "showId": "bengals_chatterbox_bengals",
+      "showName": "Chatterbox Bengals",
+      "showFullTitle": "Chatterbox Bengals: A Cincinnati Bengals NFL Podcast",
+      "hosts": "Chatterbox Sports",
+      "network": "Chatterbox Sports",
+      "title": "Things Just Got VERY INTERESTING For The Cincinnati Bengals...",
+      "summary": "The Cincinnati Bengals' 22-20 loss to the Washington Commanders on Monday night exposed two problems that could make life difficult for this team moving forward: an inconsistent running game and an offense that puts far too much pressure on Joe Burrow to make something happe",
+      "publishedAt": "2026-11-24T20:20:52.000Z",
+      "durationMinutes": 48,
+      "durationDisplay": "48 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4e/10/41/4e104127-83df-0958-d008-6501cb4fa5f5/mza_851835020673573439.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/things-just-got-very-interesting-for-the-cincinnati/id1652732141?i=1000803857288&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4",
+      "feedUrl": "https://feed.podbean.com/cboxbengals/feed.xml",
+      "audioStreamUrl": "https://mcdn.podbean.com/mf/web/d3a39i96spdhddc2/Rumors_FINAL_AUDIO7e1cy.mp3"
+    },
     {
       "id": "pod_bengals_chatterbox_bengals_1000803725661",
       "trackId": 1000803725661,
@@ -240,46 +300,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
       "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8b4258/lockedon.simplecastaudio.com/cc8b7148-cfe3-4578-a7a0-0bd38215a32f/episodes/b04d2d79-3969-447c-a5b9-3b74676ea880/audio/128/default.mp3?aid=rss_feed&awCollectionId=cc8b7148-cfe3-4578-a7a0-0bd38215a32f&awEpisodeId=b04d2d79-3969-447c-a5b9-3b74676ea880&feed=J1A29rxl"
-    },
-    {
-      "id": "pod_bengals_chatterbox_bengals_1000802774773",
-      "trackId": 1000802774773,
-      "collectionId": 1652732141,
-      "showId": "bengals_chatterbox_bengals",
-      "showName": "Chatterbox Bengals",
-      "showFullTitle": "Chatterbox Bengals: A Cincinnati Bengals NFL Podcast",
-      "hosts": "Chatterbox Sports",
-      "network": "Chatterbox Sports",
-      "title": "Cincinnati Bengals Fans Are Going To LOVE THIS NEWS",
-      "summary": "The Cincinnati Bengals got a huge 38-18 win over the Pittsburgh Steelers on Sunday Night Football, and while Joe Burrow and the offense received plenty of attention, two unsung heroes deserve recognition: Jalen Rivers and Chase Brown. Deposit and place $25 in trades with Kal",
-      "publishedAt": "2026-11-18T19:30:12.000Z",
-      "durationMinutes": 18,
-      "durationDisplay": "18 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4e/10/41/4e104127-83df-0958-d008-6501cb4fa5f5/mza_851835020673573439.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/cincinnati-bengals-fans-are-going-to-love-this-news/id1652732141?i=1000802774773&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4",
-      "feedUrl": "https://feed.podbean.com/cboxbengals/feed.xml",
-      "audioStreamUrl": "https://mcdn.podbean.com/mf/web/5xpakgyx3db8jhgk/Brown_Rivers_FINAL_AUDIO7cws1.mp3"
-    },
-    {
-      "id": "pod_bengals_locked_on_bengals_1000802556514",
-      "trackId": 1000802556514,
-      "collectionId": 1159723162,
-      "showId": "bengals_locked_on_bengals",
-      "showName": "Locked On Bengals",
-      "showFullTitle": "Locked On Bengals - Daily Podcast On The Cincinnati Bengals",
-      "hosts": "Locked On Podcast Network, James Rapien, Jake Liscow",
-      "network": "Locked On Podcast Network, James Rapien, Jake Liscow",
-      "title": "LOFTY GOALS: Bengals 7-2 Start Makes AFC #1 Seed a REAL POSSIBILITY",
-      "summary": "Join the Locked On Bengals Everydayer Club! The Everydayer Club brings you access to exclusive video content, the Subtext insider club where you can text Jake and Joe and get Bengals updates in your text messages, ad-free audio, and Joe Goodberry's members-only Discord with ",
-      "publishedAt": "2026-11-17T21:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/0d/a5/90/0da590b7-5801-23e0-5692-fddafa7c66f4/mza_370054438395599903.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/lofty-goals-bengals-7-2-start-makes-afc-1-seed-a/id1159723162?i=1000802556514&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8b4258/lockedon.simplecastaudio.com/cc8b7148-cfe3-4578-a7a0-0bd38215a32f/episodes/8130350e-240c-4b46-a86b-410449a2071d/audio/128/default.mp3?aid=rss_feed&awCollectionId=cc8b7148-cfe3-4578-a7a0-0bd38215a32f&awEpisodeId=8130350e-240c-4b46-a86b-410449a2071d&feed=J1A29rxl"
     }
   ]
 }

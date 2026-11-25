@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:08.569Z",
+  "updatedAt": "2026-11-25T20:44:18.717Z",
   "windowDays": 7,
   "totalEpisodes": 12,
   "shows": [
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/f1/72/35/f17235e3-fa66-7d24-0928-a06495efadde/mza_2805909275589411514.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 5
     },
     {
       "id": "buccaneers_salty_dogs",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/39bb7413-22e5-4a67-a26e-aea90029f1f9/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/salty-dogs/id1420665229?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/01/ba/93/01ba9330-7422-310c-662e-6898288f6097/mza_160950890383233691.jpg/600x600bb.jpg",
-      "episodeCount7d": 1
+      "episodeCount7d": 2
     },
     {
       "id": "buccaneers_pewter_report_podcast",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/d7/3d/60/d73d6058-06f3-1e86-807f-2a142c936c47/mza_8674259041146946255.jpg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 4
     },
     {
       "id": "buccaneers_bucs_players_table",
@@ -53,6 +53,46 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_buccaneers_salty_dogs_1000804013730",
+      "trackId": 1000804013730,
+      "collectionId": 1420665229,
+      "showId": "buccaneers_salty_dogs",
+      "showName": "Salty Dogs",
+      "showFullTitle": "Salty Dogs",
+      "hosts": "Tampa Bay Buccaneers",
+      "network": "Tampa Bay Buccaneers",
+      "title": "Bucs Prepare For Must-Have Monday Night | Salty Dogs",
+      "summary": "Jeff and Scott dive deep into the Detroit game and the upcoming showdown with the Panthers, and disagree mightily about parking maneuversSee omnystudio.com/listener for privacy information.",
+      "publishedAt": "2026-11-25T17:56:00.000Z",
+      "durationMinutes": 96,
+      "durationDisplay": "96 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/01/ba/93/01ba9330-7422-310c-662e-6898288f6097/mza_160950890383233691.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bucs-prepare-for-must-have-monday-night-salty-dogs/id1420665229?i=1000804013730&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/salty-dogs/id1420665229?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/39bb7413-22e5-4a67-a26e-aea90029f1f9/podcast.rss",
+      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/760f6867-3843-413b-9eca-b50d00f4dd36/audio.mp3?utm_source=Podcast&in_playlist=39bb7413-22e5-4a67-a26e-aea90029f1f9"
+    },
+    {
+      "id": "pod_buccaneers_pewter_report_podcast_1000803724988",
+      "trackId": 1000803724988,
+      "collectionId": 1216727537,
+      "showId": "buccaneers_pewter_report_podcast",
+      "showName": "Pewter Report Podcast",
+      "showFullTitle": "Pewter Report Podcast",
+      "hosts": "Bucs",
+      "network": "Bucs",
+      "title": "Ted Hurst III's Breakout Game",
+      "summary": "A bright spot in the Bucs' loss to the Lions on Sunday was a great game had by rookie wide receiver, Ted Hurst III. After Hurst had two straight drops, he started to break out and wound up leading the team with five catches for 56 yards and two touchdowns on seven targets. H",
+      "publishedAt": "2026-11-24T05:46:00.000Z",
+      "durationMinutes": 97,
+      "durationDisplay": "97 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/d7/3d/60/d73d6058-06f3-1e86-807f-2a142c936c47/mza_8674259041146946255.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/ted-hurst-iiis-breakout-game/id1216727537?i=1000803724988&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
+      "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
+      "audioStreamUrl": "https://traffic.megaphone.fm/RTERE9381549672.mp3"
+    },
     {
       "id": "pod_buccaneers_bucs_players_table_1000803681698",
       "trackId": 1000803681698,
@@ -252,46 +292,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/salty-dogs/id1420665229?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/39bb7413-22e5-4a67-a26e-aea90029f1f9/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/d717b74b-3da0-4efd-b902-b505012057d7/audio.mp3?utm_source=Podcast&in_playlist=39bb7413-22e5-4a67-a26e-aea90029f1f9"
-    },
-    {
-      "id": "pod_buccaneers_locked_on_bucs_1000802774286",
-      "trackId": 1000802774286,
-      "collectionId": 1139752021,
-      "showId": "buccaneers_locked_on_bucs",
-      "showName": "Locked On Bucs",
-      "showFullTitle": "Locked On Bucs – Daily Podcast On The Tampa Bay Buccaneers",
-      "hosts": "Locked On Podcast Network, James Yarcho",
-      "network": "Locked On Podcast Network, James Yarcho",
-      "title": "Bucs MUST CONTAIN GIBBS To Have A Chance | Lions' Rush Defense A MIRAGE? | Jalon Daniels' X-Factor",
-      "summary": "Jahmyr Gibbs has tortured the NFL and if the Bucs are going to get an upset win, they have to contain him in both the run and the pass game. The Lions have a top 5 run defense - but is it really as good as advertised? It certainly doesn't seem like it. Jalon Daniels may poss",
-      "publishedAt": "2026-11-18T19:28:49.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/ae/46/84/ae4684c4-09b4-548f-2d57-c46034ebc2e1/mza_7404036130576502676.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bucs-must-contain-gibbs-to-have-a-chance-lions-rush/id1139752021?i=1000802774286&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/ca31e9/lockedon.simplecastaudio.com/8bf5e17f-ef5a-4b2a-b3a5-27a00de50027/episodes/c9f9b49a-06e7-4159-a7b7-0e79da99f85f/audio/128/default.mp3?aid=rss_feed&awCollectionId=8bf5e17f-ef5a-4b2a-b3a5-27a00de50027&awEpisodeId=c9f9b49a-06e7-4159-a7b7-0e79da99f85f&feed=mOWpQkH2"
-    },
-    {
-      "id": "pod_buccaneers_locked_on_bucs_1000802607177",
-      "trackId": 1000802607177,
-      "collectionId": 1139752021,
-      "showId": "buccaneers_locked_on_bucs",
-      "showName": "Locked On Bucs",
-      "showFullTitle": "Locked On Bucs – Daily Podcast On The Tampa Bay Buccaneers",
-      "hosts": "Locked On Podcast Network, James Yarcho",
-      "network": "Locked On Podcast Network, James Yarcho",
-      "title": "Baker Mayfield IN QUESTION vs Lions | Can Bucs WIN WITH JALON? | Dedication To RUN GAME IS KEY",
-      "summary": "Baker Mayfield is \"trending towards not playing\" Sunday as he deals with a lower leg injury. Jalon Daniels got a win earlier this season - but can he lead the Bucs to victory at Ford Field? The Bucs will have to stay dedicated to the run game no matter what the game script i",
-      "publishedAt": "2026-11-18T01:33:07.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/19/98/56/199856ba-ecbd-fe0b-6471-325f8915ea46/mza_12212461605640784297.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/baker-mayfield-in-question-vs-lions-can-bucs-win-with/id1139752021?i=1000802607177&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/ca31e9/lockedon.simplecastaudio.com/8bf5e17f-ef5a-4b2a-b3a5-27a00de50027/episodes/7e70c6f8-9230-4cd4-ac60-4124d3082770/audio/128/default.mp3?aid=rss_feed&awCollectionId=8bf5e17f-ef5a-4b2a-b3a5-27a00de50027&awEpisodeId=7e70c6f8-9230-4cd4-ac60-4124d3082770&feed=mOWpQkH2"
     }
   ]
 }

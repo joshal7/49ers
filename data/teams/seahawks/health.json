@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:30.082Z",
+  "updatedAt": "2026-11-25T20:43:27.887Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.seahawks.com/team/injury-report/",
@@ -21,7 +21,7 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Cleared — No Designation",
+      "injuryType": "Personal",
       "gameStatus": "Out",
       "playProbabilityPct": 0,
       "priorDayPlayProbabilityPct": null,
@@ -32,7 +32,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": ""
+      "beatComment": "It was reported earlier this month that Arnold would be joining the Seahawks, and the move became official Saturday. Per Ian Rapoport of ESPN and NFL Network, Arnold will be placed on the commissioner's exempt list while he works through legal issues stemming from an incident in June, so it's unclear when he will be ready to see action with his new team."
     },
     {
       "playerId": "3129308",
@@ -57,33 +57,7 @@
       "factors": [
         "Official Doubtful tag (NFL historical base ~10–14%)"
       ],
-      "beatComment": "doubtful"
-    },
-    {
-      "playerId": "3912547",
-      "name": "Sam Darnold",
-      "position": "QB",
-      "jersey": 14,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Quadriceps",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 45,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "45% • Long Shot",
-      "archetypeNote": "Veteran starter profile (9th NFL season, 87% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
-        "Soft-tissue re-aggravation caution (Quadriceps)"
-      ],
-      "beatComment": "Darnold has been sidelined for the Seahawks' last two games due to a quad issue and a cracked rib, but he was back on the field Monday for a bonus practice coming out of the bye week. While Macdonald relayed that Darnold \"looked great\" and took \"a ton of reps\" during what the coach referred to as more of a walk-through session, the Seahawks want to see how the veteran quarterback responds to a full-speed practice Wednesday before giving him the green light to start Week 12. After leading the Seahawks to their second Super Bowl championship in 2025, Darnold has endured a rough start to 2026, completing 60.2 percent of his passes and posting a 10:9 TD:INT while missing nearly four full games due to injury."
+      "beatComment": "Seahawks injury updates: Quenton Nelson, Abe Lucas ruled out of 49ers game. The Seattle Seahawks are set to release their first injury report for Week 12 against the San Francisco 49ers, but we can already rule out a couple of players before Wednesday’s practice is even completed. Mike Macdonald told reporters that."
     },
     {
       "playerId": "4426376",
@@ -135,6 +109,33 @@
         "Manageable pain-tolerance injury profile (Shoulder)"
       ],
       "beatComment": "questionable"
+    },
+    {
+      "playerId": "3912547",
+      "name": "Sam Darnold",
+      "position": "QB",
+      "jersey": 14,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Quadriceps",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 64,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "64% • GTD",
+      "archetypeNote": "Veteran starter profile (9th NFL season, 87% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Quadriceps)",
+        "Beat practice observation (beat report): returned to on-field practice"
+      ],
+      "beatComment": "Darnold has been sidelined for the Seahawks' last two games due to a quad issue and a cracked rib, but he was back on the field Monday for a bonus practice coming out of the bye week. While Macdonald relayed that Darnold \"looked great\" and took \"a ton of reps\" during what the coach referred to as more of a walk-through session, the Seahawks want to see how the veteran quarterback responds to a full-speed practice Wednesday before giving him the green light to start in Week 12. After leading the Seahawks to their second Super Bowl championship in 2025, Darnold has endured a rough start to 2026, completing 60.2 percent of his passes and posting a 10:9 TD:INT while missing nearly four full games due to injury."
     },
     {
       "playerId": "4245171",
@@ -308,28 +309,6 @@
       "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
     },
     {
-      "playerId": "4678006",
-      "name": "Elijah Arroyo",
-      "position": "TE",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4678006.png",
-      "injuryType": "Shoulder",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 7,
-      "earliestEligibleWeek": 12,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Shoulder); awaiting 21-day practice window designation."
-    },
-    {
       "playerId": "4684543",
       "name": "Julian Neal",
       "position": "CB",
@@ -349,29 +328,29 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Hamstring); awaiting 21-day practice window designation."
+      "beatNote": "Neal was already ruled out for Sunday's game against the 49ers due to a hamstring injury, which is severe enough for the rookie third-rounder to warrant a stint on injured reserve. As such, Neal will be forced to miss at least four games, so the earliest he can return is Week 9 against the Cardinals on Sunday, Nov. 8. He's mostly operated on special teams this season, but his absence will also weaken the Seahawks' depth in the secondary."
     },
     {
-      "playerId": "4432525",
-      "name": "Mason Richman",
-      "position": "G",
-      "jersey": 78,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432525.png",
-      "injuryType": "Leg",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
+      "playerId": "4678006",
+      "name": "Elijah Arroyo",
+      "position": "TE",
+      "jersey": 18,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4678006.png",
+      "injuryType": "Shoulder (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "placedBeforeWeek": 7,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Leg); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Macdonald didn't outright rule Arroyo out for the entire 2026 campaign, leaving the possibility that the second-year tight end would be available if the Seahawks made a deep playoff run. Regardless, Arroyo will not be available for the rest of the regular season while recovering from a shoulder injury, leaving Eric Saubert and Nick Kallerup as the Seahawks' depth options at tight end behind AJ Barner."
     },
     {
       "playerId": "4360405",
@@ -393,7 +372,29 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Knee) on Aug 22, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Bobo sustained a serious knee injury in Friday's joint practice with the Titans. The wide receiver's placement on injured reserve means he will be unable to participate for the Seahawks in the entirety of the 2026 season. With Bobo out of the picture, Tory Horton (undisclosed), Emmanuel Henderson, Montorie Foster and Cody White will have a close competition for starting roles during the remainder of the preseason. The Seahawks also signed wide receiver Julian Hicks in a corresponding move."
+    },
+    {
+      "playerId": "4432525",
+      "name": "Mason Richman",
+      "position": "G",
+      "jersey": 78,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432525.png",
+      "injuryType": "Leg",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Richman suffered a serious right leg injury during Sunday's preseason loss to the Titans. The offensive lineman will now miss the entirety of the 2026 regular season unless he is waived with an injury settlement. The second-year player maintained his depth role on the offensive line throughout his rookie season and will have to fight for the same status in 2027."
     },
     {
       "playerId": "4691688",
@@ -415,7 +416,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Neck) on Aug 11, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
     }
   ]
 }

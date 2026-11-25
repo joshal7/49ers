@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:09:09.279Z",
+  "updatedAt": "2026-11-25T20:36:18.672Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/las-vegas-raiders",
   "spotracUrl": "https://www.spotrac.com/nfl/las-vegas-raiders/cap/",
@@ -258,7 +258,173 @@
     }
   },
   "blueprint": {
-    "summary": "Las Vegas Raiders hold $9.30M in 2026 OverTheCap space and $66.46M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/las-vegas-raiders",
+    "summary": "Las Vegas Raiders hold $9.30M in 2026 OverTheCap space ($9.30M effective) and +$66.46M projected for 2027.",
+    "executiveSummary": "John Spytek and the Raiders front office hold $9.30M in gross 2026 cap space ($9.30M effective), while 2027 currently projects at +$66.46M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Maxx Crosby, Kolton Miller, Tyler Linderbaum, Malcolm Koonce.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$66.46M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Las Vegas's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "3916655",
+        "name": "Maxx Crosby",
+        "position": "DE",
+        "jersey": 98,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916655.png",
+        "otcUrl": "https://overthecap.com/player/maxx-crosby/7897/",
+        "capHit2026": 35791250,
+        "baseSalary2026": 30000000,
+        "maxRestructureSavings": 21525000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3134312",
+        "name": "Kolton Miller",
+        "position": "OT",
+        "jersey": 74,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3134312.png",
+        "otcUrl": "https://overthecap.com/player/kolton-miller/6900/",
+        "capHit2026": 22540000,
+        "baseSalary2026": 20000000,
+        "maxRestructureSavings": 12466667,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4360499",
+        "name": "Tyler Linderbaum",
+        "position": "C",
+        "jersey": 65,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360499.png",
+        "otcUrl": "https://overthecap.com/player/tyler-linderbaum/10070/",
+        "capHit2026": 14000000,
+        "baseSalary2026": 10000000,
+        "maxRestructureSavings": 7028000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4258194",
+        "name": "Kwity Paye",
+        "position": "DE",
+        "jersey": 95,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258194.png",
+        "otcUrl": "https://overthecap.com/player/kwity-paye/9485/",
+        "capHit2026": 9422666,
+        "baseSalary2026": 5500000,
+        "maxRestructureSavings": 2856667,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3121003",
+        "name": "Taron Johnson",
+        "position": "CB",
+        "jersey": 3,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121003.png",
+        "otcUrl": "https://overthecap.com/player/taron-johnson/7006/",
+        "capHit2026": 8670000,
+        "baseSalary2026": 8100000,
+        "maxRestructureSavings": 5560000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4426340",
+        "name": "Nakobe Dean",
+        "position": "LB",
+        "jersey": 17,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426340.png",
+        "otcUrl": "https://overthecap.com/player/nakobe-dean/10128/",
+        "capHit2026": 7966666,
+        "baseSalary2026": 5750000,
+        "maxRestructureSavings": 3023333,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "3916655",
+        "name": "Maxx Crosby",
+        "position": "DE",
+        "jersey": 98,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916655.png",
+        "otcUrl": "https://overthecap.com/player/maxx-crosby/7897/",
+        "capHit2026": 35791250,
+        "postJune1CutSavings": -28310000,
+        "postJune1TradeSavings": 30690000,
+        "preJune1DeadMoney": 64101250,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3134312",
+        "name": "Kolton Miller",
+        "position": "OT",
+        "jersey": 74,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3134312.png",
+        "otcUrl": "https://overthecap.com/player/kolton-miller/6900/",
+        "capHit2026": 22540000,
+        "postJune1CutSavings": 40000,
+        "postJune1TradeSavings": 20040000,
+        "preJune1DeadMoney": 27500000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4360499",
+        "name": "Tyler Linderbaum",
+        "position": "C",
+        "jersey": 65,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360499.png",
+        "otcUrl": "https://overthecap.com/player/tyler-linderbaum/10070/",
+        "capHit2026": 14000000,
+        "postJune1CutSavings": -23000000,
+        "postJune1TradeSavings": 10000000,
+        "preJune1DeadMoney": 53000000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4239719",
+        "name": "Malcolm Koonce",
+        "position": "DE",
+        "jersey": 51,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239719.png",
+        "otcUrl": "https://overthecap.com/player/malcolm-koonce/9543/",
+        "capHit2026": 11010000,
+        "postJune1CutSavings": 510000,
+        "postJune1TradeSavings": 5760000,
+        "preJune1DeadMoney": 10500000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4043169",
+        "name": "Jeremy Chinn",
+        "position": "S",
+        "jersey": 11,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043169.png",
+        "otcUrl": "https://overthecap.com/player/jeremy-chinn/8804/",
+        "capHit2026": 9555000,
+        "postJune1CutSavings": 3305000,
+        "postJune1TradeSavings": 7555000,
+        "preJune1DeadMoney": 6250000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4258194",
+        "name": "Kwity Paye",
+        "position": "DE",
+        "jersey": 95,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258194.png",
+        "otcUrl": "https://overthecap.com/player/kwity-paye/9485/",
+        "capHit2026": 9422666,
+        "postJune1CutSavings": -9490000,
+        "postJune1TradeSavings": 6010000,
+        "preJune1DeadMoney": 25738000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {

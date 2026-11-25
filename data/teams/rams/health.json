@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:33.480Z",
+  "updatedAt": "2026-11-25T20:43:50.951Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.therams.com/team/injury-report/",
@@ -32,7 +32,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "out"
+      "beatComment": "Packers: Steve Avila, Terrance Ferguson and Coleman Shelton ruled out"
     },
     {
       "playerId": "4362474",
@@ -82,32 +82,7 @@
       "factors": [
         "Positive upward rehab ramp (Wed DNP -> Thu LP; player prior 78%)"
       ],
-      "beatComment": "Garrett downgraded his practice participation in Monday's session. The linebacker started Week 12 prep with a limited session on Sunday, so Monday's lack of participation is likely more due to affording him a day off than any aggravation of his knee issue. Garrett will likely need to log at least a limited session Tuesday to dodge an injury designation ahead of Wednesday's game against the Packers."
-    },
-    {
-      "playerId": "4242154",
-      "name": "Kam Curl",
-      "position": "S",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242154.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "-",
-      "injuryType": "Toe",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 84,
-      "priorDayPlayProbabilityPct": 84,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "84% • GTD",
-      "archetypeNote": "Veteran starter profile (7th NFL season, 93% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Thursday Limited Participation (LP); player toughness prior = 84%"
-      ],
-      "beatComment": ""
+      "beatComment": "Garrett was limited in practice Sunday and Tuesday due to a knee injury, but it doesn't appear he will be impacted in Wednesday night's matchup against the Packers. The 30-year-old has three tackles (three solo), including 3.0 sacks and a forced fumble in three regular-season games in 2026."
     },
     {
       "playerId": "2575907",
@@ -134,6 +109,31 @@
         "Beat/podium consensus: on track to suit up"
       ],
       "beatComment": "The Rams' long snapper was injured last Sunday against Arizona, but should be good to go for Wednesday versus Green Bay."
+    },
+    {
+      "playerId": "4242154",
+      "name": "Kam Curl",
+      "position": "S",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242154.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "-",
+      "injuryType": "Toe",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 84,
+      "priorDayPlayProbabilityPct": 84,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "84% • GTD",
+      "archetypeNote": "Veteran starter profile (7th NFL season, 93% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Thursday Limited Participation (LP); player toughness prior = 84%"
+      ],
+      "beatComment": "Curl posted two limited practices after beginning the week as a nonparticipant. The 27-year-old has started all 10 games for the Rams this season, recording 48 tackles (28 solo) and three pass deflections."
     },
     {
       "playerId": "12483",
@@ -163,6 +163,31 @@
       "beatComment": "From the Podium: Sean McVay, Matthew Stafford, Aaron Donald and coordinators talk adjustments ahead of Rams' Thanksgiving Eve game against Packers in Week 12. Head coach Sean McVay, quarterback Matthew Stafford, defensive end Aaron Donald and coordinators talked about the necessity of evolution for this season's Rams as they get set to play the Packers on Thanksgiving Eve."
     },
     {
+      "playerId": "4426553",
+      "name": "Davis Allen",
+      "position": "TE",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426553.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "Oblique",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 92,
+      "priorDayPlayProbabilityPct": 86,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "92% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Logged Full Participation (FP) on Thursday"
+      ],
+      "beatComment": "With all three of Puka Nacua (knee/toe), Davante Adams (hamstring) and Terrance Ferguson (hamstring) out, the Rams leaned on their tight-end triumvirate of Tyler Higbee, Colby Parkinson and Allen, as all three played more offensive snaps than any of the Los Angeles wideouts. Parkinson (53 snaps) led the way, followed by Allen (52) and Higbee (51), and both Allen and Higbee caught touchdowns. Allen, however, ran just six routes on Matthew Stafford's 28 dropbacks, so it's not enough to warrant consideration in fantasy leagues."
+    },
+    {
       "playerId": "4430737",
       "name": "Kyren Williams",
       "position": "RB",
@@ -186,31 +211,6 @@
         "Logged Full Participation (FP) on Thursday"
       ],
       "beatComment": "Listed as a limited participant on the Rams' initial Week 12 injury report posted Sunday, Williams quelled any concern about his status for Wednesday's game against the Packers by taking full reps a day later. Though his sore toe isn't expected to affect his workload, Williams nonetheless may find himself in a timeshare with Blake Corum, who has been the more productive option on the ground this season. Williams has totaled seven touchdowns and is averaging 4.4 yards per carry through 10 games, while Corum has scored six times and is averaging 5.3 yards per tote."
-    },
-    {
-      "playerId": "4426405",
-      "name": "Trent McDuffie",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426405.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Every-down starter workload (95% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": ""
     },
     {
       "playerId": "4243181",
@@ -238,29 +238,29 @@
       "beatComment": ""
     },
     {
-      "playerId": "4426553",
-      "name": "Davis Allen",
-      "position": "TE",
-      "jersey": 87,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426553.png",
+      "playerId": "4426405",
+      "name": "Trent McDuffie",
+      "position": "CB",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426405.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
       "fri": "-",
-      "injuryType": "Oblique",
+      "injuryType": "Back",
       "gameStatus": "Questionable",
       "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 86,
+      "priorDayPlayProbabilityPct": 91,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "archetypeNote": "Every-down starter workload (95% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Logged Full Participation (FP) on Thursday"
       ],
-      "beatComment": "With all three of Puka Nacua (knee/toe), Davante Adams (hamstring) and Terrance Ferguson (hamstring) out, the Rams leaned on their tight-end triumvirate of Tyler Higbee, Colby Parkinson and Allen, as all three played more offensive snaps than any of the Los Angeles wideouts. Parkinson (53 snaps) led the way, followed by Allen (52) and Higbee (51), and both Allen and Higbee caught touchdowns. Allen, however, ran just six routes on Matthew Stafford's 28 dropbacks, so it's not enough to warrant consideration in fantasy leagues."
+      "beatComment": ""
     },
     {
       "playerId": "4242557",
@@ -289,31 +289,6 @@
       "beatComment": "Parkinson was able to shed an injury designation for Sunday's game after having his practice reps limited during Week 10 prep due to a lingering rib injury. His second catch of the contest went for 10 yards early in the third quarter and set the Rams up on the 1-yard line, with Blake Corum finding the end zone on the next play. Parkinson was on the field for 53 of the Rams' 76 offensive snaps (69.7 percent), and fellow tight ends Davis Allen (52) and Tyler Higbee (51) were not far behind. The Rams are committed to using their 13-man personnel, although the game plan could be slightly tweaked after the Week 11 bye if wide receiver Davante Adams (hamstring) is activated from injured reserve ahead of Week 12 against the Packers on Wednesday, Nov. 25. Parkinson has caught 20 passes (on 25 targets) for 127 yards and a touchdown through eight regular-season games."
     },
     {
-      "playerId": "4875196",
-      "name": "Byron Young",
-      "position": "LB",
-      "jersey": 0,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875196.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "Vet Rest",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "NIR - Rest",
-      "gameStatus": "Active",
-      "playProbabilityPct": 98,
-      "priorDayPlayProbabilityPct": 98,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "98% • Vet Rest (Full Go)",
-      "archetypeNote": "Every-down starter workload (79% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Habitual Veteran Rest prior (Byron Young maintenance schedule)"
-      ],
-      "beatComment": ""
-    },
-    {
       "playerId": "16716",
       "name": "Aaron Donald",
       "position": "DT",
@@ -337,6 +312,31 @@
         "Habitual Veteran Rest prior (Aaron Donald maintenance schedule)"
       ],
       "beatComment": "From the Podium: Sean McVay, Matthew Stafford, Aaron Donald and coordinators talk adjustments ahead of Rams' Thanksgiving Eve game against Packers in Week 12. Head coach Sean McVay, quarterback Matthew Stafford, defensive end Aaron Donald and coordinators talked about the necessity of evolution for this season's Rams as they get set to play the Packers on Thanksgiving Eve."
+    },
+    {
+      "playerId": "4875196",
+      "name": "Byron Young",
+      "position": "LB",
+      "jersey": 0,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875196.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "Vet Rest",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": 98,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Every-down starter workload (79% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Habitual Veteran Rest prior (Byron Young maintenance schedule)"
+      ],
+      "beatComment": ""
     },
     {
       "playerId": "2573401",
@@ -393,7 +393,7 @@
       "position": "RB",
       "jersey": 33,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5082269.png",
-      "injuryType": "Hand",
+      "injuryType": "Hand (Surgery)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -407,29 +407,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Hand) ahead of Week 9; must miss at least 4 games (earliest eligible Week 14)."
-    },
-    {
-      "playerId": "4697639",
-      "name": "Jaylen Watson",
-      "position": "CB",
-      "jersey": 35,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4697639.png",
-      "injuryType": "Shoulder",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 9,
-      "earliestEligibleWeek": 14,
-      "projectedReturnWeek": "Est. Week 14 (Dec 13)",
-      "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Shoulder) ahead of Week 9; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "Connors broke his hand in Sunday's win over the Chargers and is slated for surgery. He's worked as a core special-teamer this season but hasn't logged a snap on offense. As such, Connors' IR stint -- which will last at least four games -- isn't likely to cause any waves in fantasy."
     },
     {
       "playerId": "4569382",
@@ -451,7 +429,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Back) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
+      "beatNote": "This is another blow to the Rams' receiving corps, as Davante Adams (hamstring) is still on IR and Puka Nacua (knee/toe) is slated to miss several weeks. Whittington would have had a chance to carve out a major role in Los Angeles' wideout room, but instead he'll be sidelined until at least Dec. 20. The Rams signed Xavier Smith off San Francisco's practice squad Tuesday to take Whittington's place on the 53-man roster and in the WR corps."
     },
     {
       "playerId": "4430155",
@@ -482,20 +460,20 @@
       "jersey": 19,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259619.png",
       "injuryType": "Knee - ACL",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 6,
-      "earliestEligibleWeek": 10,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee - ACL); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Los Angeles placed Grupe on injured reserve earlier Monday and likely will work out multiple kickers over the next few days before deciding on a new option prior to Sunday's game against the Raiders. Signed off the Jets' practice squad last week, Grupe converted a 44-yard field goal in the first quarter of Sunday's contest before sustaining the season-ending injury while attempting to make a tackle on the ensuing kickoff return."
     },
     {
       "playerId": "4695022",
@@ -504,64 +482,20 @@
       "jersey": 40,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695022.png",
       "injuryType": "Knee",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Knee); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4877717",
-      "name": "Matthew Caldwell",
-      "position": "QB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877717.png",
-      "injuryType": "Undisclosed",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "3125114",
-      "name": "Poona Ford",
-      "position": "DT",
-      "jersey": 97,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125114.png",
-      "injuryType": "Triceps",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 7,
-      "earliestEligibleWeek": 12,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Triceps); awaiting 21-day practice window designation."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Rickert suffered a knee injury during Sunday's preseason game versus the Saints and will now be forced to miss the entirety of the 2026 campaign unless he's waived with an injury settlement. He had just signed with the Rams as an undrafted free agent earlier this month."
     },
     {
       "playerId": "16800",
@@ -608,11 +542,55 @@
       "beatNote": "Placed on Injured Reserve (Undisclosed) on Jun 4, 2026; ineligible to return in 2026 under NFL CBA rules."
     },
     {
+      "playerId": "4697639",
+      "name": "Jaylen Watson",
+      "position": "CB",
+      "jersey": 35,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4697639.png",
+      "injuryType": "Shoulder (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 9,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Watson exited Sunday's win over the Chargers early with a severe shoulder injury. The cornerback will undergo surgery while on IR, which will end his season. Watson ends the season with 24 tackles (14 solo) and nine passes defensed, including one interception, over seven regular-season games."
+    },
+    {
       "playerId": "4038843",
       "name": "Keir Thomas II",
       "position": "LB",
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038843.png",
+      "injuryType": "Groin",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Thomas suffered a groin injury during preseason play and was subsequently placed on season-ending injured reserve. However, since he was able to reach an injury settlement with Los Angeles, the linebacker could end up playing this season if he can get past his injury and sign with another team. With that said, Thomas hasn't played a regular-season NFL snap since 2024, so he may need to settle for a practice-squad deal."
+    },
+    {
+      "playerId": "4877717",
+      "name": "Matthew Caldwell",
+      "position": "QB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877717.png",
       "injuryType": "Undisclosed",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
@@ -627,7 +605,29 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 24, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Caldwell joined the team as an undrafted free agent in April but is now dealing with an undisclosed injury. The 23-year-old will now be forced to miss the entirety of the upcoming campaign unless he's waived with an injury settlement."
+    },
+    {
+      "playerId": "3125114",
+      "name": "Poona Ford",
+      "position": "DT",
+      "jersey": 97,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3125114.png",
+      "injuryType": "Triceps (Surgery)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 7,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "The move is an expected one, given that Ford suffered a season-ending triceps injury during the Rams' 18-16 loss to the Cardinals on Sunday. The veteran defensive tackle will shift his focus toward rehab and being fully healthy for the 2027 season, which is the final year of his three-year, $27.6 million contract with the Rams."
     },
     {
       "playerId": "4426515",
@@ -671,7 +671,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 24, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "McPhearson had been competing for a roster spot during the preseason before landing on injured reserve Aug. 24. That could have ended his campaign, but the injury settlement allows McPhearson to seek out a new contract and potentially play in 2026. The Texas Tech product was a fourth-round draft pick by Philadelphia in 2021 and played in 33 regular-season games (mostly on special teams) over his first two NFL campaigns but hasn't logged a regular-season snap since 2022."
     }
   ]
 }

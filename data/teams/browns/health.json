@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:08:40.209Z",
+  "updatedAt": "2026-11-25T20:35:52.714Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.clevelandbrowns.com/team/injury-report/",
@@ -33,6 +33,31 @@
         "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
       "beatComment": "questionable"
+    },
+    {
+      "playerId": "4832800",
+      "name": "Denzel Boston",
+      "position": "WR",
+      "jersey": 12,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832800.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Toe",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 82,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "82% • GTD",
+      "archetypeNote": "Every-down starter workload (90% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Questionable tag adjusted by player career prior (82%)"
+      ],
+      "beatComment": "Per Oyefusi, the Browns are holding a typical Thursday practice Wednesday, and will then have a short walkthrough on Thanksgiving day. Prior to a Week 11 bye, Boston logged 'DNPs' in the team's Wednesday and Thursday practices before being limited to close out his prep for Week 10 action. Though the WR approached Cleveland's 27-24 overtime win over the Texans on Nov. 15 listed as questionable, he was active and recorded an 85 percent snap share in the contest."
     },
     {
       "playerId": "3915535",
@@ -85,31 +110,6 @@
       "beatComment": "Williams has had his practice reps over the last couple of weeks limited while tending to a hamstring injury, but he has yet to miss a regular-season game, and that trend will continue for Sunday's home tilt. The veteran linebacker has accumulated 62 tackles (37 solo), including 1.0 sacks, three pass defenses and four forced fumbles through nine regular-season games."
     },
     {
-      "playerId": "4832800",
-      "name": "Denzel Boston",
-      "position": "WR",
-      "jersey": 12,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832800.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Toe",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (90% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "The rookie wideout entered play Sunday dealing with a toe injury and appeared to aggravate it versus Houston. At less than 100 percent health, Boston was unproductive in the box score and saw a microscopic five percent target share. After popping back up for 6-98-0 receiving last Sunday in New Orleans with Shedeur Sanders at quarterback, Boston reverted to his sluggish ways with Deshaun Watson in Week 10. Over his last four games with Watson, Boston has compiled 11 catches for 95 empty yards. Boston can't be trusted in fantasy lineups until he shows more consistency."
-    },
-    {
       "playerId": "3115336",
       "name": "Derek Barnett",
       "position": "DE",
@@ -155,8 +155,8 @@
       "projectedReturnWeek": "Week 12 Activation Window",
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "21-day practice window opened; eligible for 53-man roster activation (Quadriceps)."
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Davis injured his quad during training camp in late July and started the regular season on IR. His 21-day window opened Oct. 6, but he has not progressed enough in his recovery to warrant his removal from IR. That means that the 2022 sixth-rounder will be sidelined for the rest of the season unless he reaches an injury settlement with the Browns."
     },
     {
       "playerId": "4601080",
@@ -203,50 +203,6 @@
       "beatNote": "Burton was already ruled out for Sunday's game against the Texans due to a calf injury that he picked up against the Saints in Week 9. The injury is severe enough for him to warrant an extended absence, and since he's now on IR, Burton will be required to miss at least four games, so the earliest he can return is Week 15 against the Giants on Sunday, Dec. 20. Since the Browns do not have another fullback on the 53-man roster, the team will likely turn to tight ends Carsen Ryan, Zaire Mitchell-Paden and Blake Whiteheart to provide blocking out of the backfield, per Daniel Oyefusi of ESPN.com."
     },
     {
-      "playerId": "4374280",
-      "name": "Edefuan Ulofoshio",
-      "position": "LB",
-      "jersey": 54,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374280.png",
-      "injuryType": "Biceps",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Biceps); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4258599",
-      "name": "Jeremiah Owusu-Koramoah",
-      "position": "LB",
-      "jersey": 6,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258599.png",
-      "injuryType": "Neck",
-      "status": "Reserve / PUP",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 1,
-      "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Reserve/PUP",
-      "beatNote": "4-game minimum satisfied on Reserve / PUP (Neck); awaiting 21-day practice window designation."
-    },
-    {
       "playerId": "4565859",
       "name": "Joe Royer",
       "position": "TE",
@@ -288,7 +244,7 @@
       "byeWeekNote": "Week 11 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Back); awaiting 21-day practice window designation."
+      "beatNote": "Jenkins has yet to play in the 2026 regular season due to a persistent back injury. The issue seems to be significant enough that Jenkins will not be able to return to the field soon, leaving the Browns no choice but to place the guard on IR."
     },
     {
       "playerId": "4570119",
@@ -296,7 +252,7 @@
       "position": "DE",
       "jersey": 91,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570119.png",
-      "injuryType": "Achilles",
+      "injuryType": "Achilles (Surgery)",
       "status": "Season-Ending IR",
       "isSeasonEnding": true,
       "isPracticeWindowOpen": false,
@@ -310,7 +266,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Achilles) on Aug 23, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "Wright picked up the injury during Thursday's joint practice with the Bills during a one-on-one drill with offensive tackle Spencer Brown. Follow-up tests revealed the extent of Wright's injury, which will sideline the 2022 third-rounder for the upcoming season. Isaiah McGuire is slated to start at defensive end opposite Jared Verse for the upcoming season, with the Browns adding depth to the position by signing Derek Barnett to a one-year contract."
     },
     {
       "playerId": "4240707",
@@ -332,7 +288,51 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 11, 2026; ineligible to return in 2026 under NFL CBA rules."
+      "beatNote": "ir"
+    },
+    {
+      "playerId": "4374280",
+      "name": "Edefuan Ulofoshio",
+      "position": "LB",
+      "jersey": 54,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374280.png",
+      "injuryType": "Biceps",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Ulofoshio suffered a biceps injury in Cleveland's final preseason contest Thursday and was waived/injured Sunday. He went unclaimed on waivers and consequently reverted to injured reserve. As a result, Ulofoshio won't be able to play during the 2026 season unless he reaches an injury settlement with the Browns."
+    },
+    {
+      "playerId": "4258599",
+      "name": "Jeremiah Owusu-Koramoah",
+      "position": "LB",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258599.png",
+      "injuryType": "Neck",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "out"
     }
   ]
 }

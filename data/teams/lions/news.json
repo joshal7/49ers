@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:01:03.964Z",
+  "updatedAt": "2026-11-25T20:43:53.598Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-25T20:01:03.964Z",
+    "generatedAt": "2026-11-25T20:43:53.598Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,32 +15,30 @@
       "hasThu": true,
       "hasFri": false
     },
-    "wordCount": 203,
+    "wordCount": 217,
     "headline": "Lions (8-2) Week 12 Briefing: Thursday Injury Report Ahead of Bears",
     "summary": "",
     "bullets": [
       "Injury & Practice Status: S Chuck Clark (hamstring) logged limited practice reps Thursday [Dave Birkett](https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222). DT Skyler Gill-Howard (knee), CB Ennis Rakestraw Jr. (shoulder), and LB DJ Wonnum (back) did not practice Thursday, while CB D.J. Reed (hip) and TE Sam LaPorta (ankle) practiced in full [Erik Schlitt](https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday).",
-      "Week 12 Bears Outlook: Dan Campbell and DC Kelvin Sheppard open installation for the Chicago Bears (8-2, CHI -1.5, HC Ben Johnson, OC Press Taylor & DC Dennis Allen (Ford Field))—a unit ranked #3 in Rushing Yards / Game (142.4 yds) as Detroit prepares for a pivotal NFC matchup [Jeremy Reisman](https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper) [Erik Schlitt](https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks).",
-      "NFC Playoff Trajectory: Entering Week 12 at 8-2 (1st in NFC North • #2 Seed in NFC), Detroit carries a 90.3% postseason projection, 42.1% NFC North division title mark, and 15.9% #1 Seed Bye equity into the conference stretch [Jeremy Reisman](https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper).",
+      "Week 12 Bears Outlook: Dan Campbell and DC Kelvin Sheppard open installation for the Chicago Bears (8-2, CHI -1.5, HC Ben Johnson, OC Press Taylor & DC Dennis Allen (Ford Field))—a unit ranked #3 in Rushing Yards / Game (142.4 yds) as Detroit prepares for a pivotal NFC matchup [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions) [Jeremy Reisman](https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper).",
+      "NFC Playoff Trajectory: Entering Week 12 at 8-2 (1st in NFC North • #2 Seed in NFC), Detroit carries a 91.9% postseason projection, 46% NFC North division title mark, and 18.8% #1 Seed Bye equity into the conference stretch [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions).",
+      "Around the Beat: Jahmyr Gibbs and Chuba Hubbard have been a cut above [PFF](https://x.com/PFF/status/2125681059723686232).",
       "Statistical Profile & Matchup Edge: Through Week 11, Detroit ranks #5 in Points / Game (28.8), #15 in Points Allowed / Game (22.0), #15 in Turnover Differential (+2), giving Dan Campbell and Kelvin Sheppard a clear benchmark ahead of Thu, Nov 26, 1:00 PM EST • NFL TV at [object Object] against the Chicago Bears [Jeremy Reisman](https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper)."
     ],
-    "coveredStoryKeys": [
-      "janegoodell::roster_departure",
-      "team::weekly_injury_report"
-    ],
+    "coveredStoryKeys": [],
     "coveredUrls": [
       "https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222",
       "https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday",
+      "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper",
-      "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks",
       "https://bsky.app/profile/detroitfootball.net/post/3n35pjhbvo42x",
+      "https://x.com/PFF/status/2125681059723686232",
       "https://bsky.app/profile/detroitfootball.net/post/3n35usyrhvb26",
       "https://x.com/PFF/status/2125648069714985014",
       "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n35rzdhvkk2p",
+      "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks",
       "https://bsky.app/profile/detroitfootball.net/post/3n35uuvhpa22a",
       "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n357qyzdrs2s",
-      "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
-      "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182377/lions-week-12-preview-breaking-down-bears-offensive-defensive-schemes",
       "https://bsky.app/profile/erikschlitt.bsky.social/post/3n35cghmfek22",
       "https://bsky.app/profile/erikschlitt.bsky.social/post/3n35vwqohzc27",
@@ -48,14 +46,14 @@
       "https://bsky.app/profile/erikschlitt.bsky.social/post/3n32lvkhvck2b",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182613/detroit-lions-chicago-bears-5-qs-preview-caleb-williams-mvp-candidate",
       "https://bsky.app/profile/davebirkett.bsky.social/post/3n343o6afh22d",
+      "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
+      "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/",
       "https://www.espn.com/nfl/story/_/id/50588773/long-lions-owner-martha-firestone-ford-dies-age-101",
       "https://www.prideofdetroit.com/detroit-lions-news/182636/former-detroit-lions-owner-martha-firestone-ford-dies-at-age-101",
       "https://bsky.app/profile/detroitfootball.net/post/3n33ehilvyj2z",
       "https://www.profootballrumors.com/2026/11/lions-dt-skyler-gill-howard-suffers-season-ending-knee-injury",
       "https://www.prideofdetroit.com/detroit-lions-news/182582/detroit-lions-lose-another-defender-to-season-ending-injury",
-      "https://bsky.app/profile/detroitfootball.net/post/3n33g5eh6np2x",
-      "https://x.com/NFL/status/2125436252371759600",
-      "https://bsky.app/profile/erikschlitt.bsky.social/post/3n33olkbric2p"
+      "https://bsky.app/profile/detroitfootball.net/post/3n33g5eh6np2x"
     ],
     "sources": [
       {
@@ -76,19 +74,19 @@
       },
       {
         "type": "article",
+        "author": "ProFootballTalk",
+        "outlet": "ProFootballTalk",
+        "title": "PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
+        "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions",
+        "publishedAt": "2026-11-25T20:00:26.000Z"
+      },
+      {
+        "type": "article",
         "author": "Jeremy Reisman",
         "outlet": "Pride of Detroit",
         "title": "Detroit Lions vs. Chicago Bears preview, prediction: On Paper",
         "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper",
         "publishedAt": "2026-11-25T18:26:03.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Erik Schlitt",
-        "outlet": "Pride of Detroit",
-        "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving",
-        "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks",
-        "publishedAt": "2026-11-25T19:38:05.000Z"
       },
       {
         "type": "tweet",
@@ -97,6 +95,14 @@
         "title": "It showed up in my writing and the podcast, I undeniably doubted Roger McCreary. But since Week 5, he's been on a roll, and, not coincidentally, so has Detroit's defense. \"He’s",
         "url": "https://bsky.app/profile/detroitfootball.net/post/3n35pjhbvo42x",
         "publishedAt": "2026-11-25T17:43:52.299Z"
+      },
+      {
+        "type": "tweet",
+        "author": "PFF",
+        "outlet": "PFF",
+        "title": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
+        "url": "https://x.com/PFF/status/2125681059723686232",
+        "publishedAt": "2026-11-25T20:00:32.000Z"
       },
       {
         "type": "tweet",
@@ -123,6 +129,14 @@
         "publishedAt": "2026-11-25T18:28:33.510Z"
       },
       {
+        "type": "article",
+        "author": "Erik Schlitt",
+        "outlet": "Pride of Detroit",
+        "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving",
+        "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks",
+        "publishedAt": "2026-11-25T19:38:05.000Z"
+      },
+      {
         "type": "tweet",
         "author": "Justin Rogers",
         "outlet": "Justin Rogers",
@@ -137,22 +151,6 @@
         "title": "RIP Martha Ford Those of us who inherited the Lions and live here have a complicated relationship with the Fords. BUT, Martha was in an impossibly tough spot after WCF died.",
         "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n357qyzdrs2s",
         "publishedAt": "2026-11-25T13:01:46.763Z"
-      },
-      {
-        "type": "article",
-        "author": "Jeremy Reisman",
-        "outlet": "Pride of Detroit",
-        "title": "Teams, media, fans share tributes to former Detroit Lions owner Martha Ford",
-        "url": "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
-        "publishedAt": "2026-11-25T12:38:30.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Dave Birkett",
-        "outlet": "Dave Birkett",
-        "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season",
-        "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/",
-        "publishedAt": "2026-11-24T20:33:25.082Z"
       }
     ]
   },
@@ -161,10 +159,22 @@
       "id": "det_cl_top",
       "category": "beat",
       "headline": "Detroit Lions Week 12 Top Headlines (8-2)",
-      "summary": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving — NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving www.prideofdetroit.com/detroit-lion...",
-      "updatedAt": "2026-11-25T19:38:05.000Z",
+      "summary": "Jahmyr Gibbs and Chuba Hubbard have been a cut above — PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
+      "updatedAt": "2026-11-25T20:00:32.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "PFF",
+          "title": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
+          "url": "https://x.com/PFF/status/2125681059723686232",
+          "publishedAt": "2026-11-25T20:00:32.000Z"
+        },
+        {
+          "label": "ProFootballTalk",
+          "title": "PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
+          "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions",
+          "publishedAt": "2026-11-25T20:00:26.000Z"
+        },
         {
           "label": "Erik Schlitt",
           "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving",
@@ -173,7 +183,7 @@
         },
         {
           "label": "Erik Schlitt",
-          "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving www.prideofdetroit.com/detroit-lion...",
+          "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving\nwww.prideofdetroit.com/detroit-lion...",
           "url": "https://bsky.app/profile/erikschlitt.bsky.social/post/3n35vwqohzc27",
           "publishedAt": "2026-11-25T19:38:41.666Z"
         },
@@ -188,18 +198,6 @@
           "title": "The Detroit Lions announced the team will have a moment of silence for former owner Martha Firestone Ford ahead of tomorrow's game and players will wear a MFF helmet decal for the contest. A jersey patch will be added ahead of the team's next contest, Dec. 6 in Atlanta.",
           "url": "https://bsky.app/profile/detroitfootball.net/post/3n35usyrhvb26",
           "publishedAt": "2026-11-25T19:18:41.997Z"
-        },
-        {
-          "label": "PFF",
-          "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
-          "url": "https://x.com/PFF/status/2125648069714985014",
-          "publishedAt": "2026-11-25T17:49:27.000Z"
-        },
-        {
-          "label": "Nick Baumgardner",
-          "title": "NEW to the YouTube channel (like & subscribe!) Dan Campbell & Ben Johnson: Brothers in Football www.youtube.com/watch?v=MxkU...",
-          "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n35rzdhvkk2p",
-          "publishedAt": "2026-11-25T18:28:33.510Z"
         }
       ]
     },
@@ -253,13 +251,13 @@
       "id": "det_cl_film",
       "category": "film",
       "headline": "Lions All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE — NOTEBOOK: Scruggs anchoring Lions' offensive line",
+      "summary": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE — NOTEBOOK: Scruggs anchoring Lions' offensive line",
       "updatedAt": "2026-11-25T17:49:27.000Z",
       "itemCount": 5,
       "sourceLinks": [
         {
           "label": "PFF",
-          "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+          "title": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE",
           "url": "https://x.com/PFF/status/2125648069714985014",
           "publishedAt": "2026-11-25T17:49:27.000Z"
         },
@@ -283,7 +281,7 @@
         },
         {
           "label": "Erik Schlitt",
-          "title": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets www.prideofdetroit.com/detroit-lion...",
+          "title": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets\nwww.prideofdetroit.com/detroit-lion...",
           "url": "https://bsky.app/profile/erikschlitt.bsky.social/post/3n2yhyrvgmc23",
           "publishedAt": "2026-11-23T15:45:58.973Z"
         }
@@ -293,13 +291,13 @@
       "id": "det_cl_roster",
       "category": "roster",
       "headline": "Lions Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season www.freep.com/story/sports... — Lions DT Skyler Gill-Howard Suffers Season-Ending Knee Injury",
+      "summary": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season\n\nwww.freep.com/story/sports... — Lions DT Skyler Gill-Howard Suffers Season-Ending Knee Injury",
       "updatedAt": "2026-11-24T20:33:25.082Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Dave Birkett",
-          "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season www.freep.com/story/sports...",
+          "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season\n\nwww.freep.com/story/sports...",
           "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n33ijojquc2j",
           "publishedAt": "2026-11-24T20:33:25.082Z"
         },
@@ -338,107 +336,15 @@
   ],
   "rawStream": [
     {
-      "id": "det_yts_PWphJLZ89e4",
-      "type": "video",
-      "videoId": "PWphJLZ89e4",
-      "embeddable": false,
-      "title": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
+      "id": "x_tl_pff_2125681059723686232",
+      "type": "tweet",
+      "title": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
+      "fullText": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
+      "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
-      "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-25T20:01:03.964Z",
-      "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0736
-    },
-    {
-      "id": "det_yts_nnXZ7q24zqo",
-      "type": "video",
-      "videoId": "nnXZ7q24zqo",
-      "embeddable": false,
-      "title": "Jared Goff Every Throw & Run | Week 11",
-      "summary": "",
-      "imageUrl": "https://i.ytimg.com/vi/nnXZ7q24zqo/hqdefault.jpg",
-      "imageAlt": "Jared Goff Every Throw & Run | Week 11",
-      "publishedAt": "2026-11-25T20:01:03.964Z",
-      "url": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "3046779",
-          "name": "Jared Goff",
-          "shortName": "J. Goff",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3046779.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0736
-    },
-    {
-      "id": "det_yts_ZVavJVtF4Z8",
-      "type": "video",
-      "videoId": "ZVavJVtF4Z8",
-      "embeddable": false,
-      "title": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "summary": "",
-      "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
-      "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "publishedAt": "2026-11-25T20:01:03.964Z",
-      "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
+      "imageUrl": "https://pbs.twimg.com/media/HX_vp96aEAAK04r.jpg",
+      "imageAlt": "PFF post",
+      "hasInlineChartImage": true,
       "mentionedPlayers": [
         {
           "id": "4429795",
@@ -449,6 +355,20 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429795.png"
         }
       ],
+      "publishedAt": "2026-11-25T20:00:32.000Z",
+      "url": "https://x.com/PFF/status/2125681059723686232",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "national_film",
+      "outletName": "PFF",
+      "reporterId": "pff_official",
+      "reporterName": "PFF",
+      "author": "PFF",
+      "authorHandle": "@PFF",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -457,34 +377,31 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
+      "credibilityScore": 90,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0736
+      "storyRank": 28.5879
     },
     {
-      "id": "det_yts_u9ggzabBnEo",
-      "type": "video",
-      "videoId": "u9ggzabBnEo",
-      "embeddable": false,
-      "title": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "imageUrl": "https://i.ytimg.com/vi/u9ggzabBnEo/hqdefault.jpg",
-      "imageAlt": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-25T20:01:03.964Z",
-      "url": "https://www.youtube.com/watch?v=u9ggzabBnEo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
+      "id": "det_pft_1fd3eca01bd1",
+      "type": "article",
+      "title": "PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
+      "summary": "Mike Florio digs into the biggest early Thanksgiving game ever, when the Bears and Lions duel for NFC North supremacy in Detroit.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/Y4GIWOPffbii?auto=true",
+      "imageAlt": "PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
+      "publishedAt": "2026-11-25T20:00:26.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
@@ -494,14 +411,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
+      "credibilityScore": 88,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0736
+      "storyRank": 25.9276
     },
     {
       "id": "det_brss_pride_of_detroit_c7e7589ef5fe",
@@ -535,13 +450,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 35.3638
+      "storyRank": 20.2764
     },
     {
       "id": "det_bsky_366bc7162d15",
       "type": "tweet",
-      "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving www.prideofdetroit.com/detroit-lion...",
-      "fullText": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving www.prideofdetroit.com/detroit-lion...",
+      "title": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "NFL predictions: 4 keys to a Lions victory over the Bears in Week 12 on Thanksgiving\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreia2bz42e2ilxypbnacvp53heiy6crhfka66u7pgmit4z7vtup5feu",
@@ -573,7 +488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 34.5266
+      "storyRank": 19.7329
     },
     {
       "id": "det_bsky_bc08f8f113a5",
@@ -583,6 +498,13 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:mifhdxms7uvx3sb3chvovwr6/bafkreidmchj3vwwlwlfws3bszfgvoeefq2fnqsx3p5tp2q65wgu25szmre",
+      "imageUrls": [
+        "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:mifhdxms7uvx3sb3chvovwr6/bafkreidmchj3vwwlwlfws3bszfgvoeefq2fnqsx3p5tp2q65wgu25szmre",
+        "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:mifhdxms7uvx3sb3chvovwr6/bafkreieztgtiu4kghokimmgilwe4rucsicfljs3p7m42erw2qmrcx7om3a",
+        "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:mifhdxms7uvx3sb3chvovwr6/bafkreidgmuylj66mhevcepgjo35ktccr3giomap44v6ceaycinf3wcbj6m",
+        "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:mifhdxms7uvx3sb3chvovwr6/bafkreid5keequf5rely3iahbepigzynquvqps33e2v7bp65qh2waellaoy"
+      ],
+      "hasInlineChartImage": true,
       "imageAlt": "Justin Rogers post",
       "publishedAt": "2026-11-25T19:19:45.793Z",
       "url": "https://bsky.app/profile/detroitfootball.net/post/3n35uuvhpa22a",
@@ -611,7 +533,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 26.2261
+      "storyRank": 16.3147
     },
     {
       "id": "det_bsky_98b7b2453030",
@@ -649,13 +571,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.8627
+      "storyRank": 16.1531
     },
     {
       "id": "x_tl_pff_2125648069714985014",
       "type": "tweet",
-      "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
-      "fullText": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+      "title": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE",
+      "fullText": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/media/HX_RbnAXoAACDFD.jpg",
@@ -688,7 +610,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.766,
+      "breakingPriority": 0.733,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -698,13 +620,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 17.8216
+      "storyRank": 13.7899
     },
     {
       "id": "det_bsky_5489b955508d",
       "type": "tweet",
-      "title": "NEW to the YouTube channel (like & subscribe!) Dan Campbell & Ben Johnson: Brothers in Football www.youtube.com/watch?v=MxkU...",
-      "fullText": "NEW to the YouTube channel (like & subscribe!) Dan Campbell & Ben Johnson: Brothers in Football www.youtube.com/watch?v=MxkU...",
+      "title": "NEW to the YouTube channel (like & subscribe!)\n\nDan Campbell & Ben Johnson: Brothers in Football\n\nwww.youtube.com/watch?v=MxkU...",
+      "fullText": "NEW to the YouTube channel (like & subscribe!)\n\nDan Campbell & Ben Johnson: Brothers in Football\n\nwww.youtube.com/watch?v=MxkU...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:377szmobv24dravpuuu5ihem/bafkreihf6zfyptk4pjxbpphldnictnghch63lfoplukvubj4ajgbvv6s6y",
@@ -737,7 +659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.115
+      "storyRank": 10.7891
     },
     {
       "id": "det_brss_pride_of_detroit_08619fae17e4",
@@ -771,7 +693,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.2912
+      "storyRank": 10.9664
     },
     {
       "id": "det_bsky_7413304d7854",
@@ -818,7 +740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.7324
+      "storyRank": 8.1989
     },
     {
       "id": "det_brss_pride_of_detroit_15660b5b4bc2",
@@ -852,7 +774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5973
+      "storyRank": 6.1524
     },
     {
       "id": "det_brss_pride_of_detroit_c9fa3791dd23",
@@ -886,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2876
+      "storyRank": 4.4725
     },
     {
       "id": "det_bsky_827235304401",
@@ -925,13 +847,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6523
+      "storyRank": 3.2034
     },
     {
       "id": "det_bsky_bfb4ce989cd1",
       "type": "tweet",
-      "title": "Lions Week 12 preview: Breaking down Bears’ offensive and defensive schemes www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions Week 12 preview: Breaking down Bears’ offensive and defensive schemes www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions Week 12 preview: Breaking down Bears’ offensive and defensive schemes\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions Week 12 preview: Breaking down Bears’ offensive and defensive schemes\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiajmvxau66q37vh72ufiis6bbfamtwaxuu3isl7prjuhussa4znpe",
@@ -963,13 +885,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4738
+      "storyRank": 3.0583
     },
     {
       "id": "det_bsky_fdf162e71e23",
       "type": "tweet",
-      "title": "RIP Martha Ford Those of us who inherited the Lions and live here have a complicated relationship with the Fords. BUT, Martha was in an impossibly tough spot after WCF died. Getting the team to Sheila is the best thing anyone's done for the franchise in 50+ years. May that be her legacy. 🫡",
-      "fullText": "RIP Martha Ford Those of us who inherited the Lions and live here have a complicated relationship with the Fords. BUT, Martha was in an impossibly tough spot after WCF died. Getting the team to Sheila is the best thing anyone's done for the franchise in 50+ years. May that be her legacy. 🫡",
+      "title": "RIP Martha Ford\n\nThose of us who inherited the Lions and live here have a complicated relationship with the Fords.\n\nBUT, Martha was in an impossibly tough spot after WCF died. Getting the team to Sheila is the best thing anyone's done for the franchise in 50+ years. May that be her legacy. 🫡",
+      "fullText": "RIP Martha Ford\n\nThose of us who inherited the Lions and live here have a complicated relationship with the Fords.\n\nBUT, Martha was in an impossibly tough spot after WCF died. Getting the team to Sheila is the best thing anyone's done for the franchise in 50+ years. May that be her legacy. 🫡",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -1001,7 +923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1341
+      "storyRank": 2.7833
     },
     {
       "id": "det_brss_pride_of_detroit_feb209abe74e",
@@ -1035,13 +957,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0354
+      "storyRank": 2.7097
     },
     {
       "id": "det_bsky_db18b8a5bdc9",
       "type": "tweet",
-      "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season www.freep.com/story/sports...",
-      "fullText": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season www.freep.com/story/sports...",
+      "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season\n\nwww.freep.com/story/sports...",
+      "fullText": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season\n\nwww.freep.com/story/sports...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -1082,7 +1004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1497
+      "storyRank": 3.0414
     },
     {
       "id": "det_pfr_c9ff7aa242f3",
@@ -1124,7 +1046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1572
+      "storyRank": 3.049
     },
     {
       "id": "det_brss_pride_of_detroit_63e6c097cb47",
@@ -1167,7 +1089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0823
+      "storyRank": 2.9792
     },
     {
       "id": "det_bsky_a90ce57ce6e8",
@@ -1214,7 +1136,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0418
+      "storyRank": 2.9401
     },
     {
       "id": "det_bsky_24dfeb5a4a39",
@@ -1261,7 +1183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9849
+      "storyRank": 2.8866
     },
     {
       "id": "det_espn_ed610992ac64e",
@@ -1271,7 +1193,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2015/1105/r23136_600x400_3-2.jpg",
       "imageCaption": "Martha Firestone Ford took over ownership of the Lions in 2014 following the death of her husband, William Clay Ford Sr.",
       "imageAlt": "Longtime Lions owner Martha Firestone Ford dies at age 101",
-      "publishedAt": "2026-11-25T05:43:02Z",
+      "publishedAt": "2026-11-25T05:43:02.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50588773/long-lions-owner-martha-firestone-ford-dies-age-101",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -1296,7 +1218,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3138
+      "storyRank": 1.2329
     },
     {
       "id": "x_tl_nfl_2125436252371759600",
@@ -1304,8 +1226,8 @@
       "title": "Jane Goodell and NFL Commissioner Roger Goodell tonight released the below statement regarding the passing of Detroit Lions Owner/Chair Emeritus Martha Firestone Ford:",
       "fullText": "Jane Goodell and NFL Commissioner Roger Goodell tonight released the below statement regarding the passing of Detroit Lions Owner/Chair Emeritus Martha Firestone Ford:",
       "isFullTweet": true,
-      "summary": "The NFL family mourns the loss of Lions Owner/Chair Emeritus Martha Firestone Ford. We extend our deepest condolences to her family, friends and the entire Detroit community. https://t.co/t5ntyalf1l",
-      "imageUrl": "https://pbs.twimg.com/media/HX8QddJaMAEBsLr.png",
+      "summary": "The NFL family mourns the loss of Lions Owner/Chair Emeritus Martha Firestone Ford. We extend our deepest condolences to her family, friends and the entire Detroit community.",
+      "imageUrl": "https://pbs.twimg.com/media/HX8QddJaMAEBsLr.png?name=orig",
       "imageAlt": "NFL post",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-25T03:47:45.918Z",
@@ -1335,7 +1257,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2066
+      "storyRank": 1.1402
     },
     {
       "id": "det_brss_pride_of_detroit_988283ab3d6c",
@@ -1386,13 +1308,128 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5338
+      "storyRank": 1.473
+    },
+    {
+      "id": "det_bsky_c87f5993547e",
+      "type": "tweet",
+      "title": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
+      "fullText": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-25T02:15:56.868Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n343o6afh22d",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "category": "beat",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9081
+    },
+    {
+      "id": "det_rss_cb8cd7557301",
+      "type": "article",
+      "title": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
+      "summary": "",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ye47bjgz2n3iyogelzxu.jpg",
+      "imageAlt": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
+      "publishedAt": "2026-11-25T02:02:01.000Z",
+      "url": "https://www.detroitlions.com/news/lions-owner-chair-emeritus-martha-firestone-ford-passes-away-at-101",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9239
+    },
+    {
+      "id": "det_rss_727483a8843b",
+      "type": "article",
+      "title": "NOTEBOOK: Scruggs anchoring Lions' offensive line",
+      "summary": "Tim Twentyman covers all the Detroit Lions news of the day including center Juice Scruggs' performance, injury updates and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/im5jle525nkpu2wj3dnw.jpg",
+      "imageAlt": "NOTEBOOK: Scruggs anchoring Lions' offensive line",
+      "publishedAt": "2026-11-24T22:22:00.000Z",
+      "url": "https://www.detroitlions.com/news/notebook-scruggs-anchoring-lions-offensive-line-gillhoward-reed",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361425",
+          "name": "Juice Scruggs",
+          "shortName": "J. Scruggs",
+          "position": "G",
+          "jersey": 70,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361425.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1969
     },
     {
       "id": "det_bsky_deab6a39e2fa",
       "type": "tweet",
-      "title": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiemgbnr7x6tcv47adw7dmogq5icwkfl47525i6ydu7i5mgfhebp7q",
@@ -1441,7 +1478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.487
+      "storyRank": 1.4284
     },
     {
       "id": "det_rss_698cc6e5922f",
@@ -1475,7 +1512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5002
+      "storyRank": 1.4417
     },
     {
       "id": "det_pfr_fe7efe21290b",
@@ -1508,7 +1545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0044
+      "storyRank": 0.9523
     },
     {
       "id": "det_brss_pride_of_detroit_6f1734a87688",
@@ -1542,13 +1579,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9984
+      "storyRank": 0.9474
     },
     {
       "id": "det_bsky_76e56c7a0782",
       "type": "tweet",
-      "title": "Detroit Lions matriarch Martha Ford dies at age 101 www.freep.com/story/sports...",
-      "fullText": "Detroit Lions matriarch Martha Ford dies at age 101 www.freep.com/story/sports...",
+      "title": "Detroit Lions matriarch Martha Ford dies at age 101\n\nwww.freep.com/story/sports...",
+      "fullText": "Detroit Lions matriarch Martha Ford dies at age 101\n\nwww.freep.com/story/sports...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -1580,45 +1617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9588
-    },
-    {
-      "id": "det_bsky_c87f5993547e",
-      "type": "tweet",
-      "title": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
-      "fullText": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-25T02:15:56.868Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n343o6afh22d",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
-      "trustTier": 1,
-      "category": "beat",
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9567
+      "storyRank": 0.91
     },
     {
       "id": "x_tl_justin_rogers_2125411413820682319",
@@ -1657,84 +1656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0788
-    },
-    {
-      "id": "det_rss_cb8cd7557301",
-      "type": "article",
-      "title": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
-      "summary": "",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ye47bjgz2n3iyogelzxu.jpg",
-      "imageAlt": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
-      "publishedAt": "2026-11-25T02:02:01.000Z",
-      "url": "https://www.detroitlions.com/news/lions-owner-chair-emeritus-martha-firestone-ford-passes-away-at-101",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9727
-    },
-    {
-      "id": "det_rss_727483a8843b",
-      "type": "article",
-      "title": "NOTEBOOK: Scruggs anchoring Lions' offensive line",
-      "summary": "Tim Twentyman covers all the Detroit Lions news of the day including center Juice Scruggs' performance, injury updates and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/im5jle525nkpu2wj3dnw.jpg",
-      "imageAlt": "NOTEBOOK: Scruggs anchoring Lions' offensive line",
-      "publishedAt": "2026-11-24T22:22:00.000Z",
-      "url": "https://www.detroitlions.com/news/notebook-scruggs-anchoring-lions-offensive-line-gillhoward-reed",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4361425",
-          "name": "Juice Scruggs",
-          "shortName": "J. Scruggs",
-          "position": "G",
-          "jersey": 70,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361425.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.246
+      "storyRank": 1.0243
     },
     {
       "id": "det_vid_a8b98df6299e",
@@ -1779,7 +1701,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.79
+      "storyRank": 0.7557
     },
     {
       "id": "det_vid_6e2e5c655a5d",
@@ -1824,7 +1746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.787
+      "storyRank": 0.7529
     },
     {
       "id": "det_vid_8a6e7909f516",
@@ -1877,7 +1799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7265
+      "storyRank": 0.6967
     },
     {
       "id": "det_pwire_4374302_49949224",
@@ -1909,7 +1831,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6626
+      "storyRank": 0.6367
     },
     {
       "id": "det_vid_ff315d084fd5",
@@ -1954,7 +1876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6524
+      "storyRank": 0.6275
     },
     {
       "id": "det_bsky_66c9bc0bcd4a",
@@ -2001,14 +1923,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6172,
+      "storyRank": 0.5941,
       "isSupersededInjuryUpdate": true
     },
     {
       "id": "det_bsky_79bcbe2d6dd1",
       "type": "tweet",
-      "title": "Lions can’t let Jeffery Simmons wreck their Thanksgiving. “He’s a really special football player.” www.freep.com/story/sports...",
-      "fullText": "Lions can’t let Jeffery Simmons wreck their Thanksgiving. “He’s a really special football player.” www.freep.com/story/sports...",
+      "title": "Lions can’t let Jeffery Simmons wreck their Thanksgiving. “He’s a really special football player.”\n\nwww.freep.com/story/sports...",
+      "fullText": "Lions can’t let Jeffery Simmons wreck their Thanksgiving. “He’s a really special football player.”\n\nwww.freep.com/story/sports...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -2040,13 +1962,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6125
+      "storyRank": 0.5896
     },
     {
       "id": "det_bsky_9d75c2abcf01",
       "type": "tweet",
-      "title": "NFL Week 12 power rankings: Lions a consensus Top 10 team for first time this season www.prideofdetroit.com/detroit-lion...",
-      "fullText": "NFL Week 12 power rankings: Lions a consensus Top 10 team for first time this season www.prideofdetroit.com/detroit-lion...",
+      "title": "NFL Week 12 power rankings: Lions a consensus Top 10 team for first time this season\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "NFL Week 12 power rankings: Lions a consensus Top 10 team for first time this season\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreicp3jloug7m6d4chrx2sfgr2ckix2g3bonvudxnbw3g67x6eu4dwe",
@@ -2078,7 +2000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6039
+      "storyRank": 0.5816
     },
     {
       "id": "det_espn_449171876b717",
@@ -2088,7 +2010,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1124/r1750486_608x342_16-9.jpg",
       "imageCaption": "Mahomes [608x342]",
       "imageAlt": "Seven things Solak thinks for NFL Week 12: Takes on Chiefs-Bills, Giants, Lions",
-      "publishedAt": "2026-11-24T17:03:20Z",
+      "publishedAt": "2026-11-24T17:03:20.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
       "outletId": "espn_national",
       "outletName": "ESPN",
@@ -2113,7 +2035,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5667
+      "storyRank": 0.5471
     },
     {
       "id": "det_brss_pride_of_detroit_fad9226d0a06",
@@ -2147,7 +2069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5432
+      "storyRank": 0.5249
     },
     {
       "id": "det_rss_b16b20d342cb",
@@ -2181,7 +2103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5381
+      "storyRank": 0.5202
     },
     {
       "id": "det_espn_406fa2ad56057",
@@ -2191,7 +2113,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1124/ss_20261124_103851729_3759244651/ss_20261124_103851729_3759244651.jpg",
       "imageCaption": "Stephen A.: Bears-Lions a big-time game",
       "imageAlt": "Stephen A.: Bears-Lions a big-time game",
-      "publishedAt": "2026-11-24T15:55:30Z",
+      "publishedAt": "2026-11-24T15:55:30.000Z",
       "url": "https://www.espn.com/video/clip/_/id/50583260/bears-lions-big-game",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -2217,7 +2139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5362
+      "storyRank": 0.5184
     },
     {
       "id": "det_brss_pride_of_detroit_586ed38dd66b",
@@ -2260,7 +2182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8822
+      "storyRank": 0.8554
     },
     {
       "id": "det_rss_9f2a94fc3b62",
@@ -2294,7 +2216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4645
+      "storyRank": 0.4492
     },
     {
       "id": "det_vid_32148a142432",
@@ -2330,7 +2252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5193
+      "storyRank": 0.5024
     },
     {
       "id": "det_vid_4d53d4bdb819",
@@ -2366,13 +2288,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4903
+      "storyRank": 0.475
     },
     {
       "id": "det_bsky_ef1e2d2afcbe",
       "type": "tweet",
-      "title": "Survey: Will the Lions beat the Bears on Thanksgiving? www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Survey: Will the Lions beat the Bears on Thanksgiving? www.prideofdetroit.com/detroit-lion...",
+      "title": "Survey: Will the Lions beat the Bears on Thanksgiving?\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Survey: Will the Lions beat the Bears on Thanksgiving?\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreia3vylwfgf2bweftghq53ymd5bdyvpcllyi6fdwwx5ov73raeiv2a",
@@ -2404,7 +2326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4348
+      "storyRank": 0.422
     },
     {
       "id": "det_rss_46c025b4bc09",
@@ -2438,13 +2360,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4494
+      "storyRank": 0.4361
     },
     {
       "id": "det_bsky_929720614785",
       "type": "tweet",
-      "title": "have to remember: One of the offensive assistants who worked under Dan Campbell (and others) in New Orleans was Joe Brady DC also does a great job of making everyone think he's a dip, when in reality he's the opposite",
-      "fullText": "have to remember: One of the offensive assistants who worked under Dan Campbell (and others) in New Orleans was Joe Brady DC also does a great job of making everyone think he's a dip, when in reality he's the opposite",
+      "title": "have to remember: One of the offensive assistants who worked under Dan Campbell (and others) in New Orleans was Joe Brady\n\nDC also does a great job of making everyone think he's a dip, when in reality he's the opposite",
+      "fullText": "have to remember: One of the offensive assistants who worked under Dan Campbell (and others) in New Orleans was Joe Brady\n\nDC also does a great job of making everyone think he's a dip, when in reality he's the opposite",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -2476,7 +2398,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2931
+      "storyRank": 0.2866
     },
     {
       "id": "det_vid_1744bcb9317c",
@@ -2521,7 +2443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3006
+      "storyRank": 0.2939
     },
     {
       "id": "det_vid_d610abd93dfc",
@@ -2566,7 +2488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2995
+      "storyRank": 0.2929
     },
     {
       "id": "det_vid_ebc363c2a475",
@@ -2611,13 +2533,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2993
+      "storyRank": 0.2927
     },
     {
       "id": "det_bsky_07e1ef2c5ada",
       "type": "tweet",
-      "title": "what's not understood is that this is not simply a coach who \"goes for it a lot\" and \"has a great culture\" Ben Johnson detailed Campbell's offense better than anyone, because they'd worked together before and see the game the same way. Giving Campbell 0 credit RE: how Detroit runs offense is insane",
-      "fullText": "what's not understood is that this is not simply a coach who \"goes for it a lot\" and \"has a great culture\" Ben Johnson detailed Campbell's offense better than anyone, because they'd worked together before and see the game the same way. Giving Campbell 0 credit RE: how Detroit runs offense is insane",
+      "title": "what's not understood is that this is not simply a coach who \"goes for it a lot\" and \"has a great culture\"\n\nBen Johnson detailed Campbell's offense better than anyone, because they'd worked together before and see the game the same way. Giving Campbell 0 credit RE: how Detroit runs offense is insane",
+      "fullText": "what's not understood is that this is not simply a coach who \"goes for it a lot\" and \"has a great culture\"\n\nBen Johnson detailed Campbell's offense better than anyone, because they'd worked together before and see the game the same way. Giving Campbell 0 credit RE: how Detroit runs offense is insane",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -2649,7 +2571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2893
+      "storyRank": 0.2829
     },
     {
       "id": "det_vid_f3f07a1a8d3e",
@@ -2694,13 +2616,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2991
+      "storyRank": 0.2924
     },
     {
       "id": "det_bsky_a01ef238f0b7",
       "type": "tweet",
-      "title": "Lions, Bears Week 12 injury report: 4 defenders unable to practice; DJ Reed upgraded to FULL www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions, Bears Week 12 injury report: 4 defenders unable to practice; DJ Reed upgraded to FULL www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions, Bears Week 12 injury report: 4 defenders unable to practice; DJ Reed upgraded to FULL\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions, Bears Week 12 injury report: 4 defenders unable to practice; DJ Reed upgraded to FULL\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiaw6u6gfwwauoshuvcjbhgsbfmxhfpzdvv4bxievazlemlljjpa4i",
@@ -2732,7 +2654,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6247
+      "storyRank": 0.6118
     },
     {
       "id": "det_pwire_4430027_64943928",
@@ -2773,7 +2695,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2973
+      "storyRank": 0.2908
     },
     {
       "id": "det_rss_5a9bfe5047f9",
@@ -2807,7 +2729,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6326
+      "storyRank": 0.6197
     },
     {
       "id": "det_rss_efe4964fe3eb",
@@ -2841,13 +2763,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2908
+      "storyRank": 0.2844
     },
     {
       "id": "det_bsky_a419c9ea9125",
       "type": "tweet",
-      "title": "Lions-Bears this week! Biggest game of the year nowhere enough people are talking about.",
-      "fullText": "Lions-Bears this week! Biggest game of the year nowhere enough people are talking about.",
+      "title": "Lions-Bears this week!\n\nBiggest game of the year nowhere enough people are talking about.",
+      "fullText": "Lions-Bears this week!\n\nBiggest game of the year nowhere enough people are talking about.",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -2879,7 +2801,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2801
+      "storyRank": 0.274
     },
     {
       "id": "det_bsky_07e60ae28a0e",
@@ -2926,7 +2848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2751
+      "storyRank": 0.2692
     },
     {
       "id": "det_bsky_41f77842df32",
@@ -2973,7 +2895,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0362
+      "storyRank": 0.0352
     },
     {
       "id": "det_vid_63fb87adb17f",
@@ -3009,7 +2931,142 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2777
+      "storyRank": 0.2718
+    },
+    {
+      "id": "det_yts_PWphJLZ89e4",
+      "type": "video",
+      "videoId": "PWphJLZ89e4",
+      "embeddable": false,
+      "title": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "12:52",
+      "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
+      "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-23T20:43:54.670Z",
+      "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
+    },
+    {
+      "id": "det_yts_nnXZ7q24zqo",
+      "type": "video",
+      "videoId": "nnXZ7q24zqo",
+      "embeddable": false,
+      "title": "Jared Goff Every Throw & Run | Week 11",
+      "summary": "",
+      "duration": "7:11",
+      "imageUrl": "https://i.ytimg.com/vi/nnXZ7q24zqo/hqdefault.jpg",
+      "imageAlt": "Jared Goff Every Throw & Run | Week 11",
+      "publishedAt": "2026-11-23T20:43:54.670Z",
+      "url": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "3046779",
+          "name": "Jared Goff",
+          "shortName": "J. Goff",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3046779.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
+    },
+    {
+      "id": "det_yts_ZVavJVtF4Z8",
+      "type": "video",
+      "videoId": "ZVavJVtF4Z8",
+      "embeddable": false,
+      "title": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
+      "summary": "",
+      "duration": "2:02",
+      "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
+      "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
+      "publishedAt": "2026-11-23T20:43:54.670Z",
+      "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4429795",
+          "name": "Jahmyr Gibbs",
+          "shortName": "J. Gibbs",
+          "position": "RB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429795.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
     },
     {
       "id": "det_bsky_ed45f057fafe",
@@ -3047,7 +3104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2477
+      "storyRank": 0.2427
     },
     {
       "id": "det_rss_4e3782d1e0b5",
@@ -3090,13 +3147,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2192
+      "storyRank": 0.215
     },
     {
       "id": "det_bsky_ad75c64d1232",
       "type": "tweet",
-      "title": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets www.prideofdetroit.com/detroit-lion...",
+      "title": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreifphzkckkoqbp3ov5sq7whevaretikrzx63cihmivo6colbl66cya",
@@ -3137,7 +3194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2228
+      "storyRank": 0.2187
     },
     {
       "id": "det_bsky_149ff0524692",
@@ -3184,13 +3241,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2235
+      "storyRank": 0.2194
     },
     {
       "id": "det_bsky_e8dbf0d2ce5f",
       "type": "tweet",
-      "title": "Lions vs. Bears odds: Detroit home underdogs on Thanksgiving www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions vs. Bears odds: Detroit home underdogs on Thanksgiving www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions vs. Bears odds: Detroit home underdogs on Thanksgiving\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions vs. Bears odds: Detroit home underdogs on Thanksgiving\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreigikmceslur6aprb3qqkizzomfrzjzupzdag7euzzqu5xtkcjckk4",
@@ -3222,7 +3279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2131
+      "storyRank": 0.2093
     },
     {
       "id": "det_rss_d8892147a817",
@@ -3256,7 +3313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2094
+      "storyRank": 0.2058
     },
     {
       "id": "det_espn_ea150ec18134c",
@@ -3266,7 +3323,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2017/1121/r292337_608x342_16-9.jpg",
       "imageCaption": "A monster day from Troy Aikman was not enough to keep up with the Vikings on Thanksgiving 1998.",
       "imageAlt": "NFL Thanksgiving games: Traditions, best moments, team records, 2026 schedule",
-      "publishedAt": "2026-11-23T11:09:10Z",
+      "publishedAt": "2026-11-23T11:09:10.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/32646037/nfl-thanksgiving-day-games-history-lions-cowboys-play-every-year-moments-traditions-records",
       "outletId": "espn",
       "outletName": "ESPN",
@@ -3291,7 +3348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1745
+      "storyRank": 0.1716
     },
     {
       "id": "det_bsky_df06fbb87619",
@@ -3329,7 +3386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1648
+      "storyRank": 0.1623
     },
     {
       "id": "det_bsky_8fd7122a3b41",
@@ -3367,13 +3424,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.041
+      "storyRank": 0.0404
     },
     {
       "id": "det_bsky_6a4fc552715e",
       "type": "tweet",
-      "title": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
-      "fullText": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
+      "title": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up”\n\nwww.freep.com/story/sports...",
+      "fullText": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up”\n\nwww.freep.com/story/sports...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -3405,7 +3462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1611
+      "storyRank": 0.1587
     },
     {
       "id": "det_bsky_a8b66c348752",
@@ -3492,7 +3549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1782
+      "storyRank": 0.1756
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -3528,7 +3585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1614
+      "storyRank": 0.1591
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -3562,7 +3619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1605
+      "storyRank": 0.1582
     },
     {
       "id": "det_rss_e97a2a128e9b",
@@ -3596,7 +3653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1595
+      "storyRank": 0.1572
     },
     {
       "id": "det_espn_aea129f88ee07",
@@ -3606,7 +3663,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
       "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
-      "publishedAt": "2026-11-22T22:33:44Z",
+      "publishedAt": "2026-11-22T22:33:44.000Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873072",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -3648,7 +3705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1558
+      "storyRank": 0.1536
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -3684,7 +3741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1535
+      "storyRank": 0.1513
     },
     {
       "id": "det_rss_3ea274280813",
@@ -3718,7 +3775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.153
+      "storyRank": 0.1509
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -3763,7 +3820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1529
+      "storyRank": 0.1507
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -3808,7 +3865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1528
+      "storyRank": 0.1507
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -3846,7 +3903,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1473
+      "storyRank": 0.1452
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -3891,7 +3948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1516
+      "storyRank": 0.1495
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -3929,7 +3986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1465
+      "storyRank": 0.1445
     },
     {
       "id": "det_vid_a79420d76426",
@@ -3965,7 +4022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1511
+      "storyRank": 0.1491
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -4010,7 +4067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1508
+      "storyRank": 0.1488
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -4048,7 +4105,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1457
+      "storyRank": 0.1437
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -4086,7 +4143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1434
+      "storyRank": 0.1415
     },
     {
       "id": "det_vid_009110c13b8e",
@@ -4139,7 +4196,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
+      "storyRank": 0.1462
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -4177,7 +4234,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1429
+      "storyRank": 0.141
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -4224,7 +4281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1414
+      "storyRank": 0.1396
     },
     {
       "id": "det_vid_31f3890de597",
@@ -4269,7 +4326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1463
+      "storyRank": 0.1443
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -4316,7 +4373,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1409
+      "storyRank": 0.139
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -4363,7 +4420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1405
+      "storyRank": 0.1386
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -4418,7 +4475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1403
+      "storyRank": 0.1384
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -4473,7 +4530,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1402
+      "storyRank": 0.1384
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -4520,7 +4577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1399
+      "storyRank": 0.1381
     },
     {
       "id": "det_bsky_5caee00df2ce",
@@ -4575,7 +4632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1399
+      "storyRank": 0.138
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -4613,7 +4670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1396
+      "storyRank": 0.1377
     },
     {
       "id": "det_bsky_ccd54bb8872f",
@@ -4660,13 +4717,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1389
+      "storyRank": 0.137
     },
     {
       "id": "det_bsky_d71edc7b2097",
       "type": "tweet",
-      "title": "The Bucs have the 5 ex-Lions out as game captains for the coin toss vs. the Lions: Anzalone, Melifonwu, A'Shawn Robinson, Muhammad and Miles Killebrew. Kerby Joseph was a game captain for the Lions.",
-      "fullText": "The Bucs have the 5 ex-Lions out as game captains for the coin toss vs. the Lions: Anzalone, Melifonwu, A'Shawn Robinson, Muhammad and Miles Killebrew. Kerby Joseph was a game captain for the Lions.",
+      "title": "The Bucs have the 5 ex-Lions out as game captains for the coin toss vs. the Lions: Anzalone, Melifonwu, A'Shawn Robinson, Muhammad and Miles Killebrew.\n\nKerby Joseph was a game captain for the Lions.",
+      "fullText": "The Bucs have the 5 ex-Lions out as game captains for the coin toss vs. the Lions: Anzalone, Melifonwu, A'Shawn Robinson, Muhammad and Miles Killebrew.\n\nKerby Joseph was a game captain for the Lions.",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -4707,13 +4764,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1381
+      "storyRank": 0.1363
     },
     {
       "id": "det_bsky_0e00b32b5276",
       "type": "tweet",
-      "title": "Detroit Lions updated depth chart: Week 11 vs. Buccaneers www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Detroit Lions updated depth chart: Week 11 vs. Buccaneers www.prideofdetroit.com/detroit-lion...",
+      "title": "Detroit Lions updated depth chart: Week 11 vs. Buccaneers\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Detroit Lions updated depth chart: Week 11 vs. Buccaneers\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreihxiuouqgrv6s7rali2pjvppqeouaizo47flb4343lnnqhln5nzeq",
@@ -4745,13 +4802,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0654
+      "storyRank": 0.0646
     },
     {
       "id": "det_bsky_d870fb1952b8",
       "type": "tweet",
-      "title": "Detroit Lions midseason grades: Offense excels, defense improving www.freep.com/story/sports...",
-      "fullText": "Detroit Lions midseason grades: Offense excels, defense improving www.freep.com/story/sports...",
+      "title": "Detroit Lions midseason grades: Offense excels, defense improving\n\nwww.freep.com/story/sports...",
+      "fullText": "Detroit Lions midseason grades: Offense excels, defense improving\n\nwww.freep.com/story/sports...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
@@ -4783,7 +4840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0629
+      "storyRank": 0.0621
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -4817,7 +4874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0573
+      "storyRank": 0.0566
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -4851,7 +4908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0615
+      "storyRank": 0.0608
     },
     {
       "id": "det_bsky_f1d887559ba8",
@@ -4898,7 +4955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0477
+      "storyRank": 0.0472
     },
     {
       "id": "det_bsky_9e313f31deec",
@@ -4953,13 +5010,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0476
+      "storyRank": 0.0471
     },
     {
       "id": "det_bsky_0f1a6d53713f",
       "type": "tweet",
-      "title": "Detroit Lions place Cade Mays on IR, re-sign CB to active roster www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Detroit Lions place Cade Mays on IR, re-sign CB to active roster www.prideofdetroit.com/detroit-lion...",
+      "title": "Detroit Lions place Cade Mays on IR, re-sign CB to active roster\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Detroit Lions place Cade Mays on IR, re-sign CB to active roster\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreid6g3kpr4nogj5obep2ybzb2ozkjaifgk3rm25ovxcs47zvqordya",
@@ -5000,7 +5057,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0473
+      "storyRank": 0.0468
     },
     {
       "id": "det_pfr_6d7323d65d58",
@@ -5042,7 +5099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0479
+      "storyRank": 0.0474
     },
     {
       "id": "det_bsky_6eee65061126",
@@ -5089,7 +5146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.047
+      "storyRank": 0.0465
     },
     {
       "id": "det_rss_d13c9787f2ee",
@@ -5123,7 +5180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0452
+      "storyRank": 0.0447
     },
     {
       "id": "det_rss_20dd0e7f1bf2",
@@ -5166,7 +5223,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0428
+      "storyRank": 0.0424
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -5218,7 +5275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0406
+      "storyRank": 0.0402
     },
     {
       "id": "det_bsky_4e0d8a91bf97",
@@ -5265,7 +5322,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0351
+      "storyRank": 0.0349
     },
     {
       "id": "det_rss_eea329af076f",
@@ -5299,7 +5356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0835
+      "storyRank": 0.0828
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -5350,13 +5407,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0346
+      "storyRank": 0.0343
     },
     {
       "id": "det_bsky_c9b6abbd9373",
       "type": "tweet",
-      "title": "NFL predictions: 4 keys to a Lions victory over the Buccaneers in Week 11 www.prideofdetroit.com/detroit-lion...",
-      "fullText": "NFL predictions: 4 keys to a Lions victory over the Buccaneers in Week 11 www.prideofdetroit.com/detroit-lion...",
+      "title": "NFL predictions: 4 keys to a Lions victory over the Buccaneers in Week 11\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "NFL predictions: 4 keys to a Lions victory over the Buccaneers in Week 11\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreicezwodycr5ytp76v5nvcdz5zh3a2xd24c5njvmz6j5sqmroqshua",
@@ -5388,7 +5445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0321
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -5427,13 +5484,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0313
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
       "type": "tweet",
-      "title": "Aidan Hutchinson shares thoughts on injury: \"I always come back stronger\" www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Aidan Hutchinson shares thoughts on injury: \"I always come back stronger\" www.prideofdetroit.com/detroit-lion...",
+      "title": "Aidan Hutchinson shares thoughts on injury: \"I always come back stronger\"\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Aidan Hutchinson shares thoughts on injury: \"I always come back stronger\"\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreigwtcep6ex6vocmx7icxvkz76gxo4eqtvmdtqgnrehbqhzrd75nwq",
@@ -5474,7 +5531,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0274
+      "storyRank": 0.0272
     },
     {
       "id": "det_espn_dac2aef086042",
@@ -5484,7 +5541,7 @@
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
       "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Lions moving on after Hutchinson joins Campbell on IR and they face Bucs aiming for 6th straight win",
-      "publishedAt": "2026-11-19T23:23:33Z",
+      "publishedAt": "2026-11-19T23:23:33.000Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873072",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -5518,13 +5575,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282
+      "storyRank": 0.028
     },
     {
       "id": "det_bsky_dbbfbbb85625",
       "type": "tweet",
-      "title": "Lions, Bucs injury report: QB Baker Mayfield returns to practice, feels ‘ready’ to play www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions, Bucs injury report: QB Baker Mayfield returns to practice, feels ‘ready’ to play www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions, Bucs injury report: QB Baker Mayfield returns to practice, feels ‘ready’ to play\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions, Bucs injury report: QB Baker Mayfield returns to practice, feels ‘ready’ to play\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreigaohuwic64vixocaocko3pb4plt2smuwlvzctkv23vpij6zi3kmq",
@@ -5556,13 +5613,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.065
+      "storyRank": 0.0646
     },
     {
       "id": "det_bsky_3eaa886217a1",
       "type": "tweet",
-      "title": "Really good stuff from @betweenthenumbers.bsky.social The Detroit Lions’ road to a Super Bowl will be paved with adversity www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Really good stuff from @betweenthenumbers.bsky.social The Detroit Lions’ road to a Super Bowl will be paved with adversity www.prideofdetroit.com/detroit-lion...",
+      "title": "Really good stuff from @betweenthenumbers.bsky.social\nThe Detroit Lions’ road to a Super Bowl will be paved with adversity\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Really good stuff from @betweenthenumbers.bsky.social\nThe Detroit Lions’ road to a Super Bowl will be paved with adversity\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreihnvegrpvis2rovrlomyh3nugpn45t23qxffasbzgmzrujkpkfnji",
@@ -5594,13 +5651,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
+      "storyRank": 0.0248
     },
     {
       "id": "det_bsky_119561c1c557",
       "type": "tweet",
-      "title": "Lions Week 11 preview: Breaking down Buccaneers’ offensive and defensive schemes www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions Week 11 preview: Breaking down Buccaneers’ offensive and defensive schemes www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions Week 11 preview: Breaking down Buccaneers’ offensive and defensive schemes\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions Week 11 preview: Breaking down Buccaneers’ offensive and defensive schemes\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiaosu6ptcbqnh5blesove6x7c4sdvkvwiga43rc4ux5dlco3htcjq",
@@ -5632,7 +5689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0244
+      "storyRank": 0.0243
     },
     {
       "id": "det_pfr_70041b3c4411",
@@ -5665,7 +5722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0225
     },
     {
       "id": "det_pfr_d6e9815eec79",
@@ -5698,7 +5755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0224
     },
     {
       "id": "det_pfr_bb925d5e5526",
@@ -5748,13 +5805,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0218
     },
     {
       "id": "det_bsky_e1b3cc021fec",
       "type": "tweet",
-      "title": "Detroit Lions officially activate Kerby Joseph, place Aidan Hutchinson on IR www.prideofdetroit.com/detroit-lion... Lions, Bucs Week 11 injury report: D.J. Reed returns to practice www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Detroit Lions officially activate Kerby Joseph, place Aidan Hutchinson on IR www.prideofdetroit.com/detroit-lion... Lions, Bucs Week 11 injury report: D.J. Reed returns to practice www.prideofdetroit.com/detroit-lion...",
+      "title": "Detroit Lions officially activate Kerby Joseph, place Aidan Hutchinson on IR\nwww.prideofdetroit.com/detroit-lion...\n\nLions, Bucs Week 11 injury report: D.J. Reed returns to practice\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Detroit Lions officially activate Kerby Joseph, place Aidan Hutchinson on IR\nwww.prideofdetroit.com/detroit-lion...\n\nLions, Bucs Week 11 injury report: D.J. Reed returns to practice\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiajwhss45za3mfo4lkb72g5p52e6l5ardi6oowt4hjljbwmvetcpi",
@@ -5811,7 +5868,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
+      "storyRank": 0.0214
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -5871,7 +5928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0199
     },
     {
       "id": "det_pfr_b8ba66f816a2",
@@ -5904,7 +5961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0191
+      "storyRank": 0.019
     },
     {
       "id": "det_espn_51eacdb16eec2",
@@ -5914,7 +5971,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747114_1296x729_16-9.jpg",
       "imageCaption": "Kerby Joseph [1296x729]",
       "imageAlt": "Lions plan for Kerby Joseph to make season debut Sunday, per Dan Campbell",
-      "publishedAt": "2026-11-17T16:35:03Z",
+      "publishedAt": "2026-11-17T16:35:03.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50511524/lions-plan-kerby-joseph-make-season-debut-sunday",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -5948,7 +6005,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0177
     },
     {
       "id": "det_espn_f82ca0a52a103",
@@ -5958,7 +6015,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746168_1296x729_16-9.jpg",
       "imageCaption": "Lions star defensive end Aidan Hutchinson is feared to have suffered a significant knee injury after celebrating a sack in Sunday's victory over the Patriots.",
       "imageAlt": "Lions' Dan Campbell says Aidan Hutchinson injury won't prompt celebration ban",
-      "publishedAt": "2026-11-17T16:22:52Z",
+      "publishedAt": "2026-11-17T16:22:52.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50510660/dan-campbell-hutchinson-injury-prompt-celebration-ban",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -5992,7 +6049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0177
     },
     {
       "id": "det_espn_16beeafd3881f",
@@ -6002,7 +6059,7 @@
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746919_608x342_16-9.jpg",
       "imageCaption": "Burrow [608x342]",
       "imageAlt": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
-      "publishedAt": "2026-11-17T15:39:31Z",
+      "publishedAt": "2026-11-17T15:39:31.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions",
       "outletId": "espn_national",
       "outletName": "ESPN",
@@ -6036,7 +6093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0176
     },
     {
       "id": "det_tx_62a14fc45972",
@@ -6071,7 +6128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0167
     },
     {
       "id": "det_pfr_fa1d7c280908",
@@ -6113,7 +6170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0161
     },
     {
       "id": "det_pfr_e6aa64d4de47",
@@ -6207,7 +6264,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0143
     },
     {
       "id": "det_pfr_bebfbaa72044",
@@ -6394,7 +6451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
     },
     {
       "id": "det_tx_9d2a36009286",
@@ -6438,7 +6495,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0066
     },
     {
       "id": "det_tx_ccbee66da7b8",
@@ -6529,11 +6586,11 @@
     {
       "id": "x_tl_lions_2124248695529148696",
       "type": "tweet",
-      "title": "Lions announce roster moves: Placed C Cade Mays on Reserve/Injured. Signed DB Nick Whiteside to the active roster (from the Practice Squad). Elevated LB Owen Pappoe from the Practice Squad to the Active/Inactive list.",
-      "fullText": "Lions announce roster moves: Placed C Cade Mays on Reserve/Injured. Signed DB Nick Whiteside to the active roster (from the Practice Squad). Elevated LB Owen Pappoe from the Practice Squad to the Active/Inactive list.",
+      "title": "Lions announce roster moves:\n\nPlaced C Cade Mays on Reserve/Injured.\n\nSigned DB Nick Whiteside to the active roster (from the Practice Squad).\n\nElevated LB Owen Pappoe from the Practice Squad to the Active/Inactive list.",
+      "fullText": "Lions announce roster moves:\n\nPlaced C Cade Mays on Reserve/Injured.\n\nSigned DB Nick Whiteside to the active roster (from the Practice Squad).\n\nElevated LB Owen Pappoe from the Practice Squad to the Active/Inactive list.",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HXrY7Z_WYAA3RRJ.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HXrY7Z_WYAA3RRJ.jpg?name=orig",
       "imageAlt": "Brad Holmes post",
       "mentionedPlayers": [
         {
@@ -6593,8 +6650,8 @@
     {
       "id": "det_bsky_baf8fb691f44",
       "type": "tweet",
-      "title": "Lions, Bucs Week 11 injury designations: Cade Mays ruled OUT www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions, Bucs Week 11 injury designations: Cade Mays ruled OUT www.prideofdetroit.com/detroit-lion...",
+      "title": "Lions, Bucs Week 11 injury designations: Cade Mays ruled OUT\nwww.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions, Bucs Week 11 injury designations: Cade Mays ruled OUT\nwww.prideofdetroit.com/detroit-lion...",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreicf2cw3rxynxeg4bnbmn3fl7yrwvc6nx4mv22hkyyaryf56azyvrq",

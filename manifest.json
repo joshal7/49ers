@@ -9,13 +9,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "./assets/apple-touch-icon.png",
+      "src": "./assets/teams/49ers/apple-touch-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./assets/app-icon.svg",
+      "src": "./assets/teams/49ers/app-icon.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
