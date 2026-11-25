@@ -24375,11 +24375,11 @@
         "delta": "+2",
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +2.4 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 0.8% SB odds) at 5-6.",
+        "blurb": "FPI +2.4 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 1.0% SB odds) at 5-6.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24412,10 +24412,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF +1.0 (#1 Offense / #32 Defense) at 5-6 through Week 11.",
+        "blurb": "Betting market rating GPF +0.7 (#2 Offense / #31 Defense) at 5-6 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24430,7 +24430,7 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "Tier 2 (57.9% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 11.",
@@ -24469,10 +24469,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF +1.0 (#1 Offense / #32 Defense) at 5-6 through Week 11."
+        "blurb": "Betting market rating GPF +0.7 (#2 Offense / #31 Defense) at 5-6 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24501,7 +24501,7 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "Tier 2 (57.9% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 11."
@@ -24533,11 +24533,11 @@
         "delta": "+2",
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +2.4 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 0.8% SB odds) at 5-6."
+        "blurb": "FPI +2.4 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 1.0% SB odds) at 5-6."
       },
       {
         "id": "espn_panel",
@@ -24570,7 +24570,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-24T20:54:07.298Z"
+    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
   },
   "upcomingMatchup": {
     "week": 12,

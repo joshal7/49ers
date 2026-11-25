@@ -5278,6 +5278,42 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     }
   }
 
+  // Ensure deterministic fallback stays cleanly inside the ~2/3 Coaching Matchup target band (170–255 words)
+  // across all 32 teams without injecting canned cap filler.
+  const countPlainWords = arr =>
+    arr
+      .join(' ')
+      .replace(/\[S\d+\]/gi, ' ')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+  if (countPlainWords([headline, ...dynamicBullets]) < 172 && dynamicBullets.length < 5) {
+    const unitRanks = Array.isArray(appData?.scheduleMatchup?.teamStatRankings)
+      ? appData.scheduleMatchup.teamStatRankings
+      : [];
+    const topRanked = unitRanks
+      .filter(r => r && r.label && Number.isFinite(Number(r.rank)) && Number(r.rank) > 0)
+      .slice(0, 4);
+    const rankCite = pickCite(/offense|defense|yards|epa|points|rankings|matchup/i);
+    if (topRanked.length >= 2) {
+      const rankList = topRanked
+        .slice(0, 3)
+        .map(r => `#${r.rank} in ${r.label}${r.displayValue ? ` (${r.displayValue})` : ''}`)
+        .join(', ');
+      const kickoffBit = um?.kickoffDisplay ? ` ahead of ${um.kickoffDisplay}` : '';
+      const venueBit = um?.venue ? ` at ${um.venue}` : '';
+      dynamicBullets.push(
+        `Statistical Profile & Matchup Edge: Through Week ${Math.max(1, Number(wk) - 1 || 1)}, ${briefTeamCity} ranks ${rankList}, giving ${briefCoaches.hc} and ${briefCoaches.dc} a clear benchmark${kickoffBit}${venueBit} against the ${oppName}${rankCite}.`
+      );
+    } else {
+      const kickoffBit = um?.kickoffDisplay ? ` (${um.kickoffDisplay})` : '';
+      const venueBit = um?.venue ? ` at ${um.venue}` : '';
+      dynamicBullets.push(
+        `Matchup Preparation & Unit Focus: ${briefCoaches.hc} and DC ${briefCoaches.dc} finalize offensive and defensive game-plan installs${venueBit}${kickoffBit} as ${briefTeamCity} (${rec}) aligns its active 53-man rotation against the ${oppName}${rankCite}.`
+      );
+    }
+  }
+
   const effectiveCycleKey = meta.cycleKey || cycleState.activeCycleKey;
   const effectiveIsPostGame =
     meta.isPostGame !== undefined ? Boolean(meta.isPostGame) : Boolean(cycleState.isPostGameCycle);

@@ -8,8 +8,8 @@
  *   - Native X animated GIFs (`animated_gif` -> `video.twimg.com/tweet_video/*.mp4` with `isAnimatedGif: true`)
  *   - High-res analytics scatter plots & editorial photos (`pbs.twimg.com/media/...`)
  *
- * Used identically across `49ers.joshal.com` (`scripts/fetch-live-49ers-data.mjs`) and
- * all 31 other NFL club sites (`scripts/fetch-team-data.mjs`) for 100% 32-team parity.
+ * Used identically across ALL 32 NFL club sites (`49ers.joshal.com` -> `data/`, all 31 other
+ * clubs -> `data/teams/<slug>/`) via `scripts/fetch-live-data.mjs` for 100% 32-team parity.
  */
 
 import {

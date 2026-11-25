@@ -24353,15 +24353,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 8,
-    "averageRank": 7.5,
-    "medianRank": 7,
+    "consensusRank": 7,
+    "averageRank": 7.3,
+    "medianRank": 6.5,
     "previousRank": 8,
     "rangeMin": 4,
     "rangeMax": 12,
     "rangeShort": "#4–#12",
     "rangeDisplay": "#4–#12 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Seahawks at #8 consensus (avg #7.5) through Week 10, ranging from #4 (RBSDM) to #12 (CBS Sports). All listed models include the Seahawks' latest result entering Week 12 vs. 49ers.",
+    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Seahawks at #7 consensus (avg #7.3) through Week 10, ranging from #4 (RBSDM) to #12 (CBS Sports). All listed models include the Seahawks' latest result entering Week 12 vs. 49ers.",
     "sources": [
       {
         "id": "rbsdm",
@@ -24374,10 +24374,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (70.3% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11.",
+        "blurb": "Tier 1 (70.5% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24400,6 +24400,24 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "inpredictable",
+        "outlet": "Inpredictable / Betting Market Power Rating",
+        "shortName": "Inpredictable",
+        "url": "https://stats.inpredictable.com/rankings/nfl.php",
+        "rank": 6,
+        "previousRank": 8,
+        "delta": "+2",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
+        "verified": true,
+        "blurb": "Betting market rating GPF +4.5 (#12 Offense / #1 Defense) at 6-4 through Week 10.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
@@ -24409,29 +24427,11 @@
         "delta": "+1",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +3.8 (#20 Off / #4 Def efficiency, 10.0 proj. wins, 2.2% SB odds) at 6-4.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "inpredictable",
-        "outlet": "Inpredictable / Betting Market Power Rating",
-        "shortName": "Inpredictable",
-        "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 7,
-        "previousRank": 8,
-        "delta": "+1",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 10,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
-        "verified": true,
-        "blurb": "Betting market rating GPF +3.6 (#14 Offense / #1 Defense) at 6-4 through Week 10.",
+        "blurb": "FPI +3.8 (#20 Off / #4 Def efficiency, 10.0 proj. wins, 2.5% SB odds) at 6-4.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24480,16 +24480,16 @@
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 7,
+        "rank": 6,
         "previousRank": 8,
-        "delta": "+1",
+        "delta": "+2",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF +3.6 (#14 Offense / #1 Defense) at 6-4 through Week 10."
+        "blurb": "Betting market rating GPF +4.5 (#12 Offense / #1 Defense) at 6-4 through Week 10."
       },
       {
         "id": "nfelo",
@@ -24518,10 +24518,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (70.3% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11."
+        "blurb": "Tier 1 (70.5% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11."
       },
       {
         "id": "cbs",
@@ -24550,11 +24550,11 @@
         "delta": "+1",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +3.8 (#20 Off / #4 Def efficiency, 10.0 proj. wins, 2.2% SB odds) at 6-4."
+        "blurb": "FPI +3.8 (#20 Off / #4 Def efficiency, 10.0 proj. wins, 2.5% SB odds) at 6-4."
       },
       {
         "id": "espn_panel",
@@ -24576,7 +24576,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-24T20:54:07.298Z"
+    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
   },
   "upcomingMatchup": {
     "week": 12,

@@ -1,7 +1,7 @@
 /**
  * NFL Team Stats, Matchup Comparison & Positional Player Leaderboard Engine
  * 100% deterministic, zero-network module shared by the Node ingestion pipeline
- * (`scripts/fetch-live-49ers-data.mjs`) and browser views (`seasonMatchupView.js`,
+ * (`scripts/fetch-live-data.mjs`) and browser views (`seasonMatchupView.js`,
  * `playerSheetView.js`, `app.js`).
  */
 

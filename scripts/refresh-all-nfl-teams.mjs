@@ -7,11 +7,10 @@
  *
  * Modes:
  *   - Default (no mode flag): Full 32-team refresh:
- *       1. Refreshes SF (`data/*.json` + canonical league-wide stats/priors/Big Board) via
- *          `scripts/fetch-live-49ers-data.mjs`.
- *       2. Refreshes all 31 non-SF teams (`data/teams/<slug>/*.json`) in parallel isolated child
+ *       1. Refreshes all 32 teams identically (`data/*.json` for SF + `data/teams/<slug>/*.json`
+ *          for all 31 other teams) via `scripts/fetch-live-data.mjs` in parallel isolated child
  *          processes (`--concurrency=4`, zero singleton cross-team contamination, ~3.5x faster).
- *       3. Runs the canonical 32-team seasonal/playoff synchronization pass so ALL 32 teams
+ *       2. Runs the canonical 32-team seasonal/playoff synchronization pass so ALL 32 teams
  *          (including SF) finish with identical `PLAYOFF_MODEL_VERSION`, `completedGames`,
  *          `remainingGames`, `preseasonPriors`, and 32-team `injuryAdjustmentsByTeam`.
  *   - `--seasonal-only`: Ultra-fast (~5-8s) synchronized Playoff Monte Carlo & standings resync
@@ -67,18 +66,18 @@ function chunkIntoShards(items, shardCount) {
   return shards.filter(s => s.length > 0);
 }
 
-async function runNonSfTeamsInParallelShards(teams, { concurrency = 4, extraArgs = [] } = {}) {
+async function runTeamsInParallelShards(teams, { concurrency = 4, extraArgs = [] } = {}) {
   if (!teams.length) return;
   const shards = chunkIntoShards(teams, concurrency);
   console.log(
-    `[all-32] Launching ${shards.length} isolated worker shard(s) for ${teams.length} non-SF teams (concurrency=${concurrency})...`
+    `[all-32] Launching ${shards.length} isolated worker shard(s) for ${teams.length} NFL team(s) via scripts/fetch-live-data.mjs (concurrency=${concurrency})...`
   );
-  const fetchTeamScript = path.join(ROOT, 'scripts', 'fetch-team-data.mjs');
+  const fetchLiveScript = path.join(ROOT, 'scripts', 'fetch-live-data.mjs');
   const results = await Promise.allSettled(
     shards.map((shard, idx) => {
       const slugs = shard.map(t => t.abbr).join(',');
       return spawnNodeScript(
-        fetchTeamScript,
+        fetchLiveScript,
         [`--teams=${slugs}`, ...extraArgs],
         { label: `shard-${idx + 1}(${slugs})` }
       );
@@ -175,11 +174,13 @@ async function main() {
     return;
   }
 
-  const sfScript = path.join(ROOT, 'scripts', 'fetch-live-49ers-data.mjs');
+  const fetchLiveScript = path.join(ROOT, 'scripts', 'fetch-live-data.mjs');
 
   if (sfFast) {
-    console.log('[all-32:sf-fast] Step 1/2: Refreshing live 49ers feeds (data/*.json)...');
-    await spawnNodeScript(sfScript, [], { label: 'fetch-live-49ers-data' });
+    console.log('[all-32:sf-fast] Step 1/2: Refreshing live 49ers feeds (data/*.json) via unified scripts/fetch-live-data.mjs...');
+    await spawnNodeScript(fetchLiveScript, ['--teams=SF', ...(forceBrief ? ['--force-brief'] : [])], {
+      label: 'fetch-live-data(SF)'
+    });
     console.log('[all-32:sf-fast] Step 2/2: Syncing calibrated playoff seasonal.json across all 32 teams...');
     const res = await syncAll32TeamsSeasonalPlayoffData({
       rootDir: ROOT,
@@ -192,24 +193,14 @@ async function main() {
     return;
   }
 
-  const includesSf = targetTeams.some(t => t.abbr === 'SF');
-  const nonSfTeams = targetTeams.filter(t => t.abbr !== 'SF');
+  console.log(`[all-32] Step 1/2: Refreshing ${targetTeams.length} NFL franchise(s) identically via scripts/fetch-live-data.mjs...`);
+  const extraArgs = [
+    ...(forceBrief ? ['--force-brief'] : []),
+    ...(missingOnly ? ['--missing-only'] : [])
+  ];
+  await runTeamsInParallelShards(targetTeams, { concurrency, extraArgs });
 
-  if (includesSf) {
-    console.log('[all-32] Step 1/3: Refreshing 49ers live feeds & canonical league artifacts (data/*.json)...');
-    await spawnNodeScript(sfScript, [], { label: 'fetch-live-49ers-data' });
-  }
-
-  if (nonSfTeams.length > 0) {
-    console.log(`[all-32] Step 2/3: Refreshing ${nonSfTeams.length} non-SF NFL franchises in parallel shards...`);
-    const extraArgs = [
-      ...(forceBrief ? ['--force-brief'] : []),
-      ...(missingOnly ? ['--missing-only'] : [])
-    ];
-    await runNonSfTeamsInParallelShards(nonSfTeams, { concurrency, extraArgs });
-  }
-
-  console.log(`[all-32] Step 3/3: Running canonical synchronized 32-team seasonal/playoff pass (${targetTeams.length} teams)...`);
+  console.log(`[all-32] Step 2/2: Running canonical synchronized 32-team seasonal/playoff pass (${targetTeams.length} teams)...`);
   const res = await syncAll32TeamsSeasonalPlayoffData({
     rootDir: ROOT,
     seasonYear: 2026,

@@ -24354,14 +24354,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 12,
-    "averageRank": 12.3,
+    "averageRank": 12.2,
     "medianRank": 12.5,
     "previousRank": 12,
     "rangeMin": 10,
     "rangeMax": 14,
     "rangeShort": "#10–#14",
     "rangeDisplay": "#10–#14 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Packers at #12 consensus (avg #12.3) through Week 10, ranging from #10 (Inpredictable) to #14 (nfelo). All listed models include the Packers' latest result entering Week 12 vs. Rams.",
+    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Packers at #12 consensus (avg #12.2) through Week 10, ranging from #10 (Inpredictable) to #14 (nfelo). All listed models include the Packers' latest result entering Week 12 vs. Rams.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24374,10 +24374,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF +2.2 (#11 Offense / #12 Defense) at 6-4 through Week 10.",
+        "blurb": "Betting market rating GPF +2.8 (#11 Offense / #12 Defense) at 6-4 through Week 10.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24386,16 +24386,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 11,
+        "rank": 10,
         "previousRank": 11,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (63.0% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11.",
+        "blurb": "Tier 2 (63.2% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24447,11 +24447,11 @@
         "delta": "-1",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +1.9 (#13 Off / #9 Def efficiency, 9.6 proj. wins, 0.6% SB odds) at 6-4.",
+        "blurb": "FPI +1.9 (#13 Off / #9 Def efficiency, 9.6 proj. wins, 0.7% SB odds) at 6-4.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24486,10 +24486,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF +2.2 (#11 Offense / #12 Defense) at 6-4 through Week 10."
+        "blurb": "Betting market rating GPF +2.8 (#11 Offense / #12 Defense) at 6-4 through Week 10."
       },
       {
         "id": "nfelo",
@@ -24512,16 +24512,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 11,
+        "rank": 10,
         "previousRank": 11,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (63.0% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11."
+        "blurb": "Tier 2 (63.2% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11."
       },
       {
         "id": "cbs",
@@ -24550,11 +24550,11 @@
         "delta": "-1",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +1.9 (#13 Off / #9 Def efficiency, 9.6 proj. wins, 0.6% SB odds) at 6-4."
+        "blurb": "FPI +1.9 (#13 Off / #9 Def efficiency, 9.6 proj. wins, 0.7% SB odds) at 6-4."
       },
       {
         "id": "espn_panel",
@@ -24576,7 +24576,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-24T20:54:07.298Z"
+    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
   },
   "upcomingMatchup": {
     "week": 12,

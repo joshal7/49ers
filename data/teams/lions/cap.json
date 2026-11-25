@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:07:40.773Z",
+  "updatedAt": "2026-11-25T19:40:52.763Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/detroit-lions",
   "spotracUrl": "https://www.spotrac.com/nfl/detroit-lions/cap/",
@@ -134,7 +134,7 @@
           "otcUrl": "https://overthecap.com/player/aidan-keanaaina/13694/"
         }
       ],
-      "contractedCount": 53,
+      "contractedCount": 54,
       "totalSignedCount": 85
     },
     "2027": {
@@ -258,7 +258,173 @@
     }
   },
   "blueprint": {
-    "summary": "Detroit Lions hold $32.45M in 2026 OverTheCap space and $62.08M projected for 2027."
+    "sourceUrl": "https://overthecap.com/salary-cap/detroit-lions",
+    "summary": "Detroit Lions hold $32.45M in 2026 OverTheCap space ($32.45M effective) and +$62.08M projected for 2027.",
+    "executiveSummary": "Brad Holmes and the Lions front office hold $32.45M in gross 2026 cap space ($32.45M effective), while 2027 currently projects at +$62.08M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($25M–$29M target) helps manage scheduled cap escalations for Jared Goff, Alim McNeill, D.J. Reed, Penei Sewell.",
+    "strategicPillars": [
+      {
+        "title": "1. CBA Article 13 Rollover Bridge ($25M–$29M Target vs. +$62.08M 2027 Projection)",
+        "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Detroit's projected 2027 ledger without forcing premature void-year restructures."
+      },
+      {
+        "title": "2. Prorated Base Salary & Option-Bonus Architecture",
+        "detail": "Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility."
+      }
+    ],
+    "restructureCandidates": [
+      {
+        "id": "3046779",
+        "name": "Jared Goff",
+        "position": "QB",
+        "jersey": 16,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3046779.png",
+        "otcUrl": "https://overthecap.com/player/jared-goff/4714/",
+        "capHit2026": 37600000,
+        "baseSalary2026": 15000000,
+        "maxRestructureSavings": 10960000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4361662",
+        "name": "Alim McNeill",
+        "position": "DT",
+        "jersey": 54,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361662.png",
+        "otcUrl": "https://overthecap.com/player/alim-mcneill/9536/",
+        "capHit2026": 28966000,
+        "baseSalary2026": 23850000,
+        "maxRestructureSavings": 17088750,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "3139387",
+        "name": "D.J. Reed",
+        "position": "CB",
+        "jersey": 4,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139387.png",
+        "otcUrl": "https://overthecap.com/player/d-j-reed/7027/",
+        "capHit2026": 17867000,
+        "baseSalary2026": 14490000,
+        "maxRestructureSavings": 10552000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4260409",
+        "name": "Derrick Barnes",
+        "position": "LB",
+        "jersey": 55,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4260409.png",
+        "otcUrl": "https://overthecap.com/player/derrick-barnes/9577/",
+        "capHit2026": 9764000,
+        "baseSalary2026": 7490000,
+        "maxRestructureSavings": 5420000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4429795",
+        "name": "Jahmyr Gibbs",
+        "position": "RB",
+        "jersey": 0,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429795.png",
+        "otcUrl": "https://overthecap.com/player/jahmyr-gibbs/10836/",
+        "capHit2026": 8677999,
+        "baseSalary2026": 1145000,
+        "maxRestructureSavings": 1630743,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4242392",
+        "name": "Brock Wright",
+        "position": "TE",
+        "jersey": 89,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242392.png",
+        "otcUrl": "https://overthecap.com/player/brock-wright/9878/",
+        "capHit2026": 4734000,
+        "baseSalary2026": 3310000,
+        "maxRestructureSavings": 1863750,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      }
+    ],
+    "cutOrTradeCandidates": [
+      {
+        "id": "3046779",
+        "name": "Jared Goff",
+        "position": "QB",
+        "jersey": 16,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3046779.png",
+        "otcUrl": "https://overthecap.com/player/jared-goff/4714/",
+        "capHit2026": 37600000,
+        "postJune1CutSavings": -10000000,
+        "postJune1TradeSavings": 23000000,
+        "preJune1DeadMoney": 76800000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4361662",
+        "name": "Alim McNeill",
+        "position": "DT",
+        "jersey": 54,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361662.png",
+        "otcUrl": "https://overthecap.com/player/alim-mcneill/9536/",
+        "capHit2026": 28966000,
+        "postJune1CutSavings": -2850000,
+        "postJune1TradeSavings": 24000000,
+        "preJune1DeadMoney": 44714000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "3139387",
+        "name": "D.J. Reed",
+        "position": "CB",
+        "jersey": 4,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139387.png",
+        "otcUrl": "https://overthecap.com/player/d-j-reed/7027/",
+        "capHit2026": 17867000,
+        "postJune1CutSavings": -180000,
+        "postJune1TradeSavings": 14820000,
+        "preJune1DeadMoney": 27188000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4374302",
+        "name": "Amon-Ra St. Brown",
+        "position": "WR",
+        "jersey": 14,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374302.png",
+        "otcUrl": "https://overthecap.com/player/amon-ra-st-brown/9576/",
+        "capHit2026": 12310000,
+        "postJune1CutSavings": -6807000,
+        "postJune1TradeSavings": 2110000,
+        "preJune1DeadMoney": 51617000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4260409",
+        "name": "Derrick Barnes",
+        "position": "LB",
+        "jersey": 55,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4260409.png",
+        "otcUrl": "https://overthecap.com/player/derrick-barnes/9577/",
+        "capHit2026": 9764000,
+        "postJune1CutSavings": 500000,
+        "postJune1TradeSavings": 8500000,
+        "preJune1DeadMoney": 13056000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
+        "id": "4429795",
+        "name": "Jahmyr Gibbs",
+        "position": "RB",
+        "jersey": 0,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429795.png",
+        "otcUrl": "https://overthecap.com/player/jahmyr-gibbs/10836/",
+        "capHit2026": 8677999,
+        "postJune1CutSavings": -19543000,
+        "postJune1TradeSavings": 3183429,
+        "preJune1DeadMoney": 40220999,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      }
+    ]
   },
   "players": [
     {
@@ -4814,6 +4980,33 @@
               "capSavings": 0
             }
           }
+        }
+      }
+    },
+    {
+      "id": "4569323",
+      "otcId": "12204",
+      "otcSlug": "thomas-harper",
+      "otcUrl": "https://overthecap.com/player/thomas-harper/12204/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4569323/thomas-harper",
+      "pfrUrl": "https://www.pro-football-reference.com/players/H/HarpTh00.htm",
+      "name": "Thomas Harper",
+      "position": "S",
+      "jersey": 12,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569323.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "baseSalary": 1075000,
+          "proratedBonus": 0,
+          "rosterBonus": 0,
+          "capNumber": 1075000,
+          "deadMoneyPreJune1": 0,
+          "capSavingsPreJune1": 1075000,
+          "deadMoneyPostJune1": 0,
+          "capSavingsPostJune1": 1075000,
+          "guaranteedSalary": 0
         }
       }
     },

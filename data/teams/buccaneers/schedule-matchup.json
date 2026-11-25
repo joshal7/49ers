@@ -24373,11 +24373,11 @@
         "delta": "0",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +1.7 (#30 Off / #1 Def efficiency, 7.5 proj. wins, 1.2% SB odds) at 3-7.",
+        "blurb": "FPI +1.7 (#30 Off / #1 Def efficiency, 7.5 proj. wins, 1.1% SB odds) at 3-7.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24387,15 +24387,15 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 15,
-        "previousRank": 17,
-        "delta": "+2",
+        "previousRank": 16,
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF -0.3 (#18 Offense / #11 Defense) at 3-7 through Week 11.",
+        "blurb": "Betting market rating GPF -0.5 (#17 Offense / #15 Defense) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24410,10 +24410,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (53.4% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11.",
+        "blurb": "Tier 3 (52.1% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24462,15 +24462,15 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 15,
-        "previousRank": 17,
-        "delta": "+2",
+        "previousRank": 16,
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24",
-        "asOfLabel": "November 24",
+        "asOfIso": "2026-11-25",
+        "asOfLabel": "November 25",
         "verified": true,
-        "blurb": "Betting market rating GPF -0.3 (#18 Offense / #11 Defense) at 3-7 through Week 11."
+        "blurb": "Betting market rating GPF -0.5 (#17 Offense / #15 Defense) at 3-7 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24499,10 +24499,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-24T17:12:25Z",
+        "asOfIso": "2026-11-25T13:18:19Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (53.4% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11."
+        "blurb": "Tier 3 (52.1% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24531,11 +24531,11 @@
         "delta": "0",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-24T07:00Z",
-        "asOfLabel": "Thru Wk 11",
+        "throughWeek": 12,
+        "asOfIso": "2026-11-25T11:40Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +1.7 (#30 Off / #1 Def efficiency, 7.5 proj. wins, 1.2% SB odds) at 3-7."
+        "blurb": "FPI +1.7 (#30 Off / #1 Def efficiency, 7.5 proj. wins, 1.1% SB odds) at 3-7."
       },
       {
         "id": "espn_panel",
@@ -24568,7 +24568,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-24T20:54:07.298Z"
+    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
   },
   "upcomingMatchup": {
     "week": 12,

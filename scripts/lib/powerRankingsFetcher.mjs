@@ -745,7 +745,7 @@ async function discoverAndFetchEspnPanel({
 
 /**
  * Fetches all 6 league-wide NFL Power Rankings upstream payloads ONCE in parallel so
- * multi-team sweeps (`scripts/fetch-team-data.mjs --all`) parse all 32 teams cleanly
+ * multi-team sweeps (`scripts/fetch-live-data.mjs --all`) parse all 32 teams cleanly
  * from a single atomic snapshot without making 32x redundant HTTP requests.
  */
 export async function fetchLeaguePowerRankingsPayloads({

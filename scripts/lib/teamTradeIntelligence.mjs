@@ -1191,11 +1191,11 @@ function buildRealisticTargetsForTeam({
   for (const item of scored) {
     const bCnt = perBucket.get(item.bucket) || 0;
     const sCnt = perSeller.get(item.target.teamAbbr) || 0;
-    if (bCnt >= 2 || sCnt >= 2) continue;
+    if (bCnt >= 3 || sCnt >= 3) continue;
     perBucket.set(item.bucket, bCnt + 1);
     perSeller.set(item.target.teamAbbr, sCnt + 1);
     selected.push(item.target);
-    if (selected.length >= 7) break;
+    if (selected.length >= 9) break;
   }
   return selected;
 }

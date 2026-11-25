@@ -2,8 +2,7 @@
  * Canonical Shared 32-Team Playoff Monte Carlo & League Seasonal Pipeline
  *
  * Single source of truth used by:
- *   - `scripts/fetch-live-49ers-data.mjs` (`49ers.joshal.com` -> `data/seasonal.json`)
- *   - `scripts/fetch-team-data.mjs` (31 other franchises -> `data/teams/<slug>/seasonal.json`)
+ *   - `scripts/fetch-live-data.mjs` (all 32 franchises -> `data/seasonal.json` & `data/teams/<slug>/seasonal.json`)
  *   - `scripts/refresh-all-nfl-teams.mjs` (unified 32-team orchestrator & fast `--seasonal-only` resync)
  *
  * Performance & Latency Design:

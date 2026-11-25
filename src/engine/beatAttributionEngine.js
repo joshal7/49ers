@@ -3,7 +3,7 @@
  *
  * Deterministic, zero-dependency engine shared across browser live polling (`src/services/dataService.js`),
  * breaking/salience ranking (`src/engine/breakingClassifier.js`, `src/engine/antiFluffFilter.js`),
- * UI views, and server-side ingestion (`scripts/fetch-live-49ers-data.mjs`).
+ * UI views, and server-side ingestion (`scripts/fetch-live-data.mjs`).
  *
  * Core Philosophy:
  * 1. Prioritize Tier-1 Trusted 49ers Beat Reporters & NFL Insiders for general coverage and corroborated stories.
@@ -1029,14 +1029,21 @@ export function resolveEnabledDirectXReporters({
   const disabledOutlets = new Set(userPrefs?.disabledOutlets || []);
   const muteHotTakes = !includeHotTakes && Boolean(userPrefs?.muteHotTakePersonalities);
 
-  return sourceList.filter(r => {
-    if (!r || !r.handle) return false;
-    if (r.id && disabledReps.has(r.id)) return false;
-    if (r.outletId && disabledOutlets.has(r.outletId)) return false;
-    if (muteHotTakes && r.styleTag === 'opinion-hot-take') return false;
-    const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
-    return tier >= 1 && tier <= 3;
-  });
+  return sourceList
+    .filter(r => {
+      if (!r || !r.handle) return false;
+      if (r.id && disabledReps.has(r.id)) return false;
+      if (r.outletId && disabledOutlets.has(r.outletId)) return false;
+      if (muteHotTakes && r.styleTag === 'opinion-hot-take') return false;
+      const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
+      return tier >= 1 && tier <= 3;
+    })
+    .sort((a, b) => {
+      const ta = Number(a.trustTier) || getReporterTrustTier(a.id) || 2;
+      const tb = Number(b.trustTier) || getReporterTrustTier(b.id) || 2;
+      if (ta !== tb) return ta - tb;
+      return (Number(b.baseScore) || 0) - (Number(a.baseScore) || 0);
+    });
 }
 
 function packXSearchQueryWithinBudget(handles = [], suffixClause = '', maxChars = MAX_X_SEARCH_RAW_QUERY_LENGTH) {
@@ -1091,10 +1098,11 @@ export function buildXBeatListSearchUrl(mode = 'trusted', options = {}) {
     const injuryCandidates = enabled
       .filter(
         r =>
-          !isNationalReporter(r) &&
-          (r.category === 'beat' ||
-            r.category === 'official' ||
-            priorityOrder.has(String(r.handle || '').replace(/^@/, '').toLowerCase()))
+          r.category === 'injury_analyst' ||
+          (!isNationalReporter(r) &&
+            (r.category === 'beat' ||
+              r.category === 'official' ||
+              priorityOrder.has(String(r.handle || '').replace(/^@/, '').toLowerCase())))
       )
       .sort((a, b) => {
         const ha = String(a.handle || '').replace(/^@/, '').toLowerCase();

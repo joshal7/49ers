@@ -5,7 +5,7 @@
  *   - Browser PWA (`src/app.js`, `src/services/*`, `src/engine/*`, `src/views/*`)
  *   - Service Worker (`sw.js`)
  *   - Multi-Tenant Cloudflare Edge Worker & HTMLRewriter (`worker/nfl-teams-worker.js`, `worker/index.js`)
- *   - Two-Stage Data Ingestion Pipeline (`scripts/fetch-team-data.mjs`, `scripts/build-team-icons.mjs`)
+ *   - Unified 32-Team Data Ingestion Pipeline (`scripts/fetch-live-data.mjs`, `scripts/build-team-icons.mjs`)
  *
  * Zero-Regression Invariants for `49ers.joshal.com`:
  *   - `SF` preserves exact legacy branding (`49ers Faithful` / `49ers HQ`), exact legacy `localStorage`,
@@ -2458,17 +2458,32 @@ export function buildDeterministicCoachingMatchup({
   const cleanOppAbbr = String(oppAbbr || '').toUpperCase().trim();
   const oppSeed = cleanOppAbbr && cleanOppAbbr !== 'TBD' && cleanOppAbbr !== 'BYE' ? NFL_COACHES_SEED[cleanOppAbbr] || null : null;
   const oppSameHcDc = oppSeed?.hc && oppSeed?.dc && oppSeed.hc.toLowerCase() === oppSeed.dc.toLowerCase();
+  const oppSameHcOc = oppSeed?.hc && oppSeed?.oc && oppSeed.hc.toLowerCase() === oppSeed.oc.toLowerCase();
   const oppStaffTitle = oppCoachName
     ? oppCoachName
     : oppSeed
       ? oppSameHcDc
-        ? `HC/DC ${oppSeed.hc}`
-        : [
-            oppSeed.hc ? `HC ${oppSeed.hc}` : '',
-            oppSeed.dc ? `DC ${oppSeed.dc}` : ''
+        ? [
+            `HC/DC ${oppSeed.hc}`,
+            oppSeed.oc && !oppSameHcOc ? `OC ${oppSeed.oc}` : ''
           ]
             .filter(Boolean)
             .join(' & ')
+        : oppSameHcOc
+          ? [
+              `HC/OC ${oppSeed.hc}`,
+              oppSeed.dc ? `DC ${oppSeed.dc}` : ''
+            ]
+              .filter(Boolean)
+              .join(' & ')
+          : [
+              oppSeed.hc ? `HC ${oppSeed.hc}` : '',
+              oppSeed.oc ? `OC ${oppSeed.oc}` : '',
+              oppSeed.dc ? `DC ${oppSeed.dc}` : ''
+            ]
+              .filter(Boolean)
+              .join(', ')
+              .replace(/, ([^,]+)$/, ' & $1')
       : `${oppName} Staff`;
   const venueTag = homeAway === 'home' ? activeTeam.stadium : 'Road Test';
   const oppRecTag = oppRecord && oppRecord !== '—' ? ` (${oppRecord})` : '';
@@ -2478,8 +2493,10 @@ export function buildDeterministicCoachingMatchup({
       headline: `${coaches.hc} & DC ${coaches.dc} vs. ${oppStaffTitle} (${venueTag})`,
       summary: `Week ${week} two-sided coordinator chess match pitting ${coaches.hc}'s 21-personnel motion attack and DC ${coaches.dc}'s split-safety defense against ${oppName}${oppRecTag}—testing both ${activeTeam.city}'s offensive efficiency and its defensive pass-rush and secondary consistency.`,
       bullets: [
-        `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} uses condensed splits, jet motion, and orbit motion to diagnose ${oppName}'s single-high vs. two-high rotations pre-snap, while ${oppName}'s front and disguised coverage shells aim to disrupt timing windows and pressure intermediate reads.`,
-        `Trench Run-Fit & Two-Way Leverage: ${coaches.dc} leans on light-box run fits and disguised Quarters/Cover 6 rotations, while ${oppName}'s offense tests ${activeTeam.city}'s pass rush and perimeter coverage discipline on early downs and in the red zone.`
+        `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} pairs 21 personnel and condensed splits with pre-snap jet motion and orbit motion to diagnose ${oppName}'s single-high vs. two-high rotations—widening curl/flat defenders to attack the 12-to-22 yard honey-hole between hook/curl linebackers and deep safeties on play-action choice/dagger concepts between the numbers.`,
+        `Trench Run-Fit & Two-Way Leverage: Against ${oppName}'s gap-scheme pin-and-pull, counter, and duo runs targeting the A- and B-gaps, DC ${coaches.dc} holds disguised two-high shells before spinning into Quarters, Cover 6, or cloud-trap while balancing four-man pass-rush pressure and red-zone coverage discipline.`,
+        `Money-Down & Red-Zone Execution: Third-down conversion rate and red-zone touchdown efficiency determine whether ${activeTeam.city} controls possession length or lets ${oppName}'s front dictate obvious passing downs and compressed-field spacing.`,
+        `Tempo, Turnovers & Venue Leverage: ${venueTag} game-script management, penalty discipline, and hidden special-teams field position shape late-game leverage on both sidelines.`
       ]
     };
   }
@@ -2493,8 +2510,10 @@ export function buildDeterministicCoachingMatchup({
     headline: `${ourLead} vs. ${oppStaffTitle} (${venueTag})`,
     summary: `Week ${week} two-sided coordinator chess match pitting ${activeTeam.fullName}'s staff (${staffSummaryList}) against ${oppName}${oppRecTag}—testing both ${activeTeam.city}'s offensive efficiency and its defensive pass-rush and coverage discipline.`,
     bullets: [
-      `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} and ${ocLabel} look to stress ${oppName}'s single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while ${oppName}'s defensive front and coverage disguises aim to compress intermediate throwing windows.`,
-      `Trench Run-Fit & Two-Way Leverage: ${dcLabel} balances pass-rush pressure with two-high/split-safety discipline on early downs, while ${oppName}'s offense tests ${activeTeam.city}'s edge containment, third-down execution, and red-zone stops.`
+      `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} and ${ocLabel} pair condensed splits with pre-snap jet motion and orbit motion to stress ${oppName}'s single-high vs. two-high rotations—widening curl/flat defenders to attack the honey-hole between hook/curl linebackers and deep safeties on play-action choice/dagger concepts.`,
+      `Trench Run-Fit & Two-Way Leverage: Against ${oppName}'s pin-and-pull, counter, and duo runs targeting the A- and B-gaps, ${dcLabel} balances four-man pressure with disguised Quarters and Cover 6 split-safety rotations on early downs and in the red zone.`,
+      `Money-Down & Red-Zone Execution: Third-down conversion discipline and red-zone touchdown rate govern whether ${activeTeam.city} sustains multi-play scoring drives or yields momentum to ${oppName}'s pass rush and coverage disguises.`,
+      `Tempo, Turnovers & Venue Leverage: ${venueTag} situational play-calling, penalty margin, and turnover differential provide the clearest late-game swing factors for both coaching staffs.`
     ]
   };
 }

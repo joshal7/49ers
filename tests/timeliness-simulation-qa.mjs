@@ -1022,7 +1022,7 @@ await runSim('Scenario 8 [Gemini Token Tiering]: discoverBestFreeGeminiModel use
     globalThis.fetch = origFetch;
   }
 
-  const pipelineSrc = fs.readFileSync(path.join(rootDir, 'scripts', 'fetch-live-49ers-data.mjs'), 'utf8');
+  const pipelineSrc = fs.readFileSync(path.join(rootDir, 'scripts', 'fetch-live-data.mjs'), 'utf8');
   assert.ok(
     pipelineSrc.includes("preferredModel: 'gemini-3.8-flash'"),
     'Pipeline must route simpler capPurchasingPowerNote task to gemini-3.8-flash'

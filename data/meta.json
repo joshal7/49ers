@@ -1,13 +1,22 @@
 {
-  "updatedAt": "2026-11-17T07:08:18.577Z",
+  "updatedAt": "2026-11-25T19:40:45.452Z",
+  "teamAbbr": "SF",
+  "teamSlug": "49ers",
+  "brandName": "49ers Faithful",
   "seasonYear": 2026,
-  "currentWeek": 11,
-  "teamRecord": "8-1",
+  "currentWeek": 12,
+  "teamRecord": "9-1",
   "divisionRecord": "3-0",
-  "conferenceRecord": "5-1",
+  "conferenceRecord": "6-1",
   "standingSummary": "1st in NFC West • #1 Seed in NFC",
-  "pointDifferential": "+85 (281 PF / 196 PA)",
+  "pointDifferential": "+110 (316 PF / 206 PA)",
   "byeWeek": 8,
+  "coaches": {
+    "hc": "Kyle Shanahan",
+    "oc": "Klay Kubiak",
+    "dc": "Raheem Morris",
+    "gm": "John Lynch"
+  },
   "calendar": {
     "seasonYear": 2026,
     "kickoffStart": "2026-09-04T00:00:00-07:00",
@@ -23,7 +32,10 @@
     "prevPostUdfaEnd": "2026-05-17T23:59:59-07:00"
   },
   "teamStatus": {
-    "currentWeek": 11,
+    "currentWeek": 12,
+    "inPlayoffHunt": true,
+    "playoffSeed": 1,
+    "seasonConcluded": false,
     "mathematicallyEliminated": false,
     "eliminatedAt": null
   },
@@ -32,7 +44,7 @@
     "thinkingLevel": "XHIGH",
     "thinkingBudget": 24576,
     "autoPollEnabled": true,
-    "pollIntervalHours": 2,
+    "pollIntervalHours": 24,
     "candidateCascade": [
       "gemini-4-hydrogen",
       "gemini-3.8-flash",
@@ -42,6 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-17T07:08:18.481Z"
+    "lastCheckedAt": "2026-11-25T19:40:45.452Z",
+    "quotaOwner": "joshalbox@gmail.com"
   }
 }

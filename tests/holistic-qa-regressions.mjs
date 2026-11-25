@@ -868,8 +868,14 @@ test('Site-wide link, tooltip, inline-player, cross-mentioned tweet subject & en
       }
     }
   }
+  const activeRosterMoves = (seasonalJson.tradeWarRoom?.completed2026Moves || []).filter(m => m.playerId);
+  assert.ok(activeRosterMoves.length >= 2, 'Expected >=2 active-roster completed 2026 trades with resolved playerId');
   for (const m of seasonalJson.tradeWarRoom?.completed2026Moves || []) {
-    assert.ok(m.playerId && validPlayerIds.has(String(m.playerId)), `Unresolved completed trade playerId for ${m.player}`);
+    if (m.playerId) {
+      assert.ok(validPlayerIds.has(String(m.playerId)), `Unresolved completed trade playerId for ${m.player}`);
+    } else {
+      assert.ok(String(m.sourceUrl || '').startsWith('https://'), `Later-released trade ${m.player} missing valid sourceUrl`);
+    }
   }
   for (const pk of seasonalJson.draftClass2026?.picks || []) {
     assert.ok(pk.playerId && validPlayerIds.has(String(pk.playerId)), `Unresolved 2026 draft pick playerId for ${pk.name}`);
@@ -2380,7 +2386,7 @@ await testAsync('Draft Section: 4-Board Consensus Big Board above Combine, Prese
   const draftHtml = renderSeasonMatchupViewHtml({
     seasonSub: 'draft_prep',
     appData: {
-      meta: { ...metaJson, now: '2026-11-12T18:00:00Z' },
+      meta: { ...metaJson, now: metaJson.updatedAt || '2026-11-25T20:00:00Z' },
       roster: { players: [] },
       scheduleMatchup: smJson,
       seasonal: seasonalJson

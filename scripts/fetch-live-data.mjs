@@ -1,27 +1,32 @@
 #!/usr/bin/env node
 /**
- * Two-Stage Multi-Team NFL Live Data Ingestion & Grounded AI Synthesis Pipeline
+ * Unified Two-Stage All-32-Team NFL Live Data Ingestion & Grounded AI Synthesis Pipeline
  *
- * Stage 1 (Runs ONCE): Fetches league-wide datasets once (ESPN 32-team standings,
- *   272-game league schedule for AFC/NFC Monte Carlo, OverTheCap cap-space ceilings,
- *   nflverse 32-team stats & player snaps, and shared 260-prospect Draft Big Board / Combine).
- * Stage 2 (Staggered Per-Team): Builds complete 11-file team bundles under
- *   `data/teams/{slug}/` (`meta.json`, `roster.json`, `depth-chart.json`, `cap.json`,
- *   `health.json`, `news.json`, `schedule-matchup.json`, `seasonal.json`,
- *   `reporters.json`, `beat-podcasts.json`, `podcasts/index.json`) using verified live
- *   ESPN, OverTheCap, Official Club HTML/RSS, CBS Injuries, Power Rankings, Bluesky,
- *   RotoWire, Apple Podcasts, and optional `gemini-4-hydrogen` (`XHIGH`) Daily Brief.
+ * Single canonical fetcher for ALL 32 NFL franchises (`49ers.joshal.com` -> `data/`,
+ * all 31 other clubs -> `data/teams/{slug}/`):
  *
- * NEVER touches `data/*.json` (`49ers.joshal.com` production data).
+ * Stage 1 (Runs ONCE): Fetches league-wide datasets once (ESPN 32-team standings & team stats,
+ *   nflverse 32-team stats/player snaps/combine/draft picks, 272-game league schedule for AFC/NFC
+ *   Monte Carlo, OverTheCap cap-space ceilings, live 250+ prospect 3-Lens Draft Big Board,
+ *   national All-22 film/analytics X timelines & YouTube feeds, and free-tier Gemini model discovery).
+ * Stage 2 (Per-Team): Builds complete 11-file team bundles (`meta.json`, `roster.json`,
+ *   `depth-chart.json`, `cap.json`, `health.json`, `news.json`, `schedule-matchup.json`,
+ *   `seasonal.json`, `reporters.json`, `beat-podcasts.json`, `podcasts/index.json`) using verified
+ *   ESPN roster/depth/schedule/player-wire, OverTheCap, Official Club HTML/RSS, CBS Injuries,
+ *   Per-Team Local Beat RSS (SB Nation + USA Today Wire + regional TV/radio), Power Rankings,
+ *   Local + National X Timelines & Embedded X Clips/GIFs, Bluesky, RotoWire, Apple Podcasts,
+ *   Cloudflare KV brief adoption, and `gemini-4-hydrogen` (`XHIGH`) Daily Brief + `gemini-3.8-flash` Cap Note.
  *
  * Usage:
- *   node scripts/fetch-team-data.mjs --teams=DET,BUF
- *   GEMINI_NFL_API_KEY=... node scripts/fetch-team-data.mjs --teams=DET,BUF
+ *   node scripts/fetch-live-data.mjs --all
+ *   node scripts/fetch-live-data.mjs --teams=SF
+ *   node scripts/fetch-live-data.mjs --teams=DET,BUF,SF
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import zlib from 'node:zlib';
 import {
   ALL_NFL_TEAMS,
   NFL_DIVISIONS,
@@ -36,6 +41,7 @@ import { parseOverTheCapHtml } from './lib/otcParser.mjs';
 import {
   analyzeTeamTransactions,
   buildCbsTeamInjuriesUrl,
+  fetchEspnAthleteDetailsBatch,
   parseCbsTeamInjuriesHtml,
   parseOfficial49ersRosterHtml,
   resolveAuthoritativeRosterPlayerStatus
@@ -47,6 +53,7 @@ import {
   fetchKickoffOutdoorWeather,
   loadSharedNflversePlayerContext,
   normPlayerName,
+  parseCsv,
   resolvePlayerWeeklyLog
 } from './lib/nflversePlayerContext.mjs';
 import { resolveNflStadiumMeta } from '../src/config/nflStadiums.js';
@@ -67,7 +74,20 @@ import {
   harvestEmbeddedXForTeamRss,
   selectTeamLocalXHandles
 } from './lib/xBeatMediaFetcher.mjs';
-import { parseTankathonTeamPicksHtml } from './lib/aiSynthesisEngine.mjs';
+import {
+  TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR,
+  resolveTeamBeatRssFeeds
+} from './lib/teamMediaFeeds.mjs';
+import {
+  discoverBestFreeGeminiModel,
+  parseTankathonTeamPicksHtml,
+  runSinglePassDailyGeminiSynthesis
+} from './lib/aiSynthesisEngine.mjs';
+import {
+  fetchCuratedYouTubeChannelVideos,
+  fetchLive2027ConsensusBigBoardAndMocks,
+  searchYouTubeChannelVideos
+} from './lib/seasonalContentBuilder.mjs';
 import {
   buildTeamTradeWindow,
   loadSharedLeagueTradeContext
@@ -84,6 +104,7 @@ import {
 import {
   NFL_TEAM_NAMES,
   computeLeaguePositionalLeaderboards,
+  computeLeagueTeamStatsPayload,
   refreshLiveStandingsMetricsInTeamStats
 } from '../src/engine/statsLeaderboardEngine.js';
 import {
@@ -100,7 +121,10 @@ import {
   resolveOfficialReportGameStatus,
   scopeBeatTextToPlayer
 } from '../src/engine/injuryProbabilityModel.js';
-import { isBeforeWeeklyPracticeWindow } from '../src/engine/gameDayRosterEngine.js';
+import {
+  extractCompletedGameRecapSummary,
+  isBeforeWeeklyPracticeWindow
+} from '../src/engine/gameDayRosterEngine.js';
 import {
   buildNflCalendarForSeasonYear,
   normalizeScheduleGameItem
@@ -109,22 +133,33 @@ import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   classifyBreakingItem,
   classifyNewsItemCategory,
+  filterOutCompletedGameAvailabilityItems,
   formatTweetBodyForDisplay,
+  isDailyBriefStaleForLiveState,
   isOpposingTeamOnlyInjuryOrRosterStory,
   isOpposingTeamSubjectLead,
   resolveNewsBriefCycleState,
-  sortNewsWithBreakingPriority
+  sortNewsWithBreakingPriority,
+  stripRedundantAuthorBoilerplate
 } from '../src/engine/breakingClassifier.js';
 import {
   configureBeatAttributionForTeam,
+  extractBeatAttributionFromText,
+  isDirectSocialPostUrl,
+  isEspnPlayerProfileUrl,
+  isPodiumSubjectId,
+  resolveOriginalTweetUrl,
   resolveReporterFromNameOrHandle
 } from '../src/engine/beatAttributionEngine.js';
 import {
+  AMBIGUOUS_PLAYER_SURNAMES,
+  buildEspnPlayerNewsAnchorUrl,
   buildOtcPlayerUrl,
   createPlayerIdentityResolver,
   decodeHtmlEntities,
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
+  hasSafeStandaloneSurnameMatch,
   isLeagueWideFilmAnalyticsTweet,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
@@ -137,6 +172,7 @@ import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiF
 import {
   buildAuthoritativeLiveContextSnapshot,
   buildLiveGroundingSystemPrompt,
+  classifySymmetricUnitAdvantage,
   validateNoHallucinatedRosterClaims
 } from '../src/engine/groundingValidator.js';
 import {
@@ -144,6 +180,14 @@ import {
   buildGeminiThinkingConfig,
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
+import {
+  buildDailyTopNewsBriefPrompt,
+  buildDeterministicDailyTopNewsBrief,
+  getPacificDateKey,
+  parseAndSanitizeDailyTopNewsBrief,
+  repairDailyTopNewsBriefLinks,
+  selectTopNewsBriefSourceCandidates
+} from '../src/services/aiWorkerClient.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const UA_HEADERS = {
@@ -177,6 +221,128 @@ async function fetchJsonSafe(url, timeoutMs = 12000) {
   } catch {
     return null;
   }
+}
+
+function getTeamOutDir(team) {
+  return team?.abbr === 'SF' ? path.join(ROOT, 'data') : path.join(ROOT, 'data', 'teams', team.slug);
+}
+
+function getTeamDataRelUrl(team, fileName) {
+  return team?.abbr === 'SF' ? `data/${fileName}` : `data/teams/${team.slug}/${fileName}`;
+}
+
+function upgradeHttpUrlsDeep(val) {
+  if (typeof val === 'string') {
+    return val.startsWith('http://') ? `https://${val.slice(7)}` : val;
+  }
+  if (Array.isArray(val)) return val.map(upgradeHttpUrlsDeep);
+  if (val && typeof val === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(val)) {
+      out[k] = upgradeHttpUrlsDeep(v);
+    }
+    return out;
+  }
+  return val;
+}
+
+async function fetchCsvGzSafe(primaryUrl, fallbackUrl = null, timeoutMs = 15000) {
+  for (const u of [primaryUrl, fallbackUrl].filter(Boolean)) {
+    try {
+      const res = await fetch(u, { headers: UA_HEADERS, signal: AbortSignal.timeout(timeoutMs) });
+      if (!res.ok) continue;
+      const buf = Buffer.from(await res.arrayBuffer());
+      const txt = u.endsWith('.gz') ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
+      const rows = parseCsv(txt);
+      if (rows.length > 0) return rows;
+    } catch {
+      // try fallback
+    }
+  }
+  return [];
+}
+
+function buildTeamCapBlueprint(team, capYears = {}, capPlayers = [], seasonYear = 2026) {
+  const yrKey = capYears?.[String(seasonYear)]
+    ? String(seasonYear)
+    : Object.keys(capYears || {}).sort()[0] || String(seasonYear);
+  const nextYrNum = Number(yrKey) + 1;
+  const nextYrKey = String(nextYrNum);
+  const otcTeamUrl = `https://overthecap.com/salary-cap/${team.otcSlug}`;
+
+  const topSeason = [...(capPlayers || [])]
+    .filter(p => p.contractsByYear?.[yrKey])
+    .sort((a, b) => (b.contractsByYear[yrKey].capNumber || 0) - (a.contractsByYear[yrKey].capNumber || 0));
+
+  const restructureCandidates = topSeason
+    .filter(p => (p.contractsByYear[yrKey]?.transactions?.restructure?.capSavings || 0) >= 1_000_000)
+    .slice(0, 6)
+    .map(p => ({
+      id: p.id || p.otcId,
+      name: p.name,
+      position: p.position || 'VET',
+      jersey: p.jersey ?? null,
+      headshotUrl: p.headshotUrl || '',
+      otcUrl: sanitizeExternalUrl(p.otcUrl, otcTeamUrl),
+      capHit2026: p.contractsByYear[yrKey].capNumber,
+      baseSalary2026: p.contractsByYear[yrKey].baseSalary,
+      maxRestructureSavings: p.contractsByYear[yrKey].transactions.restructure.capSavings,
+      rationale: 'High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap.'
+    }));
+
+  const cutOrTradeCandidates = topSeason
+    .filter(p => {
+      const tx = p.contractsByYear[yrKey]?.transactions;
+      return (tx?.june_1_trade?.capSavings || 0) >= 2_000_000 || (tx?.june_1_cut?.capSavings || 0) >= 2_000_000;
+    })
+    .slice(0, 6)
+    .map(p => {
+      const cur = p.contractsByYear[yrKey];
+      return {
+        id: p.id || p.otcId,
+        name: p.name,
+        position: p.position || 'VET',
+        jersey: p.jersey ?? null,
+        headshotUrl: p.headshotUrl || '',
+        otcUrl: sanitizeExternalUrl(p.otcUrl, otcTeamUrl),
+        capHit2026: cur.capNumber,
+        postJune1CutSavings: cur.transactions.june_1_cut.capSavings,
+        postJune1TradeSavings: cur.transactions.june_1_trade.capSavings,
+        preJune1DeadMoney: cur.transactions.cut.deadMoney,
+        rationale: `Significant ${yrKey}/${nextYrNum} cash and cap relief via Post-June 1 trade or release designation.`
+      };
+    });
+
+  const grossSpace = Number(capYears?.[yrKey]?.teamCapSpace || 0);
+  const effSpace = Number(capYears?.[yrKey]?.effectiveCapSpace ?? Math.max(0, grossSpace - 5_000_000));
+  const nextGrossSpace = Number(capYears?.[nextYrKey]?.teamCapSpace ?? 0);
+  const nextCeilingM = Math.round(Number(capYears?.[nextYrKey]?.capCeiling || 327_000_000) / 1e6);
+  const grossM = (grossSpace / 1e6).toFixed(2);
+  const effM = (effSpace / 1e6).toFixed(2);
+  const nextSpaceAbsM = (Math.abs(nextGrossSpace) / 1e6).toFixed(2);
+  const rolloverLowM = Math.max(4, Math.round(Math.max(0, grossSpace - 7_000_000) / 1e6));
+  const rolloverHighM = Math.max(rolloverLowM + 2, Math.round(Math.max(0, grossSpace - 3_000_000) / 1e6));
+  const topCoreNames = topSeason.slice(0, 4).map(p => p.name).join(', ') || `${team.nickname} veteran core`;
+  const gmLabel = team.coachesSeed?.gm ? `${team.coachesSeed.gm} and the ${team.nickname} front office` : `${team.fullName}`;
+
+  const summary = `${team.fullName} hold $${grossM}M in ${yrKey} OverTheCap space ($${effM}M effective) and ${nextGrossSpace < 0 ? `-$${nextSpaceAbsM}M` : `+$${nextSpaceAbsM}M`} projected for ${nextYrNum}.`;
+  return {
+    sourceUrl: otcTeamUrl,
+    summary,
+    executiveSummary: `${gmLabel} hold $${grossM}M in gross ${yrKey} cap space ($${effM}M effective), while ${nextYrNum} currently projects at ${nextGrossSpace < 0 ? `-$${nextSpaceAbsM}M over` : `+$${nextSpaceAbsM}M under`} an estimated $${nextCeilingM}M cap ceiling. Rolling unused ${yrKey} cap space 1-for-1 under CBA Article 13 ($${rolloverLowM}M–$${rolloverHighM}M target) helps manage scheduled cap escalations for ${topCoreNames}.`,
+    strategicPillars: [
+      {
+        title: `1. CBA Article 13 Rollover Bridge ($${rolloverLowM}M–$${rolloverHighM}M Target vs. ${nextGrossSpace < 0 ? `-$${nextSpaceAbsM}M` : `+$${nextSpaceAbsM}M`} ${nextYrNum} Projection)`,
+        detail: `Unused ${yrKey} cap space carries over dollar-for-dollar into ${nextYrNum}, buffering ${team.city}'s projected ${nextYrNum} ledger without forcing premature void-year restructures.`
+      },
+      {
+        title: '2. Prorated Base Salary & Option-Bonus Architecture',
+        detail: `Converting base salary or option bonuses spreads cap charges across up to 5 years (including void years) while preserving weekly in-season flexibility.`
+      }
+    ],
+    restructureCandidates,
+    cutOrTradeCandidates
+  };
 }
 
 function decodeXmlEntities(str = '') {
@@ -240,9 +406,11 @@ function loadMergedReportersForTeam(team) {
 /**
  * STAGE 1: Fetch league-wide shared datasets ONCE per run.
  */
-async function loadSharedLeagueContext(seasonYear = 2026) {
-  console.log('[stage-1] Fetching league-wide shared datasets (standings, OTC ceilings, schedule, nflverse players/combine/stats/snaps, live mock drafts, big board)...');
+async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } = {}) {
+  console.log('[stage-1] Fetching league-wide shared datasets (standings, 32-team stats, OTC ceilings, schedule, nflverse players/combine/stats/snaps, live mock drafts, big board)...');
   const nextDraftYear = seasonYear + 1;
+  const prevSeasonYear = seasonYear - 1;
+  const NFLVERSE_BASE = 'https://github.com/nflverse/nflverse-data/releases/download';
   const [
     standingsRaw,
     otcSpaceHtml,
@@ -253,11 +421,15 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     ytQbSchoolXml,
     ytKollmannXml,
     nflverse,
+    statsTeamReg,
+    statsTeamWeek,
     tkMockHtml,
     dtMockHtml,
     wfMock1Html,
     wfMock2Html,
-    nationalFilmXItems
+    nationalFilmXItems,
+    liveDraftBigBoardIntel,
+    aiModelDiscovery
   ] = await Promise.all([
     fetchJsonSafe('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings', 14000),
     fetchTextSafe('https://overthecap.com/salary-cap-space', 14000),
@@ -268,6 +440,14 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCGfxHp2yuimtLsFaq1r7aIQ', 10000),
     fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCYzfVBuCfGz-oF3aOCGgOmw', 10000),
     loadSharedNflversePlayerContext(seasonYear),
+    fetchCsvGzSafe(
+      `${NFLVERSE_BASE}/stats_team/stats_team_reg_${seasonYear}.csv.gz`,
+      `${NFLVERSE_BASE}/stats_team/stats_team_reg_${prevSeasonYear}.csv.gz`
+    ),
+    fetchCsvGzSafe(
+      `${NFLVERSE_BASE}/stats_team/stats_team_week_${seasonYear}.csv.gz`,
+      `${NFLVERSE_BASE}/stats_team/stats_team_week_${prevSeasonYear}.csv.gz`
+    ),
     fetchTextSafe('https://www.tankathon.com/nfl/mock_draft', 14000),
     fetchTextSafe(`https://www.drafttek.com/${nextDraftYear}-NFL-Mock-Draft/${nextDraftYear}-NFL-Mock-Draft-Round-1.asp`, 14000),
     fetchTextSafe(`https://walterfootball.com/draft${nextDraftYear}.php`, 14000),
@@ -277,7 +457,17 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
       timeoutMs: 4200,
       maxAgeHours: 120,
       maxItems: 14
-    }).catch(() => [])
+    }).catch(() => []),
+    fetchLive2027ConsensusBigBoardAndMocks({
+      draftYear: nextDraftYear,
+      nowMs: Date.now()
+    }).catch(() => null),
+    discoverBestFreeGeminiModel(geminiApiKey, { timeoutMs: 7000 }).catch(() => ({
+      activeModel: PRIMARY_GEMINI_REASONING_MODEL,
+      thinkingLevel: 'XHIGH',
+      source: 'fallback',
+      candidateCascade: [PRIMARY_GEMINI_REASONING_MODEL, 'gemini-3.8-flash']
+    }))
   ]);
 
   // Parse 32-team standings from ESPN
@@ -451,8 +641,92 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     )
   );
 
+  // Compute live 32-team 4-unit Team Stats template ONCE in Stage 1 (zero dependency on stale SF files!)
+  let freshTeamStatsTemplate = null;
+  const regTeams = Array.isArray(statsTeamReg) ? statsTeamReg.filter(r => r.season_type === 'REG' && r.team) : [];
+  if (regTeams.length >= 28) {
+    const espnTeamStatsByAbbr = new Map();
+    const allClubTeams = [...ALL_NFL_TEAMS];
+    for (let i = 0; i < allClubTeams.length; i += 8) {
+      const slice = allClubTeams.slice(i, i + 8);
+      await Promise.all(
+        slice.map(async club => {
+          const stJson = await fetchJsonSafe(
+            `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${club.espnAbbr}/statistics`,
+            7000
+          );
+          if (!stJson) return;
+          const ownCats = stJson?.results?.stats?.categories || [];
+          const oppRaw = stJson?.results?.opponent;
+          const oppCats = Array.isArray(oppRaw) ? oppRaw : oppRaw?.categories || [];
+          const findVal = (cats, catName, statName) => {
+            const c = cats.find(x => x.name === catName);
+            const s = c?.stats?.find(x => x.name === statName);
+            return s?.value != null && Number.isFinite(Number(s.value)) ? Number(s.value) : null;
+          };
+          espnTeamStatsByAbbr.set(club.abbr, {
+            gamesPlayed:
+              findVal(ownCats, 'general', 'gamesPlayed') ??
+              findVal(ownCats, 'passing', 'teamGamesPlayed'),
+            offThirdDownPct: findVal(ownCats, 'miscellaneous', 'thirdDownConvPct'),
+            defThirdDownPctAllowed: findVal(oppCats, 'miscellaneous', 'thirdDownConvPct'),
+            offRedZoneTdPct: findVal(ownCats, 'miscellaneous', 'redzoneTouchdownPct'),
+            defRedZoneTdPctAllowed: findVal(oppCats, 'miscellaneous', 'redzoneTouchdownPct'),
+            takeaways: findVal(ownCats, 'miscellaneous', 'totalTakeaways'),
+            giveaways: findVal(ownCats, 'miscellaneous', 'totalGiveaways'),
+            turnoverDiff: findVal(ownCats, 'miscellaneous', 'turnOverDifferential'),
+            netPassingYards: findVal(ownCats, 'passing', 'netPassingYards'),
+            oppNetPassingYards: findVal(oppCats, 'passing', 'netPassingYards'),
+            oppRushingYards: findVal(oppCats, 'rushing', 'rushingYards'),
+            puntNetAvg: findVal(ownCats, 'punting', 'netAvgPuntYards'),
+            krAvg: findVal(ownCats, 'returning', 'yardsPerKickReturn'),
+            prAvg: findVal(ownCats, 'returning', 'yardsPerPuntReturn'),
+            oppKrAvg: findVal(oppCats, 'returning', 'yardsPerKickReturn'),
+            oppPrAvg: findVal(oppCats, 'returning', 'yardsPerPuntReturn')
+          });
+        })
+      );
+    }
+    const teamRecordsMap = new Map();
+    for (const [abbr, st] of standingsByAbbr.entries()) {
+      teamRecordsMap.set(abbr, {
+        wins: st.wins,
+        losses: st.losses,
+        ties: st.ties,
+        pointsFor: st.pf,
+        pointsAgainst: st.pa,
+        pointDiff: st.pd,
+        gamesPlayed: st.wins + st.losses + st.ties
+      });
+    }
+    try {
+      const payload = computeLeagueTeamStatsPayload({
+        regTeams,
+        statsTeamWeek: statsTeamWeek || [],
+        espnTeamStatsByAbbr,
+        teamRecordsMap,
+        seasonYear
+      });
+      if (payload?.teamStats?.units?.length) {
+        freshTeamStatsTemplate = payload.teamStats;
+      }
+    } catch {
+      // fallback below
+    }
+  }
+
+  const existingBoardLen = Array.isArray(sfSeasonal?.draftPrep2027?.consensusBigBoard)
+    ? sfSeasonal.draftPrep2027.consensusBigBoard.length
+    : 0;
+  const liveBigBoard =
+    Array.isArray(liveDraftBigBoardIntel?.consensusBigBoard) &&
+    liveDraftBigBoardIntel.consensusBigBoard.length >= Math.max(250, existingBoardLen)
+      ? liveDraftBigBoardIntel.consensusBigBoard
+      : sfSeasonal?.draftPrep2027?.consensusBigBoard || liveDraftBigBoardIntel?.consensusBigBoard || [];
+
   return {
     seasonYear,
+    aiModelDiscovery,
     standingsByAbbr,
     otcSpaceHtml,
     rotowireXml,
@@ -473,14 +747,173 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     sharedInjuryAdjustments: sfSeasonal?.playoffPicture?.simulatorInputs?.injuryAdjustmentsByTeam || null,
     liveScoresByMatchup,
     espnWeatherByGameId,
-    baseTeamStatsTemplate: sfMatchup?.teamStats || null,
-    sharedBigBoard: sfSeasonal?.draftPrep2027?.consensusBigBoard || [],
-    sharedBigBoardMeta: sfSeasonal?.draftPrep2027?.bigBoardMeta || null,
-    sharedBigBoardMethodology: sfSeasonal?.draftPrep2027?.bigBoardMethodology || null,
+    baseTeamStatsTemplate: freshTeamStatsTemplate || sfMatchup?.teamStats || null,
+    sharedBigBoard: liveBigBoard,
+    sharedBigBoardMeta: liveDraftBigBoardIntel?.bigBoardMeta || sfSeasonal?.draftPrep2027?.bigBoardMeta || null,
+    sharedBigBoardMethodology:
+      liveDraftBigBoardIntel?.bigBoardMethodology || sfSeasonal?.draftPrep2027?.bigBoardMethodology || null,
     sharedCombineLeaderboard: sfSeasonal?.draftPrep2027?.combineLeaderboard || null,
     leagueMockHtmls: { tkMockHtml, dtMockHtml, wfMock1Html, wfMock2Html },
     nationalFilmXItems: Array.isArray(nationalFilmXItems) ? nationalFilmXItems : []
   };
+}
+
+function buildTeamKeyMatchupsMatrix({
+  team,
+  oppAbbr = '',
+  oppName = 'Opponent',
+  players = [],
+  oppActiveRoster = [],
+  oppKeyStartersHealthy = [],
+  teamStats = null
+} = {}) {
+  const cleanOpp = String(oppAbbr || '').toUpperCase().trim();
+  const oppShort = String(oppName || 'Opponent').split(/\s+/).pop() || cleanOpp || 'Opponent';
+  if (!cleanOpp || cleanOpp === 'TBD' || cleanOpp === 'BYE') return [];
+
+  const allMetrics = (teamStats?.units || []).flatMap(u => [...(u.coreRows || []), ...(u.extraRows || [])]);
+  const getMetricFor = (abbr, labelRe, fallbackDisp = '—') => {
+    const m = allMetrics.find(x => labelRe.test(String(x?.label || x?.key || '')));
+    const hit = (m?.leaderboard || []).find(e => String(e?.team || '').toUpperCase() === abbr);
+    return {
+      rank: Number(hit?.rank || 16),
+      val: Number(hit?.val || 0),
+      disp: hit?.disp || fallbackDisp
+    };
+  };
+
+  const ourPassOff = getMetricFor(team.abbr, /pass.*epa|passing\s+yards|pass\s+off/i, 'Top-15');
+  const ourRushOff = getMetricFor(team.abbr, /rush.*epa|rushing\s+yards|rush\s+off/i, 'Balanced');
+  const ourSackAllow = getMetricFor(team.abbr, /sack\s+rate\s+allow|sacks\s+allow/i, '6.0%');
+  const ourPassDef = getMetricFor(team.abbr, /pass.*epa\s+allow|pass\s+yds\s+allow|pass\s+def/i, 'Mid-Tier');
+  const ourDefSacks = getMetricFor(team.abbr, /sacks?\s*(?:\/|\s+per)\s*gm|def.*sack/i, '2.3/gm');
+  const ourOffEpa = getMetricFor(team.abbr, /off.*epa|points\s+per\s+game|ppg/i, '24.0');
+
+  const oppPassOff = getMetricFor(cleanOpp, /pass.*epa|passing\s+yards|pass\s+off/i, 'Mid-Tier');
+  const oppPassDef = getMetricFor(cleanOpp, /pass.*epa\s+allow|pass\s+yds\s+allow|pass\s+def/i, 'Mid-Tier');
+  const oppRushDef = getMetricFor(cleanOpp, /rush.*epa\s+allow|rush\s+yds\s+allow|yards\/carry\s+allow/i, 'Mid-Tier');
+  const oppDefSacks = getMetricFor(cleanOpp, /sacks?\s*(?:\/|\s+per)\s*gm|def.*sack/i, '2.4/gm');
+  const oppSackAllow = getMetricFor(cleanOpp, /sack\s+rate\s+allow|sacks\s+allow/i, '6.5%');
+
+  const activePool = (players || [])
+    .filter(p => p && p.rosterBucket === 'active' && (p.health?.playProbabilityPct ?? 95) >= 35)
+    .sort((a, b) => Number(b.primarySnapPct || 0) - Number(a.primarySnapPct || 0) || Number(b.capHit2026 || 0) - Number(a.capHit2026 || 0));
+  const pickOurs = (posRe, count = 2, fallback = []) => {
+    const out = activePool.filter(p => posRe.test(String(p.position || ''))).slice(0, count);
+    return out.length > 0 ? out : fallback;
+  };
+  const oppPool = [...(oppKeyStartersHealthy || []), ...(oppActiveRoster || [])].filter(p => p?.name);
+  const pickOpp = (posRe, fallbackLabel) => {
+    const hit = oppPool.find(p => posRe.test(String(p.position || '')));
+    return hit ? `${hit.position} ${hit.name}` : fallbackLabel;
+  };
+  const fmtStar = p => (p?.jersey != null ? `${p.name} (#${p.jersey})` : p?.name || '');
+
+  const qb = pickOurs(/^QB$/i, 1)[0];
+  const te = pickOurs(/^TE$/i, 1)[0];
+  const wrs = pickOurs(/^WR$/i, 2);
+  const rb = pickOurs(/^RB$/i, 1)[0];
+  const fb = pickOurs(/^FB$/i, 1)[0];
+  const edgeDls = pickOurs(/^(?:DE|EDGE|OLB|DT|DL|NT)$/i, 3);
+  const dbsLbs = pickOurs(/^(?:CB|S|SS|FS|LB|MLB|ILB)$/i, 3);
+  const ols = pickOurs(/^(?:OT|LT|RT|OG|LG|RG|C|G|T|OL)$/i, 3);
+
+  const oppQb = pickOpp(/^QB$/i, `${oppShort} QB`);
+  const oppWr = pickOpp(/^WR$/i, `${oppShort} WR1`);
+  const oppEdge = pickOpp(/^(?:DE|EDGE|OLB|DT|DL)$/i, `${oppShort} Pass Rush`);
+  const oppCb = pickOpp(/^(?:CB|S|DB)$/i, `${oppShort} Secondary`);
+  const oppLb = pickOpp(/^(?:LB|ILB|MLB)$/i, `${oppShort} Linebackers`);
+  const oppOl = pickOpp(/^(?:OT|LT|RT|C|OG|G|T)$/i, `${oppShort} Offensive Line`);
+
+  const ourLabel = team.abbr;
+  const passOffAdv = classifySymmetricUnitAdvantage(ourPassOff.rank, oppPassDef.rank, cleanOpp, {
+    tieLabel: 'Even Star Clash',
+    strengthVsStrengthLabel: 'Strength vs. Strength',
+    sfEdgeLabel: `${ourLabel} Edge`,
+    sfHeavyLabel: `${ourLabel} Heavy Edge`
+  });
+  const rushVsOlAdv = classifySymmetricUnitAdvantage(ourDefSacks.rank, oppSackAllow.rank, cleanOpp, {
+    tieLabel: 'Even Trench Battle',
+    strengthVsStrengthLabel: 'Strength vs. Strength',
+    sfEdgeLabel: `${ourLabel} Trench Edge`,
+    sfHeavyLabel: `${ourLabel} Heavy Edge`,
+    oppEdgeLabel: `${cleanOpp} Trench Edge`
+  });
+  const covVsPassAdv = classifySymmetricUnitAdvantage(ourPassDef.rank, oppPassOff.rank, cleanOpp, {
+    tieLabel: 'Even Star Clash',
+    strengthVsStrengthLabel: 'Strength vs. Strength',
+    sfEdgeLabel: `${ourLabel} Edge`,
+    sfHeavyLabel: `${ourLabel} Heavy Edge`
+  });
+  const runVsDefAdv = classifySymmetricUnitAdvantage(ourRushOff.rank, oppRushDef.rank, cleanOpp, {
+    tieLabel: 'Even Trench Battle',
+    strengthVsStrengthLabel: 'Strength vs. Strength',
+    sfEdgeLabel: `${ourLabel} Trench Edge`,
+    sfHeavyLabel: `${ourLabel} Heavy Edge`
+  });
+  const olVsRushAdv = classifySymmetricUnitAdvantage(ourSackAllow.rank, oppDefSacks.rank, cleanOpp, {
+    tieLabel: 'Even Trench Battle',
+    strengthVsStrengthLabel: 'Strength vs. Strength',
+    sfEdgeLabel: `${ourLabel} Trench Edge`,
+    sfHeavyLabel: `${ourLabel} Heavy Edge`,
+    oppEdgeLabel: `${cleanOpp} Edge`
+  });
+
+  const c1Players = [qb, te, wrs[0]].filter(Boolean);
+  const c2Players = edgeDls.slice(0, 3);
+  const c3Players = dbsLbs.slice(0, 3);
+  const c4Players = [rb, fb || wrs[1]].filter(Boolean);
+  const c5Players = ols.slice(0, 3);
+
+  const joinP = arr => arr.map(p => p.name).join(', ').replace(/, ([^,]+)$/, ' & $1') || `${team.nickname} Unit`;
+
+  return [
+    {
+      phaseTag: 'Middle-Field Passing Spine',
+      unitMatchup: `${joinP(c1Players)} vs. ${oppCb} & ${oppLb}`,
+      advantage: passOffAdv,
+      sfPlayers: c1Players.map(p => p.name),
+      statComparison: `${ourLabel}: #${ourPassOff.rank} Pass Off (${ourPassOff.disp}) · #${ourOffEpa.rank} Off. Scoring (${ourOffEpa.disp}) | ${cleanOpp}: #${oppPassDef.rank} Pass Def (${oppPassDef.disp})`,
+      tacticalDetail: `${joinP(c1Players)} attack the intermediate seams and middle-of-the-field leverage windows against ${oppName}'s #${oppPassDef.rank} pass defense (${oppPassDef.disp}). Winning early-down timing throws keeps ${team.city}'s offense ahead of the chains and punishes disguised single-high rotations.`,
+      filmTell: `Watch ${fmtStar(c1Players[0]) || team.nickname} scanning ${oppShort}'s deep safeties at the snap—when ${oppLb} widens to take away the crossers, the intermediate seam opens immediately for ${fmtStar(c1Players[1] || c1Players[0])}.`
+    },
+    {
+      phaseTag: 'Front-Four Pass-Rush Stress',
+      unitMatchup: `${joinP(c2Players)} vs. ${oppQb} & ${oppOl}`,
+      advantage: rushVsOlAdv,
+      sfPlayers: c2Players.map(p => p.name),
+      statComparison: `${ourLabel}: #${ourDefSacks.rank} Def Sacks (${ourDefSacks.disp}) | ${cleanOpp}: #${oppSackAllow.rank} Pass Protection (${oppSackAllow.disp})`,
+      tacticalDetail: `${joinP(c2Players)} lead ${team.city}'s #${ourDefSacks.rank} NFL pass rush (${ourDefSacks.disp}) against ${oppName}'s #${oppSackAllow.rank} pass-protection unit (${oppSackAllow.disp}). Collapsing the interior pocket without sending extra blitzers lets ${team.nickname} keep seven defenders in coverage.`,
+      filmTell: `On 3rd-and-6+, watch whether ${fmtStar(c2Players[0]) || `${team.nickname} edge rushers`} draw chip help from ${oppShort}'s tight ends or backs—creating 1-on-1 rush lanes inside for ${fmtStar(c2Players[1] || c2Players[0])}.`
+    },
+    {
+      phaseTag: 'Perimeter Coverage & Explosive Prevention',
+      unitMatchup: `${joinP(c3Players)} vs. ${oppWr} & ${oppQb}`,
+      advantage: covVsPassAdv,
+      sfPlayers: c3Players.map(p => p.name),
+      statComparison: `${ourLabel}: #${ourPassDef.rank} Pass Def (${ourPassDef.disp}) | ${cleanOpp}: #${oppPassOff.rank} Pass Off (${oppPassOff.disp})`,
+      tacticalDetail: `${joinP(c3Players)} anchor ${team.city}'s #${ourPassDef.rank} pass defense (${ourPassDef.disp}) against ${oppWr} and ${oppName}'s #${oppPassOff.rank} passing attack (${oppPassOff.disp}). Limiting explosive 20+ yard chunk plays forces ${oppShort} into sustained red-zone drives.`,
+      filmTell: `Track ${fmtStar(c3Players[0]) || `${team.nickname} boundary corners`} at the top of routes against ${oppWr}: press-bail alignment with safety help over the top takes away ${oppQb}'s preferred isolation shots.`
+    },
+    {
+      phaseTag: 'Early-Down Ground Game & Run Fits',
+      unitMatchup: `${joinP(c4Players)} vs. ${oppShort} Front Seven & ${oppLb}`,
+      advantage: runVsDefAdv,
+      sfPlayers: c4Players.map(p => p.name),
+      statComparison: `${ourLabel}: #${ourRushOff.rank} Rush Off (${ourRushOff.disp}) | ${cleanOpp}: #${oppRushDef.rank} Rush Def (${oppRushDef.disp})`,
+      tacticalDetail: `${joinP(c4Players)} test ${oppName}'s #${oppRushDef.rank} run defense (${oppRushDef.disp}) with horizontal stretch and interior cutback lanes. Generating 4.5+ yards on first down unlocks play-action explosives and neutralizes ${oppShort}'s pass-rush packages.`,
+      filmTell: `Watch whether ${oppShort}'s linebackers over-pursue motion to the perimeter—opening decisive backside B-gap cutback lanes for ${fmtStar(c4Players[0]) || `${team.nickname}'s lead back`}.`
+    },
+    {
+      phaseTag: 'Pocket Protection & Edge Containment',
+      unitMatchup: `${joinP(c5Players)} vs. ${oppEdge} & ${oppShort} Simulated Pressures`,
+      advantage: olVsRushAdv,
+      sfPlayers: c5Players.map(p => p.name),
+      statComparison: `${ourLabel}: #${ourSackAllow.rank} Pass Protection (${ourSackAllow.disp}) | ${cleanOpp}: #${oppDefSacks.rank} Def Sacks (${oppDefSacks.disp})`,
+      tacticalDetail: `${joinP(c5Players)} protect ${qb?.name || `${team.nickname}'s quarterback`} (#${ourSackAllow.rank} protection at ${ourSackAllow.disp}) against ${oppEdge} and ${oppName}'s #${oppDefSacks.rank} pass rush (${oppDefSacks.disp}). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.`,
+      filmTell: `Watch ${fmtStar(c5Players[0]) || `${team.nickname}'s blindside tackle`} on obvious passing downs—if ${oppEdge} cannot win clean around the arc, ${oppShort} must dial up interior stunts that stress ${fmtStar(c5Players[1] || c5Players[0])}.`
+    }
+  ];
 }
 
 function buildTeamStatsForClub(team, leagueCtx) {
@@ -549,6 +982,7 @@ function buildTeamStatsForClub(team, leagueCtx) {
       key: m.key,
       label: m.label,
       value: m.displayValue,
+      displayValue: m.displayValue,
       rank: m.rank,
       leagueAvg: m.leagueAvgDisplay,
       higherIsBetter: m.higherIsBetter
@@ -610,11 +1044,11 @@ async function fetchTeamBlueskyPosts(team, reportersData) {
   const items = [];
   const bskyReps = (reportersData.reporters || []).filter(r => r.bskyHandle);
   const nickRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
-  const handlesToPoll = bskyReps.slice(0, 12);
+  const handlesToPoll = bskyReps.slice(0, 28);
 
   const settled = await Promise.allSettled(
     handlesToPoll.map(async rep => {
-      const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(rep.bskyHandle)}&limit=10&filter=posts_no_replies`;
+      const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(rep.bskyHandle)}&limit=20&filter=posts_no_replies`;
       const json = await fetchJsonSafe(url, 7000);
       if (!json?.feed?.length) return [];
       const out = [];
@@ -766,195 +1200,165 @@ async function fetchTeamBeatPodcasts(team) {
 
 const GEMINI_BATCH_TIMEOUT_COUNTS = new Map();
 
-async function generateGroundedDailyBrief(team, appData, apiKey, { existingBrief = null, forceBrief = false } = {}) {
+async function generateGroundedDailyBrief(
+  team,
+  appData,
+  apiKey,
+  { existingBrief = null, priorCycleBrief = null, forceBrief = false, aiModelDiscovery = null } = {}
+) {
   const nowMs = Date.now();
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, 17);
+  const activeCycleKey = cycleState.activeCycleKey;
+  const workerBaseUrlEnv = String(process.env.WORKER_BASE_URL || '').trim().replace(/\/+$/, '');
+  const groupPasscodeEnv = String(process.env.GROUP_PASSCODE || '').trim();
+  const workerBriefCycleKey = `${activeCycleKey}-v5`;
+  const oppAbbrBrief = appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '';
+
   const existingBriefText = [
     existingBrief?.headline || '',
     existingBrief?.summary || '',
     ...(existingBrief?.bullets || []).map(b => (typeof b === 'string' ? b : `${b?.subtopic || ''} ${b?.body || ''}`))
   ].join(' ');
-  const oppAbbrBrief = appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '';
   const existingBriefMatchesTeam =
-    Boolean(existingBrief?.id) &&
-    String(existingBrief.id).startsWith(`brief_${team.abbr.toLowerCase()}_`) &&
+    Boolean(existingBrief) &&
     !hasCrossTeam49ersLeak(existingBriefText, team, oppAbbrBrief);
+
   if (
     !forceBrief &&
+    !process.env.FORCE_NEWS_BRIEF_AI &&
     existingBriefMatchesTeam &&
-    existingBrief.source === 'live-gemini-daily' &&
-    existingBrief.cycleKey === cycleState.activeCycleKey &&
+    (existingBrief.source === 'pipeline-gemini-daily' || existingBrief.source === 'live-gemini-daily') &&
+    (existingBrief.cycleKey === activeCycleKey ||
+      (!apiKey &&
+        existingBrief.generatedAt &&
+        nowMs - Date.parse(existingBrief.generatedAt) <= 72 * 3_600_000)) &&
+    !isDailyBriefStaleForLiveState(existingBrief, appData, nowMs) &&
     existingBrief.headline &&
     Array.isArray(existingBrief.bullets) &&
     existingBrief.bullets.length >= 2
   ) {
-    return existingBrief;
-  }
-  const rawStream = appData.news?.rawStream || [];
-  const sourceCandidates = rawStream.slice(0, 14).map((it, idx) => ({
-    sid: `S${idx + 1}`,
-    id: it.id,
-    title: it.title,
-    summary: it.summary || it.fullText || '',
-    url: it.url,
-    author: it.author || it.outletName || `${team.nickname} Beat`,
-    outlet: it.outletName || `${team.nickname} Beat`,
-    publishedAt: it.publishedAt
-  }));
-
-  const buildDeterministicFallback = () => {
-    const bullets = sourceCandidates.slice(0, 5).map(s => {
-      const lead = s.title.replace(/\s+/g, ' ').trim();
-      return `${lead} ([${s.author}](${s.url}))`;
-    });
-    return {
-      id: `brief_${team.abbr.toLowerCase()}_${hashShort(cycleState.activeCycleKey)}`,
-      cycleKey: cycleState.activeCycleKey,
-      scheduledHourPt: 17,
-      isPostGame: Boolean(cycleState.isPostGameCycle),
-      gameWeek: appData.meta?.currentWeek || 1,
-      teamRecord: appData.meta?.teamRecord || '',
-      generatedAt: new Date(nowMs).toISOString(),
-      modelUsed: PRIMARY_GEMINI_REASONING_MODEL,
-      thinkingLevel: 'XHIGH',
-      source: 'deterministic-digest',
-      wordCount: bullets.join(' ').split(/\s+/).length,
-      headline: `${team.fullName} Daily Briefing — Week ${appData.meta?.currentWeek || 1}`,
-      summary: `${team.fullName} (${appData.meta?.teamRecord || '—'}, ${appData.meta?.standingSummary || team.division}) top verified storylines, injury status, and upcoming matchup intel.`,
-      bullets,
-      coveredStoryKeys: sourceCandidates.slice(0, 5).map(s => s.id),
-      coveredUrls: sourceCandidates.slice(0, 5).map(s => s.url).filter(Boolean),
-      sources: sourceCandidates.slice(0, 8).map(s => ({
-        sid: s.sid,
-        title: s.title,
-        url: s.url,
-        author: s.author,
-        outlet: s.outlet,
-        publishedAt: s.publishedAt
-      }))
-    };
-  };
-
-  if (!apiKey || sourceCandidates.length < 2) {
-    return buildDeterministicFallback();
+    return repairDailyTopNewsBriefLinks(existingBrief).brief;
   }
 
-  const systemPrompt = buildLiveGroundingSystemPrompt(appData);
-  const snapshot = buildAuthoritativeLiveContextSnapshot(appData, { compactForDossier: true, includeTradeMatrix: false });
-  const sourceBlock = sourceCandidates
-    .map(s => `[${s.sid}] (${s.author}, ${s.publishedAt?.slice(0, 10) || ''}) ${s.title}${s.summary ? ` — ${s.summary.slice(0, 180)}` : ''} | URL: ${s.url}`)
-    .join('\n');
+  const preGameHoldCutoffMs =
+    cycleState.isGameDayHold && Number.isFinite(cycleState.targetKickoffMs)
+      ? cycleState.targetKickoffMs - 90 * 60_000
+      : null;
+  const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs, {
+    maxPublishedMs: preGameHoldCutoffMs
+  });
 
-  const userPrompt = `Write today's single-pass concise, high-signal ${team.fullName} Daily Top-News Brief (target 160–220 words total) strictly grounded in the verified sources & live snapshot below.
-Return ONLY valid JSON with this exact shape:
-{
-  "headline": "Sharp 7-12 word factual headline (no clickbait)",
-  "summary": "1-2 sentence executive takeaway grounded in record/health/matchup reality",
-  "bullets": [
-    "Fact-dense bullet 1 citing [S1] inline as [Source Name](EXACT_URL_FROM_LIST)",
-    "Fact-dense bullet 2...",
-    "Fact-dense bullet 3...",
-    "Fact-dense bullet 4..."
-  ]
-}
-RULES:
-- Use ONLY exact URLs from VERIFIED SOURCES below. Never invent URLs or cite departed players as active.
-- Ground coaches strictly to ${JSON.stringify(appData.meta?.coaches || team.coachesSeed)}.
-- Zero homerism; third-person "${team.city}" / "the ${team.nickname}".
-
-VERIFIED SOURCES:
-${sourceBlock}
-
-LIVE SNAPSHOT:
-${snapshot.slice(0, 9000)}`;
-
-  const models = [PRIMARY_GEMINI_REASONING_MODEL, 'gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-3-flash-preview'];
-  for (const model of models) {
-    if ((GEMINI_BATCH_TIMEOUT_COUNTS.get(model) || 0) >= 2) continue;
+  // 1. Check Shared Worker KV FIRST across ALL 32 clubs (even during Game-Day Hold — 0 credits spent!)
+  if (!forceBrief && !process.env.FORCE_NEWS_BRIEF_AI && workerBaseUrlEnv && sourceCandidates.length > 0) {
     try {
-      const thinkingConfig = buildGeminiThinkingConfig(model, null, { preferredThinkingLevel: 'XHIGH' });
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemPrompt }] },
-          generationConfig: {
-            temperature: 0.16,
-            responseMimeType: 'application/json',
-            ...(thinkingConfig ? { thinkingConfig } : {})
-          },
-          contents: [{ role: 'user', parts: [{ text: userPrompt }] }]
-        }),
-        signal: AbortSignal.timeout(28000)
-      });
-      if (!res.ok) {
-        console.warn(`[ai-brief] ${team.abbr} ${model} HTTP ${res.status}`);
-        continue;
+      const kvRes = await fetch(
+        `${workerBaseUrlEnv}/api/daily-news-brief?team=${encodeURIComponent(team.abbr)}&cycleKey=${encodeURIComponent(workerBriefCycleKey)}&allowLatest=1`,
+        {
+          method: 'GET',
+          headers: groupPasscodeEnv ? { 'X-Group-Passcode': groupPasscodeEnv } : {},
+          signal: AbortSignal.timeout(7000)
+        }
+      );
+      if (kvRes.ok) {
+        const kvJson = await kvRes.json();
+        if (kvJson?.cached && (kvJson.data || kvJson.rawText) && !kvJson.latestFallback) {
+          const adopted = parseAndSanitizeDailyTopNewsBrief(
+            kvJson.data || kvJson.rawText,
+            sourceCandidates,
+            appData,
+            {
+              cycleKey: activeCycleKey,
+              isPostGame: cycleState.isPostGameCycle,
+              gameWeek: cycleState.targetGame
+                ? Number(cycleState.targetGame.week)
+                : appData.meta?.currentWeek || 1,
+              generatedAt: kvJson.generatedAt || new Date(nowMs).toISOString(),
+              modelUsed: kvJson.modelUsed || aiModelDiscovery?.activeModel || 'gemini-4-hydrogen',
+              source: 'pipeline-gemini-daily'
+            }
+          );
+          if (adopted && !isDailyBriefStaleForLiveState(adopted, appData, nowMs)) {
+            const adoptedTxt = `${adopted.headline || ''} ${(adopted.bullets || []).join(' ')}`;
+            if (!hasCrossTeam49ersLeak(adoptedTxt, team, oppAbbrBrief)) {
+              console.log(`[ai-brief] Adopted shared Worker KV ${team.abbr} ${activeCycleKey} brief (0 credits spent).`);
+              return adopted;
+            }
+          }
+        }
       }
-      GEMINI_BATCH_TIMEOUT_COUNTS.set(model, 0);
-      const json = await res.json();
-      const parts = json?.candidates?.[0]?.content?.parts || [];
-      const rawText = parts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
-      const cleanJson = rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
-      const parsed = JSON.parse(cleanJson);
-      if (!parsed?.headline || !Array.isArray(parsed?.bullets) || parsed.bullets.length < 2) continue;
-
-      const joined = `${parsed.headline} ${parsed.summary || ''} ${parsed.bullets.join(' ')}`;
-      const oppAbbr = String(appData?.scheduleMatchup?.upcomingMatchup?.oppAbbr || '').toUpperCase();
-      if (hasCrossTeam49ersLeak(joined, team, oppAbbr)) {
-        console.warn(`[ai-brief] ${team.abbr} ${model} rejected due to cross-team 49ers leak`);
-        continue;
-      }
-      const guard = validateNoHallucinatedRosterClaims(joined, appData.roster?.players || []);
-      const wordCount = joined.split(/\s+/).filter(Boolean).length;
-      const citedUrlSet = new Set();
-      const mdLinkRe = /\]\((https:\/\/[^)\s]+)\)/gi;
-      let lm;
-      while ((lm = mdLinkRe.exec(joined)) !== null) {
-        citedUrlSet.add(String(lm[1]).trim().toLowerCase().replace(/\/+$/, ''));
-      }
-      const orderedSources = [
-        ...sourceCandidates.filter(s => citedUrlSet.has(String(s.url || '').trim().toLowerCase().replace(/\/+$/, ''))),
-        ...sourceCandidates.filter(s => !citedUrlSet.has(String(s.url || '').trim().toLowerCase().replace(/\/+$/, '')))
-      ].slice(0, 10);
-      return {
-        id: `brief_${team.abbr.toLowerCase()}_${hashShort(cycleState.activeCycleKey)}`,
-        cycleKey: cycleState.activeCycleKey,
-        scheduledHourPt: 17,
-        isPostGame: Boolean(cycleState.isPostGameCycle),
-        gameWeek: appData.meta?.currentWeek || 1,
-        teamRecord: appData.meta?.teamRecord || '',
-        generatedAt: new Date(nowMs).toISOString(),
-        modelUsed: model,
-        thinkingLevel: resolveGeminiThinkingLevelLabel(model, 'XHIGH'),
-        source: 'live-gemini-daily',
-        wordCount,
-        guardClean: guard.valid,
-        headline: String(parsed.headline).trim(),
-        summary: String(parsed.summary || '').trim(),
-        bullets: parsed.bullets.map(b => String(b || '').trim()).filter(Boolean).slice(0, 6),
-        coveredStoryKeys: orderedSources.slice(0, 6).map(s => s.id),
-        coveredUrls: orderedSources.slice(0, 6).map(s => s.url).filter(Boolean),
-        sources: orderedSources.map(s => ({
-          sid: s.sid,
-          title: s.title,
-          url: s.url,
-          author: s.author,
-          outlet: s.outlet,
-          publishedAt: s.publishedAt
-        }))
-      };
-    } catch (err) {
-      const msg = String(err?.message || err);
-      if (/timeout|aborted/i.test(msg)) {
-        GEMINI_BATCH_TIMEOUT_COUNTS.set(model, (GEMINI_BATCH_TIMEOUT_COUNTS.get(model) || 0) + 1);
-      }
-      console.warn(`[ai-brief] ${team.abbr} ${model} error: ${msg}`);
-      continue;
+    } catch {
+      // Non-fatal: continue to direct synthesis or deterministic fallback
     }
   }
-  return buildDeterministicFallback();
+
+  // 2. Synthesize canonical Gemini 4 Hydrogen (XHIGH) brief when API key is available (skip during Game-Day Hold)
+  if (!cycleState.isGameDayHold && apiKey && sourceCandidates.length >= 2) {
+    try {
+      const aiNewsBriefRes = await runSinglePassDailyGeminiSynthesis({
+        apiKey,
+        preferredModel: aiModelDiscovery.activeModel || 'gemini-4-hydrogen',
+        promptText: buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs, {
+          previousBrief: priorCycleBrief
+        }),
+        appData,
+        rosterPlayers: appData.roster?.players || []
+      });
+      if (aiNewsBriefRes.ok && aiNewsBriefRes.rawText) {
+        const synthGenIso = new Date().toISOString();
+        const parsedBrief = parseAndSanitizeDailyTopNewsBrief(
+          aiNewsBriefRes.rawText,
+          sourceCandidates,
+          appData,
+          {
+            cycleKey: activeCycleKey,
+            isPostGame: cycleState.isPostGameCycle,
+            gameWeek: cycleState.targetGame
+              ? Number(cycleState.targetGame.week)
+              : appData.meta?.currentWeek || 1,
+            generatedAt: synthGenIso,
+            modelUsed: aiNewsBriefRes.modelUsed || 'gemini-4-hydrogen',
+            source: 'pipeline-gemini-daily'
+          }
+        );
+        if (parsedBrief) {
+          const joined = `${parsedBrief.headline || ''} ${(parsedBrief.bullets || []).join(' ')}`;
+          if (!hasCrossTeam49ersLeak(joined, team, oppAbbrBrief)) {
+            if (workerBaseUrlEnv) {
+              try {
+                await fetch(`${workerBaseUrlEnv}/api/daily-news-brief?team=${encodeURIComponent(team.abbr)}`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    ...(groupPasscodeEnv ? { 'X-Group-Passcode': groupPasscodeEnv } : {})
+                  },
+                  body: JSON.stringify({
+                    team: team.abbr,
+                    cycleKey: workerBriefCycleKey,
+                    seedRawText: aiNewsBriefRes.rawText,
+                    seedData: parsedBrief,
+                    modelUsed: parsedBrief.modelUsed,
+                    generatedAt: synthGenIso
+                  }),
+                  signal: AbortSignal.timeout(6000)
+                });
+              } catch {
+                // Non-fatal
+              }
+            }
+            return parsedBrief;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn(`[ai-brief] ${team.abbr} Gemini synthesis skipped: ${err?.message || err}`);
+    }
+  }
+
+  return buildDeterministicDailyTopNewsBrief(appData, nowMs, {
+    cycleKey: activeCycleKey,
+    ...(Number.isFinite(preGameHoldCutoffMs) ? { maxPublishedMs: preGameHoldCutoffMs } : {}),
+    source: 'pipeline-grounded'
+  });
 }
 
 /**
@@ -1065,14 +1469,17 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   let byeWeek = null;
   const seenRegWeeks = new Set();
 
+  let preSeqIdx = 0;
   for (const ev of espnScheduleRaw?.events || []) {
     const stType = Number(ev.seasonType?.type ?? ev.seasonType?.id ?? 2);
     const wkRaw = Number(ev.week?.number || 0);
     if (stType === 3 && wkRaw === 4) continue;
     const seasonType = stType === 1 ? 'PRE' : stType === 3 ? 'POST' : 'REG';
+    if (seasonType === 'PRE') preSeqIdx += 1;
+    const preNum = seasonType === 'PRE' ? preSeqIdx : null;
     const wk =
       seasonType === 'PRE'
-        ? -(4 - Math.min(3, wkRaw || 1))
+        ? -(4 - Math.min(3, preNum || 1))
         : seasonType === 'POST'
           ? 18 + wkRaw
           : wkRaw;
@@ -1134,9 +1541,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         {
           id: String(ev.id || `${seasonType}_${wk}`),
           seasonType,
-          preseasonWeek: seasonType === 'PRE' ? wkRaw : null,
+          preseasonWeek: seasonType === 'PRE' ? preNum : null,
           week: wk,
-          weekLabel: seasonType === 'PRE' ? `PRE ${wkRaw}` : seasonType === 'POST' ? ['WC', 'DIV', 'CON', 'SB'][wkRaw - 1] || 'POST' : `Wk ${wk}`,
+          weekLabel: seasonType === 'PRE' ? `PRE ${preNum}` : seasonType === 'POST' ? ['WC', 'DIV', 'CON', 'SB'][wkRaw - 1] || 'POST' : `Wk ${wk}`,
           gameUrl: ev.links?.[0]?.href || `https://www.espn.com/nfl/game/_/gameId/${ev.id}`,
           dateIso: ev.date || comp.date,
           statusDetail: comp.status?.type?.shortDetail || comp.status?.type?.description || '',
@@ -1179,35 +1586,6 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       break;
     }
   }
-  if (byeWeek) {
-    const anyCompletedAfterBye = schedule.some(
-      g => g.seasonType === 'REG' && !g.isByeWeek && g.completed && Number(g.week) > byeWeek
-    );
-    const nextAfterBye = schedule.find(
-      g => g.seasonType === 'REG' && !g.isByeWeek && Number(g.week) > byeWeek && g.dateIso
-    );
-    const byeWindowElapsed =
-      nextAfterBye?.dateIso && Number.isFinite(Date.parse(nextAfterBye.dateIso))
-        ? Date.now() >= Date.parse(nextAfterBye.dateIso) - 5 * 86_400_000
-        : teamStanding.wins + teamStanding.losses + teamStanding.ties >= byeWeek;
-    schedule.push(
-      normalizeScheduleGameItem(
-        {
-          id: `bye_${seasonYear}_wk${byeWeek}`,
-          seasonType: 'REG',
-          week: byeWeek,
-          weekLabel: `WK ${byeWeek}`,
-          isByeWeek: true,
-          statusDetail: 'Bye Week',
-          completed: Boolean(anyCompletedAfterBye || byeWindowElapsed),
-          sfLogoUrl: teamLogoUrl,
-          opponent: { abbr: 'BYE', name: 'BYE WEEK', record: '', isTbd: false },
-          venue: { name: 'Bye Week', city: '', state: '', country: 'USA', isInternational: false, surface: '' }
-        },
-        seasonYear
-      )
-    );
-  }
   schedule.sort((a, b) => (a.week || 0) - (b.week || 0));
 
   const regAndPost = schedule.filter(g => g.seasonType !== 'PRE' && !g.isByeWeek);
@@ -1215,13 +1593,17 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   const currentWeek = Number(nextUnplayed?.week || Math.min(18, teamStanding.wins + teamStanding.losses + teamStanding.ties + 1));
   const beforePracticeWindow = isBeforeWeeklyPracticeWindow(nextUnplayed?.dateIso || '');
 
-  // Fetch opponent injuries for upcoming matchup
+  // Fetch opponent injuries, active roster & depth chart for upcoming matchup (full 32-team parity!)
   const oppCfg = nextUnplayed?.opponent?.abbr && nextUnplayed.opponent.abbr !== 'BYE' && nextUnplayed.opponent.abbr !== 'TBD'
     ? getTeamByAbbr(nextUnplayed.opponent.abbr)
     : null;
-  const oppInjRaw = oppCfg
-    ? await fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${oppCfg.espnId}`, 8000)
-    : null;
+  const [oppInjRaw, oppRosterRaw, oppDepthRaw] = oppCfg
+    ? await Promise.all([
+        fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${oppCfg.espnId}`, 8000),
+        fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppCfg.espnId}/roster`, 8000),
+        fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppCfg.espnId}/depthcharts`, 8000)
+      ])
+    : [null, null, null];
 
   // Reconcile official club injury HTML for team & opponent
   const officialInj = clubInjuryHtml
@@ -1312,12 +1694,28 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
 
   // 4. Build Complete Enriched Roster Array (Spider Charts, 2026 + Career Stats, Snaps, NGS, PFR, Health, IR)
   const allEspnRosterNames = [];
+  const deepHealthIds = [];
   for (const grp of espnRosterRaw?.athletes || []) {
+    const gPos = String(grp.position || '').toLowerCase();
+    const isIrGroup = /injured|reserve|suspended|pup|nfi/i.test(gPos);
     for (const a of grp.items || []) {
       const nm = a?.fullName || a?.displayName;
       if (nm) allEspnRosterNames.push(nm);
+      const aid = String(a?.id || '').trim();
+      const ck = canonicalInjuryPlayerKey(nm || '');
+      if (
+        aid &&
+        (isIrGroup ||
+          espnInjById.has(aid) ||
+          cbsInjMap.has(ck) ||
+          officialInj?.sfByKey?.has(ck) ||
+          (Array.isArray(a?.injuries) && a.injuries.length > 0))
+      ) {
+        deepHealthIds.push(aid);
+      }
     }
   }
+  const espnWebAthleteDetails = await fetchEspnAthleteDetailsBatch(deepHealthIds, fetchJsonSafe, 10);
   const players = [];
   const excludedGhostIds = [];
   const seenIds = new Set();
@@ -1356,6 +1754,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           otcNonActiveByKey.has(nk)
       );
 
+      const webAthInjEarly = espnWebAthleteDetails.get(id)?.injury || null;
       const rosterDecision = resolveAuthoritativeRosterPlayerStatus({
         teamAbbr: team.abbr,
         espnId: id,
@@ -1367,7 +1766,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         txRec,
         depthChartIds,
         espnInj,
-        webInj: null,
+        webInj: webAthInjEarly,
         inlineInj,
         recentNewsText: recentTeamNewsText,
         inOtcTeamPage
@@ -1377,7 +1776,16 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         continue;
       }
 
-      const rosterBucket = rosterDecision.bucket;
+      const rawIrFantasyEarly = String(
+        espnInj?.details?.fantasyStatus?.abbreviation || webAthInjEarly?.fantasyStatusAbbr || ''
+      ).toUpperCase();
+      const espnRemainsOnIrNote = /\bremains\s+on\s+injured\s+reserve\b/i.test(
+        `${espnInj?.shortComment || ''} ${espnInj?.longComment || ''} ${webAthInjEarly?.shortComment || ''} ${webAthInjEarly?.longComment || ''}`
+      );
+      const rosterBucket =
+        rosterDecision.bucket === 'active' && (rawIrFantasyEarly === 'IR-R' || espnRemainsOnIrNote)
+          ? 'ir'
+          : rosterDecision.bucket;
       const isReserveLeftSquadOrSusp = rosterDecision.isReserveLeftSquadOrSusp;
 
       // Homonym-safe Identity Resolution (GSIS, PFR, OTC, Draft Metadata)
@@ -1405,12 +1813,32 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         otcLookupKeys.map(k => otcDirByKey.get(k)).find(Boolean) ||
         otcDirByKey.get(nk) ||
         null;
-      const contractsByYear = otcEntry?.contractsByYear || {};
+      const contractsByYear = { ...(otcEntry?.contractsByYear || {}) };
+      const curYrKey = String(seasonYear);
+      const nonActiveCurCharge = otcNonActiveEntry?.chargesByYear?.[curYrKey] || null;
       const capHit2026 = Number(
-        contractsByYear[String(seasonYear)]?.capNumber ||
-          otcNonActiveEntry?.chargesByYear?.[String(seasonYear)]?.capNumber ||
+        contractsByYear[curYrKey]?.capNumber ||
+          nonActiveCurCharge?.capNumber ||
           0
       );
+      // If a player was just activated off IR/PS onto the Active 53 before OverTheCap moved them out of the non-active table,
+      // preserve their current-year OTC cap charge in `contractsByYear` so all 53 active roster players stay in the Cap Simulator!
+      if (rosterBucket === 'active' && !contractsByYear[curYrKey]) {
+        const carryCap = capHit2026 > 0 ? capHit2026 : 840000;
+        const carryBase = Number(nonActiveCurCharge?.baseSalary || carryCap);
+        const carryBonus = Math.max(0, carryCap - carryBase);
+        contractsByYear[curYrKey] = {
+          baseSalary: carryBase,
+          proratedBonus: carryBonus,
+          rosterBonus: 0,
+          capNumber: carryCap,
+          deadMoneyPreJune1: Number(nonActiveCurCharge?.deadMoney || carryBonus),
+          capSavingsPreJune1: Math.max(0, carryCap - Number(nonActiveCurCharge?.deadMoney || carryBonus)),
+          deadMoneyPostJune1: Number(nonActiveCurCharge?.deadMoney || carryBonus),
+          capSavingsPostJune1: Math.max(0, carryCap - Number(nonActiveCurCharge?.deadMoney || carryBonus)),
+          guaranteedSalary: 0
+        };
+      }
       const resolvedOtcId =
         otcEntry?.otcId || otcNonActiveEntry?.otcId || otcDir?.otcId || resolvedIdentity.otcId || null;
       const resolvedOtcSlug =
@@ -1507,13 +1935,14 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           ? `${draftYearVal} • Rd ${draftRoundVal}, Pick #${draftPickVal}`
           : 'Undrafted / CFA';
 
-      // Multi-source Injury, Practice Progression & IR Return Reconciliation (fixed property mappings!)
+      // Multi-source Injury, Practice Progression & IR Return Reconciliation (merging ESPN Web v3 Athlete Details for Season-Ending IR accuracy!)
       const cbsInj = cbsInjMap.get(canonKey) || null;
       const offInjRec = officialInj?.sfByKey?.get(canonKey) || null;
+      const webAthInj = espnWebAthleteDetails.get(id)?.injury || null;
       const weeklyHistory2026 = teamWeeklyInjByName.get(nflNameKey) || [];
 
-      const rawEspnStatus = String(espnInj?.status || inlineInj?.status || '').trim();
-      const espnBlurbMs = espnInj?.date ? Date.parse(espnInj.date) : NaN;
+      const rawEspnStatus = String(espnInj?.status || webAthInj?.status || inlineInj?.status || '').trim();
+      const espnBlurbMs = espnInj?.date ? Date.parse(espnInj.date) : webAthInj?.date ? Date.parse(webAthInj.date) : NaN;
       const isStaleActiveIrBlurb =
         rosterBucket === 'active' &&
         /injured reserve|reserve\/pup|reserve\/nfi/i.test(rawEspnStatus) &&
@@ -1530,13 +1959,17 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
 
       const rawShortComment = isStaleActiveIrBlurb
         ? ''
-        : cleanSensationalistText(pickMeaningfulInjuryComment(espnInj?.shortComment, inlineInj?.shortComment));
+        : cleanSensationalistText(
+            pickMeaningfulInjuryComment(espnInj?.shortComment, webAthInj?.shortComment, inlineInj?.shortComment)
+          );
       const rawLongComment = isStaleActiveIrBlurb
         ? ''
-        : cleanSensationalistText(pickMeaningfulInjuryComment(espnInj?.longComment, inlineInj?.longComment, rawShortComment));
+        : cleanSensationalistText(
+            pickMeaningfulInjuryComment(espnInj?.longComment, webAthInj?.longComment, inlineInj?.longComment, rawShortComment)
+          );
       const returnDateStr = isStaleActiveIrBlurb
         ? null
-        : espnInj?.details?.returnDate || inlineInj?.details?.returnDate || null;
+        : espnInj?.details?.returnDate || webAthInj?.returnDate || inlineInj?.details?.returnDate || null;
 
       const scopedShortComment = rawShortComment
         ? scopeBeatTextToPlayer(rawShortComment, fullName, allEspnRosterNames)
@@ -1559,6 +1992,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         ? ''
         : cbsInj?.injuryType ||
           espnInj?.details?.type ||
+          webAthInj?.injuryType ||
           inlineInj?.details?.type ||
           leadParenBodyPart ||
           '';
@@ -1597,7 +2031,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           (offInjRec.thu && offInjRec.thu !== '-') ||
           (offInjRec.fri && offInjRec.fri !== '-'));
 
-      const irFantasyAbbr = espnInj?.details?.fantasyStatus?.abbreviation || '';
+      const irFantasyAbbr = espnInj?.details?.fantasyStatus?.abbreviation || webAthInj?.fantasyStatusAbbr || '';
       const persistedIrWin =
         rosterBucket === 'ir'
           ? detectOpen21DayIrWindowFromHistory({
@@ -1617,9 +2051,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
               statusRaw: rawStatus,
               fantasyStatusAbbr: irFantasyAbbr,
               injuryType: explicitInjType || leadParenBodyPart || 'Undisclosed',
-              injuryDetail: espnInj?.details?.detail || '',
+              injuryDetail: espnInj?.details?.detail || webAthInj?.injuryDetail || '',
               returnDateIso: returnDateStr,
-              placedDateIso: espnInj?.date || inlineInj?.date || null,
+              placedDateIso: espnInj?.date || webAthInj?.date || inlineInj?.date || null,
               txPlacedDateIso: txRec?.placedOnIrDate || null,
               designatedDateIso: txRec?.designatedToReturnDate || persistedIrWin.designatedDateIso || null,
               beatNote: rawLongComment || rawShortComment,
@@ -1920,12 +2354,16 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   }
 
   // 6. Build Depth Chart from ESPN (AFTER players have final playProbabilityPct & fixing "Special Teams" regex!)
+  const isBase34Defense = (espnDepthRaw?.depthchart || []).some(dc => /3-4/i.test(String(dc?.name || '')));
   const slotLabels = {
-    qb: 'QB', rb: 'RB', fb: 'FB', wr1: 'WR (X)', wr2: 'WR (Z)', wr3: 'WR (Slot)', te: 'TE',
-    lt: 'LT', lg: 'LG', c: 'C', rg: 'RG', rt: 'RT',
-    lde: 'LDE', ldt: 'LDT', nt: 'NT', rdt: 'RDT', rde: 'RDE',
-    wlb: 'WILL LB', mlb: 'MIKE LB', slb: 'SAM LB', lolb: 'LOLB', lilb: 'LILB', rilb: 'RILB', rolb: 'ROLB',
-    nb: 'NICKEL CB', lcb: 'LCB', rcb: 'RCB', ss: 'SS', fs: 'FS',
+    qb: 'QB', rb: 'RB', fb: 'FB (21 Personnel)', wr1: 'WR (X)', wr2: 'WR (Z)', wr3: 'SLWR (11 Personnel)',
+    te: 'TE (Y)', lt: 'LT', lg: 'LG', c: 'C', rg: 'RG', rt: 'RT',
+    lde: isBase34Defense ? 'LDE (3-4)' : 'LDE (Wide-9)',
+    ldt: 'LDT (1/2i)', nt: 'NT (0/1-Tech)', rdt: 'RDT (3-Tech)',
+    rde: isBase34Defense ? 'RDE (3-4)' : 'RDE (Wide-9)',
+    wlb: 'WILL LB', mlb: 'MIKE LB', slb: 'SAM LB (4-3)',
+    lolb: 'LOLB', lilb: 'LILB', rilb: 'RILB', rolb: 'ROLB',
+    nb: 'NICKEL CB (4-2-5)', lcb: 'LCB', rcb: 'RCB', ss: 'SS', fs: 'FS',
     pk: 'PK', p: 'P', ls: 'LS', h: 'H', pr: 'PR', kr: 'KR'
   };
   const playersById = new Map(players.map(p => [String(p.id), p]));
@@ -1977,9 +2415,11 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       const unitName = /special/i.test(rawName)
         ? 'Special Teams'
         : /\b(wr|te|offense|2rb|3wr|1te|2te|base\s*off)\b/i.test(rawName)
-          ? `Offense (${rawName})`
+          ? 'Offense (11 & 21 Personnel)'
           : /\b(4-3|3-4|defense|base\s*def|d)\b/i.test(rawName)
-            ? `Defense (${rawName})`
+            ? /3-4/i.test(rawName)
+              ? 'Defense (Base 3-4 & Nickel 4-2-5)'
+              : 'Defense (Wide-9 Base 4-3 & Nickel 4-2-5)'
             : rawName;
       depthUnits.push({ id: String(dc.id || rawName), unitName, rows });
     }
@@ -2038,18 +2478,42 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       beatNote: oppComment
     });
 
+    const oppIrCls = isOppIr
+      ? classifyIrAndReserveTimeline({
+          statusRaw: effectiveOppStatus || rawOppStatus || 'Injured Reserve',
+          fantasyStatusAbbr: inj?.details?.fantasyStatus?.abbreviation || '',
+          injuryType: effectiveOppInj || 'Reserve / IR',
+          injuryDetail: inj?.details?.detail || '',
+          returnDateIso: inj?.details?.returnDate || null,
+          placedDateIso: inj?.date || null,
+          beatNote: oppComment,
+          currentWeek,
+          byeWeek: null,
+          seasonYear,
+          scheduleEvents: espnScheduleRaw?.events || []
+        })
+      : null;
+
     const oppRow = {
       playerId: oppPid,
       name: nm,
       position: pos,
       headshotUrl: headshot,
-      injuryType: effectiveOppInj || (isOppIr ? 'Reserve / IR' : 'Injury'),
-      gameStatus: effectiveOppStatus || (isOppIr ? 'Injured Reserve' : 'Questionable'),
-      wed: offRec?.wed || '-',
-      thu: offRec?.thu || '-',
-      fri: offRec?.fri || '-',
+      injuryType: oppIrCls?.injuryType || effectiveOppInj || (isOppIr ? 'Reserve / IR' : 'Injury'),
+      gameStatus: oppIrCls?.status || effectiveOppStatus || (isOppIr ? 'Injured Reserve' : 'Questionable'),
+      status: oppIrCls?.status || effectiveOppStatus || (isOppIr ? 'Injured Reserve' : 'Questionable'),
+      isSeasonEnding: Boolean(oppIrCls?.isSeasonEnding),
+      isPracticeWindowOpen: Boolean(oppIrCls?.isPracticeWindowOpen),
+      earliestEligibleWeek: oppIrCls ? oppIrCls.earliestEligibleWeek ?? Math.max(5, currentWeek) : null,
+      projectedReturnWeek: oppIrCls?.projectedReturnWeek || null,
+      byeWeekNote: oppIrCls?.byeWeekNote || null,
+      wed: beforePracticeWindow ? '-' : offRec?.wed || '-',
+      thu: beforePracticeWindow ? '-' : offRec?.thu || '-',
+      fri: beforePracticeWindow ? '-' : offRec?.fri || '-',
       playProbabilityPct: oppProb.probabilityPct,
       playBadgeLabel: oppProb.badgeLabel,
+      archetypeNote: oppProb.archetypeNote || `${pos} availability projection`,
+      factors: Array.isArray(oppProb.factors) && oppProb.factors.length > 0 ? oppProb.factors : [effectiveOppStatus || 'Monitor weekly practice progression'],
       beatComment: oppComment
     };
     if (isOppIr && !offRec) oppIrReserve.push(oppRow);
@@ -2066,9 +2530,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         gameStatus: offRec.gameStatus || 'Questionable',
         injuryType: offRec.injuryType || 'Injury',
         rosterBucket: 'active',
-        wed: offRec.wed || '-',
-        thu: offRec.thu || '-',
-        fri: offRec.fri || '-',
+        wed: beforePracticeWindow ? '-' : offRec.wed || '-',
+        thu: beforePracticeWindow ? '-' : offRec.thu || '-',
+        fri: beforePracticeWindow ? '-' : offRec.fri || '-',
         kickoffIso: nextUnplayed?.dateIso || ''
       });
       oppInjuryReport.push({
@@ -2078,15 +2542,108 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         headshotUrl: '',
         injuryType: offRec.injuryType || 'Injury',
         gameStatus: offRec.gameStatus || 'Questionable',
-        wed: offRec.wed || '-',
-        thu: offRec.thu || '-',
-        fri: offRec.fri || '-',
+        wed: beforePracticeWindow ? '-' : offRec.wed || '-',
+        thu: beforePracticeWindow ? '-' : offRec.thu || '-',
+        fri: beforePracticeWindow ? '-' : offRec.fri || '-',
         playProbabilityPct: oppProb.probabilityPct,
         playBadgeLabel: oppProb.badgeLabel,
+        archetypeNote: oppProb.archetypeNote || `${offRec.position || 'ATH'} availability projection`,
+        factors: Array.isArray(oppProb.factors) && oppProb.factors.length > 0 ? oppProb.factors : [offRec.gameStatus || 'Official injury report'],
         beatComment: ''
       });
     }
   }
+
+  // Build Opponent Active Roster (>=40 active players), Starter Depth Keys & Healthy 1st-String Starters (full 32-team parity!)
+  const oppActiveRoster = [];
+  const oppRosterByKey = new Map();
+  for (const grp of oppRosterRaw?.athletes || []) {
+    const gPos = String(grp?.position || '').toLowerCase();
+    if (/injured|reserve|suspended|practice/i.test(gPos)) continue;
+    for (const a of grp?.items || []) {
+      const nm = a?.fullName || a?.displayName || '';
+      if (!nm) continue;
+      const ck = canonicalInjuryPlayerKey(nm);
+      if (oppRosterByKey.has(ck)) continue;
+      const rec = {
+        playerId: String(a.id || ''),
+        name: nm,
+        position: a.position?.abbreviation || 'ATH',
+        jersey: a.jersey ? Number(a.jersey) : null,
+        headshotUrl: a.headshot?.href || (a.id ? `https://a.espncdn.com/i/headshots/nfl/players/full/${a.id}.png` : ''),
+        unit: mapPositionToUnit(a.position?.abbreviation || '')
+      };
+      oppRosterByKey.set(ck, rec);
+      oppActiveRoster.push(rec);
+    }
+  }
+  const oppStarterKeys = new Set();
+  const oppStarterMetaByKey = new Map();
+  for (const dc of oppDepthRaw?.depthchart || []) {
+    if (/special/i.test(String(dc?.name || ''))) continue;
+    for (const [slotKey, posObj] of Object.entries(dc?.positions || {})) {
+      const first = (posObj?.athletes || [])[0];
+      const nm = first?.displayName || first?.fullName || '';
+      if (!nm) continue;
+      const ck = canonicalInjuryPlayerKey(nm);
+      if (oppStarterKeys.has(ck) || oppStarterKeys.size >= 22) continue;
+      oppStarterKeys.add(ck);
+      const rMatch = oppRosterByKey.get(ck);
+      const starterPos = rMatch?.position || posObj?.position?.abbreviation || slotKey.toUpperCase();
+      const starterUnit = /offense/i.test(String(dc?.name || ''))
+        ? 'Offense'
+        : /defense/i.test(String(dc?.name || ''))
+          ? 'Defense'
+          : mapPositionToUnit(starterPos);
+      oppStarterMetaByKey.set(ck, {
+        playerId: String(first?.id || rMatch?.playerId || ''),
+        name: rMatch?.name || nm,
+        position: starterPos,
+        unit: starterUnit,
+        slot: slotKey.toUpperCase(),
+        jersey: rMatch?.jersey ?? null,
+        headshotUrl: rMatch?.headshotUrl || (first?.id ? `https://a.espncdn.com/i/headshots/nfl/players/full/${first.id}.png` : ''),
+        playProbabilityPct: 95
+      });
+    }
+  }
+  // Annotate Starter vs Depth role on every opponent injury report row across all 32 teams
+  for (const row of oppInjuryReport) {
+    const ck = canonicalInjuryPlayerKey(row.name || '');
+    const isStarter = oppStarterKeys.has(ck);
+    row.isStarter = isStarter;
+    row.role = isStarter ? 'Starter' : 'Depth';
+  }
+  const oppNotClearedKeys = new Set([
+    ...oppInjuryReport
+      .filter(r => {
+        const pct = Number(r.playProbabilityPct ?? 95);
+        const st = String(r.gameStatus || r.status || '');
+        const isCleared = /Full Go|Cleared|Likely|In \(Active\)/i.test(String(r.playBadgeLabel || '')) || (pct >= 85 && !/\b(?:Out|Doubtful|IR)\b/i.test(st));
+        return !isCleared;
+      })
+      .map(r => canonicalInjuryPlayerKey(r.name || '')),
+    ...oppIrReserve.map(r => canonicalInjuryPlayerKey(r.name || ''))
+  ]);
+  const oppKeyStartersHealthy = [...oppStarterMetaByKey.entries()]
+    .filter(([ck]) => !oppNotClearedKeys.has(ck))
+    .map(([, meta]) => meta);
+  const oppInjuredStarterRows = oppInjuryReport.filter(r => {
+    if (!r.isStarter) return false;
+    const pct = Number(r.playProbabilityPct ?? 95);
+    const st = String(r.gameStatus || r.status || '');
+    const isCleared = /Full Go|Cleared|Likely|In \(Active\)/i.test(String(r.playBadgeLabel || '')) || (pct >= 85 && !/\b(?:Out|Doubtful|IR)\b/i.test(st));
+    return !isCleared;
+  });
+  const oppTotalStarters = 22;
+  const oppStartersClearedCount = Math.max(0, oppTotalStarters - oppInjuredStarterRows.length);
+  const oppAvailSum =
+    oppStartersClearedCount * 95 +
+    oppInjuredStarterRows.reduce((s, r) => s + (Number(r.playProbabilityPct) || 50), 0);
+  const oppOverallAvailabilityScore = Math.max(
+    50,
+    Math.min(100, Math.round(oppAvailSum / Math.max(1, oppTotalStarters)))
+  );
 
   // 8. Build Health JSON (practiceReport & irAndReserveTracker)
   const practiceReport = players
@@ -2147,25 +2704,112 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       beatNote: p.health.irBeatNote || ''
     }));
 
-  // 9. Build News Raw Stream (ESPN News + ESPN Tx + Club RSS + Club Video RSS + RotoWire + Bluesky)
+  // 9. Build News Raw Stream (ESPN News + ESPN Tx + Club RSS + Club Video RSS + Local Beat RSS + X + RotoWire + Bluesky)
   const rawStream = [];
   const seenNewsUrls = new Set();
+  const newsSurnameCounts = new Map();
+  const newsRosterMatchers = players
+    .filter(p => p?.name && (p.rosterBucket === 'active' || p.rosterBucket === 'ir'))
+    .map(p => {
+      const cleanFull = String(p.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+      const parts = cleanFull.split(/\s+/).filter(Boolean);
+      const first = (parts[0] || '').toLowerCase();
+      const last = (parts[parts.length - 1] || '').replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+      if (last.length >= 4) newsSurnameCounts.set(last, (newsSurnameCounts.get(last) || 0) + 1);
+      return {
+        player: p,
+        cleanFull,
+        fullLower: cleanFull.toLowerCase(),
+        fullRe: cleanFull.length >= 5 ? new RegExp(`\\b${cleanFull.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i') : null,
+        first,
+        last
+      };
+    });
+  const extractMentionedPlayersForNews = item => {
+    if (Array.isArray(item.mentionedPlayers) && item.mentionedPlayers.length > 0) {
+      return item.mentionedPlayers;
+    }
+    const blob = `${item.title || ''} ${item.fullText || ''} ${item.summary || ''}`.trim();
+    if (!blob) return [];
+    const found = [];
+    const seenPid = new Set();
+    const addMatch = p => {
+      if (!p || seenPid.has(p.id) || found.length >= 6) return;
+      seenPid.add(p.id);
+      found.push({
+        id: p.id,
+        name: p.name,
+        shortName: p.shortName || p.name,
+        position: p.position,
+        jersey: p.jersey,
+        headshotUrl: p.headshotUrl || ''
+      });
+    };
+    for (const m of newsRosterMatchers) {
+      if (m.fullRe && m.fullRe.test(blob)) {
+        addMatch(m.player);
+        continue;
+      }
+      if (m.first === 'deebo' && /\bdeebo\b/i.test(blob)) {
+        addMatch(m.player);
+        continue;
+      }
+      if (
+        m.last.length >= 5 &&
+        newsSurnameCounts.get(m.last) === 1 &&
+        !AMBIGUOUS_PLAYER_SURNAMES.has(m.last) &&
+        hasSafeStandaloneSurnameMatch(blob, m.last, m.cleanFull)
+      ) {
+        addMatch(m.player);
+      }
+    }
+    return found;
+  };
   const pushNewsItem = item => {
     const cleanUrl = sanitizeExternalUrl(item?.url || '', null);
     if (!cleanUrl || isPaywalledPublisher(cleanUrl) || seenNewsUrls.has(cleanUrl)) return;
     seenNewsUrls.add(cleanUrl);
     if (isOpposingTeamOnlyInjuryOrRosterStory(item, team)) return;
-    const sig = scoreContentSignal(item.title || '', item.summary || item.fullText || '', {
+    const decTitle = decodeHtmlEntities(String(item.title || '')).trim();
+    const decSummary = decodeHtmlEntities(String(item.summary || '')).trim();
+    const decFull = item.fullText != null ? decodeHtmlEntities(String(item.fullText)).trim() : undefined;
+    const sig = scoreContentSignal(decTitle, decSummary || decFull || '', {
       url: cleanUrl,
       externalUrl: item.externalUrl || '',
       type: item.type || ''
     });
     if (sig.isClickbait) return;
-    const pubIso = item.publishedAt || nowIso;
-    const brk = classifyBreakingItem(item, Date.now(), { team, rosterPlayers: players });
-    const cat = classifyNewsItemCategory(item);
-    rawStream.push({
+    const cleanImg = item.imageUrl ? decodeHtmlEntities(String(item.imageUrl)).trim() : '';
+    const decodedItem = {
       ...item,
+      title: decTitle,
+      summary: decSummary,
+      ...(cleanImg ? { imageUrl: cleanImg } : {}),
+      ...(decFull !== undefined ? { fullText: decFull } : {}),
+      author: decodeHtmlEntities(String(item.author || item.outletName || `${team.nickname} Beat`)).trim(),
+      outletName: decodeHtmlEntities(String(item.outletName || '')).trim(),
+      reporterName: decodeHtmlEntities(String(item.reporterName || item.author || '')).trim(),
+      ...(item.imageCaption ? { imageCaption: decodeHtmlEntities(String(item.imageCaption)).trim() } : {}),
+      ...(item.imageAlt ? { imageAlt: decodeHtmlEntities(String(item.imageAlt)).trim() } : {})
+    };
+    const mentionedPlayers = extractMentionedPlayersForNews(decodedItem);
+    const enrichedItem = {
+      ...decodedItem,
+      mentionedPlayers,
+      ...(decodedItem.type === 'video'
+        ? {
+            embeddable:
+              typeof decodedItem.embeddable === 'boolean'
+                ? decodedItem.embeddable
+                : Boolean(decodedItem.videoStreamUrl)
+          }
+        : {})
+    };
+    const pubIso = enrichedItem.publishedAt || nowIso;
+    const brk = classifyBreakingItem(enrichedItem, Date.now(), { team, rosterPlayers: players });
+    const cat = classifyNewsItemCategory(enrichedItem);
+    rawStream.push({
+      ...enrichedItem,
       url: cleanUrl,
       publishedAt: pubIso,
       isBreaking: brk.isBreaking,
@@ -2517,21 +3161,191 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   }
 
-  // 9f. Verified Team Local X Timelines + Shared National Film/Analytics X Pool + Embedded RSS X Tweets + Bluesky Beat Posts
-  const [localXRaw, embeddedXItems] = await Promise.all([
+  // 9f. Per-Team Local Beat RSS Feeds (SB Nation + USA Today Wire + Regional Beat), Curated YouTube Film Channels,
+  //     Verified Local + National X Timelines, Embedded RSS X Tweets, ESPN 24/7 Player Wire & Bluesky Beat Posts!
+  const localBeatRssSpecs = resolveTeamBeatRssFeeds(team, reportersData);
+  const teamCuratedYtSpecs = TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR[team.abbr] || [];
+  const [localBeatRssXmls, teamYtXmls, localXRaw, curatedSfYtVideos] = await Promise.all([
+    Promise.all(localBeatRssSpecs.map(spec => fetchTextSafe(spec.url, 6500).catch(() => ''))),
+    Promise.all(
+      teamCuratedYtSpecs.map(ch =>
+        fetchTextSafe(`https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(ch.id)}`, 7500).catch(() => '')
+      )
+    ),
     fetchXTimelinesBatch(selectTeamLocalXHandles(team, reportersData, 12), {
       concurrency: 6,
       timeoutMs: 4000,
       maxAgeHours: 120,
       maxItems: 12
     }).catch(() => []),
-    harvestEmbeddedXForTeamRss([clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {})], {
+    team.abbr === 'SF'
+      ? fetchCuratedYouTubeChannelVideos({
+          qbNames: players.filter(p => p.position === 'QB' && p.rosterBucket === 'active').map(p => p.name),
+          rosterPlayers: players,
+          maxAgeDays: 14
+        }).catch(() => [])
+      : Promise.resolve([])
+  ]);
+
+  // Parse Per-Team Local Beat RSS articles (all 32 teams!)
+  localBeatRssSpecs.forEach((spec, idx) => {
+    const xml = localBeatRssXmls[idx] || '';
+    if (!xml) return;
+    const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
+    for (const b of blocks.slice(0, 14)) {
+      const title = decodeXmlEntities((b.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const desc = decodeXmlEntities(
+        (b.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || ''
+      )
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const link = decodeXmlEntities(
+        (b.match(/<link[^>]*href="([^"]+)"/i) || [])[1] ||
+          (b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] ||
+          ''
+      );
+      const pubRaw = decodeXmlEntities(
+        (b.match(/<(?:pubDate|published|updated)>([\s\S]*?)<\/(?:pubDate|published|updated)>/i) || [])[1] || ''
+      );
+      const creator = decodeXmlEntities(
+        (b.match(/<dc:creator[^>]*>([\s\S]*?)<\/dc:creator>/i) || [])[1] ||
+          (b.match(/<author>[\s\S]*?<name>([^<]+)<\/name>/i) || [])[1] ||
+          ''
+      );
+      if (!title || !/^https?:\/\//i.test(link)) continue;
+      if (spec.filterByTeam && !teamOrStarRe.test(`${title} ${desc}`)) continue;
+      if (isOpposingTeamSubjectLead(`${title} ${desc}`, {}, team)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+      if (!Number.isFinite(pubMs) || Date.now() - pubMs > 12 * 86_400_000) continue;
+      const img = (
+        (b.match(/<media:content[^>]*url="([^"]+)"/i) ||
+          b.match(/<media:thumbnail[^>]*url="([^"]+)"/i) ||
+          b.match(/<enclosure[^>]*url="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i) ||
+          [])[1] || ''
+      ).replace(/&amp;/g, '&');
+      const repEntry = creator ? resolveReporterFromNameOrHandle(creator, team) : null;
+      const validRep = repEntry && !isPodiumSubjectId(repEntry.id) ? repEntry : null;
+      pushNewsItem({
+        id: `${team.abbr.toLowerCase()}_brss_${spec.outletId}_${hashShort(link)}`,
+        type: 'article',
+        title,
+        summary: desc.slice(0, 240),
+        imageUrl: img,
+        imageAlt: title,
+        publishedAt: new Date(pubMs).toISOString(),
+        url: link,
+        outletId: spec.outletId,
+        outletName: spec.outletName,
+        reporterId: validRep?.id || spec.outletId,
+        reporterName: validRep?.name || creator || spec.outletName,
+        author: validRep?.name || creator || spec.outletName,
+        authorHandle: validRep?.handle || '',
+        authorProfileUrl: validRep?.xUrl || link,
+        trustTier: validRep?.trustTier || spec.trustTier || 2,
+        wireSource: 'local_beat_rss'
+      });
+    }
+  });
+
+  // Parse Per-Team Curated YouTube Channels (official + local All-22 film)
+  teamCuratedYtSpecs.forEach((ytCh, idx) => {
+    const xml = teamYtXmls[idx] || '';
+    for (const m of xml.matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
+      const b = m[0];
+      const videoId = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
+      const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const desc = decodeXmlEntities((b.match(/<media:description>([\s\S]*?)<\/media:description>/i) || [])[1] || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
+      if (!videoId || !title) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+      const maxAgeDays = ytCh.category === 'film' ? 60 : 21;
+      if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
+      const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+      pushNewsItem({
+        id: `${team.abbr.toLowerCase()}_tyt_${videoId}`,
+        type: 'video',
+        category: ytCh.category,
+        videoId,
+        embeddable: ytCh.embeddable,
+        title,
+        summary: desc.slice(0, 220),
+        imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        imageAlt: title,
+        publishedAt: new Date(pubMs).toISOString(),
+        url: watchUrl,
+        externalVideoUrl: watchUrl,
+        outletId: ytCh.id,
+        outletName: ytCh.name,
+        reporterId: ytCh.id,
+        reporterName: ytCh.name,
+        author: ytCh.name,
+        authorHandle: ytCh.handle,
+        authorProfileUrl: `https://www.youtube.com/${ytCh.handle}`,
+        trustTier: ytCh.trustTier || 2,
+        wireSource: 'team_youtube_atom'
+      });
+    }
+  });
+  // Also search official NFL YouTube channel for recent player & game highlight cutups across ALL 32 clubs
+  const latestCompForYt = [...schedule].reverse().find(g => g.completed && !g.isByeWeek) || null;
+  const officialTeamYtCh = teamCuratedYtSpecs.find(c => c.category !== 'film') || null;
+  const [nflHighlightVids, clubHighlightVids] = await Promise.all([
+    searchYouTubeChannelVideos(
+      'UCDVYQ4Zhbm3S2dlz7P1GBDg',
+      'NFL',
+      latestCompForYt?.week ? `${team.nickname} Week ${latestCompForYt.week}` : `${team.fullName} ${seasonYear} Highlights`,
+      8
+    ).catch(() => []),
+    officialTeamYtCh
+      ? searchYouTubeChannelVideos(
+          officialTeamYtCh.id,
+          officialTeamYtCh.name,
+          latestCompForYt?.opponent?.shortName || (latestCompForYt?.week ? `Week ${latestCompForYt.week}` : 'Highlights'),
+          12
+        ).catch(() => [])
+      : Promise.resolve([])
+  ]);
+  for (const hv of [...clubHighlightVids, ...nflHighlightVids]) {
+    if (!hv?.videoId || !hv?.title) continue;
+    if (!teamOrStarRe.test(hv.title) && hv.channel !== officialTeamYtCh?.name) continue;
+    pushNewsItem({
+      id: `${team.abbr.toLowerCase()}_yts_${hv.videoId}`,
+      type: 'video',
+      videoId: hv.videoId,
+      embeddable: hv.embeddable !== undefined ? hv.embeddable : false,
+      title: hv.title,
+      summary: hv.summary || '',
+      imageUrl: `https://i.ytimg.com/vi/${hv.videoId}/hqdefault.jpg`,
+      imageAlt: hv.title,
+      publishedAt: hv.publishedAt || nowIso,
+      url: `https://www.youtube.com/watch?v=${encodeURIComponent(hv.videoId)}`,
+      externalVideoUrl: `https://www.youtube.com/watch?v=${encodeURIComponent(hv.videoId)}`,
+      outletId: officialTeamYtCh && hv.channel === officialTeamYtCh.name ? `${team.slug}_official` : 'nfl_official',
+      outletName: hv.channel || 'NFL',
+      reporterId: officialTeamYtCh && hv.channel === officialTeamYtCh.name ? `${team.slug}_official` : 'nfl_official',
+      reporterName: hv.channel || 'NFL',
+      author: hv.channel || 'NFL',
+      trustTier: 1,
+      wireSource: 'youtube_search'
+    });
+  }
+
+  for (const cv of Array.isArray(curatedSfYtVideos) ? curatedSfYtVideos : []) {
+    if (cv?.videoId && cv?.title) pushNewsItem({ ...cv, type: 'video' });
+  }
+
+  const embeddedXItems = await harvestEmbeddedXForTeamRss(
+    [clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {}), ...localBeatRssXmls],
+    {
       team,
       rosterPlayers: players,
       reportersData,
-      maxHydrate: 12
-    }).catch(() => [])
-  ]);
+      maxHydrate: 14
+    }
+  ).catch(() => []);
   const localXItems = filterXTimelineItemsForTeam(localXRaw, {
     team,
     rosterPlayers: players,
@@ -2544,13 +3358,116 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     reportersData,
     isNationalPool: true
   });
-  for (const xi of [...localXItems, ...embeddedXItems, ...nationalFilmXForTeam]) pushNewsItem(xi);
-  for (const bp of bskyPosts) pushNewsItem(bp);
+  const combinedDirectSocial = [...localXItems, ...embeddedXItems, ...nationalFilmXForTeam, ...bskyPosts];
+  for (const xi of combinedDirectSocial) pushNewsItem(xi);
+
+  // 9g. ESPN 24/7 Player Wire Batch across ALL 32 clubs (top active/injured numeric-ESPN-ID players, 7-day window)
+  const sevenDayWireCutoffMs = Date.now() - 7 * 86_400_000;
+  const keyWirePlayers = players
+    .filter(p => /^\d{4,10}$/.test(String(p.id || '')))
+    .sort((a, b) => {
+      const aInj = a.health?.injuryStatus && a.health.injuryStatus !== 'Healthy' ? 1 : 0;
+      const bInj = b.health?.injuryStatus && b.health.injuryStatus !== 'Healthy' ? 1 : 0;
+      const aSkill = ['QB', 'WR', 'RB', 'TE'].includes(String(a.position || '').toUpperCase()) ? 1 : 0;
+      const bSkill = ['QB', 'WR', 'RB', 'TE'].includes(String(b.position || '').toUpperCase()) ? 1 : 0;
+      return bInj - aInj || bSkill - aSkill || (Number(b.primarySnapPct) || 0) - (Number(a.primarySnapPct) || 0);
+    })
+    .slice(0, 42);
+  for (let i = 0; i < keyWirePlayers.length; i += 12) {
+    const slice = keyWirePlayers.slice(i, i + 12);
+    await Promise.all(
+      slice.map(async p => {
+        const pwJson = await fetchJsonSafe(
+          `https://site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(p.id)}&limit=3`,
+          6000
+        );
+        for (const entry of pwJson?.feed || []) {
+          const pubIso = entry.published || entry.lastModified || '';
+          const pubMs = pubIso ? Date.parse(pubIso) : NaN;
+          if (!Number.isFinite(pubMs) || pubMs < sevenDayWireCutoffMs) continue;
+          const rawHeadline = cleanSensationalistText(stripHtmlAndDecodeEntities(String(entry.headline || '')));
+          const rawDesc = cleanSensationalistText(stripHtmlAndDecodeEntities(String(entry.description || '')));
+          const rawStory = cleanSensationalistText(stripHtmlAndDecodeEntities(String(entry.story || '')));
+          const lead = rawDesc || rawHeadline;
+          if (!lead || lead.length < 20) continue;
+          if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${rawDesc}`)) continue;
+          const bylineHint = entry.byline
+            ? String(entry.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim()
+            : '';
+          const attr = extractBeatAttributionFromText(`${rawDesc} ${rawStory}`.trim(), {
+            reporterId: null,
+            reporterName: bylineHint || `${team.nickname} Beat Wire`,
+            outletId: 'espn',
+            outletName: 'ESPN / X Beat Wire'
+          });
+          const cleanFull = cleanSensationalistText(attr.cleanedText || lead);
+          const directWeb = sanitizeExternalUrl(entry.links?.web?.href, null);
+          if (!directWeb && !attr.viaWire && !bylineHint) continue;
+          const isDirectArticle = Boolean(directWeb && !isEspnPlayerProfileUrl(directWeb) && /\/nfl\/story\/_\/id\/\d+/i.test(directWeb));
+          const isPlayerBlurb = !isDirectArticle;
+          const pubIsoStr = new Date(pubMs).toISOString();
+          const candidateDirectSocial =
+            isPlayerBlurb && !(rawStory && rawStory.length >= 80)
+              ? resolveOriginalTweetUrl(
+                  {
+                    type: 'tweet',
+                    url: '',
+                    author: attr.author,
+                    reporterId: attr.reporterId,
+                    reporterName: attr.reporterName,
+                    authorHandle: attr.authorHandle,
+                    primaryPlayer: p,
+                    fullText: cleanFull,
+                    title: cleanFull,
+                    publishedAt: pubIsoStr
+                  },
+                  combinedDirectSocial
+                )
+              : null;
+          const hasDirectPost = Boolean(candidateDirectSocial && isDirectSocialPostUrl(candidateDirectSocial));
+          const effectiveType = isPlayerBlurb && hasDirectPost ? 'tweet' : 'article';
+          const cleanLead = stripRedundantAuthorBoilerplate(rawDesc || rawHeadline || lead, attr.author);
+          const itemUrl = isPlayerBlurb
+            ? hasDirectPost
+              ? candidateDirectSocial
+              : buildEspnPlayerNewsAnchorUrl(p.id, p.name, rawDesc || rawHeadline)
+            : directWeb;
+          if (!itemUrl) continue;
+          const fmtTw = formatTweetBodyForDisplay(cleanFull);
+          const resolvedTitle =
+            effectiveType === 'tweet' ? fmtTw.text : isDirectArticle ? rawHeadline || cleanLead : cleanLead || rawHeadline;
+          const resolvedAuthor = isPlayerBlurb ? attr.author : bylineHint || 'ESPN';
+          const repMatch = resolveReporterFromNameOrHandle(resolvedAuthor, team);
+          const validRep = repMatch && !isPodiumSubjectId(repMatch.id) ? repMatch : null;
+          pushNewsItem({
+            id: `${team.abbr.toLowerCase()}_pwire_${p.id}_${entry.id || Math.floor(pubMs / 1000)}`,
+            type: effectiveType,
+            title: resolvedTitle,
+            fullText: effectiveType === 'tweet' ? cleanFull : undefined,
+            isFullTweet: effectiveType === 'tweet' ? fmtTw.isFullTweet : undefined,
+            summary: (rawStory && rawStory !== cleanFull ? rawStory : rawDesc !== resolvedTitle ? rawDesc : '').slice(0, 220),
+            publishedAt: pubIsoStr,
+            url: itemUrl,
+            outletId: validRep?.outletId || attr.outletId || 'espn',
+            outletName: validRep?.outletName || attr.outletName || 'ESPN / X Beat Wire',
+            reporterId: validRep?.id || attr.reporterId || null,
+            reporterName: validRep?.name || resolvedAuthor,
+            author: validRep?.name || resolvedAuthor,
+            authorHandle: validRep?.handle || attr.authorHandle || '',
+            authorProfileUrl: validRep?.xUrl || attr.authorProfileUrl || itemUrl,
+            trustTier: validRep?.trustTier || attr.trustTier || 2,
+            wireSource: 'espn_player_wire'
+          });
+        }
+      })
+    );
+  }
 
   // 10. Live Power Rankings (teamStats & teamStatRankings already built in Step 5)
+  const outDir = getTeamOutDir(team);
   let previousPowerRankings = null;
   try {
-    const existingSmPath = path.join(ROOT, 'data', 'teams', team.slug, 'schedule-matchup.json');
+    const existingSmPath = path.join(outDir, 'schedule-matchup.json');
     if (fs.existsSync(existingSmPath)) {
       previousPowerRankings = JSON.parse(fs.readFileSync(existingSmPath, 'utf8'))?.powerRankings || null;
     }
@@ -2600,19 +3517,29 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     coaches,
     calendar: buildNflCalendarForSeasonYear(seasonYear),
     teamStatus: {
+      currentWeek,
       inPlayoffHunt: (playoffPicture.baselineSimulation?.teamOdds?.makePlayoffsPct ?? 50) > 0,
       playoffSeed: teamStanding.seed,
-      seasonConcluded: false
+      seasonConcluded: false,
+      mathematicallyEliminated: (playoffPicture.baselineSimulation?.teamOdds?.makePlayoffsPct ?? 50) <= 0,
+      eliminatedAt: null
     },
     aiEngine: {
-      activeModel: PRIMARY_GEMINI_REASONING_MODEL,
+      activeModel: leagueCtx.aiModelDiscovery?.activeModel || PRIMARY_GEMINI_REASONING_MODEL,
       thinkingLevel: 'XHIGH',
+      thinkingBudget: 24576,
+      autoPollEnabled: true,
+      pollIntervalHours: 24,
+      candidateCascade: leagueCtx.aiModelDiscovery?.candidateCascade || [PRIMARY_GEMINI_REASONING_MODEL, 'gemini-3.8-flash'],
+      source: leagueCtx.aiModelDiscovery?.source || 'live-v1beta',
+      lastCheckedAt: nowIso,
       quotaOwner: 'joshalbox@gmail.com'
     }
   };
 
   const kickoffDate = nextUnplayed?.dateIso ? new Date(nextUnplayed.dateIso) : null;
-  const kickoffDisplay = kickoffDate
+  const broadcastLabel = String(nextUnplayed?.broadcast || 'NFL TV').trim();
+  const kickoffDisplayBase = kickoffDate
     ? kickoffDate.toLocaleString('en-US', {
         timeZone: team.timezone,
         weekday: 'short',
@@ -2623,6 +3550,10 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         timeZoneName: 'short'
       })
     : 'TBD';
+  const kickoffDisplay =
+    kickoffDisplayBase !== 'TBD' && broadcastLabel && !kickoffDisplayBase.includes(broadcastLabel)
+      ? `${kickoffDisplayBase} • ${broadcastLabel}`
+      : kickoffDisplayBase;
 
   const featuredPlayers = players
     .filter(p => p.rosterBucket === 'active' && (p.primarySnapPct >= 40 || p.stats2026))
@@ -2819,11 +3750,33 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     statusDetail: nextUnplayed?.statusDetail || '',
     featuredPlayers,
     opponentHealth: {
+      teamAbbr: oppCfg?.abbr || oppAbbrNext,
+      teamName: oppCfg?.fullName || nextUnplayed?.opponent?.name || 'Opponent',
       sourceUrl: oppCfg ? oppCfg.clubInjuryUrl : 'https://www.espn.com/nfl/injuries',
+      teamInjuriesUrl: oppCfg ? buildCbsTeamInjuriesUrl(oppCfg.abbr, oppCfg.fullName) : 'https://www.espn.com/nfl/injuries',
+      byeWeek: null,
+      summary: {
+        overallAvailabilityScore: oppOverallAvailabilityScore,
+        totalStarters: oppTotalStarters,
+        startersHealthy: oppStartersClearedCount,
+        injuredCount: oppInjuryReport.length,
+        irCount: oppIrReserve.length,
+        text: `${oppInjuryReport.length} on injury report, ${oppIrReserve.length} on IR/Reserve`
+      },
+      activeRoster: oppActiveRoster,
+      keyStartersHealthy: oppKeyStartersHealthy,
       injuryReport: oppInjuryReport,
       irReserve: oppIrReserve
     },
     betting: {
+      favorite:
+        signedSpreadNext == null
+          ? 'TBD'
+          : signedSpreadNext === 0
+            ? 'PK'
+            : signedSpreadNext < 0
+              ? team.abbr
+              : oppAbbrNext,
       spread: spreadDispNext,
       openingSpread: openingSpreadDispNext,
       overUnder: ouNext ?? 'TBD',
@@ -2848,7 +3801,15 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       oppRecord: nextUnplayed?.opponent?.record || '',
       homeAway: nextUnplayed?.homeAway || 'home'
     }),
-    keyMatchupsMatrix: []
+    keyMatchupsMatrix: buildTeamKeyMatchupsMatrix({
+      team,
+      oppAbbr: oppAbbrNext,
+      oppName: nextUnplayed?.opponent?.name || 'Opponent',
+      players,
+      oppActiveRoster,
+      oppKeyStartersHealthy,
+      teamStats
+    })
   };
 
   const cap26 = otcYears[String(seasonYear)] || { teamCapSpace: 0, deadMoneyTotal: 0 };
@@ -2899,13 +3860,27 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     spotracUrl: `https://www.spotrac.com/nfl/${team.otcSlug}/cap/`,
     nflpaUrl: 'https://nflpa.com/reports/public-salary-cap-report',
     years: otcYears,
-    blueprint: {
-      summary: `${team.fullName} hold $${(Number(cap26.teamCapSpace || 0) / 1e6).toFixed(2)}M in ${seasonYear} OverTheCap space and $${(Number(cap27.teamCapSpace || 0) / 1e6).toFixed(2)}M projected for ${seasonYear + 1}.`
-    },
+    blueprint: buildTeamCapBlueprint(team, otcYears, capPlayers, seasonYear),
     players: capPlayers
   };
 
   // Build authentic seasonYear Draft Class & Priority UDFAs (using nflverse draft_picks.csv + roster spiderProfiles!)
+  let existingSeasonalDraftClass = null;
+  let prevCapNoteCached = null;
+  const todayPt = getPacificDateKey(Date.now());
+  try {
+    const existingSeasonalPath = path.join(outDir, 'seasonal.json');
+    if (fs.existsSync(existingSeasonalPath)) {
+      const prevSeas = JSON.parse(fs.readFileSync(existingSeasonalPath, 'utf8'));
+      existingSeasonalDraftClass = prevSeas?.draftClass2026 || null;
+      if (prevSeas?.tradeWarRoom?.aiCapNoteDatePt === todayPt && prevSeas?.tradeWarRoom?.capPurchasingPowerNote) {
+        prevCapNoteCached = prevSeas.tradeWarRoom.capPurchasingPowerNote;
+      }
+    }
+  } catch {}
+  const existingPickByNormName = new Map(
+    (existingSeasonalDraftClass?.picks || []).map(pk => [normPlayerName(pk?.name || ''), pk])
+  );
   const playersByPfr = new Map(players.filter(p => p.pfrId).map(p => [p.pfrId, p]));
   const playersByGsis = new Map(players.filter(p => p.gsisId).map(p => [p.gsisId, p]));
   const playersByNflName = new Map(players.map(p => [normPlayerName(p.name), p]));
@@ -2977,6 +3952,17 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       ? `${statusText} • ${matched.displayHeight || ''} ${matched.displayWeight || ''}${matched.primarySnapPct > 0 ? ` • ${matched.primarySnapPct}% 2026 snaps` : ''}`.replace(/\s+/g, ' ').trim()
       : `${seasonYear} Round ${dp.round}, Pick #${dp.pick} selection from ${dp.college || 'College'}.`;
 
+    const prevPickRec = existingPickByNormName.get(normPlayerName(matched?.name || dp.name)) || null;
+    const nflProspectSlug = String(matched?.name || dp.name)
+      .toLowerCase()
+      .replace(/['’.]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+    const nflScoutingUrl =
+      prevPickRec?.nflScoutingUrl && /^https:\/\/www\.nfl\.com\/prospects\//i.test(prevPickRec.nflScoutingUrl)
+        ? prevPickRec.nflScoutingUrl
+        : `https://www.nfl.com/prospects/${nflProspectSlug}`;
+
     draftPicksFinal.push({
       playerId: matched?.id || null,
       name: matched?.name || dp.name,
@@ -2988,6 +3974,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       jersey: matched?.jersey ?? null,
       headshotUrl: matched?.headshotUrl || '',
       espnUrl: matched?.espnUrl || null,
+      nflScoutingUrl,
+      ...(prevPickRec?.highlightVideo ? { highlightVideo: prevPickRec.highlightVideo } : {}),
       pfrUrl:
         matched?.pfrUrl ||
         (dp.pfrId
@@ -3091,14 +4079,73 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     nowIso
   });
 
-  const outDir = path.join(ROOT, 'data', 'teams', team.slug);
-  let existingSeasonalDraftClass = null;
-  try {
-    const existingSeasonalPath = path.join(outDir, 'seasonal.json');
-    if (fs.existsSync(existingSeasonalPath)) {
-      existingSeasonalDraftClass = JSON.parse(fs.readFileSync(existingSeasonalPath, 'utf8'))?.draftClass2026 || null;
+  // Cross-reference club's verified recent trades onto `draftPrep2027.tradedPicksNote` across ALL 32 clubs
+  // so traded-away upcoming-draft picks explicitly cite the acquired player and counterparty (e.g. Rd 4 sent to IND for Buckner)
+  if (draftPrep2027 && typeof draftPrep2027.tradedPicksNote === 'string') {
+    const draftYrNum = Number(draftPrep2027.draftYear || seasonYear + 1);
+    const wordToRd = { first: 1, second: 2, third: 3, fourth: 4, fifth: 5, sixth: 6, seventh: 7 };
+    const tradeDetails = [];
+    const recentMovesList = [
+      ...(tradeIntel?.tradeWarRoom?.completed2026Moves || []),
+      ...(tradeIntel?.tradeWarRoom?.recentTrades || [])
+    ];
+    for (const tr of recentMovesList) {
+      const cost = String(tr?.costSummary || '');
+      const yrMatch = cost.match(new RegExp(`\\b${draftYrNum}\\b`));
+      const rdMatch = cost.match(
+        /\b([1-7])(?:st|nd|rd|th)[- ]round|\bRd\s*([1-7])\b|\b(first|second|third|fourth|fifth|sixth|seventh)[- ]round/i
+      );
+      if (!rdMatch) continue;
+      if (!yrMatch && /\b202[0-9]\b/.test(cost)) continue;
+      const rd = Number(rdMatch[1] || rdMatch[2] || wordToRd[String(rdMatch[3] || '').toLowerCase()] || 0);
+      if (!Number.isFinite(rd) || rd < 1 || rd > 7) continue;
+      const fromTeam = String(tr.acquiredFrom || '').trim();
+      const playerName = String(tr.player || '').trim();
+      if (!playerName) continue;
+      tradeDetails.push(`Rd ${rd} sent${fromTeam ? ` to ${fromTeam}` : ''} for ${playerName}`);
     }
-  } catch {}
+    if (tradeDetails.length > 0) {
+      const baseNote = draftPrep2027.tradedPicksNote.replace(/\.$/, '');
+      draftPrep2027.tradedPicksNote = `${baseNote} (incl. ${tradeDetails.slice(0, 3).join('; ')}).`;
+    }
+  }
+
+  // Optional 1/Day Cap Purchasing Power Note: route simpler 2-sentence task to `gemini-3.8-flash`
+  // so `gemini-4-hydrogen` RPD tokens stay preserved for Top-News Briefs and Auto Podcasts!
+  if (prevCapNoteCached && tradeIntel?.tradeWarRoom) {
+    tradeIntel.tradeWarRoom.capPurchasingPowerNote = prevCapNoteCached;
+    tradeIntel.tradeWarRoom.aiCapNoteDatePt = todayPt;
+  } else if (geminiApiKey && !process.env.SKIP_TRADE_AI && tradeIntel?.tradeWarRoom) {
+    try {
+      const capPromptFacts = JSON.stringify({
+        team: team.fullName,
+        seasonYear,
+        currentWeek,
+        record: teamStanding.record,
+        capCurrent: cap26?.teamCapSpace,
+        capNext: cap27?.teamCapSpace,
+        draftPickCount: tankathonPicks?.length || 0
+      });
+      const capAiRes = await runSinglePassDailyGeminiSynthesis({
+        apiKey: geminiApiKey,
+        preferredModel: 'gemini-3.8-flash',
+        promptText: `Facts: ${capPromptFacts}\nReturn strict JSON {"capNote": "..."} with a concise 2-sentence CBA cap-rollover & trade-window synthesis for ${team.fullName} grounded strictly in the provided ${seasonYear}/${seasonYear + 1} cap space, draft pick count, and weekly proration mechanics.`,
+        appData: { meta, roster: { players }, cap: capJson },
+        rosterPlayers: players
+      });
+      if (capAiRes.ok && capAiRes.rawText) {
+        const cleanCap = capAiRes.rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
+        const parsedCap = JSON.parse(cleanCap);
+        if (parsedCap?.capNote && !hasCrossTeam49ersLeak(parsedCap.capNote, team, oppAbbrNext)) {
+          tradeIntel.tradeWarRoom.capPurchasingPowerNote = String(parsedCap.capNote).trim();
+          tradeIntel.tradeWarRoom.aiCapNoteDatePt = todayPt;
+        }
+      }
+    } catch {
+      // Non-fatal: deterministic cap purchasing power note remains intact
+    }
+  }
+
   const draftClass2026Obj = {
     draftYear: seasonYear,
     sourceUrl: `https://www.pro-football-reference.com/teams/${team.pfrAbbr}/${seasonYear}_draft.htm`,
@@ -3112,6 +4159,24 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         existingDraftClass: existingSeasonalDraftClass
       });
     } catch {}
+  }
+
+  // Fetch latest completed game summary for `lastCompletedGameRecap` across ALL 32 clubs
+  const latestCompletedSchedItem =
+    [...schedule].reverse().find(g => g.completed && !g.isByeWeek && g.id && /^\d{6,12}$/.test(String(g.id))) || null;
+  let lastCompletedGameRecap = null;
+  if (latestCompletedSchedItem) {
+    const compSum = await fetchJsonSafe(
+      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(latestCompletedSchedItem.id)}`,
+      8000
+    ).catch(() => null);
+    if (compSum) {
+      try {
+        lastCompletedGameRecap = extractCompletedGameRecapSummary(compSum, latestCompletedSchedItem);
+      } catch {
+        lastCompletedGameRecap = null;
+      }
+    }
   }
 
   const teamTxLedger = parseEspnTransactionsToLedger(espnTxRaw?.transactions || [], {
@@ -3145,6 +4210,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     irAndReserveTracker
   };
 
+  // Keep roster players sorted alphabetically ascending by name across all 32 teams
+  players.sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+
   const rosterJson = {
     updatedAt: nowIso,
     count: players.length,
@@ -3170,7 +4238,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       { label: `${team.clubDomain}`, url: team.clubNewsUrl }
     ],
     schedule,
-    lastCompletedGameRecap: null,
+    lastCompletedGameRecap,
     teamStats,
     teamStatRankings,
     powerRankings,
@@ -3192,8 +4260,96 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   tempAppData.news.rawStream = sortNewsWithBreakingPriority(rawStream, Date.now(), { appData: tempAppData });
   reconcileRosterAndHealthWithNews(tempAppData);
 
-  // Reuse an already-generated live Gemini brief for the exact same cycleKey so hourly refreshes spend 0 extra API calls!
+  // Attach deep 7-day rolling `recentNews` to every roster player (pruning stale completed-game availability notes!)
+  const cleanStreamForPlayers = filterOutCompletedGameAvailabilityItems(
+    tempAppData.news.rawStream,
+    tempAppData,
+    Date.now()
+  );
+  const recentByPid = new Map();
+  for (const item of cleanStreamForPlayers) {
+    for (const mp of item.mentionedPlayers || []) {
+      if (!mp?.id) continue;
+      if (!recentByPid.has(mp.id)) recentByPid.set(mp.id, []);
+      const arr = recentByPid.get(mp.id);
+      if (arr.length >= 12) continue;
+      arr.push({
+        id: item.id,
+        type: item.type || 'article',
+        headline: item.title || '',
+        title: item.title || '',
+        fullText: item.fullText || undefined,
+        summary: item.summary || '',
+        url: item.url,
+        author: item.author || item.outletName || `${team.nickname} Beat`,
+        outletName: item.outletName || `${team.nickname} Beat`,
+        publishedAt: item.publishedAt
+      });
+    }
+  }
+  for (const p of players) {
+    p.recentNews = recentByPid.get(p.id) || [];
+  }
+
+  // Build structured high-SNR `clusteredBriefs` (>=3 topic clusters with verified sourceLinks) across ALL 32 clubs!
+  const buildClusterCard = (id, category, headline, items) => {
+    const picked = (items || []).filter(i => i?.url && i?.title).slice(0, 6);
+    if (picked.length === 0) return null;
+    return {
+      id: `${team.abbr.toLowerCase()}_cl_${id}`,
+      category,
+      headline,
+      summary: picked.slice(0, 2).map(i => i.title).join(' — ').slice(0, 260),
+      updatedAt: picked[0].publishedAt || nowIso,
+      itemCount: picked.length,
+      sourceLinks: picked.map(i => ({
+        label: i.author || i.outletName || `${team.nickname} Beat`,
+        title: i.title,
+        url: i.url,
+        publishedAt: i.publishedAt
+      }))
+    };
+  };
+  const nonFilmRaw = tempAppData.news.rawStream.filter(i => !i.filmOnlyScope);
+  tempAppData.news.clusteredBriefs = [
+    buildClusterCard(
+      'top',
+      'beat',
+      `${team.fullName} Week ${currentWeek} Top Headlines (${meta.teamRecord})`,
+      nonFilmRaw.filter(i => i.type !== 'video')
+    ),
+    buildClusterCard(
+      'health',
+      'injury',
+      `${team.nickname} Practice Report, Injury & IR Availability`,
+      nonFilmRaw.filter(i => i.category === 'injury' || /injur|practice|ir\b|questionable|out\b/i.test(i.title || ''))
+    ),
+    buildClusterCard(
+      'film',
+      'film',
+      `${team.nickname} All-22 Film, Trench & Efficiency Breakdowns`,
+      tempAppData.news.rawStream.filter(i => i.category === 'film')
+    ),
+    buildClusterCard(
+      'roster',
+      'roster',
+      `${team.nickname} Roster Moves, Trades & Salary Cap Desk`,
+      nonFilmRaw.filter(i => i.category === 'roster' || i.category === 'cap')
+    )
+  ].filter(Boolean);
+  if (tempAppData.news.clusteredBriefs.length < 3 && nonFilmRaw.length > 0) {
+    const fallbackCluster = buildClusterCard(
+      'matchup',
+      'beat',
+      `Week ${currentWeek} Matchup Prep vs. ${upcomingMatchup.oppName}`,
+      nonFilmRaw.slice(0, 5)
+    );
+    if (fallbackCluster) tempAppData.news.clusteredBriefs.push(fallbackCluster);
+  }
+
+  // Reuse an already-generated live/pipeline Gemini brief for the exact same cycleKey so hourly refreshes spend 0 extra API calls!
   let existingBrief = null;
+  let priorCycleBrief = null;
   try {
     const existingNewsPath = path.join(outDir, 'news.json');
     if (fs.existsSync(existingNewsPath)) {
@@ -3203,35 +4359,52 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   } catch {}
   if (!existingBrief && process.env.CI) {
     try {
-      const livePrev = await fetchJsonSafe(`https://${team.domain}/data/teams/${team.slug}/news.json`, 4500);
+      const livePrev = await fetchJsonSafe(`https://${team.domain}/${getTeamDataRelUrl(team, 'news.json')}`, 4500);
       existingBrief = livePrev?.dailyTopNewsBrief || null;
     } catch {}
+  }
+  const activeBriefCycleCheck = resolveNewsBriefCycleState(Date.now(), tempAppData, 17).activeCycleKey;
+  if (existingBrief?.cycleKey && existingBrief.cycleKey !== activeBriefCycleCheck) {
+    priorCycleBrief = existingBrief;
   }
 
   tempAppData.news.dailyTopNewsBrief = await generateGroundedDailyBrief(team, tempAppData, geminiApiKey, {
     existingBrief,
-    forceBrief: process.argv.includes('--force-brief')
+    priorCycleBrief,
+    forceBrief: process.argv.includes('--force-brief'),
+    aiModelDiscovery: leagueCtx.aiModelDiscovery || { activeModel: PRIMARY_GEMINI_REASONING_MODEL }
   });
 
+  // Preserve any pre-generated studio `.m4a` episodes / sharedAnalyses in `podcasts/index.json`!
+  const podIndexPath = path.join(outDir, 'podcasts', 'index.json');
+  let existingPodIndex = null;
+  try {
+    if (fs.existsSync(podIndexPath)) {
+      existingPodIndex = JSON.parse(fs.readFileSync(podIndexPath, 'utf8'));
+    }
+  } catch {}
   const podcastIndexJson = {
     updatedAt: nowIso,
-    episodes: [],
-    sharedAnalyses: []
+    episodes: Array.isArray(existingPodIndex?.episodes) ? existingPodIndex.episodes : [],
+    sharedAnalyses: Array.isArray(existingPodIndex?.sharedAnalyses) ? existingPodIndex.sharedAnalyses : []
   };
 
-  // Write all 11 JSON files under `data/teams/{slug}/`
+  // Write all 11 JSON files cleanly (`data/` for SF, `data/teams/{slug}/` for all 31 other teams), upgrading any http:// URLs
+  const writeCleanJson = (targetPath, payload) => {
+    fs.writeFileSync(targetPath, JSON.stringify(upgradeHttpUrlsDeep(payload), null, 2));
+  };
   fs.mkdirSync(path.join(outDir, 'podcasts'), { recursive: true });
-  fs.writeFileSync(path.join(outDir, 'meta.json'), JSON.stringify(meta, null, 2));
-  fs.writeFileSync(path.join(outDir, 'roster.json'), JSON.stringify(rosterJson, null, 2));
-  fs.writeFileSync(path.join(outDir, 'depth-chart.json'), JSON.stringify(depthChartJson, null, 2));
-  fs.writeFileSync(path.join(outDir, 'cap.json'), JSON.stringify(capJson, null, 2));
-  fs.writeFileSync(path.join(outDir, 'health.json'), JSON.stringify(healthJson, null, 2));
-  fs.writeFileSync(path.join(outDir, 'news.json'), JSON.stringify(tempAppData.news, null, 2));
-  fs.writeFileSync(path.join(outDir, 'schedule-matchup.json'), JSON.stringify(scheduleMatchupJson, null, 2));
-  fs.writeFileSync(path.join(outDir, 'seasonal.json'), JSON.stringify(seasonalJson, null, 2));
-  fs.writeFileSync(path.join(outDir, 'reporters.json'), JSON.stringify(reportersData, null, 2));
-  fs.writeFileSync(path.join(outDir, 'beat-podcasts.json'), JSON.stringify(beatPodcasts, null, 2));
-  fs.writeFileSync(path.join(outDir, 'podcasts', 'index.json'), JSON.stringify(podcastIndexJson, null, 2));
+  writeCleanJson(path.join(outDir, 'meta.json'), meta);
+  writeCleanJson(path.join(outDir, 'roster.json'), rosterJson);
+  writeCleanJson(path.join(outDir, 'depth-chart.json'), depthChartJson);
+  writeCleanJson(path.join(outDir, 'cap.json'), capJson);
+  writeCleanJson(path.join(outDir, 'health.json'), healthJson);
+  writeCleanJson(path.join(outDir, 'news.json'), tempAppData.news);
+  writeCleanJson(path.join(outDir, 'schedule-matchup.json'), scheduleMatchupJson);
+  writeCleanJson(path.join(outDir, 'seasonal.json'), seasonalJson);
+  writeCleanJson(path.join(outDir, 'reporters.json'), reportersData);
+  writeCleanJson(path.join(outDir, 'beat-podcasts.json'), beatPodcasts);
+  writeCleanJson(podIndexPath, podcastIndexJson);
 
   console.log(
     `[stage-2] Done ${team.abbr} (${team.slug}): record=${meta.teamRecord}, roster=${players.length}, capPlayers=${capPlayers.length}, departed=${departedPlayers.length}, power=${powerRankings.sources?.length || 0}/${powerRankings.allSources?.length || 0} (#${powerRankings.consensusRank ?? '—'}), news=${tempAppData.news.rawStream.length}, brief=${tempAppData.news.dailyTopNewsBrief?.source} (${tempAppData.news.dailyTopNewsBrief?.modelUsed}), pods7d=${beatPodcasts.totalEpisodes}, playoffOdds=${playoffPicture.baselineSimulation?.teamOdds?.makePlayoffsPct}%`
@@ -3241,7 +4414,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
 async function refreshPowerRankingsOnlyForTeams(teams, seasonYear = 2026) {
   const sampleMeta = teams
     .map(t => {
-      const p = path.join(ROOT, 'data', 'teams', t.slug, 'meta.json');
+      const p = path.join(getTeamOutDir(t), 'meta.json');
       try {
         return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null;
       } catch {
@@ -3267,7 +4440,7 @@ async function refreshPowerRankingsOnlyForTeams(teams, seasonYear = 2026) {
 
   const nowMs = Date.now();
   for (const team of teams) {
-    const outDir = path.join(ROOT, 'data', 'teams', team.slug);
+    const outDir = getTeamOutDir(team);
     const smPath = path.join(outDir, 'schedule-matchup.json');
     const metaPath = path.join(outDir, 'meta.json');
     if (!fs.existsSync(smPath)) {
@@ -3305,15 +4478,15 @@ async function main() {
   const teamsArg = args.find(a => a.startsWith('--teams=')) || args.find(a => a.startsWith('--team='));
   let teams = [];
   if (runAll) {
-    teams = ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF');
+    teams = [...ALL_NFL_TEAMS];
   } else if (teamsArg) {
     const rawList = teamsArg.replace(/^--teams?=/, '').split(',').map(s => s.trim()).filter(Boolean);
-    teams = rawList.map(resolveTeamConfig).filter(t => t && t.abbr !== 'SF');
+    teams = rawList.map(resolveTeamConfig).filter(Boolean);
   } else {
-    teams = ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF');
+    teams = [...ALL_NFL_TEAMS];
   }
   if (missingOnly) {
-    teams = teams.filter(t => !fs.existsSync(path.join(ROOT, 'data', 'teams', t.slug, 'meta.json')));
+    teams = teams.filter(t => !fs.existsSync(path.join(getTeamOutDir(t), 'meta.json')));
   }
   if (teams.length === 0) {
     console.log('[stage-2] All target teams already built (0 remaining).');
@@ -3325,8 +4498,10 @@ async function main() {
     return;
   }
 
-  const leagueCtx = await loadSharedLeagueContext(2026);
-  const geminiApiKey = String(process.env.GEMINI_NFL_API_KEY || '').trim();
+  const geminiApiKey = String(
+    process.env.GEMINI_NFL_API_KEY || process.env.GEMINI_NEWS_API_KEY || process.env.GEMINI_API_KEY || ''
+  ).trim();
+  const leagueCtx = await loadSharedLeagueContext(2026, { geminiApiKey });
   const failures = [];
 
   for (let i = 0; i < teams.length; i += 1) {
