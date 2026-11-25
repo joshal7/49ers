@@ -138,6 +138,7 @@ import {
   esc,
   formatRelativeAge,
   rankBadgeClass,
+  renderMarkdownSafe,
   renderTeamLogoHtml,
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
@@ -5098,6 +5099,39 @@ function bindEvents() {
         break;
       }
 
+      case 'set-analysis-mode': {
+        const nextMode = btn.getAttribute('data-analysis-mode') === 'deep' ? 'deep' : 'fast';
+        const areaEl = document.getElementById('analysisPromptInput');
+        if (areaEl) state.analysisPromptDraft = areaEl.value;
+        if (state.prefs.analysisMode !== nextMode) {
+          state.prefs.analysisMode = nextMode;
+          saveUserPrefs(state.prefs);
+        }
+        const previewBar = document.querySelector('[data-est-wait-preview="analysis"]');
+        if (previewBar) {
+          const waitEst = estimateGenerationWait({
+            kind: 'analysis',
+            mode: nextMode,
+            prefs: state.prefs,
+            appData: state.appData
+          });
+          const estEl = previewBar.querySelector('[data-analysis-est-text]');
+          if (estEl) estEl.textContent = waitEst.summaryText;
+          previewBar.querySelectorAll('[data-action="set-analysis-mode"]').forEach(optBtn => {
+            const isSel = optBtn.getAttribute('data-analysis-mode') === nextMode;
+            optBtn.classList.toggle('active', isSel);
+            optBtn.setAttribute('aria-pressed', isSel ? 'true' : 'false');
+          });
+          const runLbl = document.querySelector('[data-analysis-run-label]');
+          if (runLbl && !state.jobStatus?.active) {
+            runLbl.textContent = nextMode === 'deep' ? 'Run Deep Analysis' : 'Run Analysis';
+          }
+        } else {
+          renderMain();
+        }
+        break;
+      }
+
       case 'run-deep-analysis': {
         const areaEl = document.getElementById('analysisPromptInput');
         if (areaEl) state.analysisPromptDraft = areaEl.value;
@@ -5111,12 +5145,14 @@ function bindEvents() {
           break;
         }
         const startedAtMs = Date.now();
+        const analysisMode = state.prefs.analysisMode === 'deep' ? 'deep' : 'fast';
         const waitEst = estimateGenerationWait({
           kind: 'analysis',
+          mode: analysisMode,
           prefs: state.prefs,
           appData: state.appData
         });
-        const modelInfo = resolveActiveHighQualityModelLabel(state.appData, state.prefs);
+        const modeLabel = analysisMode === 'deep' ? 'Deep' : 'Fast';
         const elapsedTicker = setInterval(() => {
           const clockEl = document.getElementById('jobElapsedClock');
           if (clockEl) {
@@ -5128,41 +5164,32 @@ function bindEvents() {
           state.jobStatus = {
             active: true,
             kind: 'analysis',
+            mode: analysisMode,
+            phase: 'thinking',
             startedAtMs,
-            stepIdx: 1,
-            totalSteps: 3,
-            stages: ANALYSIS_PIPELINE_STAGES,
-            percent: 12,
-            stagePercents: [12, 0, 0],
-            stageElapsedSec: [0, 0, 0],
             estLabel: waitEst.estLabel,
-            modelLabel: modelInfo.displayLabel,
-            message: 'Step 1 of 3: Deep research on the topic…',
-            subDetail: `Querying live ESPN NFL Nation, Bluesky beat wire & ${state.appData?.roster?.players?.length || 90}-player roster/EPA/cap ledger.`
+            modelLabel: modeLabel,
+            message: analysisMode === 'deep' ? 'Running deep analysis…' : 'Analyzing…',
+            streamedText: ''
           };
           renderMain();
           const report = await runOnDemandDeepAnalysis({
             prompt: state.analysisPromptDraft,
-            category: 'Custom Deep Dive',
+            category: analysisMode === 'deep' ? 'Custom Deep Dive' : 'Scouting & Cap Analysis',
+            mode: analysisMode,
             appData: state.appData,
             prefs: state.prefs,
             onProgress: p => {
-              const prevStep = state.jobStatus?.stepIdx || 1;
-              const nextStep = p.stepIdx || 1;
               state.jobStatus = {
                 active: true,
                 kind: 'analysis',
+                mode: p.mode || analysisMode,
+                phase: p.phase || 'thinking',
                 startedAtMs,
-                stepIdx: nextStep,
-                totalSteps: p.totalSteps || 3,
-                stages: p.stages || ANALYSIS_PIPELINE_STAGES,
-                percent: p.percent || 35,
-                stagePercents: p.stagePercents || [100, 0, 0],
-                stageElapsedSec: p.stageElapsedSec || [0, 0, 0],
                 estLabel: p.estLabel || waitEst.estLabel,
-                modelLabel: p.modelLabel || modelInfo.displayLabel,
-                message: p.message,
-                subDetail: p.subDetail || ''
+                modelLabel: p.modelLabel || modeLabel,
+                message: p.message || (analysisMode === 'deep' ? 'Running deep analysis…' : 'Analyzing…'),
+                streamedText: typeof p.streamedText === 'string' ? p.streamedText : state.jobStatus?.streamedText || ''
               };
               if (
                 state.activeNavTab === 'audio' &&
@@ -6184,6 +6211,27 @@ function syncActiveJobBannerDomInPlace(jobStatus) {
   if (!jobStatus?.active) return false;
   const banner = document.querySelector('[data-job-progress="active"]');
   if (!banner) return false;
+
+  // Fast lightweight streaming analysis box (zero multi-stage wait bars)
+  if (banner.hasAttribute('data-analysis-stream-box')) {
+    const msgEl = banner.querySelector('[data-analysis-live-msg]');
+    if (msgEl && jobStatus.message) {
+      msgEl.textContent = jobStatus.message;
+    }
+    const streamed = String(jobStatus.streamedText || '');
+    const hasText = streamed.trim().length > 0;
+    const shimmerEl = banner.querySelector('[data-analysis-shimmer]');
+    if (shimmerEl) shimmerEl.hidden = hasText;
+    const outEl = banner.querySelector('[data-analysis-stream-output]');
+    if (outEl) {
+      outEl.hidden = !hasText;
+      if (hasText) {
+        outEl.innerHTML = renderMarkdownSafe(streamed);
+        outEl.scrollTop = outEl.scrollHeight;
+      }
+    }
+    return true;
+  }
 
   const overallFill = banner.querySelector('.job-progress-fill');
   if (overallFill) {

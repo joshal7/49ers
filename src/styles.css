@@ -2489,6 +2489,106 @@ body.sheet-open {
   margin-bottom: 10px;
 }
 
+.est-wait-analysis-bar {
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding: 5px 6px 5px 10px;
+}
+
+.analysis-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.analysis-mode-opt {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.analysis-mode-opt.active {
+  background: linear-gradient(135deg, var(--scarlet), var(--scarlet-bright));
+  color: #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="light"] .analysis-mode-pill {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.analysis-stream-box {
+  gap: 8px;
+  padding: 10px 12px;
+}
+
+.analysis-stream-head {
+  flex-wrap: nowrap;
+}
+
+.analysis-stream-status {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--gold-bright);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.analysis-stream-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.analysis-stream-shimmer {
+  width: 100%;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--border-subtle);
+  overflow: hidden;
+}
+
+.analysis-stream-shimmer-bar {
+  width: 42%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright), var(--scarlet-bright), transparent);
+  animation: analysisShimmerSlide 1.25s ease-in-out infinite;
+}
+
+@keyframes analysisShimmerSlide {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(260%); }
+}
+
+.analysis-stream-output {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 8px;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
 /* Markdown Rendered Output */
 .md-report h3, .md-report h4 {
   margin: 8px 0 5px;

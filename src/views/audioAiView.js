@@ -146,6 +146,45 @@ function renderSourceChips(items = []) {
   return rendered ? `<div class="source-link-strip">${rendered}</div>` : '';
 }
 
+function renderAnalysisLiveBox({ jobStatus, waitEst }) {
+  const mode = jobStatus?.mode === 'deep' ? 'deep' : 'fast';
+  const modeLabel = jobStatus?.modelLabel || (mode === 'deep' ? 'Deep' : 'Fast');
+  const elapsedSec = jobStatus?.startedAtMs
+    ? Math.max(0, Math.floor((Date.now() - jobStatus.startedAtMs) / 1000))
+    : 0;
+  const elapsedLabel = `Elapsed ${formatTimeMmSs(elapsedSec)}`;
+  const streamedText = String(jobStatus?.streamedText || '');
+  const hasStreamedText = streamedText.trim().length > 0;
+  const statusMsg =
+    jobStatus?.message ||
+    (hasStreamedText
+      ? 'Streaming analysis…'
+      : mode === 'deep'
+        ? 'Running deep analysis…'
+        : 'Analyzing…');
+
+  return `
+    <div class="job-progress-box analysis-stream-box" data-job-progress="active" data-analysis-stream-box="true" data-analysis-mode="${esc(mode)}" role="status" aria-live="polite" style="margin-bottom:10px">
+      <div class="job-progress-head analysis-stream-head">
+        <div class="job-progress-lead">
+          <span class="job-spinner-ring" aria-hidden="true"></span>
+          <span class="analysis-stream-status" data-analysis-live-msg>${esc(statusMsg)}</span>
+        </div>
+        <div class="analysis-stream-meta">
+          <span class="mono" id="jobElapsedClock" style="font-size:11px;color:var(--gold-bright);font-weight:700">${esc(elapsedLabel)}</span>
+          <span class="badge badge-gold mono">${esc(modeLabel)}</span>
+        </div>
+      </div>
+      <div class="analysis-stream-shimmer" data-analysis-shimmer ${hasStreamedText ? 'hidden' : ''} aria-hidden="true">
+        <div class="analysis-stream-shimmer-bar"></div>
+      </div>
+      <div class="analysis-stream-output md-report" data-analysis-stream-output ${hasStreamedText ? '' : 'hidden'}>${
+        hasStreamedText ? renderMarkdownSafe(streamedText) : ''
+      }</div>
+    </div>
+  `;
+}
+
 function renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast = true }) {
   const pct = Math.max(8, Math.min(99, Number(jobStatus?.percent || 14)));
   const activeStep = Math.max(1, Math.min(3, Number(jobStatus?.stepIdx || 1)));
@@ -1117,7 +1156,8 @@ function renderDeepAnalysisRunner({
   passkeyBusy = false
 }) {
   const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
-  const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs, appData });
+  const analysisMode = userPrefs?.analysisMode === 'deep' ? 'deep' : 'fast';
+  const waitEst = estimateGenerationWait({ kind: 'analysis', mode: analysisMode, prefs: userPrefs, appData });
   const isAnalysisBusy = Boolean(jobStatus?.active && (!jobStatus.kind || jobStatus.kind === 'analysis'));
   const analysisError =
     !jobStatus?.active && (!jobStatus?.kind || jobStatus?.kind === 'analysis') ? jobStatus?.error : '';
@@ -1202,9 +1242,23 @@ function renderDeepAnalysisRunner({
 
       ${
         isAnalysisBusy
-          ? renderJobProcessingBanner({ jobStatus, waitEst, modelInfo, isPodcast: false })
-          : `<div class="est-wait-hint" data-est-wait-preview="analysis">
-               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span>${esc(waitEst.summaryText)}</span></span>
+          ? renderAnalysisLiveBox({ jobStatus, waitEst })
+          : `<div class="est-wait-hint est-wait-analysis-bar" data-est-wait-preview="analysis">
+               <span class="inline-icon-meta">${iconSvg('clock', 12)}<span data-analysis-est-text>${esc(waitEst.summaryText)}</span></span>
+               <div class="analysis-mode-pill" role="group" aria-label="Analysis speed and depth mode" data-analysis-mode-toggle>
+                 <button type="button"
+                         class="analysis-mode-opt ${analysisMode === 'fast' ? 'active' : ''}"
+                         data-action="set-analysis-mode"
+                         data-analysis-mode="fast"
+                         aria-pressed="${analysisMode === 'fast' ? 'true' : 'false'}"
+                         title="Fast streaming analysis (~5–14 sec)">Fast</button>
+                 <button type="button"
+                         class="analysis-mode-opt ${analysisMode === 'deep' ? 'active' : ''}"
+                         data-action="set-analysis-mode"
+                         data-analysis-mode="deep"
+                         aria-pressed="${analysisMode === 'deep' ? 'true' : 'false'}"
+                         title="Deep high-thinking analysis + live web search (~18–35 sec)">Deep</button>
+               </div>
              </div>`
       }
       ${
@@ -1215,7 +1269,15 @@ function renderDeepAnalysisRunner({
 
       <button type="button" class="btn-primary" style="width:100%" data-action="run-deep-analysis" ${isAnalysisBusy ? 'disabled' : ''}>
         ${isAnalysisBusy ? iconSvg('loader', 15, 'btn-spin-icon') : iconSvg('sparkles', 15)}
-        <span>${isAnalysisBusy ? 'Running Deep Research & Scouting Analysis…' : 'Run Deep Analysis'}</span>
+        <span data-analysis-run-label>${
+          isAnalysisBusy
+            ? analysisMode === 'deep'
+              ? 'Running Deep Analysis…'
+              : 'Analyzing…'
+            : analysisMode === 'deep'
+              ? 'Run Deep Analysis'
+              : 'Run Analysis'
+        }</span>
       </button>
     </section>
 

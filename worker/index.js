@@ -2386,10 +2386,12 @@ export default {
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
-      const requestedThinkingLevel =
-        String(body.thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL).trim().toUpperCase() === 'XHIGH'
-          ? 'XHIGH'
-          : 'HIGH';
+      const rawThinkingLevel = String(body.thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL)
+        .trim()
+        .toUpperCase();
+      const requestedThinkingLevel = ['XHIGH', 'HIGH', 'MEDIUM', 'LOW'].includes(rawThinkingLevel)
+        ? rawThinkingLevel
+        : 'HIGH';
       let modelUsed = DEFAULT_FREE_MODEL_CASCADE[0];
       let resolvedThinkingLevel = null;
       let verifiedPasses = 1;

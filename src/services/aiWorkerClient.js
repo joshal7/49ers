@@ -23,8 +23,10 @@
 import {
   buildLiveGroundingSystemPrompt,
   buildAuthoritativeLiveContextSnapshot,
+  buildDeduplicatedAnalysisContext,
   buildBalancedLeagueComparisonBlock,
   describeSpreadCalibration,
+  getDisallowedFormerPlayers,
   sanitizeHallucinatedRosterText
 } from '../engine/groundingValidator.js';
 import {
@@ -45,6 +47,7 @@ import {
 } from '../engine/breakingClassifier.js';
 import { formatCompletedGameRecapForPrompt } from '../engine/gameDayRosterEngine.js';
 import {
+  ALL_NFL_TEAMS,
   getActiveTeamConfig,
   getTeamCoaches,
   hasCrossTeam49ersLeak,
@@ -77,6 +80,7 @@ import {
   PRIMARY_GEMINI_REASONING_MODEL,
   PRIMARY_GEMINI_THINKING_LEVEL,
   LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL,
+  FAST_ANALYSIS_GEMINI_THINKING_LEVEL,
   DEFAULT_BEST_REASONING_CASCADE,
   DEFAULT_NOTEBOOKLM_TTS_CASCADE,
   NOTEBOOKLM_VOICE_PROFILES,
@@ -87,6 +91,8 @@ import {
   buildGeminiThinkingConfig,
   getDeepAnalysisStage2SystemPrompt,
   buildStage2AnalysisSynthesisPrompt,
+  buildCompactAnalysisSystemPrompt,
+  buildCompactAnalysisUserPrompt,
   getNotebookLmStage2SystemPrompt,
   buildStage2NotebookLmScriptPrompt,
   buildNotebookLmTtsDirectorHeader,
@@ -262,16 +268,22 @@ export function resolveActiveHighQualityModelLabel(appData = null, prefs = null)
 export function estimateGenerationWait({
   kind = 'podcast',
   durationMinutes = 3,
+  mode = null,
   prefs = {}
 } = {}) {
   const isCloud = hasLiveAiConnection(prefs);
 
   if (kind === 'analysis') {
-    const minSec = 15;
-    const maxSec = 40;
-    const rangeLabel = '15–40 sec';
+    const resolvedMode =
+      String(mode || prefs?.analysisMode || 'fast').trim().toLowerCase() === 'deep'
+        ? 'deep'
+        : 'fast';
+    const minSec = resolvedMode === 'deep' ? 18 : 5;
+    const maxSec = resolvedMode === 'deep' ? 35 : 14;
+    const rangeLabel = resolvedMode === 'deep' ? '18–35 sec' : '5–14 sec';
     return {
       isCloud,
+      mode: resolvedMode,
       minSec,
       maxSec,
       rangeLabel,
@@ -763,6 +775,391 @@ async function callGeminiDirectWithCascade({
   } catch {}
   throw new Error(
     `Gemini High-Thinking request failed (HTTP ${lastStatus}): ${String(parsedMsg || 'Service unavailable').slice(0, 220)}`
+  );
+}
+
+const NON_PERSON_CAPITALIZED_PHRASES = new Set([
+  'wide receiver', 'wide receivers', 'tight end', 'tight ends', 'running back', 'running backs',
+  'offensive line', 'defensive line', 'special teams', 'pass rush', 'play action', 'red zone',
+  'third down', 'fourth down', 'first down', 'super bowl', 'pro bowl', 'all pro', 'salary cap',
+  'cap space', 'dead money', 'post june', 'article thirteen', 'next gen', 'draft pick',
+  'trade deadline', 'free agency', 'free agent', 'practice squad', 'injured reserve',
+  'first round', 'second round', 'third round', 'fourth round', 'depth chart', 'snap share',
+  'target share', 'power rankings', 'playoff odds', 'monte carlo', 'nfc west', 'nfc north',
+  'nfc south', 'nfc east', 'afc west', 'afc north', 'afc south', 'afc east', 'over the',
+  'the cap', 'deep dive', 'scouting breakdown', 'game plan', 'matchup preview', 'wide nine',
+  'cover three', 'cover two', 'cover four', 'two high', 'single high', 'man coverage'
+]);
+
+/**
+ * Decides whether an On-Demand AI Analysis query genuinely needs live `google_search` grounding:
+ * - In `deep` mode: always true.
+ * - In `fast` mode: true ONLY when the prompt asks about recency/breaking news/rumors, external NFL
+ *   draft/free-agency/trade markets, another non-upcoming NFL club, or a named person not already
+ *   present in the team's live roster/coaches/upcoming-opponent snapshot.
+ */
+export function shouldUseGoogleSearchForAnalysis(rawQuestion = '', appData = null, mode = 'fast') {
+  if (String(mode || 'fast').trim().toLowerCase() === 'deep') {
+    return true;
+  }
+  const q = String(rawQuestion || '').trim();
+  if (!q) return false;
+  const qLower = q.toLowerCase();
+
+  // 1. Explicit breaking/recency/rumor/external-market cues
+  if (
+    /\b(latest|today|tonight|yesterday|breaking|just\s+happened|rumors?|reported|reports?|press\s+conference|presser|interview|quote|signed|signing|waived|waiver|claimed|suspension|suspended|arrest|fine|hearing|weather|forecast|referee|officiating|announcer|tv\s+broadcast)\b/i.test(
+      qLower
+    )
+  ) {
+    return true;
+  }
+  if (
+    /\b(free\s+agen(?:t|cy)|trade\s+target|trade\s+candidate|mock\s+draft|prospect|combine|college|ncaa|nfl\s+draft|around\s+the\s+league|other\s+teams?|mvp|all-?pro|pro\s+bowl|line\s+movement)\b/i.test(
+      qLower
+    )
+  ) {
+    return true;
+  }
+
+  // 2. Mentions an NFL club that is NEITHER the active team NOR its immediate upcoming opponent
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || appData?.meta?.teamSlug || getActiveTeamConfig());
+  const oppAbbr = String(appData?.scheduleMatchup?.upcomingMatchup?.oppAbbr || '').toUpperCase();
+  const oppNameLower = String(appData?.scheduleMatchup?.upcomingMatchup?.oppName || '').toLowerCase();
+  for (const t of ALL_NFL_TEAMS) {
+    if (t.abbr === activeTeam.abbr || (oppAbbr && t.abbr === oppAbbr)) continue;
+    const nickLower = String(t.nickname || '').toLowerCase();
+    const cityLower = String(t.city || '').toLowerCase();
+    if (nickLower && oppNameLower.includes(nickLower)) continue;
+    if (nickLower && new RegExp(`\\b${nickLower}\\b`, 'i').test(qLower)) return true;
+    if (cityLower && cityLower.length >= 5 && new RegExp(`\\b${cityLower}\\b`, 'i').test(qLower)) return true;
+  }
+
+  // 3. Capitalized "First Last" name not already present in the live snapshot (roster, coaches, upcoming opponent stars)
+  const knownTextParts = [
+    activeTeam.fullName,
+    activeTeam.city,
+    activeTeam.nickname,
+    appData?.scheduleMatchup?.upcomingMatchup?.oppName || ''
+  ];
+  const coaches = getTeamCoaches(activeTeam, appData?.meta?.coaches);
+  for (const v of Object.values(coaches || {})) {
+    if (v) knownTextParts.push(String(v));
+  }
+  for (const p of appData?.roster?.players || []) {
+    if (p?.name) knownTextParts.push(p.name);
+  }
+  for (const p of appData?.roster?.departedPlayers || []) {
+    knownTextParts.push(typeof p === 'string' ? p : p?.name || '');
+  }
+  for (const p of appData?.scheduleMatchup?.upcomingMatchup?.opponentHealth?.keyStartersHealthy || []) {
+    if (p?.name) knownTextParts.push(p.name);
+  }
+  for (const p of appData?.scheduleMatchup?.upcomingMatchup?.opponentHealth?.injuryReport || []) {
+    if (p?.name) knownTextParts.push(p.name);
+  }
+  const knownHaystack = knownTextParts.join(' | ').toLowerCase();
+
+  const namePairs = q.match(/\b[A-Z][a-z']{2,}\s+[A-Z][a-z']{2,}\b/g) || [];
+  for (const pair of namePairs) {
+    const pairLower = pair.toLowerCase();
+    if (NON_PERSON_CAPITALIZED_PHRASES.has(pairLower)) continue;
+    if (!knownHaystack.includes(pairLower)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function readGeminiSseResponse(res, { onTextChunk, modelUsed, thinkingLevelUsed } = {}) {
+  const ct = String(res?.headers?.get?.('content-type') || '').toLowerCase();
+  // Graceful fallback if endpoint returned standard JSON instead of text/event-stream
+  if (!ct.includes('text/event-stream') || !res.body || typeof res.body.getReader !== 'function') {
+    const json = await parseJsonResponseOrThrow(res);
+    const text = extractGeminiResponseText(json);
+    const groundingChips = extractGroundingSourceChips(json);
+    if (text) onTextChunk?.(text, { modelUsed, thinkingLevelUsed });
+    return { text, groundingChips };
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder('utf-8');
+  let buffer = '';
+  let accumulatedText = '';
+  let fallbackThoughtText = '';
+  const groundingMap = new Map();
+
+  const processEventData = rawData => {
+    const trimmed = String(rawData || '').trim();
+    if (!trimmed || trimmed === '[DONE]') return;
+    let parsed;
+    try {
+      parsed = JSON.parse(trimmed);
+    } catch {
+      return;
+    }
+    const parts = parsed?.candidates?.[0]?.content?.parts;
+    if (Array.isArray(parts)) {
+      let appended = false;
+      for (const p of parts) {
+        if (!p || typeof p.text !== 'string' || !p.text) continue;
+        if (p.thought) {
+          fallbackThoughtText += p.text;
+        } else {
+          accumulatedText += p.text;
+          appended = true;
+        }
+      }
+      if (appended && accumulatedText.trim()) {
+        onTextChunk?.(accumulatedText, { modelUsed, thinkingLevelUsed });
+      }
+    }
+    for (const chip of extractGroundingSourceChips(parsed)) {
+      const k = chip.url || chip.label;
+      if (k && !groundingMap.has(k) && groundingMap.size < 6) {
+        groundingMap.set(k, chip);
+      }
+    }
+  };
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    let newlineIdx;
+    while ((newlineIdx = buffer.indexOf('\n')) !== -1) {
+      const line = buffer.slice(0, newlineIdx).replace(/\r$/, '');
+      buffer = buffer.slice(newlineIdx + 1);
+      if (line.startsWith('data:')) {
+        processEventData(line.slice(5));
+      }
+    }
+  }
+  buffer += decoder.decode();
+  if (buffer.trim()) {
+    for (const line of buffer.split(/\r?\n/)) {
+      if (line.startsWith('data:')) {
+        processEventData(line.slice(5));
+      }
+    }
+  }
+
+  const finalText = (accumulatedText || fallbackThoughtText).trim();
+  return {
+    text: finalText,
+    groundingChips: Array.from(groundingMap.values())
+  };
+}
+
+/**
+ * Streaming variant of `callGeminiDirectWithCascade` using `:streamGenerateContent?alt=sse`
+ * for snappy time-to-first-token interactive AI Analysis, with automatic fallback to
+ * `:generateContent` on the same model if a proxy/mock does not expose `:streamGenerateContent`.
+ */
+async function callGeminiDirectStreamWithCascade({
+  apiBase,
+  key,
+  cascade,
+  systemInstructionText,
+  userText,
+  useGoogleSearch = false,
+  temperature = 0.2,
+  perAttemptTimeoutMs = 55000,
+  preferredThinkingLevel = FAST_ANALYSIS_GEMINI_THINKING_LEVEL,
+  onTextChunk = null
+}) {
+  let lastErrorText = '';
+  let lastStatus = 500;
+  let hasPrimaryModelError = false;
+
+  const cacheKey = `${apiBase}:${key}`;
+  const deadSet = getDailyDeadModelSet(unavailableModelsByKey, cacheKey);
+
+  const sanitizedCascade = [];
+  for (const rawModel of cascade || []) {
+    const cleanModel = sanitizeRetiredModelId(rawModel);
+    if (cleanModel && !deadSet.has(cleanModel) && !sanitizedCascade.includes(cleanModel)) {
+      sanitizedCascade.push(cleanModel);
+    }
+  }
+  for (const fb of LIVE_PRODUCTION_FALLBACK_CASCADE) {
+    if (!deadSet.has(fb) && !sanitizedCascade.includes(fb)) {
+      sanitizedCascade.push(fb);
+    }
+  }
+  if (sanitizedCascade.length === 0) {
+    throw new Error(
+      'Gemini request failed (HTTP 429): You exceeded your current quota, please check your plan and billing details.'
+    );
+  }
+
+  for (let i = 0; i < sanitizedCascade.length; i++) {
+    const model = sanitizedCascade[i];
+    const thinkingConfig = buildGeminiThinkingConfig(model, null, {
+      preferredThinkingLevel
+    });
+    let thinkingLevelUsed =
+      thinkingConfig?.thinkingLevel || resolveGeminiThinkingLevelLabel(model, preferredThinkingLevel);
+    const payload = {
+      systemInstruction: { parts: [{ text: systemInstructionText }] },
+      ...(useGoogleSearch ? { tools: [{ google_search: {} }] } : {}),
+      generationConfig: {
+        temperature,
+        thinkingConfig
+      },
+      contents: [{ role: 'user', parts: [{ text: userText }] }]
+    };
+
+    const streamUrl = `${apiBase}/models/${encodeURIComponent(model)}:streamGenerateContent?alt=sse&key=${encodeURIComponent(key)}`;
+    const nonStreamUrl = `${apiBase}/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+    let activeUrl = streamUrl;
+    let res;
+    try {
+      res = await fetchPostJsonWithTimeout(activeUrl, payload, perAttemptTimeoutMs);
+    } catch (netErr) {
+      lastStatus = 504;
+      lastErrorText = netErr?.message || 'Request timed out';
+      continue;
+    }
+
+    // If an endpoint/proxy does not expose `:streamGenerateContent` (404/405), fall back cleanly to `:generateContent` on the same model
+    if (res.status === 404 || res.status === 405) {
+      activeUrl = nonStreamUrl;
+      try {
+        res = await fetchPostJsonWithTimeout(activeUrl, payload, perAttemptTimeoutMs);
+      } catch (netErr) {
+        lastStatus = 504;
+        lastErrorText = netErr?.message || 'Request timed out';
+        continue;
+      }
+    }
+
+    let initialErrPreview = '';
+    if (res.status === 400 || res.status === 429) {
+      try {
+        initialErrPreview = await res.clone().text();
+      } catch {}
+    }
+
+    if (
+      useGoogleSearch &&
+      ((res.status === 400 && !/thinking|xhigh|medium/i.test(initialErrPreview)) ||
+        (res.status === 429 && !/limit:\s*0\b/i.test(initialErrPreview)))
+    ) {
+      const retryPayload = {
+        systemInstruction: { parts: [{ text: systemInstructionText }] },
+        generationConfig: {
+          temperature,
+          ...(res.status === 400 ? { thinkingConfig } : {})
+        },
+        contents: [{ role: 'user', parts: [{ text: userText }] }]
+      };
+      try {
+        res = await fetchPostJsonWithTimeout(activeUrl, retryPayload, perAttemptTimeoutMs);
+      } catch (retryErr) {
+        lastStatus = 504;
+        lastErrorText = retryErr?.message || 'Retry timed out';
+        continue;
+      }
+    }
+
+    if (res.status === 400) {
+      let errPreview = initialErrPreview;
+      if (!errPreview) {
+        try {
+          errPreview = await res.clone().text();
+        } catch {}
+      }
+      if (/thinking|xhigh|medium|invalid_argument/i.test(errPreview)) {
+        if (thinkingConfig?.thinkingLevel === 'XHIGH' || thinkingConfig?.thinkingLevel === 'MEDIUM') {
+          const highFallbackPayload = {
+            systemInstruction: { parts: [{ text: systemInstructionText }] },
+            ...(useGoogleSearch ? { tools: [{ google_search: {} }] } : {}),
+            generationConfig: {
+              temperature,
+              thinkingConfig: { thinkingLevel: 'HIGH' }
+            },
+            contents: [{ role: 'user', parts: [{ text: userText }] }]
+          };
+          try {
+            res = await fetchPostJsonWithTimeout(activeUrl, highFallbackPayload, perAttemptTimeoutMs);
+            if (res.ok) thinkingLevelUsed = 'HIGH';
+          } catch {}
+        }
+        if (res.status === 400) {
+          const dynamicPayload = {
+            systemInstruction: { parts: [{ text: systemInstructionText }] },
+            generationConfig: { temperature },
+            contents: [{ role: 'user', parts: [{ text: userText }] }]
+          };
+          try {
+            res = await fetchPostJsonWithTimeout(activeUrl, dynamicPayload, perAttemptTimeoutMs);
+          } catch {
+            continue;
+          }
+        }
+      }
+    }
+
+    if (res.ok) {
+      const streamed = await readGeminiSseResponse(res, {
+        onTextChunk,
+        modelUsed: model,
+        thinkingLevelUsed
+      });
+      if (streamed.text) {
+        const preservedOrder = sanitizedCascade.filter(m => !deadSet.has(m));
+        const finalCascade = preservedOrder.length > 0 ? preservedOrder : [model];
+        const existingState = discoveredCascadeByKey.get(cacheKey);
+        discoveredCascadeByKey.set(cacheKey, {
+          ok: true,
+          bestModel: finalCascade[0],
+          cascade: finalCascade,
+          ttsCascade: existingState?.ttsCascade || [...FAST_FALLBACK_TTS_CASCADE],
+          checkedAtMs: Date.now()
+        });
+        return {
+          text: streamed.text,
+          modelUsed: model,
+          thinkingLevelUsed,
+          groundingChips: streamed.groundingChips || []
+        };
+      }
+    } else {
+      let errText = '';
+      try {
+        errText = await res.text();
+      } catch {}
+
+      if (res.status === 401) {
+        throw new Error('Invalid Gemini API Key. Update your key in Audio & AI or Settings.');
+      }
+
+      if (isDailyOrHardModelExhaustion(res.status, errText)) {
+        deadSet.add(model);
+      }
+
+      if (!hasPrimaryModelError || res.status !== 404) {
+        lastStatus = res.status;
+        lastErrorText = errText;
+        if (res.status !== 404) {
+          hasPrimaryModelError = true;
+        }
+      }
+
+      if (![400, 403, 404, 429, 503].includes(res.status)) {
+        break;
+      }
+    }
+  }
+
+  let parsedMsg = lastErrorText;
+  try {
+    parsedMsg = JSON.parse(lastErrorText)?.error?.message || lastErrorText;
+  } catch {}
+  throw new Error(
+    `Gemini request failed (HTTP ${lastStatus}): ${String(parsedMsg || 'Service unavailable').slice(0, 220)}`
   );
 }
 
@@ -2048,7 +2445,8 @@ export async function runOnDemandDeepAnalysis({
   appData,
   prefs,
   onProgress,
-  thinkingLevel
+  thinkingLevel,
+  mode
 }) {
   const rawPrompt = String(prompt || '').trim();
   if (!rawPrompt) throw new Error('Please enter an analysis topic or question.');
@@ -2056,211 +2454,252 @@ export async function runOnDemandDeepAnalysis({
     throw createMissingGeminiKeyError();
   }
 
-  // Live user-waiting analysis defaults to Gemini 4 Hydrogen `HIGH` (~35–50% faster over compiled Stage-1 OverTheCap/EPA dossier)
-  const effectiveThinkingLevel =
-    String(thinkingLevel || LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL).trim().toUpperCase() === 'XHIGH'
-      ? 'XHIGH'
-      : 'HIGH';
+  const analysisMode =
+    String(mode || prefs?.analysisMode || 'fast').trim().toLowerCase() === 'deep'
+      ? 'deep'
+      : 'fast';
+  const explicitThinking = String(thinkingLevel || '').trim().toUpperCase();
+  const effectiveThinkingLevel = ['XHIGH', 'HIGH', 'MEDIUM', 'LOW'].includes(explicitThinking)
+    ? explicitThinking
+    : analysisMode === 'deep'
+      ? LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL
+      : FAST_ANALYSIS_GEMINI_THINKING_LEVEL;
 
   const cleanPrompt = normalizeDisplayTopic(rawPrompt) || rawPrompt;
-  const modelInfo = resolveActiveHighQualityModelLabel(appData, prefs);
-  const waitEst = estimateGenerationWait({ kind: 'analysis', prefs, appData });
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const waitEst = estimateGenerationWait({ kind: 'analysis', mode: analysisMode, prefs, appData });
   const rosterPlayers = appData?.roster?.players || [];
   const isTradeTopic = /\b(trade|deadline|seller|buyer|target|acquire|rental)\b/i.test(cleanPrompt);
-  const liveSnapshot = buildAuthoritativeLiveContextSnapshot(appData, {
-    compactForDossier: true,
-    includeTradeMatrix: isTradeTopic
-  });
-  const groundingRules = buildLiveGroundingSystemPrompt(appData);
+  const useGoogleSearch = shouldUseGoogleSearchForAnalysis(cleanPrompt, appData, analysisMode);
+  const modeBadge = analysisMode === 'deep' ? 'Deep' : 'Fast';
 
-  const tracker = createPipelineStageTracker({
-    kind: 'analysis',
-    stages: ANALYSIS_PIPELINE_STAGES,
-    allowAutoStage3: true,
-    topicLabel: cleanPrompt,
-    waitEst,
-    initialModelLabel: modelInfo.displayLabel,
-    onProgress
-  });
-  tracker.emitInitial();
+  const emitAnalysisProgress = ({
+    phase = 'thinking',
+    message = '',
+    subDetail = '',
+    streamedText = '',
+    modelLabel = modeBadge
+  } = {}) => {
+    onProgress?.({
+      kind: 'analysis',
+      mode: analysisMode,
+      phase,
+      useGoogleSearch,
+      estLabel: waitEst.estLabel,
+      summaryText: waitEst.summaryText,
+      modelLabel,
+      message:
+        message ||
+        (phase === 'streaming'
+          ? 'Streaming analysis…'
+          : analysisMode === 'deep'
+            ? 'Running deep analysis…'
+            : useGoogleSearch
+              ? 'Checking live context & web…'
+              : 'Analyzing…'),
+      subDetail,
+      streamedText
+    });
+  };
 
-  try {
-    // =========================================================================
-    // Cloud Worker Transport (`prefs.workerBaseUrl`)
-    // =========================================================================
-    const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
-    const activeTeamCloud = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
-    if (baseUrl) {
-      const liveSearchItems = await fetchLiveTopicSignals(cleanPrompt);
-      const dossier = compileDeepResearchDossier({
-        query: cleanPrompt,
-        appData,
-        liveSearchItems
-      });
+  emitAnalysisProgress({ phase: 'thinking' });
 
-      const res = await fetchWithTimeout(
-        `${baseUrl}/api/analyze?team=${encodeURIComponent(activeTeamCloud.abbr)}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Group-Passcode': prefs?.groupPasscode || ''
-          },
-          body: JSON.stringify({
-            teamAbbr: activeTeamCloud.abbr,
-            prompt: rawPrompt,
-            category: category || 'Deep Scouting & Cap Dive',
-            author: prefs?.authorName || activeTeamCloud.brandName,
-            deepResearchPass: false,
-            verifyPass: false,
-            thinkingLevel: effectiveThinkingLevel,
-            qualityPriority: 'accuracy_over_latency',
-            systemPrompt: groundingRules,
-            contextSummary: `${dossier.dossierSummaryText}\n\n${liveSnapshot}`
-          })
-        },
-        95000
-      );
-      const json = await parseJsonResponseOrThrow(res);
-      if (!res.ok) {
-        throw new Error(json.error || `Worker HTTP ${res.status}`);
-      }
-      await tracker.ensureMinimumVisualStageDwell(420);
-      tracker.enterStage2();
-      await tracker.ensureMinimumVisualStageDwell(800);
-      tracker.enterStage3({
-        msg: 'Step 3 of 3: Structuring verified scouting & cap report…',
-        detail: 'Cross-checking active 53-man roster & OverTheCap figures.'
-      });
-      if (json.item?.markdown) {
-        json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers, {
-          team: activeTeamCloud,
-          departedPlayers: appData?.roster?.departedPlayers || []
-        });
-      }
-      await tracker.ensureMinimumVisualStageDwell(1150);
-      tracker.complete(
-        'Step 3 of 3: Verified scouting & cap report ready!',
-        'Cross-checked zero retired/departed roster claims and saved to library.'
-      );
-      return json.item;
-    }
+  const disallowedSample = getDisallowedFormerPlayers(rosterPlayers, {
+    team: activeTeam,
+    departedPlayers: appData?.roster?.departedPlayers || []
+  })
+    .slice(0, 20)
+    .join(', ');
 
-    // =========================================================================
-    // Direct Browser Gemini High-Thinking Pipeline (`prefs.geminiApiKey`)
-    // =========================================================================
-    const [conn, liveSearchItems] = await Promise.all([
-      resolveDirectGeminiCascades(prefs),
-      fetchLiveTopicSignals(cleanPrompt)
-    ]);
-    const activeBadge = formatActiveModelBadge(conn.bestModel, 'Accuracy-First');
-    tracker.setModelLabel(activeBadge);
-
+  // =========================================================================
+  // Cloud Worker Transport (`prefs.workerBaseUrl`)
+  // =========================================================================
+  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  if (baseUrl) {
+    const liveSearchItems =
+      analysisMode === 'deep' ? await fetchLiveTopicSignals(cleanPrompt, activeTeam) : [];
     const dossier = compileDeepResearchDossier({
       query: cleanPrompt,
       appData,
       liveSearchItems
     });
+    const compactContext = buildDeduplicatedAnalysisContext({
+      appData,
+      dossier,
+      includeTradeMatrix: isTradeTopic,
+      mode: analysisMode
+    });
+    const compactSystem = buildCompactAnalysisSystemPrompt(activeTeam, {
+      coaches: appData?.meta?.coaches,
+      mode: analysisMode,
+      disallowedSample,
+      syncStamp: appData?.meta?.updatedAt || ''
+    });
 
-    let finalMarkdown = '';
-    let finalModel = conn.bestModel;
-    let synthThinkingLevel = null;
-    let groundingChips = [];
-
-    const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
-    try {
-      // Single focused High-Thinking + Google Search Grounding synthesis over compiled Stage-1 Dossier (~15–35s on Hydrogen HIGH)
-      const synthRes = await callGeminiDirectWithCascade({
-        apiBase: conn.apiBase,
-        key: conn.key,
-        cascade: conn.cascade,
-        systemInstructionText: `${getDeepAnalysisStage2SystemPrompt(activeTeam, appData?.meta?.coaches)}\n\n${groundingRules}`,
-        userText: buildStage2AnalysisSynthesisPrompt({
-          question: rawPrompt,
-          researchMemo: dossier.dossierSummaryText,
-          liveContextSnapshot: liveSnapshot,
-          team: activeTeam
-        }),
-        useGoogleSearch: true,
-        temperature: 0.2,
-        preferredThinkingLevel: effectiveThinkingLevel
-      });
-      if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
-        prefs.verifiedGeminiModel =
-          discoveredCascadeByKey.get(`${conn.apiBase}:${conn.key}`)?.bestModel || synthRes.modelUsed;
-      }
-      groundingChips = synthRes.groundingChips || [];
-      finalMarkdown = synthRes.text;
-      finalModel = synthRes.modelUsed;
-      synthThinkingLevel = synthRes.thinkingLevelUsed || null;
-
-      // Ensure fast/cached responses still step cleanly through Stage 2 -> Stage 3 without flashing in <1s
-      await tracker.ensureMinimumVisualStageDwell(420);
-      tracker.enterStage2();
-      await tracker.ensureMinimumVisualStageDwell(800);
-      tracker.enterStage3({
-        msg: 'Step 3 of 3: Adversarial fact-check & structuring final report…',
-        detail: 'Auditing every player bucket, OverTheCap figure, draft slot & sharpening prose clarity.',
-        badge: formatActiveModelBadge(finalModel, 'Accuracy-First')
-      });
-    } catch (err) {
-      if (!isGeminiQuotaExhaustedError(err)) {
-        throw err;
-      }
-      tracker.enterStage2(
-        'Step 2 of 3: Google AI Studio Free-Tier quota reached — running Deep Research & Cap Engine…',
-        'Synthesizing verified 88-player EPA, practice participation, OverTheCap & beat wire dossier.',
-        formatActiveModelBadge(conn.bestModel, 'Deep Dossier Engine')
-      );
-      finalMarkdown = buildDeepScoutingAnalysisMarkdown({
-        query: rawPrompt,
-        appData,
-        dossier
-      });
-      finalModel = `${conn.bestModel}-dossier-fallback`;
-      await tracker.ensureMinimumVisualStageDwell(750);
-      tracker.enterStage3({
-        msg: 'Step 3 of 3: Structuring verified scouting & cap report…',
-        detail: 'Completed 6-section All-22 & OverTheCap audit.'
+    const res = await fetchWithTimeout(
+      `${baseUrl}/api/analyze?team=${encodeURIComponent(activeTeam.abbr)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Group-Passcode': prefs?.groupPasscode || ''
+        },
+        body: JSON.stringify({
+          teamAbbr: activeTeam.abbr,
+          prompt: rawPrompt,
+          category: category || 'Scouting & Cap Analysis',
+          author: prefs?.authorName || activeTeam.brandName,
+          deepResearchPass: false,
+          verifyPass: false,
+          mode: analysisMode,
+          thinkingLevel: effectiveThinkingLevel,
+          qualityPriority: analysisMode === 'deep' ? 'accuracy_over_latency' : 'balanced_speed',
+          systemPrompt: compactSystem,
+          contextSummary: compactContext
+        })
+      },
+      95000
+    );
+    const json = await parseJsonResponseOrThrow(res);
+    if (!res.ok) {
+      throw new Error(json.error || `Worker HTTP ${res.status}`);
+    }
+    if (json.item?.markdown) {
+      json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers, {
+        team: activeTeam,
+        departedPlayers: appData?.roster?.departedPlayers || []
       });
     }
-
-    const verifiedMarkdown = sanitizeHallucinatedRosterText(finalMarkdown, rosterPlayers, {
-      team: activeTeam,
-      departedPlayers: appData?.roster?.departedPlayers || []
-    });
-    await tracker.ensureMinimumVisualStageDwell(1150);
-    tracker.complete(
-      'Step 3 of 3: Verified scouting & cap report ready!',
-      'Completed All-22 film, EPA & CBA cap audit.'
-    );
-
-    const sourcesCited = [
-      ...groundingChips,
-      { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
-      { label: `OverTheCap ${activeTeam.nickname} Cap`, url: `https://overthecap.com/salary-cap/${activeTeam.otcSlug}` },
-      { label: `ESPN ${activeTeam.nickname} Coverage`, url: `https://www.espn.com/nfl/team/_/name/${activeTeam.espnAbbr}/${activeTeam.otcSlug}` }
-    ].slice(0, 6);
-
-    return {
-      id: `local_analysis_${Date.now()}`,
-      title: rawPrompt,
-      category: dossier.primaryGroup?.label
-        ? `${dossier.primaryGroup.label} Deep Dive`
-        : category || 'Deep Scouting & Cap Synthesis',
-      modelUsed: finalModel,
-      thinkingLevel:
-        synthThinkingLevel || resolveGeminiThinkingLevelLabel(finalModel, effectiveThinkingLevel),
-      qualityPriority: 'accuracy_over_latency',
-      verifiedPasses: 3,
-      createdAt: new Date().toISOString(),
-      createdBy: prefs?.authorName || 'Josh',
-      sourcesCited,
-      markdown: verifiedMarkdown
-    };
-  } finally {
-    tracker.stop();
+    emitAnalysisProgress({ phase: 'done', message: 'Analysis ready!' });
+    return json.item;
   }
+
+  // =========================================================================
+  // Direct Browser Gemini Streaming Pipeline (`prefs.geminiApiKey`)
+  // =========================================================================
+  // Fast mode uses already-hydrated live wire synchronously (0ms pre-flight network stall);
+  // Deep mode augments with parallel Bluesky/ESPN topic search.
+  const [conn, liveSearchItems] =
+    analysisMode === 'deep'
+      ? await Promise.all([
+          resolveDirectGeminiCascades(prefs),
+          fetchLiveTopicSignals(cleanPrompt, activeTeam)
+        ])
+      : [await resolveDirectGeminiCascades(prefs), []];
+
+  const dossier = compileDeepResearchDossier({
+    query: cleanPrompt,
+    appData,
+    liveSearchItems
+  });
+  const compactContext = buildDeduplicatedAnalysisContext({
+    appData,
+    dossier,
+    includeTradeMatrix: isTradeTopic,
+    mode: analysisMode
+  });
+  const compactSystemPrompt = buildCompactAnalysisSystemPrompt(activeTeam, {
+    coaches: appData?.meta?.coaches,
+    mode: analysisMode,
+    disallowedSample,
+    syncStamp: appData?.meta?.updatedAt || ''
+  });
+  const compactUserPrompt = buildCompactAnalysisUserPrompt({
+    question: rawPrompt,
+    contextBlock: compactContext,
+    mode: analysisMode,
+    useGoogleSearch,
+    team: activeTeam
+  });
+
+  let finalMarkdown = '';
+  let finalModel = conn.bestModel;
+  let synthThinkingLevel = null;
+  let groundingChips = [];
+
+  try {
+    let lastStreamEmitMs = 0;
+    const synthRes = await callGeminiDirectStreamWithCascade({
+      apiBase: conn.apiBase,
+      key: conn.key,
+      cascade: conn.cascade,
+      systemInstructionText: compactSystemPrompt,
+      userText: compactUserPrompt,
+      useGoogleSearch,
+      temperature: 0.2,
+      preferredThinkingLevel: effectiveThinkingLevel,
+      onTextChunk: partialText => {
+        const nowMs = Date.now();
+        if (nowMs - lastStreamEmitMs >= 75 || partialText.length < 180) {
+          lastStreamEmitMs = nowMs;
+          emitAnalysisProgress({
+            phase: 'streaming',
+            message: 'Streaming analysis…',
+            streamedText: partialText
+          });
+        }
+      }
+    });
+    if (prefs && typeof prefs === 'object' && synthRes.modelUsed) {
+      prefs.verifiedGeminiModel =
+        discoveredCascadeByKey.get(`${conn.apiBase}:${conn.key}`)?.bestModel || synthRes.modelUsed;
+    }
+    groundingChips = synthRes.groundingChips || [];
+    finalMarkdown = synthRes.text;
+    finalModel = synthRes.modelUsed;
+    synthThinkingLevel = synthRes.thinkingLevelUsed || null;
+  } catch (err) {
+    if (!isGeminiQuotaExhaustedError(err)) {
+      throw err;
+    }
+    emitAnalysisProgress({
+      phase: 'thinking',
+      message: 'Quota reached — compiling local verified dossier…',
+      modelLabel: 'Dossier Engine'
+    });
+    finalMarkdown = buildDeepScoutingAnalysisMarkdown({
+      query: rawPrompt,
+      appData,
+      dossier
+    });
+    finalModel = `${conn.bestModel}-dossier-fallback`;
+  }
+
+  const verifiedMarkdown = sanitizeHallucinatedRosterText(finalMarkdown, rosterPlayers, {
+    team: activeTeam,
+    departedPlayers: appData?.roster?.departedPlayers || []
+  });
+  emitAnalysisProgress({
+    phase: 'done',
+    message: 'Analysis ready!',
+    streamedText: verifiedMarkdown
+  });
+
+  const sourcesCited = [
+    ...groundingChips,
+    { label: 'nflverse 2026 Play-by-Play', url: 'https://github.com/nflverse/nflverse-data/releases' },
+    { label: `OverTheCap ${activeTeam.nickname} Cap`, url: `https://overthecap.com/salary-cap/${activeTeam.otcSlug}` },
+    { label: `ESPN ${activeTeam.nickname} Coverage`, url: `https://www.espn.com/nfl/team/_/name/${activeTeam.espnAbbr}/${activeTeam.otcSlug}` }
+  ].slice(0, 6);
+
+  return {
+    id: `local_analysis_${Date.now()}`,
+    title: rawPrompt,
+    category: dossier.primaryGroup?.label
+      ? `${dossier.primaryGroup.label} ${analysisMode === 'deep' ? 'Deep Dive' : 'Analysis'}`
+      : category || (analysisMode === 'deep' ? 'Deep Scouting & Cap Synthesis' : 'Scouting & Cap Analysis'),
+    modelUsed: finalModel,
+    analysisMode,
+    useGoogleSearch,
+    thinkingLevel:
+      synthThinkingLevel || resolveGeminiThinkingLevelLabel(finalModel, effectiveThinkingLevel),
+    qualityPriority: analysisMode === 'deep' ? 'accuracy_over_latency' : 'balanced_speed',
+    verifiedPasses: 1,
+    createdAt: new Date().toISOString(),
+    createdBy: prefs?.authorName || 'Josh',
+    sourcesCited,
+    markdown: verifiedMarkdown
+  };
 }
 
 export async function generateOnDemandAutopodcast({

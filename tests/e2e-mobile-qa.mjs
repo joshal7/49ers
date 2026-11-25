@@ -370,7 +370,12 @@ function startStaticServer(port) {
         return;
       }
 
-      if (urlPath.startsWith('/v1beta/models/') && urlPath.endsWith(':generateContent') && req.method === 'POST') {
+      if (
+        urlPath.startsWith('/v1beta/models/') &&
+        (urlPath.endsWith(':generateContent') || urlPath.endsWith(':streamGenerateContent')) &&
+        req.method === 'POST'
+      ) {
+        const isSseStream = urlPath.endsWith(':streamGenerateContent');
         let rawBody = '';
         req.on('data', chunk => {
           rawBody += chunk;
@@ -550,7 +555,7 @@ function startStaticServer(port) {
 
           // Extract user question for tailored response (including retired Bryce Huff check & XSS escaping check)
           const qMatch =
-            userPrompt.match(/USER(?:'S EXACT QUESTION| TOPIC \/ QUESTION TO INVESTIGATE IN DEPTH):\s*"([^"]+)"/) ||
+            userPrompt.match(/(?:USER(?:'S EXACT QUESTION| TOPIC \/ QUESTION TO INVESTIGATE IN DEPTH)|QUESTION):\s*"([^"]+)"/) ||
             userPrompt.match(/specifically answer "([^"]+)"/);
           const extractedQ = qMatch ? qMatch[1] : userPrompt.slice(0, 180);
 
@@ -570,6 +575,50 @@ With **Brandon Aiyuk** on season-ending IR and **Mike Evans** rehabbing on IR, K
 * San Francisco's active 2026 defensive end rotation under DC Raheem Morris features **Nick Bosa**, **Keion White**, and **Mykel Williams** alongside interior trade acquisition **DeForest Buckner**.`;
           } else if (extractedQ.includes('<img') || extractedQ.includes('<script') || userPrompt.includes('<img src=x')) {
             mdText = `### Security Escaping Audit: <img src=x onerror="window.__xssTriggered=true"><script>window.__xssTriggered=true</script>\n* **Brock Purdy** posts elite efficiency against two-high shells while preserving **$35.16M** in 2026 Article 13 rollover.`;
+          }
+
+          if (isSseStream) {
+            res.writeHead(200, {
+              'Content-Type': 'text/event-stream; charset=utf-8',
+              'Cache-Control': 'no-store'
+            });
+            const split1 = Math.max(40, Math.floor(mdText.length * 0.35));
+            const split2 = Math.max(split1 + 40, Math.floor(mdText.length * 0.72));
+            const chunks = [mdText.slice(0, split1), mdText.slice(split1, split2), mdText.slice(split2)];
+            res.write(
+              `data: ${JSON.stringify({
+                candidates: [{ content: { parts: [{ thought: true, text: 'Focused scouting synthesis...' }] } }]
+              })}\n\n`
+            );
+            for (let ci = 0; ci < chunks.length; ci++) {
+              await new Promise(r => setTimeout(r, 110));
+              const isLast = ci === chunks.length - 1;
+              res.write(
+                `data: ${JSON.stringify({
+                  candidates: [
+                    {
+                      content: { parts: [{ text: chunks[ci] }] },
+                      ...(isLast
+                        ? {
+                            groundingMetadata: {
+                              groundingChunks: [
+                                {
+                                  web: {
+                                    title: 'OverTheCap 49ers Salary Cap',
+                                    uri: 'https://overthecap.com/salary-cap/san-francisco-49ers'
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        : {})
+                    }
+                  ]
+                })}\n\n`
+              );
+            }
+            res.end();
+            return;
           }
 
           res.writeHead(200, {
@@ -4057,41 +4106,67 @@ async function main() {
 
       const beforeReportCount = await cdp.eval(() => document.querySelectorAll('#mainView article.brief-card').length);
       const analysisProgress = await cdp.eval(async () => {
-        const preHint = document.querySelector('[data-est-wait-preview="analysis"]')?.textContent?.trim() || '';
+        const previewBar = document.querySelector('[data-est-wait-preview="analysis"]');
+        const fastEst = previewBar?.querySelector('[data-analysis-est-text]')?.textContent?.trim() || '';
+        const estRect = previewBar?.querySelector('[data-analysis-est-text]')?.getBoundingClientRect();
+        const pillRect = previewBar?.querySelector('[data-analysis-mode-toggle]')?.getBoundingClientRect();
+        const singleRowToggle =
+          Boolean(estRect && pillRect) && Math.abs((estRect.top + estRect.bottom) / 2 - (pillRect.top + pillRect.bottom) / 2) <= 8;
+
+        // Toggle Fast -> Deep -> Fast inline without adding a row
+        previewBar?.querySelector('[data-action="set-analysis-mode"][data-analysis-mode="deep"]')?.click();
+        const deepEst = previewBar?.querySelector('[data-analysis-est-text]')?.textContent?.trim() || '';
+        const deepBtnText = document.querySelector('[data-analysis-run-label]')?.textContent?.trim() || '';
+        previewBar?.querySelector('[data-action="set-analysis-mode"][data-analysis-mode="fast"]')?.click();
+        const fastEstBack = previewBar?.querySelector('[data-analysis-est-text]')?.textContent?.trim() || '';
+
         const area = document.getElementById('analysisPromptInput');
         area.value = 'wide recievers';
         area.dispatchEvent(new Event('input', { bubbles: true }));
         document.querySelector('[data-action="run-deep-analysis"]').click();
-        await new Promise(r => setTimeout(r, 140));
+        await new Promise(r => setTimeout(r, 120));
         const banner = document.querySelector('[data-job-progress="active"]');
-        const stageLabels = Array.from(banner?.querySelectorAll('.job-stage-label') || []).map(el =>
-          el.textContent.trim()
-        );
         const stageBarsCount = banner?.querySelectorAll('[data-stage-bar]')?.length || 0;
-        const stageStatuses = Array.from(banner?.querySelectorAll('[data-stage-status]') || []).map(el =>
-          el.textContent.trim()
-        );
+        const isStreamBox = Boolean(banner?.hasAttribute('data-analysis-stream-box'));
+        let sawStreamedPreview = false;
+        const t0 = Date.now();
+        while (Date.now() - t0 < 2500) {
+          const outEl = document.querySelector('[data-analysis-stream-output]');
+          if (outEl && !outEl.hidden && outEl.textContent.trim().length > 20) {
+            sawStreamedPreview = true;
+            break;
+          }
+          if (!document.querySelector('[data-job-progress="active"]')) break;
+          await new Promise(r => setTimeout(r, 60));
+        }
         return {
-          preHint,
+          fastEst,
+          deepEst,
+          deepBtnText,
+          fastEstBack,
+          singleRowToggle,
           hasBanner: Boolean(banner),
-          stageLabels,
+          isStreamBox,
           stageBarsCount,
-          stageStatuses,
+          sawStreamedPreview,
           bannerText: banner?.textContent || '',
           hasSpinner: Boolean(banner?.querySelector('.job-spinner-ring'))
         };
       });
       assert(
-        analysisProgress.preHint === 'Est. 15–40 sec' &&
+        analysisProgress.fastEst === 'Est. 5–14 sec' &&
+          analysisProgress.deepEst === 'Est. 18–35 sec' &&
+          analysisProgress.deepBtnText === 'Run Deep Analysis' &&
+          analysisProgress.fastEstBack === 'Est. 5–14 sec' &&
+          analysisProgress.singleRowToggle &&
           analysisProgress.hasBanner &&
+          analysisProgress.isStreamBox &&
           analysisProgress.hasSpinner &&
-          analysisProgress.stageLabels.length === 3 &&
-          analysisProgress.stageBarsCount === 3 &&
-          analysisProgress.stageStatuses.length === 3 &&
-          analysisProgress.bannerText.includes('Est. wait:') &&
+          analysisProgress.stageBarsCount === 0 &&
+          analysisProgress.sawStreamedPreview &&
           !analysisProgress.bannerText.includes('Gemini 3.8') &&
           !analysisProgress.bannerText.includes('Gemini 4'),
-        `Analysis 3-stage wait bar / estimate check failed: ${JSON.stringify(analysisProgress)}`
+        `Analysis Fast/Deep single-row pill & streaming box check failed: ${JSON.stringify(analysisProgress)}`
       );
 
       await cdp.waitFor(
@@ -4101,14 +4176,16 @@ async function main() {
       );
       const latestAnalysisReq = mockGeminiRequests
         .filter(r => {
-          if (!r.urlPath.includes('gemini-4-hydrogen:generateContent')) return false;
+          if (!/gemini-4-hydrogen:(?:streamGenerateContent|generateContent)/.test(r.urlPath)) return false;
           const txt = String(r.body?.contents?.[0]?.parts?.[0]?.text || '');
           return !/DAILY_TOP_NEWS_BRIEF_JSON|coachingMatchup|keyMatchupsMatrix/i.test(txt);
         })
         .at(-1);
       assert(
-        latestAnalysisReq?.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH',
-        `Live AI Analysis request must send Gemini 4 Hydrogen thinkingLevel: "HIGH", got: ${JSON.stringify(latestAnalysisReq?.body?.generationConfig?.thinkingConfig)}`
+        latestAnalysisReq?.urlPath?.includes(':streamGenerateContent') &&
+          latestAnalysisReq?.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'MEDIUM' &&
+          !latestAnalysisReq?.body?.tools,
+        `Fast AI Analysis must stream on Gemini 4 Hydrogen with thinkingLevel: "MEDIUM" & smart-off google_search for in-snapshot WR query, got: ${JSON.stringify({ urlPath: latestAnalysisReq?.urlPath, thinkingConfig: latestAnalysisReq?.body?.generationConfig?.thinkingConfig, tools: latestAnalysisReq?.body?.tools })}`
       );
 
       // Verify Share icon + Delete-only lifecycle on AI Analysis report card (zero Archive controls)
@@ -6404,23 +6481,35 @@ async function main() {
           .filter(el => el.scrollWidth > el.clientWidth + 1)
           .map(el => `${el.className}: "${el.textContent.trim()}" (${el.scrollWidth}>${el.clientWidth})`);
 
-        // Observe all 3 pipeline steps actually transition 1 -> 2 -> 3 during Deep Analysis in browser
+        // Verify single-row Fast/Deep pill toggle & lightweight streaming box (0 stacked wait bars) at 360px
         document.querySelector('[data-nav-tab="audio"]').click();
         document.querySelector('[data-action="set-studio-sub"][data-studio-sub="analysis"]').click();
+        const bar360 = document.querySelector('[data-est-wait-preview="analysis"]');
+        const estRect360 = bar360?.querySelector('[data-analysis-est-text]')?.getBoundingClientRect();
+        const pillRect360 = bar360?.querySelector('[data-analysis-mode-toggle]')?.getBoundingClientRect();
+        const singleRowAt360 =
+          Boolean(estRect360 && pillRect360) &&
+          Math.abs((estRect360.top + estRect360.bottom) / 2 - (pillRect360.top + pillRect360.bottom) / 2) <= 8 &&
+          (bar360?.scrollWidth || 0) <= (bar360?.clientWidth || 0) + 1;
+
         const area = document.getElementById('analysisPromptInput');
         area.value = 'Keenan Allen slot option routes and cap fit';
         area.dispatchEvent(new Event('input', { bubbles: true }));
 
-        const seenSteps = new Set();
+        let sawStreamBox = false;
+        let sawZeroStageBars = false;
         const obs = setInterval(() => {
-          const cur = document.querySelector('[data-job-progress="active"] .job-stage-row.current');
-          if (cur) seenSteps.add(Number(cur.getAttribute('data-pipeline-step')));
-        }, 80);
+          const box = document.querySelector('[data-job-progress="active"][data-analysis-stream-box="true"]');
+          if (box) {
+            sawStreamBox = true;
+            if (box.querySelectorAll('[data-stage-bar]').length === 0) sawZeroStageBars = true;
+          }
+        }, 60);
         document.querySelector('[data-action="run-deep-analysis"]').click();
         const t0 = Date.now();
         while (Date.now() - t0 < 8000) {
           await new Promise(r => setTimeout(r, 80));
-          if (!document.querySelector('[data-job-progress="active"]') && seenSteps.size > 0) break;
+          if (!document.querySelector('[data-job-progress="active"]') && sawStreamBox) break;
         }
         clearInterval(obs);
 
@@ -6428,7 +6517,9 @@ async function main() {
         document.querySelector('[data-nav-tab="home"]').click();
         return {
           clippedAt360,
-          seenSteps: [...seenSteps].sort((a, b) => a - b)
+          singleRowAt360,
+          sawStreamBox,
+          sawZeroStageBars
         };
       });
 
@@ -6437,8 +6528,8 @@ async function main() {
         `Opponent 4-card scorecard clipped text at 360px: ${JSON.stringify(audit360.clippedAt360)}`
       );
       assert(
-        JSON.stringify(audit360.seenSteps) === JSON.stringify([1, 2, 3]),
-        `Expected Deep Analysis progress banner to visibly visit all 3 steps [1,2,3], saw ${JSON.stringify(audit360.seenSteps)}`
+        audit360.singleRowAt360 && audit360.sawStreamBox && audit360.sawZeroStageBars,
+        `Expected single-row Fast/Deep pill & single-box streaming UI at 360px, saw ${JSON.stringify(audit360)}`
       );
     });
 

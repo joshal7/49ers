@@ -28,6 +28,7 @@ import { ALL_NFL_TEAMS, getActiveTeamConfig, getTeamCoaches, resolveTeamConfig }
 export const PRIMARY_GEMINI_REASONING_MODEL = 'gemini-4-hydrogen';
 export const PRIMARY_GEMINI_THINKING_LEVEL = 'XHIGH';
 export const LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL = 'HIGH';
+export const FAST_ANALYSIS_GEMINI_THINKING_LEVEL = 'MEDIUM';
 
 /**
  * Ordered default cascade prioritizing `gemini-4-hydrogen` (`Gemini 4 Hydrogen` at maximum
@@ -576,6 +577,73 @@ ${researchMemo}
 
 AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT (FOR FINAL NUMBER CROSS-CHECK):
 ${liveContextSnapshot}`;
+}
+
+/**
+ * Single, non-redundant system prompt for interactive On-Demand AI Analysis across all 32 NFL clubs.
+ * Eliminates duplicate charters and slow "unhurried multi-pass self-audit" boilerplate while preserving
+ * strict factual grounding, CBA cap accuracy, All-22 film depth, and spread-calibrated objectivity.
+ */
+export function buildCompactAnalysisSystemPrompt(
+  teamInput = null,
+  { coaches = null, mode = 'fast', disallowedSample = '', syncStamp = '' } = {}
+) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const isDeep = String(mode || 'fast').toLowerCase() === 'deep';
+  const c = getTeamCoaches(team, coaches);
+  const coachSummary =
+    team.abbr === 'SF'
+      ? `HC ${c.hc} | OC ${c.oc} | DC ${c.dc} (Wide-9 4-man rush + disguised two-high / Cover-3 Buzz / Quarters). Former coaches (Saleh, Sorensen, Wilks, Ryans, McDaniel, Klint Kubiak) are no longer on staff.`
+      : [
+          c.hc ? `HC ${c.hc}` : null,
+          c.oc ? `OC ${c.oc}` : null,
+          c.dc ? `DC ${c.dc}` : null,
+          c.gm ? `GM ${c.gm}` : null
+        ]
+          .filter(Boolean)
+          .join(' | ');
+  const lengthDirective = isDeep
+    ? 'Deliver a thorough, high-signal Markdown report (~550–900 words) with crisp subheadings, selective bullets/tables where numbers clarify trade-offs, and a clear verdict.'
+    : 'Deliver a crisp, scannable, high-IQ Markdown analysis (~350–600 words unless the user explicitly asks for an exhaustive breakdown) with tight subheadings and selective bullets/tables only where numbers clarify a comparison.';
+
+  return [
+    `You are an independent Lead NFL Film, Analytics & Salary Cap Analyst writing for "${team.brandName}".`,
+    `1. ANSWER IMMEDIATELY: Lead with a sharp, impartial thesis answering the exact question—zero throat-clearing, zero AI clichés ("delve", "tapestry", "testament", "in conclusion"), and zero phone-book roster dumps.`,
+    `2. VERIFIED LIVE GROUNDING (Synced ${syncStamp || 'live'}): Anchor 100% of current-season roster spots, injuries, records, 32-team ranks, draft picks, and OverTheCap numbers to the provided LIVE TEAM CONTEXT${isDeep ? ' and targeted Google Search Grounding when external facts are needed' : ''}. Never rely on stale pre-trained weights.`,
+    `   - Verified Coaching Staff: ${coachSummary}`,
+    `   - Multi-Year CBA Cap Rule (ONLY when cap/contracts/trades are relevant): Pair current-year cap space with next-year cap projection under CBA Article 13 1-for-1 rollover; midseason trade buyers absorb only remaining weekly base proration. Never shoehorn cap boilerplate into pure film/injury questions.`,
+    disallowedSample
+      ? `   - Departed/Retired Guardrail: NEVER place non-rostered former ${team.nickname} (${disallowedSample}) on the active rotation; mention them only in verified historical, dead-cap, opponent, or external context.`
+      : `   - Roster Guardrail: Cite only players present in the active/IR/PS roster index for current-season rotations.`,
+    `3. IMPARTIAL NATIONAL-ANALYST LENS: Refer to ${team.city} in the third person ("${team.city}", "the ${team.nickname}", "they")—never "we/us/our". Pair top-10 strengths with real bottom-half NFL vulnerabilities, credit opposing coordinators/stars, and calibrate matchup confidence strictly to the Vegas spread (treat ±3.5 pts as a ~50/50 one-score coin-flip).`,
+    `4. DEPTH & FORMAT: Connect All-22 scheme mechanics (personnel, coverage shells, stunt/protection rules) to EPA/CPOE/NGS metrics and cap trade-offs. ${lengthDirective}`
+  ].join('\n');
+}
+
+export function buildCompactAnalysisUserPrompt({
+  question,
+  contextBlock,
+  mode = 'fast',
+  useGoogleSearch = false,
+  team = null
+}) {
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const nickUp = String(activeTeam.nickname || '49ers').toUpperCase();
+  const searchNote = useGoogleSearch
+    ? ' Use at most 1 concise Google Search query ONLY if a post-snapshot external fact is missing.'
+    : ' Everything needed is in the verified live context below—answer directly without unnecessary detours.';
+  const modeNote =
+    String(mode || 'fast').toLowerCase() === 'deep'
+      ? `Provide a deep, two-sided front-office & coaching-tape breakdown.${searchNote}`
+      : `Respond directly, concisely, and analytically.${searchNote}`;
+
+  return `${modeNote}
+
+QUESTION:
+"${question}"
+
+VERIFIED LIVE ${nickUp} CONTEXT:
+${contextBlock}`;
 }
 
 export function buildStage3AnalysisAuditPrompt({

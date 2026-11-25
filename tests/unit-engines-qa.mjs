@@ -3222,7 +3222,9 @@ test('Accuracy-over-latency system prompts, 3.8+ High model ranking, Studio Pro 
   assert.equal(localEst.isCloud, false);
   assert.equal(localEst.summaryText, '3 min pod • Est. 30–65 sec');
   const analysisEst = estimateGenerationWait({ kind: 'analysis', prefs: {} });
-  assert.equal(analysisEst.summaryText, 'Est. 15–40 sec');
+  assert.equal(analysisEst.summaryText, 'Est. 5–14 sec');
+  const deepAnalysisEst = estimateGenerationWait({ kind: 'analysis', mode: 'deep', prefs: {} });
+  assert.equal(deepAnalysisEst.summaryText, 'Est. 18–35 sec');
   assert.equal(PODCAST_PIPELINE_STAGES.length, 3);
   assert.equal(ANALYSIS_PIPELINE_STAGES.length, 3);
 });
@@ -3664,7 +3666,7 @@ await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQU
       return new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
     // Simulate preview 400 on gemini-3.8-pro so cascade falls over cleanly to gemini-3.1-pro-preview!
-    if (u.includes('models/gemini-3.8-pro:generateContent')) {
+    if (/models\/gemini-3\.8-pro:(?:streamGenerateContent|generateContent)/.test(u)) {
       return new Response(JSON.stringify({ error: { message: 'Model preview gated' } }), { status: 400 });
     }
     if (u.includes('preview-tts:generateContent')) {
@@ -3744,12 +3746,12 @@ await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQU
       }
     });
     assert.equal(directReport.modelUsed, 'gemini-3.1-pro-preview', 'Must cascade cleanly from 400 on 3.8-pro to 3.1-pro-preview');
-    assert.equal(directReport.verifiedPasses, 3);
+    assert.equal(directReport.verifiedPasses, 1);
     assert.ok(directReport.markdown.includes('Jordan Watkins'));
 
-    // Verify Gemini 3+ payload sent thinkingLevel: 'HIGH' and NEVER thinkingBudget
-    const g3Call = capturedPayloads.find(c => c.url.includes('gemini-3.1-pro-preview:generateContent'));
-    assert.deepEqual(g3Call?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+    // Verify Gemini 3+ Fast analysis payload sent thinkingLevel: 'MEDIUM' and NEVER thinkingBudget
+    const g3Call = capturedPayloads.find(c => /gemini-3\.1-pro-preview:(?:streamGenerateContent|generateContent)/.test(c.url));
+    assert.deepEqual(g3Call?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'MEDIUM' });
 
     // Also test Worker 3-stage deepResearchPass=true + solo format voiceConfig ('Charon')
     const env = createMockWorkerEnv({ GEMINI_API_KEY: 'mock-worker-3pass-key' });
@@ -7763,7 +7765,29 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
     const briefGenCall = captured.find(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
     assert.deepEqual(briefGenCall?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' });
 
-    // 4A. Verify live interactive runOnDemandDeepAnalysis defaults to Gemini 4 Hydrogen `HIGH` (fast live turnaround)
+    // 4A. Verify live interactive runOnDemandDeepAnalysis defaults to Fast mode (Gemini 4 Hydrogen `MEDIUM`, deduplicated prompt, smart conditional search) & Deep mode uses `HIGH` + forced Google Search
+    const { shouldUseGoogleSearchForAnalysis } = await import('../src/services/aiWorkerClient.js');
+    assert.equal(
+      shouldUseGoogleSearchForAnalysis('Brock Purdy EPA live interactive', fullAppData, 'fast'),
+      false,
+      'In-snapshot team/player EPA query must skip Google Search in Fast mode'
+    );
+    assert.equal(
+      shouldUseGoogleSearchForAnalysis('What is the latest injury rumor today?', fullAppData, 'fast'),
+      true,
+      'Breaking/recency query must trigger Google Search in Fast mode'
+    );
+    assert.equal(
+      shouldUseGoogleSearchForAnalysis('How do the Chiefs compare to the 49ers defense?', fullAppData, 'fast'),
+      true,
+      'External NFL team comparison must trigger Google Search in Fast mode'
+    );
+    assert.equal(
+      shouldUseGoogleSearchForAnalysis('Brock Purdy EPA live interactive', fullAppData, 'deep'),
+      true,
+      'Deep mode must always enable Google Search grounding'
+    );
+
     captured.length = 0;
     const liveDefaultReport = await runOnDemandDeepAnalysis({
       prompt: 'Brock Purdy EPA live interactive',
@@ -7771,10 +7795,39 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
       prefs: { geminiApiKey: 'AIzaHydrogenLiveHighKey', geminiApiBaseUrl: 'https://mock-h2-live.local/v1beta' }
     });
     assert.equal(liveDefaultReport.modelUsed, 'gemini-4-hydrogen');
-    assert.equal(liveDefaultReport.thinkingLevel, 'HIGH');
-    const liveH2Calls = captured.filter(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.equal(liveDefaultReport.analysisMode, 'fast');
+    assert.equal(liveDefaultReport.thinkingLevel, 'MEDIUM');
+    assert.equal(liveDefaultReport.useGoogleSearch, false);
+    const liveH2Calls = captured.filter(c => /models\/gemini-4-hydrogen:(?:streamGenerateContent|generateContent)/.test(c.url));
     assert.equal(liveH2Calls.length, 1);
-    assert.deepEqual(liveH2Calls[0]?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+    assert.deepEqual(liveH2Calls[0]?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'MEDIUM' });
+    assert.equal(liveH2Calls[0]?.body?.tools, undefined, 'Fast in-snapshot query must omit google_search tool');
+    assert.ok(
+      !captured.some(c => c.url.includes('bsky.app') || c.url.includes('espn.com')),
+      'Fast mode must NOT block on pre-flight Bluesky/ESPN network fetches'
+    );
+    const fastSysLen = String(liveH2Calls[0]?.body?.systemInstruction?.parts?.[0]?.text || '').length;
+    const fastUsrLen = String(liveH2Calls[0]?.body?.contents?.[0]?.parts?.[0]?.text || '').length;
+    assert.ok(
+      fastSysLen + fastUsrLen < 16000,
+      `Deduplicated Fast analysis prompt must stay compact (<16k chars), got ${fastSysLen + fastUsrLen}`
+    );
+
+    // 4A-deep. Verify Deep mode switches to `HIGH` thinking + forced `google_search`
+    captured.length = 0;
+    const liveDeepReport = await runOnDemandDeepAnalysis({
+      prompt: 'Brock Purdy EPA live interactive',
+      mode: 'deep',
+      appData: fullAppData,
+      prefs: { geminiApiKey: 'AIzaHydrogenLiveHighKey', geminiApiBaseUrl: 'https://mock-h2-live.local/v1beta' }
+    });
+    assert.equal(liveDeepReport.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(liveDeepReport.analysisMode, 'deep');
+    assert.equal(liveDeepReport.thinkingLevel, 'HIGH');
+    assert.equal(liveDeepReport.useGoogleSearch, true);
+    const liveDeepCall = captured.find(c => /models\/gemini-4-hydrogen:(?:streamGenerateContent|generateContent)/.test(c.url));
+    assert.deepEqual(liveDeepCall?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+    assert.ok(Array.isArray(liveDeepCall?.body?.tools) && liveDeepCall.body.tools.length === 1, 'Deep mode must attach google_search tool');
 
     // 4B. Verify XHIGH -> HIGH retry resilience on same model when XHIGH is requested and endpoint returns 400 INVALID_ARGUMENT
     captured.length = 0;
@@ -7787,7 +7840,7 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
     });
     assert.equal(retryReport.modelUsed, 'gemini-4-hydrogen');
     assert.equal(retryReport.thinkingLevel, 'HIGH');
-    const h2GenCalls = captured.filter(c => c.url.includes('models/gemini-4-hydrogen:generateContent'));
+    const h2GenCalls = captured.filter(c => /models\/gemini-4-hydrogen:(?:streamGenerateContent|generateContent)/.test(c.url));
     assert.ok(h2GenCalls.some(c => c.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'XHIGH'));
     assert.ok(h2GenCalls.some(c => c.body?.generationConfig?.thinkingConfig?.thinkingLevel === 'HIGH'));
 
@@ -7886,24 +7939,24 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
       verifiedGeminiModel: 'gemini-4-hydrogen'
     };
 
-    // Call 1: Hydrogen hits temporary 60s RPM limit -> falls back to 3.8 HIGH for this call, WITHOUT permanently demoting Hydrogen!
+    // Call 1: Hydrogen hits temporary 60s RPM limit -> falls back to 3.8 MEDIUM (Fast mode) for this call, WITHOUT permanently demoting Hydrogen!
     const run1 = await runOnDemandDeepAnalysis({ prompt: 'Nick Bosa Wide-9', appData: fullAppData, prefs: cascadePrefs });
     assert.equal(run1.modelUsed, 'gemini-3.8-flash');
-    assert.equal(run1.thinkingLevel, 'HIGH');
+    assert.equal(run1.thinkingLevel, 'MEDIUM');
     assert.equal(cascadePrefs.verifiedGeminiModel, 'gemini-4-hydrogen', 'Transient 60s RPM blip must NOT demote default model away from Hydrogen');
 
-    // Call 2: 60s RPM window cleared -> MUST automatically use Gemini 4 Hydrogen (HIGH live) again!
+    // Call 2: 60s RPM window cleared -> MUST automatically use Gemini 4 Hydrogen (MEDIUM in Fast mode) again!
     h2Mode = 'ok';
     const run2 = await runOnDemandDeepAnalysis({ prompt: 'Fred Warner Quarters', appData: fullAppData, prefs: cascadePrefs });
     assert.equal(run2.modelUsed, 'gemini-4-hydrogen', 'Must return to Gemini 4 Hydrogen while daily tokens remain');
-    assert.equal(run2.thinkingLevel, 'HIGH');
+    assert.equal(run2.thinkingLevel, 'MEDIUM');
 
-    // Call 3: Hydrogen daily tokens run out -> falls back cleanly to 3.8 HIGH (skipping 0-quota 3.8-pro!)
+    // Call 3: Hydrogen daily tokens run out -> falls back cleanly to 3.8 MEDIUM (skipping 0-quota 3.8-pro!)
     h2Mode = 'daily_exhausted';
     const run3 = await runOnDemandDeepAnalysis({ prompt: 'Trent Williams Anchor', appData: fullAppData, prefs: cascadePrefs });
     assert.equal(run3.modelUsed, 'gemini-3.8-flash');
-    assert.equal(run3.thinkingLevel, 'HIGH');
-    assert.equal(cascadePrefs.verifiedGeminiModel, 'gemini-3.8-flash', 'Once Hydrogen daily tokens run out, active model must shift to 3.8-flash HIGH');
+    assert.equal(run3.thinkingLevel, 'MEDIUM');
+    assert.equal(cascadePrefs.verifiedGeminiModel, 'gemini-3.8-flash', 'Once Hydrogen daily tokens run out, active model must shift to 3.8-flash');
 
     // Call 4: Subsequent call on same day goes straight to 3.8 HIGH without wasting a round-trip on exhausted Hydrogen
     failoverCalls.length = 0;
@@ -7918,6 +7971,133 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
     globalThis.localStorage = origLocalStorage;
   }
 });
+
+await testAsync(
+  'AI Analysis SSE Streaming (`:streamGenerateContent?alt=sse`), Thought Filtering & Non-SF 32-Team Prompt Parity',
+  async () => {
+    const { runOnDemandDeepAnalysis } = await import('../src/services/aiWorkerClient.js');
+    const origFetch = globalThis.fetch;
+    const detAppData = {
+      meta: {
+        teamAbbr: 'DET',
+        teamSlug: 'lions',
+        seasonYear: 2026,
+        currentWeek: 11,
+        teamRecord: '8-2',
+        standingSummary: '1st NFC North',
+        updatedAt: '2026-11-24T18:00:00Z',
+        coaches: { hc: 'Dan Campbell', oc: 'John Morton', dc: 'Kelvin Sheppard', gm: 'Brad Holmes' }
+      },
+      roster: {
+        players: [
+          {
+            id: 'det_goff',
+            name: 'Jared Goff',
+            position: 'QB',
+            jersey: 16,
+            rosterBucket: 'active',
+            primarySnapPct: 100,
+            health: { status: 'Active', playBadgeLabel: '99% • Active' },
+            stats2026: { passing: { completions: 210, attempts: 295, yards: 2540, tds: 21, ints: 4, epa: 64.2, cpoe: 4.8 } },
+            contractsByYear: { '2026': { capNumber: 32600000 }, '2027': { capNumber: 55000000 } }
+          }
+        ],
+        departedPlayers: ['Ben Johnson']
+      },
+      cap: { years: { '2026': { teamCapSpace: 18500000, effectiveCapSpace: 16200000 }, '2027': { teamCapSpace: 12000000 } } },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 12,
+          homeAway: 'home',
+          oppAbbr: 'GB',
+          oppName: 'Green Bay Packers',
+          oppRecord: '7-3',
+          betting: { spread: 'DET -2.5', overUnder: '48.5' }
+        },
+        teamStats: { units: [] }
+      },
+      health: { practiceReport: [], irAndReserveTracker: [] },
+      seasonal: {
+        playoffPicture: { baselineSimulation: { teamOdds: { projectedWins: 12.4, makePlayoffsPct: 94, winDivisionPct: 68, seed1ByePct: 31 } } },
+        draftPrep2027: { pickInventory: [{ round: 1, origin: 'DET' }] },
+        tradeWarRoom: { completed2026Moves: [], topNeeds: [], realisticTargets: [] }
+      },
+      news: { rawStream: [], articles: [], socialPosts: [], clusteredBriefs: [] }
+    };
+
+    const capturedStreamReqs = [];
+    const streamedSnapshots = [];
+    try {
+      globalThis.fetch = async (url, init) => {
+        const u = String(url);
+        if (u.includes('/models?key=')) {
+          return new Response(
+            JSON.stringify({
+              models: [{ name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] }]
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        if (u.includes('models/gemini-4-hydrogen:streamGenerateContent')) {
+          const parsedBody = init?.body ? JSON.parse(init.body) : {};
+          capturedStreamReqs.push({ url: u, body: parsedBody });
+          const encoder = new TextEncoder();
+          const sseFrames = [
+            `data: ${JSON.stringify({ candidates: [{ content: { parts: [{ thought: true, text: 'INTERNAL_SECRET_THOUGHT' }] } }] })}\n\n`,
+            `data: ${JSON.stringify({ candidates: [{ content: { parts: [{ text: '### Detroit Passing Efficiency\n' }] } }] })}\n\n`,
+            `data: ${JSON.stringify({
+              candidates: [
+                {
+                  content: { parts: [{ text: '* **Jared Goff** leads Detroit into Week 12 vs. Green Bay.' }] },
+                  groundingMetadata: {
+                    groundingChunks: [{ web: { title: 'OverTheCap Lions Cap', uri: 'https://overthecap.com/salary-cap/detroit-lions' } }]
+                  }
+                }
+              ]
+            })}\n\n`
+          ];
+          const stream = new ReadableStream({
+            start(controller) {
+              for (const frame of sseFrames) controller.enqueue(encoder.encode(frame));
+              controller.close();
+            }
+          });
+          return new Response(stream, {
+            status: 200,
+            headers: { 'Content-Type': 'text/event-stream; charset=utf-8' }
+          });
+        }
+        return new Response('{}', { status: 404 });
+      };
+
+      const detReport = await runOnDemandDeepAnalysis({
+        prompt: 'Jared Goff passing efficiency and Green Bay matchup',
+        appData: detAppData,
+        prefs: { geminiApiKey: 'AIzaDetStreamKey', geminiApiBaseUrl: 'https://mock-det-stream.local/v1beta' },
+        onProgress: p => {
+          if (p.streamedText) streamedSnapshots.push(p.streamedText);
+        }
+      });
+
+      assert.equal(capturedStreamReqs.length, 1, 'Must call :streamGenerateContent once');
+      assert.equal(detReport.analysisMode, 'fast');
+      assert.equal(detReport.thinkingLevel, 'MEDIUM');
+      assert.equal(detReport.useGoogleSearch, false, 'Upcoming opponent (Green Bay) is in snapshot so Fast mode skips Google Search');
+      assert.ok(streamedSnapshots.length >= 2, `Expected progressive SSE chunks, saw ${streamedSnapshots.length}`);
+      assert.ok(!detReport.markdown.includes('INTERNAL_SECRET_THOUGHT'), 'Thought chunks must be stripped from streamed Markdown');
+      assert.ok(detReport.markdown.includes('Jared Goff'), 'Final streamed report must retain visible text');
+      const sentSys = String(capturedStreamReqs[0]?.body?.systemInstruction?.parts?.[0]?.text || '');
+      const sentUsr = String(capturedStreamReqs[0]?.body?.contents?.[0]?.parts?.[0]?.text || '');
+      assert.ok(
+        !/49ers|Shanahan|Raheem Morris/i.test(sentSys) && !/49ers|Shanahan|Raheem Morris/i.test(sentUsr),
+        'Non-SF Lions analysis prompt must contain zero cross-team 49ers leakage'
+      );
+      assert.ok(sentSys.includes('Dan Campbell'), 'Non-SF Lions system prompt must inject Lions coaches');
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+  }
+);
 
 await testAsync(
   'Cross-Device Brief Sync, Variable Game-Day Post-Game Cycle, T-90m All-News Promotion & Race-Condition Guards',

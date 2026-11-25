@@ -799,3 +799,166 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}, { compactFor
     .filter(Boolean)
     .join('\n\n');
 }
+
+/**
+ * Builds a single, deduplicated live context payload for interactive On-Demand AI Analysis
+ * across all 32 NFL teams (~9–12 KB instead of ~26.8 KB duplicated dossier + snapshot).
+ */
+export function buildDeduplicatedAnalysisContext({
+  appData = {},
+  dossier = null,
+  includeTradeMatrix = false,
+  mode = 'fast'
+} = {}) {
+  const meta = appData?.meta || {};
+  const team = resolveTeamConfig(meta.teamAbbr || meta.teamSlug || getActiveTeamConfig());
+  const isDeep = String(mode || 'fast').toLowerCase() === 'deep';
+  const seasonYr = String(meta.seasonYear || 2026);
+  const nextYr = String(Number(seasonYr) + 1);
+  const cap26 = appData?.cap?.years?.[seasonYr] || appData?.cap?.years?.['2026'] || {};
+  const cap27 = appData?.cap?.years?.[nextYr] || appData?.cap?.years?.['2027'] || {};
+  const curDeadMoney = Number(cap26.deadMoneyTotal ?? cap26.deadMoney ?? 0);
+  const matchup = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const rosterPlayers = appData?.roster?.players || [];
+  const practiceReport = appData?.health?.practiceReport || [];
+  const irList = appData?.health?.irAndReserveTracker || [];
+  const tw = appData?.seasonal?.tradeWarRoom || {};
+  const mcSim = appData?.seasonal?.playoffPicture?.baselineSimulation || {};
+  const teamOdds = mcSim.teamOdds || mcSim.sfOdds || {};
+  const pickInventory = appData?.seasonal?.draftPrep2027?.pickInventory || [];
+  const tradedPicksNote = appData?.seasonal?.draftPrep2027?.tradedPicksNote || '';
+
+  const lines = [
+    `SYNC: ${meta.updatedAt || new Date().toISOString()} | ${seasonYr} Week ${meta.currentWeek || 9} | ${team.fullName} (${meta.teamRecord || '—'}, ${meta.standingSummary || team.division}${meta.pointDifferential ? `, PtDiff ${meta.pointDifferential}` : ''})`,
+    `NEXT GAME: Wk ${matchup.week || meta.currentWeek || 9} ${matchup.homeAway === 'away' ? '@' : 'vs.'} ${matchup.oppName || 'TBD'} (${matchup.oppRecord || '—'}) | ${matchup.kickoffDisplay || 'TBD'} | Spread: ${matchup.betting?.spread || 'TBD'} | O/U: ${matchup.betting?.overUnder || 'TBD'}`,
+    `PLAYOFF ODDS: Proj Wins ${teamOdds.projectedWins ?? '—'} | Playoffs ${teamOdds.makePlayoffsPct ?? '—'}% | Div ${teamOdds.winDivisionPct ?? '—'}% | #1 Bye ${teamOdds.seed1ByePct ?? '—'}%`
+  ];
+
+  const balancedBlock =
+    dossier?.balancedLeagueBlock || buildBalancedLeagueComparisonBlock(appData, { compact: !isDeep });
+  if (balancedBlock) lines.push(balancedBlock);
+
+  const pickLines = pickInventory
+    .map(pk => `Rd${pk.round}${pk.projectedOverall || pk.overall ? `(#${pk.projectedOverall || pk.overall})` : ''}[${pk.origin}]`)
+    .join(', ');
+  lines.push(
+    `CAP & PICKS (OTC): ${seasonYr} Space $${(cap26.teamCapSpace || 0).toLocaleString()} (Eff $${(cap26.effectiveCapSpace || 0).toLocaleString()}, Dead $${curDeadMoney.toLocaleString()}) | ${nextYr} Proj $${(cap27.teamCapSpace || 0).toLocaleString()} | ${nextYr} Picks (${pickInventory.length}): ${pickLines || 'See ledger'}${tradedPicksNote ? ` (${tradedPicksNote})` : ''}`
+  );
+
+  // Focused player dossiers (from topic intent) — emitted ONCE
+  const fmtDollars = v => (v == null ? 'Min' : `${v < 0 ? '-' : ''}$${(Math.abs(v) / 1e6).toFixed(2)}M`);
+  if (dossier) {
+    const healthy = (dossier.activeHealthy || []).slice(0, isDeep ? 12 : 8);
+    if (healthy.length > 0) {
+      lines.push(
+        `TOPIC FOCUS PLAYERS — ACTIVE (${healthy.length}):\n` +
+          healthy
+            .map(
+              d =>
+                `  - ${d.name} (${d.position} #${d.jersey ?? '—'}): ${d.snapPct}% snaps | ${d.healthStatus}${d.playBadge ? ` (${d.playBadge})` : ''} | ${d.statLine || 'Rotational'} | ${seasonYr} Cap ${fmtDollars(d.cap2026)}${d.cap2027 != null ? ` / ${nextYr} ${fmtDollars(d.cap2027)}` : ''}${d.beatNote ? ` | ${d.beatNote.slice(0, 140)}` : ''}`
+            )
+            .join('\n')
+      );
+    }
+    const sidelined = dossier.activeSidelined || [];
+    if (sidelined.length > 0) {
+      lines.push(
+        `TOPIC FOCUS — OUT/DOUBTFUL (${sidelined.length}):\n` +
+          sidelined
+            .map(d => `  - ${d.name} (${d.position}): ${d.healthStatus} (${d.injuryType || 'Injury'})${d.statLine ? ` | ${d.statLine}` : ''}${d.beatNote ? ` | ${d.beatNote.slice(0, 120)}` : ''}`)
+            .join('\n')
+      );
+    }
+    const irFocus = dossier.irReserve || [];
+    if (irFocus.length > 0) {
+      lines.push(
+        `TOPIC FOCUS — IR/RESERVE (${irFocus.length}): ` +
+          irFocus.map(d => `${d.name} (${d.position}, ${d.healthStatus}${d.injuryType ? `: ${d.injuryType}` : ''})`).join('; ')
+      );
+    }
+    const psFocus = dossier.practiceSquad || [];
+    if (psFocus.length > 0) {
+      lines.push(`TOPIC FOCUS — PS DEPTH: ${psFocus.map(d => `${d.name} (${d.position})`).join(', ')}`);
+    }
+  }
+
+  // Compact active 53-man name index (prevents roster hallucinations at ~1/3 the tokens)
+  const activeByGrp = { QB: [], RB: [], WR: [], TE: [], OL: [], DL: [], LB: [], DB: [], ST: [] };
+  for (const p of rosterPlayers) {
+    if (p.rosterBucket !== 'active') continue;
+    const tag = p.health?.status && p.health.status !== 'Active' ? `${p.name} [${p.health.status}]` : p.name;
+    if (p.position === 'QB') activeByGrp.QB.push(tag);
+    else if (['RB', 'FB'].includes(p.position)) activeByGrp.RB.push(tag);
+    else if (p.position === 'WR') activeByGrp.WR.push(tag);
+    else if (p.position === 'TE') activeByGrp.TE.push(tag);
+    else if (['OT', 'T', 'G', 'C', 'OL', 'OG'].includes(p.position)) activeByGrp.OL.push(tag);
+    else if (['DE', 'DT', 'DL', 'NT', 'EDGE'].includes(p.position)) activeByGrp.DL.push(tag);
+    else if (['LB', 'ILB', 'MLB', 'OLB'].includes(p.position)) activeByGrp.LB.push(tag);
+    else if (['CB', 'S', 'DB', 'FS', 'SS'].includes(p.position)) activeByGrp.DB.push(tag);
+    else activeByGrp.ST.push(tag);
+  }
+  const activeIndex = Object.entries(activeByGrp)
+    .filter(([, arr]) => arr.length > 0)
+    .map(([g, arr]) => `${g}: ${arr.join(', ')}`)
+    .join(' | ');
+  if (activeIndex) lines.push(`ACTIVE 53-MAN ROSTER INDEX: ${activeIndex}`);
+
+  // Compact IR & Injury Report — emitted ONCE
+  if (irList.length > 0) {
+    lines.push(
+      `IR/RESERVE LIST: ${irList
+        .slice(0, 14)
+        .map(p => `${p.name} (${p.position}, ${p.injuryType || p.status}${p.projectedReturnWeek ? ` • ${p.projectedReturnWeek}` : ''})`)
+        .join('; ')}`
+    );
+  }
+  if (practiceReport.length > 0) {
+    lines.push(
+      `WK ${meta.currentWeek || 9} INJURY REPORT: ${practiceReport
+        .slice(0, isDeep ? 14 : 10)
+        .map(p => `${p.name} (${p.position}: ${p.gameStatus}, ${p.injuryType}, ${p.wed}/${p.thu}/${p.fri}, ${p.playBadgeLabel})`)
+        .join('; ')}`
+    );
+  }
+
+  // Completed trades (compact) + trade matrix only when trade-relevant
+  const completedTrades = tw.completed2026Moves || [];
+  if (completedTrades.length > 0) {
+    lines.push(
+      `VERIFIED ${seasonYr} TRADES: ${completedTrades
+        .map(m => `${m.player} (${m.position}, from ${m.acquiredFrom}${m.costSummary || m.compensation ? ` for ${m.costSummary || m.compensation}` : ''})`)
+        .join('; ')}`
+    );
+  }
+  if (includeTradeMatrix) {
+    const needs = (tw.topNeeds || []).slice(0, 5);
+    if (needs.length > 0) {
+      lines.push(`TRADE NEEDS: ${needs.map(n => `[${n.urgency}] ${n.positionGroup || n.position}: ${n.epaContext || n.rationale}`).join(' | ')}`);
+    }
+    const targets = (dossier?.relevantTradeTargets?.length ? dossier.relevantTradeTargets : tw.realisticTargets || []).slice(0, 6);
+    if (targets.length > 0) {
+      lines.push(
+        `VERIFIED TRADE TARGETS:\n` +
+          targets
+            .map(
+              t =>
+                `  - ${t.name} (${t.position}, ${t.currentTeam || ''}, Fit ${t.fitScore}/100): Cost ${t.projectedPickCost} | 2026 Cap ${t.acquiring2026CapHit || fmtDollars(t.prorated2026CapCharge)} | ${t.fitBreakdown || t.schemeFit || ''}`
+            )
+            .join('\n')
+      );
+    }
+  }
+
+  // Top relevant beat wire items — emitted ONCE
+  const wireItems = (dossier?.matchedNews || []).slice(0, isDeep ? 7 : 5);
+  if (wireItems.length > 0) {
+    lines.push(
+      `RECENT RELEVANT BEAT WIRE:\n` +
+        wireItems
+          .map(n => `  - [${n.author || n.outletName || n.outlet || 'Beat'}]: ${(n.fullText || n.title || n.headline || n.text || n.summary || '').slice(0, 180)}`)
+          .join('\n')
+    );
+  }
+
+  return lines.join('\n\n');
+}
