@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:50.951Z",
+  "updatedAt": "2026-11-25T20:48:41.918Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.therams.com/team/injury-report/",
@@ -85,6 +85,31 @@
       "beatComment": "Garrett was limited in practice Sunday and Tuesday due to a knee injury, but it doesn't appear he will be impacted in Wednesday night's matchup against the Packers. The 30-year-old has three tackles (three solo), including 3.0 sacks and a forced fumble in three regular-season games in 2026."
     },
     {
+      "playerId": "4242154",
+      "name": "Kam Curl",
+      "position": "S",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242154.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "-",
+      "injuryType": "Toe",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 84,
+      "priorDayPlayProbabilityPct": 84,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "84% • GTD",
+      "archetypeNote": "Veteran starter profile (7th NFL season, 93% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Thursday Limited Participation (LP); player toughness prior = 84%"
+      ],
+      "beatComment": "Curl posted two limited practices after beginning the week as a nonparticipant. The 27-year-old has started all 10 games for the Rams this season, recording 48 tackles (28 solo) and three pass deflections."
+    },
+    {
       "playerId": "2575907",
       "name": "Joe Cardona",
       "position": "LS",
@@ -109,31 +134,6 @@
         "Beat/podium consensus: on track to suit up"
       ],
       "beatComment": "The Rams' long snapper was injured last Sunday against Arizona, but should be good to go for Wednesday versus Green Bay."
-    },
-    {
-      "playerId": "4242154",
-      "name": "Kam Curl",
-      "position": "S",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242154.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "-",
-      "injuryType": "Toe",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 84,
-      "priorDayPlayProbabilityPct": 84,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "84% • GTD",
-      "archetypeNote": "Veteran starter profile (7th NFL season, 93% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Thursday Limited Participation (LP); player toughness prior = 84%"
-      ],
-      "beatComment": "Curl posted two limited practices after beginning the week as a nonparticipant. The 27-year-old has started all 10 games for the Rams this season, recording 48 tackles (28 solo) and three pass deflections."
     },
     {
       "playerId": "12483",
@@ -163,31 +163,6 @@
       "beatComment": "From the Podium: Sean McVay, Matthew Stafford, Aaron Donald and coordinators talk adjustments ahead of Rams' Thanksgiving Eve game against Packers in Week 12. Head coach Sean McVay, quarterback Matthew Stafford, defensive end Aaron Donald and coordinators talked about the necessity of evolution for this season's Rams as they get set to play the Packers on Thanksgiving Eve."
     },
     {
-      "playerId": "4426553",
-      "name": "Davis Allen",
-      "position": "TE",
-      "jersey": 87,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426553.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Oblique",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 86,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": "With all three of Puka Nacua (knee/toe), Davante Adams (hamstring) and Terrance Ferguson (hamstring) out, the Rams leaned on their tight-end triumvirate of Tyler Higbee, Colby Parkinson and Allen, as all three played more offensive snaps than any of the Los Angeles wideouts. Parkinson (53 snaps) led the way, followed by Allen (52) and Higbee (51), and both Allen and Higbee caught touchdowns. Allen, however, ran just six routes on Matthew Stafford's 28 dropbacks, so it's not enough to warrant consideration in fantasy leagues."
-    },
-    {
       "playerId": "4430737",
       "name": "Kyren Williams",
       "position": "RB",
@@ -211,6 +186,31 @@
         "Logged Full Participation (FP) on Thursday"
       ],
       "beatComment": "Listed as a limited participant on the Rams' initial Week 12 injury report posted Sunday, Williams quelled any concern about his status for Wednesday's game against the Packers by taking full reps a day later. Though his sore toe isn't expected to affect his workload, Williams nonetheless may find himself in a timeshare with Blake Corum, who has been the more productive option on the ground this season. Williams has totaled seven touchdowns and is averaging 4.4 yards per carry through 10 games, while Corum has scored six times and is averaging 5.3 yards per tote."
+    },
+    {
+      "playerId": "4426405",
+      "name": "Trent McDuffie",
+      "position": "CB",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426405.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "Back",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 92,
+      "priorDayPlayProbabilityPct": 91,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "92% • Cleared",
+      "archetypeNote": "Every-down starter workload (95% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Logged Full Participation (FP) on Thursday"
+      ],
+      "beatComment": ""
     },
     {
       "playerId": "4243181",
@@ -238,29 +238,29 @@
       "beatComment": ""
     },
     {
-      "playerId": "4426405",
-      "name": "Trent McDuffie",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426405.png",
+      "playerId": "4426553",
+      "name": "Davis Allen",
+      "position": "TE",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426553.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
       "fri": "-",
-      "injuryType": "Back",
+      "injuryType": "Oblique",
       "gameStatus": "Questionable",
       "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
+      "priorDayPlayProbabilityPct": 86,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Every-down starter workload (95% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
         "Logged Full Participation (FP) on Thursday"
       ],
-      "beatComment": ""
+      "beatComment": "With all three of Puka Nacua (knee/toe), Davante Adams (hamstring) and Terrance Ferguson (hamstring) out, the Rams leaned on their tight-end triumvirate of Tyler Higbee, Colby Parkinson and Allen, as all three played more offensive snaps than any of the Los Angeles wideouts. Parkinson (53 snaps) led the way, followed by Allen (52) and Higbee (51), and both Allen and Higbee caught touchdowns. Allen, however, ran just six routes on Matthew Stafford's 28 dropbacks, so it's not enough to warrant consideration in fantasy leagues."
     },
     {
       "playerId": "4242557",
@@ -289,31 +289,6 @@
       "beatComment": "Parkinson was able to shed an injury designation for Sunday's game after having his practice reps limited during Week 10 prep due to a lingering rib injury. His second catch of the contest went for 10 yards early in the third quarter and set the Rams up on the 1-yard line, with Blake Corum finding the end zone on the next play. Parkinson was on the field for 53 of the Rams' 76 offensive snaps (69.7 percent), and fellow tight ends Davis Allen (52) and Tyler Higbee (51) were not far behind. The Rams are committed to using their 13-man personnel, although the game plan could be slightly tweaked after the Week 11 bye if wide receiver Davante Adams (hamstring) is activated from injured reserve ahead of Week 12 against the Packers on Wednesday, Nov. 25. Parkinson has caught 20 passes (on 25 targets) for 127 yards and a touchdown through eight regular-season games."
     },
     {
-      "playerId": "16716",
-      "name": "Aaron Donald",
-      "position": "DT",
-      "jersey": 99,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16716.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "Vet Rest",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "NIR - Rest",
-      "gameStatus": "Active",
-      "playProbabilityPct": 98,
-      "priorDayPlayProbabilityPct": 98,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "98% • Vet Rest (Full Go)",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Habitual Veteran Rest prior (Aaron Donald maintenance schedule)"
-      ],
-      "beatComment": "From the Podium: Sean McVay, Matthew Stafford, Aaron Donald and coordinators talk adjustments ahead of Rams' Thanksgiving Eve game against Packers in Week 12. Head coach Sean McVay, quarterback Matthew Stafford, defensive end Aaron Donald and coordinators talked about the necessity of evolution for this season's Rams as they get set to play the Packers on Thanksgiving Eve."
-    },
-    {
       "playerId": "4875196",
       "name": "Byron Young",
       "position": "LB",
@@ -337,6 +312,31 @@
         "Habitual Veteran Rest prior (Byron Young maintenance schedule)"
       ],
       "beatComment": ""
+    },
+    {
+      "playerId": "16716",
+      "name": "Aaron Donald",
+      "position": "DT",
+      "jersey": 99,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16716.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "Vet Rest",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": 98,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Habitual Veteran Rest prior (Aaron Donald maintenance schedule)"
+      ],
+      "beatComment": "From the Podium: Sean McVay, Matthew Stafford, Aaron Donald and coordinators talk adjustments ahead of Rams' Thanksgiving Eve game against Packers in Week 12. Head coach Sean McVay, quarterback Matthew Stafford, defensive end Aaron Donald and coordinators talked about the necessity of evolution for this season's Rams as they get set to play the Packers on Thanksgiving Eve."
     },
     {
       "playerId": "2573401",

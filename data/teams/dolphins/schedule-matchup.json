@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:12.152Z",
+  "updatedAt": "2026-11-25T20:50:29.413Z",
   "sources": [
     {
       "label": "ESPN Dolphins Schedule",
@@ -24664,10 +24664,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (19.7% neutral-field win rating, 2.6 proj. wins) at 1-9 through Week 11.",
+        "blurb": "Tier 6 (20.0% neutral-field win rating, 2.6 proj. wins) at 1-9 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24752,10 +24752,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (19.7% neutral-field win rating, 2.6 proj. wins) at 1-9 through Week 11."
+        "blurb": "Tier 6 (20.0% neutral-field win rating, 2.6 proj. wins) at 1-9 through Week 11."
       },
       {
         "id": "cbs",
@@ -24821,7 +24821,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:14.518Z"
+    "fetchedAtIso": "2026-11-25T20:50:32.084Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27452,16 +27452,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Aaron Brewer, Austin Jackson & Patrick Paul vs. DT Darrell Jackson Jr. & Jets Simulated Pressures",
+        "unitMatchup": "Austin Jackson, Aaron Brewer & Kadyn Proctor vs. DT Darrell Jackson Jr. & Jets Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Aaron Brewer",
           "Austin Jackson",
-          "Patrick Paul"
+          "Aaron Brewer",
+          "Kadyn Proctor"
         ],
         "statComparison": "MIA: #16 Pass Protection (6.0%) | NYJ: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Aaron Brewer, Austin Jackson & Patrick Paul protect Kyle McCord (#16 protection at 6.0%) against DT Darrell Jackson Jr. and New York Jets's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Aaron Brewer (#55) on obvious passing downs—if DT Darrell Jackson Jr. cannot win clean around the arc, Jets must dial up interior stunts that stress Austin Jackson (#73)."
+        "tacticalDetail": "Austin Jackson, Aaron Brewer & Kadyn Proctor protect Kyle McCord (#16 protection at 6.0%) against DT Darrell Jackson Jr. and New York Jets's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Austin Jackson (#73) on obvious passing downs—if DT Darrell Jackson Jr. cannot win clean around the arc, Jets must dial up interior stunts that stress Aaron Brewer (#55)."
       }
     ]
   }

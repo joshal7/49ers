@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:18.694Z",
+  "updatedAt": "2026-11-25T20:51:11.722Z",
   "sources": [
     {
       "label": "ESPN Colts Schedule",
@@ -24711,10 +24711,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (20.3% neutral-field win rating, 4.6 proj. wins) at 3-8 through Week 11.",
+        "blurb": "Tier 6 (20.5% neutral-field win rating, 4.6 proj. wins) at 3-8 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24763,10 +24763,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (20.3% neutral-field win rating, 4.6 proj. wins) at 3-8 through Week 11."
+        "blurb": "Tier 6 (20.5% neutral-field win rating, 4.6 proj. wins) at 3-8 through Week 11."
       },
       {
         "id": "cbs",
@@ -24832,7 +24832,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:22.076Z"
+    "fetchedAtIso": "2026-11-25T20:51:14.922Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27413,28 +27413,28 @@
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",
-        "unitMatchup": "Laiatu Latu, Jaylahn Tuimoloau & Arden Key vs. QB J.J. McCarthy & OT Andrew Thomas",
+        "unitMatchup": "Laiatu Latu, Jaylahn Tuimoloau & Grover Stewart vs. QB J.J. McCarthy & OT Andrew Thomas",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Laiatu Latu",
           "Jaylahn Tuimoloau",
-          "Arden Key"
+          "Grover Stewart"
         ],
         "statComparison": "IND: #16 Def Sacks (2.3/gm) | NYG: #16 Pass Protection (6.5%)",
-        "tacticalDetail": "Laiatu Latu, Jaylahn Tuimoloau & Arden Key lead Indianapolis's #16 NFL pass rush (2.3/gm) against New York Giants's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Colts keep seven defenders in coverage.",
+        "tacticalDetail": "Laiatu Latu, Jaylahn Tuimoloau & Grover Stewart lead Indianapolis's #16 NFL pass rush (2.3/gm) against New York Giants's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Colts keep seven defenders in coverage.",
         "filmTell": "On 3rd-and-6+, watch whether Laiatu Latu (#97) draw chip help from Giants's tight ends or backs—creating 1-on-1 rush lanes inside for Jaylahn Tuimoloau (#91)."
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",
-        "unitMatchup": "Cam Bynum, Sauce Gardner & Charvarius Ward vs. WR Malik Nabers & QB J.J. McCarthy",
+        "unitMatchup": "Cam Bynum, Charvarius Ward & Sauce Gardner vs. WR Malik Nabers & QB J.J. McCarthy",
         "advantage": "Even Star Clash",
         "sfPlayers": [
           "Cam Bynum",
-          "Sauce Gardner",
-          "Charvarius Ward"
+          "Charvarius Ward",
+          "Sauce Gardner"
         ],
         "statComparison": "IND: #17 Pass Def (+1.92) | NYG: #15 Pass Off (221.2 yds)",
-        "tacticalDetail": "Cam Bynum, Sauce Gardner & Charvarius Ward anchor Indianapolis's #17 pass defense (+1.92) against WR Malik Nabers and New York Giants's #15 passing attack (221.2 yds). Limiting explosive 20+ yard chunk plays forces Giants into sustained red-zone drives.",
+        "tacticalDetail": "Cam Bynum, Charvarius Ward & Sauce Gardner anchor Indianapolis's #17 pass defense (+1.92) against WR Malik Nabers and New York Giants's #15 passing attack (221.2 yds). Limiting explosive 20+ yard chunk plays forces Giants into sustained red-zone drives.",
         "filmTell": "Track Cam Bynum (#0) at the top of routes against WR Malik Nabers: press-bail alignment with safety help over the top takes away QB J.J. McCarthy's preferred isolation shots."
       },
       {
@@ -27451,16 +27451,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Tanor Bortolini, Matt Goncalves & Jalen Travis vs. DT Shelby Harris & Giants Simulated Pressures",
+        "unitMatchup": "Matt Goncalves, Tanor Bortolini & Jalen Travis vs. DT Shelby Harris & Giants Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Tanor Bortolini",
           "Matt Goncalves",
+          "Tanor Bortolini",
           "Jalen Travis"
         ],
         "statComparison": "IND: #16 Pass Protection (6.0%) | NYG: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Tanor Bortolini, Matt Goncalves & Jalen Travis protect Anthony Richardson Sr. (#16 protection at 6.0%) against DT Shelby Harris and New York Giants's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Tanor Bortolini (#60) on obvious passing downs—if DT Shelby Harris cannot win clean around the arc, Giants must dial up interior stunts that stress Matt Goncalves (#71)."
+        "tacticalDetail": "Matt Goncalves, Tanor Bortolini & Jalen Travis protect Anthony Richardson Sr. (#16 protection at 6.0%) against DT Shelby Harris and New York Giants's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Matt Goncalves (#71) on obvious passing downs—if DT Shelby Harris cannot win clean around the arc, Giants must dial up interior stunts that stress Tanor Bortolini (#60)."
       }
     ]
   }

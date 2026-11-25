@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:47:21.130Z",
+  "updatedAt": "2026-11-25T20:49:21.166Z",
   "sources": [
     {
       "label": "ESPN Eagles Schedule",
@@ -24855,7 +24855,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:47:24.043Z"
+    "fetchedAtIso": "2026-11-25T20:49:23.228Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24955,23 +24955,23 @@
       "teamInjuriesUrl": "https://www.cbssports.com/nfl/teams/DAL/dallas-cowboys/injuries/",
       "byeWeek": null,
       "summary": {
-        "overallAvailabilityScore": 88,
-        "activeStartersHealthy": 19,
+        "overallAvailabilityScore": 89,
+        "activeStartersHealthy": 20,
         "totalStarters": 22,
         "startersOutCount": 2,
         "startersDoubtfulOnlyCount": 0,
         "startersLongShotCount": 0,
         "startersDoubtfulCount": 0,
-        "startersQuestionableCount": 1,
-        "startersGtdCount": 1,
-        "startersUnresolvedCount": 3,
+        "startersQuestionableCount": 0,
+        "startersGtdCount": 0,
+        "startersUnresolvedCount": 2,
         "ruledOutCount": 4,
         "doubtfulCount": 0,
         "longShotCount": 0,
         "doubtfulOrLongShotCount": 0,
-        "gtdCount": 2,
-        "questionableOrDoubtfulCount": 2,
-        "clearedCount": 7,
+        "gtdCount": 1,
+        "questionableOrDoubtfulCount": 1,
+        "clearedCount": 8,
         "irCount": 1,
         "irOpenWindowCount": 0,
         "irSeasonEndingCount": 1
@@ -25486,6 +25486,16 @@
           "playProbabilityPct": 95
         },
         {
+          "playerId": "4428914",
+          "name": "Dee Winters",
+          "position": "LB",
+          "unit": "Defense",
+          "slot": "RILB",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
+          "playProbabilityPct": 95
+        },
+        {
           "playerId": "4683848",
           "name": "Donovan Ezeiruaku",
           "position": "LB",
@@ -25774,35 +25784,6 @@
           "isMidWeekAdditionDelta": false
         },
         {
-          "playerId": "4428914",
-          "name": "Dee Winters",
-          "position": "LB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
-          "injuryType": "Knee",
-          "gameStatus": "Questionable",
-          "status": "Questionable",
-          "isSeasonEnding": false,
-          "isPracticeWindowOpen": false,
-          "earliestEligibleWeek": null,
-          "projectedReturnWeek": null,
-          "byeWeekNote": null,
-          "wed": "DNP",
-          "thu": "LP",
-          "fri": "-",
-          "playProbabilityPct": 79,
-          "playBadgeLabel": "79% • GTD",
-          "archetypeNote": "LB availability projection",
-          "factors": [
-            "Positive upward rehab ramp (Wed DNP -> Thu LP; player prior 81%)"
-          ],
-          "beatComment": "Winters upgraded to limited participation in Tuesday's practice after beginning the week as a nonparticipant. The 26-year-old has one more practice to improve his status for Thursday's game against the Eagles. DeMarvion Overshown will likely start if Winters can't play.",
-          "isStarter": true,
-          "role": "Starter",
-          "priorDayPlayProbabilityPct": 37,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
           "playerId": "4043089",
           "name": "Jalen Thompson",
           "position": "S",
@@ -25949,6 +25930,35 @@
           "isStarter": false,
           "role": "Depth",
           "priorDayPlayProbabilityPct": 74,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "4428914",
+          "name": "Dee Winters",
+          "position": "LB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
+          "injuryType": "Knee",
+          "gameStatus": "Active",
+          "status": "Active",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "DNP",
+          "thu": "LP",
+          "fri": "-",
+          "playProbabilityPct": 95,
+          "playBadgeLabel": "95% • Cleared",
+          "archetypeNote": "LB availability projection",
+          "factors": [
+            "Cleared without restrictive game-day designation"
+          ],
+          "beatComment": "Winters upgraded to limited participation in Tuesday's practice after beginning the week as a nonparticipant. The 26-year-old has one more practice to improve his status for Thursday's game against the Eagles. DeMarvion Overshown will likely start if Winters can't play.",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": 37,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },

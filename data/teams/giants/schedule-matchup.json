@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:32.555Z",
+  "updatedAt": "2026-11-25T20:49:34.054Z",
   "sources": [
     {
       "label": "ESPN Giants Schedule",
@@ -24671,14 +24671,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 17,
-    "averageRank": 17.2,
+    "averageRank": 17.4,
     "medianRank": 18,
     "previousRank": 20,
     "rangeMin": 13,
     "rangeMax": 20,
     "rangeShort": "#13–#20",
     "rangeDisplay": "#13–#20 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 6-3-1 Giants at #17 consensus (avg #17.2) through Week 11, ranging from #13 (ESPN Panel) to #20 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 6-3-1 Giants at #17 consensus (avg #17.4) through Week 11, ranging from #13 (ESPN Panel) to #20 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_panel",
@@ -24704,16 +24704,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 16,
+        "rank": 17,
         "previousRank": 19,
-        "delta": "+3",
+        "delta": "+2",
         "reportedRecord": "6-3-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (50.6% neutral-field win rating, 9.9 proj. wins) at 6-3-1 through Week 11.",
+        "blurb": "Tier 3 (51.2% neutral-field win rating, 9.9 proj. wins) at 6-3-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24810,16 +24810,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 16,
+        "rank": 17,
         "previousRank": 19,
-        "delta": "+3",
+        "delta": "+2",
         "reportedRecord": "6-3-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (50.6% neutral-field win rating, 9.9 proj. wins) at 6-3-1 through Week 11."
+        "blurb": "Tier 3 (51.2% neutral-field win rating, 9.9 proj. wins) at 6-3-1 through Week 11."
       },
       {
         "id": "cbs",
@@ -24885,7 +24885,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:36.885Z"
+    "fetchedAtIso": "2026-11-25T20:49:37.984Z"
   },
   "upcomingMatchup": {
     "week": 12,

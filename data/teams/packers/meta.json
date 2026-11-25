@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:13.160Z",
+  "updatedAt": "2026-11-25T20:49:09.445Z",
   "teamAbbr": "GB",
   "teamSlug": "packers",
   "brandName": "Go Pack Go",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:13.160Z",
+    "lastCheckedAt": "2026-11-25T20:49:09.445Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

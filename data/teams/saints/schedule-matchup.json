@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:25.232Z",
+  "updatedAt": "2026-11-25T20:49:57.785Z",
   "sources": [
     {
       "label": "ESPN Saints Schedule",
@@ -24624,14 +24624,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 23,
-    "averageRank": 23.4,
-    "medianRank": 23,
+    "averageRank": 23,
+    "medianRank": 22,
     "previousRank": 22,
     "rangeMin": 21,
     "rangeMax": 27,
     "rangeShort": "#21–#27",
     "rangeDisplay": "#21–#27 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Saints at #23 consensus (avg #23.4) through Week 11, ranging from #21 (ESPN FPI) to #27 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Saints at #23 consensus (avg #23.0) through Week 11, ranging from #21 (ESPN FPI) to #27 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
@@ -24670,6 +24670,24 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 22,
+        "previousRank": 23,
+        "delta": "+1",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfLabel": "Thru Wk 11",
+        "verified": true,
+        "blurb": "Tier 4 (40.4% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "inpredictable",
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
@@ -24684,24 +24702,6 @@
         "asOfLabel": "November 25",
         "verified": true,
         "blurb": "Betting market rating GPF -4.1 (#19 Offense / #27 Defense) at 3-7 through Week 11.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 24,
-        "previousRank": 23,
-        "delta": "-1",
-        "reportedRecord": "3-7",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
-        "asOfLabel": "Thru Wk 11",
-        "verified": true,
-        "blurb": "Tier 4 (39.3% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24763,16 +24763,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 24,
+        "rank": 22,
         "previousRank": 23,
-        "delta": "-1",
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (39.3% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11."
+        "blurb": "Tier 4 (40.4% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24838,7 +24838,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:29.066Z"
+    "fetchedAtIso": "2026-11-25T20:50:01.563Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25753,7 +25753,7 @@
       "spread": "CIN -10",
       "openingSpread": "Opened NO +6.5 (Draft Kings)",
       "overUnder": 49.5,
-      "moneyline": "NO +411 | CIN -543",
+      "moneyline": "NO +408 | CIN -538",
       "impliedScore": "NO 19.8 – CIN 29.8",
       "restAdvantage": "+1 Days Rest Advantage",
       "impliedWinProb": "8%"
@@ -27448,15 +27448,15 @@
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",
-        "unitMatchup": "Chase Young, Carl Granderson & Vernon Broughton vs. QB Joe Burrow & OT Orlando Brown Jr.",
+        "unitMatchup": "Chase Young, Carl Granderson & Nathan Shepherd vs. QB Joe Burrow & OT Orlando Brown Jr.",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Chase Young",
           "Carl Granderson",
-          "Vernon Broughton"
+          "Nathan Shepherd"
         ],
         "statComparison": "NO: #16 Def Sacks (2.3/gm) | CIN: #16 Pass Protection (6.5%)",
-        "tacticalDetail": "Chase Young, Carl Granderson & Vernon Broughton lead New Orleans's #16 NFL pass rush (2.3/gm) against Cincinnati Bengals's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Saints keep seven defenders in coverage.",
+        "tacticalDetail": "Chase Young, Carl Granderson & Nathan Shepherd lead New Orleans's #16 NFL pass rush (2.3/gm) against Cincinnati Bengals's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Saints keep seven defenders in coverage.",
         "filmTell": "On 3rd-and-6+, watch whether Chase Young (#99) draw chip help from Bengals's tight ends or backs—creating 1-on-1 rush lanes inside for Carl Granderson (#96)."
       },
       {

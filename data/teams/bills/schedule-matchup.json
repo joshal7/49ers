@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:44.668Z",
+  "updatedAt": "2026-11-25T20:50:18.054Z",
   "sources": [
     {
       "label": "ESPN Bills Schedule",
@@ -24755,10 +24755,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (72.4% neutral-field win rating, 13.7 proj. wins) at 9-1 through Week 11.",
+        "blurb": "Tier 1 (72.1% neutral-field win rating, 13.7 proj. wins) at 9-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24825,10 +24825,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (72.4% neutral-field win rating, 13.7 proj. wins) at 9-1 through Week 11."
+        "blurb": "Tier 1 (72.1% neutral-field win rating, 13.7 proj. wins) at 9-1 through Week 11."
       },
       {
         "id": "cbs",
@@ -24894,7 +24894,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:47.133Z"
+    "fetchedAtIso": "2026-11-25T20:50:20.495Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27767,16 +27767,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "O'Cyrus Torrence, Alec Anderson & Dion Dawkins vs. DE George Karlaftis & Chiefs Simulated Pressures",
+        "unitMatchup": "O'Cyrus Torrence, Dion Dawkins & Connor McGovern vs. DE George Karlaftis & Chiefs Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "O'Cyrus Torrence",
-          "Alec Anderson",
-          "Dion Dawkins"
+          "Dion Dawkins",
+          "Connor McGovern"
         ],
         "statComparison": "BUF: #16 Pass Protection (6.0%) | KC: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "O'Cyrus Torrence, Alec Anderson & Dion Dawkins protect Josh Allen (#16 protection at 6.0%) against DE George Karlaftis and Kansas City Chiefs's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch O'Cyrus Torrence (#64) on obvious passing downs—if DE George Karlaftis cannot win clean around the arc, Chiefs must dial up interior stunts that stress Alec Anderson (#70)."
+        "tacticalDetail": "O'Cyrus Torrence, Dion Dawkins & Connor McGovern protect Josh Allen (#16 protection at 6.0%) against DE George Karlaftis and Kansas City Chiefs's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch O'Cyrus Torrence (#64) on obvious passing downs—if DE George Karlaftis cannot win clean around the arc, Chiefs must dial up interior stunts that stress Dion Dawkins (#73)."
       }
     ]
   }

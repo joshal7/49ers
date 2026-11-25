@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:48.917Z",
+  "updatedAt": "2026-11-25T20:51:18.706Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.jaguars.com/team/injury-report/",
@@ -112,31 +112,6 @@
       "beatComment": "Green has strung together six consecutive full practices since being designated to return from injured reserve Nov. 11. He's not quite ready to be activated from IR, so his next chance to play is Week 12 against the Titans on Sunday, Nov. 29. Green is in the final stages of his recovery from an elbow injury that he suffered in Week 1 against the Browns."
     },
     {
-      "playerId": "4882093",
-      "name": "Bhayshul Tuten",
-      "position": "RB",
-      "jersey": 33,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4882093.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 76,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "76% • GTD",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Questionable tag adjusted by player career prior (76%)"
-      ],
-      "beatComment": "Ryan O'Halloran of The Florida Times-Union previously reported that Jaguars head coach Liam Coen noted Monday that the re-check stemming from the aggravation of the ankle injury Tuten suffered in Week 11 suggested that the issue \"wasn't too bad.\" That said, with the running back in line to log a Wednesday 'DNP,\" his status needs to be tracked leading up to Sunday's game against the Titans. If Tuten is limited or out this weekend, Chris Rodriguez would be next in line to see added touches, with LeQuint Allen and Ameer Abdullah also on hand."
-    },
-    {
       "playerId": "4426448",
       "name": "Jarrian Jones",
       "position": "CB",
@@ -160,6 +135,31 @@
         "Questionable tag adjusted by player career prior (76%)"
       ],
       "beatComment": "Jones suffered a chest injury early in the first half, and his night has now officially come to a premature end. The Jaguars will now have to operate without their top slot cornerback for the stretch run versus New York."
+    },
+    {
+      "playerId": "4882093",
+      "name": "Bhayshul Tuten",
+      "position": "RB",
+      "jersey": 33,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4882093.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 76,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "76% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Questionable tag adjusted by player career prior (76%)"
+      ],
+      "beatComment": "Ryan O'Halloran of The Florida Times-Union previously reported that Jaguars head coach Liam Coen noted Monday that the re-check stemming from the aggravation of the ankle injury Tuten suffered in Week 11 suggested that the issue \"wasn't too bad.\" That said, with the running back in line to log a Wednesday 'DNP,\" his status needs to be tracked leading up to Sunday's game against the Titans. If Tuten is limited or out this weekend, Chris Rodriguez would be next in line to see added touches, with LeQuint Allen and Ameer Abdullah also on hand."
     },
     {
       "playerId": "3134316",

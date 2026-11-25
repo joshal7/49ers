@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:33.152Z",
+  "updatedAt": "2026-11-25T20:49:41.142Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.commanders.com/team/injury-report/",
@@ -60,6 +60,31 @@
       "beatComment": "Robertson suffered an ankle injury at the team's final practice of the week, so his absence Monday comes as no surprise. In his absence, Mike Sainristil and Quan Martin will both likely operate in more prominent roles at cornerback versus Cincinnati."
     },
     {
+      "playerId": "4360378",
+      "name": "Quan Martin",
+      "position": "S",
+      "jersey": 20,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360378.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Shoulder",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Martin's practice reps were limited both Thursday and Friday due to a shoulder issue, but his full session Saturday was enough for him to avoid an injury tag for Monday night's game. Martin could see an uptick in defensive snaps if defensive back Amik Robertson (ankle) is not cleared to play against Cincinnati."
+    },
+    {
       "playerId": "4361088",
       "name": "Colson Yankoff",
       "position": "TE",
@@ -108,31 +133,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Patrick has cleared the NFL's five-step concussion protocol in time for Monday night's contest. Patrick will step back into his starting center role against an improved Bengals defensive line."
-    },
-    {
-      "playerId": "4360378",
-      "name": "Quan Martin",
-      "position": "S",
-      "jersey": 20,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360378.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Shoulder",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Martin's practice reps were limited both Thursday and Friday due to a shoulder issue, but his full session Saturday was enough for him to avoid an injury tag for Monday night's game. Martin could see an uptick in defensive snaps if defensive back Amik Robertson (ankle) is not cleared to play against Cincinnati."
     }
   ],
   "irAndReserveTracker": [

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:46:27.918Z",
+  "updatedAt": "2026-11-25T20:49:15.120Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17CT",
     "cycleKey": "2026-11-24@17CT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-25T20:46:27.918Z",
+    "generatedAt": "2026-11-25T20:49:15.120Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -21,7 +21,7 @@
     "bullets": [
       "Injury & Practice Status: CB Tyrique Stevenson Sr. (groin) logged limited practice reps Friday [Brad Biggs](https://www.espn.com/nfl/player/_/id/4243315/salvon-ahmed#:~:text=Ahmed%20was%20elevated%20from%20the%20practice%20squad). CB Kyler Gordon (shoulder), S Elijah Hicks (concussion), and RB Roschon Johnson (ankle) did not practice Friday, while LB D'Marco Jackson (elbow) and OT Theo Benedet (quadricep) practiced in full.",
       "Week 12 Lions Outlook: Ben Johnson and DC Dennis Allen open installation for the Detroit Lions (8-2, CHI -1.5, HC Dan Campbell, OC Drew Petzing & DC Kelvin Sheppard (Road Test))—a unit ranked #3 in Total Yards / Game (391.8 yds) as Chicago prepares for a pivotal NFC matchup [chicagobears.com Official](https://www.chicagobears.com/news/three-bears-players-ruled-out-of-thanksgiving-game-in-detroit-injury-update) [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions).",
-      "NFC Playoff Trajectory: Entering Week 12 at 8-2 (2nd in NFC North • #5 Seed in NFC), Chicago carries a 86.7% postseason projection, 26.1% NFC North division title mark, and 10.5% #1 Seed Bye equity into the conference stretch [Lester A. Wiltfong Jr.](https://www.windycitygridiron.com/chicago-bears-odds/128226/bears-vs-lions-predictions-week-12-picks).",
+      "NFC Playoff Trajectory: Entering Week 12 at 8-2 (2nd in NFC North • #5 Seed in NFC), Chicago carries a 85.2% postseason projection, 24.5% NFC North division title mark, and 9.9% #1 Seed Bye equity into the conference stretch [Lester A. Wiltfong Jr.](https://www.windycitygridiron.com/chicago-bears-odds/128226/bears-vs-lions-predictions-week-12-picks).",
       "Around the Beat: The Bears run game hasn’t been as dominant this year for a few reasons [Mina Kimes](https://bsky.app/profile/minakimes.bsky.social/post/3n35q3mc3mk2f).",
       "Statistical Profile & Matchup Edge: Through Week 11, Chicago ranks #8 in Points / Game (26.2), #6 in Points Allowed / Game (19.7), #25 in Turnover Differential (-4), giving Ben Johnson and Dennis Allen a clear benchmark ahead of Thu, Nov 26, 12:00 PM CST • NFL TV at [object Object] against the Detroit Lions [Kevin Fishbain](https://bsky.app/profile/kfishbain.bsky.social/post/3n35qylaczk2k)."
     ],
@@ -399,7 +399,7 @@
       "playerValueScore": 0.09,
       "playerValueTier": "depth",
       "injuryImpactScore": 0.528,
-      "storyRank": 72.0525
+      "storyRank": 69.395
     },
     {
       "id": "chi_pwire_4243315_64974728",
@@ -430,7 +430,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.124,
+      "breakingPriority": 1.119,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -442,7 +442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.069
+      "storyRank": 50.9406
     },
     {
       "id": "chi_pft_1fd3eca01bd1",
@@ -476,7 +476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.0906
+      "storyRank": 24.2369
     },
     {
       "id": "chi_bsky_329169a0c5e5",
@@ -507,7 +507,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.734,
+      "breakingPriority": 0.732,
       "signalScore": 80,
       "fluffScore": 0,
       "isClickbait": false,
@@ -516,7 +516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.1393
+      "storyRank": 12.9421
     },
     {
       "id": "chi_brss_windy_city_gridiron_f07f7f06097e",
@@ -550,7 +550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.1335
+      "storyRank": 9.9506
     },
     {
       "id": "chi_bsky_916c71b12caf",
@@ -588,7 +588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.3896
+      "storyRank": 9.227
     },
     {
       "id": "chi_vid_bba4f166e62b",
@@ -623,7 +623,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.609,
+      "breakingPriority": 0.607,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -633,7 +633,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8533
+      "storyRank": 5.8015
     },
     {
       "id": "chi_bsky_165337090f43",
@@ -671,7 +671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4622
+      "storyRank": 5.3977
     },
     {
       "id": "chi_rss_9194459632e5",
@@ -705,7 +705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.398
+      "storyRank": 5.3362
     },
     {
       "id": "chi_brss_windy_city_gridiron_0ccfa7b9b158",
@@ -738,7 +738,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.606,
+      "breakingPriority": 0.604,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -748,7 +748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6881
+      "storyRank": 5.6395
     },
     {
       "id": "chi_rss_f10ef9363228",
@@ -782,7 +782,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1811
+      "storyRank": 5.1235
     },
     {
       "id": "chi_vid_4e006360cf25",
@@ -818,7 +818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0782
+      "storyRank": 5.0225
     },
     {
       "id": "chi_brss_windy_city_gridiron_37b02f62f06e",
@@ -852,7 +852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9275
+      "storyRank": 3.8912
     },
     {
       "id": "chi_bsky_ec172d32a0e8",
@@ -899,7 +899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8205
+      "storyRank": 3.7855
     },
     {
       "id": "chi_espn_fc8da87f0f22c",
@@ -943,7 +943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2425
+      "storyRank": 2.2288
     },
     {
       "id": "chi_bsky_94ddf4e728f2",
@@ -990,7 +990,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1081
+      "storyRank": 2.1029
     },
     {
       "id": "chi_brss_windy_city_gridiron_4cb1af4c6525",
@@ -1024,7 +1024,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1571
+      "storyRank": 1.1526
+    },
+    {
+      "id": "chi_yt_1Yn-8CLEzY4",
+      "type": "video",
+      "category": "film",
+      "videoId": "1Yn-8CLEzY4",
+      "embeddable": true,
+      "title": "NOBODY Really Understands What Caleb Williams Is Doing Right Now… | Bears QB Film Breakdown",
+      "summary": "Caleb Williams continues to show why he has the potential to be one of the most dangerous quarterbacks in the NFL! In this episode of The Breakdown, former NFL quarterback Chase Daniel dives into the All-22 film of Caleb",
+      "imageUrl": "https://i.ytimg.com/vi/1Yn-8CLEzY4/hqdefault.jpg",
+      "imageAlt": "NOBODY Really Understands What Caleb Williams Is Doing Right Now… | Bears QB Film Breakdown",
+      "publishedAt": "2026-11-24T23:00:15.000Z",
+      "url": "https://www.youtube.com/watch?v=1Yn-8CLEzY4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=1Yn-8CLEzY4",
+      "channel": "Chase Daniel",
+      "outletId": "chase_daniel",
+      "outletName": "Chase Daniel",
+      "reporterId": "chase_daniel",
+      "reporterName": "Chase Daniel",
+      "author": "Chase Daniel",
+      "authorHandle": "@ChaseDaniel",
+      "authorProfileUrl": "https://x.com/ChaseDaniel",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4431611",
+          "name": "Caleb Williams",
+          "shortName": "C. Williams",
+          "position": "QB",
+          "jersey": 18,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431611.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.3367
     },
     {
       "id": "chi_bsky_7a0b2de6a775",
@@ -1095,7 +1142,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4152
+      "storyRank": 1.4116
     },
     {
       "id": "chi_brss_windy_city_gridiron_ba2bed11f3a1",
@@ -1129,54 +1176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0161
-    },
-    {
-      "id": "chi_yt_1Yn-8CLEzY4",
-      "type": "video",
-      "category": "film",
-      "videoId": "1Yn-8CLEzY4",
-      "embeddable": true,
-      "title": "NOBODY Really Understands What Caleb Williams Is Doing Right Now… | Bears QB Film Breakdown",
-      "summary": "Caleb Williams continues to show why he has the potential to be one of the most dangerous quarterbacks in the NFL! In this episode of The Breakdown, former NFL quarterback Chase Daniel dives into the All-22 film of Caleb",
-      "imageUrl": "https://i.ytimg.com/vi/1Yn-8CLEzY4/hqdefault.jpg",
-      "imageAlt": "NOBODY Really Understands What Caleb Williams Is Doing Right Now… | Bears QB Film Breakdown",
-      "publishedAt": "2026-11-24T23:00:15.000Z",
-      "url": "https://www.youtube.com/watch?v=1Yn-8CLEzY4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=1Yn-8CLEzY4",
-      "channel": "Chase Daniel",
-      "outletId": "chase_daniel",
-      "outletName": "Chase Daniel",
-      "reporterId": "chase_daniel",
-      "reporterName": "Chase Daniel",
-      "author": "Chase Daniel",
-      "authorHandle": "@ChaseDaniel",
-      "authorProfileUrl": "https://x.com/ChaseDaniel",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4431611",
-          "name": "Caleb Williams",
-          "shortName": "C. Williams",
-          "position": "QB",
-          "jersey": 18,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431611.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.3402
+      "storyRank": 1.0125
     },
     {
       "id": "chi_brss_windy_city_gridiron_7016f9141fd7",
@@ -1210,7 +1210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9335
+      "storyRank": 0.9304
     },
     {
       "id": "chi_brss_windy_city_gridiron_0f39e867f3b0",
@@ -1244,7 +1244,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9329
+      "storyRank": 0.9298
     },
     {
       "id": "chi_brss_windy_city_gridiron_1e80852637d6",
@@ -1278,7 +1278,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9323
+      "storyRank": 0.9292
     },
     {
       "id": "chi_pfr_34688f1b6eb7",
@@ -1320,7 +1320,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8702
+      "storyRank": 0.8675
     },
     {
       "id": "chi_brss_windy_city_gridiron_fdf1cf14e0c0",
@@ -1354,7 +1354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.815
+      "storyRank": 0.8125
     },
     {
       "id": "chi_rss_0ed32e1c6cc6",
@@ -1397,7 +1397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8071
+      "storyRank": 0.8047
     },
     {
       "id": "chi_vid_8201d4228ee6",
@@ -1442,7 +1442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.722
+      "storyRank": 0.72
     },
     {
       "id": "chi_brss_windy_city_gridiron_f67d97e23e35",
@@ -1476,7 +1476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6788
+      "storyRank": 0.677
     },
     {
       "id": "chi_vid_7003772fe1ac",
@@ -1512,7 +1512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6539
+      "storyRank": 0.6523
     },
     {
       "id": "chi_pwire_4608686_49949224",
@@ -1544,7 +1544,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6353
+      "storyRank": 0.6336
     },
     {
       "id": "chi_bsky_25e2fdf41ace",
@@ -1591,7 +1591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.621
+      "storyRank": 0.6195
     },
     {
       "id": "chi_vid_05634bf6a701",
@@ -1636,7 +1636,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6358
+      "storyRank": 0.6342
     },
     {
       "id": "chi_bsky_dc8cfcb83bd6",
@@ -1674,7 +1674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5726
+      "storyRank": 0.5713
     },
     {
       "id": "x_tl_nicholasmoreano_2125285988297478560",
@@ -1726,7 +1726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6188
+      "storyRank": 0.6174
     },
     {
       "id": "chi_pwire_4685278_50583834",
@@ -1758,7 +1758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5709
+      "storyRank": 0.5696
     },
     {
       "id": "x_tl_fieldyates_2125278975282835845",
@@ -1870,7 +1870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6099
+      "storyRank": 0.6085
     },
     {
       "id": "chi_espn_406fa2ad56057",
@@ -1906,7 +1906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5173
+      "storyRank": 0.5162
     },
     {
       "id": "chi_rss_1684388ebfce",
@@ -1940,7 +1940,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4553
+      "storyRank": 0.4544
     },
     {
       "id": "chi_tx_f2c7949bd426",
@@ -1984,7 +1984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3723
+      "storyRank": 0.3717
     },
     {
       "id": "chi_bsky_661c205ec429",
@@ -2047,7 +2047,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.621
+      "storyRank": 0.6202
     },
     {
       "id": "chi_pfr_2fe42aa5dcec",
@@ -2080,7 +2080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2867
+      "storyRank": 0.2862
     },
     {
       "id": "chi_rss_a25621ac342e",
@@ -2123,7 +2123,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2689
+      "storyRank": 0.2685
     },
     {
       "id": "chi_rss_639f88242131",
@@ -2166,7 +2166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2616
+      "storyRank": 0.2613
     },
     {
       "id": "chi_vid_0bc6a299dc07",
@@ -2211,7 +2211,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2613
+      "storyRank": 0.2609
     },
     {
       "id": "chi_yts_TAvO7hOMR70",
@@ -2223,7 +2223,7 @@
       "duration": "13:16",
       "imageUrl": "https://i.ytimg.com/vi/TAvO7hOMR70/hqdefault.jpg",
       "imageAlt": "New Orleans Saints vs. Chicago Bears Game Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T20:46:29.097Z",
+      "publishedAt": "2026-11-23T20:49:15.870Z",
       "url": "https://www.youtube.com/watch?v=TAvO7hOMR70",
       "externalVideoUrl": "https://www.youtube.com/watch?v=TAvO7hOMR70",
       "channel": "NFL",
@@ -2288,7 +2288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2331
+      "storyRank": 0.2328
     },
     {
       "id": "chi_vid_4c0ec13e09af",
@@ -2324,7 +2324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2335
+      "storyRank": 0.2332
     },
     {
       "id": "chi_bsky_1a12a8ea458d",
@@ -2362,7 +2362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2247
+      "storyRank": 0.2244
     },
     {
       "id": "chi_yt_ZCTkMLWZSLw",
@@ -2409,7 +2409,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1959
+      "storyRank": 0.1956
     },
     {
       "id": "chi_bsky_578160a1f675",
@@ -2464,7 +2464,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2115
+      "storyRank": 0.2113
     },
     {
       "id": "chi_bsky_8f0ec7cb1f14",
@@ -2507,7 +2507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2057
+      "storyRank": 0.2054
     },
     {
       "id": "chi_tx_496f13d2649e",
@@ -2542,7 +2542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1872
+      "storyRank": 0.187
     },
     {
       "id": "x_tl_kfishbain_2124714294616957262",
@@ -2581,7 +2581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1885
+      "storyRank": 0.1883
     },
     {
       "id": "chi_espn_f5921e81f2ad4",
@@ -2617,7 +2617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.173
+      "storyRank": 0.1729
     },
     {
       "id": "chi_bsky_58d7d7c9d61c",
@@ -2655,7 +2655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1658
+      "storyRank": 0.1656
     },
     {
       "id": "chi_espn_1d695ca4f018e",
@@ -2699,7 +2699,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.162
+      "storyRank": 0.1618
     },
     {
       "id": "chi_rss_d87aed2928a8",
@@ -2750,7 +2750,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1605
+      "storyRank": 0.1604
     },
     {
       "id": "chi_rss_7b21b446f105",
@@ -2784,7 +2784,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1586
+      "storyRank": 0.1584
     },
     {
       "id": "chi_espn_1125cb99eeb13",
@@ -2828,7 +2828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1561
+      "storyRank": 0.156
     },
     {
       "id": "chi_bsky_d56a4f12dfc3",
@@ -2875,7 +2875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1493
+      "storyRank": 0.1492
     },
     {
       "id": "chi_bsky_f6ba59c95ca1",
@@ -2922,7 +2922,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1474
+      "storyRank": 0.1472
     },
     {
       "id": "chi_vid_9d01620afbb3",
@@ -2958,7 +2958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1519
+      "storyRank": 0.1518
     },
     {
       "id": "chi_vid_76de8309ba70",
@@ -2994,7 +2994,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1518
+      "storyRank": 0.1517
     },
     {
       "id": "chi_rss_aa9d984f2777",
@@ -3028,7 +3028,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1518
+      "storyRank": 0.1516
     },
     {
       "id": "chi_vid_9a737bb4652c",
@@ -3073,7 +3073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1517
+      "storyRank": 0.1516
     },
     {
       "id": "chi_vid_5be23549481c",
@@ -3109,7 +3109,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1514
+      "storyRank": 0.1512
     },
     {
       "id": "x_tl_sumersports_2124614076714328071",
@@ -3158,7 +3158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1623
+      "storyRank": 0.1622
     },
     {
       "id": "chi_vid_1609e55a8ff9",
@@ -3203,7 +3203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1513
+      "storyRank": 0.1512
     },
     {
       "id": "chi_vid_10530005a5a6",
@@ -3239,7 +3239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1508
+      "storyRank": 0.1507
     },
     {
       "id": "chi_vid_430bf9714927",
@@ -3284,7 +3284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1495
+      "storyRank": 0.1494
     },
     {
       "id": "chi_bsky_e13d1b8de199",
@@ -3322,7 +3322,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1443
+      "storyRank": 0.1441
     },
     {
       "id": "chi_bsky_3a5310754c1d",
@@ -3360,7 +3360,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1442
+      "storyRank": 0.1441
     },
     {
       "id": "chi_vid_007fbb7d680f",
@@ -3413,55 +3413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1488
-    },
-    {
-      "id": "chi_yts_qXmN1XVohLM",
-      "type": "video",
-      "videoId": "qXmN1XVohLM",
-      "embeddable": false,
-      "title": "Colston Loveland hurdles his way to the endzone",
-      "summary": "",
-      "duration": "0:30",
-      "imageUrl": "https://i.ytimg.com/vi/qXmN1XVohLM/hqdefault.jpg",
-      "imageAlt": "Colston Loveland hurdles his way to the endzone",
-      "publishedAt": "2026-11-22T20:46:29.097Z",
-      "url": "https://www.youtube.com/watch?v=qXmN1XVohLM",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=qXmN1XVohLM",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "4723086",
-          "name": "Colston Loveland",
-          "shortName": "C. Loveland",
-          "position": "TE",
-          "jersey": 84,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4723086.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
+      "storyRank": 0.1487
     },
     {
       "id": "chi_vid_1b6e620d4aa4",
@@ -3506,7 +3458,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1479
+      "storyRank": 0.1477
     },
     {
       "id": "chi_bsky_120c35e68e82",
@@ -3553,7 +3505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1428
+      "storyRank": 0.1427
     },
     {
       "id": "chi_bsky_c39b7e4c6674",
@@ -3600,7 +3552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1426
+      "storyRank": 0.1425
     },
     {
       "id": "chi_vid_be6ebbbc8366",
@@ -3636,7 +3588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0369
+      "storyRank": 0.0368
     },
     {
       "id": "chi_bsky_c7f5434c8c04",
@@ -3719,7 +3671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1465
+      "storyRank": 0.1463
     },
     {
       "id": "chi_vid_0058823faee3",
@@ -3772,7 +3724,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1461
+      "storyRank": 0.146
     },
     {
       "id": "chi_vid_3c8850c19334",
@@ -3817,7 +3769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1449
+      "storyRank": 0.1448
     },
     {
       "id": "chi_vid_8ea8971c9916",
@@ -3862,7 +3814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1229
+      "storyRank": 0.1228
     },
     {
       "id": "chi_vid_d6ab88b904f2",
@@ -3907,7 +3859,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1437
+      "storyRank": 0.1436
     },
     {
       "id": "chi_vid_5d67541f8474",
@@ -3952,7 +3904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1437
+      "storyRank": 0.1435
     },
     {
       "id": "chi_vid_d6d3d37e2195",
@@ -4005,7 +3957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1432
+      "storyRank": 0.143
     },
     {
       "id": "chi_vid_64e9d08e8de8",
@@ -4058,7 +4010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.143
+      "storyRank": 0.1429
     },
     {
       "id": "chi_vid_5bcdbc6f2816",
@@ -4111,7 +4063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1427
+      "storyRank": 0.1426
     },
     {
       "id": "chi_vid_601af0777572",
@@ -4156,7 +4108,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.142
+      "storyRank": 0.1419
     },
     {
       "id": "chi_vid_1f68e4525737",
@@ -4201,7 +4153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1414
+      "storyRank": 0.1413
     },
     {
       "id": "chi_vid_27f62610773d",
@@ -4254,7 +4206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1413
+      "storyRank": 0.1412
     },
     {
       "id": "chi_rss_c84cf7e7f070",
@@ -4321,7 +4273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0489
+      "storyRank": 0.0488
     },
     {
       "id": "chi_rss_1ff6eed0f859",
@@ -4355,7 +4307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0455
+      "storyRank": 0.0454
     },
     {
       "id": "chi_vid_a8f58667d8da",
@@ -4477,7 +4429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0382
+      "storyRank": 0.0381
     },
     {
       "id": "chi_rss_969eeb414c16",
@@ -4859,7 +4811,7 @@
       "duration": "9:21",
       "imageUrl": "https://i.ytimg.com/vi/V5RXwfL9Poc/hqdefault.jpg",
       "imageAlt": "New Orleans Saints vs Chicago Bears | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:46:29.097Z",
+      "publishedAt": "2026-11-18T20:49:15.870Z",
       "url": "https://www.youtube.com/watch?v=V5RXwfL9Poc",
       "externalVideoUrl": "https://www.youtube.com/watch?v=V5RXwfL9Poc",
       "channel": "NFL",

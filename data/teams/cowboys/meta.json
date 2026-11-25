@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:06.364Z",
+  "updatedAt": "2026-11-25T20:49:26.043Z",
   "teamAbbr": "DAL",
   "teamSlug": "cowboys",
   "brandName": "Cowboys Nation",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:06.364Z",
+    "lastCheckedAt": "2026-11-25T20:49:26.043Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

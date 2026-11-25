@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:45.861Z",
+  "updatedAt": "2026-11-25T20:49:02.124Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.vikings.com/team/injury-report/",
@@ -138,6 +138,31 @@
       "beatComment": "Van Ginkel's practice reps were limited Wednesday and Thursday while managing a quadriceps injury that he sustained in Week 10 against the Packers. He was a full participant in Friday's session, which was enough for the veteran edge rusher to avoid an injury tag for Sunday's contest. In Van Ginkel's four outings since the Vikings' Week 6 bye, he has accumulated 14 tackles (eight solo), including 4.5 sacks, one forced fumble and one fumble recovery."
     },
     {
+      "playerId": "4036133",
+      "name": "T.J. Hockenson",
+      "position": "TE",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036133.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Wrist",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "In his return from a one-game absence, Hockenson finished second on the team in receiving yards behind Justin Jefferson's 86. Hockenson showed promising chemistry with Kirk Cousins after the veteran TE sat out Cousins' return to Minnesota during the Week 10 win over Green Bay. Cousins was under center for the Vikings in the 2023 regular season, when Hockenson set career highs with 95 catches for 960 yards. Hockenson hasn't surpassed 455 yards in a regular season since, though he's on pace to do so this year, with 41 catches for 383 yards and three touchdowns through nine appearances heading into a Week 12 home game against the Falcons."
+    },
+    {
       "playerId": "4361985",
       "name": "Christian Darrisaw",
       "position": "OT",
@@ -186,31 +211,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Jones -- who was managing a shoulder injury during Week 11 prep -- was a full participant in Friday's session, which was enough for him to avoid an injury tag for Sunday's contest. He was signed to the Vikings' 53-man roster Wednesday to give the team more depth at wide receiver while Jordan Addison recovers from a thumb injury. Jones figures to be limited to a rotational role on offense while serving as a contributor on special teams."
-    },
-    {
-      "playerId": "4036133",
-      "name": "T.J. Hockenson",
-      "position": "TE",
-      "jersey": 87,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036133.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Wrist",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "In his return from a one-game absence, Hockenson finished second on the team in receiving yards behind Justin Jefferson's 86. Hockenson showed promising chemistry with Kirk Cousins after the veteran TE sat out Cousins' return to Minnesota during the Week 10 win over Green Bay. Cousins was under center for the Vikings in the 2023 regular season, when Hockenson set career highs with 95 catches for 960 yards. Hockenson hasn't surpassed 455 yards in a regular season since, though he's on pace to do so this year, with 41 catches for 383 yards and three touchdowns through nine appearances heading into a Week 12 home game against the Falcons."
     }
   ],
   "irAndReserveTracker": [

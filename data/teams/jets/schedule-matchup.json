@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:15.980Z",
+  "updatedAt": "2026-11-25T20:50:35.574Z",
   "sources": [
     {
       "label": "ESPN Jets Schedule",
@@ -24712,10 +24712,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (39.5% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 11.",
+        "blurb": "Tier 4 (39.9% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24801,10 +24801,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (39.5% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 11."
+        "blurb": "Tier 4 (39.9% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 11."
       },
       {
         "id": "cbs",
@@ -24870,7 +24870,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:18.836Z"
+    "fetchedAtIso": "2026-11-25T20:50:37.841Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27610,16 +27610,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Olu Fashanu, Armand Membou & Josh Myers vs. DT Keith Cooper Jr. & Dolphins Simulated Pressures",
+        "unitMatchup": "Armand Membou, Olu Fashanu & Josh Myers vs. DT Keith Cooper Jr. & Dolphins Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Olu Fashanu",
           "Armand Membou",
+          "Olu Fashanu",
           "Josh Myers"
         ],
         "statComparison": "NYJ: #16 Pass Protection (6.0%) | MIA: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Olu Fashanu, Armand Membou & Josh Myers protect Geno Smith (#16 protection at 6.0%) against DT Keith Cooper Jr. and Miami Dolphins's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Olu Fashanu (#74) on obvious passing downs—if DT Keith Cooper Jr. cannot win clean around the arc, Dolphins must dial up interior stunts that stress Armand Membou (#70)."
+        "tacticalDetail": "Armand Membou, Olu Fashanu & Josh Myers protect Geno Smith (#16 protection at 6.0%) against DT Keith Cooper Jr. and Miami Dolphins's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Armand Membou (#70) on obvious passing downs—if DT Keith Cooper Jr. cannot win clean around the arc, Dolphins must dial up interior stunts that stress Olu Fashanu (#74)."
       }
     ]
   }

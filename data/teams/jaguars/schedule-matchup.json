@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:48.917Z",
+  "updatedAt": "2026-11-25T20:51:18.706Z",
   "sources": [
     {
       "label": "ESPN Jaguars Schedule",
@@ -24670,15 +24670,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 5,
-    "averageRank": 5.4,
-    "medianRank": 5,
+    "consensusRank": 6,
+    "averageRank": 5.6,
+    "medianRank": 6,
     "previousRank": 3,
     "rangeMin": 4,
     "rangeMax": 7,
     "rangeShort": "#4–#7",
     "rangeDisplay": "#4–#7 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 7-3 Jaguars at #5 consensus (avg #5.4) through Week 11, ranging from #4 (ESPN FPI) to #7 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 7-3 Jaguars at #6 consensus (avg #5.6) through Week 11, ranging from #4 (ESPN FPI) to #7 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
@@ -24717,24 +24717,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 5,
-        "previousRank": 4,
-        "delta": "-1",
-        "reportedRecord": "7-3",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
-        "asOfLabel": "Thru Wk 11",
-        "verified": true,
-        "blurb": "Tier 1 (70.0% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 11.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "nfelo",
         "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
         "shortName": "nfelo",
@@ -24749,6 +24731,24 @@
         "asOfLabel": "7-3 record",
         "verified": true,
         "blurb": "nfelo 1640 (+6.1 spread value, #5 Off EPA, #1 Net EPA) at 7-3.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 6,
+        "previousRank": 4,
+        "delta": "-2",
+        "reportedRecord": "7-3",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfLabel": "Thru Wk 11",
+        "verified": true,
+        "blurb": "Tier 1 (69.7% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24810,16 +24810,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 5,
+        "rank": 6,
         "previousRank": 4,
-        "delta": "-1",
+        "delta": "-2",
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (70.0% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 11."
+        "blurb": "Tier 1 (69.7% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 11."
       },
       {
         "id": "cbs",
@@ -24885,7 +24885,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:53.212Z"
+    "fetchedAtIso": "2026-11-25T20:51:22.198Z"
   },
   "upcomingMatchup": {
     "week": 12,

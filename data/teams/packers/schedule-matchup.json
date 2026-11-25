@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:13.160Z",
+  "updatedAt": "2026-11-25T20:49:09.445Z",
   "sources": [
     {
       "label": "ESPN Packers Schedule",
@@ -24690,10 +24690,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (63.2% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11.",
+        "blurb": "Tier 2 (63.6% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24816,10 +24816,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (63.2% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11."
+        "blurb": "Tier 2 (63.6% neutral-field win rating, 9.9 proj. wins) at 6-4 through Week 11."
       },
       {
         "id": "cbs",
@@ -24874,7 +24874,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-25T20:44:16.179Z"
+    "fetchedAtIso": "2026-11-25T20:49:12.070Z"
   },
   "upcomingMatchup": {
     "week": 12,

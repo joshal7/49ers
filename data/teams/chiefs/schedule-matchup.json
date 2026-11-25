@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:32.027Z",
+  "updatedAt": "2026-11-25T20:51:32.424Z",
   "sources": [
     {
       "label": "ESPN Chiefs Schedule",
@@ -24781,10 +24781,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (69.6% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11.",
+        "blurb": "Tier 1 (69.5% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24833,10 +24833,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (69.6% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11."
+        "blurb": "Tier 1 (69.5% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11."
       },
       {
         "id": "cbs",
@@ -24902,7 +24902,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:35.190Z"
+    "fetchedAtIso": "2026-11-25T20:51:35.264Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27664,16 +27664,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Kahlil Benson, Creed Humphrey & Trey Smith vs. DT T.J. Sanders & Bills Simulated Pressures",
+        "unitMatchup": "Creed Humphrey, Kahlil Benson & Trey Smith vs. DT T.J. Sanders & Bills Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Kahlil Benson",
           "Creed Humphrey",
+          "Kahlil Benson",
           "Trey Smith"
         ],
         "statComparison": "KC: #16 Pass Protection (6.0%) | BUF: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Kahlil Benson, Creed Humphrey & Trey Smith protect Patrick Mahomes (#16 protection at 6.0%) against DT T.J. Sanders and Buffalo Bills's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Kahlil Benson (#70) on obvious passing downs—if DT T.J. Sanders cannot win clean around the arc, Bills must dial up interior stunts that stress Creed Humphrey (#52)."
+        "tacticalDetail": "Creed Humphrey, Kahlil Benson & Trey Smith protect Patrick Mahomes (#16 protection at 6.0%) against DT T.J. Sanders and Buffalo Bills's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Creed Humphrey (#52) on obvious passing downs—if DT T.J. Sanders cannot win clean around the arc, Bills must dial up interior stunts that stress Kahlil Benson (#70)."
       }
     ]
   }

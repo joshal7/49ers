@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:46:11.275Z",
+  "updatedAt": "2026-11-25T20:51:45.028Z",
   "sources": [
     {
       "label": "ESPN Chargers Schedule",
@@ -24682,10 +24682,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 5 (33.9% neutral-field win rating, 3.6 proj. wins) at 1-9 through Week 11.",
+        "blurb": "Tier 5 (34.3% neutral-field win rating, 3.6 proj. wins) at 1-9 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24771,10 +24771,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 5 (33.9% neutral-field win rating, 3.6 proj. wins) at 1-9 through Week 11."
+        "blurb": "Tier 5 (34.3% neutral-field win rating, 3.6 proj. wins) at 1-9 through Week 11."
       },
       {
         "id": "cbs",
@@ -24840,7 +24840,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:46:13.993Z"
+    "fetchedAtIso": "2026-11-25T20:51:47.211Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27327,15 +27327,15 @@
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",
-        "unitMatchup": "Tarheeb Still, Cam Hart & Daiyan Henley vs. WR Mack Hollins & QB Tommy DeVito",
+        "unitMatchup": "Tarheeb Still, Daiyan Henley & Cam Hart vs. WR Mack Hollins & QB Tommy DeVito",
         "advantage": "NE Edge",
         "sfPlayers": [
           "Tarheeb Still",
-          "Cam Hart",
-          "Daiyan Henley"
+          "Daiyan Henley",
+          "Cam Hart"
         ],
         "statComparison": "LAC: #22 Pass Def (+3.48) | NE: #13 Pass Off (233.6 yds)",
-        "tacticalDetail": "Tarheeb Still, Cam Hart & Daiyan Henley anchor Los Angeles's #22 pass defense (+3.48) against WR Mack Hollins and New England Patriots's #13 passing attack (233.6 yds). Limiting explosive 20+ yard chunk plays forces Patriots into sustained red-zone drives.",
+        "tacticalDetail": "Tarheeb Still, Daiyan Henley & Cam Hart anchor Los Angeles's #22 pass defense (+3.48) against WR Mack Hollins and New England Patriots's #13 passing attack (233.6 yds). Limiting explosive 20+ yard chunk plays forces Patriots into sustained red-zone drives.",
         "filmTell": "Track Tarheeb Still (#4) at the top of routes against WR Mack Hollins: press-bail alignment with safety help over the top takes away QB Tommy DeVito's preferred isolation shots."
       },
       {

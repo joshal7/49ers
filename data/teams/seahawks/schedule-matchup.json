@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:27.887Z",
+  "updatedAt": "2026-11-25T20:48:36.161Z",
   "sources": [
     {
       "label": "ESPN Seahawks Schedule",
@@ -24617,10 +24617,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (70.5% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11.",
+        "blurb": "Tier 1 (70.8% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24761,10 +24761,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (70.5% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11."
+        "blurb": "Tier 1 (70.8% neutral-field win rating, 10.2 proj. wins) at 6-4 through Week 11."
       },
       {
         "id": "cbs",
@@ -24819,7 +24819,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-25T20:43:32.724Z"
+    "fetchedAtIso": "2026-11-25T20:48:38.800Z"
   },
   "upcomingMatchup": {
     "week": 12,

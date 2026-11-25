@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:48.917Z",
+  "updatedAt": "2026-11-25T20:51:18.706Z",
   "teamAbbr": "JAX",
   "teamSlug": "jaguars",
   "brandName": "Jags DUUUVAL",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:45:48.917Z",
+    "lastCheckedAt": "2026-11-25T20:51:18.706Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

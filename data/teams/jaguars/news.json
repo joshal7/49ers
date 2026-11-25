@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:48.917Z",
+  "updatedAt": "2026-11-25T20:51:18.706Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "7-3",
-    "generatedAt": "2026-11-25T20:45:48.917Z",
+    "generatedAt": "2026-11-25T20:51:18.706Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -19,9 +19,9 @@
     "headline": "Jaguars (7-3) Week 12 Briefing: Pass-Rush Review & Injury Updates Ahead of Titans",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: Entering Week 12 preparation, head coach Liam Coen and the medical staff evaluate DE Danny Striggow (concussion), C Robert Hainsey (knee), RB Bhayshul Tuten (ankle), and CB Jarrian Jones (chest) ahead of Wednesday's initial participation report [Demetrius Harvey](https://www.espn.com/nfl/player/_/id/4882093/bhayshul-tuten#:~:text=Tuten%20%28ankle%29%20wasn't%20spotted%20at%20Wednesday's%20practice). DE B.J. Green II (forearm) and G Patrick Mekari (back (surgery)) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Pro Football Rumors](https://www.profootballrumors.com/2026/11/jaguars-open-patrick-mekaris-ir-return-window).",
+      "Injury & Practice Status: Entering Week 12 preparation, head coach Liam Coen and the medical staff evaluate DE Danny Striggow (concussion), C Robert Hainsey (knee), CB Jarrian Jones (chest), and RB Bhayshul Tuten (ankle) ahead of Wednesday's initial participation report [Demetrius Harvey](https://www.espn.com/nfl/player/_/id/4882093/bhayshul-tuten#:~:text=Tuten%20%28ankle%29%20wasn't%20spotted%20at%20Wednesday's%20practice). DE B.J. Green II (forearm) and G Patrick Mekari (back (surgery)) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Pro Football Rumors](https://www.profootballrumors.com/2026/11/jaguars-open-patrick-mekaris-ir-return-window).",
       "Week 12 Titans Outlook: Liam Coen and DC Anthony Campanile open installation for the Tennessee Titans (1-9, JAX -14.5, HC Robert Saleh, OC Brian Daboll & DC Gus Bradley (EverBank Stadium))—a unit ranked #4 in Field Goal % (94.7%) as Jacksonville prepares for a pivotal AFC matchup [jaguars.com Official](https://www.jaguars.com/news/scout-s-take-bucky-brooks-looks-ahead-to-week-12-vs-titans) [jaguars.com Official](https://www.jaguars.com/news/nfl-power-rankings-week-12-stronger-and-stronger-at-no-1).",
-      "AFC Playoff Trajectory: Entering Week 12 at 7-3 (1st in AFC South • #3 Seed in AFC), Jacksonville carries a 98.3% postseason projection, 94.4% AFC South division title mark, and 6.2% #1 Seed Bye equity into the conference stretch [Matt Warren](https://www.bigcatcountry.com/jacksonville-jaguars-nfl-playoffs/91872/afc-playoff-picture-jacksonville-jaguars-cincinnati-bengals-loss).",
+      "AFC Playoff Trajectory: Entering Week 12 at 7-3 (1st in AFC South • #3 Seed in AFC), Jacksonville carries a 98% postseason projection, 93.7% AFC South division title mark, and 5.6% #1 Seed Bye equity into the conference stretch [Matt Warren](https://www.bigcatcountry.com/jacksonville-jaguars-nfl-playoffs/91872/afc-playoff-picture-jacksonville-jaguars-cincinnati-bengals-loss).",
       "Around the Beat: We have opened OL Patrick Mekari’s 21-day practice period [James Gladstone](https://x.com/Jaguars/status/2125613353725001809)."
     ],
     "coveredStoryKeys": [
@@ -364,7 +364,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.592,
+      "breakingPriority": 1.578,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -380,7 +380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.6566
+      "storyRank": 12.4205
     },
     {
       "id": "jax_vid_a8373a21f9c8",
@@ -415,7 +415,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.747,
+      "breakingPriority": 0.742,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -425,7 +425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.2333
+      "storyRank": 11.8905
     },
     {
       "id": "jax_brss_big_cat_country_a3c3a5cbcc0c",
@@ -458,7 +458,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.201,
+      "breakingPriority": 1.191,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -474,7 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.7137
+      "storyRank": 11.4422
     },
     {
       "id": "jax_pwire_4882093_64971328",
@@ -515,7 +515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7956
+      "storyRank": 6.6169
     },
     {
       "id": "jax_pwire_3916433_64971128",
@@ -556,7 +556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6887
+      "storyRank": 6.5147
     },
     {
       "id": "jax_pfr_167a09f41c53",
@@ -598,7 +598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.491
+      "storyRank": 6.3238
     },
     {
       "id": "jax_vid_4137b430e037",
@@ -634,7 +634,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.5951
+      "storyRank": 5.4667
     },
     {
       "id": "x_tl_jaguars_2125613353725001809",
@@ -688,7 +688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6452
+      "storyRank": 5.5277
     },
     {
       "id": "jax_tx_089f32fae465",
@@ -722,7 +722,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.757,
+      "breakingPriority": 0.75,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -732,7 +732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3704
+      "storyRank": 4.3338
     },
     {
       "id": "jax_brss_big_cat_country_63742fb12f88",
@@ -777,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9162
+      "storyRank": 3.8454
     },
     {
       "id": "jax_rss_7f1048d0fd2a",
@@ -811,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7136
+      "storyRank": 2.6664
     },
     {
       "id": "jax_vid_0871bcd270f0",
@@ -847,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4534
+      "storyRank": 2.4219
     },
     {
       "id": "jax_vid_5bf2d179bae9",
@@ -892,7 +892,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1058
+      "storyRank": 1.1012
     },
     {
       "id": "jax_pwire_4360310_49949224",
@@ -924,7 +924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6356
+      "storyRank": 0.6324
     },
     {
       "id": "jax_rss_199a5ef68364",
@@ -967,7 +967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6146
+      "storyRank": 0.6117
     },
     {
       "id": "jax_pwire_4882093_50583834",
@@ -999,7 +999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5712
+      "storyRank": 0.5686
     },
     {
       "id": "jax_rss_7a209bfd287d",
@@ -1033,7 +1033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5262
+      "storyRank": 0.5239
     },
     {
       "id": "jax_brss_big_cat_country_fea240f9d2f8",
@@ -1067,7 +1067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3243
+      "storyRank": 0.3233
     },
     {
       "id": "jax_brss_big_cat_country_b77ca7d07b0f",
@@ -1101,7 +1101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3224
+      "storyRank": 0.3215
     },
     {
       "id": "jax_bsky_66d475dcc8a1",
@@ -1148,7 +1148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2927
+      "storyRank": 0.2918
     },
     {
       "id": "jax_bsky_6280269cfd9e",
@@ -1195,7 +1195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2976
+      "storyRank": 0.2967
     },
     {
       "id": "x_tl_jaguars_2125030524964258131",
@@ -1247,7 +1247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3222
+      "storyRank": 0.3213
     },
     {
       "id": "jax_rss_adb0bb5dd04c",
@@ -1281,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0728
+      "storyRank": 0.0726
     },
     {
       "id": "jax_vid_b52eadfa6926",
@@ -1334,7 +1334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2663
+      "storyRank": 0.2656
     },
     {
       "id": "jax_yts_VFJ5DTTNN9A",
@@ -1346,7 +1346,7 @@
       "duration": "16:31",
       "imageUrl": "https://i.ytimg.com/vi/VFJ5DTTNN9A/hqdefault.jpg",
       "imageAlt": "Jacksonville Jaguars vs. New York Giants Game Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T20:45:50.043Z",
+      "publishedAt": "2026-11-23T20:51:19.338Z",
       "url": "https://www.youtube.com/watch?v=VFJ5DTTNN9A",
       "externalVideoUrl": "https://www.youtube.com/watch?v=VFJ5DTTNN9A",
       "channel": "NFL",
@@ -1407,7 +1407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2518
+      "storyRank": 0.2511
     },
     {
       "id": "jax_vid_eb8be280339e",
@@ -1443,7 +1443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2517
+      "storyRank": 0.251
     },
     {
       "id": "jax_brss_big_cat_country_39189c0e5a19",
@@ -1477,7 +1477,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2401
+      "storyRank": 0.2395
     },
     {
       "id": "jax_espn_a5a5edcdd418b",
@@ -1512,7 +1512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2364
+      "storyRank": 0.2358
     },
     {
       "id": "jax_vid_3a77af947730",
@@ -1548,7 +1548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.24
+      "storyRank": 0.2394
     },
     {
       "id": "jax_espn_8315a98d6e205",
@@ -1592,7 +1592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2329
+      "storyRank": 0.2324
     },
     {
       "id": "jax_brss_big_cat_country_cdca2bb399d7",
@@ -1635,7 +1635,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2203
+      "storyRank": 0.2198
     },
     {
       "id": "jax_rss_a2d4ad0cf5a2",
@@ -1669,7 +1669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2234
+      "storyRank": 0.2229
     },
     {
       "id": "x_tl_getupespn_2124862446980530512",
@@ -1712,7 +1712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2328
+      "storyRank": 0.2322
     },
     {
       "id": "jax_brss_big_cat_country_37f0ae743ad6",
@@ -1746,7 +1746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2138
+      "storyRank": 0.2133
     },
     {
       "id": "jax_brss_big_cat_country_fdc199fc635c",
@@ -1780,7 +1780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2128
+      "storyRank": 0.2123
     },
     {
       "id": "jax_yt_VLVrlPXKQQI",
@@ -1818,7 +1818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0501
     },
     {
       "id": "jax_espn_5cbd30144e099",
@@ -1854,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1818
+      "storyRank": 0.1815
     },
     {
       "id": "jax_rss_94eafd3789f6",
@@ -1888,7 +1888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.176
+      "storyRank": 0.1756
     },
     {
       "id": "jax_espn_e7bedb68b05b5",
@@ -1932,7 +1932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1751
+      "storyRank": 0.1747
     },
     {
       "id": "jax_espn_b3a9797a78b4c",
@@ -1976,7 +1976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1747
+      "storyRank": 0.1743
     },
     {
       "id": "jax_rss_bcd42a5ee017",
@@ -2010,7 +2010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1716
+      "storyRank": 0.1713
     },
     {
       "id": "x_tl_actionsportsjax_2124704541270855836",
@@ -2062,7 +2062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1832
+      "storyRank": 0.1828
     },
     {
       "id": "jax_rss_0d940168006a",
@@ -2096,7 +2096,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1693
+      "storyRank": 0.169
     },
     {
       "id": "x_tl_jaguars_2124685046607176161",
@@ -2148,7 +2148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.181
+      "storyRank": 0.1807
     },
     {
       "id": "jax_bsky_03bdf4ee8060",
@@ -2186,7 +2186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1577
+      "storyRank": 0.1574
     },
     {
       "id": "jax_espn_ba480d36c3298",
@@ -2230,7 +2230,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1655
+      "storyRank": 0.1652
     },
     {
       "id": "jax_vid_820eb2decc00",
@@ -2266,7 +2266,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1654
+      "storyRank": 0.1651
     },
     {
       "id": "x_tl_mlfootball_2124680459733041601",
@@ -2318,7 +2318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1231
+      "storyRank": 0.1228
     },
     {
       "id": "x_tl_jaguars_2124680285661134911",
@@ -2370,7 +2370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1799
+      "storyRank": 0.1795
     },
     {
       "id": "jax_vid_3e08d2187d15",
@@ -2415,7 +2415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1653
+      "storyRank": 0.165
     },
     {
       "id": "x_tl_jaguars_2124677467994493068",
@@ -2458,7 +2458,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1792
+      "storyRank": 0.1789
     },
     {
       "id": "jax_vid_d77a2ea16762",
@@ -2494,7 +2494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.163
+      "storyRank": 0.1627
     },
     {
       "id": "x_tl_sethwalder_2124666124864311455",
@@ -2534,7 +2534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1738
+      "storyRank": 0.1735
     },
     {
       "id": "x_tl_talkingiants_2124665693219987719",
@@ -2577,7 +2577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1737
+      "storyRank": 0.1734
     },
     {
       "id": "x_tl_nfloncbs_2124663022232666418",
@@ -2629,7 +2629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1731
+      "storyRank": 0.1728
     },
     {
       "id": "jax_rss_a3e5207c371f",
@@ -2663,7 +2663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1612
+      "storyRank": 0.161
     },
     {
       "id": "jax_vid_70a271bafdb9",
@@ -2708,7 +2708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.161
+      "storyRank": 0.1607
     },
     {
       "id": "jax_vid_3fbb1905927d",
@@ -2761,7 +2761,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1609
+      "storyRank": 0.1606
     },
     {
       "id": "jax_vid_872d3f975566",
@@ -2814,7 +2814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1607
+      "storyRank": 0.1604
     },
     {
       "id": "jax_bsky_b7d33ca42101",
@@ -2853,7 +2853,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1525
+      "storyRank": 0.1522
     },
     {
       "id": "jax_vid_b72cb21063a0",
@@ -2906,7 +2906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1604
+      "storyRank": 0.1601
     },
     {
       "id": "jax_vid_a7cbcda81415",
@@ -2959,7 +2959,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1602
+      "storyRank": 0.1599
     },
     {
       "id": "jax_bsky_970f76ff3701",
@@ -2997,7 +2997,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1517
+      "storyRank": 0.1514
     },
     {
       "id": "jax_vid_dc174de7af33",
@@ -3042,7 +3042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1596
+      "storyRank": 0.1593
     },
     {
       "id": "jax_pfr_c77858320178",
@@ -3100,7 +3100,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1557
+      "storyRank": 0.1554
     },
     {
       "id": "jax_vid_fc6fbdda6da0",
@@ -3153,7 +3153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.158
+      "storyRank": 0.1577
     },
     {
       "id": "jax_vid_95371c2d421c",
@@ -3198,7 +3198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1576
+      "storyRank": 0.1573
     },
     {
       "id": "jax_vid_503ba258fdb4",
@@ -3243,7 +3243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1544
+      "storyRank": 0.1541
     },
     {
       "id": "jax_vid_effbdb9874fe",
@@ -3296,7 +3296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1537
+      "storyRank": 0.1534
     },
     {
       "id": "jax_vid_fbe541276b62",
@@ -3349,7 +3349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1535
+      "storyRank": 0.1532
     },
     {
       "id": "jax_vid_7cfee4011001",
@@ -3394,7 +3394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1517
+      "storyRank": 0.1514
     },
     {
       "id": "jax_vid_4c3e022c1af3",
@@ -3439,7 +3439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1511
+      "storyRank": 0.1509
     },
     {
       "id": "jax_vid_7ca7e6081a9b",
@@ -3484,7 +3484,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1511
+      "storyRank": 0.1508
     },
     {
       "id": "jax_rss_113c5eb17033",
@@ -3535,7 +3535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0613
+      "storyRank": 0.0612
     },
     {
       "id": "jax_rss_b198f40baffb",
@@ -3569,7 +3569,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0606
+      "storyRank": 0.0605
     },
     {
       "id": "jax_pwire_4381558_64903728",
@@ -3601,7 +3601,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0552
+      "storyRank": 0.0551
     },
     {
       "id": "jax_pwire_3919512_64903628",
@@ -3642,7 +3642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0552
+      "storyRank": 0.0551
     },
     {
       "id": "jax_rss_9dc1d1a388a9",
@@ -3676,7 +3676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0419
     },
     {
       "id": "jax_rss_7e6d2c2ab303",
@@ -3719,7 +3719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0946
+      "storyRank": 0.0945
     },
     {
       "id": "jax_rss_602a210a8f7c",
@@ -3753,7 +3753,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0381
+      "storyRank": 0.038
     },
     {
       "id": "jax_tx_0aa205ffea61",
@@ -4331,7 +4331,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0228
     },
     {
       "id": "jax_vid_ede2f79966f1",
@@ -4561,7 +4561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0197
     },
     {
       "id": "jax_rss_f6b522474ebb",
@@ -4667,7 +4667,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0462
+      "storyRank": 0.0461
     },
     {
       "id": "jax_yts_OT9_tg6B8kE",
@@ -4679,7 +4679,7 @@
       "duration": "8:36",
       "imageUrl": "https://i.ytimg.com/vi/OT9_tg6B8kE/hqdefault.jpg",
       "imageAlt": "Jacksonville Jaguars vs New York Giants | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:45:50.043Z",
+      "publishedAt": "2026-11-18T20:51:19.338Z",
       "url": "https://www.youtube.com/watch?v=OT9_tg6B8kE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=OT9_tg6B8kE",
       "channel": "NFL",
@@ -4897,7 +4897,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0186
     },
     {
       "id": "jax_vid_6186b56e70aa",
@@ -5063,7 +5063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0157
     },
     {
       "id": "jax_vid_69e20e633644",
@@ -5941,7 +5941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.028
     },
     {
       "id": "jax_vid_d4d4d5a6413d",
@@ -5986,7 +5986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.028
     },
     {
       "id": "jax_vid_c138ff1abbc0",
@@ -6067,7 +6067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0118
+      "storyRank": 0.0117
     },
     {
       "id": "jax_vid_5badb7ce9f83",
@@ -6211,55 +6211,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0117
-    },
-    {
-      "id": "jax_bsky_0572b52eaf89",
-      "type": "tweet",
-      "title": "Josh Cameron (good player) with two big catches today. A 3rd down dunk and then a TD to make it a two score game in the 4th.",
-      "fullText": "Josh Cameron (good player) with two big catches today. A 3rd down dunk and then a TD to make it a two score game in the 4th.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://video.bsky.app/watch/did%3Aplc%3Akgihv26oznpn6cu3p45jzydp/bafkreib3kuqhehbm2xrbfi4m2t6kvi5sqhx6kpyn4kkfspkvdx4fw7vhsm/thumbnail.jpg",
-      "videoStreamUrl": "https://bsky.social/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Akgihv26oznpn6cu3p45jzydp&cid=bafkreib3kuqhehbm2xrbfi4m2t6kvi5sqhx6kpyn4kkfspkvdx4fw7vhsm",
-      "embeddable": true,
-      "imageAlt": "Nate Tice post",
-      "publishedAt": "2026-11-15T20:49:39.585Z",
-      "url": "https://bsky.app/profile/natetice.bsky.social/post/3n2evagqezc2s",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "national_film",
-      "outletName": "Nate Tice",
-      "reporterId": "nate_tice",
-      "reporterName": "Nate Tice",
-      "author": "Nate Tice",
-      "authorHandle": "@Nate_Tice",
-      "authorProfileUrl": "https://x.com/Nate_Tice",
-      "trustTier": 1,
-      "category": "film",
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [
-        {
-          "id": "4879194",
-          "name": "Josh Cameron",
-          "shortName": "J. Cameron",
-          "position": "WR",
-          "jersey": 19,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4879194.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 93,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
     },
     {
       "id": "jax_vid_631a932eeccb",
@@ -6717,7 +6668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0115
     },
     {
       "id": "jax_vid_15d6c87f9b97",
@@ -6854,7 +6805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0241
+      "storyRank": 0.024
     },
     {
       "id": "jax_rss_1ed9701bd753",
@@ -7441,7 +7392,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0069
     },
     {
       "id": "jax_tx_de16f035a8a3",

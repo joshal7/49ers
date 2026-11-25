@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:53.025Z",
+  "updatedAt": "2026-11-25T20:50:05.363Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-25T20:44:53.025Z",
+    "generatedAt": "2026-11-25T20:50:05.363Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -21,9 +21,9 @@
     "bullets": [
       "Roster & Front Office: Atlanta signed CB Terell Smith to the practice squad [Dave Choate](https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter).",
       "Injury & Practice Status: Entering Week 12 preparation, head coach Kevin Stefanski and the medical staff evaluate WR Zachariah Branch (hamstring), LB Divine Deablo (forearm), and LB Kendal Daniels (Achilles) ahead of Wednesday's initial participation report [Daniel Flick](https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20%28hamstring%29%20went%20through%20warmups%20during%20the).",
-      "Week 12 Vikings Outlook: Kevin Stefanski and DC Jeff Ulbrich open installation for the Minnesota Vikings (7-3, MIN -7, HC Kevin O'Connell, OC Wes Phillips & DC Brian Flores (Road Test))—a unit ranked #1 in Points Allowed / Game (16.1) as Atlanta prepares for a pivotal NFC matchup [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total) [atlantafalcons.com Official](https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC South • #13 Seed in NFC), Atlanta carries a 8.8% postseason projection, 8.7% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Aaron Freeman](https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons).",
-      "Statistical Profile & Matchup Edge: Through Week 11, Atlanta ranks #23 in Points / Game (20.1), #24 in Points Allowed / Game (25.8), #30 in Turnover Differential (-10), giving Kevin Stefanski and Jeff Ulbrich a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Minnesota Vikings [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026)."
+      "Week 12 Vikings Outlook: Kevin Stefanski and DC Jeff Ulbrich open installation for the Minnesota Vikings (7-3, MIN -7, HC Kevin O'Connell, OC Wes Phillips & DC Brian Flores (Road Test))—a unit ranked #1 in Points Allowed / Game (16.1) as Atlanta prepares for a pivotal NFC matchup [atlantafalcons.com Official](https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix) [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC South • #13 Seed in NFC), Atlanta carries a 9.1% postseason projection, 9% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Aaron Freeman](https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Atlanta ranks #23 in Points / Game (20.1), #24 in Points Allowed / Game (25.8), #30 in Turnover Differential (-10), giving Kevin Stefanski and Jeff Ulbrich a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Minnesota Vikings [atlantafalcons.com Official](https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars)."
     ],
     "coveredStoryKeys": [
       "team::power_rankings",
@@ -32,10 +32,10 @@
     "coveredUrls": [
       "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
       "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+      "https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix",
       "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
-      "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
       "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
-      "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
+      "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
       "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
       "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
       "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
@@ -43,7 +43,7 @@
       "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
       "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
       "https://www.atlantafalcons.com/news/atlanta-falcons-week-12-depth-chart-vs-minnesota-vikings",
-      "https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints",
+      "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
       "https://www.thefalcoholic.com/atlanta-falcons-history/98627/where-is-2026-tracking-compared-to-previous-years-in-atlantas-miserable-run"
     ],
     "sources": [
@@ -65,19 +65,19 @@
       },
       {
         "type": "article",
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "title": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense",
+        "url": "https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix",
+        "publishedAt": "2026-11-25T20:44:11.000Z"
+      },
+      {
+        "type": "article",
         "author": "Kevin Knight",
         "outlet": "The Falcoholic",
         "title": "Falcons vs. Vikings odds: Opening lines for Week 12 matchup",
         "url": "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
         "publishedAt": "2026-11-24T20:47:03.000Z"
-      },
-      {
-        "type": "article",
-        "author": "atlantafalcons.com Official",
-        "outlet": "atlantafalcons.com Official",
-        "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
-        "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
-        "publishedAt": "2026-11-24T15:56:24.000Z"
       },
       {
         "type": "article",
@@ -89,11 +89,11 @@
       },
       {
         "type": "article",
-        "author": "Kevin Knight",
-        "outlet": "The Falcoholic",
-        "title": "What do we need to see from the Falcons over the final games of 2026?",
-        "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
-        "publishedAt": "2026-11-24T19:22:58.000Z"
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
+        "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
+        "publishedAt": "2026-11-24T15:56:24.000Z"
       },
       {
         "type": "article",
@@ -150,10 +150,16 @@
       "id": "atl_cl_top",
       "category": "beat",
       "headline": "Atlanta Falcons Week 12 Top Headlines (3-7)",
-      "summary": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson — Where to watch Atlanta Falcons vs. Minnesota Vikings",
-      "updatedAt": "2026-11-25T20:08:06.000Z",
+      "summary": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense — Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+      "updatedAt": "2026-11-25T20:44:11.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "atlantafalcons.com Official",
+          "title": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense",
+          "url": "https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix",
+          "publishedAt": "2026-11-25T20:44:11.000Z"
+        },
         {
           "label": "Marc Raimondi",
           "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
@@ -183,12 +189,6 @@
           "title": "Three former Falcons advance in Pro Football Hall of Fame voting",
           "url": "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
           "publishedAt": "2026-11-24T21:39:12.000Z"
-        },
-        {
-          "label": "Dave Choate",
-          "title": "Breaking down Falcons 2026 acquisitions through the bye",
-          "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
-          "publishedAt": "2026-11-24T21:37:32.000Z"
         }
       ]
     },
@@ -315,6 +315,49 @@
   ],
   "rawStream": [
     {
+      "id": "atl_rss_1de9f485d796",
+      "type": "article",
+      "title": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense",
+      "summary": "Brock Purdy showed the way. Can Michael Penix Jr. find similar success?",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/w33xs83ww4lbyalcqifg.jpg",
+      "imageAlt": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense",
+      "publishedAt": "2026-11-25T20:44:11.000Z",
+      "url": "https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 47.857
+    },
+    {
       "id": "atl_espn_e136351fbccec",
       "type": "article",
       "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
@@ -356,7 +399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 28.8243
+      "storyRank": 26.88
     },
     {
       "id": "atl_vid_282070c32113",
@@ -392,7 +435,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 24.3253
+      "storyRank": 22.862
     },
     {
       "id": "atl_yt_YfqLn_nqbWs",
@@ -430,7 +473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.1357
+      "storyRank": 13.5489
     },
     {
       "id": "atl_rss_b83c64598135",
@@ -464,7 +507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.653
+      "storyRank": 7.4454
     },
     {
       "id": "atl_brss_the_falcoholic_87d9c63cbd0b",
@@ -507,7 +550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4372
+      "storyRank": 4.3551
     },
     {
       "id": "atl_pwire_4870612_64962528",
@@ -548,7 +591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7602
+      "storyRank": 0.7561
     },
     {
       "id": "atl_brss_the_falcoholic_937c57dddcc0",
@@ -582,7 +625,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.686
+      "storyRank": 0.6826
     },
     {
       "id": "atl_brss_the_falcoholic_252516bd4ec3",
@@ -616,7 +659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6849
+      "storyRank": 0.6815
     },
     {
       "id": "atl_rss_a4a133dec5d5",
@@ -650,7 +693,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6716
+      "storyRank": 0.6684
     },
     {
       "id": "atl_brss_the_falcoholic_dd7e6953567d",
@@ -684,7 +727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6529
+      "storyRank": 0.6497
     },
     {
       "id": "atl_pwire_4430807_49949224",
@@ -716,7 +759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6362
+      "storyRank": 0.6332
     },
     {
       "id": "atl_brss_the_falcoholic_095aaa3aa4c6",
@@ -750,7 +793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.605
+      "storyRank": 0.6022
     },
     {
       "id": "atl_pwire_4430807_50583834",
@@ -782,7 +825,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5717
+      "storyRank": 0.5692
     },
     {
       "id": "atl_rss_ef487570b9ea",
@@ -816,7 +859,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5183
+      "storyRank": 0.5162
     },
     {
       "id": "atl_brss_the_falcoholic_c25bc21b7ba8",
@@ -850,7 +893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5015
+      "storyRank": 0.4995
     },
     {
       "id": "atl_pfr_6022e65677ca",
@@ -883,7 +926,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4876
+      "storyRank": 0.4857
     },
     {
       "id": "atl_rss_755f7c5a75e4",
@@ -917,7 +960,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1202
+      "storyRank": 0.1197
     },
     {
       "id": "atl_brss_the_falcoholic_2ba9fe6aeb27",
@@ -960,7 +1003,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2447
+      "storyRank": 0.2442
     },
     {
       "id": "atl_brss_the_falcoholic_dfe6932f982c",
@@ -994,7 +1037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2413
+      "storyRank": 0.2408
     },
     {
       "id": "atl_vid_f571667ef4c7",
@@ -1030,7 +1073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2437
+      "storyRank": 0.2431
     },
     {
       "id": "atl_rss_efd5b2e015e7",
@@ -1073,7 +1116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2333
+      "storyRank": 0.2328
     },
     {
       "id": "atl_tx_504fed1c7c04",
@@ -1117,7 +1160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1873
+      "storyRank": 0.187
     },
     {
       "id": "atl_brss_the_falcoholic_9026f8f6bea9",
@@ -1151,7 +1194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1705
+      "storyRank": 0.1702
     },
     {
       "id": "atl_brss_the_falcoholic_6eeaa128a7d3",
@@ -1194,7 +1237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1407
+      "storyRank": 0.1405
     },
     {
       "id": "x_tl_nfl_dougfarrar_2124286498942116210",
@@ -1245,7 +1288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1126
+      "storyRank": 0.1124
     },
     {
       "id": "x_tl_nfl_dougfarrar_2124186319316529519",
@@ -1297,7 +1340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1023
+      "storyRank": 0.1022
     },
     {
       "id": "atl_espn_faaa82c8f2010",
@@ -1332,7 +1375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0883
+      "storyRank": 0.0882
     },
     {
       "id": "atl_pfr_c0947bbebf2d",
@@ -1374,7 +1417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0679
     },
     {
       "id": "atl_espn_7cc8fe35ab6f7",
@@ -1826,7 +1869,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.0325
     },
     {
       "id": "atl_yts_IeXG9UkMiI0",
@@ -1838,7 +1881,7 @@
       "duration": "16:50",
       "imageUrl": "https://i.ytimg.com/vi/IeXG9UkMiI0/hqdefault.jpg",
       "imageAlt": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:44:54.152Z",
+      "publishedAt": "2026-11-16T20:50:05.972Z",
       "url": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
       "externalVideoUrl": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
       "channel": "NFL",
@@ -1979,7 +2022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0314
     },
     {
       "id": "atl_espn_9f020e3e0ae5a",
@@ -2023,7 +2066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0284
+      "storyRank": 0.0283
     },
     {
       "id": "atl_espn_848ebddeec81d",
@@ -2617,7 +2660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278
+      "storyRank": 0.0277
     },
     {
       "id": "atl_vid_5946fb31e919",
@@ -2877,7 +2920,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0228
     },
     {
       "id": "atl_rss_7d49c666a330",
@@ -3136,7 +3179,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0203
     },
     {
       "id": "atl_rss_ef1def40a3e1",
@@ -3489,7 +3532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0176
     },
     {
       "id": "atl_rss_6cef9df7b9fc",
@@ -3713,7 +3756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0165
     },
     {
       "id": "atl_vid_dd655223124f",
@@ -4527,7 +4570,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.013
     },
     {
       "id": "atl_vid_72d70aaf36b0",

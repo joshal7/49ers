@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:53.598Z",
+  "updatedAt": "2026-11-25T20:48:55.923Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-25T20:43:53.598Z",
+    "generatedAt": "2026-11-25T20:48:55.923Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,30 +15,32 @@
       "hasThu": true,
       "hasFri": false
     },
-    "wordCount": 217,
+    "wordCount": 203,
     "headline": "Lions (8-2) Week 12 Briefing: Thursday Injury Report Ahead of Bears",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: S Chuck Clark (hamstring) logged limited practice reps Thursday [Dave Birkett](https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222). DT Skyler Gill-Howard (knee), CB Ennis Rakestraw Jr. (shoulder), and LB DJ Wonnum (back) did not practice Thursday, while CB D.J. Reed (hip) and TE Sam LaPorta (ankle) practiced in full [Erik Schlitt](https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday).",
+      "Injury & Practice Status: S Chuck Clark (hamstring) logged limited practice reps Thursday [detroitlions.com Official](https://www.detroitlions.com/news/lions-vs-bears-injury-report-nov-25-wonnum-clark-laporta). DT Skyler Gill-Howard (knee), CB Ennis Rakestraw Jr. (shoulder), and LB DJ Wonnum (back) did not practice Thursday, while CB D.J. Reed (hip) and TE Sam LaPorta (ankle) practiced in full [Erik Schlitt](https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday).",
       "Week 12 Bears Outlook: Dan Campbell and DC Kelvin Sheppard open installation for the Chicago Bears (8-2, CHI -1.5, HC Ben Johnson, OC Press Taylor & DC Dennis Allen (Ford Field))—a unit ranked #3 in Rushing Yards / Game (142.4 yds) as Detroit prepares for a pivotal NFC matchup [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions) [Jeremy Reisman](https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper).",
-      "NFC Playoff Trajectory: Entering Week 12 at 8-2 (1st in NFC North • #2 Seed in NFC), Detroit carries a 91.9% postseason projection, 46% NFC North division title mark, and 18.8% #1 Seed Bye equity into the conference stretch [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions).",
-      "Around the Beat: Jahmyr Gibbs and Chuba Hubbard have been a cut above [PFF](https://x.com/PFF/status/2125681059723686232).",
+      "NFC Playoff Trajectory: Entering Week 12 at 8-2 (1st in NFC North • #2 Seed in NFC), Detroit carries a 90.4% postseason projection, 43.5% NFC North division title mark, and 17.8% #1 Seed Bye equity into the conference stretch [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions).",
       "Statistical Profile & Matchup Edge: Through Week 11, Detroit ranks #5 in Points / Game (28.8), #15 in Points Allowed / Game (22.0), #15 in Turnover Differential (+2), giving Dan Campbell and Kelvin Sheppard a clear benchmark ahead of Thu, Nov 26, 1:00 PM EST • NFL TV at [object Object] against the Chicago Bears [Jeremy Reisman](https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper)."
     ],
-    "coveredStoryKeys": [],
+    "coveredStoryKeys": [
+      "team::weekly_injury_report"
+    ],
     "coveredUrls": [
-      "https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222",
+      "https://www.detroitlions.com/news/lions-vs-bears-injury-report-nov-25-wonnum-clark-laporta",
       "https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday",
       "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-thanksgiving-preview-2026-chicago-bears-vs-detroit-lions",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper",
       "https://bsky.app/profile/detroitfootball.net/post/3n35pjhbvo42x",
-      "https://x.com/PFF/status/2125681059723686232",
       "https://bsky.app/profile/detroitfootball.net/post/3n35usyrhvb26",
-      "https://x.com/PFF/status/2125648069714985014",
       "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n35rzdhvkk2p",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks",
       "https://bsky.app/profile/detroitfootball.net/post/3n35uuvhpa22a",
       "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n357qyzdrs2s",
+      "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/",
+      "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
+      "https://www.detroitlions.com/news/lions-vs-bears-practice-report-nov-24",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182377/lions-week-12-preview-breaking-down-bears-offensive-defensive-schemes",
       "https://bsky.app/profile/erikschlitt.bsky.social/post/3n35cghmfek22",
       "https://bsky.app/profile/erikschlitt.bsky.social/post/3n35vwqohzc27",
@@ -46,23 +48,23 @@
       "https://bsky.app/profile/erikschlitt.bsky.social/post/3n32lvkhvck2b",
       "https://www.prideofdetroit.com/detroit-lions-analysis/182613/detroit-lions-chicago-bears-5-qs-preview-caleb-williams-mvp-candidate",
       "https://bsky.app/profile/davebirkett.bsky.social/post/3n343o6afh22d",
-      "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
-      "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/",
-      "https://www.espn.com/nfl/story/_/id/50588773/long-lions-owner-martha-firestone-ford-dies-age-101",
-      "https://www.prideofdetroit.com/detroit-lions-news/182636/former-detroit-lions-owner-martha-firestone-ford-dies-at-age-101",
+      "https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222",
       "https://bsky.app/profile/detroitfootball.net/post/3n33ehilvyj2z",
       "https://www.profootballrumors.com/2026/11/lions-dt-skyler-gill-howard-suffers-season-ending-knee-injury",
       "https://www.prideofdetroit.com/detroit-lions-news/182582/detroit-lions-lose-another-defender-to-season-ending-injury",
-      "https://bsky.app/profile/detroitfootball.net/post/3n33g5eh6np2x"
+      "https://bsky.app/profile/detroitfootball.net/post/3n33g5eh6np2x",
+      "https://www.espn.com/nfl/story/_/id/50588773/long-lions-owner-martha-firestone-ford-dies-age-101",
+      "https://www.prideofdetroit.com/detroit-lions-news/182636/former-detroit-lions-owner-martha-firestone-ford-dies-at-age-101",
+      "https://bsky.app/profile/erikschlitt.bsky.social/post/3n33olkbric2p"
     ],
     "sources": [
       {
-        "type": "tweet",
-        "author": "Dave Birkett",
-        "outlet": "Dave Birkett",
-        "title": "Lions DT Skyler Gill-Howard is out for the season after suffering a knee injury on a goal line offensive rep last week vs the Bucs",
-        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222",
-        "publishedAt": "2026-11-24T19:27:06.421Z"
+        "type": "article",
+        "author": "detroitlions.com Official",
+        "outlet": "detroitlions.com Official",
+        "title": "Lions vs. Bears injury report: Nov. 25",
+        "url": "https://www.detroitlions.com/news/lions-vs-bears-injury-report-nov-25-wonnum-clark-laporta",
+        "publishedAt": "2026-11-25T20:45:05.000Z"
       },
       {
         "type": "article",
@@ -98,27 +100,11 @@
       },
       {
         "type": "tweet",
-        "author": "PFF",
-        "outlet": "PFF",
-        "title": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
-        "url": "https://x.com/PFF/status/2125681059723686232",
-        "publishedAt": "2026-11-25T20:00:32.000Z"
-      },
-      {
-        "type": "tweet",
         "author": "Justin Rogers",
         "outlet": "Justin Rogers",
         "title": "The Detroit Lions announced the team will have a moment of silence for former owner Martha Firestone Ford ahead of tomorrow's game and players will wear a MFF helmet decal for",
         "url": "https://bsky.app/profile/detroitfootball.net/post/3n35usyrhvb26",
         "publishedAt": "2026-11-25T19:18:41.997Z"
-      },
-      {
-        "type": "tweet",
-        "author": "PFF",
-        "outlet": "PFF",
-        "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
-        "url": "https://x.com/PFF/status/2125648069714985014",
-        "publishedAt": "2026-11-25T17:49:27.000Z"
       },
       {
         "type": "tweet",
@@ -151,6 +137,22 @@
         "title": "RIP Martha Ford Those of us who inherited the Lions and live here have a complicated relationship with the Fords. BUT, Martha was in an impossibly tough spot after WCF died.",
         "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n357qyzdrs2s",
         "publishedAt": "2026-11-25T13:01:46.763Z"
+      },
+      {
+        "type": "article",
+        "author": "Dave Birkett",
+        "outlet": "Dave Birkett",
+        "title": "Detroit Lions lose rookie DT Skyler Gill-Howard for the season",
+        "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/",
+        "publishedAt": "2026-11-24T20:33:25.082Z"
+      },
+      {
+        "type": "article",
+        "author": "Jeremy Reisman",
+        "outlet": "Pride of Detroit",
+        "title": "Teams, media, fans share tributes to former Detroit Lions owner Martha Ford",
+        "url": "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
+        "publishedAt": "2026-11-25T12:38:30.000Z"
       }
     ]
   },
@@ -159,15 +161,15 @@
       "id": "det_cl_top",
       "category": "beat",
       "headline": "Detroit Lions Week 12 Top Headlines (8-2)",
-      "summary": "Jahmyr Gibbs and Chuba Hubbard have been a cut above — PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
-      "updatedAt": "2026-11-25T20:00:32.000Z",
+      "summary": "Lions vs. Bears injury report: Nov. 25 — PFT Week 12 Thanksgiving Preview 2026: Chicago Bears vs. Detroit Lions",
+      "updatedAt": "2026-11-25T20:45:05.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "PFF",
-          "title": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
-          "url": "https://x.com/PFF/status/2125681059723686232",
-          "publishedAt": "2026-11-25T20:00:32.000Z"
+          "label": "detroitlions.com Official",
+          "title": "Lions vs. Bears injury report: Nov. 25",
+          "url": "https://www.detroitlions.com/news/lions-vs-bears-injury-report-nov-25-wonnum-clark-laporta",
+          "publishedAt": "2026-11-25T20:45:05.000Z"
         },
         {
           "label": "ProFootballTalk",
@@ -205,10 +207,16 @@
       "id": "det_cl_health",
       "category": "injury",
       "headline": "Lions Practice Report, Injury & IR Availability",
-      "summary": "The Lions also collected and distributed statements about Martha Firestone Ford following her passing at the age of 101. — Lions DT Skyler Gill-Howard Suffers Season-Ending Knee Injury",
-      "updatedAt": "2026-11-25T19:19:45.793Z",
+      "summary": "Lions vs. Bears injury report: Nov. 25 — The Lions also collected and distributed statements about Martha Firestone Ford following her passing at the age of 101.",
+      "updatedAt": "2026-11-25T20:45:05.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "detroitlions.com Official",
+          "title": "Lions vs. Bears injury report: Nov. 25",
+          "url": "https://www.detroitlions.com/news/lions-vs-bears-injury-report-nov-25-wonnum-clark-laporta",
+          "publishedAt": "2026-11-25T20:45:05.000Z"
+        },
         {
           "label": "Justin Rogers",
           "title": "The Lions also collected and distributed statements about Martha Firestone Ford following her passing at the age of 101.",
@@ -238,12 +246,6 @@
           "title": "Lions DT Skyler Gill-Howard is out for the season after suffering a knee injury on a goal line offensive rep last week vs the Bucs",
           "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n33et46nq222",
           "publishedAt": "2026-11-24T19:27:06.421Z"
-        },
-        {
-          "label": "NFL",
-          "title": "Jane Goodell and NFL Commissioner Roger Goodell tonight released the below statement regarding the passing of Detroit Lions Owner/Chair Emeritus Martha Firestone Ford:",
-          "url": "https://x.com/NFL/status/2125436252371759600",
-          "publishedAt": "2026-11-25T03:47:45.918Z"
         }
       ]
     },
@@ -251,16 +253,10 @@
       "id": "det_cl_film",
       "category": "film",
       "headline": "Lions All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE — NOTEBOOK: Scruggs anchoring Lions' offensive line",
-      "updatedAt": "2026-11-25T17:49:27.000Z",
-      "itemCount": 5,
+      "summary": "NOTEBOOK: Scruggs anchoring Lions' offensive line — Film study: Jahmyr Gibbs in motion creates space for teammates",
+      "updatedAt": "2026-11-24T22:22:00.000Z",
+      "itemCount": 4,
       "sourceLinks": [
-        {
-          "label": "PFF",
-          "title": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE",
-          "url": "https://x.com/PFF/status/2125648069714985014",
-          "publishedAt": "2026-11-25T17:49:27.000Z"
-        },
         {
           "label": "detroitlions.com Official",
           "title": "NOTEBOOK: Scruggs anchoring Lions' offensive line",
@@ -336,39 +332,24 @@
   ],
   "rawStream": [
     {
-      "id": "x_tl_pff_2125681059723686232",
-      "type": "tweet",
-      "title": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
-      "fullText": "Jahmyr Gibbs and Chuba Hubbard have been a cut above",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_vp96aEAAK04r.jpg",
-      "imageAlt": "PFF post",
-      "hasInlineChartImage": true,
-      "mentionedPlayers": [
-        {
-          "id": "4429795",
-          "name": "Jahmyr Gibbs",
-          "shortName": "J. Gibbs",
-          "position": "RB",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429795.png"
-        }
-      ],
-      "publishedAt": "2026-11-25T20:00:32.000Z",
-      "url": "https://x.com/PFF/status/2125681059723686232",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "national_film",
-      "outletName": "PFF",
-      "reporterId": "pff_official",
-      "reporterName": "PFF",
-      "author": "PFF",
-      "authorHandle": "@PFF",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 2,
-      "wireSource": "x_timeline_live",
+      "id": "det_rss_c093b6d5f23f",
+      "type": "article",
+      "title": "Lions vs. Bears injury report: Nov. 25",
+      "summary": "Lions vs. Bears injury report and game designations for Wednesday, November 25.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/svccxcsczq3ad6qjrtjk.jpg",
+      "imageAlt": "Lions vs. Bears injury report: Nov. 25",
+      "publishedAt": "2026-11-25T20:45:05.000Z",
+      "url": "https://www.detroitlions.com/news/lions-vs-bears-injury-report-nov-25-wonnum-clark-laporta",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -377,12 +358,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 90,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 28.5879
+      "storyRank": 74.0229
     },
     {
       "id": "det_pft_1fd3eca01bd1",
@@ -416,7 +397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.9276
+      "storyRank": 24.3321
     },
     {
       "id": "det_brss_pride_of_detroit_c7e7589ef5fe",
@@ -450,7 +431,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.2764
+      "storyRank": 19.2325
     },
     {
       "id": "det_bsky_366bc7162d15",
@@ -488,7 +469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 19.7329
+      "storyRank": 18.7125
     },
     {
       "id": "det_bsky_bc08f8f113a5",
@@ -533,7 +514,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.3147
+      "storyRank": 15.574
     },
     {
       "id": "det_bsky_98b7b2453030",
@@ -571,56 +552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.1531
-    },
-    {
-      "id": "x_tl_pff_2125648069714985014",
-      "type": "tweet",
-      "title": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE",
-      "fullText": "Penei Sewell grade ranks among OT\n\nRun Block 1st\nPass Block 3rd\n\nMORE",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_RbnAXoAACDFD.jpg",
-      "imageAlt": "PFF post",
-      "hasInlineChartImage": true,
-      "mentionedPlayers": [
-        {
-          "id": "4373825",
-          "name": "Penei Sewell",
-          "shortName": "P. Sewell",
-          "position": "OT",
-          "jersey": 58,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4373825.png"
-        }
-      ],
-      "publishedAt": "2026-11-25T17:49:27.000Z",
-      "url": "https://x.com/PFF/status/2125648069714985014",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "national_film",
-      "outletName": "PFF",
-      "reporterId": "pff_official",
-      "reporterName": "PFF",
-      "author": "PFF",
-      "authorHandle": "@PFF",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 2,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.733,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.7899
+      "storyRank": 15.4248
     },
     {
       "id": "det_bsky_5489b955508d",
@@ -659,7 +591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.7891
+      "storyRank": 10.4209
     },
     {
       "id": "det_brss_pride_of_detroit_08619fae17e4",
@@ -693,7 +625,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.9664
+      "storyRank": 10.5966
     },
     {
       "id": "det_bsky_7413304d7854",
@@ -740,7 +672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.1989
+      "storyRank": 7.9689
     },
     {
       "id": "det_brss_pride_of_detroit_15660b5b4bc2",
@@ -774,7 +706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.1524
+      "storyRank": 6.0138
     },
     {
       "id": "det_brss_pride_of_detroit_c9fa3791dd23",
@@ -808,7 +740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4725
+      "storyRank": 4.3909
     },
     {
       "id": "det_bsky_827235304401",
@@ -847,7 +779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2034
+      "storyRank": 3.157
     },
     {
       "id": "det_bsky_bfb4ce989cd1",
@@ -885,7 +817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0583
+      "storyRank": 3.0151
     },
     {
       "id": "det_bsky_fdf162e71e23",
@@ -923,41 +855,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7833
-    },
-    {
-      "id": "det_brss_pride_of_detroit_feb209abe74e",
-      "type": "article",
-      "title": "Teams, media, fans share tributes to former Detroit Lions owner Martha Ford",
-      "summary": "On Tuesday night, the Detroit Lions announced that former team owner and Chair Emeritus Martha Firestone Ford passed away at the age of 101. With such an accomplished life and so many lives touched, it’s not surprising that there was an out",
-      "imageUrl": "",
-      "imageAlt": "Teams, media, fans share tributes to former Detroit Lions owner Martha Ford",
-      "publishedAt": "2026-11-25T12:38:30.000Z",
-      "url": "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
-      "outletId": "pride_of_detroit",
-      "outletName": "Pride of Detroit",
-      "reporterId": "jeremy_reisman",
-      "reporterName": "Jeremy Reisman",
-      "author": "Jeremy Reisman",
-      "authorHandle": "@DetroitOnPride",
-      "authorProfileUrl": "https://x.com/DetroitOnPride",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.7097
+      "storyRank": 2.7465
     },
     {
       "id": "det_bsky_db18b8a5bdc9",
@@ -1004,7 +902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0414
+      "storyRank": 3.0291
     },
     {
       "id": "det_pfr_c9ff7aa242f3",
@@ -1046,7 +944,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.049
+      "storyRank": 3.0367
+    },
+    {
+      "id": "det_brss_pride_of_detroit_feb209abe74e",
+      "type": "article",
+      "title": "Teams, media, fans share tributes to former Detroit Lions owner Martha Ford",
+      "summary": "On Tuesday night, the Detroit Lions announced that former team owner and Chair Emeritus Martha Firestone Ford passed away at the age of 101. With such an accomplished life and so many lives touched, it’s not surprising that there was an out",
+      "imageUrl": "",
+      "imageAlt": "Teams, media, fans share tributes to former Detroit Lions owner Martha Ford",
+      "publishedAt": "2026-11-25T12:38:30.000Z",
+      "url": "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
+      "outletId": "pride_of_detroit",
+      "outletName": "Pride of Detroit",
+      "reporterId": "jeremy_reisman",
+      "reporterName": "Jeremy Reisman",
+      "author": "Jeremy Reisman",
+      "authorHandle": "@DetroitOnPride",
+      "authorProfileUrl": "https://x.com/DetroitOnPride",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.6754
     },
     {
       "id": "det_brss_pride_of_detroit_63e6c097cb47",
@@ -1089,7 +1021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9792
+      "storyRank": 2.9675
     },
     {
       "id": "det_bsky_a90ce57ce6e8",
@@ -1136,7 +1068,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9401
+      "storyRank": 2.9285
     },
     {
       "id": "det_bsky_24dfeb5a4a39",
@@ -1183,7 +1115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8866
+      "storyRank": 2.8754
     },
     {
       "id": "det_espn_ed610992ac64e",
@@ -1218,7 +1150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2329
+      "storyRank": 1.224
     },
     {
       "id": "x_tl_nfl_2125436252371759600",
@@ -1257,7 +1189,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1402
+      "storyRank": 1.1328
     },
     {
       "id": "det_brss_pride_of_detroit_988283ab3d6c",
@@ -1308,79 +1240,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.473
-    },
-    {
-      "id": "det_bsky_c87f5993547e",
-      "type": "tweet",
-      "title": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
-      "fullText": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-25T02:15:56.868Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n343o6afh22d",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
-      "trustTier": 1,
-      "category": "beat",
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9081
-    },
-    {
-      "id": "det_rss_cb8cd7557301",
-      "type": "article",
-      "title": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
-      "summary": "",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ye47bjgz2n3iyogelzxu.jpg",
-      "imageAlt": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
-      "publishedAt": "2026-11-25T02:02:01.000Z",
-      "url": "https://www.detroitlions.com/news/lions-owner-chair-emeritus-martha-firestone-ford-passes-away-at-101",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9239
+      "storyRank": 1.4661
     },
     {
       "id": "det_rss_727483a8843b",
@@ -1423,7 +1283,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1969
+      "storyRank": 1.1913
     },
     {
       "id": "det_bsky_deab6a39e2fa",
@@ -1478,7 +1338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4284
+      "storyRank": 1.4218
     },
     {
       "id": "det_rss_698cc6e5922f",
@@ -1512,7 +1372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4417
+      "storyRank": 1.4351
     },
     {
       "id": "det_pfr_fe7efe21290b",
@@ -1545,7 +1405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9523
+      "storyRank": 0.9465
     },
     {
       "id": "det_brss_pride_of_detroit_6f1734a87688",
@@ -1579,7 +1439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9474
+      "storyRank": 0.9417
     },
     {
       "id": "det_bsky_76e56c7a0782",
@@ -1617,7 +1477,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.91
+      "storyRank": 0.9046
+    },
+    {
+      "id": "det_bsky_c87f5993547e",
+      "type": "tweet",
+      "title": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
+      "fullText": "The Lions announced the passing of Martha Firestone Ford tonight at 101 years old. Prayers to the entire family. What a life she lived.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-25T02:15:56.868Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n343o6afh22d",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "category": "beat",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9027
     },
     {
       "id": "x_tl_justin_rogers_2125411413820682319",
@@ -1656,7 +1554,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0243
+      "storyRank": 1.0183
+    },
+    {
+      "id": "det_rss_cb8cd7557301",
+      "type": "article",
+      "title": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
+      "summary": "",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ye47bjgz2n3iyogelzxu.jpg",
+      "imageAlt": "Lions Owner/Chair Emeritus Martha Firestone Ford passes away at 101",
+      "publishedAt": "2026-11-25T02:02:01.000Z",
+      "url": "https://www.detroitlions.com/news/lions-owner-chair-emeritus-martha-firestone-ford-passes-away-at-101",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9184
     },
     {
       "id": "det_vid_a8b98df6299e",
@@ -1701,7 +1633,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7557
+      "storyRank": 0.7518
     },
     {
       "id": "det_vid_6e2e5c655a5d",
@@ -1746,7 +1678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7529
+      "storyRank": 0.749
     },
     {
       "id": "det_vid_8a6e7909f516",
@@ -1799,7 +1731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6967
+      "storyRank": 0.6933
     },
     {
       "id": "det_pwire_4374302_49949224",
@@ -1831,7 +1763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6367
+      "storyRank": 0.6338
     },
     {
       "id": "det_vid_ff315d084fd5",
@@ -1876,7 +1808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6275
+      "storyRank": 0.6247
     },
     {
       "id": "det_bsky_66c9bc0bcd4a",
@@ -1923,7 +1855,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5941,
+      "storyRank": 0.5914,
       "isSupersededInjuryUpdate": true
     },
     {
@@ -1962,7 +1894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5896
+      "storyRank": 0.587
     },
     {
       "id": "det_bsky_9d75c2abcf01",
@@ -2000,7 +1932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5816
+      "storyRank": 0.5791
     },
     {
       "id": "det_espn_449171876b717",
@@ -2035,7 +1967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5471
+      "storyRank": 0.5449
     },
     {
       "id": "det_brss_pride_of_detroit_fad9226d0a06",
@@ -2069,7 +2001,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5249
+      "storyRank": 0.5229
     },
     {
       "id": "det_rss_b16b20d342cb",
@@ -2103,7 +2035,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5202
+      "storyRank": 0.5181
     },
     {
       "id": "det_espn_406fa2ad56057",
@@ -2139,7 +2071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5184
+      "storyRank": 0.5163
     },
     {
       "id": "det_brss_pride_of_detroit_586ed38dd66b",
@@ -2182,7 +2114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8554
+      "storyRank": 0.8523
     },
     {
       "id": "det_rss_9f2a94fc3b62",
@@ -2216,7 +2148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4492
+      "storyRank": 0.4475
     },
     {
       "id": "det_vid_32148a142432",
@@ -2252,7 +2184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5024
+      "storyRank": 0.5005
     },
     {
       "id": "det_vid_4d53d4bdb819",
@@ -2288,7 +2220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.475
+      "storyRank": 0.4732
     },
     {
       "id": "det_bsky_ef1e2d2afcbe",
@@ -2326,7 +2258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.422
+      "storyRank": 0.4205
     },
     {
       "id": "det_rss_46c025b4bc09",
@@ -2360,7 +2292,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4361
+      "storyRank": 0.4346
     },
     {
       "id": "det_bsky_929720614785",
@@ -2398,7 +2330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2866
+      "storyRank": 0.2858
     },
     {
       "id": "det_vid_1744bcb9317c",
@@ -2443,7 +2375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2939
+      "storyRank": 0.2932
     },
     {
       "id": "det_vid_d610abd93dfc",
@@ -2488,7 +2420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2929
+      "storyRank": 0.2921
     },
     {
       "id": "det_vid_ebc363c2a475",
@@ -2533,7 +2465,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2927
+      "storyRank": 0.2919
     },
     {
       "id": "det_bsky_07e1ef2c5ada",
@@ -2571,7 +2503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2829
+      "storyRank": 0.2821
     },
     {
       "id": "det_vid_f3f07a1a8d3e",
@@ -2616,7 +2548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2924
+      "storyRank": 0.2917
     },
     {
       "id": "det_bsky_a01ef238f0b7",
@@ -2654,7 +2586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6118
+      "storyRank": 0.6103
     },
     {
       "id": "det_pwire_4430027_64943928",
@@ -2695,7 +2627,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2908
+      "storyRank": 0.29
     },
     {
       "id": "det_rss_5a9bfe5047f9",
@@ -2729,7 +2661,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6197
+      "storyRank": 0.6182
     },
     {
       "id": "det_rss_efe4964fe3eb",
@@ -2763,7 +2695,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2844
+      "storyRank": 0.2837
     },
     {
       "id": "det_bsky_a419c9ea9125",
@@ -2801,7 +2733,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.274
+      "storyRank": 0.2733
     },
     {
       "id": "det_bsky_07e60ae28a0e",
@@ -2848,7 +2780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2692
+      "storyRank": 0.2685
     },
     {
       "id": "det_bsky_41f77842df32",
@@ -2895,7 +2827,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0352
+      "storyRank": 0.0351
     },
     {
       "id": "det_vid_63fb87adb17f",
@@ -2931,7 +2863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2718
+      "storyRank": 0.2712
     },
     {
       "id": "det_yts_PWphJLZ89e4",
@@ -2943,7 +2875,7 @@
       "duration": "12:52",
       "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
       "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:43:54.670Z",
+      "publishedAt": "2026-11-23T20:48:56.556Z",
       "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
       "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
       "channel": "NFL",
@@ -2982,7 +2914,7 @@
       "duration": "7:11",
       "imageUrl": "https://i.ytimg.com/vi/nnXZ7q24zqo/hqdefault.jpg",
       "imageAlt": "Jared Goff Every Throw & Run | Week 11",
-      "publishedAt": "2026-11-23T20:43:54.670Z",
+      "publishedAt": "2026-11-23T20:48:56.556Z",
       "url": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
       "externalVideoUrl": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
       "channel": "NFL",
@@ -3030,7 +2962,7 @@
       "duration": "2:02",
       "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
       "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "publishedAt": "2026-11-23T20:43:54.670Z",
+      "publishedAt": "2026-11-23T20:48:56.556Z",
       "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
       "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
       "channel": "NFL",
@@ -3104,7 +3036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2427
+      "storyRank": 0.2422
     },
     {
       "id": "det_rss_4e3782d1e0b5",
@@ -3147,7 +3079,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.215
+      "storyRank": 0.2145
     },
     {
       "id": "det_bsky_ad75c64d1232",
@@ -3194,7 +3126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2187
+      "storyRank": 0.2182
     },
     {
       "id": "det_bsky_149ff0524692",
@@ -3241,7 +3173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2194
+      "storyRank": 0.2189
     },
     {
       "id": "det_bsky_e8dbf0d2ce5f",
@@ -3279,7 +3211,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2093
+      "storyRank": 0.2089
     },
     {
       "id": "det_rss_d8892147a817",
@@ -3313,7 +3245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2058
+      "storyRank": 0.2054
     },
     {
       "id": "det_espn_ea150ec18134c",
@@ -3348,7 +3280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1716
+      "storyRank": 0.1712
     },
     {
       "id": "det_bsky_df06fbb87619",
@@ -3386,7 +3318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1623
+      "storyRank": 0.1621
     },
     {
       "id": "det_bsky_8fd7122a3b41",
@@ -3424,7 +3356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0404
+      "storyRank": 0.0403
     },
     {
       "id": "det_bsky_6a4fc552715e",
@@ -3462,7 +3394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1587
+      "storyRank": 0.1584
     },
     {
       "id": "det_bsky_a8b66c348752",
@@ -3549,7 +3481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1756
+      "storyRank": 0.1753
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -3585,7 +3517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1591
+      "storyRank": 0.1588
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -3619,7 +3551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1582
+      "storyRank": 0.1579
     },
     {
       "id": "det_rss_e97a2a128e9b",
@@ -3653,7 +3585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1572
+      "storyRank": 0.1569
     },
     {
       "id": "det_espn_aea129f88ee07",
@@ -3705,7 +3637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1536
+      "storyRank": 0.1534
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -3741,7 +3673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1513
+      "storyRank": 0.1511
     },
     {
       "id": "det_rss_3ea274280813",
@@ -3775,7 +3707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1509
+      "storyRank": 0.1506
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -3820,7 +3752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1507
+      "storyRank": 0.1505
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -3865,7 +3797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1507
+      "storyRank": 0.1504
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -3903,7 +3835,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1452
+      "storyRank": 0.145
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -3948,7 +3880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1495
+      "storyRank": 0.1493
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -3986,7 +3918,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1445
+      "storyRank": 0.1443
     },
     {
       "id": "det_vid_a79420d76426",
@@ -4022,7 +3954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1491
+      "storyRank": 0.1488
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -4067,7 +3999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1488
+      "storyRank": 0.1485
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -4105,7 +4037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1437
+      "storyRank": 0.1435
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -4143,7 +4075,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1415
+      "storyRank": 0.1413
     },
     {
       "id": "det_vid_009110c13b8e",
@@ -4196,7 +4128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1462
+      "storyRank": 0.146
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -4234,7 +4166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.141
+      "storyRank": 0.1408
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -4281,7 +4213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1396
+      "storyRank": 0.1393
     },
     {
       "id": "det_vid_31f3890de597",
@@ -4326,7 +4258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1443
+      "storyRank": 0.1441
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -4373,7 +4305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.139
+      "storyRank": 0.1388
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -4420,7 +4352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1386
+      "storyRank": 0.1384
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -4475,7 +4407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1384
+      "storyRank": 0.1382
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -4530,7 +4462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1384
+      "storyRank": 0.1382
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -4577,7 +4509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1381
+      "storyRank": 0.1378
     },
     {
       "id": "det_bsky_5caee00df2ce",
@@ -4632,7 +4564,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.138
+      "storyRank": 0.1378
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -4670,7 +4602,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1377
+      "storyRank": 0.1375
     },
     {
       "id": "det_bsky_ccd54bb8872f",
@@ -4717,7 +4649,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.137
+      "storyRank": 0.1368
     },
     {
       "id": "det_bsky_d71edc7b2097",
@@ -4764,7 +4696,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1363
+      "storyRank": 0.136
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -4802,7 +4734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0646
+      "storyRank": 0.0645
     },
     {
       "id": "det_bsky_d870fb1952b8",
@@ -4840,7 +4772,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.062
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -4874,7 +4806,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0566
+      "storyRank": 0.0565
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -4908,7 +4840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0608
+      "storyRank": 0.0607
     },
     {
       "id": "det_bsky_f1d887559ba8",
@@ -4955,7 +4887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0472
+      "storyRank": 0.0471
     },
     {
       "id": "det_bsky_9e313f31deec",
@@ -5010,7 +4942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0471
+      "storyRank": 0.047
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -5099,7 +5031,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0474
+      "storyRank": 0.0473
     },
     {
       "id": "det_bsky_6eee65061126",
@@ -5223,7 +5155,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0423
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -5322,7 +5254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0349
+      "storyRank": 0.0348
     },
     {
       "id": "det_rss_eea329af076f",
@@ -5356,58 +5288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0828
-    },
-    {
-      "id": "det_rss_976be5789ea0",
-      "type": "article",
-      "title": "NOTEBOOK: Williams impressing coaches with his play in Year 2",
-      "summary": "Tim Twentyman covers all the Detroit Lions news of the day including defensive lineman Tyleik Williams' adjustment to nose tackle, safety Chuck Clark being named a captain and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/d1vf8ca2sgitdkvwafdc.jpg",
-      "imageAlt": "NOTEBOOK: Williams impressing coaches with his play in Year 2",
-      "publishedAt": "2026-11-20T18:45:48.000Z",
-      "url": "https://www.detroitlions.com/news/notebook-detroit-lions-tyleik-williams-impressing-coaches-clark-joseph",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "3045463",
-          "name": "Chuck Clark",
-          "shortName": "C. Clark",
-          "position": "S",
-          "jersey": 36,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045463.png"
-        },
-        {
-          "id": "4431615",
-          "name": "Tyleik Williams",
-          "shortName": "T. Williams",
-          "position": "DT",
-          "jersey": 91,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431615.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0343
+      "storyRank": 0.0827
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -5445,7 +5326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.032
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -5484,7 +5365,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0312
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
@@ -5531,7 +5412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272
+      "storyRank": 0.0271
     },
     {
       "id": "det_espn_dac2aef086042",
@@ -5575,7 +5456,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.028
+      "storyRank": 0.0279
     },
     {
       "id": "det_bsky_dbbfbbb85625",
@@ -5613,7 +5494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0646
+      "storyRank": 0.0645
     },
     {
       "id": "det_bsky_3eaa886217a1",
@@ -5651,7 +5532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0247
     },
     {
       "id": "det_bsky_119561c1c557",
@@ -5755,7 +5636,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0223
     },
     {
       "id": "det_pfr_bb925d5e5526",
@@ -6212,7 +6093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0156
     },
     {
       "id": "det_tx_19ed81fc487c",

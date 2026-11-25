@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:47:21.130Z",
+  "updatedAt": "2026-11-25T20:49:21.166Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-25T20:47:21.130Z",
+    "generatedAt": "2026-11-25T20:49:21.166Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -20,8 +20,8 @@
     "summary": "",
     "bullets": [
       "Injury & Practice Status: RB Will Shipley (foot / illness) and LB Smael Mondon Jr. (ankle) logged limited practice reps Friday [Dave Zangaro](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/injury-update-quinyon-mitchell-cowboys-saquon-barkley/769419/). LB Arnold Ebiketie (oblique) and CB Jonathan Jones (ankle) did not practice Friday, while WR DeVonta Smith (hamstring) and TE Dallas Goedert (shin) practiced in full [Brandon Lee Gowton](https://www.bleedinggreennation.com/philadelphia-eagles-injuries/191406/eagles-cowboys-final-injury-report-quinyon-mitchell-will-play-in-dallas).",
-      "Week 12 Cowboys Outlook: Nick Sirianni and DC Vic Fangio open installation for the Dallas Cowboys (5-6, DAL -8.5, HC Brian Schottenheimer, OC Klayton Adams & DC Christian Parker (Road Test))—a unit ranked #2 in Offensive EPA / Game (+8.90) as Philadelphia prepares for a pivotal NFC matchup [Dave Zangaro](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/) [Dave Zangaro](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC East • #15 Seed in NFC), Philadelphia carries a 0.5% postseason projection, 0.5% NFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [Dave Zangaro](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/).",
+      "Week 12 Cowboys Outlook: Nick Sirianni and DC Vic Fangio open installation for the Dallas Cowboys (5-6, DAL -8.5, HC Brian Schottenheimer, OC Klayton Adams & DC Christian Parker (Road Test))—a unit ranked #2 in Offensive EPA / Game (+8.90) as Philadelphia prepares for a pivotal NFC matchup [NBC Sports Philadelphia](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/) [Dave Zangaro](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC East • #15 Seed in NFC), Philadelphia carries a 0.6% postseason projection, 0.5% NFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [NBC Sports Philadelphia](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/).",
       "Around the Beat: Please welcome Braden Mann to the wonderful world of Roob's Eagles Stats [Reuben Frank](https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/braden-mann-eagles-stats-dallas-goedert-aaron-rodgers-nolan-smith/769140/).",
       "Statistical Profile & Matchup Edge: Through Week 11, Philadelphia ranks #31 in Points / Game (16.7), #18 in Points Allowed / Game (23.7), #27 in Turnover Differential (-5), giving Nick Sirianni and Vic Fangio a clear benchmark ahead of Thu, Nov 26, 4:30 PM EST • NFL TV at [object Object] against the Dallas Cowboys [philadelphiaeagles.com Official](https://www.philadelphiaeagles.com/news/thanksgiving-game-preview-eagles-at-cowboys-six-storylines-to-follow-2026-nfl-week-12-joe-milton-saquon-barkley-dak-prescott-cee-dee-lamb)."
     ],
@@ -33,9 +33,9 @@
     "coveredUrls": [
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/injury-update-quinyon-mitchell-cowboys-saquon-barkley/769419/",
       "https://www.bleedinggreennation.com/philadelphia-eagles-injuries/191406/eagles-cowboys-final-injury-report-quinyon-mitchell-will-play-in-dallas",
-      "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
-      "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/",
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
+      "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/",
+      "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/braden-mann-eagles-stats-dallas-goedert-aaron-rodgers-nolan-smith/769140/",
       "https://www.philadelphiaeagles.com/news/thanksgiving-game-preview-eagles-at-cowboys-six-storylines-to-follow-2026-nfl-week-12-joe-milton-saquon-barkley-dak-prescott-cee-dee-lamb",
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-analysis/eagles-vs-cowboys-betting-guide-odds-props-and-picks-2/769404/",
@@ -43,8 +43,8 @@
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/future-eagles-fits-searching-for-the-eagles-next-perimeter-difference-maker/769279/",
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/lesean-mccoy-advances-pro-football-hall-of-fame-selection-process/769273/",
       "https://bsky.app/profile/jimmykempski.bsky.social/post/3n35qsqmbkk2a",
-      "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-make-roster-swap-chance-campbell-jake-majors/769318/",
       "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-cowboys-matchups-to-watch-in-week-12-on-thanksgiving/769298/",
+      "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-make-roster-swap-chance-campbell-jake-majors/769318/",
       "https://www.philadelphiaeagles.com/news/three-former-eagles-advance-in-pro-football-hall-of-fame-selection-process-maxie-baughan-lesean-mccoy-ricky-watters",
       "https://bsky.app/profile/jimmykempski.bsky.social/post/3n353umpwik2c",
       "https://www.philadelphiaeagles.com/news/eagles-at-cowboys-injury-report-2026-nfl-week-12-thanksgiving",
@@ -57,7 +57,7 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/injury-update-quinyon-mitchell-cowboys-saquon-barkley/769419/",
-        "publishedAt": "2026-11-25T20:47:22.102Z"
+        "publishedAt": "2026-11-25T20:49:21.889Z"
       },
       {
         "type": "article",
@@ -69,11 +69,11 @@
       },
       {
         "type": "article",
-        "author": "Dave Zangaro",
+        "author": "NBC Sports Philadelphia Staff",
         "outlet": "NBC Sports Philadelphia",
-        "title": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
-        "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
-        "publishedAt": "2026-11-25T20:47:22.105Z"
+        "title": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
+        "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
+        "publishedAt": "2026-11-25T20:49:21.893Z"
       },
       {
         "type": "article",
@@ -81,15 +81,15 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "Eagles snap counts: Eli Stowers doesn't play on offense vs. Steelers",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/",
-        "publishedAt": "2026-11-25T20:47:22.105Z"
+        "publishedAt": "2026-11-25T20:49:21.892Z"
       },
       {
         "type": "article",
-        "author": "NBC Sports Philadelphia Staff",
+        "author": "Dave Zangaro",
         "outlet": "NBC Sports Philadelphia",
-        "title": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
-        "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
-        "publishedAt": "2026-11-25T20:47:22.105Z"
+        "title": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
+        "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
+        "publishedAt": "2026-11-25T20:49:21.891Z"
       },
       {
         "type": "article",
@@ -97,7 +97,7 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "Please welcome Braden Mann to the wonderful world of Roob's Eagles Stats",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/braden-mann-eagles-stats-dallas-goedert-aaron-rodgers-nolan-smith/769140/",
-        "publishedAt": "2026-11-25T20:47:22.105Z"
+        "publishedAt": "2026-11-25T20:49:21.892Z"
       },
       {
         "type": "article",
@@ -113,7 +113,7 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "Eagles vs Cowboys betting guide: Odds, props and picks",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-analysis/eagles-vs-cowboys-betting-guide-odds-props-and-picks-2/769404/",
-        "publishedAt": "2026-11-25T20:47:22.104Z"
+        "publishedAt": "2026-11-25T20:49:21.890Z"
       },
       {
         "type": "article",
@@ -121,7 +121,7 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "Why is it so hard to sack Dak Prescott?",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/why-is-it-hard-to-sack-dak-prescott-vic-fangio-defensive-line-pass-rush/769340/",
-        "publishedAt": "2026-11-25T20:47:22.104Z"
+        "publishedAt": "2026-11-25T20:49:21.890Z"
       },
       {
         "type": "article",
@@ -129,7 +129,7 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "Future Eagles Fits: Searching for the Eagles' next perimeter difference-maker",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/future-eagles-fits-searching-for-the-eagles-next-perimeter-difference-maker/769279/",
-        "publishedAt": "2026-11-25T20:47:22.104Z"
+        "publishedAt": "2026-11-25T20:49:21.890Z"
       },
       {
         "type": "article",
@@ -137,7 +137,7 @@
         "outlet": "NBC Sports Philadelphia",
         "title": "LeSean McCoy advances in Pro Football Hall of Fame selection process",
         "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/lesean-mccoy-advances-pro-football-hall-of-fame-selection-process/769273/",
-        "publishedAt": "2026-11-25T20:47:22.105Z"
+        "publishedAt": "2026-11-25T20:49:21.891Z"
       },
       {
         "type": "tweet",
@@ -154,45 +154,45 @@
       "id": "phi_cl_top",
       "category": "beat",
       "headline": "Philadelphia Eagles Week 12 Top Headlines (3-7)",
-      "summary": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out — Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
-      "updatedAt": "2026-11-25T20:47:22.102Z",
+      "summary": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out — Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
+      "updatedAt": "2026-11-25T20:49:21.889Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Dave Zangaro",
           "title": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/injury-update-quinyon-mitchell-cowboys-saquon-barkley/769419/",
-          "publishedAt": "2026-11-25T20:47:22.102Z"
+          "publishedAt": "2026-11-25T20:49:21.889Z"
         },
         {
-          "label": "Dave Zangaro",
-          "title": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
-          "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
-        },
-        {
-          "label": "Dave Zangaro",
-          "title": "Eagles make a roster swap, add LB to 53-man roster",
-          "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-make-roster-swap-chance-campbell-jake-majors/769318/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
-        },
-        {
-          "label": "Reuben Frank",
-          "title": "LeSean McCoy advances in Pro Football Hall of Fame selection process",
-          "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/lesean-mccoy-advances-pro-football-hall-of-fame-selection-process/769273/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
+          "label": "NBC Sports Philadelphia Staff",
+          "title": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
+          "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
+          "publishedAt": "2026-11-25T20:49:21.893Z"
         },
         {
           "label": "Reuben Frank",
           "title": "Please welcome Braden Mann to the wonderful world of Roob's Eagles Stats",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/braden-mann-eagles-stats-dallas-goedert-aaron-rodgers-nolan-smith/769140/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
+          "publishedAt": "2026-11-25T20:49:21.892Z"
         },
         {
           "label": "Dave Zangaro",
           "title": "Eagles snap counts: Eli Stowers doesn't play on offense vs. Steelers",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
+          "publishedAt": "2026-11-25T20:49:21.892Z"
+        },
+        {
+          "label": "Dave Zangaro",
+          "title": "Eagles injury update: Quinyon Mitchell a DNP to start Thanksgiving week",
+          "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-jonathan-jones-cowboys-week-12-thanksgiving/769021/",
+          "publishedAt": "2026-11-25T20:49:21.892Z"
+        },
+        {
+          "label": "Dave Zangaro",
+          "title": "Eagles injury update: Some good news in latest report",
+          "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-saquon-barkley-smael-mondon-dallas-goedert-cowboys-week-12-thanksgiving/769359/",
+          "publishedAt": "2026-11-25T20:49:21.891Z"
         }
       ]
     },
@@ -201,26 +201,26 @@
       "category": "injury",
       "headline": "Eagles Practice Report, Injury & IR Availability",
       "summary": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out — Eagles injury update: Quinyon Mitchell a DNP to start Thanksgiving week",
-      "updatedAt": "2026-11-25T20:47:22.102Z",
+      "updatedAt": "2026-11-25T20:49:21.889Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Dave Zangaro",
           "title": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/injury-update-quinyon-mitchell-cowboys-saquon-barkley/769419/",
-          "publishedAt": "2026-11-25T20:47:22.102Z"
+          "publishedAt": "2026-11-25T20:49:21.889Z"
         },
         {
           "label": "Dave Zangaro",
           "title": "Eagles injury update: Quinyon Mitchell a DNP to start Thanksgiving week",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-jonathan-jones-cowboys-week-12-thanksgiving/769021/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
+          "publishedAt": "2026-11-25T20:49:21.892Z"
         },
         {
           "label": "Dave Zangaro",
           "title": "Eagles injury update: Some good news in latest report",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-saquon-barkley-smael-mondon-dallas-goedert-cowboys-week-12-thanksgiving/769359/",
-          "publishedAt": "2026-11-25T20:47:22.104Z"
+          "publishedAt": "2026-11-25T20:49:21.891Z"
         },
         {
           "label": "Brandon Lee Gowton",
@@ -269,14 +269,14 @@
       "category": "roster",
       "headline": "Eagles Roster Moves, Trades & Salary Cap Desk",
       "summary": "Eagles make a roster swap, add LB to 53-man roster — From practice squad to prime time: A look at Milton's big chance on Thanksgiving",
-      "updatedAt": "2026-11-25T20:47:22.105Z",
+      "updatedAt": "2026-11-25T20:49:21.891Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Dave Zangaro",
           "title": "Eagles make a roster swap, add LB to 53-man roster",
           "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-make-roster-swap-chance-campbell-jake-majors/769318/",
-          "publishedAt": "2026-11-25T20:47:22.105Z"
+          "publishedAt": "2026-11-25T20:49:21.891Z"
         },
         {
           "label": "Tim McManus",
@@ -319,7 +319,7 @@
       "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/GettyImages-2306483972.jpg?quality=85&strip=all&fit=7617,5078",
       "imageAlt": "Eagles injury update: Quinyon Mitchell good to go; 2 ruled out",
-      "publishedAt": "2026-11-25T20:47:22.102Z",
+      "publishedAt": "2026-11-25T20:49:21.889Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/injury-update-quinyon-mitchell-cowboys-saquon-barkley/769419/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -360,24 +360,24 @@
       "playerValueScore": 0.68,
       "playerValueTier": "core_starter",
       "injuryImpactScore": 0.764,
-      "storyRank": 164.9663
+      "storyRank": 165.0327
     },
     {
-      "id": "phi_brss_nbcs_phi_5c80a1453636",
+      "id": "phi_brss_nbcs_phi_6cdc80b6b3dd",
       "type": "article",
-      "title": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
+      "title": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
       "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
-      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/08/Mitchell-Q-USATSI-29167834.jpg?quality=85&strip=all&fit=1920,1080",
-      "imageAlt": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
-      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
+      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/112426_EETHUMB-1.jpg?quality=85&strip=all&fit=1920,1080",
+      "imageAlt": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
+      "publishedAt": "2026-11-25T20:49:21.893Z",
+      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
-      "reporterId": "dave_zangaro",
-      "reporterName": "Dave Zangaro",
-      "author": "Dave Zangaro",
-      "authorHandle": "@DZangaroNBCS",
-      "authorProfileUrl": "https://x.com/DZangaroNBCS",
+      "reporterId": "nbcs_phi",
+      "reporterName": "NBC Sports Philadelphia Staff",
+      "author": "NBC Sports Philadelphia Staff",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
       "mentionedPlayers": [
@@ -398,89 +398,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 95,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
-    },
-    {
-      "id": "phi_brss_nbcs_phi_978c410d3eba",
-      "type": "article",
-      "title": "Eagles make a roster swap, add LB to 53-man roster",
-      "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
-      "imageUrl": "https://media.nbcsportsphiladelphia.com/2023/05/USA_Eagles_helmet.jpg?quality=85&strip=all&fit=1500,877",
-      "imageAlt": "Eagles make a roster swap, add LB to 53-man roster",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
-      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-make-roster-swap-chance-campbell-jake-majors/769318/",
-      "outletId": "nbcs_phi",
-      "outletName": "NBC Sports Philadelphia",
-      "reporterId": "dave_zangaro",
-      "reporterName": "Dave Zangaro",
-      "author": "Dave Zangaro",
-      "authorHandle": "@DZangaroNBCS",
-      "authorProfileUrl": "https://x.com/DZangaroNBCS",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4686273",
-          "name": "Quinyon Mitchell",
-          "shortName": "Q. Mitchell",
-          "position": "CB",
-          "jersey": 27,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686273.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
-    },
-    {
-      "id": "phi_brss_nbcs_phi_30e22bc55c8e",
-      "type": "article",
-      "title": "LeSean McCoy advances in Pro Football Hall of Fame selection process",
-      "summary": "",
-      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/GettyImages-1232878650.jpg?quality=85&strip=all&fit=2832,4256",
-      "imageAlt": "LeSean McCoy advances in Pro Football Hall of Fame selection process",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
-      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/lesean-mccoy-advances-pro-football-hall-of-fame-selection-process/769273/",
-      "outletId": "nbcs_phi",
-      "outletName": "NBC Sports Philadelphia",
-      "reporterId": "reuben_frank",
-      "reporterName": "Reuben Frank",
-      "author": "Reuben Frank",
-      "authorHandle": "@RoobNBCS",
-      "authorProfileUrl": "https://x.com/RoobNBCS",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0967
     },
     {
       "id": "phi_brss_nbcs_phi_0743d1f05fcd",
@@ -489,7 +412,7 @@
       "summary": "",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/2026-10-05T030210Z_1389994591_MT1USATODAY30002945_RTRMADP_3_NFL-LOS-ANGELES-RAMS-AT-PHILADELPHIA-EAGLES.jpg?quality=85&strip=all&fit=7436,4958",
       "imageAlt": "Please welcome Braden Mann to the wonderful world of Roob's Eagles Stats",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
+      "publishedAt": "2026-11-25T20:49:21.892Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/braden-mann-eagles-stats-dallas-goedert-aaron-rodgers-nolan-smith/769140/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -523,7 +446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_nbcs_phi_52547fe1bd40",
@@ -532,7 +455,7 @@
       "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/10/Stowers-E-Getty-2302185839.jpg?quality=85&strip=all&fit=1920,1080",
       "imageAlt": "Eagles snap counts: Eli Stowers doesn't play on offense vs. Steelers",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
+      "publishedAt": "2026-11-25T20:49:21.892Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-snap-counts-eli-stowers-tight-ends-dallas-goedert-zach-ertz-johnny-mundt-steelers/768966/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -574,7 +497,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_nbcs_phi_b97690c5daf2",
@@ -583,7 +506,7 @@
       "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2025/10/Mitchell-Q-USATSI-27002944.jpg?quality=85&strip=all&fit=1920,1080",
       "imageAlt": "Eagles injury update: Quinyon Mitchell a DNP to start Thanksgiving week",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
+      "publishedAt": "2026-11-25T20:49:21.892Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-jonathan-jones-cowboys-week-12-thanksgiving/769021/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -617,24 +540,58 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
-      "id": "phi_brss_nbcs_phi_6cdc80b6b3dd",
+      "id": "phi_brss_nbcs_phi_4d87b29ce5a4",
       "type": "article",
-      "title": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
-      "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
-      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/112426_EETHUMB-1.jpg?quality=85&strip=all&fit=1920,1080",
-      "imageAlt": "Eagle Eye: Gearing up for the Cowboys on Thanksgiving",
-      "publishedAt": "2026-11-25T20:47:22.105Z",
-      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
+      "title": "Eagles injury update: Some good news in latest report",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsphiladelphia.com/2025/06/Barkley-S-USATSI-26417520.jpg?quality=85&strip=all&fit=1920,1080",
+      "imageAlt": "Eagles injury update: Some good news in latest report",
+      "publishedAt": "2026-11-25T20:49:21.891Z",
+      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-saquon-barkley-smael-mondon-dallas-goedert-cowboys-week-12-thanksgiving/769359/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
-      "reporterId": "nbcs_phi",
-      "reporterName": "NBC Sports Philadelphia Staff",
-      "author": "NBC Sports Philadelphia Staff",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagle-eye-gearing-up-for-the-cowboys-on-thanksgiving/769242/",
+      "reporterId": "dave_zangaro",
+      "reporterName": "Dave Zangaro",
+      "author": "Dave Zangaro",
+      "authorHandle": "@DZangaroNBCS",
+      "authorProfileUrl": "https://x.com/DZangaroNBCS",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 54.0966
+    },
+    {
+      "id": "phi_brss_nbcs_phi_5c80a1453636",
+      "type": "article",
+      "title": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
+      "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
+      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/08/Mitchell-Q-USATSI-29167834.jpg?quality=85&strip=all&fit=1920,1080",
+      "imageAlt": "Vic Fangio delivers good news on Quinyon Mitchell for Thanksgiving",
+      "publishedAt": "2026-11-25T20:49:21.891Z",
+      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-vic-fangio-good-news-quinyon-mitchell-thanksgiving-cowboys/769281/",
+      "outletId": "nbcs_phi",
+      "outletName": "NBC Sports Philadelphia",
+      "reporterId": "dave_zangaro",
+      "reporterName": "Dave Zangaro",
+      "author": "Dave Zangaro",
+      "authorHandle": "@DZangaroNBCS",
+      "authorProfileUrl": "https://x.com/DZangaroNBCS",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
       "mentionedPlayers": [
@@ -655,22 +612,22 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 95,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
-      "id": "phi_brss_nbcs_phi_93660e60549f",
+      "id": "phi_brss_nbcs_phi_978c410d3eba",
       "type": "article",
-      "title": "The switch that flips for Jeremiah Trotter Jr. when he takes the field",
-      "summary": "",
-      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/Trotter-J-USATSI-30321841.jpg?quality=85&strip=all&fit=1920,1080",
-      "imageAlt": "The switch that flips for Jeremiah Trotter Jr. when he takes the field",
-      "publishedAt": "2026-11-25T20:47:22.104Z",
-      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/jeremiah-trotter-jr-switch-linebacker-nfl-clemson-jihaad-campbell-zack-baun-cooper-dejean/769364/",
+      "title": "Eagles make a roster swap, add LB to 53-man roster",
+      "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
+      "imageUrl": "https://media.nbcsportsphiladelphia.com/2023/05/USA_Eagles_helmet.jpg?quality=85&strip=all&fit=1500,877",
+      "imageAlt": "Eagles make a roster swap, add LB to 53-man roster",
+      "publishedAt": "2026-11-25T20:49:21.891Z",
+      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-make-roster-swap-chance-campbell-jake-majors/769318/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
       "reporterId": "dave_zangaro",
@@ -682,14 +639,48 @@
       "wireSource": "local_beat_rss",
       "mentionedPlayers": [
         {
-          "id": "4432777",
-          "name": "Jeremiah Trotter Jr.",
-          "shortName": "J. Trotter Jr.",
-          "position": "LB",
-          "jersey": 54,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432777.png"
+          "id": "4686273",
+          "name": "Quinyon Mitchell",
+          "shortName": "Q. Mitchell",
+          "position": "CB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686273.png"
         }
       ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 54.0966
+    },
+    {
+      "id": "phi_brss_nbcs_phi_30e22bc55c8e",
+      "type": "article",
+      "title": "LeSean McCoy advances in Pro Football Hall of Fame selection process",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/GettyImages-1232878650.jpg?quality=85&strip=all&fit=2832,4256",
+      "imageAlt": "LeSean McCoy advances in Pro Football Hall of Fame selection process",
+      "publishedAt": "2026-11-25T20:49:21.891Z",
+      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/lesean-mccoy-advances-pro-football-hall-of-fame-selection-process/769273/",
+      "outletId": "nbcs_phi",
+      "outletName": "NBC Sports Philadelphia",
+      "reporterId": "reuben_frank",
+      "reporterName": "Reuben Frank",
+      "author": "Reuben Frank",
+      "authorHandle": "@RoobNBCS",
+      "authorProfileUrl": "https://x.com/RoobNBCS",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -703,7 +694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_nbcs_phi_39783b430a67",
@@ -712,7 +703,7 @@
       "summary": "Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/Mitchell-Lamb-2.jpg?quality=85&strip=all&fit=1200,675",
       "imageAlt": "Eagles-Cowboys matchups to watch in Week 12 on Thanksgiving",
-      "publishedAt": "2026-11-25T20:47:22.104Z",
+      "publishedAt": "2026-11-25T20:49:21.890Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-cowboys-matchups-to-watch-in-week-12-on-thanksgiving/769298/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -746,7 +737,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_nbcs_phi_4339d0ac841d",
@@ -755,7 +746,7 @@
       "summary": "",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/2026-10-27T002752Z_1673046319_MT1USATODAY30193286_RTRMADP_3_NFL-DALLAS-COWBOYS-AT-PHILADELPHIA-EAGLES.jpg?quality=85&strip=all&fit=4692,3132",
       "imageAlt": "Eagles vs Cowboys betting guide: Odds, props and picks",
-      "publishedAt": "2026-11-25T20:47:22.104Z",
+      "publishedAt": "2026-11-25T20:49:21.890Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-analysis/eagles-vs-cowboys-betting-guide-odds-props-and-picks-2/769404/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -780,7 +771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_nbcs_phi_897700199267",
@@ -789,7 +780,7 @@
       "summary": "",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/2026-10-27T001709Z_1267161366_MT1USATODAY30193270_RTRMADP_3_NFL-DALLAS-COWBOYS-AT-PHILADELPHIA-EAGLES.jpg?quality=85&strip=all&fit=4500,3000",
       "imageAlt": "Why is it so hard to sack Dak Prescott?",
-      "publishedAt": "2026-11-25T20:47:22.104Z",
+      "publishedAt": "2026-11-25T20:49:21.890Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/why-is-it-hard-to-sack-dak-prescott-vic-fangio-defensive-line-pass-rush/769340/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -814,7 +805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_nbcs_phi_01e8728e106e",
@@ -823,7 +814,7 @@
       "summary": "",
       "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/GettyImages-2304365405.jpg?quality=85&strip=all&fit=3000,2000",
       "imageAlt": "Future Eagles Fits: Searching for the Eagles' next perimeter difference-maker",
-      "publishedAt": "2026-11-25T20:47:22.104Z",
+      "publishedAt": "2026-11-25T20:49:21.890Z",
       "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/future-eagles-fits-searching-for-the-eagles-next-perimeter-difference-maker/769279/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
@@ -848,17 +839,17 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
-      "id": "phi_brss_nbcs_phi_4d87b29ce5a4",
+      "id": "phi_brss_nbcs_phi_93660e60549f",
       "type": "article",
-      "title": "Eagles injury update: Some good news in latest report",
+      "title": "The switch that flips for Jeremiah Trotter Jr. when he takes the field",
       "summary": "",
-      "imageUrl": "https://media.nbcsportsphiladelphia.com/2025/06/Barkley-S-USATSI-26417520.jpg?quality=85&strip=all&fit=1920,1080",
-      "imageAlt": "Eagles injury update: Some good news in latest report",
-      "publishedAt": "2026-11-25T20:47:22.104Z",
-      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/eagles-injury-update-quinyon-mitchell-saquon-barkley-smael-mondon-dallas-goedert-cowboys-week-12-thanksgiving/769359/",
+      "imageUrl": "https://media.nbcsportsphiladelphia.com/2026/11/Trotter-J-USATSI-30321841.jpg?quality=85&strip=all&fit=1920,1080",
+      "imageAlt": "The switch that flips for Jeremiah Trotter Jr. when he takes the field",
+      "publishedAt": "2026-11-25T20:49:21.889Z",
+      "url": "https://www.nbcsportsphiladelphia.com/nfl/philadelphia-eagles/jeremiah-trotter-jr-switch-linebacker-nfl-clemson-jihaad-campbell-zack-baun-cooper-dejean/769364/",
       "outletId": "nbcs_phi",
       "outletName": "NBC Sports Philadelphia",
       "reporterId": "dave_zangaro",
@@ -868,7 +859,16 @@
       "authorProfileUrl": "https://x.com/DZangaroNBCS",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "4432777",
+          "name": "Jeremiah Trotter Jr.",
+          "shortName": "J. Trotter Jr.",
+          "position": "LB",
+          "jersey": 54,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432777.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -882,7 +882,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0774
+      "storyRank": 54.0966
     },
     {
       "id": "phi_brss_bleeding_green_nation_d1d3d35de7fe",
@@ -925,7 +925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.9791
+      "storyRank": 16.7746
     },
     {
       "id": "phi_rss_1e56a92f3af9",
@@ -968,7 +968,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.7785
+      "storyRank": 13.5598
     },
     {
       "id": "phi_bsky_db60a94c4f2f",
@@ -1006,7 +1006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.8688
+      "storyRank": 8.7363
     },
     {
       "id": "phi_rss_4eee36d6c93c",
@@ -1049,7 +1049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.4699
+      "storyRank": 7.3701
     },
     {
       "id": "phi_vid_3011600599dc",
@@ -1094,7 +1094,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.5725
+      "storyRank": 6.5106
     },
     {
       "id": "phi_vid_6b143108a069",
@@ -1155,7 +1155,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.5568
+      "storyRank": 6.4952
     },
     {
       "id": "phi_brss_bleeding_green_nation_ff914a64550f",
@@ -1189,7 +1189,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4948
+      "storyRank": 5.4487
     },
     {
       "id": "phi_brss_bleeding_green_nation_c5cbbab38b14",
@@ -1223,7 +1223,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.7224
+      "storyRank": 4.6869
     },
     {
       "id": "phi_espn_a5ecefe1070fc",
@@ -1257,7 +1257,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.628,
+      "breakingPriority": 0.626,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1269,7 +1269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9416
+      "storyRank": 4.91
     },
     {
       "id": "phi_brss_bleeding_green_nation_ad8d40225fd6",
@@ -1303,7 +1303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0327
+      "storyRank": 4.0056
     },
     {
       "id": "phi_bsky_011ceed8bcd3",
@@ -1341,7 +1341,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3252
+      "storyRank": 4.3067
     },
     {
       "id": "phi_brss_bleeding_green_nation_0abd9fc8a126",
@@ -1375,7 +1375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9483
+      "storyRank": 3.9221
     },
     {
       "id": "phi_rss_fbda204f12e9",
@@ -1409,7 +1409,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9403
+      "storyRank": 3.9145
     },
     {
       "id": "phi_bsky_9042d5cbb9ea",
@@ -1447,7 +1447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7108
+      "storyRank": 2.6969
     },
     {
       "id": "phi_brss_bleeding_green_nation_701a1b90c1a9",
@@ -1490,7 +1490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5156
+      "storyRank": 1.5128
     },
     {
       "id": "phi_espn_65acffaa13e73",
@@ -1526,7 +1526,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1171
+      "storyRank": 1.1142
     },
     {
       "id": "phi_bsky_a70d047398a1",
@@ -1564,7 +1564,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6793
+      "storyRank": 0.6758
     },
     {
       "id": "phi_vid_111306bbe023",
@@ -1609,7 +1609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7883
+      "storyRank": 0.7867
     },
     {
       "id": "phi_vid_d222f183955f",
@@ -1678,7 +1678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7557
+      "storyRank": 0.7542
     },
     {
       "id": "phi_brss_bleeding_green_nation_5f0655dd73e5",
@@ -1721,7 +1721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7429
+      "storyRank": 0.7414
     },
     {
       "id": "phi_vid_d5fe2497ac29",
@@ -1766,7 +1766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.731
+      "storyRank": 0.7295
     },
     {
       "id": "phi_espn_2c0e450347dbd",
@@ -1810,7 +1810,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6778
+      "storyRank": 0.6765
     },
     {
       "id": "phi_rss_a2d36aabe373",
@@ -1853,7 +1853,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6756
+      "storyRank": 0.6743
     },
     {
       "id": "phi_rss_bdf95cded9b6",
@@ -1887,7 +1887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6704
+      "storyRank": 0.6692
     },
     {
       "id": "phi_vid_244640cd2444",
@@ -1923,7 +1923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6704
+      "storyRank": 0.6692
     },
     {
       "id": "phi_pwire_3121023_49949224",
@@ -1955,7 +1955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6347
+      "storyRank": 0.6336
     },
     {
       "id": "phi_pwire_4241478_49949224",
@@ -1987,7 +1987,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6347
+      "storyRank": 0.6336
     },
     {
       "id": "phi_brss_bleeding_green_nation_d77f3000a5bc",
@@ -2021,7 +2021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5995
+      "storyRank": 0.5985
     },
     {
       "id": "phi_rss_11b08c2d4744",
@@ -2055,7 +2055,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6016
+      "storyRank": 0.6006
     },
     {
       "id": "phi_brss_bleeding_green_nation_8388b15ba174",
@@ -2089,7 +2089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5732
+      "storyRank": 0.5722
     },
     {
       "id": "phi_vid_9fcd9877705b",
@@ -2150,7 +2150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5752
+      "storyRank": 0.5743
     },
     {
       "id": "phi_brss_bleeding_green_nation_627cf295ea56",
@@ -2184,7 +2184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5617
+      "storyRank": 0.5608
     },
     {
       "id": "phi_bsky_b3430e3b42af",
@@ -2222,7 +2222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5132
+      "storyRank": 0.5124
     },
     {
       "id": "phi_rss_043b0a82dfb4",
@@ -2256,7 +2256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4949
+      "storyRank": 0.4942
     },
     {
       "id": "phi_bsky_b9279e5d06eb",
@@ -2294,7 +2294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4398
+      "storyRank": 0.4391
     },
     {
       "id": "phi_tx_1607b1565534",
@@ -2338,7 +2338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3721
+      "storyRank": 0.3717
     },
     {
       "id": "phi_rss_c7448a274c54",
@@ -2372,7 +2372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2761
+      "storyRank": 0.2758
     },
     {
       "id": "phi_bsky_bd23b6aebb49",
@@ -2410,7 +2410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5742
+      "storyRank": 0.5737
     },
     {
       "id": "phi_vid_0e6860d39f9f",
@@ -2471,46 +2471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2597
-    },
-    {
-      "id": "phi_yts_9ORFm2xTKNs",
-      "type": "video",
-      "videoId": "9ORFm2xTKNs",
-      "embeddable": false,
-      "title": "Pittsburgh Steelers vs. Philadelphia Eagles Game Highlights | 2026 NFL Season Week 11",
-      "summary": "",
-      "duration": "12:31",
-      "imageUrl": "https://i.ytimg.com/vi/9ORFm2xTKNs/hqdefault.jpg",
-      "imageAlt": "Pittsburgh Steelers vs. Philadelphia Eagles Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:47:22.106Z",
-      "url": "https://www.youtube.com/watch?v=9ORFm2xTKNs",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=9ORFm2xTKNs",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
+      "storyRank": 0.2595
     },
     {
       "id": "phi_rss_49d41e294869",
@@ -2561,7 +2522,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2567
+      "storyRank": 0.2565
     },
     {
       "id": "phi_pfr_26f50cbafbd9",
@@ -2603,7 +2564,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2344
+      "storyRank": 0.2342
     },
     {
       "id": "phi_rss_8eed88daedce",
@@ -2646,7 +2607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2332
+      "storyRank": 0.233
     },
     {
       "id": "phi_espn_251a69cf49add",
@@ -2698,7 +2659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2239
+      "storyRank": 0.2237
     },
     {
       "id": "phi_vid_e54d72bee4f2",
@@ -2734,7 +2695,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2186
+      "storyRank": 0.2185
     },
     {
       "id": "phi_bsky_1612b48be5bb",
@@ -2772,7 +2733,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2086
+      "storyRank": 0.2084
     },
     {
       "id": "phi_bsky_8823cfd98ccb",
@@ -2810,7 +2771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2008
+      "storyRank": 0.2006
     },
     {
       "id": "phi_espn_c66b1cfb0eee8",
@@ -2845,7 +2806,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1746
+      "storyRank": 0.1745
     },
     {
       "id": "phi_espn_9d62099864e19",
@@ -2881,7 +2842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1683
+      "storyRank": 0.1682
     },
     {
       "id": "phi_espn_1c585d6bd3e60",
@@ -2916,7 +2877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.164
+      "storyRank": 0.1639
     },
     {
       "id": "phi_espn_65d16fc1c609b",
@@ -2960,7 +2921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1602
+      "storyRank": 0.1601
     },
     {
       "id": "phi_espn_169b3e6e25074",
@@ -3012,7 +2973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1587
+      "storyRank": 0.1586
     },
     {
       "id": "phi_bsky_e3cbd5b32322",
@@ -3050,7 +3011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.152
+      "storyRank": 0.1519
     },
     {
       "id": "phi_vid_e655b444fae1",
@@ -3119,7 +3080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1554
+      "storyRank": 0.1552
     },
     {
       "id": "phi_rss_1b6fe26e2148",
@@ -3162,7 +3123,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1548
+      "storyRank": 0.1547
     },
     {
       "id": "phi_rss_07426cb6e369",
@@ -3249,7 +3210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1537
+      "storyRank": 0.1536
     },
     {
       "id": "phi_vid_6f5f8c4475a5",
@@ -3294,7 +3255,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1534
+      "storyRank": 0.1533
     },
     {
       "id": "phi_vid_f8e6c569f84b",
@@ -3347,7 +3308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1512
+      "storyRank": 0.1511
     },
     {
       "id": "phi_vid_d7dffbca04ad",
@@ -3400,7 +3361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1498
+      "storyRank": 0.1497
     },
     {
       "id": "phi_bsky_586886a5d401",
@@ -3438,7 +3399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1447
+      "storyRank": 0.1446
     },
     {
       "id": "phi_bsky_fce1c057ab43",
@@ -3476,7 +3437,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1443
+      "storyRank": 0.1442
     },
     {
       "id": "phi_vid_12d8c493f8b7",
@@ -3521,7 +3482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1488
+      "storyRank": 0.1487
     },
     {
       "id": "phi_vid_77ff032c08a7",
@@ -3648,7 +3609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1431
+      "storyRank": 0.143
     },
     {
       "id": "phi_bsky_3215aae9a1b4",
@@ -3695,7 +3656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1431
+      "storyRank": 0.143
     },
     {
       "id": "phi_bsky_89391d5eff4d",
@@ -3750,7 +3711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.143
+      "storyRank": 0.1429
     },
     {
       "id": "phi_bsky_fb458a417bf6",
@@ -3797,7 +3758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1429
+      "storyRank": 0.1428
     },
     {
       "id": "phi_vid_70a04d504e40",
@@ -3842,7 +3803,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1476
+      "storyRank": 0.1475
     },
     {
       "id": "phi_vid_ed64c94f9e8f",
@@ -3887,7 +3848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1473
+      "storyRank": 0.1472
     },
     {
       "id": "phi_bsky_b56450a9a34d",
@@ -3950,7 +3911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1422
+      "storyRank": 0.1421
     },
     {
       "id": "phi_bsky_bbaf5ba86761",
@@ -3997,7 +3958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1419
+      "storyRank": 0.1418
     },
     {
       "id": "phi_bsky_ccb915762cc8",
@@ -4035,7 +3996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1417
+      "storyRank": 0.1416
     },
     {
       "id": "phi_vid_eb9268147491",
@@ -4080,7 +4041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1463
+      "storyRank": 0.1462
     },
     {
       "id": "phi_vid_3ffd0880c7ea",
@@ -4125,7 +4086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1462
+      "storyRank": 0.1461
     },
     {
       "id": "phi_bsky_51905ba0a795",
@@ -4172,7 +4133,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1412
+      "storyRank": 0.1411
     },
     {
       "id": "phi_vid_fe704d28451f",
@@ -4217,7 +4178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1441
+      "storyRank": 0.144
     },
     {
       "id": "phi_vid_c6f55aa7f86f",
@@ -4262,7 +4223,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1431
+      "storyRank": 0.143
     },
     {
       "id": "phi_vid_eedbb7b9fdd3",
@@ -4307,7 +4268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.143
+      "storyRank": 0.1429
     },
     {
       "id": "phi_vid_bafb972eeba2",
@@ -4352,7 +4313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1427
+      "storyRank": 0.1426
     },
     {
       "id": "phi_vid_783b0337d4e2",
@@ -4397,7 +4358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1427
+      "storyRank": 0.1426
     },
     {
       "id": "phi_vid_3a219ad58899",
@@ -4450,7 +4411,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1422
+      "storyRank": 0.1421
     },
     {
       "id": "phi_vid_c65be2079bc9",
@@ -4548,7 +4509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.142
+      "storyRank": 0.1419
     },
     {
       "id": "phi_vid_6bb292d07eb5",
@@ -4593,7 +4554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1417
+      "storyRank": 0.1416
     },
     {
       "id": "phi_vid_c4d2ce385d49",
@@ -4638,7 +4599,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1413
+      "storyRank": 0.1412
     },
     {
       "id": "phi_rss_cfc755001db3",
@@ -4708,7 +4669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0587
+      "storyRank": 0.0586
     },
     {
       "id": "phi_rss_e188ea0b8445",
@@ -4915,7 +4876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.048
+      "storyRank": 0.0479
     },
     {
       "id": "phi_bsky_ed388f9550cd",
@@ -4970,7 +4931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0432
+      "storyRank": 0.0431
     },
     {
       "id": "phi_espn_0718def9cfa00",
@@ -5373,7 +5334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0288
     },
     {
       "id": "phi_espn_9e4cfc2967553",
@@ -5658,7 +5619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0261
+      "storyRank": 0.026
     },
     {
       "id": "phi_vid_d0d168aebda7",
@@ -5788,7 +5749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0223
     },
     {
       "id": "phi_vid_f36b654546c5",
@@ -5893,45 +5854,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0222
-    },
-    {
-      "id": "phi_yts_cK_m9WFrq60",
-      "type": "video",
-      "videoId": "cK_m9WFrq60",
-      "embeddable": false,
-      "title": "Pittsburgh Steelers vs Philadelphia Eagles | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "10:22",
-      "imageUrl": "https://i.ytimg.com/vi/cK_m9WFrq60/hqdefault.jpg",
-      "imageAlt": "Pittsburgh Steelers vs Philadelphia Eagles | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:47:22.106Z",
-      "url": "https://www.youtube.com/watch?v=cK_m9WFrq60",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=cK_m9WFrq60",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
     },
     {
       "id": "phi_rss_e9cca7ca3152",
@@ -6480,7 +6402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0156
     },
     {
       "id": "phi_pfr_76dc8f44aa8b",

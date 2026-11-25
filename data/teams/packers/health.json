@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:13.160Z",
+  "updatedAt": "2026-11-25T20:49:09.445Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.packers.com/team/injury-report/",
@@ -112,31 +112,6 @@
       "beatComment": "Franklin was limited in all three practices leading up to Wednesday night's showdown against the Rams. The questionable tag is positive news for the 30-year-old linebacker, as he's missed the past four games due to a shin injury."
     },
     {
-      "playerId": "4259305",
-      "name": "Bo Melton",
-      "position": "WR",
-      "jersey": 16,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "-",
-      "injuryType": "Thigh",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 76,
-      "priorDayPlayProbabilityPct": 76,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "76% • GTD",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Thursday Limited Participation (LP); player toughness prior = 76%"
-      ],
-      "beatComment": "Melton had a trio of limited practices leading up to the Packers' Week 12 matchup against the Rams. The 27-year-old injured his thigh in the team's Week 10 loss to the Vikings. The fifth-year pro has appeared in all 10 games for Green Bay this season, catching five of 10 targets for 34 yards."
-    },
-    {
       "playerId": "4430191",
       "name": "Skyy Moore",
       "position": "WR",
@@ -160,6 +135,31 @@
         "Thursday Limited Participation (LP); player toughness prior = 76%"
       ],
       "beatComment": "Moore was limited in all three practices ahead of Week 12 after re-injuring his ankle in Week 10 against the Vikings. The 26-year-old has had a smaller role on offense since Savion Williams returned from injury, but Moore still plays a key role in the kick return unit on special teams."
+    },
+    {
+      "playerId": "4259305",
+      "name": "Bo Melton",
+      "position": "WR",
+      "jersey": 16,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "-",
+      "injuryType": "Thigh",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 76,
+      "priorDayPlayProbabilityPct": 76,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "76% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Thursday Limited Participation (LP); player toughness prior = 76%"
+      ],
+      "beatComment": "Melton had a trio of limited practices leading up to the Packers' Week 12 matchup against the Rams. The 27-year-old injured his thigh in the team's Week 10 loss to the Vikings. The fifth-year pro has appeared in all 10 games for Green Bay this season, catching five of 10 targets for 34 yards."
     },
     {
       "playerId": "14931",

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:59.669Z",
+  "updatedAt": "2026-11-25T20:50:40.903Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-7",
-    "generatedAt": "2026-11-25T20:44:59.669Z",
+    "generatedAt": "2026-11-25T20:50:40.903Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -21,7 +21,7 @@
     "bullets": [
       "Injury & Practice Status: RB Derrick Henry (concussion) and G Olaivavega Ioane (shoulder/knee) logged limited practice reps Wednesday [Cordell Woodland](https://www.espn.com/nfl/player/_/id/3043078/derrick-henry#:~:text=Ravens%20head%20coach%20Jesse%20Minter%20said%20that).",
       "Week 12 Texans Outlook: Jesse Minter and DC Anthony Weaver open installation for the Houston Texans (4-6, HOU -7, HC DeMeco Ryans, OC Nick Caley & DC Matt Burke (Road Test))—a unit ranked #3 in Field Goal % (95.2%) as Baltimore prepares for a pivotal AFC matchup [baltimoreravens.com Official](https://www.baltimoreravens.com/news/power-rankings-ravens-nfl-week-12) [Jamison Hensley](https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday).",
-      "AFC Playoff Trajectory: Entering Week 12 at 4-7 (4th in AFC North • #11 Seed in AFC), Baltimore carries a 5.7% postseason projection, 0.4% AFC North division title mark, and 0% #1 Seed Bye equity into the conference stretch [Frank Platko](https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling).",
+      "AFC Playoff Trajectory: Entering Week 12 at 4-7 (4th in AFC North • #11 Seed in AFC), Baltimore carries a 3.5% postseason projection, 0.2% AFC North division title mark, and 0% #1 Seed Bye equity into the conference stretch [Frank Platko](https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88198/afc-north-preview-week-12-browns-off-their-bye-week-steelers-and-ravens-reeling).",
       "Around the Beat: Three Ravens, including defensive tackle Nnamdi Madubuike, were not on the field at the start of Wednesday’s practice [baltimoreravens.com Official](https://www.baltimoreravens.com/news/marlon-humphrey-returns-to-practice-nnamdi-madubuike-jaylinn-hawkins-calais-campbell).",
       "Statistical Profile & Matchup Edge: Through Week 11, Baltimore ranks #19 in Points / Game (22.0), #26 in Points Allowed / Game (26.7), #28 in Turnover Differential (-7), giving Jesse Minter and Anthony Weaver a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Houston Texans [Frank Platko](https://www.baltimorebeatdown.com/baltimore-ravens-analysis/88201/ravens-snap-count-analysis-week-11-mike-green-shines-again-t-j-tampa-steps-into-larger-role)."
     ],
@@ -340,7 +340,7 @@
       "isBreaking": true,
       "isInGameInjury": true,
       "breakingBadge": "LIVE INJURY UPDATE",
-      "breakingPriority": 3.29,
+      "breakingPriority": 3.321,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -354,10 +354,10 @@
       "isStalePreGameAvailability": false,
       "injurySeverityScore": 0.82,
       "injurySeverityTier": "serious",
-      "playerValueScore": 0.27,
+      "playerValueScore": 0.44,
       "playerValueTier": "rotational",
-      "injuryImpactScore": 0.6,
-      "storyRank": 87.3365
+      "injuryImpactScore": 0.668,
+      "storyRank": 82.5507
     },
     {
       "id": "bal_rss_9dadc039c43a",
@@ -398,7 +398,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.486,
+      "breakingPriority": 1.473,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -408,7 +408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.1326
+      "storyRank": 22.1998
     },
     {
       "id": "bal_vid_99933fad683c",
@@ -453,7 +453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 21.6419
+      "storyRank": 20.3349
     },
     {
       "id": "bal_yt_YHHIsspyM2w",
@@ -491,7 +491,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.0647
+      "storyRank": 13.4317
     },
     {
       "id": "x_tl_jamisonhensley_2125651163060085119",
@@ -543,7 +543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.2201
+      "storyRank": 9.8745
     },
     {
       "id": "bal_brss_baltimore_beatdown_3a5e3bedb563",
@@ -584,7 +584,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.656,
+      "breakingPriority": 0.653,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -594,7 +594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.8155
+      "storyRank": 8.6299
     },
     {
       "id": "bal_vid_fe4ad7748f96",
@@ -639,7 +639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.7874
+      "storyRank": 7.5545
     },
     {
       "id": "bal_vid_f00335ae8f36",
@@ -684,7 +684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.7476
+      "storyRank": 7.5167
     },
     {
       "id": "bal_vid_e9b261f11108",
@@ -729,7 +729,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.7171
+      "storyRank": 7.4878
     },
     {
       "id": "bal_brss_baltimore_beatdown_c98ddc6407ba",
@@ -763,7 +763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3267
+      "storyRank": 7.1142
     },
     {
       "id": "bal_rss_970882856377",
@@ -806,7 +806,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6502
+      "storyRank": 6.4721
     },
     {
       "id": "bal_rss_81206790dfa8",
@@ -840,7 +840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9503
+      "storyRank": 3.8768
     },
     {
       "id": "bal_rss_2d3ef708a3b1",
@@ -874,7 +874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5158
+      "storyRank": 3.4556
     },
     {
       "id": "bal_rss_6f22b3da66d9",
@@ -908,7 +908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3803
+      "storyRank": 3.3239
     },
     {
       "id": "bal_rss_9fd73245413b",
@@ -942,7 +942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1381
+      "storyRank": 1.1147
     },
     {
       "id": "bal_pfr_25b58917e59d",
@@ -975,7 +975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7787
+      "storyRank": 0.7741
     },
     {
       "id": "bal_brss_baltimore_beatdown_8a01df3ccfa6",
@@ -1009,7 +1009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6814
+      "storyRank": 0.6777
     },
     {
       "id": "bal_espn_0c47334020a84",
@@ -1044,7 +1044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6755
+      "storyRank": 0.6719
     },
     {
       "id": "bal_rss_060a17d921e7",
@@ -1078,7 +1078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.672
+      "storyRank": 0.6685
     },
     {
       "id": "bal_espn_61911afc2caa4",
@@ -1123,7 +1123,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6596
+      "storyRank": 0.6561
     },
     {
       "id": "x_tl_jeffzrebiec_2125316383130972208",
@@ -1162,7 +1162,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6937
+      "storyRank": 0.6902
     },
     {
       "id": "bal_vid_bd0c8e383d15",
@@ -1215,7 +1215,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6177
+      "storyRank": 0.6146
     },
     {
       "id": "bal_rss_1f4a07eaff45",
@@ -1274,7 +1274,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4883
+      "storyRank": 0.4863
     },
     {
       "id": "bal_tx_01c69bd6b5d5",
@@ -1309,7 +1309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3727
+      "storyRank": 0.3714
     },
     {
       "id": "bal_pwire_3126356_64941128",
@@ -1350,7 +1350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0379
+      "storyRank": 0.0377
     },
     {
       "id": "bal_rss_0bf462efd2e6",
@@ -1401,7 +1401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2844
+      "storyRank": 0.2836
     },
     {
       "id": "bal_espn_da80639075b30",
@@ -1445,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2818
+      "storyRank": 0.281
     },
     {
       "id": "bal_brss_baltimore_beatdown_9d2d5c7571d4",
@@ -1488,7 +1488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2598
+      "storyRank": 0.2591
     },
     {
       "id": "bal_yts_wdlsXc0by8U",
@@ -1500,7 +1500,7 @@
       "duration": "16:17",
       "imageUrl": "https://i.ytimg.com/vi/wdlsXc0by8U/hqdefault.jpg",
       "imageAlt": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:45:00.767Z",
+      "publishedAt": "2026-11-23T20:50:41.695Z",
       "url": "https://www.youtube.com/watch?v=wdlsXc0by8U",
       "externalVideoUrl": "https://www.youtube.com/watch?v=wdlsXc0by8U",
       "channel": "NFL",
@@ -1561,7 +1561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2457
+      "storyRank": 0.245
     },
     {
       "id": "bal_rss_f79d10809a3f",
@@ -1620,7 +1620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2327
+      "storyRank": 0.2321
     },
     {
       "id": "bal_espn_92501318f9b5b",
@@ -1655,7 +1655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2319
+      "storyRank": 0.2314
     },
     {
       "id": "bal_rss_f2d89141419a",
@@ -1689,7 +1689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2194
+      "storyRank": 0.2189
     },
     {
       "id": "bal_brss_baltimore_beatdown_c2e718e02ebb",
@@ -1723,7 +1723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1687
+      "storyRank": 0.1683
     },
     {
       "id": "bal_pwire_4038441_50563318",
@@ -1758,6 +1758,45 @@
       "storyRank": 0.041
     },
     {
+      "id": "x_tl_mike_e_kaye_2124672113965764842",
+      "type": "tweet",
+      "title": "Per @espn research: The Ravens are the second team in the last 20 years to lose a game despite producing a safety and a kick return TD.\n\nThey join Washington, who lost in Week 11 of 2015 (… and wait for it …) to the #Panthers at Bank of America Stadium.",
+      "fullText": "Per @espn research: The Ravens are the second team in the last 20 years to lose a game despite producing a safety and a kick return TD.\n\nThey join Washington, who lost in Week 11 of 2015 (… and wait for it …) to the #Panthers at Bank of America Stadium.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Mike Kaye post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-23T01:11:21.125Z",
+      "url": "https://x.com/mike_e_kaye/status/2124672113965764842",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "charlotte_observer_public_beat_wire_car",
+      "outletName": "Charlotte Observer",
+      "reporterId": "mike_kaye",
+      "reporterName": "Mike Kaye",
+      "author": "Mike Kaye",
+      "authorHandle": "@mike_e_kaye",
+      "authorProfileUrl": "https://x.com/mike_e_kaye",
+      "trustTier": 3,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 78,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1535
+    },
+    {
       "id": "bal_espn_43feb3a96b1bc",
       "type": "article",
       "title": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
@@ -1767,14 +1806,14 @@
       "imageAlt": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
       "publishedAt": "2026-11-23T01:28:16.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567146/young-authors-game-winning-drive-first-place-panthers",
-      "outletId": "espn_bal",
+      "outletId": "charlotte_observer_public_beat_wire_car",
       "outletName": "ESPN",
-      "reporterId": "espn_bal",
+      "reporterId": "mike_kaye",
       "reporterName": "Mike Kaye",
       "author": "Mike Kaye",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens",
-      "trustTier": 1,
+      "authorHandle": "@mike_e_kaye",
+      "authorProfileUrl": "https://x.com/mike_e_kaye",
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "mentionedPlayers": [],
       "isBreaking": false,
@@ -1785,12 +1824,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1628
+      "storyRank": 0.1382
     },
     {
       "id": "bal_espn_69b128e169263",
@@ -1825,7 +1864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1607
+      "storyRank": 0.1604
     },
     {
       "id": "bal_espn_a0caad20a15b2",
@@ -1860,7 +1899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0399
     },
     {
       "id": "bal_rss_4374fcb620e1",
@@ -1894,7 +1933,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1574
+      "storyRank": 0.1571
     },
     {
       "id": "bal_rss_cd23233b5f38",
@@ -1928,7 +1967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1563
+      "storyRank": 0.156
     },
     {
       "id": "bal_brss_baltimore_beatdown_cf57764cfb3a",
@@ -1962,7 +2001,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1494
+      "storyRank": 0.1491
     },
     {
       "id": "x_tl_ravens_2124580003002089680",
@@ -2005,7 +2044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0343
+      "storyRank": 0.0342
     },
     {
       "id": "bal_brss_baltimore_beatdown_0ed24784d55d",
@@ -2039,7 +2078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0661
+      "storyRank": 0.066
     },
     {
       "id": "bal_pfr_d3775005498d",
@@ -2081,7 +2120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0657
+      "storyRank": 0.0656
     },
     {
       "id": "bal_rss_ed6787f68a96",
@@ -2115,7 +2154,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0618
+      "storyRank": 0.0617
     },
     {
       "id": "bal_rss_6deb198b0397",
@@ -2149,7 +2188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0618
+      "storyRank": 0.0617
     },
     {
       "id": "bal_rss_7426ee678ab7",
@@ -2251,7 +2290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
+      "storyRank": 0.0518
     },
     {
       "id": "bal_pfr_e4b84b9ab405",
@@ -2284,7 +2323,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0489
+      "storyRank": 0.0488
     },
     {
       "id": "bal_rss_7991c38701a6",
@@ -2318,7 +2357,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.048
+      "storyRank": 0.0479
     },
     {
       "id": "bal_rss_53ee2c8a75f9",
@@ -2352,7 +2391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0473
+      "storyRank": 0.0472
     },
     {
       "id": "bal_pfr_7890a695a61a",
@@ -2489,7 +2528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.0432
     },
     {
       "id": "bal_tx_0329aa061dee",
@@ -2649,7 +2688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0326
     },
     {
       "id": "bal_rss_334f8ad65d9b",
@@ -2725,7 +2764,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.029
+      "storyRank": 0.0289
     },
     {
       "id": "bal_pwire_4832793_64872128",
@@ -2852,7 +2891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0662
+      "storyRank": 0.0661
     },
     {
       "id": "bal_pwire_4035245_64866828",
@@ -3234,7 +3273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0228
     },
     {
       "id": "bal_pfr_d6e9815eec79",
@@ -3276,7 +3315,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0223
     },
     {
       "id": "bal_rss_9c7d97318855",
@@ -3319,7 +3358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0223
     },
     {
       "id": "bal_rss_f611b04f2828",
@@ -3382,7 +3421,7 @@
       "duration": "8:31",
       "imageUrl": "https://i.ytimg.com/vi/axRtyvgNbkI/hqdefault.jpg",
       "imageAlt": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:45:00.767Z",
+      "publishedAt": "2026-11-18T20:50:41.695Z",
       "url": "https://www.youtube.com/watch?v=axRtyvgNbkI",
       "externalVideoUrl": "https://www.youtube.com/watch?v=axRtyvgNbkI",
       "channel": "NFL",
@@ -3589,7 +3628,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0198
     },
     {
       "id": "bal_pfr_b8ba66f816a2",
@@ -3711,7 +3750,7 @@
       "duration": "17:13",
       "imageUrl": "https://i.ytimg.com/vi/cyQ2OqTC6C4/hqdefault.jpg",
       "imageAlt": "Ravens NEED A Play, WHO WILL STEP UP?! Chargers vs Ravens Week 10 Ending",
-      "publishedAt": "2026-11-17T20:45:00.767Z",
+      "publishedAt": "2026-11-17T20:50:41.695Z",
       "url": "https://www.youtube.com/watch?v=cyQ2OqTC6C4",
       "externalVideoUrl": "https://www.youtube.com/watch?v=cyQ2OqTC6C4",
       "channel": "NFL",
@@ -3750,7 +3789,7 @@
       "duration": "17:43",
       "imageUrl": "https://i.ytimg.com/vi/iXTg27Lenug/hqdefault.jpg",
       "imageAlt": "Los Angeles Chargers vs Baltimore Ravens Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-17T20:45:00.767Z",
+      "publishedAt": "2026-11-17T20:50:41.695Z",
       "url": "https://www.youtube.com/watch?v=iXTg27Lenug",
       "externalVideoUrl": "https://www.youtube.com/watch?v=iXTg27Lenug",
       "channel": "NFL",

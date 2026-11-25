@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:18.694Z",
+  "updatedAt": "2026-11-25T20:51:11.722Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.colts.com/team/injury-report/",
@@ -186,6 +186,31 @@
         "Soft-tissue re-aggravation caution (Calf)"
       ],
       "beatComment": "questionable"
+    },
+    {
+      "playerId": "4722908",
+      "name": "Drew Ogletree",
+      "position": "TE",
+      "jersey": 85,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4722908.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "For the third time in four weeks, Ogletree failed to draw a look in the passing game, but he wasn't held off the stat sheet entirely, as he collected a pair of tackles on special teams. Though the fifth-year tight end has been active for all 11 of the Colts' games, he's cobbled together a lowly 4-21-0 receiving line on seven targets."
     }
   ],
   "irAndReserveTracker": [

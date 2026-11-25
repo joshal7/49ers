@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:34.723Z",
+  "updatedAt": "2026-11-25T20:50:58.811Z",
   "sources": [
     {
       "label": "ESPN Steelers Schedule",
@@ -24655,15 +24655,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 17,
-    "averageRank": 17.2,
+    "consensusRank": 18,
+    "averageRank": 18,
     "medianRank": 16,
     "previousRank": 15,
     "rangeMin": 15,
-    "rangeMax": 20,
-    "rangeShort": "#15–#20",
-    "rangeDisplay": "#15–#20 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 6-4 Steelers at #17 consensus (avg #17.2) through Week 11, ranging from #15 (ESPN Panel) to #20 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeMax": 24,
+    "rangeShort": "#15–#24",
+    "rangeDisplay": "#15–#24 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 6-4 Steelers at #18 consensus (avg #18.0) through Week 11, ranging from #15 (ESPN Panel) to #24 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_panel",
@@ -24743,16 +24743,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 20,
+        "rank": 24,
         "previousRank": 15,
-        "delta": "-5",
+        "delta": "-9",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (43.6% neutral-field win rating, 9.1 proj. wins) at 6-4 through Week 11.",
+        "blurb": "Tier 5 (35.0% neutral-field win rating, 8.7 proj. wins) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24795,16 +24795,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 20,
+        "rank": 24,
         "previousRank": 15,
-        "delta": "-5",
+        "delta": "-9",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (43.6% neutral-field win rating, 9.1 proj. wins) at 6-4 through Week 11."
+        "blurb": "Tier 5 (35.0% neutral-field win rating, 8.7 proj. wins) at 6-4 through Week 11."
       },
       {
         "id": "cbs",
@@ -24870,7 +24870,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:39.395Z"
+    "fetchedAtIso": "2026-11-25T20:51:03.041Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25934,7 +25934,7 @@
       "spread": "DEN -3.5",
       "openingSpread": "Opened PIT +1.5 (Draft Kings)",
       "overUnder": 36.5,
-      "moneyline": "PIT +170 | DEN -203",
+      "moneyline": "PIT +169 | DEN -202",
       "impliedScore": "PIT 16.5 – DEN 20.0",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "30%"
@@ -27686,16 +27686,16 @@
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",
-        "unitMatchup": "Patrick Queen, Jalen Ramsey & Jaquan Brisker vs. WR Jaylen Waddle & QB Bo Nix",
+        "unitMatchup": "Jalen Ramsey, Patrick Queen & Jaquan Brisker vs. WR Jaylen Waddle & QB Bo Nix",
         "advantage": "PIT Edge",
         "sfPlayers": [
-          "Patrick Queen",
           "Jalen Ramsey",
+          "Patrick Queen",
           "Jaquan Brisker"
         ],
         "statComparison": "PIT: #15 Pass Def (+0.32) | DEN: #25 Pass Off (189.1 yds)",
-        "tacticalDetail": "Patrick Queen, Jalen Ramsey & Jaquan Brisker anchor Pittsburgh's #15 pass defense (+0.32) against WR Jaylen Waddle and Denver Broncos's #25 passing attack (189.1 yds). Limiting explosive 20+ yard chunk plays forces Broncos into sustained red-zone drives.",
-        "filmTell": "Track Patrick Queen (#6) at the top of routes against WR Jaylen Waddle: press-bail alignment with safety help over the top takes away QB Bo Nix's preferred isolation shots."
+        "tacticalDetail": "Jalen Ramsey, Patrick Queen & Jaquan Brisker anchor Pittsburgh's #15 pass defense (+0.32) against WR Jaylen Waddle and Denver Broncos's #25 passing attack (189.1 yds). Limiting explosive 20+ yard chunk plays forces Broncos into sustained red-zone drives.",
+        "filmTell": "Track Jalen Ramsey (#5) at the top of routes against WR Jaylen Waddle: press-bail alignment with safety help over the top takes away QB Bo Nix's preferred isolation shots."
       },
       {
         "phaseTag": "Early-Down Ground Game & Run Fits",

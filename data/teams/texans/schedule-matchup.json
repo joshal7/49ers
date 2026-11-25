@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:16.287Z",
+  "updatedAt": "2026-11-25T20:51:05.987Z",
   "sources": [
     {
       "label": "ESPN Texans Schedule",
@@ -24727,10 +24727,10 @@
         "reportedRecord": "4-6",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (63.0% neutral-field win rating, 8.4 proj. wins) at 4-6 through Week 11.",
+        "blurb": "Tier 2 (63.6% neutral-field win rating, 8.4 proj. wins) at 4-6 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24816,10 +24816,10 @@
         "reportedRecord": "4-6",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (63.0% neutral-field win rating, 8.4 proj. wins) at 4-6 through Week 11."
+        "blurb": "Tier 2 (63.6% neutral-field win rating, 8.4 proj. wins) at 4-6 through Week 11."
       },
       {
         "id": "cbs",
@@ -24885,7 +24885,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:19.475Z"
+    "fetchedAtIso": "2026-11-25T20:51:08.588Z"
   },
   "upcomingMatchup": {
     "week": 12,

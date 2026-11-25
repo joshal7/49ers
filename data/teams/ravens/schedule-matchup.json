@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:59.669Z",
+  "updatedAt": "2026-11-25T20:50:40.903Z",
   "sources": [
     {
       "label": "ESPN Ravens Schedule",
@@ -24697,10 +24697,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (43.9% neutral-field win rating, 6.6 proj. wins) at 4-7 through Week 11.",
+        "blurb": "Tier 4 (42.3% neutral-field win rating, 6.7 proj. wins) at 4-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24804,10 +24804,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (43.9% neutral-field win rating, 6.6 proj. wins) at 4-7 through Week 11."
+        "blurb": "Tier 4 (42.3% neutral-field win rating, 6.7 proj. wins) at 4-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24873,7 +24873,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:03.629Z"
+    "fetchedAtIso": "2026-11-25T20:50:44.195Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27639,16 +27639,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Cam Jurgens, Roger Rosengarten & John Simpson vs. DE Will Anderson Jr. & Texans Simulated Pressures",
+        "unitMatchup": "John Simpson, Roger Rosengarten & Cam Jurgens vs. DE Will Anderson Jr. & Texans Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Cam Jurgens",
+          "John Simpson",
           "Roger Rosengarten",
-          "John Simpson"
+          "Cam Jurgens"
         ],
         "statComparison": "BAL: #16 Pass Protection (6.0%) | HOU: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Cam Jurgens, Roger Rosengarten & John Simpson protect Jacoby Brissett (#16 protection at 6.0%) against DE Will Anderson Jr. and Houston Texans's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Cam Jurgens (#64) on obvious passing downs—if DE Will Anderson Jr. cannot win clean around the arc, Texans must dial up interior stunts that stress Roger Rosengarten (#70)."
+        "tacticalDetail": "John Simpson, Roger Rosengarten & Cam Jurgens protect Jacoby Brissett (#16 protection at 6.0%) against DE Will Anderson Jr. and Houston Texans's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch John Simpson (#74) on obvious passing downs—if DE Will Anderson Jr. cannot win clean around the arc, Texans must dial up interior stunts that stress Roger Rosengarten (#70)."
       }
     ]
   }

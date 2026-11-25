@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:46:27.918Z",
+  "updatedAt": "2026-11-25T20:49:15.120Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/chicago-bears",
   "spotracUrl": "https://www.spotrac.com/nfl/chicago-bears/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 309376534,
-      "baseLeagueCap": null,
+      "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
       "totalCapLiabilities": 306750652,
       "top51": 266452626,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 52
+      "totalSignedCount": 81
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": null,
+      "baseLeagueCap": 327000000,
       "capCeilingProjected": false,
       "totalCapLiabilities": 351273983,
       "top51": 350907649,
       "teamCapSpace": -24273983,
       "otcRawTeamCapSpace": -24273983,
-      "effectiveCapSpace": -31713983,
+      "effectiveCapSpace": -33403495,
       "activeCapSpending": 350907649,
       "offenseSpend": 140080563,
       "defenseSpend": 205690111,
@@ -174,7 +174,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": null,
+      "baseLeagueCap": 352000000,
       "capCeilingProjected": false,
       "totalCapLiabilities": 155463750,
       "top51": 155463750,

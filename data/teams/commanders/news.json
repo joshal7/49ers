@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:33.152Z",
+  "updatedAt": "2026-11-25T20:49:41.142Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-5-1",
-    "generatedAt": "2026-11-25T20:44:33.152Z",
+    "generatedAt": "2026-11-25T20:49:41.142Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -22,7 +22,7 @@
       "Bengals Offensive Surge: Fresh off moving to 4-5-1 (3rd in NFC East) with a 22–20 win over Cincinnati, Washington piled up 428 total yards [Scott Jennings](https://www.hogshaven.com/pressers/456871/dan-quinn-brandon-aiyuk-hungry-play-ball-hes-hungry-be-here) [JP Finlay](https://x.com/JPFinlayNBCS/status/2125671464590315609). Jacory Croskey-Merritt totaled 77 scrimmage yards and 1 touchdown while Jayden Daniels threw for 289 yards and 0 TDs in Dan Quinn's attack [JP Finlay](https://x.com/JPFinlayNBCS/status/2125670727215194452).",
       "Injury & Practice Status: Core starters enter Wednesday on track as medical staff monitor routine recovery ahead of the Arizona Cardinals [The Associated Press and Gina Cook](https://www.nbcwashington.com/news/sports/washington-commanders/commanders-wr-terry-mclaurin-out-for-the-season-after-knee-injury/4169719/).",
       "Week 12 Cardinals Outlook: Dan Quinn and DC Daronte Jones open installation for the Arizona Cardinals (3-8, WSH -7, HC Mike LaFleur, OC Nathaniel Hackett & DC Nick Rallis (Road Test)) as Washington prepares for a pivotal NFC matchup [Ben Standig](https://www.espn.com/nfl/player/_/id/2976212/stefon-diggs#:~:text=Diggs%20was%20absent%20from%20Wednesday's%20practice%20and).",
-      "NFC Playoff Trajectory: Entering Week 12 at 4-5-1 (3rd in NFC East • #11 Seed in NFC), Washington carries a 18.4% postseason projection, 16.6% NFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [bill-in-bangkok](https://www.hogshaven.com/washington-commanders-news/457532/commanders-rookie-drew-stevens-wins-nfc-special-teams-player-of-the-week).",
+      "NFC Playoff Trajectory: Entering Week 12 at 4-5-1 (3rd in NFC East • #11 Seed in NFC), Washington carries a 14.3% postseason projection, 13% NFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [bill-in-bangkok](https://www.hogshaven.com/washington-commanders-news/457532/commanders-rookie-drew-stevens-wins-nfc-special-teams-player-of-the-week).",
       "Statistical Profile & Matchup Edge: Through Week 11, Washington ranks #20 in Points / Game (21.8), #20 in Points Allowed / Game (24.3), #3 in Turnover Differential (+7), giving Dan Quinn and Daronte Jones a clear benchmark ahead of Sun, Nov 29, 4:25 PM EST • NFL TV at [object Object] against the Arizona Cardinals [bill-in-bangkok](https://www.hogshaven.com/washington-commanders-news/457323/for-the-first-time-in-years-its-fun-to-watch-the-commanders-play-defense)."
     ],
     "coveredStoryKeys": [],
@@ -37,10 +37,9 @@
       "https://www.nbcwashington.com/news/sports/nfl/brandon-aiyuk-contract-commanders-practice-squad/4188070/",
       "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
       "https://x.com/NickiJhabvala/status/2125669972533768679",
-      "https://x.com/JPFinlayNBCS/status/2125670265896177743",
       "https://www.commanders.com/team/transactions/#tx-bcf245c787ec",
+      "https://x.com/JPFinlayNBCS/status/2125670265896177743",
       "https://www.nbcwashington.com/news/sports/nfl/49ers-commanders-score-purdy-daniels/4169467/",
-      "https://www.nbcwashington.com/news/local/daniels-commanders-try-to-put-tie-behind-them-as-unbeaten-49ers-loom/4168019/",
       "https://x.com/JPFinlayNBCS/status/2125673310084325460",
       "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/brandon-aiyuk-joins-washington-commanders-practice-squad-in-low-risk-move",
       "https://www.hogshaven.com/washington-commanders-news/457325/washington-commanders-sign-brandon-aiyuk-practice-squad-49ers-espn",
@@ -84,7 +83,7 @@
         "outlet": "NBC4 Washington",
         "title": "Commanders WR Terry McLaurin out for the season after knee injury",
         "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-wr-terry-mclaurin-out-for-the-season-after-knee-injury/4169719/",
-        "publishedAt": "2026-11-25T20:44:34.298Z"
+        "publishedAt": "2026-11-25T20:49:41.984Z"
       },
       {
         "type": "article",
@@ -116,7 +115,7 @@
         "outlet": "NBC4 Washington",
         "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
         "url": "https://www.nbcwashington.com/news/sports/nfl/brandon-aiyuk-contract-commanders-practice-squad/4188070/",
-        "publishedAt": "2026-11-25T20:44:34.295Z"
+        "publishedAt": "2026-11-25T20:49:41.982Z"
       },
       {
         "type": "article",
@@ -124,7 +123,7 @@
         "outlet": "NBC4 Washington",
         "title": "‘Are you serious, dude?' Commanders fans locked in Metro station after game",
         "url": "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
-        "publishedAt": "2026-11-25T20:44:34.297Z"
+        "publishedAt": "2026-11-25T20:49:41.984Z"
       },
       {
         "type": "tweet",
@@ -136,19 +135,19 @@
       },
       {
         "type": "tweet",
-        "author": "JP Finlay",
-        "outlet": "NBC4 Washington",
-        "title": "Dan Quinn says it will take some time to figure out when Aiyuk can actually be on the field with the team. Timeline seems unclear",
-        "url": "https://x.com/JPFinlayNBCS/status/2125670265896177743",
-        "publishedAt": "2026-11-25T19:17:39.090Z"
-      },
-      {
-        "type": "tweet",
         "author": "Washington Commanders Official",
         "outlet": "commanders.com Official",
         "title": "Commanders roster move: Agreed to terms with WR Brandon Aiyuk on a practice squad contract.",
         "url": "https://www.commanders.com/team/transactions/#tx-bcf245c787ec",
         "publishedAt": "2026-11-25T08:00:00.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "JP Finlay",
+        "outlet": "NBC4 Washington",
+        "title": "Dan Quinn says it will take some time to figure out when Aiyuk can actually be on the field with the team. Timeline seems unclear",
+        "url": "https://x.com/JPFinlayNBCS/status/2125670265896177743",
+        "publishedAt": "2026-11-25T19:17:39.090Z"
       }
     ]
   },
@@ -158,44 +157,44 @@
       "category": "beat",
       "headline": "Washington Commanders Week 12 Top Headlines (4-5-1)",
       "summary": "Commanders WR Terry McLaurin out for the season after knee injury — Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
-      "updatedAt": "2026-11-25T20:44:34.298Z",
+      "updatedAt": "2026-11-25T20:49:41.984Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "The Associated Press and Gina Cook",
           "title": "Commanders WR Terry McLaurin out for the season after knee injury",
           "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-wr-terry-mclaurin-out-for-the-season-after-knee-injury/4169719/",
-          "publishedAt": "2026-11-25T20:44:34.298Z"
+          "publishedAt": "2026-11-25T20:49:41.984Z"
         },
         {
           "label": "Ali Thanawalla",
           "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
           "url": "https://www.nbcwashington.com/news/sports/nfl/brandon-aiyuk-contract-commanders-practice-squad/4188070/",
-          "publishedAt": "2026-11-25T20:44:34.295Z"
-        },
-        {
-          "label": "JP Finlay",
-          "title": "Winners, losers as 49ers outlast Commanders 23-17 on Monday Night Football",
-          "url": "https://www.nbcwashington.com/news/sports/nfl/49ers-commanders-score-purdy-daniels/4169467/",
-          "publishedAt": "2026-11-25T20:44:34.298Z"
-        },
-        {
-          "label": "Andrew Gillis | The Associated Press",
-          "title": "Daniels, Commanders try to put tie behind them as unbeaten 49ers loom",
-          "url": "https://www.nbcwashington.com/news/local/daniels-commanders-try-to-put-tie-behind-them-as-unbeaten-49ers-loom/4168019/",
-          "publishedAt": "2026-11-25T20:44:34.298Z"
+          "publishedAt": "2026-11-25T20:49:41.982Z"
         },
         {
           "label": "Adam Tuss",
           "title": "‘Are you serious, dude?' Commanders fans locked in Metro station after game",
           "url": "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
-          "publishedAt": "2026-11-25T20:44:34.297Z"
+          "publishedAt": "2026-11-25T20:49:41.984Z"
         },
         {
           "label": "Sanjesh Singh",
           "title": "Takeaways as Commanders beat Eagles 27-10 on Sunday Night Football",
           "url": "https://www.nbcwashington.com/news/sports/nfl/eagles-commanders-week-8-score/4175220/",
-          "publishedAt": "2026-11-25T20:44:34.297Z"
+          "publishedAt": "2026-11-25T20:49:41.984Z"
+        },
+        {
+          "label": "Ashley Neyra",
+          "title": "Commanders and Uber launch $15 post-game shuttle bus service to DC",
+          "url": "https://www.nbcwashington.com/news/sports/washington-commanders/save-time-and-money-washington-commanders-and-uber-launch-post-game-shuttles/4174362/",
+          "publishedAt": "2026-11-25T20:49:41.984Z"
+        },
+        {
+          "label": "NBC Staff",
+          "title": "Which high school game do you want featured on Sunday Night Football? Vote here",
+          "url": "https://www.nbcwashington.com/news/sports/washington-commanders/sunday-night-football-eagles-commanders-high-school-vote/4171948/",
+          "publishedAt": "2026-11-25T20:49:41.984Z"
         }
       ]
     },
@@ -204,26 +203,26 @@
       "category": "injury",
       "headline": "Commanders Practice Report, Injury & IR Availability",
       "summary": "Commanders WR Terry McLaurin out for the season after knee injury — Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
-      "updatedAt": "2026-11-25T20:44:34.298Z",
+      "updatedAt": "2026-11-25T20:49:41.984Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "The Associated Press and Gina Cook",
           "title": "Commanders WR Terry McLaurin out for the season after knee injury",
           "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-wr-terry-mclaurin-out-for-the-season-after-knee-injury/4169719/",
-          "publishedAt": "2026-11-25T20:44:34.298Z"
+          "publishedAt": "2026-11-25T20:49:41.984Z"
         },
         {
           "label": "Ali Thanawalla",
           "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
           "url": "https://www.nbcwashington.com/news/sports/nfl/brandon-aiyuk-contract-commanders-practice-squad/4188070/",
-          "publishedAt": "2026-11-25T20:44:34.295Z"
+          "publishedAt": "2026-11-25T20:49:41.982Z"
         },
         {
           "label": "Andrew Gillis | The Associated Press",
           "title": "Commanders dealing with injuries on defensive line ahead of matchup with Rams",
           "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-dealing-with-injuries-on-defensive-line-ahead-of-matchup-with-rams/4178076/",
-          "publishedAt": "2026-11-25T20:44:34.296Z"
+          "publishedAt": "2026-11-25T20:49:41.983Z"
         },
         {
           "label": "ProFootballTalk",
@@ -272,16 +271,16 @@
           "publishedAt": "2026-11-25T00:16:03.053Z"
         },
         {
-          "label": "Mark Bullock",
-          "title": "Commanders rookie WR Antonio Williams had a breakout game against the Bengals last night with 9 catches for 122 yards. I broke down his performance: markbullock.substack.com/p/antonio-wi...",
-          "url": "https://bsky.app/profile/markbullocknfl.bsky.social/post/3n33andee7c2g",
-          "publishedAt": "2026-11-24T18:12:17.657Z"
-        },
-        {
           "label": "Mina Kimes",
           "title": "It sure looks like Commanders GM Adam Peters cooked with his top draft picks this year….\n\n📺: youtu.be/dquR4jBp66E?...",
           "url": "https://bsky.app/profile/minakimes.bsky.social/post/3n33te6ckp22e",
           "publishedAt": "2026-11-24T23:47:11.456Z"
+        },
+        {
+          "label": "Mark Bullock",
+          "title": "Commanders rookie WR Antonio Williams had a breakout game against the Bengals last night with 9 catches for 122 yards. I broke down his performance: markbullock.substack.com/p/antonio-wi...",
+          "url": "https://bsky.app/profile/markbullocknfl.bsky.social/post/3n33andee7c2g",
+          "publishedAt": "2026-11-24T18:12:17.657Z"
         },
         {
           "label": "Mark Bullock",
@@ -296,20 +295,20 @@
       "category": "roster",
       "headline": "Commanders Roster Moves, Trades & Salary Cap Desk",
       "summary": "Commanders WR Terry McLaurin out for the season after knee injury — Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
-      "updatedAt": "2026-11-25T20:44:34.298Z",
+      "updatedAt": "2026-11-25T20:49:41.984Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "The Associated Press and Gina Cook",
           "title": "Commanders WR Terry McLaurin out for the season after knee injury",
           "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-wr-terry-mclaurin-out-for-the-season-after-knee-injury/4169719/",
-          "publishedAt": "2026-11-25T20:44:34.298Z"
+          "publishedAt": "2026-11-25T20:49:41.984Z"
         },
         {
           "label": "Ali Thanawalla",
           "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
           "url": "https://www.nbcwashington.com/news/sports/nfl/brandon-aiyuk-contract-commanders-practice-squad/4188070/",
-          "publishedAt": "2026-11-25T20:44:34.295Z"
+          "publishedAt": "2026-11-25T20:49:41.982Z"
         },
         {
           "label": "ProFootballTalk",
@@ -343,10 +342,10 @@
       "id": "was_brss_nbcs_was_dfa6e9b246a4",
       "type": "article",
       "title": "Commanders WR Terry McLaurin out for the season after knee injury",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
+      "summary": "",
       "imageUrl": "https://media.nbcwashington.com/2026/10/GettyImages-2301053612.jpg?quality=85&strip=all&fit=3000,2000",
       "imageAlt": "Commanders WR Terry McLaurin out for the season after knee injury",
-      "publishedAt": "2026-11-25T20:44:34.298Z",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
       "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-wr-terry-mclaurin-out-for-the-season-after-knee-injury/4169719/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -370,7 +369,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "BREAKING",
-      "breakingPriority": 3.25,
+      "breakingPriority": 3.249,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -380,7 +379,7 @@
       "isUrgentBreaking": true,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 159.8093
+      "storyRank": 159.7472
     },
     {
       "id": "was_brss_nbcs_was_6fd0e675de0d",
@@ -389,7 +388,7 @@
       "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
       "imageUrl": "https://media.nbcwashington.com/2026/11/Brandon-Aiyuk-49ers-Vikings-GETTY.jpg?quality=85&strip=all&fit=1200,675",
       "imageAlt": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
-      "publishedAt": "2026-11-25T20:44:34.295Z",
+      "publishedAt": "2026-11-25T20:49:41.982Z",
       "url": "https://www.nbcwashington.com/news/sports/nfl/brandon-aiyuk-contract-commanders-practice-squad/4188070/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -420,7 +419,177 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 86.6805
+      "storyRank": 86.6383
+    },
+    {
+      "id": "was_brss_nbcs_was_276432c11e05",
+      "type": "article",
+      "title": "‘Are you serious, dude?' Commanders fans locked in Metro station after game",
+      "summary": "",
+      "imageUrl": "https://media.nbcwashington.com/2026/11/locked-in-metro-nov-2-2026.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "‘Are you serious, dude?' Commanders fans locked in Metro station after game",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
+      "url": "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
+      "outletId": "nbcs_was",
+      "outletName": "NBC4 Washington",
+      "reporterId": "nbcs_was",
+      "reporterName": "Adam Tuss",
+      "author": "Adam Tuss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 53.9876
+    },
+    {
+      "id": "was_brss_nbcs_was_fb81e4dbec9b",
+      "type": "article",
+      "title": "Takeaways as Commanders beat Eagles 27-10 on Sunday Night Football",
+      "summary": "",
+      "imageUrl": "https://media.nbcwashington.com/2026/11/GettyImages-2302625036-e1793593035880.jpg?quality=85&strip=all&fit=5115,3205",
+      "imageAlt": "Takeaways as Commanders beat Eagles 27-10 on Sunday Night Football",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
+      "url": "https://www.nbcwashington.com/news/sports/nfl/eagles-commanders-week-8-score/4175220/",
+      "outletId": "nbcs_was",
+      "outletName": "NBC4 Washington",
+      "reporterId": "nbcs_was",
+      "reporterName": "Sanjesh Singh",
+      "author": "Sanjesh Singh",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/nfl/eagles-commanders-week-8-score/4175220/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 53.9876
+    },
+    {
+      "id": "was_brss_nbcs_was_1956b2dafcdd",
+      "type": "article",
+      "title": "Commanders and Uber launch $15 post-game shuttle bus service to DC",
+      "summary": "",
+      "imageUrl": "https://media.nbcwashington.com/2022/05/washington-commanders-helmet.jpg?quality=85&strip=all&fit=5472,3648",
+      "imageAlt": "Commanders and Uber launch $15 post-game shuttle bus service to DC",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
+      "url": "https://www.nbcwashington.com/news/sports/washington-commanders/save-time-and-money-washington-commanders-and-uber-launch-post-game-shuttles/4174362/",
+      "outletId": "nbcs_was",
+      "outletName": "NBC4 Washington",
+      "reporterId": "nbcs_was",
+      "reporterName": "Ashley Neyra",
+      "author": "Ashley Neyra",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/washington-commanders/save-time-and-money-washington-commanders-and-uber-launch-post-game-shuttles/4174362/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 53.9876
+    },
+    {
+      "id": "was_brss_nbcs_was_e76db0fa43be",
+      "type": "article",
+      "title": "Which high school game do you want featured on Sunday Night Football? Vote here",
+      "summary": "",
+      "imageUrl": "https://media.nbcwashington.com/2026/10/2025-12-08T030617Z_1785006370_MT1USATODAY27769731_RTRMADP_3_NFL-HOUSTON-TEXANS-AT-KANSAS-CITY-CHIEFS-1.jpg?quality=85&strip=all&fit=6000,4000",
+      "imageAlt": "Which high school game do you want featured on Sunday Night Football? Vote here",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
+      "url": "https://www.nbcwashington.com/news/sports/washington-commanders/sunday-night-football-eagles-commanders-high-school-vote/4171948/",
+      "outletId": "nbcs_was",
+      "outletName": "NBC4 Washington",
+      "reporterId": "nbcs_was",
+      "reporterName": "NBC Staff",
+      "author": "NBC Staff",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/washington-commanders/sunday-night-football-eagles-commanders-high-school-vote/4171948/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 53.9876
+    },
+    {
+      "id": "was_brss_nbcs_was_3417272beed0",
+      "type": "article",
+      "title": "NFC East makes history with back-to-back winless weeks",
+      "summary": "",
+      "imageUrl": "https://media.nbcwashington.com/2026/10/2025-02-27T192621Z_1026821181_MT1USATODAY25528413_RTRMADP_3_NFL-COMBINE-1.jpg?quality=85&strip=all&fit=8001,5334",
+      "imageAlt": "NFC East makes history with back-to-back winless weeks",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
+      "url": "https://www.nbcwashington.com/news/sports/nfl/nfc-east-makes-history-with-back-to-back-winless-weeks/4170022/",
+      "outletId": "nbcs_was",
+      "outletName": "NBC4 Washington",
+      "reporterId": "nbcs_was",
+      "reporterName": "Josh Dubow | The Associated Press",
+      "author": "Josh Dubow | The Associated Press",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/nfl/nfc-east-makes-history-with-back-to-back-winless-weeks/4170022/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 53.9876
     },
     {
       "id": "was_brss_nbcs_was_2ec92d7b1f38",
@@ -429,7 +598,7 @@
       "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
       "imageUrl": "https://media.nbcwashington.com/2026/10/GettyImages-2301057022-e1792467161236.jpg?quality=85&strip=all&fit=3000,1815",
       "imageAlt": "Winners, losers as 49ers outlast Commanders 23-17 on Monday Night Football",
-      "publishedAt": "2026-11-25T20:44:34.298Z",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
       "url": "https://www.nbcwashington.com/news/sports/nfl/49ers-commanders-score-purdy-daniels/4169467/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -454,16 +623,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0136
+      "storyRank": 53.9876
     },
     {
       "id": "was_brss_nbcs_was_fba6f711419d",
       "type": "article",
       "title": "Daniels, Commanders try to put tie behind them as unbeaten 49ers loom",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
+      "summary": "",
       "imageUrl": "https://media.nbcwashington.com/2026/10/GettyImages-2296859780.jpg?quality=85&strip=all&fit=4871,3247",
       "imageAlt": "Daniels, Commanders try to put tie behind them as unbeaten 49ers loom",
-      "publishedAt": "2026-11-25T20:44:34.298Z",
+      "publishedAt": "2026-11-25T20:49:41.984Z",
       "url": "https://www.nbcwashington.com/news/local/daniels-commanders-try-to-put-tie-behind-them-as-unbeaten-49ers-loom/4168019/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -497,186 +666,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0136
-    },
-    {
-      "id": "was_brss_nbcs_was_276432c11e05",
-      "type": "article",
-      "title": "‘Are you serious, dude?' Commanders fans locked in Metro station after game",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
-      "imageUrl": "https://media.nbcwashington.com/2026/11/locked-in-metro-nov-2-2026.jpg?quality=85&strip=all&fit=1200,675",
-      "imageAlt": "‘Are you serious, dude?' Commanders fans locked in Metro station after game",
-      "publishedAt": "2026-11-25T20:44:34.297Z",
-      "url": "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
-      "outletId": "nbcs_was",
-      "outletName": "NBC4 Washington",
-      "reporterId": "nbcs_was",
-      "reporterName": "Adam Tuss",
-      "author": "Adam Tuss",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcwashington.com/news/local/transportation/are-you-serious-dude-commanders-fans-locked-in-metro-station-after-game/4175529/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
-    },
-    {
-      "id": "was_brss_nbcs_was_fb81e4dbec9b",
-      "type": "article",
-      "title": "Takeaways as Commanders beat Eagles 27-10 on Sunday Night Football",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
-      "imageUrl": "https://media.nbcwashington.com/2026/11/GettyImages-2302625036-e1793593035880.jpg?quality=85&strip=all&fit=5115,3205",
-      "imageAlt": "Takeaways as Commanders beat Eagles 27-10 on Sunday Night Football",
-      "publishedAt": "2026-11-25T20:44:34.297Z",
-      "url": "https://www.nbcwashington.com/news/sports/nfl/eagles-commanders-week-8-score/4175220/",
-      "outletId": "nbcs_was",
-      "outletName": "NBC4 Washington",
-      "reporterId": "nbcs_was",
-      "reporterName": "Sanjesh Singh",
-      "author": "Sanjesh Singh",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/nfl/eagles-commanders-week-8-score/4175220/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
-    },
-    {
-      "id": "was_brss_nbcs_was_1956b2dafcdd",
-      "type": "article",
-      "title": "Commanders and Uber launch $15 post-game shuttle bus service to DC",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
-      "imageUrl": "https://media.nbcwashington.com/2022/05/washington-commanders-helmet.jpg?quality=85&strip=all&fit=5472,3648",
-      "imageAlt": "Commanders and Uber launch $15 post-game shuttle bus service to DC",
-      "publishedAt": "2026-11-25T20:44:34.297Z",
-      "url": "https://www.nbcwashington.com/news/sports/washington-commanders/save-time-and-money-washington-commanders-and-uber-launch-post-game-shuttles/4174362/",
-      "outletId": "nbcs_was",
-      "outletName": "NBC4 Washington",
-      "reporterId": "nbcs_was",
-      "reporterName": "Ashley Neyra",
-      "author": "Ashley Neyra",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/washington-commanders/save-time-and-money-washington-commanders-and-uber-launch-post-game-shuttles/4174362/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
-    },
-    {
-      "id": "was_brss_nbcs_was_e76db0fa43be",
-      "type": "article",
-      "title": "Which high school game do you want featured on Sunday Night Football? Vote here",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
-      "imageUrl": "https://media.nbcwashington.com/2026/10/2025-12-08T030617Z_1785006370_MT1USATODAY27769731_RTRMADP_3_NFL-HOUSTON-TEXANS-AT-KANSAS-CITY-CHIEFS-1.jpg?quality=85&strip=all&fit=6000,4000",
-      "imageAlt": "Which high school game do you want featured on Sunday Night Football? Vote here",
-      "publishedAt": "2026-11-25T20:44:34.297Z",
-      "url": "https://www.nbcwashington.com/news/sports/washington-commanders/sunday-night-football-eagles-commanders-high-school-vote/4171948/",
-      "outletId": "nbcs_was",
-      "outletName": "NBC4 Washington",
-      "reporterId": "nbcs_was",
-      "reporterName": "NBC Staff",
-      "author": "NBC Staff",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/washington-commanders/sunday-night-football-eagles-commanders-high-school-vote/4171948/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
-    },
-    {
-      "id": "was_brss_nbcs_was_3417272beed0",
-      "type": "article",
-      "title": "NFC East makes history with back-to-back winless weeks",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
-      "imageUrl": "https://media.nbcwashington.com/2026/10/2025-02-27T192621Z_1026821181_MT1USATODAY25528413_RTRMADP_3_NFL-COMBINE-1.jpg?quality=85&strip=all&fit=8001,5334",
-      "imageAlt": "NFC East makes history with back-to-back winless weeks",
-      "publishedAt": "2026-11-25T20:44:34.297Z",
-      "url": "https://www.nbcwashington.com/news/sports/nfl/nfc-east-makes-history-with-back-to-back-winless-weeks/4170022/",
-      "outletId": "nbcs_was",
-      "outletName": "NBC4 Washington",
-      "reporterId": "nbcs_was",
-      "reporterName": "Josh Dubow | The Associated Press",
-      "author": "Josh Dubow | The Associated Press",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/nfl/nfc-east-makes-history-with-back-to-back-winless-weeks/4170022/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
+      "storyRank": 53.9876
     },
     {
       "id": "was_brss_nbcs_was_d1178c7f4f7c",
       "type": "article",
       "title": "Metro's ‘gold line' renderings show dramatic changes on H Street",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
+      "summary": "",
       "imageUrl": "https://media.nbcwashington.com/2026/11/52766518199-1080pnbcstations.jpg?quality=85&strip=all&fit=1920,1080",
       "imageAlt": "Metro's ‘gold line' renderings show dramatic changes on H Street",
-      "publishedAt": "2026-11-25T20:44:34.296Z",
+      "publishedAt": "2026-11-25T20:49:41.983Z",
       "url": "https://www.nbcwashington.com/news/local/transportation/metro-gold-line-renderings-changes-h-street/4184657/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -701,16 +700,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
+      "storyRank": 53.9876
     },
     {
       "id": "was_brss_nbcs_was_a61022eb6b3e",
       "type": "article",
       "title": "Winners, losers as Commanders upset Giants 24-21 on Thursday Night Football",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
+      "summary": "",
       "imageUrl": "https://media.nbcwashington.com/2026/11/GettyImages-2304876440-e1794543775738.jpg?quality=85&strip=all&fit=3384,2025",
       "imageAlt": "Winners, losers as Commanders upset Giants 24-21 on Thursday Night Football",
-      "publishedAt": "2026-11-25T20:44:34.296Z",
+      "publishedAt": "2026-11-25T20:49:41.983Z",
       "url": "https://www.nbcwashington.com/news/sports/nfl/commanders-giants-score-week-10/4182361/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -735,16 +734,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
+      "storyRank": 53.9876
     },
     {
       "id": "was_brss_nbcs_was_8aab4a7a3b25",
       "type": "article",
       "title": "Commanders dealing with injuries on defensive line ahead of matchup with Rams",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
+      "summary": "",
       "imageUrl": "https://media.nbcwashington.com/2026/11/GettyImages-2299382446.jpg?quality=85&strip=all&fit=6000,4000",
       "imageAlt": "Commanders dealing with injuries on defensive line ahead of matchup with Rams",
-      "publishedAt": "2026-11-25T20:44:34.296Z",
+      "publishedAt": "2026-11-25T20:49:41.983Z",
       "url": "https://www.nbcwashington.com/news/sports/washington-commanders/commanders-dealing-with-injuries-on-defensive-line-ahead-of-matchup-with-rams/4178076/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -769,7 +768,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
+      "storyRank": 53.9876
     },
     {
       "id": "was_brss_nbcs_was_9fd0ca6c3694",
@@ -778,7 +777,7 @@
       "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
       "imageUrl": "https://media.nbcwashington.com/2026/11/GettyImages-2306102239-e1795494092550.jpg?quality=85&strip=all&fit=5285,3127",
       "imageAlt": "Winners, losers as Commanders stun Bengals 22-20 on Monday Night Football",
-      "publishedAt": "2026-11-25T20:44:34.295Z",
+      "publishedAt": "2026-11-25T20:49:41.982Z",
       "url": "https://www.nbcwashington.com/news/sports/nfl/commanders-bengals-score-joe-burrow-jayden-daniels/4187269/",
       "outletId": "nbcs_was",
       "outletName": "NBC4 Washington",
@@ -803,7 +802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0135
+      "storyRank": 53.9876
     },
     {
       "id": "was_pft_74988664f040",
@@ -827,7 +826,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.06,
+      "breakingPriority": 1.051,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -843,7 +842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 38.3248
+      "storyRank": 35.9789
     },
     {
       "id": "was_pwire_2976212_64974528",
@@ -884,7 +883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 37.4205
+      "storyRank": 34.4413
     },
     {
       "id": "x_tl_commanders_2125681931023192247",
@@ -927,7 +926,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 30.0961
+      "storyRank": 28.1529
     },
     {
       "id": "was_brss_hogs_haven_d81af448080f",
@@ -961,7 +960,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 27.3271
+      "storyRank": 25.5446
     },
     {
       "id": "was_espn_cc63f182956ee",
@@ -1005,7 +1004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.1517
+      "storyRank": 23.618
     },
     {
       "id": "was_brss_hogs_haven_430ab4939604",
@@ -1029,7 +1028,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.003,
+      "breakingPriority": 0.994,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1041,7 +1040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 24.126
+      "storyRank": 22.9969
     },
     {
       "id": "was_brss_hogs_haven_4b298fd0bdbd",
@@ -1075,7 +1074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.4879
+      "storyRank": 22.1049
     },
     {
       "id": "x_tl_nickijhabvala_2125669972533768679",
@@ -1120,7 +1119,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.348
+      "storyRank": 21.303
     },
     {
       "id": "x_tl_jpfinlaynbcs_2125673310084325460",
@@ -1159,7 +1158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.3006
+      "storyRank": 19.2975
     },
     {
       "id": "x_tl_jpfinlaynbcs_2125671464590315609",
@@ -1215,7 +1214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.8977
+      "storyRank": 18.0086
     },
     {
       "id": "x_tl_jpfinlaynbcs_2125670727215194452",
@@ -1263,7 +1262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.3829
+      "storyRank": 17.5342
     },
     {
       "id": "x_tl_jpfinlaynbcs_2125670265896177743",
@@ -1302,7 +1301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.0729
+      "storyRank": 17.2483
     },
     {
       "id": "x_tl_jpfinlaynbcs_2125670032797729190",
@@ -1345,7 +1344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 17.9197
+      "storyRank": 17.1068
     },
     {
       "id": "x_tl_adamschefter_2125655337848209439",
@@ -1383,7 +1382,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.903,
+      "breakingPriority": 0.896,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1398,7 +1397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.6471
+      "storyRank": 15.1191
     },
     {
       "id": "was_nfltr_6cf7df0496af",
@@ -1431,7 +1430,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.907,
+      "breakingPriority": 0.9,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1446,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.7206
+      "storyRank": 14.2168
     },
     {
       "id": "was_yt_jsQZjjj59hk",
@@ -1484,41 +1483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.1383
-    },
-    {
-      "id": "was_brss_nbcs_was_648e16d468eb",
-      "type": "article",
-      "title": "Puka Nacua, Myles Garrett lead Rams to 20-13 win over Commanders",
-      "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. The 49ers offici",
-      "imageUrl": "https://media.nbcwashington.com/2026/11/GettyImages-2304166674.jpg?quality=85&strip=all&fit=3900,2194",
-      "imageAlt": "Puka Nacua, Myles Garrett lead Rams to 20-13 win over Commanders",
-      "publishedAt": "2026-11-25T20:44:34.296Z",
-      "url": "https://www.nbcwashington.com/news/sports/washington-commanders/puka-nacua-myles-garrett-lead-rams-to-20-13-win-over-commanders/4179776/",
-      "outletId": "nbcs_was",
-      "outletName": "NBC4 Washington",
-      "reporterId": "nbcs_was",
-      "reporterName": "Andrew Gillis | The Associated Press",
-      "author": "Andrew Gillis | The Associated Press",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcwashington.com/news/sports/washington-commanders/puka-nacua-myles-garrett-lead-rams-to-20-13-win-over-commanders/4179776/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.5034
+      "storyRank": 13.5567
     },
     {
       "id": "was_espn_10dcc73f44a6a",
@@ -1553,7 +1518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.7948
+      "storyRank": 12.2455
     },
     {
       "id": "was_nfltr_60d2d5d78975",
@@ -1589,7 +1554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.0103
+      "storyRank": 9.7098
     },
     {
       "id": "was_brss_hogs_haven_21b42a8a0810",
@@ -1632,7 +1597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.5464
+      "storyRank": 8.2955
     },
     {
       "id": "x_tl_john_keim_2125636784826560575",
@@ -1671,7 +1636,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.4889
+      "storyRank": 7.3034
     },
     {
       "id": "x_tl_commanders_2125635637881803043",
@@ -1710,7 +1675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3243
+      "storyRank": 7.1457
     },
     {
       "id": "was_tx_bcf245c787ec",
@@ -1735,7 +1700,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.282,
+      "breakingPriority": 1.274,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1745,7 +1710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.4251
+      "storyRank": 6.3768
     },
     {
       "id": "x_tl_markbullocknfl_2125559517819670829",
@@ -1777,7 +1742,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.506,
+      "breakingPriority": 0.503,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1787,7 +1752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0145
+      "storyRank": 4.9583
     },
     {
       "id": "was_brss_hogs_haven_278ac9c49405",
@@ -1838,7 +1803,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5543
+      "storyRank": 4.4682
     },
     {
       "id": "was_espn_340dee6f360ae",
@@ -1873,7 +1838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4131
+      "storyRank": 4.3324
     },
     {
       "id": "was_bsky_537fe8265996",
@@ -1904,7 +1869,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.506,
+      "breakingPriority": 0.503,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1913,7 +1878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.607
+      "storyRank": 4.5554
     },
     {
       "id": "was_brss_hogs_haven_f06e1f5095e4",
@@ -1947,7 +1912,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.095
+      "storyRank": 4.0232
     },
     {
       "id": "x_tl_commanders_2125595108829794766",
@@ -1990,7 +1955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9426
+      "storyRank": 3.8804
     },
     {
       "id": "was_brss_hogs_haven_4cdf2f1496ab",
@@ -2024,7 +1989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.554
+      "storyRank": 2.5219
     },
     {
       "id": "was_espn_356ceed0e3ebe",
@@ -2076,7 +2041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2539
+      "storyRank": 2.2282
     },
     {
       "id": "x_tl_commanders_2125333642314731866",
@@ -2105,7 +2070,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.255,
+      "breakingPriority": 0.253,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -2115,7 +2080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1683
+      "storyRank": 2.1587
     },
     {
       "id": "x_tl_danorlovsky7_2125382972694220801",
@@ -2147,7 +2112,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.242,
+      "breakingPriority": 0.241,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -2157,7 +2122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7966
+      "storyRank": 1.7873
     },
     {
       "id": "x_tl_dharrison82_2125383089153081446",
@@ -2200,7 +2165,223 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8874
+      "storyRank": 0.8824
+    },
+    {
+      "id": "was_bsky_ec7b8321d6c0",
+      "type": "tweet",
+      "title": "It sure looks like Commanders GM Adam Peters cooked with his top draft picks this year….\n\n📺: youtu.be/dquR4jBp66E?...",
+      "fullText": "It sure looks like Commanders GM Adam Peters cooked with his top draft picks this year….\n\n📺: youtu.be/dquR4jBp66E?...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://video.bsky.app/watch/did%3Aplc%3A2buz4gf5sew3rdwzbxsvcd4s/bafkreifii3dd3nilvnqvrcrqnoz52gwin3qw7rdbxsqdaz43yvyz44npde/thumbnail.jpg",
+      "videoStreamUrl": "https://bsky.social/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3A2buz4gf5sew3rdwzbxsvcd4s&cid=bafkreifii3dd3nilvnqvrcrqnoz52gwin3qw7rdbxsqdaz43yvyz44npde",
+      "embeddable": true,
+      "imageAlt": "Mina Kimes post",
+      "publishedAt": "2026-11-24T23:47:11.456Z",
+      "url": "https://bsky.app/profile/minakimes.bsky.social/post/3n33te6ckp22e",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "espn_national",
+      "outletName": "Mina Kimes",
+      "reporterId": "mina_kimes",
+      "reporterName": "Mina Kimes",
+      "author": "Mina Kimes",
+      "authorHandle": "@minakimes",
+      "authorProfileUrl": "https://x.com/minakimes",
+      "trustTier": 1,
+      "category": "film",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.234,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 93,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.612
+    },
+    {
+      "id": "was_brss_hogs_haven_11fa9656024e",
+      "type": "article",
+      "title": "Washington Commanders Whiteboard: Notes, observations from MNF Week 11",
+      "summary": "Before the advent of media devices, football coaches at all levels used simple whiteboards to outline plays, map out player positions and explain schemes in real time. Nowadays digital playbooks and tablets have taken over, but coaches stil",
+      "imageUrl": "",
+      "imageAlt": "Washington Commanders Whiteboard: Notes, observations from MNF Week 11",
+      "publishedAt": "2026-11-25T04:25:11.000Z",
+      "url": "https://www.hogshaven.com/washington-commanders-analysis/456865/washington-commanders-whiteboard-notes-observations-mnf-week-11-cincinnati-bengals",
+      "outletId": "hogs_haven",
+      "outletName": "Hogs Haven",
+      "reporterId": "hogs_haven",
+      "reporterName": "John Portis",
+      "author": "John Portis",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.hogshaven.com/washington-commanders-analysis/456865/washington-commanders-whiteboard-notes-observations-mnf-week-11-cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0792
+    },
+    {
+      "id": "was_brss_hogs_haven_accdd00fac19",
+      "type": "article",
+      "title": "Commanders reportedly set to meet with free-agent WR Brandon Aiyuk",
+      "summary": "The Commanders will meet with receiver Brandon Aiyuk on Wednesday, according to a report from ESPN’s Adam Schefter. Citing the information from agent Drew Rosenhaus, Schefter says Aiyuk will meet with Washington brass on Wednesday. This mee",
+      "imageUrl": "",
+      "imageAlt": "Commanders reportedly set to meet with free-agent WR Brandon Aiyuk",
+      "publishedAt": "2026-11-25T02:39:49.000Z",
+      "url": "https://www.hogshaven.com/washington-commanders-news/457314/commanders-brandon-aiyuk-meeting-49ers-adam-schefter-nfl-free-agency",
+      "outletId": "hogs_haven",
+      "outletName": "Hogs Haven",
+      "reporterId": "hogs_haven",
+      "reporterName": "Scott Bair",
+      "author": "Scott Bair",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.hogshaven.com/washington-commanders-news/457314/commanders-brandon-aiyuk-meeting-49ers-adam-schefter-nfl-free-agency",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.944
+    },
+    {
+      "id": "was_brss_hogs_haven_c6218748bc1a",
+      "type": "article",
+      "title": "“Let’s go Redskins”- Washington fans chant in the dark – All aTwitter",
+      "summary": "All aTwitter – 25 November 2026 We follow Twitter so you don’t have to The goal of All aTwitter is to give readers a detailed or quirky look, through the unique lens of Twitter, at the Commanders, the NFL, and sports in general, along with",
+      "imageUrl": "",
+      "imageAlt": "“Let’s go Redskins”- Washington fans chant in the dark – All aTwitter",
+      "publishedAt": "2026-11-25T02:08:44.000Z",
+      "url": "https://www.hogshaven.com/washington-commanders-discussion/457322/lets-go-redskins-washington-fans-chant-in-the-dark-all-atwitter",
+      "outletId": "hogs_haven",
+      "outletName": "Hogs Haven",
+      "reporterId": "hogs_haven",
+      "reporterName": "Scott Jennings",
+      "author": "Scott Jennings",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.hogshaven.com/washington-commanders-discussion/457322/lets-go-redskins-washington-fans-chant-in-the-dark-all-atwitter",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9095
+    },
+    {
+      "id": "was_espn_4df4b08304393",
+      "type": "video",
+      "title": "How the Commanders confused Joe Burrow",
+      "summary": "John Keim reports on how Washington's disguised blitzes gave Joe Burrow trouble and helped limit the Bengals' offense.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1124/dm_261124_com/dm_261124_com.jpg",
+      "imageCaption": "John Keim reports on how Washington's disguised blitzes gave Joe Burrow trouble and helped limit the Bengals' offense.",
+      "imageAlt": "How the Commanders confused Joe Burrow",
+      "publishedAt": "2026-11-25T01:24:08.000Z",
+      "url": "https://www.espn.com/video/clip/_/id/50588144/how-commanders-confused-joe-burrow",
+      "outletId": "espn_was",
+      "outletName": "ESPN",
+      "reporterId": "espn_was",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/wsh/washington-commanders",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8782
+    },
+    {
+      "id": "was_yt_n_3lwzlBo1Q",
+      "type": "video",
+      "category": "beat",
+      "videoId": "n_3lwzlBo1Q",
+      "embeddable": false,
+      "title": "Are the Commanders Legit? + Micah Parsons Returns | The NFL Report",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.youtube.com/c/NFLBrasilOficial NFL UK htt",
+      "imageUrl": "https://i.ytimg.com/vi/n_3lwzlBo1Q/hqdefault.jpg",
+      "imageAlt": "Are the Commanders Legit? + Micah Parsons Returns | The NFL Report",
+      "publishedAt": "2026-11-25T01:00:44.000Z",
+      "url": "https://www.youtube.com/watch?v=n_3lwzlBo1Q",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=n_3lwzlBo1Q",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8554
     },
     {
       "id": "was_bsky_14ce372293c0",
@@ -2240,7 +2421,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.165,
+      "breakingPriority": 0.164,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2249,7 +2430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2081
+      "storyRank": 1.2032
     },
     {
       "id": "x_tl_commanders_2125371386751500772",
@@ -2288,223 +2469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8575
-    },
-    {
-      "id": "was_bsky_ec7b8321d6c0",
-      "type": "tweet",
-      "title": "It sure looks like Commanders GM Adam Peters cooked with his top draft picks this year….\n\n📺: youtu.be/dquR4jBp66E?...",
-      "fullText": "It sure looks like Commanders GM Adam Peters cooked with his top draft picks this year….\n\n📺: youtu.be/dquR4jBp66E?...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://video.bsky.app/watch/did%3Aplc%3A2buz4gf5sew3rdwzbxsvcd4s/bafkreifii3dd3nilvnqvrcrqnoz52gwin3qw7rdbxsqdaz43yvyz44npde/thumbnail.jpg",
-      "videoStreamUrl": "https://bsky.social/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3A2buz4gf5sew3rdwzbxsvcd4s&cid=bafkreifii3dd3nilvnqvrcrqnoz52gwin3qw7rdbxsqdaz43yvyz44npde",
-      "embeddable": true,
-      "imageAlt": "Mina Kimes post",
-      "publishedAt": "2026-11-24T23:47:11.456Z",
-      "url": "https://bsky.app/profile/minakimes.bsky.social/post/3n33te6ckp22e",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "espn_national",
-      "outletName": "Mina Kimes",
-      "reporterId": "mina_kimes",
-      "reporterName": "Mina Kimes",
-      "author": "Mina Kimes",
-      "authorHandle": "@minakimes",
-      "authorProfileUrl": "https://x.com/minakimes",
-      "trustTier": 1,
-      "category": "film",
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.235,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 93,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.6202
-    },
-    {
-      "id": "was_brss_hogs_haven_11fa9656024e",
-      "type": "article",
-      "title": "Washington Commanders Whiteboard: Notes, observations from MNF Week 11",
-      "summary": "Before the advent of media devices, football coaches at all levels used simple whiteboards to outline plays, map out player positions and explain schemes in real time. Nowadays digital playbooks and tablets have taken over, but coaches stil",
-      "imageUrl": "",
-      "imageAlt": "Washington Commanders Whiteboard: Notes, observations from MNF Week 11",
-      "publishedAt": "2026-11-25T04:25:11.000Z",
-      "url": "https://www.hogshaven.com/washington-commanders-analysis/456865/washington-commanders-whiteboard-notes-observations-mnf-week-11-cincinnati-bengals",
-      "outletId": "hogs_haven",
-      "outletName": "Hogs Haven",
-      "reporterId": "hogs_haven",
-      "reporterName": "John Portis",
-      "author": "John Portis",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.hogshaven.com/washington-commanders-analysis/456865/washington-commanders-whiteboard-notes-observations-mnf-week-11-cincinnati-bengals",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0867
-    },
-    {
-      "id": "was_brss_hogs_haven_accdd00fac19",
-      "type": "article",
-      "title": "Commanders reportedly set to meet with free-agent WR Brandon Aiyuk",
-      "summary": "The Commanders will meet with receiver Brandon Aiyuk on Wednesday, according to a report from ESPN’s Adam Schefter. Citing the information from agent Drew Rosenhaus, Schefter says Aiyuk will meet with Washington brass on Wednesday. This mee",
-      "imageUrl": "",
-      "imageAlt": "Commanders reportedly set to meet with free-agent WR Brandon Aiyuk",
-      "publishedAt": "2026-11-25T02:39:49.000Z",
-      "url": "https://www.hogshaven.com/washington-commanders-news/457314/commanders-brandon-aiyuk-meeting-49ers-adam-schefter-nfl-free-agency",
-      "outletId": "hogs_haven",
-      "outletName": "Hogs Haven",
-      "reporterId": "hogs_haven",
-      "reporterName": "Scott Bair",
-      "author": "Scott Bair",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.hogshaven.com/washington-commanders-news/457314/commanders-brandon-aiyuk-meeting-49ers-adam-schefter-nfl-free-agency",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9499
-    },
-    {
-      "id": "was_brss_hogs_haven_c6218748bc1a",
-      "type": "article",
-      "title": "“Let’s go Redskins”- Washington fans chant in the dark – All aTwitter",
-      "summary": "All aTwitter – 25 November 2026 We follow Twitter so you don’t have to The goal of All aTwitter is to give readers a detailed or quirky look, through the unique lens of Twitter, at the Commanders, the NFL, and sports in general, along with",
-      "imageUrl": "",
-      "imageAlt": "“Let’s go Redskins”- Washington fans chant in the dark – All aTwitter",
-      "publishedAt": "2026-11-25T02:08:44.000Z",
-      "url": "https://www.hogshaven.com/washington-commanders-discussion/457322/lets-go-redskins-washington-fans-chant-in-the-dark-all-atwitter",
-      "outletId": "hogs_haven",
-      "outletName": "Hogs Haven",
-      "reporterId": "hogs_haven",
-      "reporterName": "Scott Jennings",
-      "author": "Scott Jennings",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.hogshaven.com/washington-commanders-discussion/457322/lets-go-redskins-washington-fans-chant-in-the-dark-all-atwitter",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9151
-    },
-    {
-      "id": "was_espn_4df4b08304393",
-      "type": "video",
-      "title": "How the Commanders confused Joe Burrow",
-      "summary": "John Keim reports on how Washington's disguised blitzes gave Joe Burrow trouble and helped limit the Bengals' offense.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1124/dm_261124_com/dm_261124_com.jpg",
-      "imageCaption": "John Keim reports on how Washington's disguised blitzes gave Joe Burrow trouble and helped limit the Bengals' offense.",
-      "imageAlt": "How the Commanders confused Joe Burrow",
-      "publishedAt": "2026-11-25T01:24:08.000Z",
-      "url": "https://www.espn.com/video/clip/_/id/50588144/how-commanders-confused-joe-burrow",
-      "outletId": "espn_was",
-      "outletName": "ESPN",
-      "reporterId": "espn_was",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/wsh/washington-commanders",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8834
-    },
-    {
-      "id": "was_yt_n_3lwzlBo1Q",
-      "type": "video",
-      "category": "beat",
-      "videoId": "n_3lwzlBo1Q",
-      "embeddable": false,
-      "title": "Are the Commanders Legit? + Micah Parsons Returns | The NFL Report",
-      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.youtube.com/c/NFLBrasilOficial NFL UK htt",
-      "imageUrl": "https://i.ytimg.com/vi/n_3lwzlBo1Q/hqdefault.jpg",
-      "imageAlt": "Are the Commanders Legit? + Micah Parsons Returns | The NFL Report",
-      "publishedAt": "2026-11-25T01:00:44.000Z",
-      "url": "https://www.youtube.com/watch?v=n_3lwzlBo1Q",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=n_3lwzlBo1Q",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8603
+      "storyRank": 0.8529
     },
     {
       "id": "was_yts_2fYtN8uY6tw",
@@ -2516,7 +2481,7 @@
       "duration": "1:51:07",
       "imageUrl": "https://i.ytimg.com/vi/2fYtN8uY6tw/hqdefault.jpg",
       "imageAlt": "GAME OF THE WEEK! Cincinnati Bengals vs. Washington Commanders FULL GAME | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-24T23:44:34.299Z",
+      "publishedAt": "2026-11-24T23:49:41.984Z",
       "url": "https://www.youtube.com/watch?v=2fYtN8uY6tw",
       "externalVideoUrl": "https://www.youtube.com/watch?v=2fYtN8uY6tw",
       "channel": "NFL",
@@ -2588,7 +2553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7793
+      "storyRank": 0.7752
     },
     {
       "id": "x_tl_adamschefter_2125354508028952690",
@@ -2636,7 +2601,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8008
+      "storyRank": 0.7967
     },
     {
       "id": "x_tl_espnnfl_2125352479395070185",
@@ -2679,47 +2644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7824
-    },
-    {
-      "id": "x_tl_minakimes_2125350923245592879",
-      "type": "tweet",
-      "title": "New pod! Recapping the Commanders win and previewing the Wednesday and Thursday games with @BenjaminSolak\n\n🎧:\n\n📺:",
-      "fullText": "New pod! Recapping the Commanders win and previewing the Wednesday and Thursday games with @BenjaminSolak\n\n🎧:\n\n📺:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX7DY1fbAAA5ByB.jpg",
-      "imageAlt": "Mina Kimes post",
-      "hasInlineChartImage": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-24T22:08:41.000Z",
-      "url": "https://x.com/minakimes/status/2125350923245592879",
-      "externalUrl": "https://podcasts.apple.com/us/podcast/the-mina-kimes-show-featuring-lenny/id1437647915?i=1000803857667",
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "espn_national",
-      "outletName": "ESPN NFL",
-      "reporterId": "mina_kimes",
-      "reporterName": "Mina Kimes",
-      "author": "Mina Kimes",
-      "authorHandle": "@minakimes",
-      "authorProfileUrl": "https://x.com/minakimes",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 93,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.7896
+      "storyRank": 0.7784
     },
     {
       "id": "was_bsky_37f02f4be95f",
@@ -2758,7 +2683,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6938
+      "storyRank": 0.6903
     },
     {
       "id": "x_tl_commanders_2125337662315782382",
@@ -2801,7 +2726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7503
+      "storyRank": 0.7467
     },
     {
       "id": "was_yts_C3ZJX7on7OE",
@@ -2813,7 +2738,7 @@
       "duration": "15:07",
       "imageUrl": "https://i.ytimg.com/vi/C3ZJX7on7OE/hqdefault.jpg",
       "imageAlt": "Cincinnati Bengals vs Washington Commanders Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-24T20:44:34.299Z",
+      "publishedAt": "2026-11-24T20:49:41.984Z",
       "url": "https://www.youtube.com/watch?v=C3ZJX7on7OE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=C3ZJX7on7OE",
       "channel": "NFL",
@@ -2843,54 +2768,6 @@
       "storyRank": 0.6625
     },
     {
-      "id": "was_yts_6UwgrVlo2lY",
-      "type": "video",
-      "videoId": "6UwgrVlo2lY",
-      "embeddable": false,
-      "title": "JAYDEN DANIELS.. GREATNESS IS REQUIRED! Bengals vs Commanders Week 11 CRAZY Ending",
-      "summary": "",
-      "duration": "17:31",
-      "imageUrl": "https://i.ytimg.com/vi/6UwgrVlo2lY/hqdefault.jpg",
-      "imageAlt": "JAYDEN DANIELS.. GREATNESS IS REQUIRED! Bengals vs Commanders Week 11 CRAZY Ending",
-      "publishedAt": "2026-11-24T20:44:34.299Z",
-      "url": "https://www.youtube.com/watch?v=6UwgrVlo2lY",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=6UwgrVlo2lY",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "4426348",
-          "name": "Jayden Daniels",
-          "shortName": "J. Daniels",
-          "position": "QB",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426348.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 25,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5664
-    },
-    {
       "id": "was_yts_uLyhvnGoWNA",
       "type": "video",
       "videoId": "uLyhvnGoWNA",
@@ -2900,7 +2777,7 @@
       "duration": "9:00",
       "imageUrl": "https://i.ytimg.com/vi/uLyhvnGoWNA/hqdefault.jpg",
       "imageAlt": "Jayden Daniels Every Throw & Run | Week 11",
-      "publishedAt": "2026-11-24T20:44:34.299Z",
+      "publishedAt": "2026-11-24T20:49:41.984Z",
       "url": "https://www.youtube.com/watch?v=uLyhvnGoWNA",
       "externalVideoUrl": "https://www.youtube.com/watch?v=uLyhvnGoWNA",
       "channel": "NFL",
@@ -2939,36 +2816,52 @@
       "storyRank": 0.6625
     },
     {
-      "id": "was_pwire_4360635_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4360635/chig-okonkwo#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4360635/chig-okonkwo#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
+      "id": "was_yts_6UwgrVlo2lY",
+      "type": "video",
+      "videoId": "6UwgrVlo2lY",
+      "embeddable": false,
+      "title": "JAYDEN DANIELS.. GREATNESS IS REQUIRED! Bengals vs Commanders Week 11 CRAZY Ending",
+      "summary": "",
+      "duration": "17:31",
+      "imageUrl": "https://i.ytimg.com/vi/6UwgrVlo2lY/hqdefault.jpg",
+      "imageAlt": "JAYDEN DANIELS.. GREATNESS IS REQUIRED! Bengals vs Commanders Week 11 CRAZY Ending",
+      "publishedAt": "2026-11-24T20:49:41.984Z",
+      "url": "https://www.youtube.com/watch?v=6UwgrVlo2lY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=6UwgrVlo2lY",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4426348",
+          "name": "Jayden Daniels",
+          "shortName": "J. Daniels",
+          "position": "QB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426348.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
+      "category": "beat",
       "signalScore": 70,
-      "fluffScore": 0,
+      "fluffScore": 25,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6363
+      "storyRank": 0.5664
     },
     {
       "id": "was_pwire_4575131_49949224",
@@ -3000,7 +2893,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6363
+      "storyRank": 0.6334
+    },
+    {
+      "id": "was_pwire_4360635_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4360635/chig-okonkwo#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4360635/chig-okonkwo#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6334
     },
     {
       "id": "was_vid_5257967fffda",
@@ -3045,7 +2970,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6374
+      "storyRank": 0.6345
     },
     {
       "id": "x_tl_nickijhabvala_2125308854103629870",
@@ -3084,7 +3009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6757
+      "storyRank": 0.6726
     },
     {
       "id": "was_vid_5218b9536208",
@@ -3120,7 +3045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6233
+      "storyRank": 0.6205
     },
     {
       "id": "x_tl_dharrison82_2125299377824563240",
@@ -3172,7 +3097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6484
+      "storyRank": 0.6455
     },
     {
       "id": "x_tl_nickijhabvala_2125289825481769238",
@@ -3224,7 +3149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6331
+      "storyRank": 0.6304
     },
     {
       "id": "was_espn_d682ece379aa6",
@@ -3268,7 +3193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5474
+      "storyRank": 0.5451
     },
     {
       "id": "was_espn_ca76832d395a9",
@@ -3304,7 +3229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5391
+      "storyRank": 0.5368
     },
     {
       "id": "was_bsky_432785a3fd0b",
@@ -3342,7 +3267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4152
+      "storyRank": 0.4136
     },
     {
       "id": "was_espn_4da498786e2be",
@@ -3387,7 +3312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4936
+      "storyRank": 0.4917
     },
     {
       "id": "was_espn_94f5161cf6e62",
@@ -3432,7 +3357,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4731
+      "storyRank": 0.4713
     },
     {
       "id": "was_espn_9bb1aaa7cefff",
@@ -3477,7 +3402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4713
+      "storyRank": 0.4695
     },
     {
       "id": "was_espn_f8ec40f3f36a5",
@@ -3521,7 +3446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4613
+      "storyRank": 0.4596
     },
     {
       "id": "was_tx_a6a4c80b2e1b",
@@ -3556,7 +3481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3728
+      "storyRank": 0.3716
     },
     {
       "id": "was_espn_69d5f42f14c4a",
@@ -3600,7 +3525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3482
+      "storyRank": 0.3471
     },
     {
       "id": "was_vid_c0a80e1b2147",
@@ -3645,7 +3570,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3441
+      "storyRank": 0.3431
     },
     {
       "id": "was_vid_f8c79359052e",
@@ -3690,7 +3615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.344
+      "storyRank": 0.343
     },
     {
       "id": "was_vid_3115fc3e73a9",
@@ -3735,7 +3660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.344
+      "storyRank": 0.343
     },
     {
       "id": "was_vid_110066c8c075",
@@ -3780,7 +3705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.344
+      "storyRank": 0.3429
     },
     {
       "id": "was_vid_0c234741d147",
@@ -3825,7 +3750,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3439
+      "storyRank": 0.3429
     },
     {
       "id": "was_vid_6e954af23335",
@@ -3870,7 +3795,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3437
+      "storyRank": 0.3426
     },
     {
       "id": "was_vid_0c1e5e41d097",
@@ -3915,7 +3840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3412
+      "storyRank": 0.3402
     },
     {
       "id": "was_espn_b907d187d76df",
@@ -3950,7 +3875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.338
+      "storyRank": 0.337
     },
     {
       "id": "was_espn_70ee274fda6b3",
@@ -3994,7 +3919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3348
+      "storyRank": 0.3339
     },
     {
       "id": "was_espn_cf24ec005070a",
@@ -4029,7 +3954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3346
+      "storyRank": 0.3337
     },
     {
       "id": "was_espn_f1c9d9d2006c5",
@@ -4065,7 +3990,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3326
+      "storyRank": 0.3316
     },
     {
       "id": "was_bsky_a21bcabaa54c",
@@ -4103,7 +4028,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3088
+      "storyRank": 0.308
     },
     {
       "id": "was_espn_b22844eb1955a",
@@ -4147,7 +4072,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.119
+      "storyRank": 0.1187
     },
     {
       "id": "was_tx_4bc2ed13e7da",
@@ -4191,7 +4116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0787
+      "storyRank": 0.0785
     },
     {
       "id": "was_rss_01f6724d788b",
@@ -4266,7 +4191,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0251
     },
     {
       "id": "was_tx_41134122dec5",
@@ -4313,7 +4238,7 @@
       "duration": "7:46",
       "imageUrl": "https://i.ytimg.com/vi/jRdOBn5-lTw/hqdefault.jpg",
       "imageAlt": "Cincinnati Bengals vs Washington Commanders | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:44:34.299Z",
+      "publishedAt": "2026-11-18T20:49:41.984Z",
       "url": "https://www.youtube.com/watch?v=jRdOBn5-lTw",
       "externalVideoUrl": "https://www.youtube.com/watch?v=jRdOBn5-lTw",
       "channel": "NFL",

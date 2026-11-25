@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:47:27.158Z",
+  "updatedAt": "2026-11-25T20:51:50.115Z",
   "count": 75,
   "excludedGhostIds": [
     "3138744"
@@ -79155,7 +79155,7 @@
           "url": "https://www.raiders.com/video/raiders-live",
           "author": "raiders.com Video",
           "outletName": "raiders.com Video",
-          "publishedAt": "2026-11-25T20:47:27.690Z"
+          "publishedAt": "2026-11-25T20:50:00.000Z"
         },
         {
           "id": "lv_brss_silver_and_black_pride_46c80cb3b492",
@@ -79202,6 +79202,18 @@
           "author": "Marcus Johnson",
           "outletName": "Tape Don't Lie",
           "publishedAt": "2026-11-24T02:28:34.389Z"
+        },
+        {
+          "id": "lv_yts_I7M80cWgT8s",
+          "type": "video",
+          "headline": "Fernando Mendoza Every Throw & Run | Week 11",
+          "title": "Fernando Mendoza Every Throw & Run | Week 11",
+          "summary": "",
+          "imageUrl": "https://i.ytimg.com/vi/I7M80cWgT8s/hqdefault.jpg",
+          "url": "https://www.youtube.com/watch?v=I7M80cWgT8s",
+          "author": "NFL",
+          "outletName": "NFL",
+          "publishedAt": "2026-11-23T20:51:50.701Z"
         },
         {
           "id": "lv_brss_silver_and_black_pride_b8abed93c964",
@@ -79273,18 +79285,6 @@
           "author": "raiders.com Official",
           "outletName": "raiders.com Official",
           "publishedAt": "2026-11-23T03:30:00.000Z"
-        },
-        {
-          "id": "lv_vid_0746e76f4dda",
-          "type": "video",
-          "headline": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
-          "title": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
-          "summary": "Quarterback Fernando Mendoza addresses the media following the Raiders' Week 11 matchup against the Denver Broncos.",
-          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/zqdhmonwuuxsf0mwsdq2.png",
-          "url": "https://www.raiders.com/video/fernando-mendoza-postgame-presser-broncos-nfl-week-11-2026-season",
-          "author": "raiders.com Video",
-          "outletName": "raiders.com Video",
-          "publishedAt": "2026-11-23T01:55:00.000Z"
         }
       ],
       "statProfile2026": {

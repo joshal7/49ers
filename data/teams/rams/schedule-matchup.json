@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:50.951Z",
+  "updatedAt": "2026-11-25T20:48:41.918Z",
   "sources": [
     {
       "label": "ESPN Rams Schedule",
@@ -24676,14 +24676,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 7,
-    "averageRank": 7,
-    "medianRank": 6.5,
+    "averageRank": 6.8,
+    "medianRank": 6,
     "previousRank": 7,
     "rangeMin": 2,
     "rangeMax": 11,
     "rangeShort": "#2–#11",
     "rangeDisplay": "#2–#11 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Rams at #7 consensus (avg #7.0) through Week 10, ranging from #2 (nfelo) to #11 (ESPN Panel). All listed models include the Rams' latest result entering Week 12 vs. Packers.",
+    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Rams at #7 consensus (avg #6.8) through Week 10, ranging from #2 (nfelo) to #11 (ESPN Panel). All listed models include the Rams' latest result entering Week 12 vs. Packers.",
     "sources": [
       {
         "id": "nfelo",
@@ -24726,16 +24726,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 6,
+        "rank": 5,
         "previousRank": 2,
-        "delta": "-4",
+        "delta": "-3",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (69.7% neutral-field win rating, 9.8 proj. wins) at 6-4 through Week 11.",
+        "blurb": "Tier 1 (69.9% neutral-field win rating, 9.8 proj. wins) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24834,16 +24834,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 6,
+        "rank": 5,
         "previousRank": 2,
-        "delta": "-4",
+        "delta": "-3",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (69.7% neutral-field win rating, 9.8 proj. wins) at 6-4 through Week 11."
+        "blurb": "Tier 1 (69.9% neutral-field win rating, 9.8 proj. wins) at 6-4 through Week 11."
       },
       {
         "id": "cbs",
@@ -24898,7 +24898,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-25T20:43:55.934Z"
+    "fetchedAtIso": "2026-11-25T20:48:46.431Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27590,16 +27590,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Warren McClendon Jr., Kevin Dotson & Alaric Jackson vs. DT Karl Brooks & Packers Simulated Pressures",
+        "unitMatchup": "Warren McClendon Jr., Alaric Jackson & Kevin Dotson vs. DT Karl Brooks & Packers Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Warren McClendon Jr.",
-          "Kevin Dotson",
-          "Alaric Jackson"
+          "Alaric Jackson",
+          "Kevin Dotson"
         ],
         "statComparison": "LAR: #16 Pass Protection (6.0%) | GB: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Warren McClendon Jr., Kevin Dotson & Alaric Jackson protect Matthew Stafford (#16 protection at 6.0%) against DT Karl Brooks and Green Bay Packers's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Warren McClendon Jr. (#71) on obvious passing downs—if DT Karl Brooks cannot win clean around the arc, Packers must dial up interior stunts that stress Kevin Dotson (#69)."
+        "tacticalDetail": "Warren McClendon Jr., Alaric Jackson & Kevin Dotson protect Matthew Stafford (#16 protection at 6.0%) against DT Karl Brooks and Green Bay Packers's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Warren McClendon Jr. (#71) on obvious passing downs—if DT Karl Brooks cannot win clean around the arc, Packers must dial up interior stunts that stress Alaric Jackson (#77)."
       }
     ]
   }

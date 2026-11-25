@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:18.694Z",
+  "updatedAt": "2026-11-25T20:51:11.722Z",
   "teamAbbr": "IND",
   "teamSlug": "colts",
   "brandName": "Colts Nation",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:45:18.694Z",
+    "lastCheckedAt": "2026-11-25T20:51:11.722Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

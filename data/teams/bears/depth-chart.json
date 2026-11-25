@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:46:27.918Z",
+  "updatedAt": "2026-11-25T20:49:15.120Z",
   "week": 12,
   "units": [
     {
@@ -1011,11 +1011,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4372576",
+              "name": "Jack Sanborn",
+              "jersey": 57,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372576.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4245655",
               "name": "Tony Fields II",
               "jersey": 43,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4245655.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false
@@ -1025,7 +1035,7 @@
               "name": "Nephi Sewell",
               "jersey": 45,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241611.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false
@@ -1043,11 +1053,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4372576",
+              "name": "Jack Sanborn",
+              "jersey": 57,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372576.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4245655",
               "name": "Tony Fields II",
               "jersey": 43,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4245655.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false,
@@ -1058,7 +1078,7 @@
               "name": "Nephi Sewell",
               "jersey": 45,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241611.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false,
@@ -1082,21 +1102,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4430822",
-              "name": "Noah Sewell",
-              "jersey": 44,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430822.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4911952",
               "name": "Keyshaun Elliott",
               "jersey": 49,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4911952.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1114,21 +1124,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4430822",
-              "name": "Noah Sewell",
-              "jersey": 44,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430822.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4911952",
               "name": "Keyshaun Elliott",
               "jersey": 49,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4911952.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1141,23 +1141,23 @@
           "slotLabel": "SAM LB (4-3)",
           "baselineChain": [
             {
+              "playerId": "4430822",
+              "name": "Noah Sewell",
+              "jersey": 44,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430822.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4241007",
               "name": "D'Marco Jackson",
               "jersey": 48,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241007.png",
-              "baselineRank": 1,
+              "baselineRank": 2,
               "playProbabilityPct": 93,
               "statusBadge": "93% • Cleared",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4372576",
-              "name": "Jack Sanborn",
-              "jersey": 57,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372576.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1173,23 +1173,23 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "4430822",
+              "name": "Noah Sewell",
+              "jersey": 44,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430822.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4241007",
               "name": "D'Marco Jackson",
               "jersey": 48,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241007.png",
-              "baselineRank": 1,
+              "baselineRank": 2,
               "playProbabilityPct": 93,
               "statusBadge": "93% • Cleared",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4372576",
-              "name": "Jack Sanborn",
-              "jersey": 57,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372576.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {

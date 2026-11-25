@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:02.630Z",
+  "updatedAt": "2026-11-25T20:50:47.387Z",
   "sources": [
     {
       "label": "ESPN Bengals Schedule",
@@ -24723,10 +24723,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (69.4% neutral-field win rating, 12.0 proj. wins) at 7-3 through Week 11.",
+        "blurb": "Tier 1 (68.8% neutral-field win rating, 12.0 proj. wins) at 7-3 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24794,10 +24794,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (69.4% neutral-field win rating, 12.0 proj. wins) at 7-3 through Week 11."
+        "blurb": "Tier 1 (68.8% neutral-field win rating, 12.0 proj. wins) at 7-3 through Week 11."
       },
       {
         "id": "cbs",
@@ -24863,7 +24863,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:06.100Z"
+    "fetchedAtIso": "2026-11-25T20:50:50.706Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25812,7 +25812,7 @@
       "spread": "CIN -10",
       "openingSpread": "Opened CIN -6.5 (Draft Kings)",
       "overUnder": 49.5,
-      "moneyline": "CIN -543 | NO +411",
+      "moneyline": "CIN -538 | NO +408",
       "impliedScore": "CIN 29.8 – NO 19.8",
       "restAdvantage": "-1 Days Rest Differential (NO extra rest)",
       "impliedWinProb": "92%"
@@ -27523,16 +27523,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Orlando Brown Jr., Dylan Fairchild & Ted Karras vs. DT Colby Wooden & Saints Simulated Pressures",
+        "unitMatchup": "Orlando Brown Jr., Ted Karras & Dylan Fairchild vs. DT Colby Wooden & Saints Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Orlando Brown Jr.",
-          "Dylan Fairchild",
-          "Ted Karras"
+          "Ted Karras",
+          "Dylan Fairchild"
         ],
         "statComparison": "CIN: #16 Pass Protection (6.0%) | NO: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Orlando Brown Jr., Dylan Fairchild & Ted Karras protect Joe Burrow (#16 protection at 6.0%) against DT Colby Wooden and New Orleans Saints's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Orlando Brown Jr. (#75) on obvious passing downs—if DT Colby Wooden cannot win clean around the arc, Saints must dial up interior stunts that stress Dylan Fairchild (#63)."
+        "tacticalDetail": "Orlando Brown Jr., Ted Karras & Dylan Fairchild protect Joe Burrow (#16 protection at 6.0%) against DT Colby Wooden and New Orleans Saints's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Orlando Brown Jr. (#75) on obvious passing downs—if DT Colby Wooden cannot win clean around the arc, Saints must dial up interior stunts that stress Ted Karras (#64)."
       }
     ]
   }

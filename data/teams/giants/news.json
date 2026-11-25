@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:32.555Z",
+  "updatedAt": "2026-11-25T20:49:34.054Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "6-3-1",
-    "generatedAt": "2026-11-25T20:44:32.555Z",
+    "generatedAt": "2026-11-25T20:49:34.054Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -19,29 +19,29 @@
     "headline": "Giants (6-3-1) Week 12 Briefing: Injury Updates Ahead of Colts",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: Entering Week 12 preparation, head coach John Harbaugh and the medical staff evaluate LB Malik Harrison (groin) ahead of Wednesday's initial participation report [giants.com Official](https://www.giants.com/news/abdul-carter-named-nfc-defensive-player-of-the-week).",
-      "Week 12 Colts Outlook: John Harbaugh and DC Dennard Wilson open installation for the Indianapolis Colts (3-8, NYG -6.5, HC Shane Steichen, OC Jim Bob Cooter & DC Lou Anarumo (Road Test))—a unit ranked #5 in Kickoff Return Average (27.5 yds) as New York prepares for a pivotal NFC matchup [giants.com Official](https://www.giants.com/news/week-12-tracker-latest-news-notes-roster-moves-indianapolis-colts-nfl) [giants.com Official](https://www.giants.com/news/week-12-indianapolis-colts-john-harbaugh-paulson-adebo-deonte-banks-cam-skattebo-isaiah-likely-malik-nabers).",
-      "NFC Playoff Trajectory: Entering Week 12 at 6-3-1 (1st in NFC East • #3 Seed in NFC), New York carries a 73.4% postseason projection, 71.3% NFC East division title mark, and 1.1% #1 Seed Bye equity into the conference stretch [giants.com Official](https://www.giants.com/news/abdul-carter-named-nfc-defensive-player-of-the-week).",
+      "Injury & Practice Status: Entering Week 12 preparation, head coach John Harbaugh and the medical staff evaluate LB Malik Harrison (groin) ahead of Wednesday's initial participation report [Ed Valentine](https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more).",
+      "Week 12 Colts Outlook: John Harbaugh and DC Dennard Wilson open installation for the Indianapolis Colts (3-8, NYG -6.5, HC Shane Steichen, OC Jim Bob Cooter & DC Lou Anarumo (Road Test))—a unit ranked #5 in Kickoff Return Average (27.5 yds) as New York prepares for a pivotal NFC matchup [Ed Valentine](https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more) [giants.com Official](https://www.giants.com/news/week-12-tracker-latest-news-notes-roster-moves-indianapolis-colts-nfl).",
+      "NFC Playoff Trajectory: Entering Week 12 at 6-3-1 (1st in NFC East • #3 Seed in NFC), New York carries a 69.7% postseason projection, 67.4% NFC East division title mark, and 1% #1 Seed Bye equity into the conference stretch [giants.com Official](https://www.giants.com/news/abdul-carter-named-nfc-defensive-player-of-the-week).",
       "Around the Beat: Welcome to Week 12 of the NFL season, and Happy Thanksgiving [David Hartman](https://www.bigblueview.com/new-york-giants-roster/181432/fantasy-football-2026-week-12-preview-start-sit-and-more).",
-      "Statistical Profile & Matchup Edge: Through Week 11, New York ranks #15 in Points / Game (22.6), #12 in Points Allowed / Game (21.4), #20 in Turnover Differential (-1), giving John Harbaugh and Dennard Wilson a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Indianapolis Colts [Ben Solak](https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants)."
+      "Statistical Profile & Matchup Edge: Through Week 11, New York ranks #15 in Points / Game (22.6), #12 in Points Allowed / Game (21.4), #20 in Turnover Differential (-1), giving John Harbaugh and Dennard Wilson a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Indianapolis Colts [giants.com Official](https://www.giants.com/news/week-12-indianapolis-colts-john-harbaugh-paulson-adebo-deonte-banks-cam-skattebo-isaiah-likely-malik-nabers)."
     ],
     "coveredStoryKeys": [
       "gregnewsome::diagnostic_result",
       "gregnewsome::in_game_injury_status"
     ],
     "coveredUrls": [
+      "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
       "https://www.giants.com/news/week-12-tracker-latest-news-notes-roster-moves-indianapolis-colts-nfl",
-      "https://www.giants.com/news/week-12-indianapolis-colts-john-harbaugh-paulson-adebo-deonte-banks-cam-skattebo-isaiah-likely-malik-nabers",
       "https://www.giants.com/news/abdul-carter-named-nfc-defensive-player-of-the-week",
       "https://x.com/Schultz_Report/status/2125283467168456951",
       "https://www.bigblueview.com/new-york-giants-roster/181432/fantasy-football-2026-week-12-preview-start-sit-and-more",
-      "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
+      "https://www.giants.com/news/week-12-indianapolis-colts-john-harbaugh-paulson-adebo-deonte-banks-cam-skattebo-isaiah-likely-malik-nabers",
       "https://www.bigblueview.com/new-york-giants-analysis/181392/5-ny-giants-indianapolis-colts-storylines-jonathan-taylor-dominic-zvada-playoff-picture",
-      "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
       "https://www.profootballrumors.com/2026/11/giants-deonte-banks-discussed-extension-latest-on-paulson-adebo",
       "https://www.espn.com/nfl/player/_/id/4696981/cam-skattebo#:~:text=Dopp%2C%20Yates%20face%20off%20over%20Jeanty%20vs",
       "https://x.com/DDuggan21/status/2125286536786944055",
       "https://x.com/PatMcAfeeShow/status/2125283711121764782",
+      "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
       "https://www.bigblueview.com/new-york-giants-news/181447/ny-giants-abdul-carter-named-the-nfc-defensive-player-of-the-week",
       "https://www.giants.com/news/greg-newsome-ii-injury-status-high-ankle-sprain-cornerback",
       "https://www.profootballrumors.com/2026/11/giants-greg-newsome-to-undergo-ankle-surgery-cb-could-miss-4-6-weeks",
@@ -53,19 +53,19 @@
     "sources": [
       {
         "type": "article",
-        "author": "giants.com Official",
-        "outlet": "giants.com Official",
-        "title": "Week 12 Tracker: Latest news, notes & roster moves",
-        "url": "https://www.giants.com/news/week-12-tracker-latest-news-notes-roster-moves-indianapolis-colts-nfl",
-        "publishedAt": "2026-11-25T18:52:00.000Z"
+        "author": "Ed Valentine",
+        "outlet": "Big Blue View",
+        "title": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
+        "url": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
+        "publishedAt": "2026-11-25T19:55:46.000Z"
       },
       {
         "type": "article",
         "author": "giants.com Official",
         "outlet": "giants.com Official",
-        "title": "Storylines to follow in Week 12 matchup",
-        "url": "https://www.giants.com/news/week-12-indianapolis-colts-john-harbaugh-paulson-adebo-deonte-banks-cam-skattebo-isaiah-likely-malik-nabers",
-        "publishedAt": "2026-11-25T18:45:00.000Z"
+        "title": "Week 12 Tracker: Latest news, notes & roster moves",
+        "url": "https://www.giants.com/news/week-12-tracker-latest-news-notes-roster-moves-indianapolis-colts-nfl",
+        "publishedAt": "2026-11-25T18:52:00.000Z"
       },
       {
         "type": "article",
@@ -93,11 +93,11 @@
       },
       {
         "type": "article",
-        "author": "Ben Solak",
-        "outlet": "ESPN",
-        "title": "Seven things Solak thinks for NFL Week 12: Takes on Chiefs-Bills, Giants, Lions",
-        "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
-        "publishedAt": "2026-11-24T17:03:20.000Z"
+        "author": "giants.com Official",
+        "outlet": "giants.com Official",
+        "title": "Storylines to follow in Week 12 matchup",
+        "url": "https://www.giants.com/news/week-12-indianapolis-colts-john-harbaugh-paulson-adebo-deonte-banks-cam-skattebo-isaiah-likely-malik-nabers",
+        "publishedAt": "2026-11-25T18:45:00.000Z"
       },
       {
         "type": "article",
@@ -106,14 +106,6 @@
         "title": "5 NY Giants-Indianapolis Colts storylines: This is no time for a stumble",
         "url": "https://www.bigblueview.com/new-york-giants-analysis/181392/5-ny-giants-indianapolis-colts-storylines-jonathan-taylor-dominic-zvada-playoff-picture",
         "publishedAt": "2026-11-25T14:38:12.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Ed Valentine",
-        "outlet": "Big Blue View",
-        "title": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
-        "url": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
-        "publishedAt": "2026-11-25T14:36:38.000Z"
       },
       {
         "type": "article",
@@ -146,6 +138,14 @@
         "title": "\"Abdul Carter was flying off the ball and he was all over the field.. He called his shot during the week and he backed it up with his play.. It was so impressive\" ~ @JJWatt",
         "url": "https://x.com/PatMcAfeeShow/status/2125283711121764782",
         "publishedAt": "2026-11-24T17:41:37.250Z"
+      },
+      {
+        "type": "article",
+        "author": "Ben Solak",
+        "outlet": "ESPN",
+        "title": "Seven things Solak thinks for NFL Week 12: Takes on Chiefs-Bills, Giants, Lions",
+        "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
+        "publishedAt": "2026-11-24T17:03:20.000Z"
       }
     ]
   },
@@ -154,10 +154,16 @@
       "id": "nyg_cl_top",
       "category": "beat",
       "headline": "New York Giants Week 12 Top Headlines (6-3-1)",
-      "summary": "Abdul Carter named NFC Defensive Player of the Week — Week 12 Tracker: Latest news, notes & roster moves",
-      "updatedAt": "2026-11-25T18:55:00.000Z",
+      "summary": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more — Abdul Carter named NFC Defensive Player of the Week",
+      "updatedAt": "2026-11-25T19:55:46.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Ed Valentine",
+          "title": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
+          "url": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
+          "publishedAt": "2026-11-25T19:55:46.000Z"
+        },
         {
           "label": "giants.com Official",
           "title": "Abdul Carter named NFC Defensive Player of the Week",
@@ -187,12 +193,6 @@
           "title": "Fantasy Football 2026: Week 12 preview — Start/sit and more",
           "url": "https://www.bigblueview.com/new-york-giants-roster/181432/fantasy-football-2026-week-12-preview-start-sit-and-more",
           "publishedAt": "2026-11-25T17:30:34.000Z"
-        },
-        {
-          "label": "Ed Valentine",
-          "title": "5 NY Giants-Indianapolis Colts storylines: This is no time for a stumble",
-          "url": "https://www.bigblueview.com/new-york-giants-analysis/181392/5-ny-giants-indianapolis-colts-storylines-jonathan-taylor-dominic-zvada-playoff-picture",
-          "publishedAt": "2026-11-25T14:38:12.000Z"
         }
       ]
     },
@@ -201,14 +201,14 @@
       "category": "injury",
       "headline": "Giants Practice Report, Injury & IR Availability",
       "summary": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more — NY Giants news: Playoff outlook, CB Greg Newsome placed on IR, more",
-      "updatedAt": "2026-11-25T14:36:38.000Z",
+      "updatedAt": "2026-11-25T19:55:46.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Ed Valentine",
           "title": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
           "url": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
-          "publishedAt": "2026-11-25T14:36:38.000Z"
+          "publishedAt": "2026-11-25T19:55:46.000Z"
         },
         {
           "label": "James Hickey",
@@ -337,6 +337,40 @@
   ],
   "rawStream": [
     {
+      "id": "nyg_brss_big_blue_view_d6102b9149c3",
+      "type": "article",
+      "title": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
+      "summary": "The New York Giants travel to Lucas Oil Stadium in Indianapolis on Sunday to face the Indianapolis Colts in a game that could prove critical to the Giants’ hopes of winning their first NFC East title since 2011. The 6-3-1 Giants are 6.5-poi",
+      "imageUrl": "",
+      "imageAlt": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
+      "publishedAt": "2026-11-25T19:55:46.000Z",
+      "url": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
+      "outletId": "big_blue_view",
+      "outletName": "Big Blue View",
+      "reporterId": "big_blue_view",
+      "reporterName": "Ed Valentine",
+      "author": "Ed Valentine",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 22.8198
+    },
+    {
       "id": "nyg_yt_-auhFwQ2iSQ",
       "type": "video",
       "category": "beat",
@@ -372,7 +406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.1536
+      "storyRank": 13.5853
     },
     {
       "id": "nyg_rss_f8432d31e29e",
@@ -415,7 +449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.5346
+      "storyRank": 13.0077
     },
     {
       "id": "nyg_rss_2639b14737ec",
@@ -449,7 +483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.2154
+      "storyRank": 12.7093
     },
     {
       "id": "nyg_rss_9d3854486c83",
@@ -483,7 +517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.5185
+      "storyRank": 12.0568
     },
     {
       "id": "nyg_brss_big_blue_view_fcf167c1be97",
@@ -526,7 +560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.192
+      "storyRank": 11.7453
     },
     {
       "id": "nyg_brss_big_blue_view_ee5d88476617",
@@ -560,7 +594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.6588
+      "storyRank": 7.4556
     },
     {
       "id": "nyg_vid_584ad3c00b1c",
@@ -586,7 +620,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.566,
+      "breakingPriority": 0.563,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -596,7 +630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7122
+      "storyRank": 5.6362
     },
     {
       "id": "nyg_brss_big_blue_view_90d10dd97b0f",
@@ -630,41 +664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7486
-    },
-    {
-      "id": "nyg_brss_big_blue_view_d6102b9149c3",
-      "type": "article",
-      "title": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
-      "summary": "The New York Giants travel to Lucas Oil Stadium in Indianapolis on Sunday to face the Indianapolis Colts in a game that could prove critical to the Giants’ hopes of winning their first NFC East title since 2011. The 6-3-1 Giants are 6.5-poi",
-      "imageUrl": "",
-      "imageAlt": "NY Giants at Indianapolis Colts, Week 12: News, injuries, analysis, more",
-      "publishedAt": "2026-11-25T14:36:38.000Z",
-      "url": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
-      "outletId": "big_blue_view",
-      "outletName": "Big Blue View",
-      "reporterId": "big_blue_view",
-      "reporterName": "Ed Valentine",
-      "author": "Ed Valentine",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.bigblueview.com/new-york-giants-game-information/181375/ny-giants-at-indianapolis-colts-week-12-news-injuries-analysis-more",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.7296
+      "storyRank": 3.6884
     },
     {
       "id": "nyg_brss_big_blue_view_6af095686ac9",
@@ -697,7 +697,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.481,
+      "breakingPriority": 0.477,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -707,7 +707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0076
+      "storyRank": 2.9902
     },
     {
       "id": "nyg_vid_3d879c12bc8a",
@@ -752,7 +752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8987
+      "storyRank": 1.88
     },
     {
       "id": "nyg_vid_259e53646523",
@@ -797,7 +797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6947
+      "storyRank": 1.6793
     },
     {
       "id": "nyg_pfr_1e5cccf4cc69",
@@ -847,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0522
+      "storyRank": 1.0453
     },
     {
       "id": "nyg_pwire_4361266_64963728",
@@ -888,7 +888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8431
+      "storyRank": 0.8385
     },
     {
       "id": "nyg_brss_big_blue_view_0050dc1a62eb",
@@ -931,7 +931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7692
+      "storyRank": 0.7652
     },
     {
       "id": "nyg_brss_big_blue_view_1f454874a1b9",
@@ -974,7 +974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6988
+      "storyRank": 0.6954
     },
     {
       "id": "nyg_yts_VZiLGzqkKHc",
@@ -986,7 +986,7 @@
       "duration": "11:24",
       "imageUrl": "https://i.ytimg.com/vi/VZiLGzqkKHc/hqdefault.jpg",
       "imageAlt": "NFL Power Rankings Week 12: Broncos Climb to No. 3, Giants Crack Top 10",
-      "publishedAt": "2026-11-24T21:44:33.582Z",
+      "publishedAt": "2026-11-24T21:49:34.798Z",
       "url": "https://www.youtube.com/watch?v=VZiLGzqkKHc",
       "externalVideoUrl": "https://www.youtube.com/watch?v=VZiLGzqkKHc",
       "channel": "NFL",
@@ -1047,7 +1047,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.636
+      "storyRank": 0.6332
     },
     {
       "id": "nyg_pfr_4ec00a9b3f99",
@@ -1089,7 +1089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5854
+      "storyRank": 0.5829
     },
     {
       "id": "nyg_brss_big_blue_view_39b1c727f0da",
@@ -1132,7 +1132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5769
+      "storyRank": 0.5744
     },
     {
       "id": "nyg_pwire_4696981_50584335",
@@ -1173,7 +1173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5768
+      "storyRank": 0.5743
     },
     {
       "id": "x_tl_dduggan21_2125286536786944055",
@@ -1221,7 +1221,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6262
+      "storyRank": 0.6236
     },
     {
       "id": "x_tl_patmcafeeshow_2125283711121764782",
@@ -1273,7 +1273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.611
+      "storyRank": 0.6085
     },
     {
       "id": "x_tl_schultz_report_2125283467168456951",
@@ -1321,7 +1321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6106
+      "storyRank": 0.608
     },
     {
       "id": "nyg_vid_f4790ba05b35",
@@ -1357,7 +1357,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9225
+      "storyRank": 0.9194
     },
     {
       "id": "nyg_brss_big_blue_view_56251494ae87",
@@ -1391,7 +1391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5672
+      "storyRank": 0.5648
     },
     {
       "id": "nyg_rss_dc42573aff84",
@@ -1425,7 +1425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5493
+      "storyRank": 0.5471
     },
     {
       "id": "nyg_espn_449171876b717",
@@ -1460,7 +1460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5468
+      "storyRank": 0.5446
     },
     {
       "id": "nyg_rss_7c0d2846290a",
@@ -1494,7 +1494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5453
+      "storyRank": 0.5431
     },
     {
       "id": "nyg_vid_e23be090eb2f",
@@ -1539,7 +1539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5453
+      "storyRank": 0.5431
     },
     {
       "id": "nyg_rss_6b919d172c31",
@@ -1573,7 +1573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5449
+      "storyRank": 0.5427
     },
     {
       "id": "nyg_vid_6f4e815cd188",
@@ -1618,7 +1618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5431
+      "storyRank": 0.5409
     },
     {
       "id": "nyg_pfr_36af5fe4a8ed",
@@ -1651,7 +1651,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5124
+      "storyRank": 0.5104
     },
     {
       "id": "nyg_brss_big_blue_view_1e1887faff3c",
@@ -1685,7 +1685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4815
+      "storyRank": 0.4797
     },
     {
       "id": "nyg_rss_07d81613634f",
@@ -1728,7 +1728,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4765,
+      "storyRank": 0.4747,
       "isSupersededInjuryUpdate": true
     },
     {
@@ -1763,7 +1763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4359
+      "storyRank": 0.4344
     },
     {
       "id": "nyg_vid_8a8c85f68722",
@@ -1799,7 +1799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1026
+      "storyRank": 0.1022
     },
     {
       "id": "nyg_vid_2ec4591457c5",
@@ -1844,7 +1844,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.387
+      "storyRank": 0.3858
     },
     {
       "id": "nyg_tx_f81cd7d1edd0",
@@ -1896,7 +1896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3728
+      "storyRank": 0.3716
     },
     {
       "id": "nyg_pwire_4361266_64939428",
@@ -1945,7 +1945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2704
+      "storyRank": 0.2697
     },
     {
       "id": "nyg_espn_c96bc454d379a",
@@ -1989,7 +1989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2684
+      "storyRank": 0.2677
     },
     {
       "id": "nyg_espn_98578c5039425",
@@ -2024,7 +2024,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2636
+      "storyRank": 0.2629
     },
     {
       "id": "nyg_rss_fdaaa5ef7cf6",
@@ -2058,7 +2058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2599
+      "storyRank": 0.2593
     },
     {
       "id": "nyg_rss_347ba61e14d4",
@@ -2092,7 +2092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2598
+      "storyRank": 0.2591
     },
     {
       "id": "nyg_yts_VFJ5DTTNN9A",
@@ -2104,7 +2104,7 @@
       "duration": "16:31",
       "imageUrl": "https://i.ytimg.com/vi/VFJ5DTTNN9A/hqdefault.jpg",
       "imageAlt": "Jacksonville Jaguars vs. New York Giants Game Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T20:44:33.582Z",
+      "publishedAt": "2026-11-23T20:49:34.798Z",
       "url": "https://www.youtube.com/watch?v=VFJ5DTTNN9A",
       "externalVideoUrl": "https://www.youtube.com/watch?v=VFJ5DTTNN9A",
       "channel": "NFL",
@@ -2167,7 +2167,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2571
+      "storyRank": 0.2565
     },
     {
       "id": "x_tl_mikegarafolo_2124945135238627423",
@@ -2206,7 +2206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2731
+      "storyRank": 0.2724
     },
     {
       "id": "nyg_rss_586bbc957a1a",
@@ -2240,7 +2240,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2463
+      "storyRank": 0.2457
     },
     {
       "id": "nyg_rss_9f5591cb0e7c",
@@ -2274,7 +2274,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.229
+      "storyRank": 0.2285
     },
     {
       "id": "x_tl_ringer_2124895756758729066",
@@ -2326,7 +2326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2464
+      "storyRank": 0.2458
     },
     {
       "id": "nyg_rss_f681a38d9966",
@@ -2360,7 +2360,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2275
+      "storyRank": 0.227
     },
     {
       "id": "nyg_espn_eb7eccdb33e23",
@@ -2396,7 +2396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2272
+      "storyRank": 0.2267
     },
     {
       "id": "nyg_espn_9a75a8ddd7d61",
@@ -2432,7 +2432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2158
+      "storyRank": 0.2154
     },
     {
       "id": "nyg_espn_42057c678030e",
@@ -2476,7 +2476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2148
+      "storyRank": 0.2143
     },
     {
       "id": "nyg_rss_57579ff8ee58",
@@ -2510,7 +2510,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2125
+      "storyRank": 0.2121
     },
     {
       "id": "nyg_vid_4f57a6625ad8",
@@ -2555,7 +2555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2109
+      "storyRank": 0.2104
     },
     {
       "id": "nyg_vid_0b680bbca0c1",
@@ -2600,7 +2600,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2083
+      "storyRank": 0.2079
     },
     {
       "id": "nyg_yt_VLVrlPXKQQI",
@@ -2647,7 +2647,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2009
+      "storyRank": 0.2005
     },
     {
       "id": "nyg_rss_db51125938fa",
@@ -2681,7 +2681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2009
+      "storyRank": 0.2005
     },
     {
       "id": "nyg_vid_9c9ff64ad7be",
@@ -2717,7 +2717,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1985
+      "storyRank": 0.1981
     },
     {
       "id": "nyg_rss_6350744923b3",
@@ -2751,7 +2751,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1962
+      "storyRank": 0.1958
     },
     {
       "id": "nyg_yt_ZKtreDbZQBY",
@@ -2789,7 +2789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1494
+      "storyRank": 0.1491
     },
     {
       "id": "nyg_rss_110f8d140de1",
@@ -2823,7 +2823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1716
+      "storyRank": 0.1713
     },
     {
       "id": "nyg_bsky_03bdf4ee8060",
@@ -2905,7 +2905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1656
+      "storyRank": 0.1653
     },
     {
       "id": "x_tl_nfloncbs_2124674427199861132",
@@ -2965,7 +2965,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.177
+      "storyRank": 0.1767
     },
     {
       "id": "nyg_rss_a45a30f6fd50",
@@ -2999,7 +2999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1623
+      "storyRank": 0.1621
     },
     {
       "id": "nyg_rss_a01000edbb59",
@@ -3033,7 +3033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1622
+      "storyRank": 0.162
     },
     {
       "id": "nyg_vid_4636dc05dd5f",
@@ -3069,7 +3069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1621
+      "storyRank": 0.1618
     },
     {
       "id": "nyg_vid_a501fe4c66ec",
@@ -3114,7 +3114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1618
+      "storyRank": 0.1615
     },
     {
       "id": "nyg_vid_46b886066537",
@@ -3159,7 +3159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1617
+      "storyRank": 0.1615
     },
     {
       "id": "nyg_vid_290431346a5e",
@@ -3195,7 +3195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1615
+      "storyRank": 0.1612
     },
     {
       "id": "nyg_vid_732b6a8b0ea3",
@@ -3240,7 +3240,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1612
+      "storyRank": 0.161
     },
     {
       "id": "nyg_vid_38227ebde618",
@@ -3285,7 +3285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.161
+      "storyRank": 0.1607
     },
     {
       "id": "nyg_vid_b901966dad2d",
@@ -3330,7 +3330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1607
+      "storyRank": 0.1604
     },
     {
       "id": "nyg_vid_c6b950317d94",
@@ -3375,7 +3375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1604
+      "storyRank": 0.1602
     },
     {
       "id": "nyg_vid_35f821a796b3",
@@ -3420,7 +3420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1599
+      "storyRank": 0.1596
     },
     {
       "id": "nyg_vid_0fcf9e5eb800",
@@ -3465,7 +3465,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1596
+      "storyRank": 0.1593
     },
     {
       "id": "nyg_vid_0ff681cc180f",
@@ -3510,7 +3510,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1593
+      "storyRank": 0.1591
     },
     {
       "id": "nyg_vid_e863f8e7dc75",
@@ -3563,7 +3563,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0601
+      "storyRank": 0.06
     },
     {
       "id": "nyg_vid_59235be692c7",
@@ -3608,7 +3608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0599
+      "storyRank": 0.0598
     },
     {
       "id": "nyg_vid_9e6043f98677",
@@ -3653,7 +3653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0599
+      "storyRank": 0.0598
     },
     {
       "id": "nyg_vid_ad1b3d5e011c",
@@ -3698,7 +3698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0598
+      "storyRank": 0.0597
     },
     {
       "id": "nyg_vid_b3ddc992ac1a",
@@ -3743,7 +3743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0598
+      "storyRank": 0.0597
     },
     {
       "id": "nyg_vid_fd722fed412e",
@@ -3796,7 +3796,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0598
+      "storyRank": 0.0597
     },
     {
       "id": "nyg_vid_493af1cf3f1b",
@@ -3849,7 +3849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0597
+      "storyRank": 0.0596
     },
     {
       "id": "nyg_vid_6a2522abf7b8",
@@ -3939,7 +3939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0595
+      "storyRank": 0.0594
     },
     {
       "id": "nyg_vid_4c5a7519a221",
@@ -3992,7 +3992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0594
+      "storyRank": 0.0593
     },
     {
       "id": "nyg_vid_3d25fa7c3dbc",
@@ -4037,7 +4037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0594
+      "storyRank": 0.0593
     },
     {
       "id": "nyg_vid_fdb52af48135",
@@ -4082,7 +4082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0593
+      "storyRank": 0.0592
     },
     {
       "id": "nyg_vid_1b1e8b5775a9",
@@ -4127,7 +4127,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0592
+      "storyRank": 0.0591
     },
     {
       "id": "nyg_rss_7f63b28b4654",
@@ -4161,7 +4161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0581
+      "storyRank": 0.058
     },
     {
       "id": "nyg_rss_5a4b20dfd526",
@@ -4238,7 +4238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0567
+      "storyRank": 0.0566
     },
     {
       "id": "nyg_rss_17b6e9032dd0",
@@ -4272,7 +4272,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0566
+      "storyRank": 0.0565
     },
     {
       "id": "nyg_rss_71dd83bf01ad",
@@ -4306,7 +4306,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0565
+      "storyRank": 0.0564
     },
     {
       "id": "nyg_rss_7632eb2742af",
@@ -4340,7 +4340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.055
+      "storyRank": 0.0549
     },
     {
       "id": "nyg_rss_68757e5bd7f7",
@@ -4374,7 +4374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
+      "storyRank": 0.0518
     },
     {
       "id": "nyg_rss_65a08f24a7e9",
@@ -4408,7 +4408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.051
+      "storyRank": 0.0509
     },
     {
       "id": "nyg_rss_1d8824efcbd4",
@@ -4474,7 +4474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0443
+      "storyRank": 0.0442
     },
     {
       "id": "nyg_espn_f2cc47bada0e0",
@@ -4739,7 +4739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0296
     },
     {
       "id": "nyg_vid_8e47c863d381",
@@ -4820,7 +4820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0291
+      "storyRank": 0.029
     },
     {
       "id": "nyg_vid_f7bd5c25e30e",
@@ -5007,7 +5007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0276
+      "storyRank": 0.0275
     },
     {
       "id": "nyg_vid_8a3d3a712474",
@@ -5243,7 +5243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0235
+      "storyRank": 0.0234
     },
     {
       "id": "nyg_vid_1459fa360afa",
@@ -5420,7 +5420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.0231
     },
     {
       "id": "nyg_rss_7da01937f67c",
@@ -5531,7 +5531,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.022
     },
     {
       "id": "nyg_vid_68a647a9b325",
@@ -5716,7 +5716,7 @@
       "duration": "8:36",
       "imageUrl": "https://i.ytimg.com/vi/OT9_tg6B8kE/hqdefault.jpg",
       "imageAlt": "Jacksonville Jaguars vs New York Giants | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:44:33.582Z",
+      "publishedAt": "2026-11-18T20:49:34.798Z",
       "url": "https://www.youtube.com/watch?v=OT9_tg6B8kE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=OT9_tg6B8kE",
       "channel": "NFL",
@@ -5941,7 +5941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0176
     },
     {
       "id": "nyg_vid_5081acd1f65f",
@@ -8390,40 +8390,6 @@
       "storyRank": 0.0015
     },
     {
-      "id": "nyg_rss_b0d3add5a096",
-      "type": "article",
-      "title": "📸 Practice Photos: Giants gear up for TNF",
-      "summary": "View photos of the Giants on the practice field as they prepare for their Week 10 matchup against the Commanders.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/giants/osv2qufucrg2ooznei3t.jpg",
-      "imageAlt": "📸 Practice Photos: Giants gear up for TNF",
-      "publishedAt": "2026-11-11T20:45:00.000Z",
-      "url": "https://www.giants.com/photos/practice-photos-giants-gear-up-for-tnf",
-      "outletId": "giants_official",
-      "outletName": "giants.com Official",
-      "reporterId": "giants_official",
-      "reporterName": "giants.com Official",
-      "author": "giants.com Official",
-      "authorHandle": "@Giants",
-      "authorProfileUrl": "https://www.giants.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
-    },
-    {
       "id": "nyg_vid_d4d2d99b6a18",
       "type": "video",
       "title": "The Coach Harbaugh Show: Previewing Week 10 vs. Commanders",
@@ -8817,7 +8783,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0065
     },
     {
       "id": "nyg_tx_d87ad5b32f83",

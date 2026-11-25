@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:46:11.275Z",
+  "updatedAt": "2026-11-25T20:51:45.028Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.chargers.com/team/injury-report/",
@@ -213,31 +213,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "4574105",
-      "name": "Isas Waxter",
-      "position": "CB",
-      "jersey": 37,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4574105.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Waxter was cleared to return from a one-game absence due to an ankle injury. His availability gives the Chargers another contributor on special teams and depth in the secondary."
-    },
-    {
       "playerId": "4567138",
       "name": "Justin Eboigbe",
       "position": "DT",
@@ -261,6 +236,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Eboigbe was unable to play against the Ravens this past Monday due to an ankle injury. He ended Week 11 prep with a full practice Friday, which was enough for him to avoid an injury tag ahead of Sunday's contest. His return means there will be less rotational snaps at defensive end for rookie fifth-rounder Nick Barrett."
+    },
+    {
+      "playerId": "4574105",
+      "name": "Isas Waxter",
+      "position": "CB",
+      "jersey": 37,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4574105.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Waxter was cleared to return from a one-game absence due to an ankle injury. His availability gives the Chargers another contributor on special teams and depth in the secondary."
     }
   ],
   "irAndReserveTracker": [

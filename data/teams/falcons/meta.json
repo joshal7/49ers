@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:53.025Z",
+  "updatedAt": "2026-11-25T20:50:05.363Z",
   "teamAbbr": "ATL",
   "teamSlug": "falcons",
   "brandName": "Falcons Rise Up",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:53.025Z",
+    "lastCheckedAt": "2026-11-25T20:50:05.363Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

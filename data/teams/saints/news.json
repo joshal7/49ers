@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:25.232Z",
+  "updatedAt": "2026-11-25T20:49:57.785Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17CT",
     "cycleKey": "2026-11-24@17CT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-25T20:44:25.232Z",
+    "generatedAt": "2026-11-25T20:49:57.785Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -21,7 +21,7 @@
     "bullets": [
       "Injury & Practice Status: Entering Week 12 preparation, head coach Kellen Moore and the medical staff evaluate OT Asim Richards (knee), CB Martin Emerson Jr. (concussion), OT Taliese Fuaga (knee), and C Erik McCoy (biceps) ahead of Wednesday's initial participation report [Wallace Delery](https://www.canalstreetchronicles.com/new-orleans-saints-news/118490/nfl-picks-week-12-thanks-for-nothing).",
       "Week 12 Bengals Outlook: Kellen Moore and DC Brandon Staley open installation for the Cincinnati Bengals (7-3, CIN -10, HC Zac Taylor, OC Dan Pitcher & DC Al Golden (Road Test))—a unit ranked #1 in Passing Yards / Game (297.1 yds) as New Orleans prepares for a pivotal NFC matchup [Wallace Delery](https://www.canalstreetchronicles.com/new-orleans-saints-news/118490/nfl-picks-week-12-thanks-for-nothing) [neworleanssaints.com Official](https://www.neworleanssaints.com/news/cincinnati-bengals-vs-new-orleans-saints-game-preview-2026-nfl-season-week-12-series-history-stats-connections).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (3rd in NFC South • #14 Seed in NFC), New Orleans carries a 7.7% postseason projection, 7.6% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Caleb Yaccarino](https://www.canalstreetchronicles.com/new-orleans-saints-power-rankings/118504/saints-power-rankings-nfl-week-11).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (3rd in NFC South • #14 Seed in NFC), New Orleans carries a 7.4% postseason projection, 7.4% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Caleb Yaccarino](https://www.canalstreetchronicles.com/new-orleans-saints-power-rankings/118504/saints-power-rankings-nfl-week-11).",
       "Around the Beat: Why Field Yates is banking on Jordyn Tyson to bounce back [Saints Beat Wire](https://www.espn.com/nfl/player/_/id/4880281/jordyn-tyson#:~:text=Why%20Field%20Yates%20is%20banking%20on%20Jordyn).",
       "Statistical Profile & Matchup Edge: Through Week 11, New Orleans ranks #21 in Points / Game (21.5), #23 in Points Allowed / Game (25.7), #29 in Turnover Differential (-8), giving Kellen Moore and Brandon Staley a clear benchmark ahead of Sun, Nov 29, 12:00 PM CST • NFL TV at [object Object] against the Cincinnati Bengals [Caleb Yaccarino](https://www.canalstreetchronicles.com/new-orleans-saints-power-rankings/118504/saints-power-rankings-nfl-week-11)."
     ],
@@ -174,16 +174,16 @@
           "publishedAt": "2026-11-25T16:22:28.000Z"
         },
         {
-          "label": "neworleanssaints.com Official",
-          "title": "Game Preview: Bengals vs. Saints | 2026 NFL Week 12",
-          "url": "https://www.neworleanssaints.com/news/cincinnati-bengals-vs-new-orleans-saints-game-preview-2026-nfl-season-week-12-series-history-stats-connections",
-          "publishedAt": "2026-11-25T16:21:18.000Z"
-        },
-        {
           "label": "Liz Loza",
           "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
           "url": "https://www.espn.com/nfl/player/_/id/4239996/travis-etienne-jr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
           "publishedAt": "2026-11-25T15:22:54.000Z"
+        },
+        {
+          "label": "neworleanssaints.com Official",
+          "title": "Game Preview: Bengals vs. Saints | 2026 NFL Week 12",
+          "url": "https://www.neworleanssaints.com/news/cincinnati-bengals-vs-new-orleans-saints-game-preview-2026-nfl-season-week-12-series-history-stats-connections",
+          "publishedAt": "2026-11-25T16:21:18.000Z"
         },
         {
           "label": "Tina Howell",
@@ -363,7 +363,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.1336
+      "storyRank": 13.5099
     },
     {
       "id": "no_brss_canal_street_chronicles_5b218cebd9b8",
@@ -397,7 +397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3687
+      "storyRank": 7.1592
     },
     {
       "id": "no_pwire_4880281_50594376",
@@ -438,7 +438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6066
+      "storyRank": 6.4325
     },
     {
       "id": "no_rss_196c8faf90bb",
@@ -472,7 +472,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0457
+      "storyRank": 3.9516
+    },
+    {
+      "id": "no_pwire_4239996_50588158",
+      "type": "article",
+      "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
+      "summary": "Greetings from above the clouds! Jan from Milford, a librarian and gardening enthusiast, has just nodded off and the plane's Wi-Fi has finally decided to connect. It's been another action-packed few days in Bristol and I",
+      "publishedAt": "2026-11-25T15:22:54.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4239996/travis-etienne-jr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Liz Loza",
+      "author": "Liz Loza",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4239996/travis-etienne-jr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.285
     },
     {
       "id": "no_rss_bbb4f3502421",
@@ -506,39 +538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0256
-    },
-    {
-      "id": "no_pwire_4239996_50588158",
-      "type": "article",
-      "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
-      "summary": "Greetings from above the clouds! Jan from Milford, a librarian and gardening enthusiast, has just nodded off and the plane's Wi-Fi has finally decided to connect. It's been another action-packed few days in Bristol and I",
-      "publishedAt": "2026-11-25T15:22:54.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4239996/travis-etienne-jr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Liz Loza",
-      "author": "Liz Loza",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4239996/travis-etienne-jr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.3713
+      "storyRank": 3.9323
     },
     {
       "id": "no_brss_canal_street_chronicles_fd79de42c6ea",
@@ -572,7 +572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9322
+      "storyRank": 3.8602
     },
     {
       "id": "no_rss_f1e0b8c3ab46",
@@ -606,7 +606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4659
+      "storyRank": 3.4085
     },
     {
       "id": "no_rss_99b1be4cffcd",
@@ -640,7 +640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2919
+      "storyRank": 3.2393
     },
     {
       "id": "no_espn_51b53fdbdad19",
@@ -675,7 +675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2468
+      "storyRank": 2.2194
     },
     {
       "id": "no_brss_canal_street_chronicles_deb87724f766",
@@ -709,7 +709,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1592
+      "storyRank": 2.1332
     },
     {
       "id": "no_brss_canal_street_chronicles_dd5e6115a750",
@@ -743,7 +743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1472
+      "storyRank": 2.1216
     },
     {
       "id": "no_rss_7e83d380e088",
@@ -777,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0297
+      "storyRank": 1.0225
     },
     {
       "id": "no_pwire_5209791_64962928",
@@ -809,7 +809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8209
+      "storyRank": 0.816
     },
     {
       "id": "no_pwire_4239996_49949224",
@@ -841,7 +841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6364
+      "storyRank": 0.6332
     },
     {
       "id": "x_tl_mysportsupdate_2125364261497274514",
@@ -884,7 +884,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2051
+      "storyRank": 0.2039
     },
     {
       "id": "no_rss_51961a32ef79",
@@ -918,7 +918,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5508
+      "storyRank": 0.5483
     },
     {
       "id": "no_rss_ffb044f7581a",
@@ -952,7 +952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5139
+      "storyRank": 0.5117
     },
     {
       "id": "no_rss_8c020f9d1685",
@@ -986,7 +986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4965
+      "storyRank": 0.4944
     },
     {
       "id": "no_brss_canal_street_chronicles_7eca1c0dac9b",
@@ -1029,7 +1029,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4799
+      "storyRank": 0.4779
     },
     {
       "id": "no_brss_canal_street_chronicles_0535211f2e5c",
@@ -1063,7 +1063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4256
+      "storyRank": 0.424
     },
     {
       "id": "no_brss_canal_street_chronicles_d43b445a2744",
@@ -1097,7 +1097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4255
+      "storyRank": 0.4239
     },
     {
       "id": "no_brss_canal_street_chronicles_a8062b44fa64",
@@ -1131,7 +1131,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4244
+      "storyRank": 0.4228
     },
     {
       "id": "no_tx_c0985bc4526d",
@@ -1166,7 +1166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3728
+      "storyRank": 0.3715
     },
     {
       "id": "no_brss_canal_street_chronicles_18391091d0ea",
@@ -1200,7 +1200,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2755
+      "storyRank": 0.2748
     },
     {
       "id": "no_rss_fc957e7cfe5d",
@@ -1234,7 +1234,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2771
+      "storyRank": 0.2764
     },
     {
       "id": "no_vid_56ebbd943106",
@@ -1270,7 +1270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2604
+      "storyRank": 0.2597
     },
     {
       "id": "no_yts_TAvO7hOMR70",
@@ -1282,7 +1282,7 @@
       "duration": "13:16",
       "imageUrl": "https://i.ytimg.com/vi/TAvO7hOMR70/hqdefault.jpg",
       "imageAlt": "New Orleans Saints vs. Chicago Bears Game Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T20:44:26.178Z",
+      "publishedAt": "2026-11-23T20:49:58.401Z",
       "url": "https://www.youtube.com/watch?v=TAvO7hOMR70",
       "externalVideoUrl": "https://www.youtube.com/watch?v=TAvO7hOMR70",
       "channel": "NFL",
@@ -1354,7 +1354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2571
+      "storyRank": 0.2564
     },
     {
       "id": "no_vid_5bb037f8338e",
@@ -1399,7 +1399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.257
+      "storyRank": 0.2564
     },
     {
       "id": "no_vid_797ea00d7367",
@@ -1452,7 +1452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.257
+      "storyRank": 0.2564
     },
     {
       "id": "no_vid_93d662ada277",
@@ -1488,7 +1488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2569
+      "storyRank": 0.2562
     },
     {
       "id": "no_pwire_3929645_64937328",
@@ -1520,7 +1520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2551
+      "storyRank": 0.2544
     },
     {
       "id": "no_bsky_73c034a3f554",
@@ -1567,7 +1567,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2403
+      "storyRank": 0.2397
     },
     {
       "id": "no_vid_789eb025175a",
@@ -1612,7 +1612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2297
+      "storyRank": 0.2291
     },
     {
       "id": "no_vid_542049125f54",
@@ -1657,7 +1657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2296
+      "storyRank": 0.229
     },
     {
       "id": "no_rss_c43047b7edfa",
@@ -1691,7 +1691,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2176
+      "storyRank": 0.2171
     },
     {
       "id": "no_rss_61e66e05ad46",
@@ -1725,7 +1725,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2161
+      "storyRank": 0.2156
     },
     {
       "id": "no_espn_396db277a8768",
@@ -1769,7 +1769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1627
+      "storyRank": 0.1624
     },
     {
       "id": "no_rss_9dbce142cd6a",
@@ -1812,7 +1812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1596
+      "storyRank": 0.1593
     },
     {
       "id": "no_espn_8e379aad64212",
@@ -1848,7 +1848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1587
+      "storyRank": 0.1584
     },
     {
       "id": "no_bsky_72c42ae3c473",
@@ -1886,7 +1886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.153
+      "storyRank": 0.1527
     },
     {
       "id": "no_espn_1125cb99eeb13",
@@ -1921,7 +1921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1562
+      "storyRank": 0.1559
     },
     {
       "id": "no_rss_950a7da3f86c",
@@ -1955,7 +1955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1545
+      "storyRank": 0.1543
     },
     {
       "id": "no_vid_e0c4969f1035",
@@ -2000,7 +2000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1525
+      "storyRank": 0.1522
     },
     {
       "id": "no_vid_09daa0a06770",
@@ -2036,7 +2036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1518
+      "storyRank": 0.1515
     },
     {
       "id": "no_vid_5d1bbce9c2b3",
@@ -2106,7 +2106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1497
+      "storyRank": 0.1494
     },
     {
       "id": "no_rss_96c66cd3fddf",
@@ -2140,7 +2140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1451
+      "storyRank": 0.1448
     },
     {
       "id": "no_rss_c23cb2a580f4",
@@ -2174,7 +2174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1408
+      "storyRank": 0.1406
     },
     {
       "id": "no_rss_a7d540437de6",
@@ -2208,7 +2208,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0639
+      "storyRank": 0.0638
     },
     {
       "id": "no_rss_db34683c7a1e",
@@ -2242,7 +2242,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0635
+      "storyRank": 0.0634
     },
     {
       "id": "no_rss_745271f094d1",
@@ -2276,7 +2276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0469
+      "storyRank": 0.0468
     },
     {
       "id": "no_pfr_936170570699",
@@ -2469,7 +2469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0357
+      "storyRank": 0.0356
     },
     {
       "id": "x_tl_kat_terrell_2123890339601944871",
@@ -2508,7 +2508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0389
+      "storyRank": 0.0388
     },
     {
       "id": "no_tx_0846df3dd9ed",
@@ -2619,7 +2619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278
+      "storyRank": 0.0277
     },
     {
       "id": "x_tl_nofnetwork_2123534330685206959",
@@ -2977,7 +2977,7 @@
       "duration": "9:21",
       "imageUrl": "https://i.ytimg.com/vi/V5RXwfL9Poc/hqdefault.jpg",
       "imageAlt": "New Orleans Saints vs Chicago Bears | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:44:26.178Z",
+      "publishedAt": "2026-11-18T20:49:58.401Z",
       "url": "https://www.youtube.com/watch?v=V5RXwfL9Poc",
       "externalVideoUrl": "https://www.youtube.com/watch?v=V5RXwfL9Poc",
       "channel": "NFL",
@@ -3039,7 +3039,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0207
     },
     {
       "id": "no_tx_7e596c49d737",
@@ -3074,7 +3074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0198
     },
     {
       "id": "no_bsky_02920291fa4f",
@@ -3124,6 +3124,45 @@
       "storyRank": 0.0301
     },
     {
+      "id": "no_yts_kpYlWvU7zjY",
+      "type": "video",
+      "videoId": "kpYlWvU7zjY",
+      "embeddable": false,
+      "title": "Carolina Panthers vs. New Orleans Saints Game Highlights | NFL 2026 Season Week 10",
+      "summary": "",
+      "duration": "11:12",
+      "imageUrl": "https://i.ytimg.com/vi/kpYlWvU7zjY/hqdefault.jpg",
+      "imageAlt": "Carolina Panthers vs. New Orleans Saints Game Highlights | NFL 2026 Season Week 10",
+      "publishedAt": "2026-11-16T20:49:58.401Z",
+      "url": "https://www.youtube.com/watch?v=kpYlWvU7zjY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=kpYlWvU7zjY",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0155
+    },
+    {
       "id": "no_bsky_51dde1ef0958",
       "type": "tweet",
       "title": "Saints film room: The calls and decisions that went wrong against Carolina https://neworleans.football/article/saints-film-room-panthers-short-yardage-shough-defense",
@@ -3169,45 +3208,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.015
-    },
-    {
-      "id": "no_yts_kpYlWvU7zjY",
-      "type": "video",
-      "videoId": "kpYlWvU7zjY",
-      "embeddable": false,
-      "title": "Carolina Panthers vs. New Orleans Saints Game Highlights | NFL 2026 Season Week 10",
-      "summary": "",
-      "duration": "11:12",
-      "imageUrl": "https://i.ytimg.com/vi/kpYlWvU7zjY/hqdefault.jpg",
-      "imageAlt": "Carolina Panthers vs. New Orleans Saints Game Highlights | NFL 2026 Season Week 10",
-      "publishedAt": "2026-11-16T20:44:26.178Z",
-      "url": "https://www.youtube.com/watch?v=kpYlWvU7zjY",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=kpYlWvU7zjY",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
     },
     {
       "id": "no_bsky_561d493564d5",

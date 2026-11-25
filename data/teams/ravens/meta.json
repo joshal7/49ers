@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:59.669Z",
+  "updatedAt": "2026-11-25T20:50:40.903Z",
   "teamAbbr": "BAL",
   "teamSlug": "ravens",
   "brandName": "Ravens Flock",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:59.669Z",
+    "lastCheckedAt": "2026-11-25T20:50:40.903Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

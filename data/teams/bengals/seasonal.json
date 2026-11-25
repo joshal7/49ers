@@ -1,21 +1,21 @@
 {
-  "updatedAt": "2026-11-25T20:47:30.629Z",
+  "updatedAt": "2026-11-25T20:51:53.915Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
-    "availableGrossCap": 0,
-    "projected2027CapSpace": 0,
+    "availableGrossCap": 7523782,
+    "projected2027CapSpace": 48850747,
     "capSourceUrl": "https://overthecap.com/salary-cap/cincinnati-bengals",
     "transactionsUrl": "https://www.bengals.com/team/transactions/",
     "purchasingPower": [
       {
         "metric": "2026 Salary Cap Space",
-        "figure": "$0 Gross (#20 NFL)",
+        "figure": "$7.52M Gross (#20 NFL)",
         "strategicImpact": "#11 in AFC. With the 2026 deadline passed, unused cap rolls over 1-for-1 under CBA Article 13 into 2027."
       },
       {
         "metric": "2027 Projected Cap Horizon",
-        "figure": "+$0 (#12 NFL)",
+        "figure": "+$48.85M (#12 NFL)",
         "strategicImpact": "Healthy 2027 cap cushion lets CIN absorb multi-year starter contracts or extend key homegrown players without restructuring traps."
       },
       {
@@ -38,8 +38,8 @@
         "timing": "Offseason Trade (Apr 20, 2026)",
         "costSummary": "2026 first-round draft pick",
         "schemeGrade": "A-",
-        "sourceUrl": "https://overthecap.com/player/dexter-lawrence-ii/7808/",
-        "analysis": "Bengals acquired DT Dexter Lawrence II from New York Giants (18 tackles, 5.0 sacks, 1 PD • 68% 2026 snap share • $840K 2026 cap hit). Expiring 2026 deal ($0 2027 cap commitment)."
+        "sourceUrl": "https://overthecap.com/player/dexter-lawrence/7808/",
+        "analysis": "Bengals acquired DT Dexter Lawrence II from New York Giants (18 tackles, 5.0 sacks, 1 PD • 68% 2026 snap share • $15.33M 2026 cap hit). Under contract through 2027 ($24.21M cap hit)."
       }
     ],
     "topNeeds": [
@@ -47,25 +47,25 @@
         "rank": 1,
         "positionGroup": "Cornerback (Outside & Nickel Coverage)",
         "urgency": "High",
-        "epaContext": "Active attrition: Jalen Davis (IR), Ja'Sir Taylor (IR) sidelined. Points Allowed ranks #13 (21.5/g). 2027 impending UFA exposure: Dax Hill, Josh Newton, DJ Turner II."
+        "epaContext": "Active attrition: Jalen Davis (IR), Ja'Sir Taylor (IR) sidelined. Points Allowed ranks #13 (21.5/g). 2027 impending UFA exposure: Dax Hill, DJ Turner II."
       },
       {
         "rank": 2,
         "positionGroup": "Tight End (12-Personnel & Seam Threat)",
         "urgency": "Moderate-High",
-        "epaContext": "Active attrition: Erick All Jr. (IR), Tanner Hudson (IR) sidelined. 2027 impending UFA exposure: Mike Gesicki, Drew Sample."
+        "epaContext": "Active attrition: Erick All Jr. (IR), Tanner Hudson (IR) sidelined. 2027 impending UFA exposure: Drew Sample."
       },
       {
         "rank": 3,
-        "positionGroup": "Wide Receiver (Perimeter & Slot Separation)",
+        "positionGroup": "Edge Rusher (4-Man Pass Rush)",
         "urgency": "Moderate",
-        "epaContext": "Active attrition: Andrei Iosivas (IR) sidelined. 2027 impending UFA exposure: Ja'Marr Chase, Tee Higgins."
+        "epaContext": "Active attrition: Cashius Howell (IR) sidelined. 2027 impending UFA exposure: Myles Murphy."
       },
       {
         "rank": 4,
-        "positionGroup": "Off-Ball Linebacker (Run Fit & Coverage)",
+        "positionGroup": "Wide Receiver (Perimeter & Slot Separation)",
         "urgency": "Opportunistic",
-        "epaContext": "Active attrition: Oren Burks (IR) sidelined. Points Allowed ranks #13 (21.5/g). 2027 impending UFA exposure: Barrett Carter, Demetrius Knight Jr.."
+        "epaContext": "Active attrition: Andrei Iosivas (IR) sidelined."
       }
     ],
     "realisticTargets": [
@@ -84,7 +84,7 @@
         "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
         "fitScore": 94,
         "sourceUrl": "https://overthecap.com/player/tarheeb-still/11745/",
-        "fitBreakdown": "Age 24 CB posting 20 tackles, 5 PD, 1 INT (95% snaps in 9g). Addresses Bengals' #1 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "fitBreakdown": "Age 24 CB posting 20 tackles, 5 PD, 1 INT (95% snaps in 9g). Addresses Bengals' #1 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
         "name": "Cam Hart",
@@ -101,7 +101,7 @@
         "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
         "fitScore": 94,
         "sourceUrl": "https://overthecap.com/player/cam-hart/11748/",
-        "fitBreakdown": "Age 25 CB posting 28 tackles, 8 PD, 2 INT (87% snaps in 10g). Addresses Bengals' #1 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "fitBreakdown": "Age 25 CB posting 28 tackles, 8 PD, 2 INT (87% snaps in 10g). Addresses Bengals' #1 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
         "name": "Max Melton",
@@ -118,58 +118,41 @@
         "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
         "fitScore": 94,
         "sourceUrl": "https://overthecap.com/player/max-melton/11651/",
-        "fitBreakdown": "Age 24 CB posting 18 tackles, 6 PD (55% snaps in 10g). Addresses Bengals' #1 need; $2.01M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "fitBreakdown": "Age 24 CB posting 18 tackles, 6 PD (55% snaps in 10g). Addresses Bengals' #1 need; $2.01M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
-        "name": "Ladd McConkey",
-        "jersey": 15,
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q2sk7yforrkiusvruo1o",
-        "teamAbbr": "LAC",
-        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
-        "currentTeam": "LAC (1-9 Seller)",
-        "position": "WR",
-        "prorated2026CapCharge": 2157981,
-        "offseason2027CapCharge": 2157981,
-        "cap2027Impact": "$2.16M Rookie Scale",
-        "sellerIncentive": "1-9 Chargers are in retooling territory; controlled through 2027 while LAC collects future draft capital.",
+        "name": "Cameron Thomas",
+        "jersey": 99,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/eexbykj9evozuwarhf2r",
+        "teamAbbr": "ATL",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
+        "currentTeam": "ATL (3-7 Seller)",
+        "position": "DE",
+        "prorated2026CapCharge": 2360000,
+        "offseason2027CapCharge": 2360000,
+        "cap2027Impact": "$2.36M ($5.17M Gtd)",
+        "sellerIncentive": "3-7 Falcons are in retooling territory; controlled through 2027 while ATL collects future draft capital.",
         "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
         "fitScore": 89,
-        "sourceUrl": "https://overthecap.com/player/ladd-mcconkey/11642/",
-        "fitBreakdown": "Age 24 WR posting 22 rec, 323 yds, 3 TD, +12.1 EPA in 7g. Addresses Bengals' #3 need; $2.16M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "sourceUrl": "https://overthecap.com/player/cameron-thomas/10132/",
+        "fitBreakdown": "Age 26 DE posting 2.0 sacks, 13 QB hits, 1 TFL (64% snaps in 9g). Addresses Bengals' #3 need; $2.36M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
-        "name": "Malik Washington",
-        "jersey": 6,
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/uainpdjrwkwk9zjdxpem",
-        "teamAbbr": "MIA",
-        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
-        "currentTeam": "MIA (1-9 Seller)",
-        "position": "WR",
+        "name": "Brandon Dorlus",
+        "jersey": 54,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/yjyai4c0os0sgis3nrua",
+        "teamAbbr": "ATL",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
+        "currentTeam": "ATL (3-7 Seller)",
+        "position": "DE",
         "prorated2026CapCharge": 1190000,
         "offseason2027CapCharge": 1190000,
         "cap2027Impact": "$1.19M Rookie Scale",
-        "sellerIncentive": "1-9 Dolphins are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "sellerIncentive": "3-7 Falcons are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
         "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
         "fitScore": 89,
-        "sourceUrl": "https://overthecap.com/player/malik-washington/11792/",
-        "fitBreakdown": "Age 26 WR posting 39 rec, 430 yds, 1 TD, +8.0 EPA in 10g. Addresses Bengals' #3 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
-      },
-      {
-        "name": "Adonai Mitchell",
-        "jersey": 15,
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/hwwacoa3pqapd7pgahfx",
-        "teamAbbr": "NYJ",
-        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png",
-        "currentTeam": "NYJ (3-8 Seller)",
-        "position": "WR",
-        "prorated2026CapCharge": 1802193,
-        "offseason2027CapCharge": 1802193,
-        "cap2027Impact": "$1.80M Rookie Scale",
-        "sellerIncentive": "3-8 Jets are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
-        "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
-        "fitScore": 87,
-        "sourceUrl": "https://overthecap.com/player/adonai-mitchell/11660/",
-        "fitBreakdown": "Age 24 WR posting 21 rec, 354 yds, 1 TD, +10.1 EPA in 7g. Addresses Bengals' #3 need; $1.80M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "sourceUrl": "https://overthecap.com/player/brandon-dorlus/11717/",
+        "fitBreakdown": "Age 25 DE posting 1.5 sacks, 9 QB hits, 4 TFL (55% snaps in 10g). Addresses Bengals' #3 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
         "name": "Trey McBride",
@@ -186,41 +169,58 @@
         "projectedPickCost": "2027 4th-Round Pick (#125)",
         "fitScore": 86,
         "sourceUrl": "https://overthecap.com/player/trey-mcbride/10100/",
-        "fitBreakdown": "Age 26 TE posting 87 rec, 689 yds, 5 TD, +21.1 EPA in 11g. Addresses Bengals' #2 need; $10.97M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "fitBreakdown": "Age 26 TE posting 87 rec, 689 yds, 5 TD, +21.1 EPA in 11g. Addresses Bengals' #2 need; $10.97M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
-        "name": "Cedric Gray",
-        "jersey": 33,
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pelxtefda4adhi7fsbar",
-        "teamAbbr": "TEN",
-        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
-        "currentTeam": "TEN (1-9 Seller)",
-        "position": "LB",
+        "name": "Ladd McConkey",
+        "jersey": 15,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q2sk7yforrkiusvruo1o",
+        "teamAbbr": "LAC",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+        "currentTeam": "LAC (1-9 Seller)",
+        "position": "WR",
+        "prorated2026CapCharge": 2157981,
+        "offseason2027CapCharge": 2157981,
+        "cap2027Impact": "$2.16M Rookie Scale",
+        "sellerIncentive": "1-9 Chargers are in retooling territory; controlled through 2027 while LAC collects future draft capital.",
+        "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
+        "fitScore": 86,
+        "sourceUrl": "https://overthecap.com/player/ladd-mcconkey/11642/",
+        "fitBreakdown": "Age 24 WR posting 22 rec, 323 yds, 3 TD, +12.1 EPA in 7g. Addresses Bengals' #4 need; $2.16M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
+      },
+      {
+        "name": "Malik Washington",
+        "jersey": 6,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/uainpdjrwkwk9zjdxpem",
+        "teamAbbr": "MIA",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+        "currentTeam": "MIA (1-9 Seller)",
+        "position": "WR",
         "prorated2026CapCharge": 1190000,
         "offseason2027CapCharge": 1190000,
         "cap2027Impact": "$1.19M Rookie Scale",
-        "sellerIncentive": "1-9 Titans are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "sellerIncentive": "1-9 Dolphins are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
         "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
         "fitScore": 86,
-        "sourceUrl": "https://overthecap.com/player/cedric-gray/11714/",
-        "fitBreakdown": "Age 24 LB posting 30 tackles, 3 TFL, 0.5 sacks, 2 PD (57% snaps in 9g). Addresses Bengals' #4 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "sourceUrl": "https://overthecap.com/player/malik-washington/11792/",
+        "fitBreakdown": "Age 26 WR posting 39 rec, 430 yds, 1 TD, +8.0 EPA in 10g. Addresses Bengals' #4 need; $1.19M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       },
       {
-        "name": "Nolan Smith",
-        "jersey": 3,
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/mutic3dzmrlfruwqlgcb",
-        "teamAbbr": "PHI",
-        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
-        "currentTeam": "PHI (3-7 Seller)",
-        "position": "LB",
-        "prorated2026CapCharge": 2604203,
-        "offseason2027CapCharge": 2604203,
-        "cap2027Impact": "$2.60M Rookie Scale",
-        "sellerIncentive": "3-7 Eagles are in retooling territory; controlled through 2027 while PHI collects future draft capital.",
-        "projectedPickCost": "2027 3rd-Round Pick (#88) or Day-2 Package",
-        "fitScore": 86,
-        "sourceUrl": "https://overthecap.com/player/nolan-smith/10854/",
-        "fitBreakdown": "Age 25 LB posting 12 tackles, 7 TFL, 6.0 sacks, 1 PD (64% snaps in 9g). Addresses Bengals' #4 need; $2.60M projected 2027 acquiring cap charge fits easily inside CIN's $0 2027 cap space."
+        "name": "Gunnar Helm",
+        "jersey": 84,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/vxm3tzziboxezsb9thjm",
+        "teamAbbr": "TEN",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+        "currentTeam": "TEN (1-9 Seller)",
+        "position": "TE",
+        "prorated2026CapCharge": 1120000,
+        "offseason2027CapCharge": 1120000,
+        "cap2027Impact": "$1.12M Rookie Scale",
+        "sellerIncentive": "1-9 Titans are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 5th-Round Pick (#161)",
+        "fitScore": 84,
+        "sourceUrl": "https://overthecap.com/player/gunnar-helm/12480/",
+        "fitBreakdown": "Age 24 TE posting 23 rec, 197 yds, +2.8 EPA in 9g. Addresses Bengals' #2 need; $1.12M projected 2027 acquiring cap charge fits easily inside CIN's $48.85M 2027 cap space."
       }
     ],
     "pitfallsToAvoid": [
@@ -241,7 +241,7 @@
             "url": "https://overthecap.com/player/garrett-wilson/10055/"
           }
         ],
-        "whyAvoid": "Even with $0 in projected 2027 cap space, surrendering draft picks to absorb $24.95M+ guaranteed veteran deals crowds out upcoming homegrown extensions."
+        "whyAvoid": "Even with $48.85M in projected 2027 cap space, surrendering draft picks to absorb $24.95M+ guaranteed veteran deals crowds out upcoming homegrown extensions."
       },
       {
         "trap": "Paying Draft Capital for Aging Name-Value Veterans",
@@ -300,7 +300,7 @@
         "tier": "Tier 2 • Cap & CBA Article 13 Intel",
         "sources": "OverTheCap Live Ledger",
         "sourceUrl": "https://overthecap.com/salary-cap/cincinnati-bengals",
-        "summary": "Bengals carry $0 in live 2026 cap space and $0 projected for 2027, giving the front office flexibility to absorb veteran salaries or front-load extensions without sacrificing core picks.",
+        "summary": "Bengals carry $7.52M in live 2026 cap space and $48.85M projected for 2027, giving the front office flexibility to absorb veteran salaries or front-load extensions without sacrificing core picks.",
         "credibilityPct": 95
       }
     ]
@@ -333,28 +333,28 @@
         "powerRating": 1593,
         "preseasonPriorElo": 1493,
         "sosSpreadAdj": -0.878,
-        "remainingSosSpread": -1.331,
+        "remainingSosSpread": -1.549,
         "remainingSosRank": 27,
         "qbInjuryEloAdj": 0,
         "nonQbInjuryEloAdj": -2,
-        "projectedWins": 11.6,
-        "makePlayoffsPct": 95.7,
-        "winDivisionPct": 72.8,
-        "seed1ByePct": 6.1,
+        "projectedWins": 11.7,
+        "makePlayoffsPct": 95.8,
+        "winDivisionPct": 72.9,
+        "seed1ByePct": 6,
         "wildCardPct": 22.9,
         "isClinchedPlayoffs": false,
         "isClinchedDivision": false,
         "isClinchedSeed1": false,
         "seedDistribution": {
-          "1": 6.1,
-          "2": 17,
-          "3": 23.8,
-          "4": 25.9,
-          "5": 5.7,
-          "6": 10.3,
+          "1": 6,
+          "2": 17.4,
+          "3": 24.3,
+          "4": 25.3,
+          "5": 5.6,
+          "6": 10.4,
           "7": 7
         },
-        "missedPlayoffsPct": 4.3
+        "missedPlayoffsPct": 4.2
       },
       "sfOdds": {
         "abbr": "CIN",
@@ -365,28 +365,28 @@
         "powerRating": 1593,
         "preseasonPriorElo": 1493,
         "sosSpreadAdj": -0.878,
-        "remainingSosSpread": -1.331,
+        "remainingSosSpread": -1.549,
         "remainingSosRank": 27,
         "qbInjuryEloAdj": 0,
         "nonQbInjuryEloAdj": -2,
-        "projectedWins": 11.6,
-        "makePlayoffsPct": 95.7,
-        "winDivisionPct": 72.8,
-        "seed1ByePct": 6.1,
+        "projectedWins": 11.7,
+        "makePlayoffsPct": 95.8,
+        "winDivisionPct": 72.9,
+        "seed1ByePct": 6,
         "wildCardPct": 22.9,
         "isClinchedPlayoffs": false,
         "isClinchedDivision": false,
         "isClinchedSeed1": false,
         "seedDistribution": {
-          "1": 6.1,
-          "2": 17,
-          "3": 23.8,
-          "4": 25.9,
-          "5": 5.7,
-          "6": 10.3,
+          "1": 6,
+          "2": 17.4,
+          "3": 24.3,
+          "4": 25.3,
+          "5": 5.6,
+          "6": 10.4,
           "7": 7
         },
-        "missedPlayoffsPct": 4.3
+        "missedPlayoffsPct": 4.2
       },
       "allTeamOdds": [
         {
@@ -395,26 +395,26 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
           "division": "AFC East",
           "currentRecord": "9-1",
-          "powerRating": 1636,
+          "powerRating": 1635,
           "preseasonPriorElo": 1592,
           "sosSpreadAdj": -0.417,
-          "remainingSosSpread": 0.166,
-          "remainingSosRank": 12,
+          "remainingSosSpread": 0.034,
+          "remainingSosRank": 10,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": 0,
+          "nonQbInjuryEloAdj": -1,
           "projectedWins": 13.6,
           "makePlayoffsPct": 99.9,
-          "winDivisionPct": 98.8,
-          "seed1ByePct": 53.8,
-          "wildCardPct": 1.1,
+          "winDivisionPct": 98.9,
+          "seed1ByePct": 53.5,
+          "wildCardPct": 1,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
-            "1": 53.8,
-            "2": 24,
+            "1": 53.5,
+            "2": 24.3,
             "3": 13.9,
-            "4": 7.3,
+            "4": 7.1,
             "5": 0.3,
             "6": 0.5,
             "7": 0.3
@@ -430,60 +430,27 @@
           "powerRating": 1602,
           "preseasonPriorElo": 1533,
           "sosSpreadAdj": -1.619,
-          "remainingSosSpread": 1.286,
+          "remainingSosSpread": 1.12,
           "remainingSosRank": 3,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -3,
-          "qbStatusNote": "Jaylon Moore (OT Out)",
+          "qbStatusNote": "Jaylon Moore (OT Out), Kenneth Walker III (RB Out)",
           "projectedWins": 12,
-          "makePlayoffsPct": 98.5,
-          "winDivisionPct": 47.2,
-          "seed1ByePct": 14.1,
-          "wildCardPct": 51.3,
-          "isClinchedPlayoffs": false,
-          "isClinchedDivision": false,
-          "isClinchedSeed1": false,
-          "seedDistribution": {
-            "1": 14.1,
-            "2": 15.5,
-            "3": 10.4,
-            "4": 7.2,
-            "5": 39.6,
-            "6": 8.3,
-            "7": 3.4
-          },
-          "missedPlayoffsPct": 1.5
-        },
-        {
-          "abbr": "JAX",
-          "name": "Jacksonville Jaguars",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png",
-          "division": "AFC South",
-          "currentRecord": "7-3",
-          "powerRating": 1612,
-          "preseasonPriorElo": 1589,
-          "sosSpreadAdj": -0.908,
-          "remainingSosSpread": -1.554,
-          "remainingSosRank": 29,
-          "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -12,
-          "qbStatusNote": "Anton Harrison (OT Season IR)",
-          "projectedWins": 11.7,
           "makePlayoffsPct": 98.4,
-          "winDivisionPct": 94.5,
-          "seed1ByePct": 6.4,
-          "wildCardPct": 3.9,
+          "winDivisionPct": 45.1,
+          "seed1ByePct": 13.6,
+          "wildCardPct": 53.3,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
-            "1": 6.4,
-            "2": 22.7,
-            "3": 31.9,
-            "4": 33.5,
-            "5": 0.4,
-            "6": 1.7,
-            "7": 1.8
+            "1": 13.6,
+            "2": 15,
+            "3": 10,
+            "4": 6.5,
+            "5": 41.1,
+            "6": 8.8,
+            "7": 3.5
           },
           "missedPlayoffsPct": 1.6
         },
@@ -493,31 +460,65 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
           "division": "AFC West",
           "currentRecord": "8-2",
-          "powerRating": 1558,
+          "powerRating": 1568,
           "preseasonPriorElo": 1513,
           "sosSpreadAdj": 1.317,
-          "remainingSosSpread": -1.331,
+          "remainingSosSpread": -1.514,
           "remainingSosRank": 26,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
-          "projectedWins": 12.2,
-          "makePlayoffsPct": 97.6,
-          "winDivisionPct": 52.7,
-          "seed1ByePct": 19.2,
-          "wildCardPct": 44.9,
+          "nonQbInjuryEloAdj": 8,
+          "qbStatusNote": "Jonathon Cooper (LB Returned), Pat Surtain II (CB Returned)",
+          "projectedWins": 12.3,
+          "makePlayoffsPct": 98,
+          "winDivisionPct": 54.9,
+          "seed1ByePct": 20.9,
+          "wildCardPct": 43.2,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
-            "1": 19.2,
-            "2": 17.8,
-            "3": 10.5,
-            "4": 5.2,
-            "5": 32.7,
-            "6": 8.5,
-            "7": 3.7
+            "1": 20.9,
+            "2": 19.1,
+            "3": 10.1,
+            "4": 4.8,
+            "5": 32.1,
+            "6": 7.9,
+            "7": 3.1
           },
-          "missedPlayoffsPct": 2.4
+          "missedPlayoffsPct": 2
+        },
+        {
+          "abbr": "JAX",
+          "name": "Jacksonville Jaguars",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png",
+          "division": "AFC South",
+          "currentRecord": "7-3",
+          "powerRating": 1598,
+          "preseasonPriorElo": 1589,
+          "sosSpreadAdj": -0.908,
+          "remainingSosSpread": -1.846,
+          "remainingSosRank": 28,
+          "qbInjuryEloAdj": 0,
+          "nonQbInjuryEloAdj": -27,
+          "qbStatusNote": "Anton Harrison (OT Season IR), Eric Murray (S Season IR)",
+          "projectedWins": 11.6,
+          "makePlayoffsPct": 98,
+          "winDivisionPct": 93.7,
+          "seed1ByePct": 5.5,
+          "wildCardPct": 4.3,
+          "isClinchedPlayoffs": false,
+          "isClinchedDivision": false,
+          "isClinchedSeed1": false,
+          "seedDistribution": {
+            "1": 5.5,
+            "2": 21.2,
+            "3": 31.8,
+            "4": 35.2,
+            "5": 0.4,
+            "6": 1.9,
+            "7": 2
+          },
+          "missedPlayoffsPct": 2
         },
         {
           "abbr": "CIN",
@@ -528,28 +529,28 @@
           "powerRating": 1593,
           "preseasonPriorElo": 1493,
           "sosSpreadAdj": -0.878,
-          "remainingSosSpread": -1.331,
+          "remainingSosSpread": -1.549,
           "remainingSosRank": 27,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
-          "projectedWins": 11.6,
-          "makePlayoffsPct": 95.7,
-          "winDivisionPct": 72.8,
-          "seed1ByePct": 6.1,
+          "projectedWins": 11.7,
+          "makePlayoffsPct": 95.8,
+          "winDivisionPct": 72.9,
+          "seed1ByePct": 6,
           "wildCardPct": 22.9,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
-            "1": 6.1,
-            "2": 17,
-            "3": 23.8,
-            "4": 25.9,
-            "5": 5.7,
-            "6": 10.3,
+            "1": 6,
+            "2": 17.4,
+            "3": 24.3,
+            "4": 25.3,
+            "5": 5.6,
+            "6": 10.4,
             "7": 7
           },
-          "missedPlayoffsPct": 4.3
+          "missedPlayoffsPct": 4.2
         },
         {
           "abbr": "PIT",
@@ -557,31 +558,32 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
           "division": "AFC North",
           "currentRecord": "6-4",
-          "powerRating": 1502,
+          "powerRating": 1500,
           "preseasonPriorElo": 1543,
           "sosSpreadAdj": -0.761,
-          "remainingSosSpread": -0.566,
-          "remainingSosRank": 18,
+          "remainingSosSpread": -1.069,
+          "remainingSosRank": 22,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
+          "nonQbInjuryEloAdj": -7,
+          "qbStatusNote": "Alex Highsmith (LB D)",
           "projectedWins": 9.7,
-          "makePlayoffsPct": 67.8,
-          "winDivisionPct": 11.6,
+          "makePlayoffsPct": 69.1,
+          "winDivisionPct": 11.9,
           "seed1ByePct": 0.3,
-          "wildCardPct": 56.2,
+          "wildCardPct": 57.2,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
             "1": 0.3,
-            "2": 1.9,
-            "3": 4.6,
+            "2": 1.8,
+            "3": 5,
             "4": 4.8,
-            "5": 10.3,
-            "6": 26.5,
-            "7": 19.4
+            "5": 10.2,
+            "6": 27.2,
+            "7": 19.8
           },
-          "missedPlayoffsPct": 32.2
+          "missedPlayoffsPct": 30.9
         },
         {
           "abbr": "CLE",
@@ -589,31 +591,31 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
           "division": "AFC North",
           "currentRecord": "6-4",
-          "powerRating": 1466,
+          "powerRating": 1465,
           "preseasonPriorElo": 1426,
           "sosSpreadAdj": -0.656,
-          "remainingSosSpread": -0.663,
-          "remainingSosRank": 20,
+          "remainingSosSpread": -0.869,
+          "remainingSosRank": 19,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
-          "projectedWins": 9.4,
-          "makePlayoffsPct": 62.3,
-          "winDivisionPct": 15.2,
+          "nonQbInjuryEloAdj": -3,
+          "projectedWins": 9.5,
+          "makePlayoffsPct": 62.7,
+          "winDivisionPct": 15,
           "seed1ByePct": 0.1,
-          "wildCardPct": 47.1,
+          "wildCardPct": 47.7,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
             "1": 0.1,
-            "2": 1,
-            "3": 4.2,
-            "4": 9.9,
-            "5": 4.1,
-            "6": 19.6,
-            "7": 23.4
+            "2": 1.1,
+            "3": 4.4,
+            "4": 9.4,
+            "5": 3.7,
+            "6": 19.8,
+            "7": 24.1
           },
-          "missedPlayoffsPct": 37.7
+          "missedPlayoffsPct": 37.3
         },
         {
           "abbr": "NE",
@@ -621,32 +623,32 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
           "division": "AFC East",
           "currentRecord": "5-5",
-          "powerRating": 1482,
+          "powerRating": 1480,
           "preseasonPriorElo": 1567,
           "sosSpreadAdj": 1.057,
-          "remainingSosSpread": 0.223,
+          "remainingSosSpread": 0.12,
           "remainingSosRank": 9,
-          "qbInjuryEloAdj": -28,
-          "nonQbInjuryEloAdj": 0,
-          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito)",
+          "qbInjuryEloAdj": -29,
+          "nonQbInjuryEloAdj": -1,
+          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito); Alijah Vera-Tucker (G IR)",
           "projectedWins": 8.3,
-          "makePlayoffsPct": 41.9,
-          "winDivisionPct": 1.2,
+          "makePlayoffsPct": 41.1,
+          "winDivisionPct": 1.1,
           "seed1ByePct": 0.1,
-          "wildCardPct": 40.8,
+          "wildCardPct": 40,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
           "seedDistribution": {
             "1": 0.1,
-            "2": 0.1,
-            "3": 0.4,
+            "2": 0.2,
+            "3": 0.3,
             "4": 0.6,
-            "5": 5.8,
-            "6": 15.4,
-            "7": 19.6
+            "5": 5.6,
+            "6": 14.9,
+            "7": 19.5
           },
-          "missedPlayoffsPct": 58.1
+          "missedPlayoffsPct": 58.9
         },
         {
           "abbr": "HOU",
@@ -654,18 +656,19 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/hou.png",
           "division": "AFC South",
           "currentRecord": "4-6",
-          "powerRating": 1516,
+          "powerRating": 1512,
           "preseasonPriorElo": 1523,
           "sosSpreadAdj": -0.534,
-          "remainingSosSpread": -1.44,
-          "remainingSosRank": 28,
+          "remainingSosSpread": -1.989,
+          "remainingSosRank": 30,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "projectedWins": 7.8,
-          "makePlayoffsPct": 22.4,
-          "winDivisionPct": 5.5,
+          "nonQbInjuryEloAdj": -9,
+          "qbStatusNote": "Azeez Al-Shaair (LB IR), Danielle Hunter (DE Q 45%)",
+          "projectedWins": 7.9,
+          "makePlayoffsPct": 23.9,
+          "winDivisionPct": 6.3,
           "seed1ByePct": 0,
-          "wildCardPct": 16.9,
+          "wildCardPct": 17.6,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
@@ -673,12 +676,12 @@
             "1": 0,
             "2": 0,
             "3": 0.3,
-            "4": 5.2,
-            "5": 0.9,
-            "6": 5.2,
-            "7": 10.8
+            "4": 6,
+            "5": 0.8,
+            "6": 5.4,
+            "7": 11.5
           },
-          "missedPlayoffsPct": 77.6
+          "missedPlayoffsPct": 76.1
         },
         {
           "abbr": "LV",
@@ -689,15 +692,15 @@
           "powerRating": 1451,
           "preseasonPriorElo": 1445,
           "sosSpreadAdj": 0.854,
-          "remainingSosSpread": -1.793,
-          "remainingSosRank": 30,
+          "remainingSosSpread": -2.007,
+          "remainingSosRank": 31,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
           "projectedWins": 7,
-          "makePlayoffsPct": 8.6,
-          "winDivisionPct": 0.1,
+          "makePlayoffsPct": 8.3,
+          "winDivisionPct": 0,
           "seed1ByePct": 0,
-          "wildCardPct": 8.5,
+          "wildCardPct": 8.2,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
@@ -705,12 +708,12 @@
             "1": 0,
             "2": 0,
             "3": 0,
-            "4": 0.1,
-            "5": 0.3,
-            "6": 2.2,
-            "7": 6.1
+            "4": 0,
+            "5": 0.2,
+            "6": 2.1,
+            "7": 5.9
           },
-          "missedPlayoffsPct": 91.4
+          "missedPlayoffsPct": 91.7
         },
         {
           "abbr": "BAL",
@@ -718,18 +721,19 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
           "division": "AFC North",
           "currentRecord": "4-7",
-          "powerRating": 1454,
+          "powerRating": 1421,
           "preseasonPriorElo": 1572,
           "sosSpreadAdj": -0.682,
-          "remainingSosSpread": 0.507,
+          "remainingSosSpread": 0.447,
           "remainingSosRank": 5,
-          "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "projectedWins": 6.6,
-          "makePlayoffsPct": 5.7,
-          "winDivisionPct": 0.4,
+          "qbInjuryEloAdj": -32,
+          "nonQbInjuryEloAdj": -7,
+          "qbStatusNote": "Lamar Jackson (QB1 IR → Jacoby Brissett)",
+          "projectedWins": 6.3,
+          "makePlayoffsPct": 3.6,
+          "winDivisionPct": 0.2,
           "seed1ByePct": 0,
-          "wildCardPct": 5.3,
+          "wildCardPct": 3.4,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
@@ -737,12 +741,12 @@
             "1": 0,
             "2": 0,
             "3": 0,
-            "4": 0.4,
-            "5": 0.1,
-            "6": 1.6,
-            "7": 3.6
+            "4": 0.2,
+            "5": 0,
+            "6": 0.9,
+            "7": 2.4
           },
-          "missedPlayoffsPct": 94.3
+          "missedPlayoffsPct": 96.4
         },
         {
           "abbr": "NYJ",
@@ -753,15 +757,15 @@
           "powerRating": 1430,
           "preseasonPriorElo": 1409,
           "sosSpreadAdj": -0.056,
-          "remainingSosSpread": -0.187,
-          "remainingSosRank": 14,
+          "remainingSosSpread": -0.413,
+          "remainingSosRank": 13,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
           "projectedWins": 5.6,
-          "makePlayoffsPct": 1,
+          "makePlayoffsPct": 0.9,
           "winDivisionPct": 0,
           "seed1ByePct": 0,
-          "wildCardPct": 1,
+          "wildCardPct": 0.9,
           "isClinchedPlayoffs": false,
           "isClinchedDivision": false,
           "isClinchedSeed1": false,
@@ -774,7 +778,7 @@
             "6": 0.3,
             "7": 0.7
           },
-          "missedPlayoffsPct": 99
+          "missedPlayoffsPct": 99.1
         },
         {
           "abbr": "IND",
@@ -782,14 +786,14 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
           "division": "AFC South",
           "currentRecord": "3-8",
-          "powerRating": 1388,
+          "powerRating": 1387,
           "preseasonPriorElo": 1468,
           "sosSpreadAdj": 0.028,
-          "remainingSosSpread": -0.933,
-          "remainingSosRank": 24,
+          "remainingSosSpread": -1.173,
+          "remainingSosRank": 23,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -7,
-          "qbStatusNote": "Bernhard Raimann (OT D)",
+          "nonQbInjuryEloAdj": -9,
+          "qbStatusNote": "Bernhard Raimann (OT D), Charvarius Ward (CB Q 46%)",
           "projectedWins": 5.4,
           "makePlayoffsPct": 0.3,
           "winDivisionPct": 0,
@@ -810,19 +814,19 @@
           "missedPlayoffsPct": 99.7
         },
         {
-          "abbr": "MIA",
-          "name": "Miami Dolphins",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
-          "division": "AFC East",
+          "abbr": "LAC",
+          "name": "Los Angeles Chargers",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+          "division": "AFC West",
           "currentRecord": "1-9",
-          "powerRating": 1378,
-          "preseasonPriorElo": 1422,
-          "sosSpreadAdj": 1.434,
-          "remainingSosSpread": 0.417,
+          "powerRating": 1381,
+          "preseasonPriorElo": 1559,
+          "sosSpreadAdj": 0.85,
+          "remainingSosSpread": 0.366,
           "remainingSosRank": 6,
-          "qbInjuryEloAdj": -6,
-          "nonQbInjuryEloAdj": -9,
-          "qbStatusNote": "Malik Willis (QB1 IR → Kyle McCord); Zach Sieler (DT Season IR)",
+          "qbInjuryEloAdj": -8,
+          "nonQbInjuryEloAdj": -3,
+          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei); Rashawn Slater (OT IR)",
           "projectedWins": 3.4,
           "makePlayoffsPct": 0,
           "winDivisionPct": 0,
@@ -843,20 +847,20 @@
           "missedPlayoffsPct": 100
         },
         {
-          "abbr": "LAC",
-          "name": "Los Angeles Chargers",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
-          "division": "AFC West",
+          "abbr": "MIA",
+          "name": "Miami Dolphins",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "division": "AFC East",
           "currentRecord": "1-9",
-          "powerRating": 1388,
-          "preseasonPriorElo": 1559,
-          "sosSpreadAdj": 0.85,
-          "remainingSosSpread": 0.411,
+          "powerRating": 1358,
+          "preseasonPriorElo": 1422,
+          "sosSpreadAdj": 1.434,
+          "remainingSosSpread": 0.354,
           "remainingSosRank": 7,
-          "qbInjuryEloAdj": -3,
-          "nonQbInjuryEloAdj": -1,
-          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei)",
-          "projectedWins": 3.4,
+          "qbInjuryEloAdj": -13,
+          "nonQbInjuryEloAdj": -21,
+          "qbStatusNote": "Malik Willis (QB1 IR → Kyle McCord); Zach Sieler (DT Season IR)",
+          "projectedWins": 3.3,
           "makePlayoffsPct": 0,
           "winDivisionPct": 0,
           "seed1ByePct": 0,
@@ -881,14 +885,14 @@
           "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
           "division": "AFC South",
           "currentRecord": "1-9",
-          "powerRating": 1346,
+          "powerRating": 1333,
           "preseasonPriorElo": 1405,
           "sosSpreadAdj": -0.358,
-          "remainingSosSpread": -0.166,
-          "remainingSosRank": 13,
+          "remainingSosSpread": -0.48,
+          "remainingSosRank": 14,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -12,
-          "qbStatusNote": "Wan'Dale Robinson (WR Season IR)",
+          "nonQbInjuryEloAdj": -25,
+          "qbStatusNote": "Wan'Dale Robinson (WR Season IR), Peter Skoronski (G IR)",
           "projectedWins": 3.2,
           "makePlayoffsPct": 0,
           "winDivisionPct": 0,
@@ -924,19 +928,19 @@
         "rootAgainstTeam": "NO",
         "rootFor": "CIN",
         "rootSide": "HOME",
-        "homeWinProbPct": 76.7,
-        "expectedImpactScore": 12.6,
+        "homeWinProbPct": 76.8,
+        "expectedImpactScore": 12.2,
         "leverageTag": "Direct Control",
         "leverageReason": "CIN head-to-head result directly controls AFC North & #1 Seed Bye trajectory",
-        "maxSwingPct": 14.5,
+        "maxSwingPct": 14,
         "primaryMetric": "AFC North",
-        "primaryDeltaPct": 14.5,
-        "seed1SwingPct": 4.8,
-        "divSwingPct": 14.5,
+        "primaryDeltaPct": 14,
+        "seed1SwingPct": 4.7,
+        "divSwingPct": 14,
         "berthSwingPct": 4.9,
-        "byeLeveragePct": 4.8,
-        "divisionLeveragePct": 14.5,
-        "totalLeverageScore": 23.2,
+        "byeLeveragePct": 4.7,
+        "divisionLeveragePct": 14,
+        "totalLeverageScore": 22.6,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png"
       },
@@ -953,19 +957,19 @@
         "rootAgainstTeam": "PIT",
         "rootFor": "DEN",
         "rootSide": "AWAY",
-        "homeWinProbPct": 48.2,
-        "expectedImpactScore": 6.4,
+        "homeWinProbPct": 46.5,
+        "expectedImpactScore": 6.2,
         "leverageTag": "AFC North Race",
         "leverageReason": "Hands division rival PIT a loss in the AFC North crown & tiebreaker race",
-        "maxSwingPct": 6.4,
+        "maxSwingPct": 6.2,
         "primaryMetric": "AFC North",
-        "primaryDeltaPct": 6.4,
-        "seed1SwingPct": 2.3,
-        "divSwingPct": 6.4,
-        "berthSwingPct": 0,
-        "byeLeveragePct": 2.3,
-        "divisionLeveragePct": 6.4,
-        "totalLeverageScore": 9.2,
+        "primaryDeltaPct": 6.2,
+        "seed1SwingPct": 2.5,
+        "divSwingPct": 6.2,
+        "berthSwingPct": 0.3,
+        "byeLeveragePct": 2.5,
+        "divisionLeveragePct": 6.2,
+        "totalLeverageScore": 9.4,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png"
       },
@@ -982,19 +986,19 @@
         "rootAgainstTeam": "BUF",
         "rootFor": "KC",
         "rootSide": "AWAY",
-        "homeWinProbPct": 61,
-        "expectedImpactScore": 5.7,
+        "homeWinProbPct": 60.9,
+        "expectedImpactScore": 5.3,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender BUF in the #1 Seed Bye chase",
-        "maxSwingPct": 5.8,
+        "maxSwingPct": 5.4,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 5.8,
-        "seed1SwingPct": 5.8,
+        "primaryDeltaPct": 5.4,
+        "seed1SwingPct": 5.4,
         "divSwingPct": 0,
         "berthSwingPct": 0.1,
-        "byeLeveragePct": 5.8,
+        "byeLeveragePct": 5.4,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 7,
+        "totalLeverageScore": 6.5,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png"
       },
@@ -1011,19 +1015,19 @@
         "rootAgainstTeam": "CLE",
         "rootFor": "LV",
         "rootSide": "AWAY",
-        "homeWinProbPct": 58.4,
-        "expectedImpactScore": 5.5,
+        "homeWinProbPct": 58.2,
+        "expectedImpactScore": 4.9,
         "leverageTag": "AFC North Race",
         "leverageReason": "Hands division rival CLE a loss in the AFC North crown & tiebreaker race",
-        "maxSwingPct": 5.6,
+        "maxSwingPct": 5,
         "primaryMetric": "AFC North",
-        "primaryDeltaPct": 5.6,
+        "primaryDeltaPct": 5,
         "seed1SwingPct": 0.1,
-        "divSwingPct": 5.6,
-        "berthSwingPct": 0,
+        "divSwingPct": 5,
+        "berthSwingPct": 0.2,
         "byeLeveragePct": 0.1,
-        "divisionLeveragePct": 5.6,
-        "totalLeverageScore": 5.7,
+        "divisionLeveragePct": 5,
+        "totalLeverageScore": 5.2,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
       },
@@ -1040,19 +1044,19 @@
         "rootAgainstTeam": "JAX",
         "rootFor": "TEN",
         "rootSide": "AWAY",
-        "homeWinProbPct": 85,
-        "expectedImpactScore": 1.3,
+        "homeWinProbPct": 84.9,
+        "expectedImpactScore": 1.2,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender JAX in the #1 Seed Bye chase",
-        "maxSwingPct": 1.7,
+        "maxSwingPct": 1.5,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 1.7,
-        "seed1SwingPct": 1.7,
+        "primaryDeltaPct": 1.5,
+        "seed1SwingPct": 1.5,
         "divSwingPct": 0,
-        "berthSwingPct": 0,
-        "byeLeveragePct": 1.7,
+        "berthSwingPct": 0.1,
+        "byeLeveragePct": 1.5,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 2,
+        "totalLeverageScore": 1.9,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png"
       },
@@ -1069,19 +1073,19 @@
         "rootAgainstTeam": "NE",
         "rootFor": "LAC",
         "rootSide": "HOME",
-        "homeWinProbPct": 42.8,
-        "expectedImpactScore": 1.3,
-        "leverageTag": "Conf. Seeding",
-        "leverageReason": "Shapes AFC conference tiebreakers for Playoff Berth",
-        "maxSwingPct": 1.3,
+        "homeWinProbPct": 42.1,
+        "expectedImpactScore": 1.2,
+        "leverageTag": "SOV / Tiebreaker",
+        "leverageReason": "Strengthens CIN Strength of Victory (SOV) & common-games tiebreaker vs. NE",
+        "maxSwingPct": 1.2,
         "primaryMetric": "Playoff Berth",
-        "primaryDeltaPct": 1.3,
+        "primaryDeltaPct": 1.2,
         "seed1SwingPct": 0,
         "divSwingPct": 0,
-        "berthSwingPct": 1.3,
+        "berthSwingPct": 1.2,
         "byeLeveragePct": 0,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 0.8,
+        "totalLeverageScore": 0.7,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png"
       },
@@ -1098,19 +1102,19 @@
         "rootAgainstTeam": "HOU",
         "rootFor": "BAL",
         "rootSide": "AWAY",
-        "homeWinProbPct": 64.8,
-        "expectedImpactScore": 0.4,
+        "homeWinProbPct": 68.5,
+        "expectedImpactScore": 0.5,
         "leverageTag": "SOV / Tiebreaker",
         "leverageReason": "Strengthens CIN Strength of Victory (SOV) & common-games tiebreaker vs. HOU",
-        "maxSwingPct": 0.4,
+        "maxSwingPct": 0.5,
         "primaryMetric": "Playoff Berth",
-        "primaryDeltaPct": 0.4,
+        "primaryDeltaPct": 0.5,
         "seed1SwingPct": 0,
         "divSwingPct": 0.2,
-        "berthSwingPct": 0.4,
+        "berthSwingPct": 0.5,
         "byeLeveragePct": 0,
         "divisionLeveragePct": 0.2,
-        "totalLeverageScore": 0.4,
+        "totalLeverageScore": 0.5,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/hou.png"
       },
@@ -1127,7 +1131,7 @@
         "rootAgainstTeam": "NYJ",
         "rootFor": "MIA",
         "rootSide": "HOME",
-        "homeWinProbPct": 47.6,
+        "homeWinProbPct": 44.7,
         "expectedImpactScore": 0.1,
         "leverageTag": "SOV / Tiebreaker",
         "leverageReason": "Strengthens CIN Strength of Victory (SOV) & common-games tiebreaker vs. NYJ",
@@ -1156,19 +1160,19 @@
         "rootAgainstTeam": "NYG",
         "rootFor": "IND",
         "rootSide": "HOME",
-        "homeWinProbPct": 43.5,
-        "expectedImpactScore": 0.1,
+        "homeWinProbPct": 44.5,
+        "expectedImpactScore": 0,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender NYG in the #1 Seed Bye chase",
-        "maxSwingPct": 0.1,
+        "maxSwingPct": 0,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 0.1,
-        "seed1SwingPct": 0.1,
+        "primaryDeltaPct": 0,
+        "seed1SwingPct": 0,
         "divSwingPct": 0,
         "berthSwingPct": 0,
-        "byeLeveragePct": 0.1,
+        "byeLeveragePct": 0,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 0.1,
+        "totalLeverageScore": 0,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png"
       },
@@ -1185,19 +1189,19 @@
         "rootAgainstTeam": "CLE",
         "rootFor": "CIN",
         "rootSide": "AWAY",
-        "homeWinProbPct": 37.1,
-        "expectedImpactScore": 28.6,
+        "homeWinProbPct": 36.9,
+        "expectedImpactScore": 28.9,
         "leverageTag": "Direct Control",
         "leverageReason": "CIN head-to-head result directly controls AFC North & #1 Seed Bye trajectory",
-        "maxSwingPct": 29.5,
+        "maxSwingPct": 29.8,
         "primaryMetric": "AFC North",
-        "primaryDeltaPct": 29.5,
-        "seed1SwingPct": 7.2,
-        "divSwingPct": 29.5,
-        "berthSwingPct": 6.3,
-        "byeLeveragePct": 7.2,
-        "divisionLeveragePct": 29.5,
-        "totalLeverageScore": 41.9,
+        "primaryDeltaPct": 29.8,
+        "seed1SwingPct": 7.1,
+        "divSwingPct": 29.8,
+        "berthSwingPct": 6.1,
+        "byeLeveragePct": 7.1,
+        "divisionLeveragePct": 29.8,
+        "totalLeverageScore": 42,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
       },
@@ -1214,19 +1218,19 @@
         "rootAgainstTeam": "PIT",
         "rootFor": "HOU",
         "rootSide": "AWAY",
-        "homeWinProbPct": 54.3,
-        "expectedImpactScore": 6.7,
+        "homeWinProbPct": 54.6,
+        "expectedImpactScore": 7.1,
         "leverageTag": "AFC North Race",
         "leverageReason": "Hands division rival PIT a loss in the AFC North crown & tiebreaker race",
-        "maxSwingPct": 6.7,
+        "maxSwingPct": 7.1,
         "primaryMetric": "AFC North",
-        "primaryDeltaPct": 6.7,
+        "primaryDeltaPct": 7.1,
         "seed1SwingPct": 0.1,
-        "divSwingPct": 6.7,
-        "berthSwingPct": 0.3,
+        "divSwingPct": 7.1,
+        "berthSwingPct": 0.1,
         "byeLeveragePct": 0.1,
-        "divisionLeveragePct": 6.7,
-        "totalLeverageScore": 7,
+        "divisionLeveragePct": 7.1,
+        "totalLeverageScore": 7.3,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/hou.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png"
       },
@@ -1243,19 +1247,19 @@
         "rootAgainstTeam": "BUF",
         "rootFor": "NE",
         "rootSide": "HOME",
-        "homeWinProbPct": 33.5,
-        "expectedImpactScore": 4.1,
+        "homeWinProbPct": 33.4,
+        "expectedImpactScore": 3.9,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender BUF in the #1 Seed Bye chase",
-        "maxSwingPct": 4.3,
+        "maxSwingPct": 4.1,
         "primaryMetric": "#1 Seed Bye",
-        "primaryDeltaPct": 4.3,
-        "seed1SwingPct": 4.3,
+        "primaryDeltaPct": 4.1,
+        "seed1SwingPct": 4.1,
         "divSwingPct": 0,
-        "berthSwingPct": 1.5,
-        "byeLeveragePct": 4.3,
+        "berthSwingPct": 1.4,
+        "byeLeveragePct": 4.1,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 6.1,
+        "totalLeverageScore": 5.8,
         "awayLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
         "homeLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png"
       }
@@ -1263,26 +1267,26 @@
     "seedPathCards": [
       {
         "target": "#1 AFC Seed (First-Round Bye)",
-        "probabilityPct": 6.1,
-        "currentProbPct": 6.1,
-        "pathSummary": "At 7-3 (2-1 AFC North, 5-2 AFC), Cincinnati Bengals project to 11.6 wins (6.1% #1 AFC seed probability across 10,000 calibrated Hierarchical-Bayes + SRS + QB/injury simulations with 7 games remaining)."
+        "probabilityPct": 6,
+        "currentProbPct": 6,
+        "pathSummary": "At 7-3 (2-1 AFC North, 5-2 AFC), Cincinnati Bengals project to 11.7 wins (6% #1 AFC seed probability across 10,000 calibrated Hierarchical-Bayes + SRS + QB/injury simulations with 7 games remaining)."
       },
       {
         "target": "AFC North Division Title (Seeds #1–#4)",
-        "probabilityPct": 72.8,
-        "currentProbPct": 72.8,
-        "pathSummary": "Sitting at 7-3 overall and 2-1 inside the AFC North (+83 pt diff), Cincinnati Bengals hold 72.8% probability to win the division and host at least one playoff game at Paycor Stadium."
+        "probabilityPct": 72.9,
+        "currentProbPct": 72.9,
+        "pathSummary": "Sitting at 7-3 overall and 2-1 inside the AFC North (+83 pt diff), Cincinnati Bengals hold 72.9% probability to win the division and host at least one playoff game at Paycor Stadium."
       },
       {
         "target": "AFC Playoff Berth (Seeds #1–#7)",
-        "probabilityPct": 95.7,
-        "currentProbPct": 95.7,
-        "pathSummary": "With 7 wins banked through 10 games (5-2 AFC), Cincinnati Bengals project to 95.7% overall postseason odds (22.9% via Wild Card seeds #5–#7)."
+        "probabilityPct": 95.8,
+        "currentProbPct": 95.8,
+        "pathSummary": "With 7 wins banked through 10 games (5-2 AFC), Cincinnati Bengals project to 95.8% overall postseason odds (22.9% via Wild Card seeds #5–#7)."
       }
     ],
     "simulatorInputs": {
       "modelVersion": "2026.3-hb-srs-var",
-      "lastSimulatedAt": "2026-11-25T20:47:30.629Z",
+      "lastSimulatedAt": "2026-11-25T20:51:53.915Z",
       "targetTeam": "CIN",
       "conference": "AFC",
       "conferenceTeams": [
@@ -1313,12 +1317,12 @@
           "preseasonPriorSpread": 3.69,
           "preseasonPriorElo": 1592,
           "sosSpreadAdj": -0.417,
-          "remainingSosSpread": 0.166,
-          "remainingSosRank": 12,
+          "remainingSosSpread": 0.034,
+          "remainingSosRank": 10,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": 0,
-          "nextGameEloDelta": -7,
-          "powerRating": 1636
+          "nonQbInjuryEloAdj": -1,
+          "nextGameEloDelta": -12,
+          "powerRating": 1635
         },
         {
           "abbr": "NE",
@@ -1347,13 +1351,13 @@
           "preseasonPriorSpread": 2.67,
           "preseasonPriorElo": 1567,
           "sosSpreadAdj": 1.057,
-          "remainingSosSpread": 0.223,
+          "remainingSosSpread": 0.12,
           "remainingSosRank": 9,
-          "qbInjuryEloAdj": -28,
-          "nonQbInjuryEloAdj": 0,
-          "nextGameEloDelta": -55,
-          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito)",
-          "powerRating": 1482
+          "qbInjuryEloAdj": -29,
+          "nonQbInjuryEloAdj": -1,
+          "nextGameEloDelta": -79,
+          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito); Alijah Vera-Tucker (G IR)",
+          "powerRating": 1480
         },
         {
           "abbr": "MIA",
@@ -1382,13 +1386,13 @@
           "preseasonPriorSpread": -3.13,
           "preseasonPriorElo": 1422,
           "sosSpreadAdj": 1.434,
-          "remainingSosSpread": 0.417,
-          "remainingSosRank": 6,
-          "qbInjuryEloAdj": -6,
-          "nonQbInjuryEloAdj": -9,
-          "nextGameEloDelta": -14,
+          "remainingSosSpread": 0.354,
+          "remainingSosRank": 7,
+          "qbInjuryEloAdj": -13,
+          "nonQbInjuryEloAdj": -21,
+          "nextGameEloDelta": -18,
           "qbStatusNote": "Malik Willis (QB1 IR → Kyle McCord); Zach Sieler (DT Season IR)",
-          "powerRating": 1378
+          "powerRating": 1358
         },
         {
           "abbr": "NYJ",
@@ -1417,11 +1421,11 @@
           "preseasonPriorSpread": -3.66,
           "preseasonPriorElo": 1409,
           "sosSpreadAdj": -0.056,
-          "remainingSosSpread": -0.187,
-          "remainingSosRank": 14,
+          "remainingSosSpread": -0.413,
+          "remainingSosRank": 13,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -4,
+          "nextGameEloDelta": -5,
           "powerRating": 1430
         },
         {
@@ -1451,12 +1455,13 @@
           "preseasonPriorSpread": 2.87,
           "preseasonPriorElo": 1572,
           "sosSpreadAdj": -0.682,
-          "remainingSosSpread": 0.507,
+          "remainingSosSpread": 0.447,
           "remainingSosRank": 5,
-          "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "nextGameEloDelta": -9,
-          "powerRating": 1454
+          "qbInjuryEloAdj": -32,
+          "nonQbInjuryEloAdj": -7,
+          "nextGameEloDelta": -37,
+          "qbStatusNote": "Lamar Jackson (QB1 IR → Jacoby Brissett)",
+          "powerRating": 1421
         },
         {
           "abbr": "CIN",
@@ -1485,11 +1490,11 @@
           "preseasonPriorSpread": -0.3,
           "preseasonPriorElo": 1493,
           "sosSpreadAdj": -0.878,
-          "remainingSosSpread": -1.331,
+          "remainingSosSpread": -1.549,
           "remainingSosRank": 27,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -8,
+          "nextGameEloDelta": -9,
           "powerRating": 1593
         },
         {
@@ -1519,12 +1524,12 @@
           "preseasonPriorSpread": -2.98,
           "preseasonPriorElo": 1426,
           "sosSpreadAdj": -0.656,
-          "remainingSosSpread": -0.663,
-          "remainingSosRank": 20,
+          "remainingSosSpread": -0.869,
+          "remainingSosRank": 19,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
+          "nonQbInjuryEloAdj": -3,
           "nextGameEloDelta": -8,
-          "powerRating": 1466
+          "powerRating": 1465
         },
         {
           "abbr": "PIT",
@@ -1553,12 +1558,13 @@
           "preseasonPriorSpread": 1.72,
           "preseasonPriorElo": 1543,
           "sosSpreadAdj": -0.761,
-          "remainingSosSpread": -0.566,
-          "remainingSosRank": 18,
+          "remainingSosSpread": -1.069,
+          "remainingSosRank": 22,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "nextGameEloDelta": -12,
-          "powerRating": 1502
+          "nonQbInjuryEloAdj": -7,
+          "nextGameEloDelta": -28,
+          "qbStatusNote": "Alex Highsmith (LB D)",
+          "powerRating": 1500
         },
         {
           "abbr": "HOU",
@@ -1587,12 +1593,13 @@
           "preseasonPriorSpread": 0.91,
           "preseasonPriorElo": 1523,
           "sosSpreadAdj": -0.534,
-          "remainingSosSpread": -1.44,
-          "remainingSosRank": 28,
+          "remainingSosSpread": -1.989,
+          "remainingSosRank": 30,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "nextGameEloDelta": -14,
-          "powerRating": 1516
+          "nonQbInjuryEloAdj": -9,
+          "nextGameEloDelta": -25,
+          "qbStatusNote": "Azeez Al-Shaair (LB IR), Danielle Hunter (DE Q 45%)",
+          "powerRating": 1512
         },
         {
           "abbr": "IND",
@@ -1621,13 +1628,13 @@
           "preseasonPriorSpread": -1.26,
           "preseasonPriorElo": 1468,
           "sosSpreadAdj": 0.028,
-          "remainingSosSpread": -0.933,
-          "remainingSosRank": 24,
+          "remainingSosSpread": -1.173,
+          "remainingSosRank": 23,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -7,
-          "nextGameEloDelta": -24,
-          "qbStatusNote": "Bernhard Raimann (OT D)",
-          "powerRating": 1388
+          "nonQbInjuryEloAdj": -9,
+          "nextGameEloDelta": -45,
+          "qbStatusNote": "Bernhard Raimann (OT D), Charvarius Ward (CB Q 46%)",
+          "powerRating": 1387
         },
         {
           "abbr": "JAX",
@@ -1656,13 +1663,13 @@
           "preseasonPriorSpread": 3.57,
           "preseasonPriorElo": 1589,
           "sosSpreadAdj": -0.908,
-          "remainingSosSpread": -1.554,
-          "remainingSosRank": 29,
+          "remainingSosSpread": -1.846,
+          "remainingSosRank": 28,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -12,
-          "nextGameEloDelta": -7,
-          "qbStatusNote": "Anton Harrison (OT Season IR)",
-          "powerRating": 1612
+          "nonQbInjuryEloAdj": -27,
+          "nextGameEloDelta": -11,
+          "qbStatusNote": "Anton Harrison (OT Season IR), Eric Murray (S Season IR)",
+          "powerRating": 1598
         },
         {
           "abbr": "TEN",
@@ -1691,13 +1698,13 @@
           "preseasonPriorSpread": -3.81,
           "preseasonPriorElo": 1405,
           "sosSpreadAdj": -0.358,
-          "remainingSosSpread": -0.166,
-          "remainingSosRank": 13,
+          "remainingSosSpread": -0.48,
+          "remainingSosRank": 14,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -12,
-          "nextGameEloDelta": -10,
-          "qbStatusNote": "Wan'Dale Robinson (WR Season IR)",
-          "powerRating": 1346
+          "nonQbInjuryEloAdj": -25,
+          "nextGameEloDelta": -20,
+          "qbStatusNote": "Wan'Dale Robinson (WR Season IR), Peter Skoronski (G IR)",
+          "powerRating": 1333
         },
         {
           "abbr": "KC",
@@ -1726,12 +1733,12 @@
           "preseasonPriorSpread": 1.33,
           "preseasonPriorElo": 1533,
           "sosSpreadAdj": -1.619,
-          "remainingSosSpread": 1.286,
+          "remainingSosSpread": 1.12,
           "remainingSosRank": 3,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -3,
-          "nextGameEloDelta": -18,
-          "qbStatusNote": "Jaylon Moore (OT Out)",
+          "nextGameEloDelta": -37,
+          "qbStatusNote": "Jaylon Moore (OT Out), Kenneth Walker III (RB Out)",
           "powerRating": 1602
         },
         {
@@ -1761,12 +1768,13 @@
           "preseasonPriorSpread": 0.53,
           "preseasonPriorElo": 1513,
           "sosSpreadAdj": 1.317,
-          "remainingSosSpread": -1.331,
+          "remainingSosSpread": -1.514,
           "remainingSosRank": 26,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -3,
-          "powerRating": 1558
+          "nonQbInjuryEloAdj": 8,
+          "nextGameEloDelta": -4,
+          "qbStatusNote": "Jonathon Cooper (LB Returned), Pat Surtain II (CB Returned)",
+          "powerRating": 1568
         },
         {
           "abbr": "LAC",
@@ -1795,13 +1803,13 @@
           "preseasonPriorSpread": 2.38,
           "preseasonPriorElo": 1559,
           "sosSpreadAdj": 0.85,
-          "remainingSosSpread": 0.411,
-          "remainingSosRank": 7,
-          "qbInjuryEloAdj": -3,
-          "nonQbInjuryEloAdj": -1,
-          "nextGameEloDelta": -22,
-          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei)",
-          "powerRating": 1388
+          "remainingSosSpread": 0.366,
+          "remainingSosRank": 6,
+          "qbInjuryEloAdj": -8,
+          "nonQbInjuryEloAdj": -3,
+          "nextGameEloDelta": -49,
+          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei); Rashawn Slater (OT IR)",
+          "powerRating": 1381
         },
         {
           "abbr": "LV",
@@ -1830,8 +1838,8 @@
           "preseasonPriorSpread": -2.19,
           "preseasonPriorElo": 1445,
           "sosSpreadAdj": 0.854,
-          "remainingSosSpread": -1.793,
-          "remainingSosRank": 30,
+          "remainingSosSpread": -2.007,
+          "remainingSosRank": 31,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
           "nextGameEloDelta": -5,
@@ -1866,12 +1874,12 @@
           "preseasonPriorSpread": 3.69,
           "preseasonPriorElo": 1592,
           "sosSpreadAdj": -0.417,
-          "remainingSosSpread": 0.166,
-          "remainingSosRank": 12,
+          "remainingSosSpread": 0.034,
+          "remainingSosRank": 10,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": 0,
-          "nextGameEloDelta": -7,
-          "powerRating": 1636
+          "nonQbInjuryEloAdj": -1,
+          "nextGameEloDelta": -12,
+          "powerRating": 1635
         },
         {
           "abbr": "NE",
@@ -1900,13 +1908,13 @@
           "preseasonPriorSpread": 2.67,
           "preseasonPriorElo": 1567,
           "sosSpreadAdj": 1.057,
-          "remainingSosSpread": 0.223,
+          "remainingSosSpread": 0.12,
           "remainingSosRank": 9,
-          "qbInjuryEloAdj": -28,
-          "nonQbInjuryEloAdj": 0,
-          "nextGameEloDelta": -55,
-          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito)",
-          "powerRating": 1482
+          "qbInjuryEloAdj": -29,
+          "nonQbInjuryEloAdj": -1,
+          "nextGameEloDelta": -79,
+          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito); Alijah Vera-Tucker (G IR)",
+          "powerRating": 1480
         },
         {
           "abbr": "MIA",
@@ -1935,13 +1943,13 @@
           "preseasonPriorSpread": -3.13,
           "preseasonPriorElo": 1422,
           "sosSpreadAdj": 1.434,
-          "remainingSosSpread": 0.417,
-          "remainingSosRank": 6,
-          "qbInjuryEloAdj": -6,
-          "nonQbInjuryEloAdj": -9,
-          "nextGameEloDelta": -14,
+          "remainingSosSpread": 0.354,
+          "remainingSosRank": 7,
+          "qbInjuryEloAdj": -13,
+          "nonQbInjuryEloAdj": -21,
+          "nextGameEloDelta": -18,
           "qbStatusNote": "Malik Willis (QB1 IR → Kyle McCord); Zach Sieler (DT Season IR)",
-          "powerRating": 1378
+          "powerRating": 1358
         },
         {
           "abbr": "NYJ",
@@ -1970,11 +1978,11 @@
           "preseasonPriorSpread": -3.66,
           "preseasonPriorElo": 1409,
           "sosSpreadAdj": -0.056,
-          "remainingSosSpread": -0.187,
-          "remainingSosRank": 14,
+          "remainingSosSpread": -0.413,
+          "remainingSosRank": 13,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -4,
+          "nextGameEloDelta": -5,
           "powerRating": 1430
         },
         {
@@ -2004,12 +2012,13 @@
           "preseasonPriorSpread": 2.87,
           "preseasonPriorElo": 1572,
           "sosSpreadAdj": -0.682,
-          "remainingSosSpread": 0.507,
+          "remainingSosSpread": 0.447,
           "remainingSosRank": 5,
-          "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "nextGameEloDelta": -9,
-          "powerRating": 1454
+          "qbInjuryEloAdj": -32,
+          "nonQbInjuryEloAdj": -7,
+          "nextGameEloDelta": -37,
+          "qbStatusNote": "Lamar Jackson (QB1 IR → Jacoby Brissett)",
+          "powerRating": 1421
         },
         {
           "abbr": "CIN",
@@ -2038,11 +2047,11 @@
           "preseasonPriorSpread": -0.3,
           "preseasonPriorElo": 1493,
           "sosSpreadAdj": -0.878,
-          "remainingSosSpread": -1.331,
+          "remainingSosSpread": -1.549,
           "remainingSosRank": 27,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -8,
+          "nextGameEloDelta": -9,
           "powerRating": 1593
         },
         {
@@ -2072,12 +2081,12 @@
           "preseasonPriorSpread": -2.98,
           "preseasonPriorElo": 1426,
           "sosSpreadAdj": -0.656,
-          "remainingSosSpread": -0.663,
-          "remainingSosRank": 20,
+          "remainingSosSpread": -0.869,
+          "remainingSosRank": 19,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
+          "nonQbInjuryEloAdj": -3,
           "nextGameEloDelta": -8,
-          "powerRating": 1466
+          "powerRating": 1465
         },
         {
           "abbr": "PIT",
@@ -2106,12 +2115,13 @@
           "preseasonPriorSpread": 1.72,
           "preseasonPriorElo": 1543,
           "sosSpreadAdj": -0.761,
-          "remainingSosSpread": -0.566,
-          "remainingSosRank": 18,
+          "remainingSosSpread": -1.069,
+          "remainingSosRank": 22,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "nextGameEloDelta": -12,
-          "powerRating": 1502
+          "nonQbInjuryEloAdj": -7,
+          "nextGameEloDelta": -28,
+          "qbStatusNote": "Alex Highsmith (LB D)",
+          "powerRating": 1500
         },
         {
           "abbr": "HOU",
@@ -2140,12 +2150,13 @@
           "preseasonPriorSpread": 0.91,
           "preseasonPriorElo": 1523,
           "sosSpreadAdj": -0.534,
-          "remainingSosSpread": -1.44,
-          "remainingSosRank": 28,
+          "remainingSosSpread": -1.989,
+          "remainingSosRank": 30,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -5,
-          "nextGameEloDelta": -14,
-          "powerRating": 1516
+          "nonQbInjuryEloAdj": -9,
+          "nextGameEloDelta": -25,
+          "qbStatusNote": "Azeez Al-Shaair (LB IR), Danielle Hunter (DE Q 45%)",
+          "powerRating": 1512
         },
         {
           "abbr": "IND",
@@ -2174,13 +2185,13 @@
           "preseasonPriorSpread": -1.26,
           "preseasonPriorElo": 1468,
           "sosSpreadAdj": 0.028,
-          "remainingSosSpread": -0.933,
-          "remainingSosRank": 24,
+          "remainingSosSpread": -1.173,
+          "remainingSosRank": 23,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -7,
-          "nextGameEloDelta": -24,
-          "qbStatusNote": "Bernhard Raimann (OT D)",
-          "powerRating": 1388
+          "nonQbInjuryEloAdj": -9,
+          "nextGameEloDelta": -45,
+          "qbStatusNote": "Bernhard Raimann (OT D), Charvarius Ward (CB Q 46%)",
+          "powerRating": 1387
         },
         {
           "abbr": "JAX",
@@ -2209,13 +2220,13 @@
           "preseasonPriorSpread": 3.57,
           "preseasonPriorElo": 1589,
           "sosSpreadAdj": -0.908,
-          "remainingSosSpread": -1.554,
-          "remainingSosRank": 29,
+          "remainingSosSpread": -1.846,
+          "remainingSosRank": 28,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -12,
-          "nextGameEloDelta": -7,
-          "qbStatusNote": "Anton Harrison (OT Season IR)",
-          "powerRating": 1612
+          "nonQbInjuryEloAdj": -27,
+          "nextGameEloDelta": -11,
+          "qbStatusNote": "Anton Harrison (OT Season IR), Eric Murray (S Season IR)",
+          "powerRating": 1598
         },
         {
           "abbr": "TEN",
@@ -2244,13 +2255,13 @@
           "preseasonPriorSpread": -3.81,
           "preseasonPriorElo": 1405,
           "sosSpreadAdj": -0.358,
-          "remainingSosSpread": -0.166,
-          "remainingSosRank": 13,
+          "remainingSosSpread": -0.48,
+          "remainingSosRank": 14,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -12,
-          "nextGameEloDelta": -10,
-          "qbStatusNote": "Wan'Dale Robinson (WR Season IR)",
-          "powerRating": 1346
+          "nonQbInjuryEloAdj": -25,
+          "nextGameEloDelta": -20,
+          "qbStatusNote": "Wan'Dale Robinson (WR Season IR), Peter Skoronski (G IR)",
+          "powerRating": 1333
         },
         {
           "abbr": "KC",
@@ -2279,12 +2290,12 @@
           "preseasonPriorSpread": 1.33,
           "preseasonPriorElo": 1533,
           "sosSpreadAdj": -1.619,
-          "remainingSosSpread": 1.286,
+          "remainingSosSpread": 1.12,
           "remainingSosRank": 3,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -3,
-          "nextGameEloDelta": -18,
-          "qbStatusNote": "Jaylon Moore (OT Out)",
+          "nextGameEloDelta": -37,
+          "qbStatusNote": "Jaylon Moore (OT Out), Kenneth Walker III (RB Out)",
           "powerRating": 1602
         },
         {
@@ -2314,12 +2325,13 @@
           "preseasonPriorSpread": 0.53,
           "preseasonPriorElo": 1513,
           "sosSpreadAdj": 1.317,
-          "remainingSosSpread": -1.331,
+          "remainingSosSpread": -1.514,
           "remainingSosRank": 26,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -3,
-          "powerRating": 1558
+          "nonQbInjuryEloAdj": 8,
+          "nextGameEloDelta": -4,
+          "qbStatusNote": "Jonathon Cooper (LB Returned), Pat Surtain II (CB Returned)",
+          "powerRating": 1568
         },
         {
           "abbr": "LAC",
@@ -2348,13 +2360,13 @@
           "preseasonPriorSpread": 2.38,
           "preseasonPriorElo": 1559,
           "sosSpreadAdj": 0.85,
-          "remainingSosSpread": 0.411,
-          "remainingSosRank": 7,
-          "qbInjuryEloAdj": -3,
-          "nonQbInjuryEloAdj": -1,
-          "nextGameEloDelta": -22,
-          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei)",
-          "powerRating": 1388
+          "remainingSosSpread": 0.366,
+          "remainingSosRank": 6,
+          "qbInjuryEloAdj": -8,
+          "nonQbInjuryEloAdj": -3,
+          "nextGameEloDelta": -49,
+          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei); Rashawn Slater (OT IR)",
+          "powerRating": 1381
         },
         {
           "abbr": "LV",
@@ -2383,8 +2395,8 @@
           "preseasonPriorSpread": -2.19,
           "preseasonPriorElo": 1445,
           "sosSpreadAdj": 0.854,
-          "remainingSosSpread": -1.793,
-          "remainingSosRank": 30,
+          "remainingSosSpread": -2.007,
+          "remainingSosRank": 31,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -2,
           "nextGameEloDelta": -5,
@@ -2392,58 +2404,58 @@
         }
       ],
       "otherConferencePowerRatings": {
-        "SF": 1604,
+        "SF": 1608,
         "SEA": 1562,
-        "LAR": 1571,
-        "ARI": 1371,
-        "DET": 1560,
+        "LAR": 1548,
+        "ARI": 1350,
+        "DET": 1549,
         "MIN": 1547,
-        "GB": 1526,
+        "GB": 1515,
         "CHI": 1553,
         "PHI": 1366,
-        "DAL": 1481,
-        "NYG": 1477,
-        "WAS": 1442,
+        "DAL": 1473,
+        "NYG": 1469,
+        "WAS": 1419,
         "TB": 1497,
-        "NO": 1430,
-        "ATL": 1428,
-        "CAR": 1461
+        "NO": 1429,
+        "ATL": 1434,
+        "CAR": 1460
       },
       "afcPowerRatings": {
-        "SF": 1604,
+        "SF": 1608,
         "SEA": 1562,
-        "LAR": 1571,
-        "ARI": 1371,
-        "DET": 1560,
+        "LAR": 1548,
+        "ARI": 1350,
+        "DET": 1549,
         "MIN": 1547,
-        "GB": 1526,
+        "GB": 1515,
         "CHI": 1553,
         "PHI": 1366,
-        "DAL": 1481,
-        "NYG": 1477,
-        "WAS": 1442,
+        "DAL": 1473,
+        "NYG": 1469,
+        "WAS": 1419,
         "TB": 1497,
-        "NO": 1430,
-        "ATL": 1428,
-        "CAR": 1461
+        "NO": 1429,
+        "ATL": 1434,
+        "CAR": 1460
       },
       "afcRatings": {
-        "SF": 1604,
+        "SF": 1608,
         "SEA": 1562,
-        "LAR": 1571,
-        "ARI": 1371,
-        "DET": 1560,
+        "LAR": 1548,
+        "ARI": 1350,
+        "DET": 1549,
         "MIN": 1547,
-        "GB": 1526,
+        "GB": 1515,
         "CHI": 1553,
         "PHI": 1366,
-        "DAL": 1481,
-        "NYG": 1477,
-        "WAS": 1442,
+        "DAL": 1473,
+        "NYG": 1469,
+        "WAS": 1419,
         "TB": 1497,
-        "NO": 1430,
-        "ATL": 1428,
-        "CAR": 1461
+        "NO": 1429,
+        "ATL": 1434,
+        "CAR": 1460
       },
       "otherConferenceStandings": {
         "SF": {
@@ -2463,11 +2475,11 @@
           "preseasonPriorSpread": 1.29,
           "preseasonPriorElo": 1532,
           "sosSpreadAdj": -0.413,
-          "remainingSosSpread": -0.931,
-          "remainingSosRank": 23,
-          "qbInjuryEloAdj": -11,
-          "nonQbInjuryEloAdj": -15,
-          "nextGameEloDelta": -48,
+          "remainingSosSpread": -1.269,
+          "remainingSosRank": 24,
+          "qbInjuryEloAdj": -12,
+          "nonQbInjuryEloAdj": -9,
+          "nextGameEloDelta": -55,
           "qbStatusNote": "Brock Purdy (QB1 Q 39%); Colton McKivitz (OT Season IR)"
         },
         "SEA": {
@@ -2487,7 +2499,7 @@
           "preseasonPriorSpread": 3.99,
           "preseasonPriorElo": 1600,
           "sosSpreadAdj": -0.157,
-          "remainingSosSpread": 0.177,
+          "remainingSosSpread": -0.16,
           "remainingSosRank": 11,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -3,
@@ -2511,12 +2523,12 @@
           "preseasonPriorSpread": 4.61,
           "preseasonPriorElo": 1615,
           "sosSpreadAdj": -0.749,
-          "remainingSosSpread": 1.909,
+          "remainingSosSpread": 1.823,
           "remainingSosRank": 1,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -26,
-          "nextGameEloDelta": -14,
-          "qbStatusNote": "Jaylen Watson (CB Season IR), Puka Nacua (WR Season IR)"
+          "nonQbInjuryEloAdj": -50,
+          "nextGameEloDelta": -19,
+          "qbStatusNote": "Jaylen Watson (CB Season IR), Davante Adams (WR Season IR)"
         },
         "ARI": {
           "wins": 3,
@@ -2535,12 +2547,12 @@
           "preseasonPriorSpread": -3.88,
           "preseasonPriorElo": 1403,
           "sosSpreadAdj": 1.91,
-          "remainingSosSpread": -1.847,
-          "remainingSosRank": 31,
+          "remainingSosSpread": -1.98,
+          "remainingSosRank": 29,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -25,
-          "nextGameEloDelta": -9,
-          "qbStatusNote": "Michael Wilson (WR Season IR)"
+          "nonQbInjuryEloAdj": -45,
+          "nextGameEloDelta": -15,
+          "qbStatusNote": "Carson Beck (QB1 Q 37%); Michael Wilson (WR Season IR), Paris Johnson Jr. (OT Season IR)"
         },
         "DET": {
           "wins": 8,
@@ -2559,12 +2571,12 @@
           "preseasonPriorSpread": 2.22,
           "preseasonPriorElo": 1555,
           "sosSpreadAdj": -0.512,
-          "remainingSosSpread": -0.4,
-          "remainingSosRank": 15,
+          "remainingSosSpread": -0.549,
+          "remainingSosRank": 16,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -19,
-          "nextGameEloDelta": -10,
-          "qbStatusNote": "Aidan Hutchinson (DE Season IR)"
+          "nonQbInjuryEloAdj": -30,
+          "nextGameEloDelta": -15,
+          "qbStatusNote": "Aidan Hutchinson (DE Season IR), Jack Campbell (LB IR)"
         },
         "MIN": {
           "wins": 7,
@@ -2583,11 +2595,12 @@
           "preseasonPriorSpread": 0.59,
           "preseasonPriorElo": 1515,
           "sosSpreadAdj": 0.727,
-          "remainingSosSpread": -0.823,
-          "remainingSosRank": 22,
+          "remainingSosSpread": -1,
+          "remainingSosRank": 21,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -1,
-          "nextGameEloDelta": -13
+          "nextGameEloDelta": -18,
+          "qbStatusNote": "Jordan Addison (WR Out)"
         },
         "GB": {
           "wins": 6,
@@ -2606,11 +2619,11 @@
           "preseasonPriorSpread": 0.53,
           "preseasonPriorElo": 1513,
           "sosSpreadAdj": 0.258,
-          "remainingSosSpread": 0.823,
+          "remainingSosSpread": 0.48,
           "remainingSosRank": 4,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -6,
-          "nextGameEloDelta": -5
+          "nonQbInjuryEloAdj": -18,
+          "nextGameEloDelta": -6
         },
         "CHI": {
           "wins": 8,
@@ -2629,7 +2642,7 @@
           "preseasonPriorSpread": 1.87,
           "preseasonPriorElo": 1547,
           "sosSpreadAdj": -0.672,
-          "remainingSosSpread": 1.823,
+          "remainingSosSpread": 1.434,
           "remainingSosRank": 2,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -20,
@@ -2653,8 +2666,8 @@
           "preseasonPriorSpread": 1.81,
           "preseasonPriorElo": 1545,
           "sosSpreadAdj": 0.111,
-          "remainingSosSpread": -0.577,
-          "remainingSosRank": 19,
+          "remainingSosSpread": -0.794,
+          "remainingSosRank": 18,
           "qbInjuryEloAdj": -30,
           "nonQbInjuryEloAdj": -5,
           "nextGameEloDelta": -17,
@@ -2677,11 +2690,11 @@
           "preseasonPriorSpread": 0.37,
           "preseasonPriorElo": 1509,
           "sosSpreadAdj": -1.172,
-          "remainingSosSpread": 0.2,
-          "remainingSosRank": 10,
+          "remainingSosSpread": -0.253,
+          "remainingSosRank": 12,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -13,
-          "nextGameEloDelta": -9,
+          "nonQbInjuryEloAdj": -21,
+          "nextGameEloDelta": -16,
           "qbStatusNote": "DaRon Bland (CB Season IR)"
         },
         "NYG": {
@@ -2701,12 +2714,12 @@
           "preseasonPriorSpread": -3.54,
           "preseasonPriorElo": 1412,
           "sosSpreadAdj": -0.927,
-          "remainingSosSpread": -0.417,
-          "remainingSosRank": 16,
+          "remainingSosSpread": -0.514,
+          "remainingSosRank": 15,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -22,
-          "nextGameEloDelta": -12,
-          "qbStatusNote": "Francis Mauigoa (OT IR), Greg Newsome II (CB IR)"
+          "nonQbInjuryEloAdj": -30,
+          "nextGameEloDelta": -17,
+          "qbStatusNote": "Tremaine Edmunds (LB Season IR), Greg Newsome II (CB IR)"
         },
         "WAS": {
           "wins": 4,
@@ -2725,11 +2738,12 @@
           "preseasonPriorSpread": -2.59,
           "preseasonPriorElo": 1435,
           "sosSpreadAdj": 0.243,
-          "remainingSosSpread": -1.137,
+          "remainingSosSpread": -1.446,
           "remainingSosRank": 25,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -15,
-          "nextGameEloDelta": -5
+          "nonQbInjuryEloAdj": -38,
+          "nextGameEloDelta": -8,
+          "qbStatusNote": "Terry McLaurin (WR Season IR), Daron Payne (DT Season IR)"
         },
         "TB": {
           "wins": 3,
@@ -2748,11 +2762,11 @@
           "preseasonPriorSpread": -1.7,
           "preseasonPriorElo": 1457,
           "sosSpreadAdj": 0.636,
-          "remainingSosSpread": -1.931,
+          "remainingSosSpread": -2.274,
           "remainingSosRank": 32,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": 0,
-          "nextGameEloDelta": -3
+          "nextGameEloDelta": -6
         },
         "NO": {
           "wins": 3,
@@ -2771,11 +2785,11 @@
           "preseasonPriorSpread": -2.73,
           "preseasonPriorElo": 1432,
           "sosSpreadAdj": -0.16,
-          "remainingSosSpread": -0.726,
-          "remainingSosRank": 21,
+          "remainingSosSpread": -0.88,
+          "remainingSosRank": 20,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -1,
-          "nextGameEloDelta": -17
+          "nonQbInjuryEloAdj": -3,
+          "nextGameEloDelta": -22
         },
         "ATL": {
           "wins": 3,
@@ -2794,11 +2808,12 @@
           "preseasonPriorSpread": -2.64,
           "preseasonPriorElo": 1434,
           "sosSpreadAdj": 1.132,
-          "remainingSosSpread": -0.554,
+          "remainingSosSpread": -0.766,
           "remainingSosRank": 17,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -5
+          "nonQbInjuryEloAdj": 5,
+          "nextGameEloDelta": -6,
+          "qbStatusNote": "A.J. Terrell Jr. (CB Returned)"
         },
         "CAR": {
           "wins": 5,
@@ -2817,11 +2832,12 @@
           "preseasonPriorSpread": -2.52,
           "preseasonPriorElo": 1437,
           "sosSpreadAdj": -0.356,
-          "remainingSosSpread": 0.337,
+          "remainingSosSpread": 0.354,
           "remainingSosRank": 8,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -6,
-          "nextGameEloDelta": -18
+          "nonQbInjuryEloAdj": -7,
+          "nextGameEloDelta": -26,
+          "qbStatusNote": "Taylor Moton (OT Season IR), Jaycee Horn (CB IR)"
         }
       },
       "afcStandings": {
@@ -2842,11 +2858,11 @@
           "preseasonPriorSpread": 1.29,
           "preseasonPriorElo": 1532,
           "sosSpreadAdj": -0.413,
-          "remainingSosSpread": -0.931,
-          "remainingSosRank": 23,
-          "qbInjuryEloAdj": -11,
-          "nonQbInjuryEloAdj": -15,
-          "nextGameEloDelta": -48,
+          "remainingSosSpread": -1.269,
+          "remainingSosRank": 24,
+          "qbInjuryEloAdj": -12,
+          "nonQbInjuryEloAdj": -9,
+          "nextGameEloDelta": -55,
           "qbStatusNote": "Brock Purdy (QB1 Q 39%); Colton McKivitz (OT Season IR)"
         },
         "SEA": {
@@ -2866,7 +2882,7 @@
           "preseasonPriorSpread": 3.99,
           "preseasonPriorElo": 1600,
           "sosSpreadAdj": -0.157,
-          "remainingSosSpread": 0.177,
+          "remainingSosSpread": -0.16,
           "remainingSosRank": 11,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -3,
@@ -2890,12 +2906,12 @@
           "preseasonPriorSpread": 4.61,
           "preseasonPriorElo": 1615,
           "sosSpreadAdj": -0.749,
-          "remainingSosSpread": 1.909,
+          "remainingSosSpread": 1.823,
           "remainingSosRank": 1,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -26,
-          "nextGameEloDelta": -14,
-          "qbStatusNote": "Jaylen Watson (CB Season IR), Puka Nacua (WR Season IR)"
+          "nonQbInjuryEloAdj": -50,
+          "nextGameEloDelta": -19,
+          "qbStatusNote": "Jaylen Watson (CB Season IR), Davante Adams (WR Season IR)"
         },
         "ARI": {
           "wins": 3,
@@ -2914,12 +2930,12 @@
           "preseasonPriorSpread": -3.88,
           "preseasonPriorElo": 1403,
           "sosSpreadAdj": 1.91,
-          "remainingSosSpread": -1.847,
-          "remainingSosRank": 31,
+          "remainingSosSpread": -1.98,
+          "remainingSosRank": 29,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -25,
-          "nextGameEloDelta": -9,
-          "qbStatusNote": "Michael Wilson (WR Season IR)"
+          "nonQbInjuryEloAdj": -45,
+          "nextGameEloDelta": -15,
+          "qbStatusNote": "Carson Beck (QB1 Q 37%); Michael Wilson (WR Season IR), Paris Johnson Jr. (OT Season IR)"
         },
         "DET": {
           "wins": 8,
@@ -2938,12 +2954,12 @@
           "preseasonPriorSpread": 2.22,
           "preseasonPriorElo": 1555,
           "sosSpreadAdj": -0.512,
-          "remainingSosSpread": -0.4,
-          "remainingSosRank": 15,
+          "remainingSosSpread": -0.549,
+          "remainingSosRank": 16,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -19,
-          "nextGameEloDelta": -10,
-          "qbStatusNote": "Aidan Hutchinson (DE Season IR)"
+          "nonQbInjuryEloAdj": -30,
+          "nextGameEloDelta": -15,
+          "qbStatusNote": "Aidan Hutchinson (DE Season IR), Jack Campbell (LB IR)"
         },
         "MIN": {
           "wins": 7,
@@ -2962,11 +2978,12 @@
           "preseasonPriorSpread": 0.59,
           "preseasonPriorElo": 1515,
           "sosSpreadAdj": 0.727,
-          "remainingSosSpread": -0.823,
-          "remainingSosRank": 22,
+          "remainingSosSpread": -1,
+          "remainingSosRank": 21,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -1,
-          "nextGameEloDelta": -13
+          "nextGameEloDelta": -18,
+          "qbStatusNote": "Jordan Addison (WR Out)"
         },
         "GB": {
           "wins": 6,
@@ -2985,11 +3002,11 @@
           "preseasonPriorSpread": 0.53,
           "preseasonPriorElo": 1513,
           "sosSpreadAdj": 0.258,
-          "remainingSosSpread": 0.823,
+          "remainingSosSpread": 0.48,
           "remainingSosRank": 4,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -6,
-          "nextGameEloDelta": -5
+          "nonQbInjuryEloAdj": -18,
+          "nextGameEloDelta": -6
         },
         "CHI": {
           "wins": 8,
@@ -3008,7 +3025,7 @@
           "preseasonPriorSpread": 1.87,
           "preseasonPriorElo": 1547,
           "sosSpreadAdj": -0.672,
-          "remainingSosSpread": 1.823,
+          "remainingSosSpread": 1.434,
           "remainingSosRank": 2,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": -20,
@@ -3032,8 +3049,8 @@
           "preseasonPriorSpread": 1.81,
           "preseasonPriorElo": 1545,
           "sosSpreadAdj": 0.111,
-          "remainingSosSpread": -0.577,
-          "remainingSosRank": 19,
+          "remainingSosSpread": -0.794,
+          "remainingSosRank": 18,
           "qbInjuryEloAdj": -30,
           "nonQbInjuryEloAdj": -5,
           "nextGameEloDelta": -17,
@@ -3056,11 +3073,11 @@
           "preseasonPriorSpread": 0.37,
           "preseasonPriorElo": 1509,
           "sosSpreadAdj": -1.172,
-          "remainingSosSpread": 0.2,
-          "remainingSosRank": 10,
+          "remainingSosSpread": -0.253,
+          "remainingSosRank": 12,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -13,
-          "nextGameEloDelta": -9,
+          "nonQbInjuryEloAdj": -21,
+          "nextGameEloDelta": -16,
           "qbStatusNote": "DaRon Bland (CB Season IR)"
         },
         "NYG": {
@@ -3080,12 +3097,12 @@
           "preseasonPriorSpread": -3.54,
           "preseasonPriorElo": 1412,
           "sosSpreadAdj": -0.927,
-          "remainingSosSpread": -0.417,
-          "remainingSosRank": 16,
+          "remainingSosSpread": -0.514,
+          "remainingSosRank": 15,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -22,
-          "nextGameEloDelta": -12,
-          "qbStatusNote": "Francis Mauigoa (OT IR), Greg Newsome II (CB IR)"
+          "nonQbInjuryEloAdj": -30,
+          "nextGameEloDelta": -17,
+          "qbStatusNote": "Tremaine Edmunds (LB Season IR), Greg Newsome II (CB IR)"
         },
         "WAS": {
           "wins": 4,
@@ -3104,11 +3121,12 @@
           "preseasonPriorSpread": -2.59,
           "preseasonPriorElo": 1435,
           "sosSpreadAdj": 0.243,
-          "remainingSosSpread": -1.137,
+          "remainingSosSpread": -1.446,
           "remainingSosRank": 25,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -15,
-          "nextGameEloDelta": -5
+          "nonQbInjuryEloAdj": -38,
+          "nextGameEloDelta": -8,
+          "qbStatusNote": "Terry McLaurin (WR Season IR), Daron Payne (DT Season IR)"
         },
         "TB": {
           "wins": 3,
@@ -3127,11 +3145,11 @@
           "preseasonPriorSpread": -1.7,
           "preseasonPriorElo": 1457,
           "sosSpreadAdj": 0.636,
-          "remainingSosSpread": -1.931,
+          "remainingSosSpread": -2.274,
           "remainingSosRank": 32,
           "qbInjuryEloAdj": 0,
           "nonQbInjuryEloAdj": 0,
-          "nextGameEloDelta": -3
+          "nextGameEloDelta": -6
         },
         "NO": {
           "wins": 3,
@@ -3150,11 +3168,11 @@
           "preseasonPriorSpread": -2.73,
           "preseasonPriorElo": 1432,
           "sosSpreadAdj": -0.16,
-          "remainingSosSpread": -0.726,
-          "remainingSosRank": 21,
+          "remainingSosSpread": -0.88,
+          "remainingSosRank": 20,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -1,
-          "nextGameEloDelta": -17
+          "nonQbInjuryEloAdj": -3,
+          "nextGameEloDelta": -22
         },
         "ATL": {
           "wins": 3,
@@ -3173,11 +3191,12 @@
           "preseasonPriorSpread": -2.64,
           "preseasonPriorElo": 1434,
           "sosSpreadAdj": 1.132,
-          "remainingSosSpread": -0.554,
+          "remainingSosSpread": -0.766,
           "remainingSosRank": 17,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -2,
-          "nextGameEloDelta": -5
+          "nonQbInjuryEloAdj": 5,
+          "nextGameEloDelta": -6,
+          "qbStatusNote": "A.J. Terrell Jr. (CB Returned)"
         },
         "CAR": {
           "wins": 5,
@@ -3196,30 +3215,31 @@
           "preseasonPriorSpread": -2.52,
           "preseasonPriorElo": 1437,
           "sosSpreadAdj": -0.356,
-          "remainingSosSpread": 0.337,
+          "remainingSosSpread": 0.354,
           "remainingSosRank": 8,
           "qbInjuryEloAdj": 0,
-          "nonQbInjuryEloAdj": -6,
-          "nextGameEloDelta": -18
+          "nonQbInjuryEloAdj": -7,
+          "nextGameEloDelta": -26,
+          "qbStatusNote": "Taylor Moton (OT Season IR), Jaycee Horn (CB IR)"
         }
       },
       "otherConferenceNextGameDeltas": {
-        "SF": -48,
+        "SF": -55,
         "SEA": -27,
-        "LAR": -14,
-        "ARI": -9,
-        "DET": -10,
-        "MIN": -13,
-        "GB": -5,
+        "LAR": -19,
+        "ARI": -15,
+        "DET": -15,
+        "MIN": -18,
+        "GB": -6,
         "CHI": -18,
         "PHI": -17,
-        "DAL": -9,
-        "NYG": -12,
-        "WAS": -5,
-        "TB": -3,
-        "NO": -17,
-        "ATL": -5,
-        "CAR": -18
+        "DAL": -16,
+        "NYG": -17,
+        "WAS": -8,
+        "TB": -6,
+        "NO": -22,
+        "ATL": -6,
+        "CAR": -26
       },
       "preseasonPriors": {
         "SF": 1.286,
@@ -4891,14 +4911,14 @@
         "SF": {
           "qbName": "Brock Purdy",
           "qbBackupName": "Mac Jones",
-          "qbDropBase": 4.67,
+          "qbDropBase": 5.29,
           "qbStatusNote": "Brock Purdy (QB1 Q 39%); Colton McKivitz (OT Season IR)",
-          "qbSpreadGame": -2.137,
-          "qbSpreadSeason": -0.427,
-          "nonQbSpreadGame": -0.802,
-          "nonQbSpreadSeason": -0.582,
-          "totalGameSpreadAdj": -2.939,
-          "totalSeasonSpreadAdj": -1.009
+          "qbSpreadGame": -2.421,
+          "qbSpreadSeason": -0.484,
+          "nonQbSpreadGame": -0.622,
+          "nonQbSpreadSeason": -0.352,
+          "totalGameSpreadAdj": -3.043,
+          "totalSeasonSpreadAdj": -0.836
         },
         "SEA": {
           "qbName": "Sam Darnold",
@@ -4914,63 +4934,63 @@
         },
         "LAR": {
           "qbName": "Matthew Stafford",
-          "qbBackupName": "Stetson Bennett IV",
-          "qbDropBase": 2.19,
-          "qbStatusNote": "Jaylen Watson (CB Season IR), Puka Nacua (WR Season IR)",
+          "qbBackupName": "Ty Simpson",
+          "qbDropBase": 2.35,
+          "qbStatusNote": "Jaylen Watson (CB Season IR), Davante Adams (WR Season IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -1.594,
-          "nonQbSpreadSeason": -1.051,
-          "totalGameSpreadAdj": -1.594,
-          "totalSeasonSpreadAdj": -1.051
+          "nonQbSpreadGame": -2.714,
+          "nonQbSpreadSeason": -1.981,
+          "totalGameSpreadAdj": -2.714,
+          "totalSeasonSpreadAdj": -1.981
         },
         "ARI": {
-          "qbName": "Josh Johnson",
-          "qbBackupName": "Carson Beck",
+          "qbName": "Carson Beck",
+          "qbBackupName": "Josh Johnson",
           "qbDropBase": 0.5,
-          "qbStatusNote": "Michael Wilson (WR Season IR)",
-          "qbSpreadGame": 0,
-          "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -1.361,
-          "nonQbSpreadSeason": -0.999,
-          "totalGameSpreadAdj": -1.361,
-          "totalSeasonSpreadAdj": -0.999
+          "qbStatusNote": "Carson Beck (QB1 Q 37%); Michael Wilson (WR Season IR), Paris Johnson Jr. (OT Season IR)",
+          "qbSpreadGame": -0.047,
+          "qbSpreadSeason": -0.009,
+          "nonQbSpreadGame": -2.406,
+          "nonQbSpreadSeason": -1.82,
+          "totalGameSpreadAdj": -2.453,
+          "totalSeasonSpreadAdj": -1.829
         },
         "DET": {
           "qbName": "Jared Goff",
           "qbBackupName": "Joshua Dobbs",
-          "qbDropBase": 3.06,
-          "qbStatusNote": "Aidan Hutchinson (DE Season IR)",
+          "qbDropBase": 4.49,
+          "qbStatusNote": "Aidan Hutchinson (DE Season IR), Jack Campbell (LB IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -1.164,
-          "nonQbSpreadSeason": -0.772,
-          "totalGameSpreadAdj": -1.164,
-          "totalSeasonSpreadAdj": -0.772
+          "nonQbSpreadGame": -1.785,
+          "nonQbSpreadSeason": -1.187,
+          "totalGameSpreadAdj": -1.785,
+          "totalSeasonSpreadAdj": -1.187
         },
         "MIN": {
           "qbName": "Kirk Cousins",
           "qbBackupName": "Kyler Murray",
           "qbDropBase": 1.32,
-          "qbStatusNote": "",
+          "qbStatusNote": "Jordan Addison (WR Out)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.561,
-          "nonQbSpreadSeason": -0.027,
-          "totalGameSpreadAdj": -0.561,
-          "totalSeasonSpreadAdj": -0.027
+          "nonQbSpreadGame": -0.737,
+          "nonQbSpreadSeason": -0.028,
+          "totalGameSpreadAdj": -0.737,
+          "totalSeasonSpreadAdj": -0.028
         },
         "GB": {
           "qbName": "Jordan Love",
           "qbBackupName": "Tyrod Taylor",
-          "qbDropBase": 2.56,
+          "qbDropBase": 3.09,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.452,
-          "nonQbSpreadSeason": -0.258,
-          "totalGameSpreadAdj": -0.452,
-          "totalSeasonSpreadAdj": -0.258
+          "nonQbSpreadGame": -0.926,
+          "nonQbSpreadSeason": -0.714,
+          "totalGameSpreadAdj": -0.926,
+          "totalSeasonSpreadAdj": -0.714
         },
         "CHI": {
           "qbName": "Caleb Williams",
@@ -4999,266 +5019,266 @@
         "DAL": {
           "qbName": "Dak Prescott",
           "qbBackupName": "Sam Howell",
-          "qbDropBase": 3.44,
+          "qbDropBase": 4.06,
           "qbStatusNote": "DaRon Bland (CB Season IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.853,
-          "nonQbSpreadSeason": -0.508,
-          "totalGameSpreadAdj": -0.853,
-          "totalSeasonSpreadAdj": -0.508
+          "nonQbSpreadGame": -1.473,
+          "nonQbSpreadSeason": -0.822,
+          "totalGameSpreadAdj": -1.473,
+          "totalSeasonSpreadAdj": -0.822
         },
         "NYG": {
-          "qbName": "J.J. McCarthy",
-          "qbBackupName": "Jameis Winston",
-          "qbDropBase": 0.93,
-          "qbStatusNote": "Francis Mauigoa (OT IR), Greg Newsome II (CB IR)",
+          "qbName": "Jameis Winston",
+          "qbBackupName": "J.J. McCarthy",
+          "qbDropBase": 0.5,
+          "qbStatusNote": "Tremaine Edmunds (LB Season IR), Greg Newsome II (CB IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -1.327,
-          "nonQbSpreadSeason": -0.868,
-          "totalGameSpreadAdj": -1.327,
-          "totalSeasonSpreadAdj": -0.868
+          "nonQbSpreadGame": -1.873,
+          "nonQbSpreadSeason": -1.188,
+          "totalGameSpreadAdj": -1.873,
+          "totalSeasonSpreadAdj": -1.188
         },
         "WAS": {
           "qbName": "Jayden Daniels",
           "qbBackupName": "Athan Kaliakmanis",
-          "qbDropBase": 0.9,
-          "qbStatusNote": "",
+          "qbDropBase": 1.1,
+          "qbStatusNote": "Terry McLaurin (WR Season IR), Daron Payne (DT Season IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.797,
-          "nonQbSpreadSeason": -0.602,
-          "totalGameSpreadAdj": -0.797,
-          "totalSeasonSpreadAdj": -0.602
+          "nonQbSpreadGame": -1.819,
+          "nonQbSpreadSeason": -1.525,
+          "totalGameSpreadAdj": -1.819,
+          "totalSeasonSpreadAdj": -1.525
         },
         "TB": {
           "qbName": "Baker Mayfield",
           "qbBackupName": "Jalon Daniels",
-          "qbDropBase": 0.5,
+          "qbDropBase": 1.46,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.158,
+          "nonQbSpreadGame": -0.242,
           "nonQbSpreadSeason": -0.003,
-          "totalGameSpreadAdj": -0.158,
+          "totalGameSpreadAdj": -0.242,
           "totalSeasonSpreadAdj": -0.003
         },
         "NO": {
           "qbName": "Tyler Shough",
           "qbBackupName": "Spencer Rattler",
-          "qbDropBase": 1.44,
+          "qbDropBase": 1.51,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.751,
-          "nonQbSpreadSeason": -0.055,
-          "totalGameSpreadAdj": -0.751,
-          "totalSeasonSpreadAdj": -0.055
+          "nonQbSpreadGame": -1.005,
+          "nonQbSpreadSeason": -0.108,
+          "totalGameSpreadAdj": -1.005,
+          "totalSeasonSpreadAdj": -0.108
         },
         "ATL": {
           "qbName": "Michael Penix Jr.",
           "qbBackupName": "Jack Strand",
-          "qbDropBase": 1.07,
-          "qbStatusNote": "",
+          "qbDropBase": 1.29,
+          "qbStatusNote": "A.J. Terrell Jr. (CB Returned)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.228,
-          "nonQbSpreadSeason": -0.063,
-          "totalGameSpreadAdj": -0.228,
-          "totalSeasonSpreadAdj": -0.063
+          "nonQbSpreadGame": -0.03,
+          "nonQbSpreadSeason": 0.192,
+          "totalGameSpreadAdj": -0.03,
+          "totalSeasonSpreadAdj": 0.192
         },
         "CAR": {
           "qbName": "Bryce Young",
           "qbBackupName": "Kenny Pickett",
-          "qbDropBase": 1.59,
-          "qbStatusNote": "",
+          "qbDropBase": 0.99,
+          "qbStatusNote": "Taylor Moton (OT Season IR), Jaycee Horn (CB IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.944,
-          "nonQbSpreadSeason": -0.236,
-          "totalGameSpreadAdj": -0.944,
-          "totalSeasonSpreadAdj": -0.236
+          "nonQbSpreadGame": -1.331,
+          "nonQbSpreadSeason": -0.269,
+          "totalGameSpreadAdj": -1.331,
+          "totalSeasonSpreadAdj": -0.269
         },
         "BUF": {
           "qbName": "Josh Allen",
           "qbBackupName": "Kyle Allen",
-          "qbDropBase": 3.31,
+          "qbDropBase": 4.86,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.291,
-          "nonQbSpreadSeason": -0.018,
-          "totalGameSpreadAdj": -0.291,
-          "totalSeasonSpreadAdj": -0.018
+          "nonQbSpreadGame": -0.539,
+          "nonQbSpreadSeason": -0.051,
+          "totalGameSpreadAdj": -0.539,
+          "totalSeasonSpreadAdj": -0.051
         },
         "NE": {
           "qbName": "Drake Maye",
           "qbBackupName": "Tommy DeVito",
-          "qbDropBase": 3.16,
-          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito)",
-          "qbSpreadGame": -2.689,
-          "qbSpreadSeason": -1.107,
-          "nonQbSpreadGame": -0.653,
-          "nonQbSpreadSeason": -0.018,
-          "totalGameSpreadAdj": -3.342,
-          "totalSeasonSpreadAdj": -1.125
+          "qbDropBase": 3.36,
+          "qbStatusNote": "Drake Maye (QB1 Out → Tommy DeVito); Alijah Vera-Tucker (G IR)",
+          "qbSpreadGame": -2.855,
+          "qbSpreadSeason": -1.176,
+          "nonQbSpreadGame": -1.505,
+          "nonQbSpreadSeason": -0.042,
+          "totalGameSpreadAdj": -4.36,
+          "totalSeasonSpreadAdj": -1.218
         },
         "MIA": {
           "qbName": "Malik Willis",
           "qbBackupName": "Kyle McCord",
-          "qbDropBase": 0.57,
+          "qbDropBase": 1.3,
           "qbStatusNote": "Malik Willis (QB1 IR → Kyle McCord); Zach Sieler (DT Season IR)",
-          "qbSpreadGame": -0.397,
-          "qbSpreadSeason": -0.227,
-          "nonQbSpreadGame": -0.728,
-          "nonQbSpreadSeason": -0.374,
-          "totalGameSpreadAdj": -1.125,
-          "totalSeasonSpreadAdj": -0.601
+          "qbSpreadGame": -0.902,
+          "qbSpreadSeason": -0.515,
+          "nonQbSpreadGame": -1.215,
+          "nonQbSpreadSeason": -0.854,
+          "totalGameSpreadAdj": -2.117,
+          "totalSeasonSpreadAdj": -1.369
         },
         "NYJ": {
           "qbName": "Geno Smith",
           "qbBackupName": "Cade Klubnik",
-          "qbDropBase": 1.7,
+          "qbDropBase": 1.77,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.195,
+          "nonQbSpreadGame": -0.238,
           "nonQbSpreadSeason": -0.066,
-          "totalGameSpreadAdj": -0.195,
+          "totalGameSpreadAdj": -0.238,
           "totalSeasonSpreadAdj": -0.066
         },
         "BAL": {
-          "qbName": "Jacoby Brissett",
-          "qbBackupName": "Tyler Huntley",
-          "qbDropBase": 0.5,
-          "qbStatusNote": "",
-          "qbSpreadGame": 0,
-          "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.534,
-          "nonQbSpreadSeason": -0.196,
-          "totalGameSpreadAdj": -0.534,
-          "totalSeasonSpreadAdj": -0.196
+          "qbName": "Lamar Jackson",
+          "qbBackupName": "Jacoby Brissett",
+          "qbDropBase": 4.53,
+          "qbStatusNote": "Lamar Jackson (QB1 IR → Jacoby Brissett)",
+          "qbSpreadGame": -1.898,
+          "qbSpreadSeason": -1.265,
+          "nonQbSpreadGame": -1.08,
+          "nonQbSpreadSeason": -0.266,
+          "totalGameSpreadAdj": -2.978,
+          "totalSeasonSpreadAdj": -1.531
         },
         "CIN": {
           "qbName": "Joe Burrow",
           "qbBackupName": "Joe Flacco",
-          "qbDropBase": 3.76,
+          "qbDropBase": 4.26,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.397,
-          "nonQbSpreadSeason": -0.074,
-          "totalGameSpreadAdj": -0.397,
-          "totalSeasonSpreadAdj": -0.074
+          "nonQbSpreadGame": -0.458,
+          "nonQbSpreadSeason": -0.093,
+          "totalGameSpreadAdj": -0.458,
+          "totalSeasonSpreadAdj": -0.093
         },
         "CLE": {
           "qbName": "Deshaun Watson",
           "qbBackupName": "Shedeur Sanders",
-          "qbDropBase": 0.86,
+          "qbDropBase": 1.92,
           "qbStatusNote": "",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.373,
-          "nonQbSpreadSeason": -0.064,
-          "totalGameSpreadAdj": -0.373,
-          "totalSeasonSpreadAdj": -0.064
+          "nonQbSpreadGame": -0.418,
+          "nonQbSpreadSeason": -0.104,
+          "totalGameSpreadAdj": -0.418,
+          "totalSeasonSpreadAdj": -0.104
         },
         "PIT": {
           "qbName": "Mason Rudolph",
           "qbBackupName": "Drew Allar",
-          "qbDropBase": 0.5,
-          "qbStatusNote": "",
+          "qbDropBase": 0.98,
+          "qbStatusNote": "Alex Highsmith (LB D)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.673,
-          "nonQbSpreadSeason": -0.187,
-          "totalGameSpreadAdj": -0.673,
-          "totalSeasonSpreadAdj": -0.187
+          "nonQbSpreadGame": -1.371,
+          "nonQbSpreadSeason": -0.267,
+          "totalGameSpreadAdj": -1.371,
+          "totalSeasonSpreadAdj": -0.267
         },
         "HOU": {
           "qbName": "C.J. Stroud",
           "qbBackupName": "Davis Mills",
-          "qbDropBase": 2.67,
-          "qbStatusNote": "",
+          "qbDropBase": 2.02,
+          "qbStatusNote": "Azeez Al-Shaair (LB IR), Danielle Hunter (DE Q 45%)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.755,
-          "nonQbSpreadSeason": -0.207,
-          "totalGameSpreadAdj": -0.755,
-          "totalSeasonSpreadAdj": -0.207
+          "nonQbSpreadGame": -1.365,
+          "nonQbSpreadSeason": -0.364,
+          "totalGameSpreadAdj": -1.365,
+          "totalSeasonSpreadAdj": -0.364
         },
         "IND": {
           "qbName": "Anthony Richardson Sr.",
           "qbBackupName": "Riley Leonard",
-          "qbDropBase": 0.5,
-          "qbStatusNote": "Bernhard Raimann (OT D)",
+          "qbDropBase": 1.29,
+          "qbStatusNote": "Bernhard Raimann (OT D), Charvarius Ward (CB Q 46%)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -1.257,
-          "nonQbSpreadSeason": -0.297,
-          "totalGameSpreadAdj": -1.257,
-          "totalSeasonSpreadAdj": -0.297
+          "nonQbSpreadGame": -2.163,
+          "nonQbSpreadSeason": -0.359,
+          "totalGameSpreadAdj": -2.163,
+          "totalSeasonSpreadAdj": -0.359
         },
         "JAX": {
           "qbName": "Trevor Lawrence",
           "qbBackupName": "Quinn Ewers",
-          "qbDropBase": 3.53,
-          "qbStatusNote": "Anton Harrison (OT Season IR)",
+          "qbDropBase": 4.93,
+          "qbStatusNote": "Anton Harrison (OT Season IR), Eric Murray (S Season IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.794,
-          "nonQbSpreadSeason": -0.5,
-          "totalGameSpreadAdj": -0.794,
-          "totalSeasonSpreadAdj": -0.5
+          "nonQbSpreadGame": -1.52,
+          "nonQbSpreadSeason": -1.08,
+          "totalGameSpreadAdj": -1.52,
+          "totalSeasonSpreadAdj": -1.08
         },
         "TEN": {
           "qbName": "Cam Ward",
           "qbBackupName": "Mitchell Trubisky",
-          "qbDropBase": 1.06,
-          "qbStatusNote": "Wan'Dale Robinson (WR Season IR)",
+          "qbDropBase": 0.5,
+          "qbStatusNote": "Wan'Dale Robinson (WR Season IR), Peter Skoronski (G IR)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.879,
-          "nonQbSpreadSeason": -0.474,
-          "totalGameSpreadAdj": -0.879,
-          "totalSeasonSpreadAdj": -0.474
+          "nonQbSpreadGame": -1.768,
+          "nonQbSpreadSeason": -0.981,
+          "totalGameSpreadAdj": -1.768,
+          "totalSeasonSpreadAdj": -0.981
         },
         "KC": {
           "qbName": "Patrick Mahomes",
           "qbBackupName": "Justin Fields",
-          "qbDropBase": 3.19,
-          "qbStatusNote": "Jaylon Moore (OT Out)",
+          "qbDropBase": 4.03,
+          "qbStatusNote": "Jaylon Moore (OT Out), Kenneth Walker III (RB Out)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.861,
-          "nonQbSpreadSeason": -0.11,
-          "totalGameSpreadAdj": -0.861,
-          "totalSeasonSpreadAdj": -0.11
+          "nonQbSpreadGame": -1.602,
+          "nonQbSpreadSeason": -0.127,
+          "totalGameSpreadAdj": -1.602,
+          "totalSeasonSpreadAdj": -0.127
         },
         "DEN": {
           "qbName": "Bo Nix",
           "qbBackupName": "Jarrett Stidham",
-          "qbDropBase": 1.32,
-          "qbStatusNote": "",
+          "qbDropBase": 0.5,
+          "qbStatusNote": "Jonathon Cooper (LB Returned), Pat Surtain II (CB Returned)",
           "qbSpreadGame": 0,
           "qbSpreadSeason": 0,
-          "nonQbSpreadGame": -0.195,
-          "nonQbSpreadSeason": -0.07,
-          "totalGameSpreadAdj": -0.195,
-          "totalSeasonSpreadAdj": -0.07
+          "nonQbSpreadGame": 0.183,
+          "nonQbSpreadSeason": 0.338,
+          "totalGameSpreadAdj": 0.183,
+          "totalSeasonSpreadAdj": 0.338
         },
         "LAC": {
           "qbName": "Justin Herbert",
           "qbBackupName": "DJ Uiagalelei",
-          "qbDropBase": 0.5,
-          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei)",
-          "qbSpreadGame": -0.35,
-          "qbSpreadSeason": -0.11,
-          "nonQbSpreadGame": -0.684,
-          "nonQbSpreadSeason": -0.021,
-          "totalGameSpreadAdj": -1.034,
-          "totalSeasonSpreadAdj": -0.131
+          "qbDropBase": 1.43,
+          "qbStatusNote": "Justin Herbert (QB1 Doubtful → DJ Uiagalelei); Rashawn Slater (OT IR)",
+          "qbSpreadGame": -1.004,
+          "qbSpreadSeason": -0.316,
+          "nonQbSpreadGame": -1.366,
+          "nonQbSpreadSeason": -0.101,
+          "totalGameSpreadAdj": -2.37,
+          "totalSeasonSpreadAdj": -0.417
         },
         "LV": {
           "qbName": "Fernando Mendoza",
@@ -9738,7 +9758,7 @@
         "shortDetail": "12/7 - 8:15 PM EST"
       }
     },
-    "lastSimulatedAt": "2026-11-25T20:47:30.629Z",
+    "lastSimulatedAt": "2026-11-25T20:51:53.915Z",
     "modelVersion": "2026.3-hb-srs-var"
   },
   "draftPrep2027": {
@@ -9910,7 +9930,7 @@
       {
         "rank": 1,
         "pos": "S (Deep-Half Range & Split-Safety Depth)",
-        "horizon": "Critical — Pending 2027 free agency / contract decisions around Jordan Battle and Bryan Cook make rookie-contract reinforcement a top priority."
+        "horizon": "Critical — Expiring 2027 contract exposure (Jordan Battle) puts a premium on rookie-scale reinforcement alongside Bryan Cook."
       },
       {
         "rank": 2,
@@ -9920,7 +9940,7 @@
       {
         "rank": 3,
         "pos": "TE (12-Personnel Seam & Inline Hybrid)",
-        "horizon": "High — Pending 2027 free agency / contract decisions around Drew Sample (30) and Mike Gesicki (31) make rookie-contract reinforcement a top priority."
+        "horizon": "High — Expiring 2027 contract exposure (Drew Sample (30)) puts a premium on rookie-scale reinforcement alongside Mike Gesicki."
       },
       {
         "rank": 4,
@@ -9934,7 +9954,7 @@
         "siteName": "Tankathon",
         "analyst": "Tankathon Live Mock",
         "url": "https://www.tankathon.com/nfl/mock_draft",
-        "publishedAt": "2026-11-25T20:45:02.630Z",
+        "publishedAt": "2026-11-25T20:50:47.387Z",
         "projectedPick": 24,
         "round": 1,
         "playerName": "Jadan Baugh",
@@ -10008,6 +10028,19 @@
         "note": "High-upside consensus blue-chip prospect graded across multiple national scouting boards."
       },
       {
+        "siteId": "drafttek",
+        "siteName": "DraftTek",
+        "analyst": "DraftTek Consensus Model",
+        "url": "https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp",
+        "publishedAt": "2026-11-25T12:00:00.000Z",
+        "projectedPick": 28,
+        "round": 1,
+        "playerName": "Yhonzae Pierre",
+        "pos": "EDGE",
+        "school": "Alabama",
+        "note": "Long SEC edge setter with heavy hands in run support and counter-spin pass-rush upside."
+      },
+      {
         "siteId": "draftblaster",
         "siteName": "DraftBlaster",
         "analyst": "",
@@ -10032,19 +10065,6 @@
         "pos": "CB",
         "school": "Mississippi State",
         "note": "6'4\" boundary corner matching X-receivers with length and split-safety zone awareness."
-      },
-      {
-        "siteId": "drafttek",
-        "siteName": "DraftTek",
-        "analyst": "DraftTek Consensus Model",
-        "url": "https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp",
-        "publishedAt": "2026-11-23T12:00:00.000Z",
-        "projectedPick": 28,
-        "round": 1,
-        "playerName": "Tae Johnson",
-        "pos": "S",
-        "school": "Notre Dame",
-        "note": "Zone-intelligent defensive back suited for disguised split-safety coverage shells."
       },
       {
         "siteId": "nfl_mocks",
@@ -10382,8 +10402,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 5,
-            "delta": -1,
+            "rank": 6,
+            "delta": -2,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -10680,7 +10700,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 1,
-        "spread": 10,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 10,
@@ -10688,8 +10708,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 12,
-            "delta": -2,
+            "rank": 13,
+            "delta": -3,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -10782,7 +10802,7 @@
         "canonicalPos": "QB",
         "pos_group": "OFF",
         "tier": 1,
-        "spread": 15,
+        "spread": 16,
         "boards": {
           "consensus": {
             "rank": 12,
@@ -10790,8 +10810,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 6,
-            "delta": 6,
+            "rank": 5,
+            "delta": 7,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -10841,8 +10861,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 16,
-            "delta": -3,
+            "rank": 17,
+            "delta": -4,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -10892,8 +10912,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 13,
-            "delta": 1,
+            "rank": 12,
+            "delta": 2,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -10935,7 +10955,7 @@
         "canonicalPos": "RB",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 12,
+        "spread": 13,
         "boards": {
           "consensus": {
             "rank": 15,
@@ -10943,8 +10963,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 27,
-            "delta": -12,
+            "rank": 28,
+            "delta": -13,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11096,8 +11116,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 20,
-            "delta": -2,
+            "rank": 21,
+            "delta": -3,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11190,7 +11210,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 10,
+        "spread": 6,
         "boards": {
           "consensus": {
             "rank": 20,
@@ -11198,8 +11218,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 24,
-            "delta": -4,
+            "rank": 16,
+            "delta": 4,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11241,7 +11261,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 2,
-        "spread": 8,
+        "spread": 5,
         "boards": {
           "consensus": {
             "rank": 21,
@@ -11249,8 +11269,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 28,
-            "delta": -7,
+            "rank": 25,
+            "delta": -4,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11504,8 +11524,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 26,
-            "delta": 0,
+            "rank": 27,
+            "delta": -1,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11547,7 +11567,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 2,
-        "spread": 9,
+        "spread": 3,
         "boards": {
           "consensus": {
             "rank": 27,
@@ -11555,8 +11575,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 18,
-            "delta": 9,
+            "rank": 24,
+            "delta": 3,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11648,7 +11668,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 2,
-        "spread": 13,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 29,
@@ -11656,8 +11676,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 38,
-            "delta": -9,
+            "rank": 36,
+            "delta": -7,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11750,7 +11770,7 @@
         "canonicalPos": "QB",
         "pos_group": "OFF",
         "tier": 2,
-        "spread": 31,
+        "spread": 32,
         "boards": {
           "consensus": {
             "rank": 31,
@@ -11758,8 +11778,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 21,
-            "delta": 10,
+            "rank": 20,
+            "delta": 11,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11809,8 +11829,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 17,
-            "delta": 15,
+            "rank": 18,
+            "delta": 14,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11850,7 +11870,7 @@
         "canonicalPos": "QB",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 31,
+        "spread": 30,
         "boards": {
           "consensus": {
             "rank": 33,
@@ -11858,8 +11878,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 25,
-            "delta": 8,
+            "rank": 26,
+            "delta": 7,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -11909,8 +11929,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 37,
-            "delta": -3,
+            "rank": 38,
+            "delta": -4,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12010,8 +12030,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 36,
-            "delta": 0,
+            "rank": 37,
+            "delta": -1,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12104,7 +12124,7 @@
         "canonicalPos": "TE",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 18,
+        "spread": 17,
         "boards": {
           "consensus": {
             "rank": 38,
@@ -12112,8 +12132,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 48,
-            "delta": -10,
+            "rank": 47,
+            "delta": -9,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12155,7 +12175,7 @@
         "canonicalPos": "S",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 7,
+        "spread": 5,
         "boards": {
           "consensus": {
             "rank": 39,
@@ -12163,8 +12183,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 46,
-            "delta": -7,
+            "rank": 44,
+            "delta": -5,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12204,7 +12224,7 @@
         "canonicalPos": "S",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 1,
+        "spread": 3,
         "boards": {
           "consensus": {
             "rank": 40,
@@ -12212,8 +12232,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 41,
-            "delta": -1,
+            "rank": 43,
+            "delta": -3,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12255,7 +12275,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 19,
+        "spread": 17,
         "boards": {
           "consensus": {
             "rank": 41,
@@ -12263,8 +12283,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 47,
-            "delta": -6,
+            "rank": 45,
+            "delta": -4,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12609,7 +12629,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 6,
+        "spread": 8,
         "boards": {
           "consensus": {
             "rank": 48,
@@ -12617,8 +12637,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 42,
-            "delta": 6,
+            "rank": 40,
+            "delta": 8,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12660,7 +12680,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 9,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 49,
@@ -12668,8 +12688,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 44,
-            "delta": 5,
+            "rank": 41,
+            "delta": 8,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12761,7 +12781,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 15,
+        "spread": 14,
         "boards": {
           "consensus": {
             "rank": 51,
@@ -12769,8 +12789,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 66,
-            "delta": -15,
+            "rank": 65,
+            "delta": -14,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12811,7 +12831,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 28,
+        "spread": 27,
         "boards": {
           "consensus": {
             "rank": 52,
@@ -12819,8 +12839,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 71,
-            "delta": -19,
+            "rank": 70,
+            "delta": -18,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12860,7 +12880,7 @@
         "canonicalPos": "IOL",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 42,
+        "spread": 41,
         "boards": {
           "consensus": {
             "rank": 53,
@@ -12868,8 +12888,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 77,
-            "delta": -24,
+            "rank": 76,
+            "delta": -23,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -12960,7 +12980,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 26,
+        "spread": 18,
         "boards": {
           "consensus": {
             "rank": 55,
@@ -12968,8 +12988,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 40,
-            "delta": 15,
+            "rank": 48,
+            "delta": 7,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13011,7 +13031,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 26,
+        "spread": 23,
         "boards": {
           "consensus": {
             "rank": 56,
@@ -13019,8 +13039,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 43,
-            "delta": 13,
+            "rank": 46,
+            "delta": 10,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13061,7 +13081,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 18,
+        "spread": 21,
         "boards": {
           "consensus": {
             "rank": 57,
@@ -13069,8 +13089,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 45,
-            "delta": 12,
+            "rank": 42,
+            "delta": 15,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13111,7 +13131,7 @@
         "canonicalPos": "S",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 12,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 58,
@@ -13119,8 +13139,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 69,
-            "delta": -11,
+            "rank": 68,
+            "delta": -10,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13422,8 +13442,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 67,
-            "delta": -3,
+            "rank": 66,
+            "delta": -2,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13714,7 +13734,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 15,
+        "spread": 14,
         "boards": {
           "consensus": {
             "rank": 70,
@@ -13722,8 +13742,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 76,
-            "delta": -6,
+            "rank": 75,
+            "delta": -5,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13764,7 +13784,7 @@
         "canonicalPos": "DL",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 9,
+        "spread": 8,
         "boards": {
           "consensus": {
             "rank": 71,
@@ -13772,8 +13792,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 80,
-            "delta": -9,
+            "rank": 79,
+            "delta": -8,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13813,7 +13833,7 @@
         "canonicalPos": "WR",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 8,
+        "spread": 9,
         "boards": {
           "consensus": {
             "rank": 72,
@@ -13821,8 +13841,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 68,
-            "delta": 4,
+            "rank": 67,
+            "delta": 5,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -13970,8 +13990,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 75,
-            "delta": 0,
+            "rank": 74,
+            "delta": 1,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14062,7 +14082,7 @@
         "canonicalPos": "LB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 11,
+        "spread": 12,
         "boards": {
           "consensus": {
             "rank": 77,
@@ -14070,8 +14090,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 72,
-            "delta": 5,
+            "rank": 71,
+            "delta": 6,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14162,7 +14182,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 19,
+        "spread": 20,
         "boards": {
           "consensus": {
             "rank": 79,
@@ -14170,8 +14190,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 73,
-            "delta": 6,
+            "rank": 72,
+            "delta": 7,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14212,7 +14232,7 @@
         "canonicalPos": "OT",
         "pos_group": "OFF",
         "tier": 3,
-        "spread": 15,
+        "spread": 16,
         "boards": {
           "consensus": {
             "rank": 80,
@@ -14220,8 +14240,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 79,
-            "delta": 1,
+            "rank": 78,
+            "delta": 2,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14269,8 +14289,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 65,
-            "delta": 16,
+            "rank": 80,
+            "delta": 1,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14459,7 +14479,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 10,
+        "spread": 11,
         "boards": {
           "consensus": {
             "rank": 85,
@@ -14467,8 +14487,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 78,
-            "delta": 7,
+            "rank": 77,
+            "delta": 8,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14609,7 +14629,7 @@
         "canonicalPos": "CB",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 18,
+        "spread": 19,
         "boards": {
           "consensus": {
             "rank": 88,
@@ -14617,8 +14637,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 70,
-            "delta": 18,
+            "rank": 69,
+            "delta": 19,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -14907,7 +14927,7 @@
         "canonicalPos": "EDGE",
         "pos_group": "DEF",
         "tier": 3,
-        "spread": 24,
+        "spread": 25,
         "boards": {
           "consensus": {
             "rank": 94,
@@ -14915,8 +14935,8 @@
             "updated_at": "2026-11-25"
           },
           "buzz": {
-            "rank": 74,
-            "delta": 20,
+            "rank": 73,
+            "delta": 21,
             "updated_at": "2026-11-24"
           },
           "pff": {
@@ -23029,10 +23049,10 @@
     "consensusMockTargets": [
       {
         "rank": 1,
-        "name": "KJ Bolden / Tae Johnson",
+        "name": "KJ Bolden / Brauntae Johnson",
         "pos": "S",
         "school": "Georgia / Notre Dame",
-        "heightWeight": "6'0\" • 195 lbs / 6'2\" • 200 lbs",
+        "heightWeight": "6'0\" • 195 lbs",
         "mockFrequencyToSfPct": 25,
         "shanahanLynchFitScore": 95,
         "sourceUrl": "https://sticktothemodel.com/player/kj-bolden",
@@ -23044,10 +23064,10 @@
             "url": "https://sticktothemodel.com/player/kj-bolden"
           },
           {
-            "name": "Tae Johnson",
+            "name": "Brauntae Johnson",
             "pos": "S",
             "school": "Notre Dame",
-            "url": "https://sticktothemodel.com/player/tae-johnson"
+            "url": "https://sticktothemodel.com/player/brauntae-johnson"
           }
         ],
         "archetypeTraits": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes.",
@@ -23178,7 +23198,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/H/HoweCa00.htm",
         "consensusBigBoardRank": 41,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 10095000,
+        "estimated4YrRookieTotal": 9824727,
         "status": "Injured Reserve",
         "roleSummary": "Injured Reserve • 6' 3\" 255 lbs • 39% 2026 snaps",
         "strengths": [
@@ -23332,7 +23352,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/D/DaviTa01.htm",
         "consensusBigBoardRank": 72,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 6412000,
+        "estimated4YrRookieTotal": 7236420,
         "status": "Active 53",
         "roleSummary": "Active 53 • 6' 4\" 194 lbs • 12% 2026 snaps",
         "strengths": [
@@ -23486,7 +23506,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/L/LewxCo00.htm",
         "consensusBigBoardRank": 128,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 4790000,
+        "estimated4YrRookieTotal": 5444356,
         "status": "Active 53",
         "roleSummary": "Active 53 • 6' 4\" 310 lbs",
         "strengths": [
@@ -23638,7 +23658,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/Y/YounCo01.htm",
         "consensusBigBoardRank": 140,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 4550000,
+        "estimated4YrRookieTotal": 5169036,
         "status": "Active 53",
         "roleSummary": "Active 53 • 6' 3\" 218 lbs • 23% 2026 snaps",
         "strengths": [
@@ -23792,7 +23812,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/P/ParkBr02.htm",
         "consensusBigBoardRank": 189,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 4231500,
+        "estimated4YrRookieTotal": 4472264,
         "status": "Active 53",
         "roleSummary": "Active 53 • 6' 5\" 310 lbs",
         "strengths": [
@@ -23945,7 +23965,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/E/EndrJa00.htm",
         "consensusBigBoardRank": 221,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 4020000,
+        "estimated4YrRookieTotal": 4551016,
         "status": "Active 53",
         "roleSummary": "Active 53 • 6' 5\" 245 lbs • 16% 2026 snaps",
         "strengths": [
@@ -24099,7 +24119,7 @@
         "pfrUrl": "https://www.pro-football-reference.com/players/R/RobiLa04.htm",
         "consensusBigBoardRank": 226,
         "stealDelta": 0,
-        "estimated4YrRookieTotal": 4020000,
+        "estimated4YrRookieTotal": 4542284,
         "status": "Active 53",
         "roleSummary": "Active 53 • 6' 0\" 295 lbs",
         "strengths": [

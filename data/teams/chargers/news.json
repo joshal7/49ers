@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:46:11.275Z",
+  "updatedAt": "2026-11-25T20:51:45.028Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17PT",
     "cycleKey": "2026-11-24@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-25T20:46:11.275Z",
+    "generatedAt": "2026-11-25T20:51:45.028Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -339,7 +339,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY SCOOP",
-      "breakingPriority": 2.09,
+      "breakingPriority": 2.073,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -351,7 +351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 62.4844
+      "storyRank": 55.9013
     },
     {
       "id": "lac_pwire_4038941_64974628",
@@ -427,7 +427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.4573
+      "storyRank": 10.0773
     },
     {
       "id": "lac_brss_bolts_from_the_blue_b4383d2f3dd6",
@@ -461,7 +461,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5747
+      "storyRank": 7.3546
     },
     {
       "id": "lac_rss_999d24f3cbf7",
@@ -495,7 +495,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1872
+      "storyRank": 5.0729
     },
     {
       "id": "lac_rss_bbc14cd6cfea",
@@ -529,7 +529,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0841
+      "storyRank": 4.9736
     },
     {
       "id": "lac_pwire_4685382_50588158",
@@ -561,7 +561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3438
+      "storyRank": 4.2582
     },
     {
       "id": "lac_brss_bolts_from_the_blue_975b1d48a411",
@@ -612,7 +612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5784
+      "storyRank": 3.5169
     },
     {
       "id": "lac_rss_a06ff68c394b",
@@ -646,7 +646,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7909
+      "storyRank": 0.7863
     },
     {
       "id": "lac_pwire_4612826_49949224",
@@ -678,7 +678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6354
+      "storyRank": 0.6322
     },
     {
       "id": "lac_brss_bolts_from_the_blue_f70452cac356",
@@ -712,7 +712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5613
+      "storyRank": 0.5587
     },
     {
       "id": "lac_rss_8b9f00848d65",
@@ -746,7 +746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5468
+      "storyRank": 0.5444
     },
     {
       "id": "lac_rss_c4bd257848cf",
@@ -789,7 +789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1702
+      "storyRank": 0.1693
     },
     {
       "id": "lac_rss_08b4e9624480",
@@ -823,7 +823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4958
+      "storyRank": 0.4938
     },
     {
       "id": "lac_brss_bolts_from_the_blue_2c47746affd8",
@@ -857,7 +857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4812
+      "storyRank": 0.4792
     },
     {
       "id": "lac_tx_3349c71efe42",
@@ -892,7 +892,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3724
+      "storyRank": 0.3711
     },
     {
       "id": "lac_vid_f597da1977a1",
@@ -937,7 +937,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2835
+      "storyRank": 0.2827
     },
     {
       "id": "lac_yts_gvZYsXcr_6g",
@@ -949,7 +949,7 @@
       "duration": "11:58",
       "imageUrl": "https://i.ytimg.com/vi/gvZYsXcr_6g/hqdefault.jpg",
       "imageAlt": "New York Jets vs. Los Angeles Chargers Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T20:46:12.317Z",
+      "publishedAt": "2026-11-23T20:51:45.743Z",
       "url": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
       "externalVideoUrl": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
       "channel": "NFL",
@@ -1027,7 +1027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2518
+      "storyRank": 0.2512
     },
     {
       "id": "lac_rss_dc895e7ae943",
@@ -1061,7 +1061,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2463
+      "storyRank": 0.2457
     },
     {
       "id": "lac_rss_75dbbcd77d80",
@@ -1095,7 +1095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2273
+      "storyRank": 0.2268
     },
     {
       "id": "lac_rss_06f0044d7c90",
@@ -1129,7 +1129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2215
+      "storyRank": 0.221
     },
     {
       "id": "lac_brss_bolts_from_the_blue_2924721f6da8",
@@ -1172,7 +1172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2137
+      "storyRank": 0.2132
     },
     {
       "id": "lac_espn_7a956123b6c0f",
@@ -1207,7 +1207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1629
+      "storyRank": 0.1626
     },
     {
       "id": "lac_brss_bolts_from_the_blue_9e31811b87b0",
@@ -1241,7 +1241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1144
+      "storyRank": 0.1142
     },
     {
       "id": "lac_espn_829588ca8e863",
@@ -1285,7 +1285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1612
+      "storyRank": 0.1609
     },
     {
       "id": "lac_vid_f3fbd49d03be",
@@ -1330,7 +1330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1608
+      "storyRank": 0.1605
     },
     {
       "id": "lac_brss_bolts_from_the_blue_1cba51059f4f",
@@ -1373,7 +1373,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1579
+      "storyRank": 0.1576
     },
     {
       "id": "lac_vid_6eb08188d239",
@@ -1426,7 +1426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1603
+      "storyRank": 0.16
     },
     {
       "id": "lac_vid_8e7f0640db83",
@@ -1471,7 +1471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.16
+      "storyRank": 0.1597
     },
     {
       "id": "lac_vid_b4691779ce53",
@@ -1516,7 +1516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1598
+      "storyRank": 0.1595
     },
     {
       "id": "lac_vid_2bc0232d7d19",
@@ -1561,7 +1561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1597
+      "storyRank": 0.1594
     },
     {
       "id": "lac_vid_feb773895762",
@@ -1597,7 +1597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1593
+      "storyRank": 0.159
     },
     {
       "id": "lac_vid_02766a75299a",
@@ -1642,7 +1642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1582
+      "storyRank": 0.1579
     },
     {
       "id": "lac_rss_7bcb5f93799f",
@@ -1676,7 +1676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1571
+      "storyRank": 0.1569
     },
     {
       "id": "lac_vid_81bb93d097b7",
@@ -1729,7 +1729,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1571
+      "storyRank": 0.1568
     },
     {
       "id": "lac_bsky_1a22357fad93",
@@ -1767,7 +1767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1489
+      "storyRank": 0.1486
     },
     {
       "id": "lac_vid_b631fd69169f",
@@ -1820,7 +1820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1559
+      "storyRank": 0.1556
     },
     {
       "id": "lac_brss_bolts_from_the_blue_a9fa84f491c6",
@@ -1854,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.149
+      "storyRank": 0.1487
     },
     {
       "id": "lac_rss_3b239747f8a2",
@@ -1888,7 +1888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0591
+      "storyRank": 0.059
     },
     {
       "id": "lac_rss_8f8aa51ffb40",
@@ -1922,7 +1922,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.056
+      "storyRank": 0.0559
     },
     {
       "id": "lac_rss_f9fe0ab84955",
@@ -1973,7 +1973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0419
     },
     {
       "id": "lac_tx_dc8ca1358c18",
@@ -2197,7 +2197,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0288
+      "storyRank": 0.0287
     },
     {
       "id": "lac_rss_c1cc7c1b60ef",
@@ -2321,7 +2321,7 @@
       "duration": "10:01",
       "imageUrl": "https://i.ytimg.com/vi/24xA94YJFno/hqdefault.jpg",
       "imageAlt": "New York Jets vs Los Angeles Chargers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:46:12.317Z",
+      "publishedAt": "2026-11-18T20:51:45.743Z",
       "url": "https://www.youtube.com/watch?v=24xA94YJFno",
       "externalVideoUrl": "https://www.youtube.com/watch?v=24xA94YJFno",
       "channel": "NFL",
@@ -2486,7 +2486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0163
     },
     {
       "id": "lac_yts_iXTg27Lenug",
@@ -2498,7 +2498,7 @@
       "duration": "17:43",
       "imageUrl": "https://i.ytimg.com/vi/iXTg27Lenug/hqdefault.jpg",
       "imageAlt": "Los Angeles Chargers vs Baltimore Ravens Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-17T20:46:12.317Z",
+      "publishedAt": "2026-11-17T20:51:45.743Z",
       "url": "https://www.youtube.com/watch?v=iXTg27Lenug",
       "externalVideoUrl": "https://www.youtube.com/watch?v=iXTg27Lenug",
       "channel": "NFL",
@@ -2605,14 +2605,14 @@
       "imageAlt": "Kyle Hamilton says Ravens 'disgracing' standards after losing to 0-8 Chargers",
       "publishedAt": "2026-11-17T14:45:17.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50508744/kyle-hamilton-says-ravens-disgracing-standards-loss-previously-winless-chargers",
-      "outletId": "espn_lac",
+      "outletId": "espn_bal",
       "outletName": "ESPN",
-      "reporterId": "espn_lac",
+      "reporterId": "jamison_hensley",
       "reporterName": "Jamison Hensley",
       "author": "Jamison Hensley",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
+      "authorHandle": "@jamisonhensley",
+      "authorProfileUrl": "https://x.com/jamisonhensley",
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "mentionedPlayers": [],
       "isBreaking": false,
@@ -2623,12 +2623,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.013
     },
     {
       "id": "lac_espn_84e1ab5575045",
@@ -2640,7 +2640,7 @@
       "imageAlt": "Chargers relieved after beating Ravens for first win of season",
       "publishedAt": "2026-11-17T13:22:22.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50508438/chargers-relieved-beating-ravens-first-win-season",
-      "outletId": "espn",
+      "outletId": "espn_den",
       "outletName": "ESPN",
       "reporterId": "jeff_legwold",
       "reporterName": "Jeff Legwold",
@@ -2675,7 +2675,7 @@
       "imageAlt": "Justin Herbert, defense help lift Chargers past Ravens on MNF",
       "publishedAt": "2026-11-17T06:03:19.000Z",
       "url": "https://www.espn.com/nfl/story/_/id/50506286/ravens-chargers-mnf-herbert-first-win",
-      "outletId": "espn",
+      "outletId": "espn_den",
       "outletName": "ESPN",
       "reporterId": "jeff_legwold",
       "reporterName": "Jeff Legwold",
@@ -3400,7 +3400,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0069
     },
     {
       "id": "lac_tx_c726340e3933",

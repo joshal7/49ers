@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:29.049Z",
+  "updatedAt": "2026-11-25T20:49:51.693Z",
   "sources": [
     {
       "label": "ESPN Buccaneers Schedule",
@@ -24645,10 +24645,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (52.1% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11.",
+        "blurb": "Tier 3 (52.8% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24734,10 +24734,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (52.1% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11."
+        "blurb": "Tier 3 (52.8% neutral-field win rating, 6.9 proj. wins) at 3-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24803,7 +24803,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:32.028Z"
+    "fetchedAtIso": "2026-11-25T20:49:54.759Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27467,16 +27467,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Graham Barton, Luke Goedeke & Ben Bredeson vs. DT Derrick Brown & Panthers Simulated Pressures",
+        "unitMatchup": "Luke Goedeke, Graham Barton & Tristan Wirfs vs. DT Derrick Brown & Panthers Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Graham Barton",
           "Luke Goedeke",
-          "Ben Bredeson"
+          "Graham Barton",
+          "Tristan Wirfs"
         ],
         "statComparison": "TB: #16 Pass Protection (6.0%) | CAR: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Graham Barton, Luke Goedeke & Ben Bredeson protect Baker Mayfield (#16 protection at 6.0%) against DT Derrick Brown and Carolina Panthers's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Graham Barton (#62) on obvious passing downs—if DT Derrick Brown cannot win clean around the arc, Panthers must dial up interior stunts that stress Luke Goedeke (#67)."
+        "tacticalDetail": "Luke Goedeke, Graham Barton & Tristan Wirfs protect Baker Mayfield (#16 protection at 6.0%) against DT Derrick Brown and Carolina Panthers's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Luke Goedeke (#67) on obvious passing downs—if DT Derrick Brown cannot win clean around the arc, Panthers must dial up interior stunts that stress Graham Barton (#62)."
       }
     ]
   }

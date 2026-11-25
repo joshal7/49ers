@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:29.049Z",
+  "updatedAt": "2026-11-25T20:49:51.693Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-25T20:44:29.049Z",
+    "generatedAt": "2026-11-25T20:49:51.693Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -22,7 +22,7 @@
       "Roster & Front Office: Tampa Bay signed CB Brandon Johnson to the practice squad [Greg Auman](https://x.com/gregauman/status/2125618175509209491).",
       "Injury & Practice Status: Entering Week 12 preparation, head coach Todd Bowles and the medical staff evaluate DT Elijah Simmons (concussion), S Antoine Winfield Jr. (ankle), CB Benjamin Morrison (hamstring), and CB Jacob Parrish (back) ahead of Wednesday's initial participation report [buccaneers.com Official](https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates) [Brianna Dix](https://www.espn.com/nfl/player/_/id/4912847/jacob-parrish#:~:text=Buccaneers%20head%20coach%20Todd%20Bowles%20said%20that). CB Josh Hayes (knee (surgery)) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Greg Auman](https://x.com/gregauman/status/2125618175509209491).",
       "Week 12 Panthers Outlook: Todd Bowles and DC Todd Bowles open installation for the Carolina Panthers (5-5, TB -3, HC/DC Todd Bowles vs. HC Dave Canales, OC Brad Idzik & DC Todd Wash (Raymond James Stadium))—a unit ranked #5 in Def. Takeaways / Game (1.60) as Tampa Bay prepares for a pivotal NFC matchup [buccaneers.com Official](https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12) [Gil Arcia](https://www.bucsnation.com/tampa-bay-buccaneers-odds/69895/buccaneers-vs-panthers-odds-week-12-opening-lines-point-spread-total).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (2nd in NFC South • #12 Seed in NFC), Tampa Bay carries a 32.8% postseason projection, 32.7% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Jeremy Brener](https://www.bucsnation.com/tampa-bay-buccaneers-news/69947/tampa-bay-buccaneers-news-bucs-loss-vs-lions-could-have-major-repercussions)."
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (2nd in NFC South • #12 Seed in NFC), Tampa Bay carries a 31.2% postseason projection, 31% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Jeremy Brener](https://www.bucsnation.com/tampa-bay-buccaneers-news/69947/tampa-bay-buccaneers-news-bucs-loss-vs-lions-could-have-major-repercussions)."
     ],
     "coveredStoryKeys": [
       "jalenmcmillan::ir_roster_move",
@@ -369,7 +369,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 32.4751
+      "storyRank": 30.0253
     },
     {
       "id": "tb_vid_05477cccd819",
@@ -430,7 +430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 31.9942
+      "storyRank": 29.6047
     },
     {
       "id": "tb_vid_0a73dc627f7c",
@@ -483,7 +483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 31.5255
+      "storyRank": 29.1941
     },
     {
       "id": "tb_pfr_c7be2444eb1f",
@@ -523,7 +523,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "BREAKING",
-      "breakingPriority": 1.89,
+      "breakingPriority": 1.873,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -539,7 +539,7 @@
       "isUrgentBreaking": true,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 24.5032
+      "storyRank": 23.8796
     },
     {
       "id": "x_tl_gregauman_2125618175509209491",
@@ -593,7 +593,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.65,
+      "breakingPriority": 1.635,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -609,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.2825
+      "storyRank": 14.0059
     },
     {
       "id": "tb_rss_af35d3507143",
@@ -660,7 +660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.8558,
+      "storyRank": 10.616,
       "isSupersededInjuryUpdate": true
     },
     {
@@ -695,7 +695,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.0599
+      "storyRank": 8.7742
     },
     {
       "id": "tb_rss_237ca059efce",
@@ -738,7 +738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.6911
+      "storyRank": 8.4248
     },
     {
       "id": "tb_pwire_4430834_64970428",
@@ -785,7 +785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7439
+      "storyRank": 5.6181
     },
     {
       "id": "tb_vid_6614d5a62c46",
@@ -821,7 +821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1187
+      "storyRank": 5.0104
     },
     {
       "id": "tb_vid_4e603de9bcd2",
@@ -857,7 +857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6293
+      "storyRank": 4.538
     },
     {
       "id": "tb_tx_5938cbd301c5",
@@ -899,7 +899,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.759,
+      "breakingPriority": 0.752,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -909,7 +909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3798
+      "storyRank": 4.3437
     },
     {
       "id": "tb_rss_800aa8ef4334",
@@ -943,7 +943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9115
+      "storyRank": 3.843
     },
     {
       "id": "tb_vid_156d7a1d5abc",
@@ -988,7 +988,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3856
+      "storyRank": 3.332
     },
     {
       "id": "tb_vid_7eae14ff1f03",
@@ -1041,7 +1041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7561
+      "storyRank": 0.752
     },
     {
       "id": "tb_brss_bucs_nation_84f7581df54d",
@@ -1075,7 +1075,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6618
+      "storyRank": 0.6585
     },
     {
       "id": "tb_pwire_5220680_49949224",
@@ -1107,7 +1107,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6364
+      "storyRank": 0.6333
     },
     {
       "id": "tb_rss_4e335d013fba",
@@ -1141,7 +1141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5913
+      "storyRank": 0.5886
     },
     {
       "id": "tb_rss_b4ea567debe9",
@@ -1184,7 +1184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5893
+      "storyRank": 0.5866
     },
     {
       "id": "tb_rss_d2035fc89ebb",
@@ -1235,7 +1235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5711
+      "storyRank": 0.5685
     },
     {
       "id": "tb_rss_7e005c9cf1ed",
@@ -1269,7 +1269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.548
+      "storyRank": 0.5456
     },
     {
       "id": "tb_rss_c5eb8a7d66a0",
@@ -1312,7 +1312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4653
+      "storyRank": 0.4635
     },
     {
       "id": "tb_rss_b16eb6d258fa",
@@ -1346,7 +1346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4174
+      "storyRank": 0.4159
     },
     {
       "id": "tb_tx_0449f804d740",
@@ -1381,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3728
+      "storyRank": 0.3716
     },
     {
       "id": "tb_vid_6a6cde17a186",
@@ -1426,7 +1426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2765
+      "storyRank": 0.2758
     },
     {
       "id": "tb_brss_bucs_nation_eef0de12af4c",
@@ -1460,7 +1460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.256
+      "storyRank": 0.2553
     },
     {
       "id": "tb_pwire_4912847_64938128",
@@ -1501,7 +1501,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2557
+      "storyRank": 0.2551
     },
     {
       "id": "tb_yts_PWphJLZ89e4",
@@ -1513,7 +1513,7 @@
       "duration": "12:52",
       "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
       "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:44:29.970Z",
+      "publishedAt": "2026-11-23T20:49:52.400Z",
       "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
       "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
       "channel": "NFL",
@@ -1552,7 +1552,7 @@
       "duration": "2:02",
       "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
       "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "publishedAt": "2026-11-23T20:44:29.970Z",
+      "publishedAt": "2026-11-23T20:49:52.400Z",
       "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
       "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
       "channel": "NFL",
@@ -1622,7 +1622,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2574
+      "storyRank": 0.2567
     },
     {
       "id": "tb_rss_febb7a4d749e",
@@ -1673,7 +1673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2516
+      "storyRank": 0.251
     },
     {
       "id": "tb_rss_1d1fe153a9d7",
@@ -1724,7 +1724,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2413
+      "storyRank": 0.2407
     },
     {
       "id": "tb_vid_68d6fbf4ecac",
@@ -1760,7 +1760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.24
+      "storyRank": 0.2395
     },
     {
       "id": "tb_rss_d9a1c55852b5",
@@ -1794,7 +1794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2224
+      "storyRank": 0.2219
     },
     {
       "id": "tb_brss_bucs_nation_9b9e316d4ae8",
@@ -1828,7 +1828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2074
+      "storyRank": 0.2069
     },
     {
       "id": "tb_brss_bucs_nation_94626a46c97f",
@@ -1862,7 +1862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.174
+      "storyRank": 0.1737
     },
     {
       "id": "tb_brss_bucs_nation_26cee4585eeb",
@@ -1896,7 +1896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1705
+      "storyRank": 0.1701
     },
     {
       "id": "tb_brss_bucs_nation_51245d2de155",
@@ -1930,7 +1930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1654
+      "storyRank": 0.1651
     },
     {
       "id": "tb_rss_594fde348b8b",
@@ -1973,7 +1973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1549
+      "storyRank": 0.1546
     },
     {
       "id": "tb_espn_aea129f88ee07",
@@ -2008,7 +2008,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0384
+      "storyRank": 0.0383
     },
     {
       "id": "tb_vid_a64b08f04e11",
@@ -2044,7 +2044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1534
+      "storyRank": 0.1531
     },
     {
       "id": "tb_vid_c4e37877baf8",
@@ -2097,7 +2097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1526
+      "storyRank": 0.1523
     },
     {
       "id": "tb_vid_f0e3a63f825b",
@@ -2142,7 +2142,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1524
+      "storyRank": 0.1521
     },
     {
       "id": "tb_rss_790bc147b13e",
@@ -2176,7 +2176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1523
+      "storyRank": 0.1521
     },
     {
       "id": "tb_rss_de56872ef1bc",
@@ -2210,7 +2210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1523
+      "storyRank": 0.152
     },
     {
       "id": "tb_brss_bucs_nation_be778e8124b1",
@@ -2261,7 +2261,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1485
+      "storyRank": 0.1482
     },
     {
       "id": "tb_vid_94a7d70ab992",
@@ -2306,7 +2306,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1502
+      "storyRank": 0.1499
     },
     {
       "id": "tb_rss_5291c0dcf3cc",
@@ -2340,7 +2340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0373
+      "storyRank": 0.0372
     },
     {
       "id": "tb_vid_973d82765aee",
@@ -2393,7 +2393,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1489
+      "storyRank": 0.1487
     },
     {
       "id": "x_tl_falsefinishhq_2124599256254460337",
@@ -2445,7 +2445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1594
+      "storyRank": 0.1591
     },
     {
       "id": "tb_vid_0cf27068bbfe",
@@ -2490,7 +2490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1468
+      "storyRank": 0.1465
     },
     {
       "id": "x_tl_nfl_2124595629313691762",
@@ -2542,7 +2542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1587
+      "storyRank": 0.1584
     },
     {
       "id": "x_tl_pick6packfb_2124585109433319689",
@@ -2594,7 +2594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1566
+      "storyRank": 0.1563
     },
     {
       "id": "tb_vid_2244ed4cf550",
@@ -2647,7 +2647,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1444
+      "storyRank": 0.1442
     },
     {
       "id": "tb_rss_368f369f4cca",
@@ -2681,7 +2681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1408
+      "storyRank": 0.1406
     },
     {
       "id": "tb_brss_bucs_nation_7a2a04493b3e",
@@ -2715,7 +2715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0661
+      "storyRank": 0.066
     },
     {
       "id": "tb_espn_1e1dd9a4b0dad",
@@ -2759,7 +2759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0659
+      "storyRank": 0.0658
     },
     {
       "id": "tb_rss_554726f4632d",
@@ -2793,7 +2793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.065
+      "storyRank": 0.0649
     },
     {
       "id": "tb_vid_87d7ec130f0a",
@@ -2829,7 +2829,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0629
+      "storyRank": 0.0628
     },
     {
       "id": "tb_brss_bucs_nation_e5676970f3ed",
@@ -2863,46 +2863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0615
-    },
-    {
-      "id": "tb_yts_mlUTJdEtCU8",
-      "type": "video",
-      "videoId": "mlUTJdEtCU8",
-      "embeddable": false,
-      "title": "Buccaneers at Lions | Condensed replay",
-      "summary": "",
-      "duration": "40:34",
-      "imageUrl": "https://i.ytimg.com/vi/mlUTJdEtCU8/hqdefault.jpg",
-      "imageAlt": "Buccaneers at Lions | Condensed replay",
-      "publishedAt": "2026-11-22T08:00:00.000Z",
-      "url": "https://www.youtube.com/watch?v=mlUTJdEtCU8",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=mlUTJdEtCU8",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0568
+      "storyRank": 0.0614
     },
     {
       "id": "tb_rss_f3683165a33c",
@@ -2945,7 +2906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.048
+      "storyRank": 0.0479
     },
     {
       "id": "tb_rss_44ebfb224a14",
@@ -2988,7 +2949,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.048
+      "storyRank": 0.0479
     },
     {
       "id": "tb_tx_3de3f37fe9b8",
@@ -3093,7 +3054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.034
+      "storyRank": 0.0339
     },
     {
       "id": "x_tl_scottsbucs_2123827057167622544",
@@ -3141,7 +3102,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
+      "storyRank": 0.037
     },
     {
       "id": "tb_rss_fc98f2c92677",
@@ -3243,7 +3204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0328
+      "storyRank": 0.0327
     },
     {
       "id": "tb_rss_3e0bd2d6ba22",
@@ -3277,7 +3238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0322
+      "storyRank": 0.0321
     },
     {
       "id": "tb_rss_3cb740f68193",
@@ -3346,7 +3307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.028
+      "storyRank": 0.0279
     },
     {
       "id": "tb_rss_7ca4ff45ce41",
@@ -3432,7 +3393,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0662
+      "storyRank": 0.0661
     },
     {
       "id": "tb_vid_a9aa8e043d2b",
@@ -3522,7 +3483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0273
+      "storyRank": 0.0272
     },
     {
       "id": "tb_vid_22ae2d5c5c47",
@@ -3766,7 +3727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0246
     },
     {
       "id": "tb_rss_d573bace9482",
@@ -3809,7 +3770,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0222
     },
     {
       "id": "tb_vid_7bbfcab98571",
@@ -3866,7 +3827,7 @@
       "duration": "10:36",
       "imageUrl": "https://i.ytimg.com/vi/tWyhLVdZCtg/hqdefault.jpg",
       "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:44:29.970Z",
+      "publishedAt": "2026-11-18T20:49:52.400Z",
       "url": "https://www.youtube.com/watch?v=tWyhLVdZCtg",
       "externalVideoUrl": "https://www.youtube.com/watch?v=tWyhLVdZCtg",
       "channel": "NFL",
@@ -3980,7 +3941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0206
     },
     {
       "id": "tb_pfr_570423ef835d",
@@ -4867,7 +4828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0092
     },
     {
       "id": "tb_rss_60eb4eb76063",

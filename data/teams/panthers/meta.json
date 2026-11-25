@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:55.881Z",
+  "updatedAt": "2026-11-25T20:50:11.320Z",
   "teamAbbr": "CAR",
   "teamSlug": "panthers",
   "brandName": "Keep Pounding",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:55.881Z",
+    "lastCheckedAt": "2026-11-25T20:50:11.320Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

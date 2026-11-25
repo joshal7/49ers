@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:50.951Z",
+  "updatedAt": "2026-11-25T20:48:41.918Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17PT",
     "cycleKey": "2026-11-24@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "6-4",
-    "generatedAt": "2026-11-25T20:43:50.951Z",
+    "generatedAt": "2026-11-25T20:48:41.918Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,27 +15,28 @@
       "hasThu": true,
       "hasFri": false
     },
-    "wordCount": 197,
+    "wordCount": 227,
     "headline": "Rams (6-4) Week 12 Briefing: Thursday Injury Report Ahead of Packers",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: Los Angeles opened TE Terrance Ferguson's 21-day IR practice window alongside limited work for DE Myles Garrett (knee) and S Kam Curl (toe). C Coleman Shelton (hamstring) and G Steve Avila (hamstring) did not practice Thursday, while LS Joe Cardona (ankle) and QB Matthew Stafford (right elbow) practiced in full [Kenneth Arthur](https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay).",
-      "Week 12 Packers Outlook: Sean McVay and DC Chris Shula open installation for the Green Bay Packers (6-4, LAR -2.5, HC Matt LaFleur, OC Adam Stenavich & DC Jonathan Gannon (SoFi Stadium))—a unit ranked #2 in Net Punt Average (46.6 yds) as Los Angeles prepares for a pivotal NFC matchup [Brendan Dzwierzynski](https://www.turfshowtimes.com/los-angeles-rams-analysis/155958/matthew-stafford-rams-packers) [Gary Klein](https://x.com/LATimesklein/status/2125351930247762298).",
-      "NFC Playoff Trajectory: Entering Week 12 at 6-4 (2nd in NFC West • #9 Seed in NFC), Los Angeles carries a 44.7% postseason projection, 3.7% NFC West division title mark, and 1.3% #1 Seed Bye equity into the conference stretch [NFL Trade Rumors](https://nfltraderumors.co/rams-expected-to-franchise-wr-puka-nacua-but-that-might-not-lock-him-in-for-2027/).",
-      "Around the Beat: We have never seen a player, let alone a Hall of Fame quarterback, go off on a head coach while he’s still on the team like what Aaron Rodgers did to Mike McCarthy on Wednesday [Kenneth Arthur](https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay)."
+      "Injury & Practice Status: Los Angeles opened TE Terrance Ferguson's 21-day IR practice window alongside limited work for DE Myles Garrett (knee) and S Kam Curl (toe). C Coleman Shelton (hamstring) and G Steve Avila (hamstring) did not practice Thursday, while LS Joe Cardona (ankle) and QB Matthew Stafford (right elbow) practiced in full [NFL Trade Rumors](https://nfltraderumors.co/rams-made-three-moves-activated-dl-kobie-turner/).",
+      "Week 12 Packers Outlook: Sean McVay and DC Chris Shula open installation for the Green Bay Packers (6-4, LAR -2.5, HC Matt LaFleur, OC Adam Stenavich & DC Jonathan Gannon (SoFi Stadium))—a unit ranked #2 in Net Punt Average (46.6 yds) as Los Angeles prepares for a pivotal NFC matchup [NFL Trade Rumors](https://nfltraderumors.co/rams-made-three-moves-activated-dl-kobie-turner/) [Brendan Dzwierzynski](https://www.turfshowtimes.com/los-angeles-rams-analysis/155958/matthew-stafford-rams-packers).",
+      "NFC Playoff Trajectory: Entering Week 12 at 6-4 (2nd in NFC West • #9 Seed in NFC), Los Angeles carries a 39.2% postseason projection, 3.2% NFC West division title mark, and 1% #1 Seed Bye equity into the conference stretch [Jourdan Rodrigue](https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n35jpe7hes22).",
+      "Around the Beat: Defensive line is a brutal, physical position [Jourdan Rodrigue](https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n35jpe7hes22).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Los Angeles ranks #12 in Points / Game (24.8), #5 in Points Allowed / Game (18.7), #23 in Turnover Differential (-3), giving Sean McVay and Chris Shula a clear benchmark ahead of Wed, Nov 25, 5:00 PM PST • NFL TV at [object Object] against the Green Bay Packers [therams.com Official](https://www.therams.com/news/los-angeles-rams-vs-green-bay-packers-how-to-watch-listen-to-and-live-stream-week-12-2026)."
     ],
     "coveredStoryKeys": [
       "team::watch_guide"
     ],
     "coveredUrls": [
+      "https://nfltraderumors.co/rams-made-three-moves-activated-dl-kobie-turner/",
       "https://www.turfshowtimes.com/los-angeles-rams-analysis/155958/matthew-stafford-rams-packers",
-      "https://x.com/LATimesklein/status/2125351930247762298",
-      "https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay",
-      "https://nfltraderumors.co/rams-expected-to-franchise-wr-puka-nacua-but-that-might-not-lock-him-in-for-2027/",
-      "https://www.turfshowtimes.com/los-angeles-rams-analysis/155944/rams-matthew-stafford-splits-november",
       "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n35jpe7hes22",
       "https://www.therams.com/news/los-angeles-rams-vs-green-bay-packers-how-to-watch-listen-to-and-live-stream-week-12-2026",
+      "https://www.turfshowtimes.com/los-angeles-rams-analysis/155944/rams-matthew-stafford-splits-november",
+      "https://www.turfshowtimes.com/los-angeles-rams-news/155930/rams-packers-thanksgiving-eve-nfl-nacua",
       "https://www.espn.com/nfl/story/_/id/50574387/puka-nacua-injury-last-season-los-angeles-rams-week-12",
+      "https://x.com/LATimesklein/status/2125351930247762298",
       "https://www.therams.com/news/top-rams-news-previews-and-predictions-for-rams-vs-packers-on-thanksgiving-eve-at-sofi-stadium-for-week-12-2026",
       "https://www.therams.com/news/thanksgiving-eve-game-rams-vs-packers-an-opportunity-for-friendship-family-and-history-for-myles-garrett",
       "https://x.com/RapSheet/status/2125339205626990986",
@@ -47,43 +48,19 @@
     "sources": [
       {
         "type": "article",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "Rams Made Three Moves, Activated DL Kobie Turner",
+        "url": "https://nfltraderumors.co/rams-made-three-moves-activated-dl-kobie-turner/",
+        "publishedAt": "2026-11-25T20:45:00.000Z"
+      },
+      {
+        "type": "article",
         "author": "Brendan Dzwierzynski",
         "outlet": "Turf Show Times",
         "title": "Matthew Stafford has to play well against the Green Bay blitz",
         "url": "https://www.turfshowtimes.com/los-angeles-rams-analysis/155958/matthew-stafford-rams-packers",
         "publishedAt": "2026-11-25T18:36:55.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Gary Klein",
-        "outlet": "Los Angeles Times",
-        "title": "Healthy Rams pass rushing unit targeting 'Fearsome' performance vs. Packers",
-        "url": "https://x.com/LATimesklein/status/2125351930247762298",
-        "publishedAt": "2026-11-24T22:12:41.957Z"
-      },
-      {
-        "type": "article",
-        "author": "Kenneth Arthur",
-        "outlet": "Turf Show Times",
-        "title": "Aaron Rodgers wishes he had a coach like Sean McVay",
-        "url": "https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay",
-        "publishedAt": "2026-11-25T19:47:58.000Z"
-      },
-      {
-        "type": "article",
-        "author": "NFL Trade Rumors",
-        "outlet": "NFL Trade Rumors",
-        "title": "Rams Expected To Franchise WR Puka Nacua But That Might Not Lock Him In For 2027",
-        "url": "https://nfltraderumors.co/rams-expected-to-franchise-wr-puka-nacua-but-that-might-not-lock-him-in-for-2027/",
-        "publishedAt": "2026-11-25T17:16:09.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Steven Ridings",
-        "outlet": "Turf Show Times",
-        "title": "By the numbers: Rams’ Matthew Stafford in November",
-        "url": "https://www.turfshowtimes.com/los-angeles-rams-analysis/155944/rams-matthew-stafford-splits-november",
-        "publishedAt": "2026-11-25T17:26:04.000Z"
       },
       {
         "type": "tweet",
@@ -103,11 +80,35 @@
       },
       {
         "type": "article",
+        "author": "Steven Ridings",
+        "outlet": "Turf Show Times",
+        "title": "By the numbers: Rams’ Matthew Stafford in November",
+        "url": "https://www.turfshowtimes.com/los-angeles-rams-analysis/155944/rams-matthew-stafford-splits-november",
+        "publishedAt": "2026-11-25T17:26:04.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Danny Stone",
+        "outlet": "Turf Show Times",
+        "title": "This game tonight is history in the making",
+        "url": "https://www.turfshowtimes.com/los-angeles-rams-news/155930/rams-packers-thanksgiving-eve-nfl-nacua",
+        "publishedAt": "2026-11-25T13:45:22.000Z"
+      },
+      {
+        "type": "article",
         "author": "Sarah Barshop",
         "outlet": "ESPN",
         "title": "Has Puka Nacua played his final snaps in a Rams uniform?",
         "url": "https://www.espn.com/nfl/story/_/id/50574387/puka-nacua-injury-last-season-los-angeles-rams-week-12",
         "publishedAt": "2026-11-25T11:00:00.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Gary Klein",
+        "outlet": "Los Angeles Times",
+        "title": "Healthy Rams pass rushing unit targeting 'Fearsome' performance vs. Packers",
+        "url": "https://x.com/LATimesklein/status/2125351930247762298",
+        "publishedAt": "2026-11-24T22:12:41.957Z"
       },
       {
         "type": "article",
@@ -148,15 +149,15 @@
       "id": "lar_cl_top",
       "category": "beat",
       "headline": "Los Angeles Rams Week 12 Top Headlines (6-4)",
-      "summary": "Aaron Rodgers wishes he had a coach like Sean McVay — Matthew Stafford has to play well against the Green Bay blitz",
-      "updatedAt": "2026-11-25T19:47:58.000Z",
+      "summary": "Rams Made Three Moves, Activated DL Kobie Turner — Matthew Stafford has to play well against the Green Bay blitz",
+      "updatedAt": "2026-11-25T20:45:00.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Kenneth Arthur",
-          "title": "Aaron Rodgers wishes he had a coach like Sean McVay",
-          "url": "https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay",
-          "publishedAt": "2026-11-25T19:47:58.000Z"
+          "label": "NFL Trade Rumors",
+          "title": "Rams Made Three Moves, Activated DL Kobie Turner",
+          "url": "https://nfltraderumors.co/rams-made-three-moves-activated-dl-kobie-turner/",
+          "publishedAt": "2026-11-25T20:45:00.000Z"
         },
         {
           "label": "Brendan Dzwierzynski",
@@ -171,12 +172,6 @@
           "publishedAt": "2026-11-25T17:26:04.000Z"
         },
         {
-          "label": "NFL Trade Rumors",
-          "title": "Rams Expected To Franchise WR Puka Nacua But That Might Not Lock Him In For 2027",
-          "url": "https://nfltraderumors.co/rams-expected-to-franchise-wr-puka-nacua-but-that-might-not-lock-him-in-for-2027/",
-          "publishedAt": "2026-11-25T17:16:09.000Z"
-        },
-        {
           "label": "Jourdan Rodrigue",
           "title": "Defensive line is a brutal, physical position. It is also beautiful; technical.\n\nIt is poetry, Chicago Bears star DT Jeffery Simmons told me.\n\nAnd nobody is mesmerizing us with this craft like Simmons, whose impact is more visible than ever (story unlocked): www.nytimes.com/athletic/780...",
           "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n35jpe7hes22",
@@ -187,6 +182,12 @@
           "title": "Los Angeles Rams vs. Green Bay Packers: How to watch, listen to and live stream Week 12",
           "url": "https://www.therams.com/news/los-angeles-rams-vs-green-bay-packers-how-to-watch-listen-to-and-live-stream-week-12-2026",
           "publishedAt": "2026-11-25T16:00:00.000Z"
+        },
+        {
+          "label": "Danny Stone",
+          "title": "This game tonight is history in the making",
+          "url": "https://www.turfshowtimes.com/los-angeles-rams-news/155930/rams-packers-thanksgiving-eve-nfl-nacua",
+          "publishedAt": "2026-11-25T13:45:22.000Z"
         }
       ]
     },
@@ -313,24 +314,41 @@
   ],
   "rawStream": [
     {
-      "id": "lar_brss_turf_show_times_65ad897aa339",
+      "id": "lar_nfltr_2e4c411e74ae",
       "type": "article",
-      "title": "Aaron Rodgers wishes he had a coach like Sean McVay",
-      "summary": "We have never seen a player, let alone a Hall of Fame quarterback, go off on a head coach while he’s still on the team like what Aaron Rodgers did to Mike McCarthy on Wednesday. One day before the holiday, Rodgers made it clear that he’s no",
+      "title": "Rams Made Three Moves, Activated DL Kobie Turner",
+      "summary": "The Los Angeles Rams announced they have activated OL Justin Dedich and DL Kobie Turner from injured reserve for Wednesday night’s game against the Packers. LA Rams Roster Moves: • Activated, from Reserve OL Justin Dedich, DE Kobie Turner •",
       "imageUrl": "",
-      "imageAlt": "Aaron Rodgers wishes he had a coach like Sean McVay",
-      "publishedAt": "2026-11-25T19:47:58.000Z",
-      "url": "https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay",
-      "outletId": "turf_show_times",
-      "outletName": "Turf Show Times",
-      "reporterId": "turf_show_times",
-      "reporterName": "Kenneth Arthur",
-      "author": "Kenneth Arthur",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.turfshowtimes.com/los-angeles-rams-news/155963/aaron-rodgers-mccarthy-mcvay",
+      "imageAlt": "Rams Made Three Moves, Activated DL Kobie Turner",
+      "publishedAt": "2026-11-25T20:45:00.000Z",
+      "url": "https://nfltraderumors.co/rams-made-three-moves-activated-dl-kobie-turner/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
       "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360859",
+          "name": "Justin Dedich",
+          "shortName": "J. Dedich",
+          "position": "G",
+          "jersey": 67,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360859.png"
+        },
+        {
+          "id": "4250621",
+          "name": "Kobie Turner",
+          "shortName": "K. Turner",
+          "position": "DE",
+          "jersey": 91,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4250621.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -344,7 +362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.2627
+      "storyRank": 49.1644
     },
     {
       "id": "lar_brss_turf_show_times_999705ee75ba",
@@ -387,7 +405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.6499
+      "storyRank": 11.2514
     },
     {
       "id": "lar_brss_turf_show_times_d18d9234c545",
@@ -430,50 +448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5028
-    },
-    {
-      "id": "lar_nfltr_59d3aefb9bb6",
-      "type": "article",
-      "title": "Rams Expected To Franchise WR Puka Nacua But That Might Not Lock Him In For 2027",
-      "summary": "The Athletic’s Jonathan Jones writes that league sources find it hard to believe the Rams will just let WR Puka Nacua walk in free agency this coming offseason. Jones notes that even though the Rams have a host of quality pending free agent",
-      "imageUrl": "",
-      "imageAlt": "Rams Expected To Franchise WR Puka Nacua But That Might Not Lock Him In For 2027",
-      "publishedAt": "2026-11-25T17:16:09.000Z",
-      "url": "https://nfltraderumors.co/rams-expected-to-franchise-wr-puka-nacua-but-that-might-not-lock-him-in-for-2027/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4426515",
-          "name": "Puka Nacua",
-          "shortName": "P. Nacua",
-          "position": "WR",
-          "jersey": 12,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426515.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.1235
+      "storyRank": 7.3139
     },
     {
       "id": "lar_bsky_57376e4d7843",
@@ -502,7 +477,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.653,
+      "breakingPriority": 0.65,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -511,7 +486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.1278
+      "storyRank": 7.0016
     },
     {
       "id": "lar_espn_c38eb369c1542",
@@ -547,7 +522,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8678
+      "storyRank": 5.7448
     },
     {
       "id": "lar_rss_af9bf9dd2b6b",
@@ -581,7 +556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1308
+      "storyRank": 5.0329
     },
     {
       "id": "lar_brss_turf_show_times_2272fff8ecdf",
@@ -615,7 +590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1948
+      "storyRank": 3.1506
     },
     {
       "id": "lar_espn_31b3570023b32",
@@ -659,7 +634,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1518
+      "storyRank": 2.1296
     },
     {
       "id": "lar_brss_turf_show_times_6f44abc69896",
@@ -693,7 +668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2609
+      "storyRank": 1.2519
     },
     {
       "id": "x_tl_latimesklein_2125351930247762298",
@@ -741,7 +716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2851
+      "storyRank": 1.2795
     },
     {
       "id": "lar_brss_turf_show_times_9fce3373bf90",
@@ -800,7 +775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8904
+      "storyRank": 0.8854
     },
     {
       "id": "lar_rss_c18959a5def6",
@@ -834,7 +809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9
+      "storyRank": 0.895
     },
     {
       "id": "lar_rss_ee9cb29cf6a7",
@@ -877,7 +852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7556
+      "storyRank": 0.7519
     },
     {
       "id": "lar_brss_turf_show_times_99c39e11c351",
@@ -920,7 +895,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7214
+      "storyRank": 0.718
     },
     {
       "id": "x_tl_rapsheet_2125339205626990986",
@@ -980,7 +955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7552
+      "storyRank": 0.7518
     },
     {
       "id": "lar_rss_01848d9046f4",
@@ -1014,7 +989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6752
+      "storyRank": 0.6722
     },
     {
       "id": "lar_rss_f028a25d6173",
@@ -1081,7 +1056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3538
+      "storyRank": 0.3518
     },
     {
       "id": "lar_vid_950a283e650e",
@@ -1117,7 +1092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6726
+      "storyRank": 0.6696
     },
     {
       "id": "lar_espn_2aac4376cec7e",
@@ -1161,7 +1136,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6575
+      "storyRank": 0.6545
     },
     {
       "id": "lar_pwire_4710855_49949224",
@@ -1193,7 +1168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6368
+      "storyRank": 0.634
     },
     {
       "id": "lar_brss_turf_show_times_bb3523c2ae05",
@@ -1227,7 +1202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6168
+      "storyRank": 0.6141
     },
     {
       "id": "lar_rss_96dcdbdeb09e",
@@ -1261,7 +1236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6196
+      "storyRank": 0.6169
     },
     {
       "id": "lar_rss_257ffce22fe7",
@@ -1295,7 +1270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5734
+      "storyRank": 0.5711
     },
     {
       "id": "lar_rss_0de6f073d2a5",
@@ -1329,7 +1304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5458
+      "storyRank": 0.5436
     },
     {
       "id": "lar_rss_9ea15b724d20",
@@ -1363,7 +1338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5456
+      "storyRank": 0.5435
     },
     {
       "id": "lar_pwire_4242154_64960128",
@@ -1395,7 +1370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1751
+      "storyRank": 0.1741
     },
     {
       "id": "lar_brss_turf_show_times_7bedd6221237",
@@ -1438,7 +1413,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5134
+      "storyRank": 0.5115
+    },
+    {
+      "id": "lar_brss_turf_show_times_f4fb075893fa",
+      "type": "article",
+      "title": "Rams vs. Packers line shifts",
+      "summary": "The Los Angeles Rams were favored earlier in the Week over the Green Bay Packers by 3-points. That line may have shifted to closer to 2.5, but still is in favor of the Rams who are at home. If you are going to place a bet, do it responsibly",
+      "imageUrl": "",
+      "imageAlt": "Rams vs. Packers line shifts",
+      "publishedAt": "2026-11-24T14:27:52.000Z",
+      "url": "https://www.turfshowtimes.com/los-angeles-rams-news/155860/rams-packers-line-bets-thanksgiving-mcvay",
+      "outletId": "turf_show_times",
+      "outletName": "Turf Show Times",
+      "reporterId": "turf_show_times",
+      "reporterName": "Danny Stone",
+      "author": "Danny Stone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.turfshowtimes.com/los-angeles-rams-news/155860/rams-packers-line-bets-thanksgiving-mcvay",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4751
     },
     {
       "id": "lar_bsky_6b92b7021976",
@@ -1476,7 +1485,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.356
+      "storyRank": 0.3549
     },
     {
       "id": "lar_brss_turf_show_times_31580180245d",
@@ -1510,7 +1519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3619
+      "storyRank": 0.3608
     },
     {
       "id": "lar_bsky_5fbf287acdbf",
@@ -1548,7 +1557,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3158
+      "storyRank": 0.3149
     },
     {
       "id": "lar_bsky_5915abdcd190",
@@ -1586,7 +1595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3149
+      "storyRank": 0.314
     },
     {
       "id": "lar_bsky_e4b7eaf08a6f",
@@ -1624,7 +1633,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0729
+      "storyRank": 0.0727
     },
     {
       "id": "lar_vid_31a7dfc92bc5",
@@ -1660,7 +1669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2917
+      "storyRank": 0.291
     },
     {
       "id": "lar_rss_6e34e0a8defa",
@@ -1703,7 +1712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2912
+      "storyRank": 0.2905
     },
     {
       "id": "lar_pwire_4250621_64943028",
@@ -1735,7 +1744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2893
+      "storyRank": 0.2885
     },
     {
       "id": "lar_rss_9c3d5fd577e3",
@@ -1778,7 +1787,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2862
+      "storyRank": 0.2855
     },
     {
       "id": "lar_vid_d873a45be4de",
@@ -1823,7 +1832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6033
+      "storyRank": 0.602
     },
     {
       "id": "lar_rss_c2f6a9d03417",
@@ -1866,7 +1875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2747
+      "storyRank": 0.274
     },
     {
       "id": "lar_vid_a5e0f9549e21",
@@ -1902,7 +1911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2685
+      "storyRank": 0.2679
     },
     {
       "id": "lar_pwire_4430737_64938928",
@@ -1934,7 +1943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2684
+      "storyRank": 0.2678
     },
     {
       "id": "x_tl_adamgrosbard_2124971353996697771",
@@ -1982,7 +1991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2869
+      "storyRank": 0.2862
     },
     {
       "id": "lar_vid_7fb35c2b4a9d",
@@ -2027,7 +2036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2646
+      "storyRank": 0.264
     },
     {
       "id": "lar_espn_7e5f2e1eaf848",
@@ -2071,7 +2080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2586
+      "storyRank": 0.258
     },
     {
       "id": "lar_pwire_4570037_64936728",
@@ -2112,7 +2121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2506
+      "storyRank": 0.2501
     },
     {
       "id": "lar_vid_2d71e26d2e80",
@@ -2148,7 +2157,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1681
+      "storyRank": 0.1678
     },
     {
       "id": "lar_rss_ea2eb5c42239",
@@ -2191,7 +2200,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1635
+      "storyRank": 0.1632
     },
     {
       "id": "lar_pwire_4242154_64922728",
@@ -2223,7 +2232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1562
+      "storyRank": 0.1559
     },
     {
       "id": "x_tl_ramsnfl_2124649393748123771",
@@ -2275,7 +2284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1727
+      "storyRank": 0.1724
     },
     {
       "id": "lar_bsky_7688035d903f",
@@ -2313,7 +2322,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1532
+      "storyRank": 0.153
     },
     {
       "id": "lar_vid_34ea8f829e03",
@@ -2358,7 +2367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1581
+      "storyRank": 0.1578
     },
     {
       "id": "lar_pwire_4430737_64921028",
@@ -2390,7 +2399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1546
+      "storyRank": 0.1544
     },
     {
       "id": "lar_bsky_aa5dfd7fadc8",
@@ -2428,7 +2437,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0375
+      "storyRank": 0.0374
     },
     {
       "id": "lar_rss_e5bf48dd3090",
@@ -2471,7 +2480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1535
+      "storyRank": 0.1532
     },
     {
       "id": "lar_bsky_4af4502765f2",
@@ -2509,7 +2518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
+      "storyRank": 0.037
     },
     {
       "id": "lar_bsky_055968c991cc",
@@ -2547,7 +2556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1474
+      "storyRank": 0.1472
     },
     {
       "id": "lar_bsky_5bbe4b2b58f0",
@@ -2623,7 +2632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1464
+      "storyRank": 0.1462
     },
     {
       "id": "lar_bsky_79312614512a",
@@ -2661,7 +2670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0365
+      "storyRank": 0.0364
     },
     {
       "id": "lar_bsky_0b385ac2dbc2",
@@ -2699,7 +2708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0363
+      "storyRank": 0.0362
     },
     {
       "id": "lar_bsky_9d0054025dc9",
@@ -2737,7 +2746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0357
+      "storyRank": 0.0356
     },
     {
       "id": "lar_pwire_16800_64903828",
@@ -2778,7 +2787,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1323
+      "storyRank": 0.1321
     },
     {
       "id": "lar_rss_05006b9a32a0",
@@ -2812,7 +2821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1106
+      "storyRank": 0.1105
     },
     {
       "id": "lar_espn_9e02ead6fc444",
@@ -2856,7 +2865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1082
+      "storyRank": 0.1081
     },
     {
       "id": "lar_pwire_4426515_64902728",
@@ -2897,7 +2906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1068
+      "storyRank": 0.1067
     },
     {
       "id": "lar_pwire_4362474_64902628",
@@ -3050,7 +3059,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.103
+      "storyRank": 0.1028
     },
     {
       "id": "lar_pwire_4430737_64898928",
@@ -3150,7 +3159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1119
+      "storyRank": 0.1118
     },
     {
       "id": "lar_tx_ba25f253ba78",
@@ -3202,7 +3211,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0838
+      "storyRank": 0.0837
     },
     {
       "id": "lar_pwire_4710855_64888328",
@@ -3295,7 +3304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0715
+      "storyRank": 0.0714
     },
     {
       "id": "lar_rss_87e0a4947918",
@@ -3455,7 +3464,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0696
+      "storyRank": 0.0695
     },
     {
       "id": "lar_espn_529e3f95148f6",
@@ -3491,7 +3500,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0706
+      "storyRank": 0.0705
     },
     {
       "id": "lar_pwire_4570037_64878828",
@@ -3532,7 +3541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0704
+      "storyRank": 0.0703
     },
     {
       "id": "lar_pwire_4426515_64878328",
@@ -3573,7 +3582,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0702
+      "storyRank": 0.0701
     },
     {
       "id": "lar_rss_7b62d860a688",
@@ -3607,7 +3616,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0678
+      "storyRank": 0.0677
     },
     {
       "id": "lar_espn_85ce8047d438d",
@@ -3687,7 +3696,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.06
+      "storyRank": 0.0599
     },
     {
       "id": "lar_espn_27c55e60549a7",
@@ -3920,7 +3929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0543
+      "storyRank": 0.0542
     },
     {
       "id": "lar_vid_534b4d6c1f10",
@@ -3965,7 +3974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0543
+      "storyRank": 0.0542
     },
     {
       "id": "lar_tx_2b9af098c3d7",
@@ -4009,7 +4018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0505
+      "storyRank": 0.0504
     },
     {
       "id": "lar_rss_b8aee8348f0c",
@@ -4112,7 +4121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0423
     },
     {
       "id": "lar_tx_5c5a203afcf3",
@@ -4320,7 +4329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0372
+      "storyRank": 0.0371
     },
     {
       "id": "lar_yts_1208aE3TLNY",
@@ -4332,7 +4341,7 @@
       "duration": "12:05",
       "imageUrl": "https://i.ytimg.com/vi/1208aE3TLNY/hqdefault.jpg",
       "imageAlt": "Los Angeles Rams vs. Arizona Cardinals Game Highlights | NFL 2026 Season Week 10",
-      "publishedAt": "2026-11-16T20:43:53.443Z",
+      "publishedAt": "2026-11-16T20:48:43.027Z",
       "url": "https://www.youtube.com/watch?v=1208aE3TLNY",
       "externalVideoUrl": "https://www.youtube.com/watch?v=1208aE3TLNY",
       "channel": "NFL",
@@ -4534,7 +4543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0288
+      "storyRank": 0.0287
     },
     {
       "id": "lar_vid_59241be2869b",
@@ -4882,7 +4891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0286
+      "storyRank": 0.0285
     },
     {
       "id": "lar_vid_d2d6e236dbc2",
@@ -4927,7 +4936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0286
+      "storyRank": 0.0285
     },
     {
       "id": "lar_vid_2904456c3e7b",
@@ -5319,7 +5328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282
+      "storyRank": 0.0281
     },
     {
       "id": "lar_vid_738e7f7b70d5",
@@ -5474,7 +5483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.028
     },
     {
       "id": "lar_vid_9a6990198c78",
@@ -6016,7 +6025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0203
     },
     {
       "id": "lar_rss_1a24e0383ec4",
@@ -7161,7 +7170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0132
     },
     {
       "id": "lar_vid_626a42de037a",

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:50.310Z",
+  "updatedAt": "2026-11-25T20:48:49.807Z",
   "sources": [
     {
       "label": "ESPN Cardinals Schedule",
@@ -24736,10 +24736,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (19.5% neutral-field win rating, 4.8 proj. wins) at 3-8 through Week 11.",
+        "blurb": "Tier 6 (20.0% neutral-field win rating, 4.8 proj. wins) at 3-8 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24788,10 +24788,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (19.5% neutral-field win rating, 4.8 proj. wins) at 3-8 through Week 11."
+        "blurb": "Tier 6 (20.0% neutral-field win rating, 4.8 proj. wins) at 3-8 through Week 11."
       },
       {
         "id": "cbs",
@@ -24857,7 +24857,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:43:55.597Z"
+    "fetchedAtIso": "2026-11-25T20:48:52.923Z"
   },
   "upcomingMatchup": {
     "week": 12,

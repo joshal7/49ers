@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:55.881Z",
+  "updatedAt": "2026-11-25T20:50:11.320Z",
   "sources": [
     {
       "label": "ESPN Panthers Schedule",
@@ -24809,10 +24809,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (47.9% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 11.",
+        "blurb": "Tier 3 (47.6% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24861,10 +24861,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (47.9% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 11."
+        "blurb": "Tier 3 (47.6% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 11."
       },
       {
         "id": "cbs",
@@ -24930,7 +24930,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:59.647Z"
+    "fetchedAtIso": "2026-11-25T20:50:14.978Z"
   },
   "upcomingMatchup": {
     "week": 12,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:06.364Z",
+  "updatedAt": "2026-11-25T20:49:26.043Z",
   "sources": [
     {
       "label": "ESPN Cowboys Schedule",
@@ -24760,10 +24760,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (57.9% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 11.",
+        "blurb": "Tier 2 (58.5% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24831,10 +24831,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (57.9% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 11."
+        "blurb": "Tier 2 (58.5% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 11."
       },
       {
         "id": "cbs",
@@ -24900,7 +24900,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:11.749Z"
+    "fetchedAtIso": "2026-11-25T20:49:30.594Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27736,16 +27736,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Cooper Beebe, Tyler Smith & Terence Steele vs. DT Jalen Carter & Eagles Simulated Pressures",
+        "unitMatchup": "Tyler Smith, Terence Steele & Cooper Beebe vs. DT Jalen Carter & Eagles Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Cooper Beebe",
           "Tyler Smith",
-          "Terence Steele"
+          "Terence Steele",
+          "Cooper Beebe"
         ],
         "statComparison": "DAL: #16 Pass Protection (6.0%) | PHI: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Cooper Beebe, Tyler Smith & Terence Steele protect Dak Prescott (#16 protection at 6.0%) against DT Jalen Carter and Philadelphia Eagles's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Cooper Beebe (#56) on obvious passing downs—if DT Jalen Carter cannot win clean around the arc, Eagles must dial up interior stunts that stress Tyler Smith (#73)."
+        "tacticalDetail": "Tyler Smith, Terence Steele & Cooper Beebe protect Dak Prescott (#16 protection at 6.0%) against DT Jalen Carter and Philadelphia Eagles's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Tyler Smith (#73) on obvious passing downs—if DT Jalen Carter cannot win clean around the arc, Eagles must dial up interior stunts that stress Terence Steele (#78)."
       }
     ]
   }

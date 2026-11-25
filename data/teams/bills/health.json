@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:44.668Z",
+  "updatedAt": "2026-11-25T20:50:18.054Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.buffalobills.com/team/injury-report/",
@@ -139,81 +139,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "4036134",
-      "name": "Amani Hooker",
-      "position": "S",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036134.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": "Hooker has now played in two games for the Bills, logging 100 percent of the team's defensive reps in Week 11 and 98 percent in Week 12. The strong safety has made for a good pairing with Cole Bishop, and the duo has helped the Bills' defense extend its streak of not allowing a touchdown to 15 straight quarters of play."
-    },
-    {
-      "playerId": "4033748",
-      "name": "Connor McGovern",
-      "position": "C",
-      "jersey": 66,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4033748.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Neck",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": ""
-    },
-    {
-      "playerId": "4036060",
-      "name": "Damar Hamlin",
-      "position": "S",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036060.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Toe / Neck",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 78,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": ""
-    },
-    {
       "playerId": "4039303",
       "name": "Ed Oliver",
       "position": "DT",
@@ -289,6 +214,56 @@
       "beatComment": ""
     },
     {
+      "playerId": "4033748",
+      "name": "Connor McGovern",
+      "position": "C",
+      "jersey": 66,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4033748.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "Neck",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 92,
+      "priorDayPlayProbabilityPct": 91,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "92% • Cleared",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Logged Full Participation (FP) on Thursday"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4036134",
+      "name": "Amani Hooker",
+      "position": "S",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036134.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 92,
+      "priorDayPlayProbabilityPct": 91,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "92% • Cleared",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Logged Full Participation (FP) on Thursday"
+      ],
+      "beatComment": "Hooker has now played in two games for the Bills, logging 100 percent of the team's defensive reps in Week 11 and 98 percent in Week 12. The strong safety has made for a good pairing with Cole Bishop, and the duo has helped the Bills' defense extend its streak of not allowing a touchdown to 15 straight quarters of play."
+    },
+    {
       "playerId": "3915411",
       "name": "Ty Johnson",
       "position": "RB",
@@ -312,6 +287,31 @@
         "Logged Full Participation (FP) on Thursday"
       ],
       "beatComment": "Johnson did not carry the rock much at all in the contest. The running back did, however, rank third in receiving yards for Buffalo behind Khalil Shakir (101) and DJ Moore (91). Johnson should continue to see receiving opportunities in Week 12 against the Chiefs as the Bills' preferred third-down back."
+    },
+    {
+      "playerId": "4036060",
+      "name": "Damar Hamlin",
+      "position": "S",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036060.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "FP",
+      "fri": "-",
+      "injuryType": "Toe / Neck",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 92,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "92% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Logged Full Participation (FP) on Thursday"
+      ],
+      "beatComment": ""
     },
     {
       "playerId": "4676004",

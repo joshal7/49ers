@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:12.152Z",
+  "updatedAt": "2026-11-25T20:50:29.413Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-25T20:45:12.152Z",
+    "generatedAt": "2026-11-25T20:50:29.413Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -34,16 +34,16 @@
       "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-new-york-jets-vs-miami-dolphins",
       "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
       "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
-      "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
       "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
       "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
       "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
       "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+      "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
       "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-23-26",
-      "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
       "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Dolphins%20head%20coach%20Jeff%20Hafley%20said%20Monday",
-      "https://www.espn.com/nfl/player/_/id/4242512/malik-willis#:~:text=Head%20coach%20Jeff%20Hafley%20said%20Monday%20that"
+      "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
+      "https://www.espn.com/nfl/player/_/id/4242512/malik-willis#:~:text=Head%20coach%20Jeff%20Hafley%20said%20Monday%20that",
+      "https://x.com/DavidFurones_/status/2124675406494331065"
     ],
     "sources": [
       {
@@ -88,14 +88,6 @@
       },
       {
         "type": "article",
-        "author": "Kevin Nogle",
-        "outlet": "The Phinsider",
-        "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-        "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-        "publishedAt": "2026-11-25T19:36:30.000Z"
-      },
-      {
-        "type": "article",
         "author": "miamidolphins.com Official",
         "outlet": "miamidolphins.com Official",
         "title": "Dolphins make roster moves",
@@ -120,14 +112,6 @@
       },
       {
         "type": "article",
-        "author": "miamidolphins.com Official",
-        "outlet": "miamidolphins.com Official",
-        "title": "Inside the Numbers: Dolphins defense rises to the challenge in Buffalo",
-        "url": "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
-        "publishedAt": "2026-11-24T15:29:32.000Z"
-      },
-      {
-        "type": "article",
         "author": "Kevin Nogle",
         "outlet": "The Phinsider",
         "title": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
@@ -136,11 +120,27 @@
       },
       {
         "type": "article",
+        "author": "miamidolphins.com Official",
+        "outlet": "miamidolphins.com Official",
+        "title": "Inside the Numbers: Dolphins defense rises to the challenge in Buffalo",
+        "url": "https://www.miamidolphins.com/news/inside-the-numbers-dolphins-defense-rises-to-the-challenge-in-buffalo",
+        "publishedAt": "2026-11-24T15:29:32.000Z"
+      },
+      {
+        "type": "article",
         "author": "Pro Football Rumors",
         "outlet": "Pro Football Rumors",
         "title": "Minor NFL Transactions: 11/23/26",
         "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-23-26",
         "publishedAt": "2026-11-24T00:22:43.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Barry Jackson",
+        "outlet": "Miami Herald",
+        "title": "Dolphins head coach Jeff Hafley said Monday that Brents is day-to-day with a shoulder injury.",
+        "url": "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Dolphins%20head%20coach%20Jeff%20Hafley%20said%20Monday",
+        "publishedAt": "2026-11-23T20:38:47.000Z"
       }
     ]
   },
@@ -172,12 +172,6 @@
           "publishedAt": "2026-11-25T19:05:37.000Z"
         },
         {
-          "label": "Kevin Nogle",
-          "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-          "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-          "publishedAt": "2026-11-25T19:36:30.000Z"
-        },
-        {
           "label": "Marek Brave",
           "title": "Jacob Rodriguez coming for Dolphins record held by Zach Thomas",
           "url": "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
@@ -188,6 +182,12 @@
           "title": "Dolphins make roster moves",
           "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
           "publishedAt": "2026-11-25T15:30:00.000Z"
+        },
+        {
+          "label": "Kevin Nogle",
+          "title": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
+          "url": "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+          "publishedAt": "2026-11-25T12:45:28.000Z"
         }
       ]
     },
@@ -345,7 +345,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 27.2458
+      "storyRank": 25.0042
     },
     {
       "id": "mia_pft_a9cca81b4ff7",
@@ -379,7 +379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 27.0802
+      "storyRank": 25.2788
     },
     {
       "id": "mia_brss_the_phinsider_c9b8351333aa",
@@ -413,41 +413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.4559
-    },
-    {
-      "id": "mia_brss_the_phinsider_cd8f67f170b4",
-      "type": "article",
-      "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-      "summary": "The Miami Dolphins lost their ninth game of the 2026 NFL season in Week 11 when they visited the Buffalo Bills. Miami has struggled throughout the season, often keeping games close but unable to come away with a win. In fact, the team has o",
-      "imageUrl": "",
-      "imageAlt": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-      "publishedAt": "2026-11-25T19:36:30.000Z",
-      "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-      "outletId": "the_phinsider",
-      "outletName": "The Phinsider",
-      "reporterId": "the_phinsider",
-      "reporterName": "Kevin Nogle",
-      "author": "Kevin Nogle",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.9269
+      "storyRank": 13.8288
     },
     {
       "id": "mia_yt_vplFhoV0C9M",
@@ -485,7 +451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.0863
+      "storyRank": 13.4929
     },
     {
       "id": "mia_brss_the_phinsider_62e5cccb16c0",
@@ -528,7 +494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8907
+      "storyRank": 4.7908
     },
     {
       "id": "mia_rss_0778aea2baaa",
@@ -571,7 +537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5492
+      "storyRank": 4.462
     },
     {
       "id": "mia_brss_the_phinsider_1e2b922f8ff9",
@@ -604,7 +570,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.532,
+      "breakingPriority": 0.529,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -614,7 +580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.849
+      "storyRank": 4.7884
     },
     {
       "id": "mia_pwire_4869645_50588158",
@@ -646,7 +612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3593
+      "storyRank": 4.2773
     },
     {
       "id": "mia_tx_f7f351f4753a",
@@ -680,7 +646,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.758,
+      "breakingPriority": 0.751,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -690,7 +656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.375
+      "storyRank": 4.3395
     },
     {
       "id": "mia_brss_the_phinsider_2c69e56a3b4b",
@@ -724,7 +690,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6259
+      "storyRank": 0.6229
     },
     {
       "id": "mia_vid_78f7c08f36c4",
@@ -769,7 +735,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6303
+      "storyRank": 0.6273
     },
     {
       "id": "mia_vid_e1c4814bf001",
@@ -814,7 +780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6289
+      "storyRank": 0.6259
     },
     {
       "id": "mia_vid_e081cf362c91",
@@ -859,7 +825,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6244
+      "storyRank": 0.6215
     },
     {
       "id": "mia_vid_a9e67a7bdc6b",
@@ -904,7 +870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6213
+      "storyRank": 0.6184
     },
     {
       "id": "mia_brss_the_phinsider_5d84a6980d8d",
@@ -947,7 +913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9189
+      "storyRank": 0.9157
     },
     {
       "id": "mia_brss_the_phinsider_8a5516a1c94a",
@@ -981,7 +947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9046
+      "storyRank": 0.9015
     },
     {
       "id": "mia_rss_99e3333ab8aa",
@@ -1015,7 +981,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5075
+      "storyRank": 0.5055
     },
     {
       "id": "mia_rss_410c32ba79cb",
@@ -1049,7 +1015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5019
+      "storyRank": 0.4999
     },
     {
       "id": "mia_brss_the_phinsider_156e16ff854a",
@@ -1083,7 +1049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4669
+      "storyRank": 0.4651
     },
     {
       "id": "mia_brss_the_phinsider_07843ff48968",
@@ -1117,7 +1083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4651
+      "storyRank": 0.4633
     },
     {
       "id": "mia_brss_the_phinsider_554fe8743736",
@@ -1151,7 +1117,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.464
+      "storyRank": 0.4622
     },
     {
       "id": "mia_tx_edc11cd77e06",
@@ -1195,7 +1161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3726
+      "storyRank": 0.3714
     },
     {
       "id": "mia_pfr_3f25ec249d90",
@@ -1228,7 +1194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2834
+      "storyRank": 0.2827
     },
     {
       "id": "mia_rss_744c97882539",
@@ -1262,7 +1228,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2607
+      "storyRank": 0.26
+    },
+    {
+      "id": "mia_yts_F69kepglAY0",
+      "type": "video",
+      "videoId": "F69kepglAY0",
+      "embeddable": false,
+      "title": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
+      "summary": "",
+      "duration": "15:19",
+      "imageUrl": "https://i.ytimg.com/vi/F69kepglAY0/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
+      "publishedAt": "2026-11-23T20:50:30.070Z",
+      "url": "https://www.youtube.com/watch?v=F69kepglAY0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=F69kepglAY0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
     },
     {
       "id": "mia_pwire_4360488_64937928",
@@ -1303,7 +1308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2581
+      "storyRank": 0.2574
     },
     {
       "id": "mia_vid_e971863354f1",
@@ -1348,7 +1353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2577
+      "storyRank": 0.257
     },
     {
       "id": "mia_rss_3aa03423228d",
@@ -1382,7 +1387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2532
+      "storyRank": 0.2526
     },
     {
       "id": "mia_vid_2080cf40272d",
@@ -1418,7 +1423,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2406
+      "storyRank": 0.24
     },
     {
       "id": "mia_vid_6de712b408ca",
@@ -1463,7 +1468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2404
+      "storyRank": 0.2399
     },
     {
       "id": "mia_vid_26a618baecfe",
@@ -1508,7 +1513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2404
+      "storyRank": 0.2398
     },
     {
       "id": "mia_vid_91123f5a0b64",
@@ -1553,7 +1558,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2404
+      "storyRank": 0.2398
     },
     {
       "id": "mia_pwire_4242512_64935228",
@@ -1585,7 +1590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2355
+      "storyRank": 0.2349
     },
     {
       "id": "mia_vid_88efefc446d1",
@@ -1630,7 +1635,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2153
+      "storyRank": 0.2148
     },
     {
       "id": "mia_tx_117fe0a7a57c",
@@ -1665,7 +1670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1873
+      "storyRank": 0.187
     },
     {
       "id": "mia_espn_49aad16c52007",
@@ -1701,7 +1706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1709
+      "storyRank": 0.1706
     },
     {
       "id": "x_tl_davidfurones__2124675406494331065",
@@ -1749,7 +1754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1787
+      "storyRank": 0.1784
     },
     {
       "id": "mia_vid_a640d715cb79",
@@ -1794,7 +1799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1596
+      "storyRank": 0.1593
     },
     {
       "id": "mia_espn_bfaeeeaa3d280",
@@ -1829,7 +1834,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1564
+      "storyRank": 0.1562
     },
     {
       "id": "mia_vid_11621c02e017",
@@ -1865,7 +1870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1548
+      "storyRank": 0.1546
     },
     {
       "id": "mia_rss_deb85865defe",
@@ -1899,7 +1904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.154
+      "storyRank": 0.1537
     },
     {
       "id": "mia_vid_a206291005bb",
@@ -1952,7 +1957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1465
+      "storyRank": 0.1463
     },
     {
       "id": "mia_vid_f5fe4b711b2f",
@@ -1997,7 +2002,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1465
+      "storyRank": 0.1463
     },
     {
       "id": "mia_pwire_4869961_64912528",
@@ -2029,7 +2034,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "mia_vid_08972143590f",
@@ -2074,7 +2079,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1452
+      "storyRank": 0.1449
     },
     {
       "id": "mia_vid_2fe8b109ca37",
@@ -2119,7 +2124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1447
+      "storyRank": 0.1445
     },
     {
       "id": "mia_vid_677e66575c26",
@@ -2155,7 +2160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1438
+      "storyRank": 0.1436
     },
     {
       "id": "mia_vid_2579e0b1b5cc",
@@ -2200,7 +2205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1438
+      "storyRank": 0.1435
     },
     {
       "id": "mia_vid_37c27616880f",
@@ -2245,7 +2250,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1416
+      "storyRank": 0.1414
     },
     {
       "id": "mia_pfr_9af26dfbd9be",
@@ -2295,7 +2300,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0523
+      "storyRank": 0.0522
     },
     {
       "id": "mia_vid_cee7474d9ede",
@@ -2485,7 +2490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0827
+      "storyRank": 0.0826
     },
     {
       "id": "mia_vid_01bb7de96eb6",
@@ -2555,7 +2560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0331
+      "storyRank": 0.033
     },
     {
       "id": "mia_rss_fd776c8b05e5",
@@ -2733,7 +2738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0326
     },
     {
       "id": "mia_vid_3b83a5d47106",
@@ -2769,7 +2774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0326
     },
     {
       "id": "mia_espn_e65125cb896f7",
@@ -2858,7 +2863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272
+      "storyRank": 0.0271
     },
     {
       "id": "mia_pfr_70041b3c4411",
@@ -3006,7 +3011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0223
     },
     {
       "id": "mia_vid_ecd3413261d7",
@@ -3189,6 +3194,45 @@
       "storyRank": 0.0223
     },
     {
+      "id": "mia_yts_dqRYfzOLzA8",
+      "type": "video",
+      "videoId": "dqRYfzOLzA8",
+      "embeddable": false,
+      "title": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:01",
+      "imageUrl": "https://i.ytimg.com/vi/dqRYfzOLzA8/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T20:50:30.070Z",
+      "url": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
+    },
+    {
       "id": "mia_vid_77325a3e5cd6",
       "type": "video",
       "title": "HC Jeff Hafley - Nov 18 | Press Conference",
@@ -3303,7 +3347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0216
     },
     {
       "id": "mia_espn_2174513a3461e",
@@ -3382,7 +3426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0198
     },
     {
       "id": "mia_pfr_7952893c8067",
@@ -3561,7 +3605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0177
     },
     {
       "id": "mia_tx_f8b282b7530c",
@@ -3755,7 +3799,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0156
+    },
+    {
+      "id": "mia_yts_8qPlVF26TS4",
+      "type": "video",
+      "videoId": "8qPlVF26TS4",
+      "embeddable": false,
+      "title": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "13:40",
+      "imageUrl": "https://i.ytimg.com/vi/8qPlVF26TS4/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T20:50:30.070Z",
+      "url": "https://www.youtube.com/watch?v=8qPlVF26TS4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=8qPlVF26TS4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0155
     },
     {
       "id": "mia_vid_79159664df40",
@@ -5254,7 +5337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
     },
     {
       "id": "mia_vid_1ce36d3ca6e8",
@@ -6610,7 +6693,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0063
     },
     {
       "id": "mia_vid_04247795ff8d",

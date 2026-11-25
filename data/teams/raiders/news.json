@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:47:27.158Z",
+  "updatedAt": "2026-11-25T20:51:50.115Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17PT",
     "cycleKey": "2026-11-24@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-7",
-    "generatedAt": "2026-11-25T20:47:27.158Z",
+    "generatedAt": "2026-11-25T20:51:50.115Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -38,11 +38,11 @@
       "https://www.silverandblackpride.com/las-vegas-raiders-odds/147273/silver-and-black-pride-reacts-survey",
       "https://bsky.app/profile/tashanreed.bsky.social/post/3n35hfsgxjc2z",
       "https://www.raiders.com/news/raiders-family-mourns-the-passing-of-martha-firestone-ford",
-      "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "https://www.silverandblackpride.com/las-vegas-raiders-analysis/147206/raiders-ashton-jeanty-jack-bech-week-11",
       "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Bowers%20(ankle%2Fquadriceps)%20was%20on%20the%20field%20for",
       "https://bsky.app/profile/tashanreed.bsky.social/post/3n334ctpz3k2d",
-      "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
       "https://bsky.app/profile/tashanreed.bsky.social/post/3n33p7kwunc2x",
       "https://www.raiders.com/news/lester-hayes-steve-wisniewski-among-five-raiders-advancing-in-pro-football-hall-of-fame-selection-process"
@@ -133,7 +133,7 @@
         "author": "Eric Karabell",
         "outlet": "ESPN / X Beat Wire",
         "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-        "url": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
+        "url": "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Need%20to%20know%20how%20to%20value%20players",
         "publishedAt": "2026-11-24T20:18:57.000Z"
       },
       {
@@ -290,13 +290,13 @@
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
@@ -334,7 +334,7 @@
       "summary": "Head Coach Klint Kubiak and QB Fernando Mendoza address the media.",
       "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/bzcqrmnmghi7hbpnsyva.jpg",
       "imageAlt": "Raiders Live: Klint Kubiak and Fernando Mendoza Presser - 11.25.26",
-      "publishedAt": "2026-11-25T20:47:27.690Z",
+      "publishedAt": "2026-11-25T20:50:00.000Z",
       "url": "https://www.raiders.com/video/raiders-live",
       "externalVideoUrl": "https://www.raiders.com/video/raiders-live",
       "outletId": "raiders_official",
@@ -370,7 +370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0917
+      "storyRank": 51.9985
     },
     {
       "id": "lv_brss_silver_and_black_pride_382c860f534f",
@@ -403,7 +403,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.686,
+      "breakingPriority": 1.675,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -413,7 +413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 51.053
+      "storyRank": 48.1968
     },
     {
       "id": "lv_pwire_4432665_64973828",
@@ -454,7 +454,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.6369
+      "storyRank": 21.5329
     },
     {
       "id": "lv_vid_14fa1c167711",
@@ -490,7 +490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 17.6727
+      "storyRank": 16.9456
     },
     {
       "id": "lv_rss_342c2fec837f",
@@ -524,7 +524,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.5773
+      "storyRank": 6.4413
     },
     {
       "id": "lv_brss_silver_and_black_pride_1a24b84fbe5b",
@@ -567,7 +567,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7757
+      "storyRank": 3.7222
     },
     {
       "id": "lv_brss_silver_and_black_pride_46c80cb3b492",
@@ -610,7 +610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7205
+      "storyRank": 3.6689
     },
     {
       "id": "lv_brss_silver_and_black_pride_f8adaece4258",
@@ -644,7 +644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5905
+      "storyRank": 3.542
     },
     {
       "id": "lv_bsky_5c7b651d5150",
@@ -682,7 +682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0469
+      "storyRank": 1.0308
     },
     {
       "id": "lv_rss_213bd3cbed20",
@@ -716,7 +716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0635
+      "storyRank": 1.0575
     },
     {
       "id": "lv_vid_9ed408a118d0",
@@ -761,7 +761,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.82
+      "storyRank": 0.8161
     },
     {
       "id": "lv_rss_27d2353d37b5",
@@ -795,7 +795,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8026
+      "storyRank": 0.7988
     },
     {
       "id": "lv_vid_935e5e880a33",
@@ -831,7 +831,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7668
+      "storyRank": 0.7633
     },
     {
       "id": "lv_vid_4a873961655a",
@@ -867,7 +867,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7539
+      "storyRank": 0.7505
     },
     {
       "id": "lv_rss_8dcb0ccc9a35",
@@ -901,7 +901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7245
+      "storyRank": 0.7214
     },
     {
       "id": "lv_bsky_69c77b12579b",
@@ -939,39 +939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.645
-    },
-    {
-      "id": "lv_pwire_4603186_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6347
+      "storyRank": 0.6424
     },
     {
       "id": "lv_pwire_4432665_49949224",
@@ -1003,7 +971,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6347
+      "storyRank": 0.6322
+    },
+    {
+      "id": "lv_pwire_4603186_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4603186/jack-bech#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6322
     },
     {
       "id": "lv_rss_22533034cddf",
@@ -1037,7 +1037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6345
+      "storyRank": 0.632
     },
     {
       "id": "lv_brss_silver_and_black_pride_d6fb7a67dfa9",
@@ -1088,7 +1088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6087
+      "storyRank": 0.6064
     },
     {
       "id": "lv_vid_e6d636b3e529",
@@ -1141,7 +1141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5994
+      "storyRank": 0.5971
     },
     {
       "id": "lv_brss_silver_and_black_pride_7cf8d9bd6456",
@@ -1184,7 +1184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5882
+      "storyRank": 0.5859
     },
     {
       "id": "lv_pwire_4432665_50583834",
@@ -1216,7 +1216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5705
+      "storyRank": 0.5684
     },
     {
       "id": "lv_bsky_d5338eaf1cda",
@@ -1254,7 +1254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1773
+      "storyRank": 0.1765
     },
     {
       "id": "lv_bsky_02c62ddb865e",
@@ -1292,7 +1292,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5238
+      "storyRank": 0.522
     },
     {
       "id": "lv_brss_silver_and_black_pride_39b28667f8ad",
@@ -1326,7 +1326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4774
+      "storyRank": 0.4759
     },
     {
       "id": "lv_bsky_988bc10f3983",
@@ -1364,7 +1364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.121
+      "storyRank": 0.1206
     },
     {
       "id": "lv_tx_9ae0829f067b",
@@ -1399,7 +1399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3721
+      "storyRank": 0.3711
     },
     {
       "id": "lv_bsky_546d1af71887",
@@ -1437,7 +1437,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3269
+      "storyRank": 0.326
     },
     {
       "id": "lv_bsky_c8b30319db5f",
@@ -1475,7 +1475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0796
+      "storyRank": 0.0794
     },
     {
       "id": "lv_bsky_d4310ff792e2",
@@ -1513,7 +1513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.079
+      "storyRank": 0.0788
     },
     {
       "id": "lv_bsky_a485c96cb3cc",
@@ -1551,7 +1551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0789
+      "storyRank": 0.0787
     },
     {
       "id": "lv_bsky_c2c4a058858f",
@@ -1589,7 +1589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3156
+      "storyRank": 0.3148
     },
     {
       "id": "lv_bsky_48afbce4f9e0",
@@ -1627,7 +1627,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0788
+      "storyRank": 0.0786
     },
     {
       "id": "lv_bsky_0cc9eaf770c2",
@@ -1665,7 +1665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3149
+      "storyRank": 0.3141
     },
     {
       "id": "lv_bsky_f55ccb076937",
@@ -1703,7 +1703,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3145
+      "storyRank": 0.3137
     },
     {
       "id": "lv_bsky_9cc9c47d2be2",
@@ -1741,7 +1741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3141
+      "storyRank": 0.3133
     },
     {
       "id": "lv_bsky_0f6b399f2e4d",
@@ -1779,7 +1779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.313
+      "storyRank": 0.3122
     },
     {
       "id": "lv_bsky_1bd4a1fc5878",
@@ -1817,7 +1817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0782
+      "storyRank": 0.078
     },
     {
       "id": "lv_bsky_5021007c1a30",
@@ -1855,7 +1855,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3124
+      "storyRank": 0.3116
     },
     {
       "id": "x_tl_themarcjohnnfl_2125053935149060466",
@@ -1903,7 +1903,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3381
+      "storyRank": 0.3373
     },
     {
       "id": "lv_rss_6d3db11449ec",
@@ -1962,7 +1962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2981
+      "storyRank": 0.2974
     },
     {
       "id": "x_tl_mholder95_2124996652243243335",
@@ -2013,7 +2013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2962
+      "storyRank": 0.2955
     },
     {
       "id": "lv_brss_silver_and_black_pride_30f35fbf701b",
@@ -2047,7 +2047,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2706
+      "storyRank": 0.27
     },
     {
       "id": "lv_brss_silver_and_black_pride_fbe363f407b9",
@@ -2081,7 +2081,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2705
+      "storyRank": 0.2699
     },
     {
       "id": "lv_yts_i13fzifkiE8",
@@ -2093,7 +2093,7 @@
       "duration": "17:17",
       "imageUrl": "https://i.ytimg.com/vi/i13fzifkiE8/hqdefault.jpg",
       "imageAlt": "Las Vegas Raiders vs Denver Broncos Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:47:27.757Z",
+      "publishedAt": "2026-11-23T20:51:50.701Z",
       "url": "https://www.youtube.com/watch?v=i13fzifkiE8",
       "externalVideoUrl": "https://www.youtube.com/watch?v=i13fzifkiE8",
       "channel": "NFL",
@@ -2121,6 +2121,93 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.2588
+    },
+    {
+      "id": "lv_yts_I7M80cWgT8s",
+      "type": "video",
+      "videoId": "I7M80cWgT8s",
+      "embeddable": false,
+      "title": "Fernando Mendoza Every Throw & Run | Week 11",
+      "summary": "",
+      "duration": "9:59",
+      "imageUrl": "https://i.ytimg.com/vi/I7M80cWgT8s/hqdefault.jpg",
+      "imageAlt": "Fernando Mendoza Every Throw & Run | Week 11",
+      "publishedAt": "2026-11-23T20:51:50.701Z",
+      "url": "https://www.youtube.com/watch?v=I7M80cWgT8s",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=I7M80cWgT8s",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4837248",
+          "name": "Fernando Mendoza",
+          "shortName": "F. Mendoza",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837248.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
+    },
+    {
+      "id": "lv_yts_FOp2nRaSeec",
+      "type": "video",
+      "videoId": "FOp2nRaSeec",
+      "embeddable": false,
+      "title": "CAN THE #1 PICK LEAD A DIVISIONAL COMEBACK?! Raiders vs Broncos Week 11 Ending",
+      "summary": "",
+      "duration": "24:39",
+      "imageUrl": "https://i.ytimg.com/vi/FOp2nRaSeec/hqdefault.jpg",
+      "imageAlt": "CAN THE #1 PICK LEAD A DIVISIONAL COMEBACK?! Raiders vs Broncos Week 11 Ending",
+      "publishedAt": "2026-11-23T20:51:50.701Z",
+      "url": "https://www.youtube.com/watch?v=FOp2nRaSeec",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=FOp2nRaSeec",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 20,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2288
     },
     {
       "id": "lv_rss_6b52bd0b3972",
@@ -2163,7 +2250,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2509
+      "storyRank": 0.2504
     },
     {
       "id": "lv_brss_silver_and_black_pride_b8abed93c964",
@@ -2214,7 +2301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.246
+      "storyRank": 0.2455
     },
     {
       "id": "lv_rss_d7193cd2d947",
@@ -2257,7 +2344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2496
+      "storyRank": 0.2491
     },
     {
       "id": "lv_vid_0d9384cb3b5e",
@@ -2293,7 +2380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2452
+      "storyRank": 0.2447
     },
     {
       "id": "lv_yt_Pok4A1thylo",
@@ -2340,7 +2427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2062
+      "storyRank": 0.2058
     },
     {
       "id": "lv_espn_9b9c804674f0a",
@@ -2385,7 +2472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2217
+      "storyRank": 0.2213
     },
     {
       "id": "lv_espn_a4eba2b639535",
@@ -2429,7 +2516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1757
+      "storyRank": 0.1754
     },
     {
       "id": "lv_yt_ZKtreDbZQBY",
@@ -2467,7 +2554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1492
+      "storyRank": 0.149
     },
     {
       "id": "lv_vid_3ece43f2757f",
@@ -2503,7 +2590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1715
+      "storyRank": 0.1712
     },
     {
       "id": "lv_rss_1e0d9e6e7d8f",
@@ -2546,7 +2633,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1696
+      "storyRank": 0.1694
     },
     {
       "id": "lv_espn_dff65d955a316",
@@ -2581,7 +2668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1672
+      "storyRank": 0.1669
     },
     {
       "id": "lv_vid_c8cb7d152b52",
@@ -2617,7 +2704,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1642
+      "storyRank": 0.164
     },
     {
       "id": "lv_vid_0746e76f4dda",
@@ -2662,7 +2749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1641
+      "storyRank": 0.1639
     },
     {
       "id": "lv_vid_66f2dd3913f6",
@@ -2698,7 +2785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1624
+      "storyRank": 0.1621
     },
     {
       "id": "lv_vid_9ec03c04bb69",
@@ -2743,7 +2830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1623
+      "storyRank": 0.1621
     },
     {
       "id": "lv_vid_bd5e51ddcf43",
@@ -2796,7 +2883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1593
+      "storyRank": 0.1591
     },
     {
       "id": "lv_bsky_924e649d62ce",
@@ -2834,7 +2921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1511
+      "storyRank": 0.1509
     },
     {
       "id": "x_tl_espnnfl_2124641860639420567",
@@ -2877,7 +2964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1682
+      "storyRank": 0.168
     },
     {
       "id": "lv_vid_49743e2cfb28",
@@ -2930,7 +3017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1568
+      "storyRank": 0.1566
     },
     {
       "id": "lv_vid_9d0b814a2fb0",
@@ -2983,7 +3070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1545
+      "storyRank": 0.1543
     },
     {
       "id": "lv_vid_445454a279e8",
@@ -3028,7 +3115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1532
+      "storyRank": 0.153
     },
     {
       "id": "lv_bsky_bc29c0a9c6ac",
@@ -3077,7 +3164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1458
+      "storyRank": 0.1456
     },
     {
       "id": "lv_rss_7ca795ed52f2",
@@ -3111,7 +3198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0625
+      "storyRank": 0.0624
     },
     {
       "id": "lv_vid_92c1d97100f5",
@@ -3147,7 +3234,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0602
+      "storyRank": 0.0601
     },
     {
       "id": "lv_rss_38873c3f9c73",
@@ -3260,7 +3347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0389
+      "storyRank": 0.0388
     },
     {
       "id": "lv_espn_0478924c7ef87",
@@ -3330,7 +3417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0366
+      "storyRank": 0.0365
     },
     {
       "id": "lv_tx_e42fffd61a58",
@@ -3365,7 +3452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0352
+      "storyRank": 0.0351
     },
     {
       "id": "lv_rss_5ae74953f83a",
@@ -3556,7 +3643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
+      "storyRank": 0.0248
     },
     {
       "id": "lv_vid_0b6d6122f0a1",
@@ -3874,13 +3961,13 @@
       "summary": "An ankle injury has sidelined Booker for each of the Raiders' last two games. However, his full session Wednesday indicates that he's recovered from his injury and on track to play in Sunday's AFC West tilt against the B",
       "publishedAt": "2026-11-19T02:15:39.000Z",
       "url": "https://www.espn.com/nfl/player/_/id/4360749/thomas-booker-iv#:~:text=Booker%20(ankle)%20was%20a%20full%20participant%20in",
-      "outletId": "athletic",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
       "outletName": "The Athletic",
       "reporterId": "sam_warren",
       "reporterName": "Sam Warren",
       "author": "Sam Warren",
-      "authorHandle": "@samwarren83",
-      "authorProfileUrl": "https://x.com/samwarren83",
+      "authorHandle": "@samwarren_3",
+      "authorProfileUrl": "https://x.com/samwarren_3",
       "trustTier": 3,
       "wireSource": "espn_player_wire",
       "mentionedPlayers": [
@@ -3915,13 +4002,13 @@
       "summary": "Fatukasi logged 31 defensive snaps in Week 10 versus the Seahawks, but it looks like he might have hurt his toe along the way. He'll probably need to practice in full Thursday or Friday to avoid carrying an injury design",
       "publishedAt": "2026-11-19T01:39:11.000Z",
       "url": "https://www.espn.com/nfl/player/_/id/3045172/folorunso-fatukasi#:~:text=Fatukasi%20(toe)%20was%20a%20limited%20participant%20at",
-      "outletId": "athletic",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
       "outletName": "The Athletic",
       "reporterId": "sam_warren",
       "reporterName": "Sam Warren",
       "author": "Sam Warren",
-      "authorHandle": "@samwarren83",
-      "authorProfileUrl": "https://x.com/samwarren83",
+      "authorHandle": "@samwarren_3",
+      "authorProfileUrl": "https://x.com/samwarren_3",
       "trustTier": 3,
       "wireSource": "espn_player_wire",
       "mentionedPlayers": [
@@ -3947,7 +4034,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.017
     },
     {
       "id": "lv_pwire_4258194_64859628",
@@ -3956,13 +4043,13 @@
       "summary": "Paye made an early exit in the second half of Sunday's loss to the Seahawks with a neck injury. The linebacker did not return to the contest, but the issue does not seem to have been serious. Paye is healthy and appears",
       "publishedAt": "2026-11-19T01:37:33.000Z",
       "url": "https://www.espn.com/nfl/player/_/id/4258194/kwity-paye#:~:text=Paye%20(neck)%20was%20not%20listed%20on%20the",
-      "outletId": "athletic",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
       "outletName": "The Athletic",
       "reporterId": "sam_warren",
       "reporterName": "Sam Warren",
       "author": "Sam Warren",
-      "authorHandle": "@samwarren83",
-      "authorProfileUrl": "https://x.com/samwarren83",
+      "authorHandle": "@samwarren_3",
+      "authorProfileUrl": "https://x.com/samwarren_3",
       "trustTier": 3,
       "wireSource": "espn_player_wire",
       "mentionedPlayers": [],
@@ -3988,13 +4075,13 @@
       "summary": "Thornton is healthy again after sitting out the team's Week 10 loss to the Seahawks due to a back injury. However, it is still unlikely that the 23-year-old plays in Sunday's matchup versus the Broncos, as Thornton had b",
       "publishedAt": "2026-11-19T01:35:22.000Z",
       "url": "https://www.espn.com/nfl/player/_/id/4432775/donte-thornton-jr#:~:text=Thornton%20(back)%20was%20a%20full%20participant%20in",
-      "outletId": "athletic",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
       "outletName": "The Athletic",
       "reporterId": "sam_warren",
       "reporterName": "Sam Warren",
       "author": "Sam Warren",
-      "authorHandle": "@samwarren83",
-      "authorProfileUrl": "https://x.com/samwarren83",
+      "authorHandle": "@samwarren_3",
+      "authorProfileUrl": "https://x.com/samwarren_3",
       "trustTier": 3,
       "wireSource": "espn_player_wire",
       "mentionedPlayers": [
@@ -4163,7 +4250,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0197
     },
     {
       "id": "lv_vid_76c5245d8e44",
@@ -4273,7 +4360,7 @@
       "duration": "9:06",
       "imageUrl": "https://i.ytimg.com/vi/8nKKV2gchI0/hqdefault.jpg",
       "imageAlt": "Las Vegas Raiders vs Denver Broncos | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:47:27.757Z",
+      "publishedAt": "2026-11-18T20:51:50.701Z",
       "url": "https://www.youtube.com/watch?v=8nKKV2gchI0",
       "externalVideoUrl": "https://www.youtube.com/watch?v=8nKKV2gchI0",
       "channel": "NFL",
@@ -4725,7 +4812,7 @@
       "duration": "14:24",
       "imageUrl": "https://i.ytimg.com/vi/2vwjrJF6RxQ/hqdefault.jpg",
       "imageAlt": "Seattle Seahawks vs Las Vegas Raiders Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:47:27.757Z",
+      "publishedAt": "2026-11-16T20:51:50.701Z",
       "url": "https://www.youtube.com/watch?v=2vwjrJF6RxQ",
       "externalVideoUrl": "https://www.youtube.com/watch?v=2vwjrJF6RxQ",
       "channel": "NFL",
@@ -6325,7 +6412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
     },
     {
       "id": "lv_rss_4ac0048e3739",
@@ -6649,7 +6736,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0069
     },
     {
       "id": "lv_vid_c4de43ba091e",
@@ -7421,7 +7508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "lv_vid_1a4fb8dd21d1",
@@ -7861,13 +7948,13 @@
       "summary": "Hemingway is currently dealing with a stinger, making his status for Sunday's matchup versus Denver uncertain. With Folorunso Fatukasi (toe) also dealing with an injury, the Raiders could find themselves shorthanded alon",
       "publishedAt": "2026-11-19T01:42:23.000Z",
       "url": "https://www.espn.com/nfl/player/_/id/4429109/tonka-hemingway#:~:text=Hemingway%20(upper%20body)%20didn't%20participate%20in%20Las",
-      "outletId": "athletic",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
       "outletName": "The Athletic",
       "reporterId": "sam_warren",
       "reporterName": "Sam Warren",
       "author": "Sam Warren",
-      "authorHandle": "@samwarren83",
-      "authorProfileUrl": "https://x.com/samwarren83",
+      "authorHandle": "@samwarren_3",
+      "authorProfileUrl": "https://x.com/samwarren_3",
       "trustTier": 3,
       "wireSource": "espn_player_wire",
       "mentionedPlayers": [

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:34.827Z",
+  "updatedAt": "2026-11-25T20:51:38.391Z",
   "sources": [
     {
       "label": "ESPN Broncos Schedule",
@@ -24760,10 +24760,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (62.4% neutral-field win rating, 12.7 proj. wins) at 8-2 through Week 11.",
+        "blurb": "Tier 2 (61.8% neutral-field win rating, 12.7 proj. wins) at 8-2 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24812,10 +24812,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (62.4% neutral-field win rating, 12.7 proj. wins) at 8-2 through Week 11."
+        "blurb": "Tier 2 (61.8% neutral-field win rating, 12.7 proj. wins) at 8-2 through Week 11."
       },
       {
         "id": "cbs",
@@ -24881,7 +24881,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:38.518Z"
+    "fetchedAtIso": "2026-11-25T20:51:41.895Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25811,7 +25811,7 @@
       "spread": "DEN -3.5",
       "openingSpread": "Opened DEN -1.5 (Draft Kings)",
       "overUnder": 36.5,
-      "moneyline": "DEN -203 | PIT +170",
+      "moneyline": "DEN -202 | PIT +169",
       "impliedScore": "DEN 20.0 – PIT 16.5",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "70%"
@@ -27588,16 +27588,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Garett Bolles, Mike McGlinchey & Luke Wattenberg vs. DT Derrick Harmon & Steelers Simulated Pressures",
+        "unitMatchup": "Mike McGlinchey, Garett Bolles & Luke Wattenberg vs. DT Derrick Harmon & Steelers Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Garett Bolles",
           "Mike McGlinchey",
+          "Garett Bolles",
           "Luke Wattenberg"
         ],
         "statComparison": "DEN: #16 Pass Protection (6.0%) | PIT: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Garett Bolles, Mike McGlinchey & Luke Wattenberg protect Bo Nix (#16 protection at 6.0%) against DT Derrick Harmon and Pittsburgh Steelers's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Garett Bolles (#72) on obvious passing downs—if DT Derrick Harmon cannot win clean around the arc, Steelers must dial up interior stunts that stress Mike McGlinchey (#69)."
+        "tacticalDetail": "Mike McGlinchey, Garett Bolles & Luke Wattenberg protect Bo Nix (#16 protection at 6.0%) against DT Derrick Harmon and Pittsburgh Steelers's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Mike McGlinchey (#69) on obvious passing downs—if DT Derrick Harmon cannot win clean around the arc, Steelers must dial up interior stunts that stress Garett Bolles (#72)."
       }
     ]
   }

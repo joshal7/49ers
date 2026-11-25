@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:33.152Z",
+  "updatedAt": "2026-11-25T20:49:41.142Z",
   "sources": [
     {
       "label": "ESPN Commanders Schedule",
@@ -24660,14 +24660,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 17,
-    "averageRank": 17.2,
-    "medianRank": 17,
+    "averageRank": 17,
+    "medianRank": 16,
     "previousRank": 19,
     "rangeMin": 16,
     "rangeMax": 19,
     "rangeShort": "#16–#19",
     "rangeDisplay": "#16–#19 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 4-5-1 Commanders at #17 consensus (avg #17.2) through Week 11, ranging from #16 (Inpredictable) to #19 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 4-5-1 Commanders at #17 consensus (avg #17.0) through Week 11, ranging from #16 (Inpredictable) to #19 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24710,16 +24710,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 17,
+        "rank": 16,
         "previousRank": 18,
-        "delta": "+1",
+        "delta": "+2",
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (49.7% neutral-field win rating, 8.0 proj. wins) at 4-5-1 through Week 11.",
+        "blurb": "Tier 3 (51.3% neutral-field win rating, 8.1 proj. wins) at 4-5-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24799,16 +24799,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 17,
+        "rank": 16,
         "previousRank": 18,
-        "delta": "+1",
+        "delta": "+2",
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 3 (49.7% neutral-field win rating, 8.0 proj. wins) at 4-5-1 through Week 11."
+        "blurb": "Tier 3 (51.3% neutral-field win rating, 8.1 proj. wins) at 4-5-1 through Week 11."
       },
       {
         "id": "cbs",
@@ -24874,7 +24874,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:39.382Z"
+    "fetchedAtIso": "2026-11-25T20:49:48.492Z"
   },
   "upcomingMatchup": {
     "week": 12,

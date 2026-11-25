@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:45.861Z",
+  "updatedAt": "2026-11-25T20:49:02.124Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17CT",
     "cycleKey": "2026-11-24@17CT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "7-3",
-    "generatedAt": "2026-11-25T20:43:45.861Z",
+    "generatedAt": "2026-11-25T20:49:02.124Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -21,7 +21,7 @@
     "bullets": [
       "Injury & Practice Status: LB Andrew Van Ginkel (quadriceps) logged limited practice reps Wednesday [Andrew Krammer](https://bsky.app/profile/andrewkrammer.bsky.social/post/3n35yuoclos24). WR Jordan Addison (thumb) did not practice Wednesday [Ben Goessling](https://www.espn.com/nfl/player/_/id/4429205/jordan-addison#:~:text=Head%20coach%20Kevin%20O'Connell%20said%20Addison%20will).",
       "Week 12 Falcons Outlook: Kevin O'Connell and DC Brian Flores open installation for the Atlanta Falcons (3-7, MIN -7, HC Kevin Stefanski, OC Tommy Rees & DC Jeff Ulbrich (U.S. Bank Stadium))—a unit ranked #3 in Rush EPA Allowed / Gm (-1.81) as Minnesota prepares for a pivotal NFC matchup [Andrew Krammer](https://bsky.app/profile/andrewkrammer.bsky.social/post/3n35tgwlhgs2z) [Christopher Gates](https://www.dailynorseman.com/minnesota-vikings-game-information/102059/2026-nfl-week-12-atlanta-falcons-minnesota-vikings).",
-      "NFC Playoff Trajectory: Entering Week 12 at 7-3 (3rd in NFC North • #6 Seed in NFC), Minnesota carries a 87.6% postseason projection, 28.1% NFC North division title mark, and 5.5% #1 Seed Bye equity into the conference stretch [Kevin Seifert](https://www.espn.com/nfl/story/_/id/50584512/minnesota-vikings-kirk-cousins-flores-defense).",
+      "NFC Playoff Trajectory: Entering Week 12 at 7-3 (3rd in NFC North • #6 Seed in NFC), Minnesota carries a 86.4% postseason projection, 26.8% NFC North division title mark, and 5.5% #1 Seed Bye equity into the conference stretch [Kevin Seifert](https://www.espn.com/nfl/story/_/id/50584512/minnesota-vikings-kirk-cousins-flores-defense).",
       "Around the Beat: Just picturing McCarthy snapping his fingers in the middle of a third-down presentation to an intern sitting on a folding chair by a small cooler [Andrew Krammer](https://bsky.app/profile/andrewkrammer.bsky.social/post/3n35y2dezfc2x).",
       "Statistical Profile & Matchup Edge: Through Week 11, Minnesota ranks #28 in Points / Game (18.6), #1 in Points Allowed / Game (16.1), #5 in Turnover Differential (+6), giving Kevin O'Connell and Brian Flores a clear benchmark ahead of Sun, Nov 29, 12:00 PM CST • NFL TV at [object Object] against the Atlanta Falcons [Ted Nguyen](https://bsky.app/profile/tednguyen.bsky.social/post/3n32v6o33js2f)."
     ],
@@ -300,13 +300,13 @@
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4036133/tj-hockenson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/14880/kirk-cousins#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/14880/kirk-cousins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/4036133/tj-hockenson#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
@@ -375,7 +375,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.746,
+      "breakingPriority": 1.732,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -384,7 +384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 71.191
+      "storyRank": 65.2389
     },
     {
       "id": "min_bsky_705203368d45",
@@ -414,7 +414,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.855,
+      "breakingPriority": 0.85,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -423,7 +423,60 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 51.6413
+      "storyRank": 48.076
+    },
+    {
+      "id": "min_vid_f7b322da7182",
+      "type": "video",
+      "title": "Kirk Cousins on Environment at U.S. Bank Stadium, Relationship with Brian O'Neill and Being a Leader",
+      "summary": "Minnesota Vikings quarterback Kirk Cousins addressed the media ahead of the Week 12 Game vs. Atlanta Falcons during the 2026 NFL regular season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/n2eqmsszuvy4forrh4kc.png",
+      "imageAlt": "Kirk Cousins on Environment at U.S. Bank Stadium, Relationship with Brian O'Neill and Being a Leader",
+      "publishedAt": "2026-11-25T20:23:07.000Z",
+      "url": "https://www.vikings.com/video/kirk-cousins-on-environment-at-u-s-bank-stadium-relationship-with-brian-o-neill-and-being-a-leader",
+      "externalVideoUrl": "https://www.vikings.com/video/kirk-cousins-on-environment-at-u-s-bank-stadium-relationship-with-brian-o-neill-and-being-a-leader",
+      "outletId": "vikings_official",
+      "outletName": "vikings.com Video",
+      "reporterId": "vikings_official",
+      "reporterName": "vikings.com Video",
+      "author": "vikings.com Video",
+      "authorHandle": "@Vikings",
+      "authorProfileUrl": "https://www.vikings.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "14880",
+          "name": "Kirk Cousins",
+          "shortName": "K. Cousins",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14880.png"
+        },
+        {
+          "id": "3123954",
+          "name": "Brian O'Neill",
+          "shortName": "B. O'Neill",
+          "position": "OT",
+          "jersey": 75,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3123954.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 33.7535
     },
     {
       "id": "min_pwire_4429205_64973428",
@@ -454,7 +507,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.607,
+      "breakingPriority": 1.594,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -464,15 +517,60 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 35.8456
+      "storyRank": 34.021
+    },
+    {
+      "id": "min_vid_c7087ffea309",
+      "type": "video",
+      "title": "Head Coach Kevin O'Connell on Preparing for Falcons, Confidence in Defense & Kirk Cousins' Leadership",
+      "summary": "Minnesota Vikings Head Coach Kevin O'Connell addressed the media ahead of the Week 12 Game vs. Atlanta Falcons during the 2026 NFL regular season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/eabog2k8vz77dycbiehd.png",
+      "imageAlt": "Head Coach Kevin O'Connell on Preparing for Falcons, Confidence in Defense & Kirk Cousins' Leadership",
+      "publishedAt": "2026-11-25T20:16:49.000Z",
+      "url": "https://www.vikings.com/video/head-coach-kevin-o-connell-on-preparing-for-falcons-confidence-in-defense-kirk-cousins-leadership",
+      "externalVideoUrl": "https://www.vikings.com/video/head-coach-kevin-o-connell-on-preparing-for-falcons-confidence-in-defense-kirk-cousins-leadership",
+      "outletId": "vikings_official",
+      "outletName": "vikings.com Video",
+      "reporterId": "vikings_official",
+      "reporterName": "vikings.com Video",
+      "author": "vikings.com Video",
+      "authorHandle": "@Vikings",
+      "authorProfileUrl": "https://www.vikings.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "14880",
+          "name": "Kirk Cousins",
+          "shortName": "K. Cousins",
+          "position": "QB",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14880.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 30.7283
     },
     {
       "id": "min_vid_2a3b8759f0e1",
       "type": "video",
-      "title": "Behind-the-Scenes of Adrian Peterson's Ring of Honor Ceremony",
+      "title": "Behind the Scenes of Adrian Peterson's Ring of Honor Ceremony",
       "summary": "Watch the behind-the-scenes video of Minnesota Vikings Legend Adrian Peterson's Ring of Honor Ceremony during the Monday Night Football game against the Buffalo Bills in Week 9.",
       "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/inc2qnnsi55zcnaw1cwz.jpg",
-      "imageAlt": "Behind-the-Scenes of Adrian Peterson's Ring of Honor Ceremony",
+      "imageAlt": "Behind the Scenes of Adrian Peterson's Ring of Honor Ceremony",
       "publishedAt": "2026-11-25T19:27:24.000Z",
       "url": "https://www.vikings.com/video/behind-the-scenes-adrian-peterson-ring-of-honor-week-9",
       "externalVideoUrl": "https://www.vikings.com/video/behind-the-scenes-adrian-peterson-ring-of-honor-week-9",
@@ -500,7 +598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.175
+      "storyRank": 17.2755
     },
     {
       "id": "min_bsky_3018558deb5a",
@@ -579,7 +677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.7908
+      "storyRank": 14.1404
     },
     {
       "id": "min_yt_YfqLn_nqbWs",
@@ -617,7 +715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.2583
+      "storyRank": 13.661
     },
     {
       "id": "min_bsky_ba5ab368514d",
@@ -655,7 +753,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.0626
+      "storyRank": 12.5352
     },
     {
       "id": "min_bsky_ca349fe8f235",
@@ -693,7 +791,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.7833
+      "storyRank": 11.3403
     },
     {
       "id": "min_rss_bc12eb418dbf",
@@ -727,7 +825,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.4264
+      "storyRank": 9.1298
     },
     {
       "id": "min_rss_ac7aed3dc9f2",
@@ -770,7 +868,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.0624
+      "storyRank": 6.8806
     },
     {
       "id": "min_rss_7fca217678d7",
@@ -813,7 +911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8891
+      "storyRank": 5.7556
     },
     {
       "id": "min_brss_daily_norseman_ec41c15526b6",
@@ -847,7 +945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.875
+      "storyRank": 4.7771
     },
     {
       "id": "min_pwire_4036133_50588158",
@@ -879,7 +977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3807
+      "storyRank": 4.299
     },
     {
       "id": "min_brss_daily_norseman_2daf3934bc88",
@@ -913,7 +1011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7879
+      "storyRank": 3.7242
     },
     {
       "id": "min_brss_daily_norseman_e355ce4b7121",
@@ -947,7 +1045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6776
+      "storyRank": 3.617
     },
     {
       "id": "min_bsky_c043dc9ce4a3",
@@ -994,7 +1092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.25
+      "storyRank": 2.2235
     },
     {
       "id": "min_espn_4804a382e81b8",
@@ -1038,7 +1136,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1524
+      "storyRank": 2.1284
     },
     {
       "id": "min_bsky_62e2f85bb01b",
@@ -1076,7 +1174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0412
+      "storyRank": 1.0341
     },
     {
       "id": "min_vid_4749c8f0f035",
@@ -1112,7 +1210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2145
+      "storyRank": 1.2093
     },
     {
       "id": "min_pfr_7cf8fc189f70",
@@ -1145,7 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8376
+      "storyRank": 0.8328
     },
     {
       "id": "min_brss_daily_norseman_5e75bcbb0332",
@@ -1179,7 +1277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8272
+      "storyRank": 0.8225
     },
     {
       "id": "min_rss_ce5c1b241d85",
@@ -1213,7 +1311,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7736
+      "storyRank": 0.7695
     },
     {
       "id": "min_rss_18de1e3b047b",
@@ -1247,7 +1345,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7566
+      "storyRank": 0.7526
     },
     {
       "id": "min_rss_abf21ddac365",
@@ -1281,7 +1379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7394
+      "storyRank": 0.7355
     },
     {
       "id": "min_bsky_df30a17fad68",
@@ -1330,7 +1428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.055
+      "storyRank": 1.0512
     },
     {
       "id": "min_bsky_10db12e83645",
@@ -1369,7 +1467,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0387
+      "storyRank": 1.0349
     },
     {
       "id": "min_brss_daily_norseman_7c2c6e1b8860",
@@ -1403,39 +1501,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6407
-    },
-    {
-      "id": "min_pwire_4036133_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4036133/tj-hockenson#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4036133/tj-hockenson#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6368
+      "storyRank": 0.6376
     },
     {
       "id": "min_pwire_14880_49949224",
@@ -1467,7 +1533,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6368
+      "storyRank": 0.6338
+    },
+    {
+      "id": "min_pwire_4036133_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4036133/tj-hockenson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4036133/tj-hockenson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6338
     },
     {
       "id": "min_brss_daily_norseman_449bef90d909",
@@ -1501,7 +1599,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.622
+      "storyRank": 0.6191
     },
     {
       "id": "min_bsky_a9f1a3e5a318",
@@ -1539,7 +1637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5716
+      "storyRank": 0.5691
     },
     {
       "id": "min_vid_f3b74a11d78c",
@@ -1575,7 +1673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5881
+      "storyRank": 0.5855
     },
     {
       "id": "min_vid_99e161b90350",
@@ -1620,7 +1718,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5856
+      "storyRank": 0.583
     },
     {
       "id": "min_vid_3f461fa8f1cd",
@@ -1673,7 +1771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5831
+      "storyRank": 0.5805
     },
     {
       "id": "min_bsky_ee5ee767d7f7",
@@ -1720,7 +1818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5625
+      "storyRank": 0.56
     },
     {
       "id": "min_vid_234730f45ebf",
@@ -1756,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4799
+      "storyRank": 0.4781
     },
     {
       "id": "min_brss_daily_norseman_82aa19514e82",
@@ -1790,7 +1888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4679
+      "storyRank": 0.4661
     },
     {
       "id": "min_tx_9bd126d4391f",
@@ -1825,7 +1923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3729
+      "storyRank": 0.3717
     },
     {
       "id": "min_brss_daily_norseman_c74f197b0831",
@@ -1859,7 +1957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3233
+      "storyRank": 0.3224
     },
     {
       "id": "min_bsky_1d049239e673",
@@ -1897,7 +1995,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3168
+      "storyRank": 0.3159
     },
     {
       "id": "min_bsky_d30ffc6d3144",
@@ -1937,45 +2035,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0718
-    },
-    {
-      "id": "min_bsky_6fb8991951b0",
-      "type": "tweet",
-      "title": "kevin o'connell is a 15 handicap golfer that has bought eight new drivers in the last two years",
-      "fullText": "kevin o'connell is a 15 handicap golfer that has bought eight new drivers in the last two years",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Luke Braun post",
-      "publishedAt": "2026-11-23T23:12:31.897Z",
-      "url": "https://bsky.app/profile/lukebraunnfl.bsky.social/post/3n2zaxbmtbc2w",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "locked_on_vikings_min",
-      "outletName": "Luke Braun",
-      "reporterId": "luke_braun",
-      "reporterName": "Luke Braun",
-      "author": "Luke Braun",
-      "authorHandle": "@LukeBraunNFL",
-      "authorProfileUrl": "https://x.com/LukeBraunNFL",
-      "trustTier": 1,
-      "category": "beat",
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2691
+      "storyRank": 0.0716
     },
     {
       "id": "min_bsky_af0b1be03cc3",
@@ -2013,7 +2073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.266
+      "storyRank": 0.2653
     },
     {
       "id": "min_brss_daily_norseman_4a4d9071d998",
@@ -2056,7 +2116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.262
+      "storyRank": 0.2613
     },
     {
       "id": "min_vid_9f0ab5e3bbbf",
@@ -2101,7 +2161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2608
+      "storyRank": 0.2602
     },
     {
       "id": "min_yts_ceMTl2eqYDA",
@@ -2113,7 +2173,7 @@
       "duration": "14:33",
       "imageUrl": "https://i.ytimg.com/vi/ceMTl2eqYDA/hqdefault.jpg",
       "imageAlt": "Minnesota Vikings vs San Francisco 49ers Game Highlights | 2026 NFL Season Week 11 Mexico City Game",
-      "publishedAt": "2026-11-23T20:43:48.899Z",
+      "publishedAt": "2026-11-23T20:49:02.848Z",
       "url": "https://www.youtube.com/watch?v=ceMTl2eqYDA",
       "externalVideoUrl": "https://www.youtube.com/watch?v=ceMTl2eqYDA",
       "channel": "NFL",
@@ -2152,7 +2212,7 @@
       "duration": "13:52",
       "imageUrl": "https://i.ytimg.com/vi/2aOOhQKvR3c/hqdefault.jpg",
       "imageAlt": "Vikings vs. 49ers Week 11 SNF Recap | NFL Daily",
-      "publishedAt": "2026-11-23T20:43:48.899Z",
+      "publishedAt": "2026-11-23T20:49:02.848Z",
       "url": "https://www.youtube.com/watch?v=2aOOhQKvR3c",
       "externalVideoUrl": "https://www.youtube.com/watch?v=2aOOhQKvR3c",
       "channel": "NFL",
@@ -2220,7 +2280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2572
+      "storyRank": 0.2566
     },
     {
       "id": "min_bsky_0d5645b6a8c3",
@@ -2267,7 +2327,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.248
+      "storyRank": 0.2474
     },
     {
       "id": "min_bsky_464e9cc2e708",
@@ -2305,7 +2365,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2328
+      "storyRank": 0.2322
     },
     {
       "id": "min_espn_b0848c1a48d2d",
@@ -2340,7 +2400,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2325
+      "storyRank": 0.232
     },
     {
       "id": "min_brss_daily_norseman_fd4450b34c89",
@@ -2374,7 +2434,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2266
+      "storyRank": 0.2261
     },
     {
       "id": "min_bsky_80365a142ff2",
@@ -2415,7 +2475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2211
+      "storyRank": 0.2206
     },
     {
       "id": "min_espn_ba3222e53f679",
@@ -2451,7 +2511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2259
+      "storyRank": 0.2254
     },
     {
       "id": "min_espn_a0514f2f45ba9",
@@ -2487,7 +2547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2202
+      "storyRank": 0.2197
     },
     {
       "id": "min_yt_Gv4uukgHviE",
@@ -2525,7 +2585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.211
+      "storyRank": 0.2105
     },
     {
       "id": "min_espn_3df790d3672e7",
@@ -2596,7 +2656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.181
+      "storyRank": 0.1806
     },
     {
       "id": "x_tl_nextgenstats_2124727636715090248",
@@ -2605,7 +2665,7 @@
       "fullText": "Brock Purdy went 16-for-18 for 195 yards and 2 TDs against the Vikings' blitz. His 88.9% completion percentage was the highest against a Brian Flores blitz since Week 1, 2019 (Lamar Jackson).\n\nWhen pressured on blitzes, Purdy finished 8-for-9 for 100 yards.\n\nPowered by @awscloud",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HXyMUbzagAEGH_r.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HXyMUbzagAEGH_r.jpg?name=orig",
       "imageAlt": "Next Gen Stats post",
       "hasInlineChartImage": true,
       "mentionedPlayers": [],
@@ -2636,7 +2696,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1923
+      "storyRank": 0.1919
     },
     {
       "id": "min_espn_1017b2857c4fd",
@@ -2707,7 +2767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1763
+      "storyRank": 0.176
     },
     {
       "id": "min_vid_53368d290016",
@@ -2760,7 +2820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.176
+      "storyRank": 0.1757
     },
     {
       "id": "min_bsky_0b342e1edfc4",
@@ -2807,7 +2867,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.17
+      "storyRank": 0.1697
     },
     {
       "id": "min_vid_34322d16947a",
@@ -2852,7 +2912,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1757
+      "storyRank": 0.1754
     },
     {
       "id": "min_vid_13192c7f0988",
@@ -2897,7 +2957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1756
+      "storyRank": 0.1752
     },
     {
       "id": "min_yt_ZKtreDbZQBY",
@@ -2944,7 +3004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1494
+      "storyRank": 0.1491
     },
     {
       "id": "min_pfr_7f7e0286912c",
@@ -2977,7 +3037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1718
+      "storyRank": 0.1714
     },
     {
       "id": "min_vid_d5b5f445dc2c",
@@ -3013,7 +3073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1717
+      "storyRank": 0.1714
     },
     {
       "id": "min_bsky_ac2368d7d4a1",
@@ -3051,7 +3111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1623
+      "storyRank": 0.162
     },
     {
       "id": "min_bsky_4814e9a5edcf",
@@ -3098,7 +3158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1615
+      "storyRank": 0.1612
     },
     {
       "id": "min_bsky_f6680492fa69",
@@ -3145,7 +3205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1613
+      "storyRank": 0.161
     },
     {
       "id": "min_bsky_27c669baa0a8",
@@ -3183,7 +3243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1612
+      "storyRank": 0.1609
     },
     {
       "id": "min_bsky_fecab1979829",
@@ -3221,7 +3281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1606
+      "storyRank": 0.1603
     },
     {
       "id": "min_bsky_69c99595379f",
@@ -3259,7 +3319,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1664
+      "storyRank": 0.1661
     },
     {
       "id": "min_vid_4b92a5c76771",
@@ -3304,7 +3364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1646
+      "storyRank": 0.1643
     },
     {
       "id": "min_vid_024e3ba9ad86",
@@ -3357,7 +3417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1641
+      "storyRank": 0.1638
     },
     {
       "id": "min_bsky_e1b9d2e38719",
@@ -3404,7 +3464,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1583
+      "storyRank": 0.1581
     },
     {
       "id": "min_bsky_a52b5ac1afdc",
@@ -3451,7 +3511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1581
+      "storyRank": 0.1579
     },
     {
       "id": "min_vid_ea503e24fbb4",
@@ -3496,7 +3556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1635
+      "storyRank": 0.1632
     },
     {
       "id": "min_vid_b455d7f0bbef",
@@ -3549,7 +3609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1629
+      "storyRank": 0.1626
     },
     {
       "id": "min_bsky_ac310658b710",
@@ -3625,7 +3685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0636
+      "storyRank": 0.0634
     },
     {
       "id": "min_espn_888a12f7e7d0e",
@@ -3762,7 +3822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0407
+      "storyRank": 0.0406
     },
     {
       "id": "min_pwire_4708049_64890828",
@@ -3911,7 +3971,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0303
     },
     {
       "id": "min_bsky_1766f43601b7",
@@ -3982,7 +4042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0699
+      "storyRank": 0.0698
     },
     {
       "id": "min_vid_7591f039fd45",
@@ -4018,7 +4078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0299
     },
     {
       "id": "min_vid_636378ed63a0",
@@ -4071,7 +4131,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0294
     },
     {
       "id": "min_vid_11f400d0e3fc",
@@ -4132,7 +4192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0292
     },
     {
       "id": "min_vid_78c196b2b87d",
@@ -4527,7 +4587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.0226
     },
     {
       "id": "min_vid_65e06ced62f8",
@@ -4895,7 +4955,7 @@
       "duration": "12:01",
       "imageUrl": "https://i.ytimg.com/vi/4CxuLa5_kzE/hqdefault.jpg",
       "imageAlt": "Minnesota Vikings vs San Francisco 49ers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:43:48.899Z",
+      "publishedAt": "2026-11-18T20:49:02.848Z",
       "url": "https://www.youtube.com/watch?v=4CxuLa5_kzE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=4CxuLa5_kzE",
       "channel": "NFL",
@@ -5393,7 +5453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0158
     },
     {
       "id": "min_vid_ef98ee6dcba8",
@@ -5738,45 +5798,6 @@
       "storyRank": 0.0139
     },
     {
-      "id": "min_yts_l8WKDp6IfQA",
-      "type": "video",
-      "videoId": "l8WKDp6IfQA",
-      "embeddable": false,
-      "title": "Minnesota Vikings vs. Green Bay Packers Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "14:53",
-      "imageUrl": "https://i.ytimg.com/vi/l8WKDp6IfQA/hqdefault.jpg",
-      "imageAlt": "Minnesota Vikings vs. Green Bay Packers Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:43:48.899Z",
-      "url": "https://www.youtube.com/watch?v=l8WKDp6IfQA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=l8WKDp6IfQA",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
-    },
-    {
       "id": "min_vid_430baf5fbca4",
       "type": "video",
       "title": "Kevin O'Connell on Vikings Fans Support in Green Bay, Jordan Addison's Injury & Trust with Kirk Cousins",
@@ -5877,7 +5898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0131
     },
     {
       "id": "min_vid_aefc7edddefc",
@@ -6116,7 +6137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0118
     },
     {
       "id": "min_vid_21a7ad4b2634",
@@ -6673,7 +6694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0117
+      "storyRank": 0.0116
     },
     {
       "id": "min_vid_201412492e02",
@@ -7482,7 +7503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "min_tx_3c0981c807ec",
@@ -8247,51 +8268,6 @@
       "storyRank": 0.0073
     },
     {
-      "id": "min_vid_bbe440f16601",
-      "type": "video",
-      "title": "Nolan Teasley on Acquiring Quarterback Kirk Cousins, Improving Vikings Roster & Defense's Success",
-      "summary": "Minnesota Vikings General Manager Nolan Teasley addressed the media from the TCO Performance Center after the team acquired quarterback Kirk Cousins ahead of the trade deadline.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/iax1o7xrw3eyck9atr7c.png",
-      "imageAlt": "Nolan Teasley on Acquiring Quarterback Kirk Cousins, Improving Vikings Roster & Defense's Success",
-      "publishedAt": "2026-11-11T19:39:44.000Z",
-      "url": "https://www.vikings.com/video/nolan-teasley-on-acquiring-quarterback-kirk-cousins-improving-vikings-roster-defense-s-success",
-      "externalVideoUrl": "https://www.vikings.com/video/nolan-teasley-on-acquiring-quarterback-kirk-cousins-improving-vikings-roster-defense-s-success",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "14880",
-          "name": "Kirk Cousins",
-          "shortName": "K. Cousins",
-          "position": "QB",
-          "jersey": 8,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14880.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
-    },
-    {
       "id": "min_tx_1b63e5d81014",
       "type": "tweet",
       "title": "Vikings roster move: Signed RB Damon Bankston and LB Josh Ross to the practice squad.",
@@ -8325,42 +8301,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.007
-    },
-    {
-      "id": "min_vid_27f8c0adc772",
-      "type": "video",
-      "title": "Adrian Peterson's Vikings Ring of Honor Induction Ceremony",
-      "summary": "Watch as Vikings Legend Adrian Peterson was inducted into the Ring of Honor during the 2026 NFL season at U.S. Bank Stadium.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/h90eoamfoku187yqzsk5.jpg",
-      "imageAlt": "Adrian Peterson's Vikings Ring of Honor Induction Ceremony",
-      "publishedAt": "2026-11-11T00:00:00.000Z",
-      "url": "https://www.vikings.com/video/adrian-peterson-ring-of-honor-induction-ceremony-2026",
-      "externalVideoUrl": "https://www.vikings.com/video/adrian-peterson-ring-of-honor-induction-ceremony-2026",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
     },
     {
       "id": "min_tx_e4fa88a8e4a0",
@@ -8483,7 +8423,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0053
     },
     {
       "id": "min_tx_2ce463a3484a",

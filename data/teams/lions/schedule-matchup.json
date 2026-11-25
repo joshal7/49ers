@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:53.598Z",
+  "updatedAt": "2026-11-25T20:48:55.923Z",
   "sources": [
     {
       "label": "ESPN Lions Schedule",
@@ -24731,10 +24731,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (62.8% neutral-field win rating, 11.8 proj. wins) at 8-2 through Week 11.",
+        "blurb": "Tier 2 (63.2% neutral-field win rating, 11.8 proj. wins) at 8-2 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24783,10 +24783,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (62.8% neutral-field win rating, 11.8 proj. wins) at 8-2 through Week 11."
+        "blurb": "Tier 2 (63.2% neutral-field win rating, 11.8 proj. wins) at 8-2 through Week 11."
       },
       {
         "id": "cbs",
@@ -24852,7 +24852,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:43:56.814Z"
+    "fetchedAtIso": "2026-11-25T20:48:58.976Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25485,13 +25485,13 @@
           "playProbabilityPct": 95
         },
         {
-          "playerId": "4241007",
-          "name": "D'Marco Jackson",
+          "playerId": "4430822",
+          "name": "Noah Sewell",
           "position": "LB",
           "unit": "Defense",
           "slot": "SLB",
-          "jersey": 48,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241007.png",
+          "jersey": 44,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430822.png",
           "playProbabilityPct": 95
         },
         {
@@ -25627,6 +25627,35 @@
       ],
       "injuryReport": [
         {
+          "playerId": "4361093",
+          "name": "Kyler Gordon",
+          "position": "CB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361093.png",
+          "injuryType": "Shoulder",
+          "gameStatus": "Out",
+          "status": "Out",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "DNP",
+          "thu": "DNP",
+          "fri": "DNP",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "archetypeNote": "CB availability projection",
+          "factors": [
+            "Officially ruled Out on weekly game status report"
+          ],
+          "beatComment": "out",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": 28,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
           "playerId": "4426386",
           "name": "Roschon Johnson",
           "position": "RB",
@@ -25685,40 +25714,11 @@
           "isMidWeekAdditionDelta": false
         },
         {
-          "playerId": "4361093",
-          "name": "Kyler Gordon",
-          "position": "CB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361093.png",
-          "injuryType": "Shoulder",
-          "gameStatus": "Out",
-          "status": "Out",
-          "isSeasonEnding": false,
-          "isPracticeWindowOpen": false,
-          "earliestEligibleWeek": null,
-          "projectedReturnWeek": null,
-          "byeWeekNote": null,
-          "wed": "DNP",
-          "thu": "DNP",
-          "fri": "DNP",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "archetypeNote": "CB availability projection",
-          "factors": [
-            "Officially ruled Out on weekly game status report"
-          ],
-          "beatComment": "questionable",
-          "isStarter": true,
-          "role": "Starter",
-          "priorDayPlayProbabilityPct": 28,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
           "playerId": "4426374",
           "name": "Tyrique Stevenson Sr.",
           "position": "CB",
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426374.png",
-          "injuryType": "Injury",
+          "injuryType": "Groin",
           "gameStatus": "Questionable",
           "status": "Questionable",
           "isSeasonEnding": false,
@@ -25729,13 +25729,14 @@
           "wed": "-",
           "thu": "-",
           "fri": "LP",
-          "playProbabilityPct": 64,
-          "playBadgeLabel": "64% • GTD",
+          "playProbabilityPct": 59,
+          "playBadgeLabel": "59% • GTD",
           "archetypeNote": "CB availability projection",
           "factors": [
-            "Late-week injury addition (added Friday Limited after clean Wed–Thu; base prior 76%)"
+            "Late-week injury addition (added Friday Limited after clean Wed–Thu; base prior 76%)",
+            "Soft-tissue re-aggravation caution (Groin)"
           ],
-          "beatComment": "Stevenson injured his hand during the Bears' Week 9 win over the Buccaneers. He had additional time to rest thanks to the Week 10 bye, and given Stevenson's absence from Wednesday's estimated practice report, the fourth-year defensive back should suit up Sunday against the Saints. He has accumulated 34 tackles (23 solo) and four pass defenses through eight regular-season games.",
+          "beatComment": "questionable",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": 99,
@@ -25743,12 +25744,18 @@
           "isMidWeekAdditionDelta": true
         },
         {
-          "playerId": "",
+          "playerId": "4241007",
           "name": "D'Marco Jackson",
           "position": "LB",
-          "headshotUrl": "",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241007.png",
           "injuryType": "Elbow",
           "gameStatus": "Questionable",
+          "status": "Questionable",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
           "wed": "FP",
           "thu": "FP",
           "fri": "FP",
@@ -25758,9 +25765,9 @@
           "factors": [
             "Logged Full Participation (FP) on Friday"
           ],
-          "beatComment": "",
-          "isStarter": true,
-          "role": "Starter",
+          "beatComment": "questionable",
+          "isStarter": false,
+          "role": "Depth",
           "priorDayPlayProbabilityPct": 92,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
@@ -27568,16 +27575,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Blake Miller, Tate Ratledge & Penei Sewell vs. DE Montez Sweat & Bears Simulated Pressures",
+        "unitMatchup": "Blake Miller, Penei Sewell & Tate Ratledge vs. DE Montez Sweat & Bears Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Blake Miller",
-          "Tate Ratledge",
-          "Penei Sewell"
+          "Penei Sewell",
+          "Tate Ratledge"
         ],
         "statComparison": "DET: #16 Pass Protection (6.0%) | CHI: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Blake Miller, Tate Ratledge & Penei Sewell protect Jared Goff (#16 protection at 6.0%) against DE Montez Sweat and Chicago Bears's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Blake Miller (#76) on obvious passing downs—if DE Montez Sweat cannot win clean around the arc, Bears must dial up interior stunts that stress Tate Ratledge (#69)."
+        "tacticalDetail": "Blake Miller, Penei Sewell & Tate Ratledge protect Jared Goff (#16 protection at 6.0%) against DE Montez Sweat and Chicago Bears's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Blake Miller (#76) on obvious passing downs—if DE Montez Sweat cannot win clean around the arc, Bears must dial up interior stunts that stress Penei Sewell (#58)."
       }
     ]
   }

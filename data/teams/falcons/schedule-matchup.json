@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:53.025Z",
+  "updatedAt": "2026-11-25T20:50:05.363Z",
   "sources": [
     {
       "label": "ESPN Falcons Schedule",
@@ -24611,15 +24611,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 23,
-    "averageRank": 22.5,
+    "consensusRank": 22,
+    "averageRank": 22.3,
     "medianRank": 22,
     "previousRank": 22,
     "rangeMin": 19,
     "rangeMax": 26,
     "rangeShort": "#19–#26",
     "rangeDisplay": "#19–#26 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #23 consensus (avg #22.5) through Week 10, ranging from #19 (Inpredictable) to #26 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
+    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #22 consensus (avg #22.3) through Week 10, ranging from #19 (Inpredictable) to #26 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24640,6 +24640,24 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 20,
+        "previousRank": 21,
+        "delta": "+1",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfLabel": "Thru Wk 11",
+        "verified": true,
+        "blurb": "Tier 4 (41.8% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "cbs",
         "outlet": "CBS Sports NFL Power Rankings",
         "shortName": "CBS Sports",
@@ -24655,24 +24673,6 @@
         "asOfLabel": "Week 11",
         "verified": true,
         "blurb": "The past two losses have really exposed this team. The idea of them being a playoff team isn't over, but it's going fast.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 21,
-        "previousRank": 21,
-        "delta": "0",
-        "reportedRecord": "3-7",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
-        "asOfLabel": "Thru Wk 11",
-        "verified": true,
-        "blurb": "Tier 4 (41.2% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24770,16 +24770,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 21,
+        "rank": 20,
         "previousRank": 21,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (41.2% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11."
+        "blurb": "Tier 4 (41.8% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24834,7 +24834,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-25T20:44:56.093Z"
+    "fetchedAtIso": "2026-11-25T20:50:08.041Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27450,15 +27450,15 @@
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",
-        "unitMatchup": "Cameron Thomas, Gervon Dexter Sr. & Brandon Dorlus vs. QB Kirk Cousins & OT Christian Darrisaw",
+        "unitMatchup": "Cameron Thomas, Gervon Dexter Sr. & Maason Smith vs. QB Kirk Cousins & OT Christian Darrisaw",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Cameron Thomas",
           "Gervon Dexter Sr.",
-          "Brandon Dorlus"
+          "Maason Smith"
         ],
         "statComparison": "ATL: #16 Def Sacks (2.3/gm) | MIN: #16 Pass Protection (6.5%)",
-        "tacticalDetail": "Cameron Thomas, Gervon Dexter Sr. & Brandon Dorlus lead Atlanta's #16 NFL pass rush (2.3/gm) against Minnesota Vikings's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Falcons keep seven defenders in coverage.",
+        "tacticalDetail": "Cameron Thomas, Gervon Dexter Sr. & Maason Smith lead Atlanta's #16 NFL pass rush (2.3/gm) against Minnesota Vikings's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Falcons keep seven defenders in coverage.",
         "filmTell": "On 3rd-and-6+, watch whether Cameron Thomas (#99) draw chip help from Vikings's tight ends or backs—creating 1-on-1 rush lanes inside for Gervon Dexter Sr. (#95)."
       },
       {

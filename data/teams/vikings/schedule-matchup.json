@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:45.861Z",
+  "updatedAt": "2026-11-25T20:49:02.124Z",
   "sources": [
     {
       "label": "ESPN Vikings Schedule",
@@ -24687,10 +24687,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (64.9% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 11.",
+        "blurb": "Tier 2 (65.7% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24793,10 +24793,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 2 (64.9% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 11."
+        "blurb": "Tier 2 (65.7% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 11."
       },
       {
         "id": "cbs",
@@ -24862,7 +24862,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:43:51.350Z"
+    "fetchedAtIso": "2026-11-25T20:49:04.350Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27460,16 +27460,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Blake Brandel, Will Fries & Brian O'Neill vs. DT Maason Smith & Falcons Simulated Pressures",
+        "unitMatchup": "Will Fries, Brian O'Neill & Blake Brandel vs. DT Maason Smith & Falcons Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Blake Brandel",
           "Will Fries",
-          "Brian O'Neill"
+          "Brian O'Neill",
+          "Blake Brandel"
         ],
         "statComparison": "MIN: #16 Pass Protection (6.0%) | ATL: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Blake Brandel, Will Fries & Brian O'Neill protect Kirk Cousins (#16 protection at 6.0%) against DT Maason Smith and Atlanta Falcons's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Blake Brandel (#64) on obvious passing downs—if DT Maason Smith cannot win clean around the arc, Falcons must dial up interior stunts that stress Will Fries (#76)."
+        "tacticalDetail": "Will Fries, Brian O'Neill & Blake Brandel protect Kirk Cousins (#16 protection at 6.0%) against DT Maason Smith and Atlanta Falcons's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Will Fries (#76) on obvious passing downs—if DT Maason Smith cannot win clean around the arc, Falcons must dial up interior stunts that stress Brian O'Neill (#75)."
       }
     ]
   }

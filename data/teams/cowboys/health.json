@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:06.364Z",
+  "updatedAt": "2026-11-25T20:49:26.043Z",
   "week": 12,
   "byeWeek": 14,
   "sourceUrl": "https://www.dallascowboys.com/team/injury-report/",
@@ -35,29 +35,29 @@
       "beatComment": "As expected, Ferguson will be sidelined for a third straight game after he failed to practice in any fashion this week while continuing to tend to a pair of lower-body injuries. Brevyn Spann-Ford will be in line for another turn as the Cowboys' top tight end while Ferguson is sidelined. After the Thanksgiving Day contest, the Cowboys will face a longer turnaround for Week 13 with a Dec. 7 matchup against the Seahawks, and Ferguson should have decent odds of making it back for that game."
     },
     {
-      "playerId": "4426485",
-      "name": "Jonathan Mingo",
-      "position": "WR",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426485.png",
+      "playerId": "4685263",
+      "name": "Tyler Booker",
+      "position": "G",
+      "jersey": 52,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685263.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "LP",
+      "wed": "DNP",
       "thu": "DNP",
       "fri": "DNP",
       "injuryType": "Ankle",
       "gameStatus": "Out",
       "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": 34,
+      "priorDayPlayProbabilityPct": 22,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Mingo downgraded from his limited participation in Monday's practice to full DNP Tuesday. The 25-year-old missed the last two games due to an ankle injury and could be in danger of missing Thursday's divisional game against the Eagles if he doesn't upgrade his practice status Wednesday. KaVontae Turpin and Camden Brown have been rotational options at wide receiver in Mingo's absence."
+      "beatComment": "out"
     },
     {
       "playerId": "3929850",
@@ -82,32 +82,32 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Locke logged his second straight limited practice in preparation for Week 12. The 29-year-old showed progression through two days of practice after being a DNP in all three practices in Week 11. The eight-year pro has one more chance to clear concussion protocol before Thursday's Thanksgiving game against the Eagles."
+      "beatComment": "out"
     },
     {
-      "playerId": "4685263",
-      "name": "Tyler Booker",
-      "position": "G",
-      "jersey": 52,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685263.png",
+      "playerId": "4426485",
+      "name": "Jonathan Mingo",
+      "position": "WR",
+      "jersey": 18,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426485.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "DNP",
+      "wed": "LP",
       "thu": "DNP",
       "fri": "DNP",
       "injuryType": "Ankle",
       "gameStatus": "Out",
       "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": 22,
+      "priorDayPlayProbabilityPct": 34,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "out"
+      "beatComment": "Mingo downgraded from his limited participation in Monday's practice to full DNP Tuesday. The 25-year-old missed the last two games due to an ankle injury and could be in danger of missing Thursday's divisional game against the Eagles if he doesn't upgrade his practice status Wednesday. KaVontae Turpin and Camden Brown have been rotational options at wide receiver in Mingo's absence."
     },
     {
       "playerId": "4702577",
@@ -186,31 +186,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "4384549",
-      "name": "Cobie Durant",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4384549.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "FP",
-      "injuryType": "Neck",
-      "gameStatus": "No Designation (Cleared)",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 95,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": ""
-    },
-    {
       "playerId": "2577417",
       "name": "Dak Prescott",
       "position": "QB",
@@ -236,54 +211,29 @@
       "beatComment": "As the final score and Prescott's numbers indicate, the prolific passer was clicking on all cylinders right out of the gate against an overmatched Titans defense. Prescott had already helped stake the Cowboys to a 27-6 lead by halftime with eight- and 10-yard touchdown strikes to CeeDee Lamb and George Pickens, respectively. Prescott struck again through the air in the second half with an 11-yard touchdown pass to Javonte Williams before closing out his touchdown tally with a two-yard toss to Brevyn Spann-Ford with just under five minutes remaining. Prescott added his second rushing touchdown of the campaign on a two-yard run in the latter portion of the third quarter, giving him his second straight five-TD performance. Prescott is up to 3,049 passing yards and a 25:6 TD:INT heading into a Thanksgiving Day home clash with the Eagles in Week 12."
     },
     {
-      "playerId": "4683848",
-      "name": "Donovan Ezeiruaku",
-      "position": "LB",
-      "jersey": 6,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683848.png",
+      "playerId": "4384549",
+      "name": "Cobie Durant",
+      "position": "CB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4384549.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
       "fri": "FP",
-      "injuryType": "Ankle",
+      "injuryType": "Neck",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
       "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": ""
-    },
-    {
-      "playerId": "4685266",
-      "name": "Jaishawn Barham",
-      "position": "LB",
-      "jersey": 55,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685266.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "LP",
-      "fri": "FP",
-      "injuryType": "Hip / Groin",
-      "gameStatus": "No Designation (Cleared)",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 74,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "questionable"
     },
     {
       "playerId": "4426506",
@@ -330,6 +280,56 @@
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4683848",
+      "name": "Donovan Ezeiruaku",
+      "position": "LB",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683848.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Ankle",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4685266",
+      "name": "Jaishawn Barham",
+      "position": "LB",
+      "jersey": 55,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685266.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "LP",
+      "fri": "FP",
+      "injuryType": "Hip / Groin",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 74,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:45:55.265Z",
+  "updatedAt": "2026-11-25T20:51:27.261Z",
   "sources": [
     {
       "label": "ESPN Titans Schedule",
@@ -24689,10 +24689,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (25.8% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 11.",
+        "blurb": "Tier 6 (24.8% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24778,10 +24778,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 6 (25.8% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 11."
+        "blurb": "Tier 6 (24.8% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 11."
       },
       {
         "id": "cbs",
@@ -24847,7 +24847,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:45:57.984Z"
+    "fetchedAtIso": "2026-11-25T20:51:29.355Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27525,16 +27525,16 @@
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",
-        "unitMatchup": "Anthony Hill Jr., Joshua Williams & Kevin Winston Jr. vs. WR Travis Hunter & QB Trevor Lawrence",
+        "unitMatchup": "Joshua Williams, Anthony Hill Jr. & Kevin Winston Jr. vs. WR Travis Hunter & QB Trevor Lawrence",
         "advantage": "JAX Heavy Edge",
         "sfPlayers": [
-          "Anthony Hill Jr.",
           "Joshua Williams",
+          "Anthony Hill Jr.",
           "Kevin Winston Jr."
         ],
         "statComparison": "TEN: #32 Pass Def (+7.94) | JAX: #10 Pass Off (244.7 yds)",
-        "tacticalDetail": "Anthony Hill Jr., Joshua Williams & Kevin Winston Jr. anchor Tennessee's #32 pass defense (+7.94) against WR Travis Hunter and Jacksonville Jaguars's #10 passing attack (244.7 yds). Limiting explosive 20+ yard chunk plays forces Jaguars into sustained red-zone drives.",
-        "filmTell": "Track Anthony Hill Jr. (#53) at the top of routes against WR Travis Hunter: press-bail alignment with safety help over the top takes away QB Trevor Lawrence's preferred isolation shots."
+        "tacticalDetail": "Joshua Williams, Anthony Hill Jr. & Kevin Winston Jr. anchor Tennessee's #32 pass defense (+7.94) against WR Travis Hunter and Jacksonville Jaguars's #10 passing attack (244.7 yds). Limiting explosive 20+ yard chunk plays forces Jaguars into sustained red-zone drives.",
+        "filmTell": "Track Joshua Williams (#25) at the top of routes against WR Travis Hunter: press-bail alignment with safety help over the top takes away QB Trevor Lawrence's preferred isolation shots."
       },
       {
         "phaseTag": "Early-Down Ground Game & Run Fits",
@@ -27550,16 +27550,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Atonio Mafi, Austin Schlottmann & Chandler Zavala vs. DE Travon Walker & Jaguars Simulated Pressures",
+        "unitMatchup": "Austin Schlottmann, Atonio Mafi & Chandler Zavala vs. DE Travon Walker & Jaguars Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Atonio Mafi",
           "Austin Schlottmann",
+          "Atonio Mafi",
           "Chandler Zavala"
         ],
         "statComparison": "TEN: #16 Pass Protection (6.0%) | JAX: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Atonio Mafi, Austin Schlottmann & Chandler Zavala protect Cam Ward (#16 protection at 6.0%) against DE Travon Walker and Jacksonville Jaguars's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Atonio Mafi (#70) on obvious passing downs—if DE Travon Walker cannot win clean around the arc, Jaguars must dial up interior stunts that stress Austin Schlottmann (#51)."
+        "tacticalDetail": "Austin Schlottmann, Atonio Mafi & Chandler Zavala protect Cam Ward (#16 protection at 6.0%) against DE Travon Walker and Jacksonville Jaguars's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Austin Schlottmann (#51) on obvious passing downs—if DE Travon Walker cannot win clean around the arc, Jaguars must dial up interior stunts that stress Atonio Mafi (#70)."
       }
     ]
   }
