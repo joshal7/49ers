@@ -5079,9 +5079,13 @@ export function deduplicateAndGroupWireItems(
     } else {
       matchedCluster.lead.confirmingReports.push({
         ...item,
+        duration: item.duration || matchedCluster.lead.duration || undefined,
         isUrgentBreaking: false,
         isBreaking: false
       });
+      if (!matchedCluster.lead.duration && item.duration && !matchedCluster.lead.isAnimatedGif) {
+        matchedCluster.lead.duration = item.duration;
+      }
       if (
         (!isEditorialPhotoUrl(matchedCluster.lead.imageUrl) && isEditorialPhotoUrl(item.imageUrl)) ||
         (!matchedCluster.lead.imageUrl && item.imageUrl)

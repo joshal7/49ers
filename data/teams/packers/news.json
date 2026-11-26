@@ -1400,7 +1400,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.1049
+      "storyRank": 9.1049,
+      "duration": "1:47"
     },
     {
       "id": "gb_pft_c164c26b97da",
@@ -2525,7 +2526,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6803
+      "storyRank": 0.6803,
+      "duration": "13:22"
     },
     {
       "id": "gb_brss_acme_packing_company_9b7cf96d88b9",
@@ -6470,7 +6472,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0087,
+      "duration": "32:00"
     },
     {
       "id": "gb_vid_dcab3d064e0e",
@@ -9180,7 +9183,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0037,
+      "duration": "8:40"
     },
     {
       "id": "gb_vid_47567b305726",
@@ -9428,7 +9432,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0038
+      "storyRank": 0.0038,
+      "duration": "36:30"
     },
     {
       "id": "gb_vid_d9f453c02817",
@@ -10545,7 +10550,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0024,
+      "duration": "5:14"
     },
     {
       "id": "gb_yt_rcF9P1EISPw",
@@ -10592,7 +10598,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0009,
+      "duration": "33:03"
     },
     {
       "id": "gb_brss_acme_packing_company_990653d5fac8",

@@ -579,7 +579,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8207
+      "storyRank": 4.8207,
+      "duration": "0:44"
     },
     {
       "id": "sea_nfltr_5f3a4ea9a8a7",
@@ -745,7 +746,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2633
+      "storyRank": 3.2633,
+      "duration": "27:59"
     },
     {
       "id": "sea_pfr_cece77e1e4e1",
@@ -961,7 +963,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2053
+      "storyRank": 3.2053,
+      "duration": "12:24"
     },
     {
       "id": "sea_tyt_6L54NGkVLxs",
@@ -999,7 +1002,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7178
+      "storyRank": 2.7178,
+      "duration": "22:36"
     },
     {
       "id": "sea_brss_field_gulls_a65c01d3a041",
@@ -1104,7 +1108,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6594
+      "storyRank": 2.6594,
+      "duration": "27:59"
     },
     {
       "id": "sea_vid_4c9f7d744d9e",
@@ -1680,7 +1685,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.159
+      "storyRank": 0.159,
+      "duration": "1:18"
     },
     {
       "id": "sea_rss_287e810a755e",
@@ -2663,7 +2669,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
+      "storyRank": 0.0463,
+      "duration": "24:54"
     },
     {
       "id": "sea_nfilm_matchquarters_d432699c0cba",
@@ -3507,7 +3514,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311
+      "storyRank": 0.0311,
+      "duration": "26:06"
     },
     {
       "id": "sea_vid_207289aed9c0",
@@ -4809,7 +4817,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0268
+      "storyRank": 0.0268,
+      "duration": "4:59"
     },
     {
       "id": "sea_vid_c6e0146ec9ea",
@@ -5410,7 +5419,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0228,
+      "duration": "10:14"
     },
     {
       "id": "sea_tx_914bf33c9742",
@@ -5688,7 +5698,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0051,
+      "duration": "7:52"
     },
     {
       "id": "sea_rss_4fb56184e791",
@@ -5779,7 +5790,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0191
+      "storyRank": 0.0191,
+      "duration": "12:00"
     },
     {
       "id": "sea_pfr_2b5016db5b0f",
@@ -5850,7 +5862,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0188
+      "storyRank": 0.0188,
+      "duration": "29:13"
     },
     {
       "id": "sea_rss_df482c9309b3",
@@ -5965,7 +5978,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
+      "storyRank": 0.0185,
+      "duration": "27:27"
     },
     {
       "id": "sea_rss_dafba9b897ff",
@@ -6107,7 +6121,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.017,
+      "duration": "7:33"
     },
     {
       "id": "sea_tx_a4699ff08a5a",
@@ -6215,7 +6230,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0144,
+      "duration": "23:25"
     },
     {
       "id": "sea_tx_bed3b4ffd9b0",
@@ -6332,7 +6348,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0023
+      "storyRank": 0.0023,
+      "duration": "19:24"
     },
     {
       "id": "sea_yt_jHbRQmuR274",
@@ -6370,7 +6387,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0059,
+      "duration": "4:23"
     },
     {
       "id": "sea_yt_Hya40kjfhN4",
@@ -6408,7 +6426,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0035,
+      "duration": "42:57"
     },
     {
       "id": "sea_rss_9a0b49119366",

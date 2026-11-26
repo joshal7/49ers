@@ -2192,6 +2192,69 @@ export default {
           );
         }
 
+        // Enrich verified durations for live ESPN video clips & live NFL YouTube clips (bounded parallel, 2.5s cap)
+        const durEnrichJobs = [];
+        let espnDurBudget = 6;
+        let ytDurBudget = 4;
+        for (const it of items) {
+          if (!it || it.duration || it.isAnimatedGif) continue;
+          if (it.type !== 'video' && !it.videoId && !it.videoStreamUrl && !it.externalVideoUrl) continue;
+          const espnMatch = String(it.url || '').match(/espn\.com\/video\/clip\/_\/id\/(\d+)/i);
+          if (espnMatch?.[1] && espnDurBudget > 0) {
+            espnDurBudget -= 1;
+            durEnrichJobs.push(
+              fetch(`https://api-app.espn.com/v1/video/clips/${encodeURIComponent(espnMatch[1])}`, {
+                signal: AbortSignal.timeout(2500)
+              })
+                .then(r => (r.ok ? r.json() : null))
+                .then(j => {
+                  const d = formatVideoDurationDisplay(Number(j?.videos?.[0]?.duration || 0));
+                  if (d) it.duration = d;
+                })
+                .catch(() => {})
+            );
+          } else if (it.videoId && ytDurBudget > 0) {
+            ytDurBudget -= 1;
+            durEnrichJobs.push(
+              fetch(`https://www.youtube.com/watch?v=${encodeURIComponent(it.videoId)}`, {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
+                signal: AbortSignal.timeout(2600)
+              })
+                .then(r => (r.ok ? r.text() : ''))
+                .then(html => {
+                  const lm = html.match(/"lengthSeconds"\s*:\s*"(\d+)"/);
+                  const iso = html.match(/itemprop="duration"\s+content="(PT[^"]+)"/i);
+                  const d = formatVideoDurationDisplay(lm?.[1] ? Number(lm[1]) : iso?.[1] || '');
+                  if (d) it.duration = d;
+                })
+                .catch(() => {})
+            );
+          }
+        }
+        if (durEnrichJobs.length > 0) {
+          await Promise.all(durEnrichJobs);
+        }
+        const normEdgeVidTitle = t =>
+          String(t || '')
+            .toLowerCase()
+            .replace(/[’‘`]/g, "'")
+            .replace(/\s*\|\s*[^|]+$/, '')
+            .replace(/[^a-z0-9]+/g, ' ')
+            .trim()
+            .slice(0, 52);
+        const edgeDurByTitle = new Map();
+        for (const it of items) {
+          if (!it?.duration) continue;
+          const k = normEdgeVidTitle(it.title);
+          if (k.length >= 14 && !edgeDurByTitle.has(k)) edgeDurByTitle.set(k, it.duration);
+        }
+        for (const it of items) {
+          if (!it || it.duration || it.isAnimatedGif) continue;
+          if (it.type !== 'video' && !it.videoId && !it.videoStreamUrl && !it.externalVideoUrl) continue;
+          const k = normEdgeVidTitle(it.title);
+          if (k.length >= 14 && edgeDurByTitle.has(k)) it.duration = edgeDurByTitle.get(k);
+        }
+
         return jsonResp(
           {
             ok: true,

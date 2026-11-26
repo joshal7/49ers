@@ -4552,10 +4552,47 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
     if (discovered.length > 0) {
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
     }
+    backfillTwinVideoDurationsClient(appData.news.rawStream);
     return discovered.length + backfilledDurations;
   } catch {
     return 0;
   }
+}
+
+/**
+ * Copies verified durations across twin club/YouTube/ESPN video entries sharing the same normalized
+ * headline (e.g. `49ers.com/video/mic-d-up-...` + `San Francisco 49ers` YouTube upload) in <0.2ms.
+ */
+function backfillTwinVideoDurationsClient(rawStream = []) {
+  if (!Array.isArray(rawStream) || rawStream.length < 2) return 0;
+  const normTitle = t =>
+    String(t || '')
+      .toLowerCase()
+      .replace(/[’‘`]/g, "'")
+      .replace(/\s*\|\s*[^|]+$/, '')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim()
+      .slice(0, 52);
+  const byTitle = new Map();
+  for (const it of rawStream) {
+    if (!it || it.isAnimatedGif) continue;
+    const d = formatVideoDurationDisplay(it.duration);
+    if (!d) continue;
+    const k = normTitle(it.title);
+    if (k.length >= 14 && !byTitle.has(k)) byTitle.set(k, d);
+  }
+  if (byTitle.size === 0) return 0;
+  let filled = 0;
+  for (const it of rawStream) {
+    if (!it || it.isAnimatedGif || formatVideoDurationDisplay(it.duration)) continue;
+    if (it.type !== 'video' && !it.videoId && !it.videoStreamUrl && !it.externalVideoUrl) continue;
+    const k = normTitle(it.title);
+    if (k.length >= 14 && byTitle.has(k)) {
+      it.duration = byTitle.get(k);
+      filled += 1;
+    }
+  }
+  return filled;
 }
 
 function pruneSupersededLiveScoringPlays(appData, incomingVideos = []) {
@@ -5157,6 +5194,7 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
       propagateLiveItemsToPlayerMentions(discovered.filter(d => d.type !== 'video'), rosterPlayers, appData);
     }
+    backfillTwinVideoDurationsClient(appData.news.rawStream);
     return discovered.length;
   } catch {
     return 0;

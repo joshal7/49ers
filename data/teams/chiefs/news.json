@@ -546,7 +546,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6913
+      "storyRank": 2.6913,
+      "duration": "18:08"
     },
     {
       "id": "kc_brss_arrowhead_pride_14e6be8ec685",
@@ -749,7 +750,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7332
+      "storyRank": 1.7332,
+      "duration": "20:38"
     },
     {
       "id": "kc_tyt_niDHP6VjZ7k",
@@ -787,7 +789,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3523
+      "storyRank": 1.3523,
+      "duration": "4:18"
     },
     {
       "id": "kc_brss_arrowhead_pride_3537eb274688",
@@ -1424,7 +1427,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4596
+      "storyRank": 0.4596,
+      "duration": "8:59"
     },
     {
       "id": "kc_brss_arrowhead_pride_755cff9609f0",
@@ -1505,7 +1509,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4228
+      "storyRank": 0.4228,
+      "duration": "1:30:37"
     },
     {
       "id": "kc_pwire_4567048_64960728",
@@ -2099,7 +2104,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.274
+      "storyRank": 0.274,
+      "duration": "1:15:59"
     },
     {
       "id": "kc_tx_20a62fe4c723",
@@ -2189,7 +2195,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2542
+      "storyRank": 0.2542,
+      "duration": "24:11"
     },
     {
       "id": "kc_rss_4d14250687ae",
@@ -2700,7 +2707,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1182
+      "storyRank": 0.1182,
+      "duration": "49:55"
     },
     {
       "id": "kc_rss_3409cc53d230",
@@ -2883,7 +2891,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1278
+      "storyRank": 0.1278,
+      "duration": "19:04"
     },
     {
       "id": "x_tl_pff_2124626366914244745",
@@ -3286,7 +3295,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1244
+      "storyRank": 0.1244,
+      "duration": "2:07"
     },
     {
       "id": "kc_tyt_8vhrZWvo_A0",
@@ -3333,7 +3343,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1242
+      "storyRank": 0.1242,
+      "duration": "3:31"
     },
     {
       "id": "kc_vid_f105a04e428b",
@@ -3426,7 +3437,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.124
+      "storyRank": 0.124,
+      "duration": "5:07"
     },
     {
       "id": "kc_vid_259bc6310e5a",
@@ -4253,7 +4265,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0394
+      "storyRank": 0.0394,
+      "duration": "7:00"
     },
     {
       "id": "kc_rss_01bb067e190b",
@@ -4377,7 +4390,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0328
+      "storyRank": 0.0328,
+      "duration": "38:56"
     },
     {
       "id": "kc_rss_193b998d5208",
@@ -4517,7 +4531,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0074,
+      "duration": "5:46"
     },
     {
       "id": "kc_rss_d688f992df14",
@@ -4633,7 +4648,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.022,
+      "duration": "5:04"
     },
     {
       "id": "kc_rss_1e185a8016b2",
@@ -4750,7 +4766,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
+      "storyRank": 0.0249,
+      "duration": "1:29:21"
     },
     {
       "id": "kc_nfilm_matchquarters_a64862556914",
@@ -4824,7 +4841,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0243
+      "storyRank": 0.0243,
+      "duration": "11:37"
     },
     {
       "id": "kc_yt_Pm-Xc0mpDvI",
@@ -4871,7 +4889,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.023,
+      "duration": "10:23"
     },
     {
       "id": "kc_yts_RgtJyKfaWc0",
@@ -5056,7 +5075,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0202,
+      "duration": "7:52"
     },
     {
       "id": "kc_pfr_b919e2b84697",
@@ -5620,7 +5640,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0018
+      "storyRank": 0.0018,
+      "duration": "49:00"
     },
     {
       "id": "kc_yt_dihTkfOOlU4",
@@ -5667,7 +5688,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0079,
+      "duration": "9:30"
     },
     {
       "id": "kc_tx_75b684dcc425",
@@ -5880,7 +5902,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0028,
+      "duration": "4:23"
     },
     {
       "id": "kc_rss_2060c522dd71",

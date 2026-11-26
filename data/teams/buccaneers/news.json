@@ -508,7 +508,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3215
+      "storyRank": 3.3215,
+      "duration": "3:10"
     },
     {
       "id": "tb_vid_ed7d62127a09",
@@ -860,7 +861,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8378
+      "storyRank": 1.8378,
+      "duration": "2:12"
     },
     {
       "id": "tb_vid_4cc667c3b49a",
@@ -1038,7 +1040,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7989
+      "storyRank": 1.7989,
+      "duration": "6:16"
     },
     {
       "id": "tb_tyt_uFwQqGgtuL8",
@@ -1093,7 +1096,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7974
+      "storyRank": 1.7974,
+      "duration": "8:11"
     },
     {
       "id": "tb_vid_0a73dc627f7c",
@@ -1146,7 +1150,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7972
+      "storyRank": 1.7972,
+      "duration": "2:12"
     },
     {
       "id": "tb_tx_5938cbd301c5",
@@ -1236,7 +1241,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7024
+      "storyRank": 1.7024,
+      "duration": "20:06"
     },
     {
       "id": "tb_yt_yyR5Ru5sS0c",
@@ -1274,7 +1280,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4283
+      "storyRank": 1.4283,
+      "duration": "9:41"
     },
     {
       "id": "tb_rss_237ca059efce",
@@ -1353,7 +1360,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1877
+      "storyRank": 1.1877,
+      "duration": "20:06"
     },
     {
       "id": "tb_pwire_4430834_64970428",
@@ -1432,7 +1440,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1469
+      "storyRank": 1.1469,
+      "duration": "6:18"
     },
     {
       "id": "tb_vid_4e603de9bcd2",
@@ -1468,7 +1477,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1455
+      "storyRank": 1.1455,
+      "duration": "6:18"
     },
     {
       "id": "tb_rss_800aa8ef4334",
@@ -1549,7 +1559,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0123
+      "storyRank": 1.0123,
+      "duration": "20:10"
     },
     {
       "id": "tb_vid_156d7a1d5abc",
@@ -2092,7 +2103,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2073
+      "storyRank": 0.2073,
+      "duration": "50:25"
     },
     {
       "id": "tb_vid_6a6cde17a186",
@@ -2185,7 +2197,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1943
+      "storyRank": 0.1943,
+      "duration": "8:21"
     },
     {
       "id": "tb_brss_bucs_nation_eef0de12af4c",
@@ -2553,7 +2566,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1699
+      "storyRank": 0.1699,
+      "duration": "8:11"
     },
     {
       "id": "tb_brss_bucs_nation_9b9e316d4ae8",
@@ -2883,7 +2897,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1109
+      "storyRank": 0.1109,
+      "duration": "25:07"
     },
     {
       "id": "tb_rss_594fde348b8b",
@@ -3351,7 +3366,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1246
+      "storyRank": 0.1246,
+      "duration": "3:06"
     },
     {
       "id": "tb_brss_bucs_nation_be778e8124b1",
@@ -3976,7 +3992,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0527
+      "storyRank": 0.0527,
+      "duration": "0:46"
     },
     {
       "id": "tb_vid_87d7ec130f0a",
@@ -7598,7 +7615,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0011,
+      "duration": "19:24"
     },
     {
       "id": "tb_yt_6evN6yrebQk",
@@ -7645,7 +7663,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0015,
+      "duration": "32:40"
     },
     {
       "id": "tb_pwire_4686334_64909028",

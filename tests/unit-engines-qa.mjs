@@ -25598,6 +25598,38 @@ test(
       clubVidCardHtml.includes('<span class="video-dur-badge mono">16:32</span>'),
       'Non-embeddable club video card must also display duration badge on thumbnail stage'
     );
+
+    // 6. Twin video clustering must inherit verified duration bidirectionally (lead <-> confirmingReport)
+    const twinGrouped = deduplicateAndGroupWireItems(
+      [
+        {
+          id: 'sf_tyt_micdup',
+          type: 'video',
+          videoId: 'Id7LlG3tijo',
+          title: "Mic'd Up: Warner and Kittle Take Over Mexico City | 49ers",
+          url: 'https://www.youtube.com/watch?v=Id7LlG3tijo',
+          author: 'San Francisco 49ers',
+          outletName: 'San Francisco 49ers',
+          trustTier: 1,
+          publishedAt: new Date(Date.now() - 2 * 3_600_000).toISOString()
+        },
+        {
+          id: 'sf_vid_micdup',
+          type: 'video',
+          title: "Mic'd Up: Warner and Kittle Take Over Mexico City",
+          url: 'https://www.49ers.com/video/mic-d-up-warner-and-kittle-take-over-mexico-city',
+          externalVideoUrl: 'https://www.49ers.com/video/mic-d-up-warner-and-kittle-take-over-mexico-city',
+          duration: '10:48',
+          author: '49ers.com Video',
+          outletName: '49ers.com Video',
+          trustTier: 1,
+          publishedAt: new Date(Date.now() - 2 * 3_600_000 - 60_000).toISOString()
+        }
+      ],
+      { preserveFormat: 'videos', nowMs: Date.now() }
+    );
+    assert.equal(twinGrouped.length, 1, 'Twin YouTube + club video must cluster into 1 item');
+    assert.equal(twinGrouped[0].duration, '10:48', 'Cluster lead video must inherit duration from twin confirming video');
   }
 );
 

@@ -71,32 +71,51 @@ export async function fetchYouTubeVideoDuration(videoId = '') {
   if (ytDurationCache.has(cleanId)) return ytDurationCache.get(cleanId);
 
   let durStr = '';
-  try {
-    const res = await fetch(`https://www.youtube.com/watch?v=${encodeURIComponent(cleanId)}`, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-        'Accept-Language': 'en-US,en;q=0.9'
-      },
-      signal: AbortSignal.timeout(4800)
-    });
-    if (res.ok) {
-      const html = await res.text();
-      const lenMatch = html.match(/"lengthSeconds"\s*:\s*"(\d+)"/);
-      if (lenMatch?.[1]) {
-        durStr = formatVideoDurationDisplay(Number(lenMatch[1]));
-      }
-      if (!durStr) {
-        const isoMatch = html.match(/itemprop="duration"\s+content="(PT[^"]+)"/i);
-        if (isoMatch?.[1]) {
-          durStr = formatVideoDurationDisplay(isoMatch[1]);
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const res = await fetch(`https://www.youtube.com/watch?v=${encodeURIComponent(cleanId)}`, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+          'Accept-Language': 'en-US,en;q=0.9'
+        },
+        signal: AbortSignal.timeout(8000)
+      });
+      if (res.ok) {
+        const html = await res.text();
+        const lenMatch = html.match(/"lengthSeconds"\s*:\s*"(\d+)"/);
+        if (lenMatch?.[1]) {
+          durStr = formatVideoDurationDisplay(Number(lenMatch[1]));
         }
+        if (!durStr) {
+          const isoMatch = html.match(/itemprop="duration"\s+content="(PT[^"]+)"/i);
+          if (isoMatch?.[1]) {
+            durStr = formatVideoDurationDisplay(isoMatch[1]);
+          }
+        }
+        if (!durStr) {
+          const msMatch = html.match(/"approxDurationMs"\s*:\s*"(\d+)"/);
+          if (msMatch?.[1]) {
+            durStr = formatVideoDurationDisplay(Math.round(Number(msMatch[1]) / 1000));
+          }
+        }
+        if (durStr) break;
+      } else if ((res.status === 429 || res.status >= 500) && attempt === 0) {
+        await new Promise(r => setTimeout(r, 700));
+        continue;
+      } else {
+        break;
+      }
+    } catch {
+      if (attempt === 0) {
+        await new Promise(r => setTimeout(r, 650));
       }
     }
-  } catch {
-    durStr = '';
   }
 
-  ytDurationCache.set(cleanId, durStr);
+  // Only cache verified non-empty durations so transient rate-limits/timeouts never poison the cache
+  if (durStr) {
+    ytDurationCache.set(cleanId, durStr);
+  }
   return durStr;
 }
 

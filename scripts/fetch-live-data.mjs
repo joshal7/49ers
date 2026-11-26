@@ -287,8 +287,20 @@ async function fetchBlueskyHlsDuration(playlistUrl = '') {
   return durStr;
 }
 
-async function enrichRawStreamVideoDurations(rawStream = []) {
+async function enrichRawStreamVideoDurations(rawStream = [], { prevNewsSnapshot = null } = {}) {
   if (!Array.isArray(rawStream) || rawStream.length === 0) return;
+
+  // 0. Carry forward immutable verified durations from previous team snapshot (0ms, zero YouTube throttling!)
+  const prevDurByVideoId = new Map();
+  const prevDurByUrl = new Map();
+  for (const prev of Array.isArray(prevNewsSnapshot?.rawStream) ? prevNewsSnapshot.rawStream : []) {
+    if (!prev || prev.isAnimatedGif) continue;
+    const prevDur = formatVideoDurationDisplay(prev.duration);
+    if (!prevDur) continue;
+    if (prev.videoId) prevDurByVideoId.set(String(prev.videoId).trim(), prevDur);
+    const prevUrlKey = String(prev.url || prev.externalVideoUrl || '').replace(/\/+$/, '').toLowerCase();
+    if (prevUrlKey) prevDurByUrl.set(prevUrlKey, prevDur);
+  }
 
   const jobs = [];
   for (const it of rawStream) {
@@ -302,6 +314,16 @@ async function enrichRawStreamVideoDurations(rawStream = []) {
     if (it.isAnimatedGif) continue;
     const isVid = it.type === 'video' || Boolean(it.videoId || it.videoStreamUrl || it.externalVideoUrl);
     if (!isVid) continue;
+
+    const urlKey = String(it.url || it.externalVideoUrl || '').replace(/\/+$/, '').toLowerCase();
+    const carriedDur =
+      (it.videoId ? prevDurByVideoId.get(String(it.videoId).trim()) : '') ||
+      (urlKey ? prevDurByUrl.get(urlKey) : '') ||
+      '';
+    if (carriedDur) {
+      it.duration = carriedDur;
+      continue;
+    }
 
     if (it.videoId) {
       jobs.push({ item: it, kind: 'youtube', key: String(it.videoId).trim() });
@@ -322,7 +344,8 @@ async function enrichRawStreamVideoDurations(rawStream = []) {
     }
   }
 
-  const CONCURRENCY = 10;
+  // Keep concurrency polite (5 per shard x 4 shards <= 20) so YouTube watch pages never throttle/timeout
+  const CONCURRENCY = 5;
   for (let i = 0; i < jobs.length; i += CONCURRENCY) {
     await Promise.all(
       jobs.slice(i, i + CONCURRENCY).map(async job => {
@@ -340,26 +363,27 @@ async function enrichRawStreamVideoDurations(rawStream = []) {
   }
 
   // Final title cross-match pass (copies YouTube exact duration onto matching-title club videos
-  // whose sitemap still had `<video:duration>0</video:duration>` right after upload)
+  // whose sitemap still had `<video:duration>0</video:duration>` right after upload across all 32 teams)
   const normVidTitle = t =>
     String(t || '')
       .toLowerCase()
-      .replace(/\s*\|\s*(?:49ers|nfl|week\s+\d+).*$/i, '')
+      .replace(/[’‘`]/g, "'")
+      .replace(/\s*\|\s*[^|]+$/, '')
       .replace(/[^a-z0-9]+/g, ' ')
       .trim()
-      .slice(0, 60);
+      .slice(0, 52);
   const durByNormTitle = new Map();
   for (const it of rawStream) {
     if (!it?.duration) continue;
     const k = normVidTitle(it.title);
-    if (k.length >= 16 && !durByNormTitle.has(k)) durByNormTitle.set(k, it.duration);
+    if (k.length >= 14 && !durByNormTitle.has(k)) durByNormTitle.set(k, it.duration);
   }
   for (const it of rawStream) {
     if (it && '_bskyPlaylistUrl' in it) delete it._bskyPlaylistUrl;
     if (!it || it.duration || it.isAnimatedGif) continue;
     if (it.type !== 'video' && !it.videoId && !it.videoStreamUrl && !it.externalVideoUrl) continue;
     const k = normVidTitle(it.title);
-    if (k.length >= 16 && durByNormTitle.has(k)) {
+    if (k.length >= 14 && durByNormTitle.has(k)) {
       it.duration = durByNormTitle.get(k);
     }
   }
@@ -4272,7 +4296,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
   }
 
   // 9h. Enrich verified exact durations for YouTube, ESPN clip, Bluesky HLS & club-matched videos
-  await enrichRawStreamVideoDurations(rawStream);
+  await enrichRawStreamVideoDurations(rawStream, { prevNewsSnapshot });
 
   // 10. Live Power Rankings (teamStats & teamStatRankings already built in Step 5)
   const outDir = getTeamOutDir(team);

@@ -8,10 +8,10 @@ const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v40'
+  ? 'nfl-hub-v41'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v197'
-    : `${SW_TEAM_SLUG}-hq-v68`;
+    ? '49ers-faithful-v198'
+    : `${SW_TEAM_SLUG}-hq-v69`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']
