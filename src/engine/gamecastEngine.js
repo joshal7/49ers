@@ -338,6 +338,160 @@ function resolveKickoffReceivingSide(text = '', driveSide = 'away', endTeamId = 
   return driveSide;
 }
 
+/**
+ * Parses a kickoff yard-line token onto the extended 3D field axis:
+ *   [-10..0]   = Away Team Endzone (e.g. "GB -3" -> -3, "GB END ZONE" -> -4)
+ *   [0..100]   = Playing Field
+ *   [100..110] = Home Team Endzone (e.g. "LA -3" -> 103, "LA END ZONE" -> 104)
+ */
+export function parseKickoffSpotToFieldU(spotText, awayAbbr, homeAbbr) {
+  const raw = String(spotText || '').trim().toUpperCase();
+  if (!raw) return null;
+  if (raw === '50' || raw === 'MIDFIELD') return 50;
+  const aCanon = normalizeCanonicalTeamAbbr(awayAbbr);
+  const hCanon = normalizeCanonicalTeamAbbr(homeAbbr);
+
+  const ezMatch = raw.match(/^([A-Z]{2,4})\s+(?:END\s*ZONE|EZ)$/);
+  if (ezMatch) {
+    const sideAbbr = normalizeCanonicalTeamAbbr(ezMatch[1]);
+    if (sideAbbr === aCanon) return -4;
+    if (sideAbbr === hCanon) return 104;
+    return null;
+  }
+
+  const m = raw.match(/^([A-Z]{2,4})\s+(-?\d{1,2})$/);
+  if (!m) return null;
+  const sideAbbr = normalizeCanonicalTeamAbbr(m[1]);
+  const yd = Number(m[2]);
+  if (!Number.isFinite(yd)) return null;
+  const clampedYd = Math.max(-9, Math.min(50, yd));
+  if (sideAbbr === aCanon) return clampedYd;
+  if (sideAbbr === hCanon) return 100 - clampedYd;
+  return null;
+}
+
+/**
+ * Extracts exact ESPN-style kickoff trajectory coordinates from play-by-play text:
+ *   - kickFromU: where the ball was kicked from (e.g. GB 35 -> 35, LAR 35 -> 65)
+ *   - receiveU:  where the ball was received / landed (e.g. LA 6 -> 94, LA -3 -> 103, end zone -> 104/-4)
+ *   - returnEndU: where the returning team returned the ball to (null on touchbacks / fair catches / no-return kicks)
+ *   - hasReturn: true only when the returning team actually advanced/moved the ball >= 1.5 yds
+ */
+export function parseKickoffGeometry(
+  playText = '',
+  { awayAbbr = '', homeAbbr = '', receivingSide = 'home', ballPos = 50, isTouchdown = false } = {}
+) {
+  const raw = String(playText || '').trim();
+  const aCanon = normalizeCanonicalTeamAbbr(awayAbbr);
+  const hCanon = normalizeCanonicalTeamAbbr(homeAbbr);
+  const safeBallPos = Math.max(0, Math.min(100, Number.isFinite(Number(ballPos)) ? Number(ballPos) : 50));
+
+  const isTouchback = /\btouchback\b/i.test(raw);
+  const isOnsideText = /\bonside\b/i.test(raw);
+
+  // Extract kick distance (e.g. "kicks 59 yards" or "kicks onside 12 yards")
+  const kickDistMatch = raw.match(/\bkicks(?:\s+onside)?\s+(\d{1,3})\s+yards?\b/i);
+  const kickYards = kickDistMatch ? Number(kickDistMatch[1]) : null;
+  const isOnside = isOnsideText || (kickYards != null && kickYards <= 20);
+
+  // Extract explicit kick origin ("from GB 35" or "from 50")
+  const fromMatch = raw.match(/\bfrom\s+(?:the\s+)?([A-Z]{2,4}\s+\d{1,2}|50)\b/i);
+  const parsedFromU = fromMatch ? parseKickoffSpotToFieldU(fromMatch[1], aCanon, hCanon) : null;
+  let kickingSide = null;
+  if (fromMatch && !/^50$/i.test(fromMatch[1].trim())) {
+    const fromAbbr = normalizeCanonicalTeamAbbr(fromMatch[1].trim().split(/\s+/)[0]);
+    if (fromAbbr === aCanon) kickingSide = 'away';
+    else if (fromAbbr === hCanon) kickingSide = 'home';
+  }
+
+  // Extract explicit kick landing spot strictly from the kick clause ("kicks N yards [from X] to Y")
+  const kickToMatch = raw.match(
+    /\bkicks(?:\s+onside)?\s+\d{1,3}\s+yards?(?:\s+from\s+(?:the\s+)?(?:[A-Z]{2,4}\s+\d{1,2}|50))?\s+to\s+(?:the\s+)?([A-Z]{2,4}\s+-?\d{1,2}|[A-Z]{2,4}\s+end\s*zone|end\s*zone|50)\b/i
+  );
+  const rawToToken = kickToMatch ? kickToMatch[1].trim() : '';
+
+  // Infer kickingSide if kicked from midfield (50) or "from" was omitted
+  if (!kickingSide) {
+    if (rawToToken && !isOnside && !/^end\s*zone$/i.test(rawToToken) && rawToToken !== '50') {
+      const toAbbr = normalizeCanonicalTeamAbbr(rawToToken.split(/\s+/)[0]);
+      if (toAbbr === aCanon) kickingSide = 'home';
+      else if (toAbbr === hCanon) kickingSide = 'away';
+    }
+  }
+  if (!kickingSide) {
+    kickingSide = receivingSide === 'away' ? 'home' : 'away';
+  }
+
+  const kickDir = kickingSide === 'away' ? 1 : -1;
+  const kickFromU = parsedFromU != null ? Math.max(0, Math.min(100, parsedFromU)) : kickingSide === 'away' ? 35 : 65;
+
+  // Compute exact receive / landing coordinate on [-9..109]
+  let receiveU = null;
+  if (rawToToken) {
+    if (/^end\s*zone$/i.test(rawToToken)) {
+      const est = kickYards != null ? kickFromU + kickDir * kickYards : kickDir === 1 ? 104 : -4;
+      receiveU = kickDir === 1 ? Math.max(103, Math.min(108, est)) : Math.min(-3, Math.max(-8, est));
+    } else {
+      const parsedTo = parseKickoffSpotToFieldU(rawToToken, aCanon, hCanon);
+      if (parsedTo != null) {
+        receiveU = parsedTo;
+      }
+    }
+  }
+  if (receiveU == null && kickYards != null) {
+    receiveU = Math.max(-8, Math.min(108, kickFromU + kickDir * kickYards));
+  }
+  if (receiveU == null && isTouchback) {
+    receiveU = kickDir === 1 ? 104 : -4;
+  }
+  if (receiveU == null) {
+    receiveU = safeBallPos;
+  }
+
+  // Isolate the post-kick clause so fair-catch / OOB / return yards are evaluated accurately
+  const afterKickClause = kickToMatch
+    ? raw.slice((kickToMatch.index || 0) + kickToMatch[0].length)
+    : kickDistMatch
+      ? raw.slice((kickDistMatch.index || 0) + kickDistMatch[0].length)
+      : raw;
+
+  const returnYdsMatch = afterKickClause.match(/\bfor\s+(-?\d{1,3})\s+yards?\b/i);
+  const parsedReturnYds = returnYdsMatch ? Number(returnYdsMatch[1]) : null;
+  const hasExplicitNonReturn =
+    isTouchback ||
+    (/\b(?:fair\s+catch|out\s+of\s+bounds|downed|kneels|no\s+gain)\b/i.test(afterKickClause) &&
+      !(parsedReturnYds != null && Math.abs(parsedReturnYds) >= 2));
+
+  let returnEndU = null;
+  if (!hasExplicitNonReturn) {
+    if (isTouchdown) {
+      // Kickoff return TD ends at the kicking team's goal line
+      returnEndU = safeBallPos === 0 || safeBallPos === 100 ? safeBallPos : receivingSide === 'away' ? 100 : 0;
+    } else {
+      returnEndU = safeBallPos;
+    }
+  }
+
+  const hasReturn = !hasExplicitNonReturn && returnEndU != null && Math.abs(returnEndU - receiveU) >= 1.5;
+  const returnYards = hasReturn
+    ? parsedReturnYds != null && Number.isFinite(parsedReturnYds)
+      ? parsedReturnYds
+      : Math.round(Math.abs(returnEndU - receiveU))
+    : 0;
+
+  return {
+    kickFromU,
+    receiveU,
+    returnEndU: hasReturn ? returnEndU : null,
+    hasReturn,
+    isTouchback,
+    isOnside,
+    kickYards,
+    returnYards,
+    kickingSide
+  };
+}
+
 function normalizeDriveResultBadge(rawResult = '', isLiveDrive = false) {
   if (isLiveDrive) return { code: 'LIVE', tone: 'live' };
   const s = String(rawResult || '').trim().toUpperCase();
@@ -1277,8 +1431,16 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         let endPos = null;
         if (!kind.isAdminStoppage) {
           const parsedStartSpot = parseSpotTextToFieldX(spot, away.abbr, home.abbr);
+          const kickoffFromMatch = kind.isKickoff
+            ? text.match(/\bfrom\s+(?:the\s+)?([A-Z]{2,4}\s+\d{1,2}|50)\b/i)
+            : null;
+          const parsedKickoffFrom = kickoffFromMatch
+            ? parseSpotTextToFieldX(kickoffFromMatch[1], away.abbr, home.abbr)
+            : null;
           const rawStartYte = pl?.start?.yardsToEndzone != null ? Number(pl.start.yardsToEndzone) : null;
-          if (parsedStartSpot != null) {
+          if (parsedKickoffFrom != null) {
+            startPos = parsedKickoffFrom;
+          } else if (parsedStartSpot != null) {
             startPos = parsedStartSpot;
           } else if (
             rawStartYte != null &&
@@ -1382,10 +1544,16 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         .filter(Boolean)
         .join(', ');
 
-    const driveStartPos =
+    const parsedDriveStart =
       drive?.start?.yardLine != null && drive?.start?.text
         ? parseSpotTextToFieldX(drive.start.text, away.abbr, home.abbr)
-        : plays[0]?.startPos ?? null;
+        : null;
+    const driveStartPos =
+      parsedDriveStart != null
+        ? parsedDriveStart
+        : plays[0]?.isKickoff
+          ? plays[0]?.endPos ?? plays[1]?.startPos ?? plays[0]?.startPos ?? null
+          : plays[0]?.startPos ?? null;
 
     return {
       id: String(drive.id || `drv_${dIdx}`),
@@ -1899,6 +2067,25 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
 
   const possessingTeamObj = possessionSide === 'away' ? away : home;
   const activeFieldDrive = isFieldGoalLastPlay && effectiveDrive ? effectiveDrive : latestDrive;
+  const lastPlayIsKickoff = Boolean(
+    effectivePlay?.isKickoff &&
+      !hasTrailingAdminStoppage &&
+      !isFieldGoalLastPlay &&
+      !isExtraPointLastPlay &&
+      !isTwoPointLastPlay
+  );
+  const kickoffGeometry = lastPlayIsKickoff
+    ? parseKickoffGeometry(effectivePlay.text || lastPlayText, {
+        awayAbbr: away.abbr,
+        homeAbbr: home.abbr,
+        receivingSide: possessionSide,
+        ballPos,
+        isTouchdown: isTouchdownLastPlay
+      })
+    : null;
+  if (lastPlayIsKickoff && isTouchdownLastPlay && kickoffGeometry?.returnEndU != null && ballPos !== 0 && ballPos !== 100) {
+    ballPos = kickoffGeometry.returnEndU;
+  }
 
   const situation = {
     possessionSide,
@@ -1935,6 +2122,8 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
     lastPlayIsSack: Boolean(effectivePlay?.isSack && !hasTrailingAdminStoppage),
     lastPlayIsIncomplete: Boolean(effectivePlay?.isIncomplete && !hasTrailingAdminStoppage),
     lastPlayIsTurnover: Boolean(effectivePlay?.isTurnover && !hasTrailingAdminStoppage),
+    lastPlayIsKickoff,
+    kickoffGeometry,
     lastPlayIsStoppage: isAdminStoppageLastPlay,
     lastPlayYards: effectivePlay?.yards ?? 0,
     currentDriveSummary: activeFieldDrive?.summary || '',
@@ -2208,6 +2397,8 @@ export function buildFallbackGamecastFromSchedule(gameMeta, appData = {}) {
       lastPlayIsSack: false,
       lastPlayIsIncomplete: false,
       lastPlayIsTurnover: false,
+      lastPlayIsKickoff: false,
+      kickoffGeometry: null,
       lastPlayYards: 0,
       currentDriveSummary: '',
       currentDriveTeamAbbr: activeAbbr,

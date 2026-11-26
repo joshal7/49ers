@@ -480,20 +480,53 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
     isFgPlay && sit.fgKickSpotPos0to100 != null
       ? Math.max(1, Math.min(99, Number(sit.fgKickSpotPos0to100)))
       : ballU;
-  const possessingColor = sit.possessionSide === 'away' ? away.color : home.color;
-  const driveEndU = isFgPlay ? kickSpotU : ballU;
-  const driveMinU = Math.min(driveStartU, driveEndU);
-  const driveMaxU = Math.max(driveStartU, driveEndU);
-  const hasDriveSpan = driveMaxU - driveMinU >= 0.8;
+  const koGeom = sit.lastPlayIsKickoff && sit.kickoffGeometry ? sit.kickoffGeometry : null;
+  const isKickoffPlay = Boolean(!isFgPlay && koGeom && koGeom.kickFromU != null && koGeom.receiveU != null);
+  const koFromU = isKickoffPlay ? Math.max(-9, Math.min(109, Number(koGeom.kickFromU))) : 50;
+  const koRecvU = isKickoffPlay ? Math.max(-9, Math.min(109, Number(koGeom.receiveU))) : 50;
+  const koRetEndU =
+    isKickoffPlay && koGeom.hasReturn && koGeom.returnEndU != null
+      ? Math.max(0, Math.min(100, Number(koGeom.returnEndU)))
+      : ballU;
 
   // Play trajectory coordinates at field depth v = 0.54 (visually centered in perspective)
   const playV = 0.54;
-  const pDriveStart = proj(driveStartU, playV);
+  const pKoFrom = proj(koFromU, playV);
+  const pKoRecv = proj(koRecvU, playV);
+  const pKoRetEnd = proj(koRetEndU, playV);
+  const koKickSpanPx = Math.abs(pKoRecv.x - pKoFrom.x);
+  const hasKickoffArc = isKickoffPlay && koKickSpanPx >= 3.2;
+  const koArcMidX = (pKoFrom.x + pKoRecv.x) / 2;
+  // Big ESPN-style parabolic arc rising cleanly above the far sideline (yTop = 18 -> apex ~5.4 for full kickoffs)
+  const koArcRise = Math.min(51.5, Math.max(22, koKickSpanPx * 0.34));
+  const koArcCtrlY = pKoFrom.y - 2 * koArcRise;
+  const koRetDx = pKoRetEnd.x - pKoRecv.x;
+  const hasKickoffReturn = isKickoffPlay && Boolean(koGeom.hasReturn) && Math.abs(koRetDx) >= 4.5;
+  const koRetDir = koRetDx >= 0 ? 1 : -1;
+  const koRetTipOffset = Math.min(Math.abs(koRetDx) * 0.28, 8.2);
+  const koRetArrowEndX = hasKickoffReturn ? pKoRetEnd.x - koRetDir * koRetTipOffset : pKoRetEnd.x;
+  const koRetShadowEndX =
+    hasKickoffReturn && Math.abs(koRetArrowEndX - pKoRecv.x) > 3.5
+      ? koRetArrowEndX - koRetDir * 2.4
+      : koRetArrowEndX;
+
+  const possessingColor = sit.possessionSide === 'away' ? away.color : home.color;
+  const effectiveDriveStartU = isKickoffPlay
+    ? hasKickoffReturn
+      ? Math.max(0, Math.min(100, koRecvU))
+      : ballU
+    : driveStartU;
+  const driveEndU = isFgPlay ? kickSpotU : isKickoffPlay ? koRetEndU : ballU;
+  const driveMinU = Math.min(effectiveDriveStartU, driveEndU);
+  const driveMaxU = Math.max(effectiveDriveStartU, driveEndU);
+  const hasDriveSpan = isKickoffPlay ? hasKickoffReturn && driveMaxU - driveMinU >= 0.8 : driveMaxU - driveMinU >= 0.8;
+
+  const pDriveStart = proj(effectiveDriveStartU, playV);
   const pPrev = proj(isFgPlay ? kickSpotU : prevU, playV);
   const pBall = proj(isFgPlay ? kickSpotU : ballU, playV);
   const dxPlay = pBall.x - pPrev.x;
-  const hasMovement = !isFgPlay && !sit.lastPlayIsStoppage && Math.abs(dxPlay) >= 3.2;
-  const hasPriorDriveShaft = Math.abs(pPrev.x - pDriveStart.x) >= 4;
+  const hasMovement = !isFgPlay && !isKickoffPlay && !sit.lastPlayIsStoppage && Math.abs(dxPlay) >= 3.2;
+  const hasPriorDriveShaft = !isKickoffPlay && Math.abs(pPrev.x - pDriveStart.x) >= 4;
 
   // Line of Scrimmage (Blue) & 1st Down Marker (Yellow) perspective segments
   const losTop = proj(isFgPlay ? kickSpotU : ballU, 0);
@@ -637,6 +670,9 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
             <marker id="gc-arrow-neg" viewBox="0 0 8 8" refX="6.2" refY="4" markerWidth="5.2" markerHeight="5.2" orient="auto">
               <path d="M 0.8 1.2 L 7 4 L 0.8 6.8 L 2.2 4 Z" fill="#fb7185" />
             </marker>
+            <marker id="gc-arrow-ko-return" viewBox="0 0 8 8" refX="6.4" refY="4" markerWidth="5.4" markerHeight="5.4" orient="auto">
+              <path d="M 0.8 1.1 L 7.2 4 L 0.8 6.9 L 2.2 4 Z" fill="#ffffff" />
+            </marker>
           </defs>
 
           <!-- 3D Turf Slab Front Skirt -->
@@ -742,7 +778,7 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
               : ''
           }
 
-          <!-- Last Play Trajectory: ESPN Dotted Field Goal Arc, Pass Arc, or Run/Sack Arrow -->
+          <!-- Last Play Trajectory: ESPN Dotted Field Goal Arc, Kickoff Big Arc + Return Arrow, Pass Arc, or Run/Sack Arrow -->
           ${
             isFgPlay
               ? `
@@ -765,7 +801,58 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
                     : ''
                 }
               `
-              : isIncomplete
+              : isKickoffPlay
+                ? `
+                  <g class="gc-kickoff-graphic" data-gamecast-kickoff-graphic="${hasKickoffReturn ? 'return' : koGeom.isTouchback ? 'touchback' : 'kick'}">
+                    ${
+                      hasKickoffArc
+                        ? `
+                          <circle cx="${pKoFrom.x.toFixed(1)}" cy="${pKoFrom.y.toFixed(1)}" r="2.5" class="gc-ko-origin-dot" />
+                          <path d="M ${pKoFrom.x.toFixed(1)} ${pKoFrom.y.toFixed(1)} Q ${koArcMidX.toFixed(1)} ${koArcCtrlY.toFixed(1)} ${pKoRecv.x.toFixed(1)} ${pKoRecv.y.toFixed(1)}"
+                                fill="none"
+                                stroke-dasharray="4.6 4.0"
+                                stroke-linecap="butt"
+                                transform="translate(0, 1.1)"
+                                class="gc-kickoff-arc-shadow gc-play-arc-anim" />
+                          <path d="M ${pKoFrom.x.toFixed(1)} ${pKoFrom.y.toFixed(1)} Q ${koArcMidX.toFixed(1)} ${koArcCtrlY.toFixed(1)} ${pKoRecv.x.toFixed(1)} ${pKoRecv.y.toFixed(1)}"
+                                fill="none"
+                                stroke="#ffffff"
+                                stroke-width="2.35"
+                                stroke-dasharray="4.6 4.0"
+                                stroke-linecap="butt"
+                                class="gc-play-arc-anim gc-kickoff-arc"
+                                data-gamecast-kickoff-arc
+                                data-kick-from-u="${koFromU.toFixed(1)}"
+                                data-kick-recv-u="${koRecvU.toFixed(1)}" />
+                          <circle cx="${pKoRecv.x.toFixed(1)}" cy="${pKoRecv.y.toFixed(1)}" r="${hasKickoffReturn ? '2.2' : '2.6'}" class="gc-ko-recv-dot" />
+                        `
+                        : ''
+                    }
+                    ${
+                      hasKickoffReturn
+                        ? `
+                          <line x1="${pKoRecv.x.toFixed(1)}" y1="${pKoRecv.y.toFixed(1)}"
+                                x2="${koRetShadowEndX.toFixed(1)}" y2="${pKoRetEnd.y.toFixed(1)}"
+                                stroke-dasharray="4.2 3.4"
+                                stroke-linecap="butt"
+                                class="gc-kickoff-return-shadow gc-kickoff-return-anim" />
+                          <line x1="${pKoRecv.x.toFixed(1)}" y1="${pKoRecv.y.toFixed(1)}"
+                                x2="${koRetArrowEndX.toFixed(1)}" y2="${pKoRetEnd.y.toFixed(1)}"
+                                stroke="#ffffff"
+                                stroke-width="2.2"
+                                stroke-dasharray="4.2 3.4"
+                                stroke-linecap="butt"
+                                marker-end="url(#gc-arrow-ko-return)"
+                                class="gc-kickoff-return-anim gc-kickoff-return-arrow"
+                                data-gamecast-kickoff-return-arrow
+                                data-return-start-u="${koRecvU.toFixed(1)}"
+                                data-return-end-u="${koRetEndU.toFixed(1)}" />
+                        `
+                        : ''
+                    }
+                  </g>
+                `
+                : isIncomplete
                 ? `
                   <path d="M ${pBall.x.toFixed(1)} ${pBall.y.toFixed(1)} Q ${pIncMidX.toFixed(1)} ${(pBall.y - 16).toFixed(1)} ${pIncEnd.x.toFixed(1)} ${pIncEnd.y.toFixed(1)}"
                         fill="none" stroke="rgba(250,204,21,0.78)" stroke-width="1.8" stroke-dasharray="3.2 2.6" stroke-linecap="round" class="gc-play-arc-anim" />

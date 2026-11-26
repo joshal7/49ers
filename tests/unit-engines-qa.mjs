@@ -347,6 +347,8 @@ import {
   buildPlayHeadline,
   yardsToEndzoneToFieldX,
   parseSpotTextToFieldX,
+  parseKickoffSpotToFieldU,
+  parseKickoffGeometry,
   sanitizeDownDistanceText,
   formatDownAndDistance
 } from '../src/engine/gamecastEngine.js';
@@ -13867,7 +13869,7 @@ await testAsync(
     const { rankPlayerOverviewMentions, rankPlayerInjuryNews } = await import('../src/engine/injuryProbabilityModel.js');
     const { renderPlayerDossierSheetHtml } = await import('../src/views/playerSheetView.js');
 
-    const nowMs = Date.parse('2026-11-19T18:00:00Z');
+    const nowMs = Date.now();
     const reportersData = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'reporters.json'), 'utf8'));
     const reportersById = new Map((reportersData.reporters || []).map(r => [r.id, r]));
 
@@ -21183,6 +21185,144 @@ test('parseEspnSummaryToGamecast parses Box Score, Team Stats, Play-by-Play, Fie
   assert.equal(parsedKo.situation.downOnlyText, '1st & 10', 'Post-kickoff down must immediately be 1st & 10');
   assert.equal(parsedKo.situation.spotOnlyText, 'GB 28', 'Post-kickoff Ball On must immediately reflect post-return spot GB 28');
   assert.equal(parsedKo.situation.ballPos0to100, 28);
+  assert.equal(parsedKo.situation.lastPlayIsKickoff, true, 'Kickoff play must flag lastPlayIsKickoff=true');
+  assert.equal(parsedKo.situation.kickoffGeometry?.kickFromU, 65, 'LAR 35 kickoff origin must map to u=65');
+  assert.equal(parsedKo.situation.kickoffGeometry?.receiveU, 2, 'GB 2 receive spot must map to u=2');
+  assert.equal(parsedKo.situation.kickoffGeometry?.returnEndU, 28, 'GB 28 return destination must map to u=28');
+  assert.equal(parsedKo.situation.kickoffGeometry?.hasReturn, true);
+  const koRevHtml = renderGamecastViewHtml({ appData: gbLarAppData, selectedGameId: '401873999', gamecastTab: 'pbp', gamecastModel: parsedKo });
+  assert.ok(koRevHtml.includes('data-gamecast-kickoff-graphic="return"'), 'Kickoff return must render kickoff graphic group');
+  assert.ok(koRevHtml.includes('data-gamecast-kickoff-arc') && koRevHtml.includes('data-kick-from-u="65.0"') && koRevHtml.includes('data-kick-recv-u="2.0"'), 'Kickoff arc must span kick origin (LAR 35) to receive spot (GB 2)');
+  assert.ok(koRevHtml.includes('data-gamecast-kickoff-return-arrow') && koRevHtml.includes('data-return-start-u="2.0"') && koRevHtml.includes('data-return-end-u="28.0"'), 'Kickoff return arrow must span receive spot (GB 2) to return spot (GB 28)');
+  assert.ok(koRevHtml.includes('gc-ball-leather') && koRevHtml.includes('gc-los-line') && koRevHtml.includes('gc-firstdown-line'), 'Kickoff graphic must maintain app aesthetic (football, blue LOS, yellow 1st-down line)');
+  assert.ok(!koRevHtml.includes('gc-run-arrow'), 'Kickoff must not fall back to generic straight run arrow');
+
+  // 4b. Forward Kickoff with blank start.possessionText (GB 35 -> LA 6 -> LA 30) & Touchback / Edge Cases
+  const koFwdSummary = makeGbLarSummary({
+    scoreAway: '13',
+    scoreHome: '13',
+    clock: '1:50',
+    period: 2,
+    drives: {
+      current: {
+        id: 'drv_lar_ko',
+        team: { id: '14', abbreviation: 'LAR', shortDisplayName: 'Rams' },
+        description: '0 plays, 0 yards, 0:00',
+        plays: [
+          {
+            id: 'p_ko_fwd',
+            period: { number: 2 },
+            clock: { displayValue: '01:50' },
+            statYardage: 24,
+            type: { text: 'Kickoff Return (Offense)' },
+            start: { down: 0, distance: 0, possessionText: '', yardsToEndzone: 65 },
+            end: { team: { id: '14' }, possessionText: 'LA 30', yardsToEndzone: 70 },
+            text: 'T.Smack kicks 59 yards from GB 35 to LA 6. R.Rivers to LA 30 for 24 yards (D.Dennis-Sutton).'
+          }
+        ]
+      }
+    }
+  });
+  const parsedKoFwd = parseEspnSummaryToGamecast(koFwdSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedKoFwd.situation.kickoffGeometry?.kickFromU, 35, 'Forward GB 35 kickoff must map kickFromU=35 even when start.possessionText is blank');
+  assert.equal(parsedKoFwd.situation.kickoffGeometry?.receiveU, 94, 'LA 6 receive spot must map receiveU=94');
+  assert.equal(parsedKoFwd.situation.kickoffGeometry?.returnEndU, 70, 'LA 30 return spot must map returnEndU=70');
+  assert.equal(parsedKoFwd.situation.kickoffGeometry?.hasReturn, true);
+  const koFwdHtml = renderGamecastViewHtml({ appData: gbLarAppData, selectedGameId: '401873999', gamecastTab: 'pbp', gamecastModel: parsedKoFwd });
+  assert.ok(koFwdHtml.includes('data-kick-from-u="35.0"') && koFwdHtml.includes('data-kick-recv-u="94.0"'), 'Forward kickoff arc must go GB 35 -> LA 6');
+  assert.ok(koFwdHtml.includes('data-return-start-u="94.0"') && koFwdHtml.includes('data-return-end-u="70.0"'), 'Forward kickoff return arrow must point LA 6 -> LA 30');
+
+  // Touchback: big kick arc into endzone, NO return arrow
+  const koTbSummary = makeGbLarSummary({
+    scoreAway: '13',
+    scoreHome: '13',
+    clock: '1:50',
+    period: 2,
+    drives: {
+      current: {
+        id: 'drv_lar_tb',
+        team: { id: '14', abbreviation: 'LAR', shortDisplayName: 'Rams' },
+        description: '0 plays, 0 yards, 0:00',
+        plays: [
+          {
+            id: 'p_ko_tb',
+            period: { number: 2 },
+            clock: { displayValue: '01:50' },
+            statYardage: 0,
+            type: { text: 'Kickoff' },
+            start: { down: 0, distance: 0, possessionText: 'GB 35', yardsToEndzone: 65 },
+            end: { team: { id: '14' }, possessionText: 'LA 30', yardsToEndzone: 70 },
+            text: 'T.Smack kicks 65 yards from GB 35 to end zone, Touchback.'
+          }
+        ]
+      }
+    }
+  });
+  const parsedKoTb = parseEspnSummaryToGamecast(koTbSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedKoTb.situation.kickoffGeometry?.isTouchback, true);
+  assert.equal(parsedKoTb.situation.kickoffGeometry?.hasReturn, false, 'Touchback must NOT render a return arrow');
+  assert.ok(parsedKoTb.situation.kickoffGeometry?.receiveU >= 103, 'Touchback into home EZ must land inside home endzone (u>=103)');
+  const koTbHtml = renderGamecastViewHtml({ appData: gbLarAppData, selectedGameId: '401873999', gamecastTab: 'pbp', gamecastModel: parsedKoTb });
+  assert.ok(koTbHtml.includes('data-gamecast-kickoff-graphic="touchback"') && koTbHtml.includes('data-gamecast-kickoff-arc'), 'Touchback must render kickoff arc into endzone');
+  assert.ok(!koTbHtml.includes('data-gamecast-kickoff-return-arrow'), 'Touchback must omit return arrow');
+
+  // Direct unit checks for deep endzone (-3), fair catch, onside kick, midfield 50 kick, and kickoff return TD
+  assert.equal(parseKickoffSpotToFieldU('SEA -3', 'SF', 'SEA'), 103);
+  assert.equal(parseKickoffSpotToFieldU('SF -4', 'SF', 'SEA'), -4);
+  const koEzRet = parseKickoffGeometry('J.Moody kicks 68 yards from SF 35 to SEA -3. D.Dallas to SEA 22 for 25 yards.', {
+    awayAbbr: 'SF', homeAbbr: 'SEA', receivingSide: 'home', ballPos: 78
+  });
+  assert.equal(koEzRet.kickFromU, 35);
+  assert.equal(koEzRet.receiveU, 103);
+  assert.equal(koEzRet.returnEndU, 78);
+  assert.equal(koEzRet.hasReturn, true);
+
+  const koFc = parseKickoffGeometry('J.Moody kicks 55 yards from SF 35 to SEA 10, fair catch by D.Dallas.', {
+    awayAbbr: 'SF', homeAbbr: 'SEA', receivingSide: 'home', ballPos: 90
+  });
+  assert.equal(koFc.kickFromU, 35);
+  assert.equal(koFc.receiveU, 90);
+  assert.equal(koFc.hasReturn, false);
+
+  const koOnside = parseKickoffGeometry('J.Moody kicks onside 12 yards from SF 35 to SF 47. RECOVERED by SF-D.Lenoir.', {
+    awayAbbr: 'SF', homeAbbr: 'SEA', receivingSide: 'away', ballPos: 47
+  });
+  assert.equal(koOnside.kickFromU, 35);
+  assert.equal(koOnside.receiveU, 47);
+  assert.equal(koOnside.isOnside, true);
+  assert.equal(koOnside.hasReturn, false);
+
+  const ko50 = parseKickoffGeometry('J.Moody kicks 48 yards from 50 to SEA 2. D.Dallas to SEA 24 for 22 yards.', {
+    awayAbbr: 'SF', homeAbbr: 'SEA', receivingSide: 'home', ballPos: 76
+  });
+  assert.equal(ko50.kickFromU, 50);
+  assert.equal(ko50.receiveU, 98);
+  assert.equal(ko50.returnEndU, 76);
+  assert.equal(ko50.hasReturn, true);
+
+  const koTd = parseKickoffGeometry('T.Smack kicks 59 yards from GB 35 to LA 6. R.Rivers for 94 yards, TOUCHDOWN.', {
+    awayAbbr: 'GB', homeAbbr: 'LAR', receivingSide: 'home', ballPos: 0, isTouchdown: true
+  });
+  assert.equal(koTd.kickFromU, 35);
+  assert.equal(koTd.receiveU, 94);
+  assert.equal(koTd.returnEndU, 0);
+  assert.equal(koTd.hasReturn, true);
+
+  // Subsequent scrimmage play after kickoff must start drive shading at LA 30 (u=70), NOT GB 35 (u=35)
+  const postKoRunSummary = structuredClone(koFwdSummary);
+  postKoRunSummary.drives.current.plays.push({
+    id: 'p_run_7',
+    period: { number: 2 },
+    clock: { displayValue: '01:32' },
+    statYardage: 7,
+    type: { text: 'Rush' },
+    start: { down: 1, distance: 10, shortDownDistanceText: '1st & 10', possessionText: 'LA 30', yardsToEndzone: 70 },
+    end: { team: { id: '14' }, possessionText: 'LA 37', yardsToEndzone: 63 },
+    text: 'K.Williams up the middle to LA 37 for 7 yards.'
+  });
+  const parsedPostKoRun = parseEspnSummaryToGamecast(postKoRunSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedPostKoRun.situation.lastPlayIsKickoff, false, 'Subsequent run play must clear lastPlayIsKickoff');
+  assert.equal(parsedPostKoRun.situation.driveStartPos0to100, 70, 'Drive start after kickoff must anchor at post-return spot LA 30 (u=70), not kick origin GB 35');
 
   // 5. Kickoff underway syncing state: when live dot (meta.isLive) is ON while summary is still `pre`, never show "opens at kickoff"
   const preModelWhileLiveMeta = buildFallbackGamecastFromSchedule(

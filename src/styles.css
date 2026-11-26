@@ -9125,6 +9125,32 @@ mark.search-hl {
   animation: gcPlayArcDraw 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.gc-kickoff-arc-shadow {
+  stroke: rgba(0, 0, 0, 0.48);
+  stroke-width: 2.5;
+}
+
+[data-theme="light"] .gc-kickoff-arc-shadow {
+  stroke: rgba(15, 23, 42, 0.62);
+  stroke-width: 2.6;
+}
+
+.gc-kickoff-return-shadow {
+  stroke: rgba(0, 0, 0, 0.42);
+  stroke-width: 3.4;
+}
+
+.gc-kickoff-return-anim {
+  animation: gcPlayArcDraw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
+}
+
+.gc-ko-origin-dot,
+.gc-ko-recv-dot {
+  fill: #ffffff;
+  stroke: rgba(0, 0, 0, 0.46);
+  stroke-width: 0.9;
+}
+
 .gc-run-arrow {
   stroke-dasharray: 180;
   animation: gcRunArrowDraw 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
