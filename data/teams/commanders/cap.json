@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:26:40.627Z",
+  "updatedAt": "2026-11-26T19:04:49.905Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/washington-commanders",
   "spotracUrl": "https://www.spotrac.com/nfl/washington-commanders/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 328168366,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 305008326,
       "top51": 263742627,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 78
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 256817540,
       "top51": 256502906,
       "teamCapSpace": 70182460,
       "otcRawTeamCapSpace": 70182460,
-      "effectiveCapSpace": 52407298,
+      "effectiveCapSpace": 59022460,
       "activeCapSpending": 256502906,
       "offenseSpend": 132845441,
       "defenseSpend": 122606632,
@@ -174,7 +174,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 199987619,
       "top51": 199987619,

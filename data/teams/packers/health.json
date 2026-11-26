@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:42.572Z",
+  "updatedAt": "2026-11-26T19:02:58.466Z",
   "week": 13,
   "byeWeek": 11,
   "sourceUrl": "https://www.packers.com/team/injury-report/",
@@ -142,7 +142,7 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4248528.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
+      "sustainedInLastGame": true,
       "wed": "-",
       "thu": "-",
       "fri": "-",
@@ -153,9 +153,10 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "18% • Doubtful",
-      "archetypeNote": "Every-down starter workload (77% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (76% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Remains in early stages of NFL 5-Step Concussion Protocol"
+        "Remains in early stages of NFL 5-Step Concussion Protocol",
+        "Post-game update (beat report): exited prior game with Concussion"
       ],
       "beatComment": "The wideout hasn't cleared concussion checks and will miss the remainder of the Week 12 contest after he was injured at the end of the second quarter when Watson took a hit to the head from Kamren Kinchens. Look for J. Michael Sturdivant and Bo Melton to see increased snaps alongside Matthew Golden and Savion Williams with Watson sidelined."
     },
@@ -167,20 +168,20 @@
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683643.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
+      "sustainedInLastGame": true,
       "wed": "-",
       "thu": "-",
       "fri": "-",
       "injuryType": "Thumb",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 82,
+      "playProbabilityPct": 78,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "82% • GTD",
+      "playBadgeLabel": "78% • GTD",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Questionable tag adjusted by player career prior (78%)",
+        "Active in prior game; day-to-day evaluation ahead of Wednesday practice (base prior 78%)",
         "Manageable pain-tolerance injury profile (Thumb)"
       ],
       "beatComment": "Prior to leaving, the linebacker recorded four tackles (two solo). Dani Dennis-Sutton and Brenton Cox will see an uptick in snaps off the edge for Green Bay."
@@ -229,36 +230,11 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (87% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (88% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Rhyan suffered a high ankle sprain against the Lions in Week 7, which sidelined him for the Packers' following three games. He's been cleared by medical staff to play Wednesday, and Rhyan will reclaim his starting spot at center while John Williams reverts to a depth role."
-    },
-    {
-      "playerId": "4430191",
-      "name": "Skyy Moore",
-      "position": "WR",
-      "jersey": 23,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Moore aggravated an ankle injury against the Vikings in Week 10, but the fifth-year pro has been cleared to play Wednesday after going through pregame warmups. Moore has mostly operated on special teams as a returner this season and has not caught a catch since Week 5 against the Bears."
     },
     {
       "playerId": "5076652",
@@ -279,7 +255,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (84% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -329,36 +305,11 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Glover's practice reps were limited due to a shoulder injury, but the third-year pro was given the green light by medical staff to play Wednesday. He's started in five regular-season games, most recently in Week 10 against the Vikings, but he'll likely operate in a depth role at right guard behind starter Kevin Zeitler."
-    },
-    {
-      "playerId": "4259305",
-      "name": "Bo Melton",
-      "position": "WR",
-      "jersey": 16,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Thigh",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Melton's practice reps were limited due to a thigh injury he picked up against the Vikings in Week 10, but the 2022 seventh-rounder has been cleared by medical staff to suit up Wednesday. He has five catches on 10 targets for 34 yards through 10 regular-season games but has not recorded a reception since Week 7 against the Lions."
     }
   ],
   "irAndReserveTracker": [

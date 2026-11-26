@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:55.019Z",
+  "updatedAt": "2026-11-26T19:06:36.112Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17ET",
     "cycleKey": "2026-11-25@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-26T07:27:55.019Z",
+    "generatedAt": "2026-11-26T19:06:36.112Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,44 +15,41 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 198,
+    "wordCount": 192,
     "headline": "Dolphins (1-9) Week 12 Briefing: Wednesday Injury Report Ahead of Jets",
     "summary": "",
     "bullets": [
-      "Roster & Front Office: Miami signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad [Pro Football Rumors](https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26).",
-      "Injury & Practice Status: Miami opened LB Ronnie Harrison Jr.'s 21-day IR practice window alongside limited work for S Dante Trader Jr. (shoulder / groin), DE Rodney McGraw (shoulder), and OT Austin Jackson (elbow / knee). P Bradley Pinion (right groin), WR Jared Wayne (quad), and CB JuJu Brents (neck) did not practice Wednesday, while LB Jacob Rodriguez (knee) and S Jaylin Simpson (kneee) practiced in full [David Furones](https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Brents%20%28neck%29%20did%20not%20participate%20in%20Wednesday's).",
-      "Week 12 Jets Outlook: Jeff Hafley and DC Sean Duggan open installation for the New York Jets (3-8, NYJ -4.5, HC Aaron Glenn, OC Frank Reich & DC Brian Duker (Hard Rock Stadium))—a unit ranked #4 in Pass Yards Allowed / Gm (188.3 yds) as Miami prepares for a pivotal AFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873089) [miamidolphins.com Official](https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets).",
-      "AFC Playoff Trajectory: Entering Week 12 at 1-9 (4th in AFC East • #15 Seed in AFC), Miami carries a 0% postseason projection, 0% AFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [James McKinney](https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition)."
+      "Injury & Practice Status: Miami opened LB Ronnie Harrison Jr.'s 21-day IR practice window alongside limited work for S Dante Trader Jr. (shoulder / groin), DE Rodney McGraw (shoulder), and OT Austin Jackson (elbow / knee). P Bradley Pinion (right groin), WR Jared Wayne (quad), and CB JuJu Brents (neck) did not practice Wednesday, while LB Jacob Rodriguez (knee) and S Jaylin Simpson (kneee) practiced in full [James McKinney](https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion).",
+      "Week 12 Jets Outlook: Jeff Hafley and DC Sean Duggan open installation for the New York Jets (3-8, NYJ -4.5, HC Aaron Glenn, OC Frank Reich & DC Brian Duker (Hard Rock Stadium))—a unit ranked #4 in Pass Yards Allowed / Gm (188.3 yds) as Miami prepares for a pivotal AFC matchup [NFL Trade Rumors](https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/) [ESPN](https://www.espn.com/nfl/preview?gameId=401873089).",
+      "AFC Playoff Trajectory: Entering Week 12 at 1-9 (4th in AFC East • #15 Seed in AFC), Miami carries a 0% postseason projection, 0% AFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [NFL Trade Rumors](https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/).",
+      "Around the Beat: I hope that everyone out there is enjoying the holiday today with your friends and family [James McKinney](https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion)."
     ],
     "coveredStoryKeys": [],
     "coveredUrls": [
-      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+      "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
       "https://www.espn.com/nfl/preview?gameId=401873089",
-      "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
-      "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
+      "https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion",
+      "https://www.thephinsider.com/miami-dolphins-history/125298/top-5-thanksgiving-day-plays-in-miami-dolphins-history",
+      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
       "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Brents%20(neck)%20did%20not%20participate%20in%20Wednesday's",
       "https://www.miamidolphins.com/news/dolphins-honor-those-who-inspire-them-through-my-cause-my-cleats",
       "https://x.com/MiamiDolphins/status/2125731920226951251",
-      "https://www.espn.com/nfl/player/_/id/4430681/jared-wayne#:~:text=Wayne%20(quadriceps)%20didn't%20practice%20Wednesday%2C%20David%20Furones",
-      "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
-      "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-      "https://x.com/MiamiDolphins/status/2125614312299385227",
-      "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
-      "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
-      "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
-      "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x6155",
       "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
-      "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes"
+      "https://www.espn.com/nfl/player/_/id/4430681/jared-wayne#:~:text=Wayne%20(quadriceps)%20didn't%20practice%20Wednesday%2C%20David%20Furones",
+      "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
+      "https://x.com/MiamiDolphins/status/2125614312299385227",
+      "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
+      "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+      "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games"
     ],
     "sources": [
       {
         "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "NFL Practice Squad Updates: 11/25/26",
-        "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
-        "publishedAt": "2026-11-26T03:17:20.000Z"
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+        "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+        "publishedAt": "2026-11-26T16:38:29.000Z"
       },
       {
         "type": "article",
@@ -64,19 +61,27 @@
       },
       {
         "type": "article",
-        "author": "miamidolphins.com Official",
-        "outlet": "miamidolphins.com Official",
-        "title": "Aqua Archives: Home History vs. the Jets",
-        "url": "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
-        "publishedAt": "2026-11-25T20:26:22.000Z"
+        "author": "James McKinney",
+        "outlet": "The Phinsider",
+        "title": "Thanksgiving Day Live Game Thread and Discussion",
+        "url": "https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion",
+        "publishedAt": "2026-11-26T17:02:32.000Z"
       },
       {
         "type": "article",
-        "author": "James McKinney",
+        "author": "Marek Brave",
         "outlet": "The Phinsider",
-        "title": "Miami Dolphins Discussion: Week 12 Game Vs NY Jets Predictions Edition",
-        "url": "https://www.thephinsider.com/miami-dolphins-discussion/125260/miami-dolphins-discussion-week-12-game-vs-ny-jets-predictions-edition",
-        "publishedAt": "2026-11-24T20:01:19.000Z"
+        "title": "Top-5 Thanksgiving Day plays in Miami Dolphins history",
+        "url": "https://www.thephinsider.com/miami-dolphins-history/125298/top-5-thanksgiving-day-plays-in-miami-dolphins-history",
+        "publishedAt": "2026-11-26T13:41:46.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "title": "NFL Practice Squad Updates: 11/25/26",
+        "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+        "publishedAt": "2026-11-26T03:17:20.000Z"
       },
       {
         "type": "article",
@@ -96,11 +101,19 @@
       },
       {
         "type": "tweet",
-        "author": "Jon-Eric Sullivan",
-        "outlet": "MiamiDolphins.com / Official Team",
+        "author": "Miami Dolphins",
+        "outlet": "@MiamiDolphins Official",
         "title": "On Sunday, Josh Uche will honor his godmother and lifelong Dolphins fan, Collette A. Reece, as part of My Cause My Cleats",
         "url": "https://x.com/MiamiDolphins/status/2125731920226951251",
         "publishedAt": "2026-11-25T23:22:38.628Z"
+      },
+      {
+        "type": "article",
+        "author": "Kevin Nogle",
+        "outlet": "The Phinsider",
+        "title": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027",
+        "url": "https://www.thephinsider.com/miami-dolphins-news/125264/miami-dolphins-news-offensive-line-changes-updates-hall-of-fame-candidates-decisions-for-2027",
+        "publishedAt": "2026-11-25T12:45:28.000Z"
       },
       {
         "type": "article",
@@ -112,35 +125,19 @@
       },
       {
         "type": "article",
-        "author": "Kevin Nogle",
-        "outlet": "The Phinsider",
-        "title": "Miami Dolphins fan confidence survey – Week 12 2026",
-        "url": "https://www.thephinsider.com/miami-dolphins-discussion/125258/miami-dolphins-fan-confidence-survey-week-12-2026",
-        "publishedAt": "2026-11-25T19:05:37.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Kevin Nogle",
-        "outlet": "The Phinsider",
-        "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-        "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-        "publishedAt": "2026-11-25T19:36:30.000Z"
+        "author": "miamidolphins.com Official",
+        "outlet": "miamidolphins.com Official",
+        "title": "Aqua Archives: Home History vs. the Jets",
+        "url": "https://www.miamidolphins.com/news/aqua-archives-home-history-vs-the-jets",
+        "publishedAt": "2026-11-25T20:26:22.000Z"
       },
       {
         "type": "tweet",
-        "author": "Jon-Eric Sullivan",
-        "outlet": "MiamiDolphins.com / Official Team",
+        "author": "Miami Dolphins",
+        "outlet": "@MiamiDolphins Official",
         "title": "For the fighters & survivors See how our guys are honoring those affected by cancer for",
         "url": "https://x.com/MiamiDolphins/status/2125614312299385227",
         "publishedAt": "2026-11-25T15:35:18.713Z"
-      },
-      {
-        "type": "article",
-        "author": "Marek Brave",
-        "outlet": "The Phinsider",
-        "title": "Jacob Rodriguez coming for Dolphins record held by Zach Thomas",
-        "url": "https://www.thephinsider.com/miami-dolphins-roster/125269/jacob-rodriguez-coming-for-dolphins-record-held-by-zach-thomas",
-        "publishedAt": "2026-11-25T15:53:26.000Z"
       }
     ]
   },
@@ -149,10 +146,28 @@
       "id": "mia_cl_top",
       "category": "beat",
       "headline": "Miami Dolphins Week 12 Top Headlines (1-9)",
-      "summary": "NFL Practice Squad Updates: 11/25/26 — Brents (neck) did not participate in Wednesday's practice.",
-      "updatedAt": "2026-11-26T03:17:20.000Z",
+      "summary": "Thanksgiving Day Live Game Thread and Discussion — AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "updatedAt": "2026-11-26T17:02:32.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "James McKinney",
+          "title": "Thanksgiving Day Live Game Thread and Discussion",
+          "url": "https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion",
+          "publishedAt": "2026-11-26T17:02:32.000Z"
+        },
+        {
+          "label": "NFL Trade Rumors",
+          "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+          "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+          "publishedAt": "2026-11-26T16:38:29.000Z"
+        },
+        {
+          "label": "Marek Brave",
+          "title": "Top-5 Thanksgiving Day plays in Miami Dolphins history",
+          "url": "https://www.thephinsider.com/miami-dolphins-history/125298/top-5-thanksgiving-day-plays-in-miami-dolphins-history",
+          "publishedAt": "2026-11-26T13:41:46.000Z"
+        },
         {
           "label": "Pro Football Rumors",
           "title": "NFL Practice Squad Updates: 11/25/26",
@@ -170,24 +185,6 @@
           "title": "Dolphins Honor Those Who Inspire Them Through My Cause My Cleats",
           "url": "https://www.miamidolphins.com/news/dolphins-honor-those-who-inspire-them-through-my-cause-my-cleats",
           "publishedAt": "2026-11-26T00:15:16.000Z"
-        },
-        {
-          "label": "Jon-Eric Sullivan",
-          "title": "On Sunday, Josh Uche will honor his godmother and lifelong Dolphins fan, Collette A. Reece, as part of My Cause My Cleats 🩵",
-          "url": "https://x.com/MiamiDolphins/status/2125731920226951251",
-          "publishedAt": "2026-11-25T23:22:38.628Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Dolphins playing host to Jets, as the NFL's youngest team remains mindful of rookie wall",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873089",
-          "publishedAt": "2026-11-25T23:48:34.000Z"
-        },
-        {
-          "label": "David Furones",
-          "title": "Wayne (quadriceps) didn't practice Wednesday.",
-          "url": "https://www.espn.com/nfl/player/_/id/4430681/jared-wayne#:~:text=Wayne%20(quadriceps)%20didn't%20practice%20Wednesday%2C%20David%20Furones",
-          "publishedAt": "2026-11-26T01:21:07.000Z"
         }
       ]
     },
@@ -224,16 +221,16 @@
           "publishedAt": "2026-11-25T08:00:00.000Z"
         },
         {
-          "label": "Liz Loza",
-          "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
-          "url": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-          "publishedAt": "2026-11-25T15:22:54.000Z"
-        },
-        {
           "label": "Miami Dolphins Official",
           "title": "Dolphins roster move: Designated LB Ronnie Harrison to return from injured reserve.",
           "url": "https://www.miamidolphins.com/team/transactions/#tx-edc11cd77e06",
           "publishedAt": "2026-11-24T08:00:00.000Z"
+        },
+        {
+          "label": "Barry Jackson",
+          "title": "Dolphins head coach Jeff Hafley said Monday that Brents is day-to-day with a shoulder injury.",
+          "url": "https://www.espn.com/nfl/player/_/id/4360488/juju-brents#:~:text=Dolphins%20head%20coach%20Jeff%20Hafley%20said%20Monday",
+          "publishedAt": "2026-11-23T20:38:47.000Z"
         }
       ]
     },
@@ -241,9 +238,9 @@
       "id": "mia_cl_film",
       "category": "film",
       "headline": "Dolphins All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027 — Dolphins considering offensive line change as Austin Jackson struggles",
+      "summary": "Miami Dolphins news: Offensive line changes updates, Hall of Fame candidates, decisions for 2027 — Week 11 Sunday Early Window: Advanced Reviews",
       "updatedAt": "2026-11-25T12:45:28.000Z",
-      "itemCount": 6,
+      "itemCount": 3,
       "sourceLinks": [
         {
           "label": "Kevin Nogle",
@@ -252,28 +249,10 @@
           "publishedAt": "2026-11-25T12:45:28.000Z"
         },
         {
-          "label": "Kevin Nogle",
-          "title": "Dolphins considering offensive line change as Austin Jackson struggles",
-          "url": "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
-          "publishedAt": "2026-11-24T13:12:23.000Z"
-        },
-        {
           "label": "Kevin Cole",
           "title": "Week 11 Sunday Early Window: Advanced Reviews",
           "url": "https://www.unexpectedpoints.com/p/week-11-sunday-early-window-advanced",
           "publishedAt": "2026-11-22T22:33:49.000Z"
-        },
-        {
-          "label": "Cody Alexander",
-          "title": "Split-Field Quarters Foundations",
-          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-          "publishedAt": "2026-11-19T22:01:55.000Z"
-        },
-        {
-          "label": "Cody Alexander",
-          "title": "The Aranda-Roberts Creeper System",
-          "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-          "publishedAt": "2026-11-19T21:33:52.000Z"
         },
         {
           "label": "Seth Walder",
@@ -287,7 +266,7 @@
       "id": "mia_cl_roster",
       "category": "roster",
       "headline": "Dolphins Roster Moves, Trades & Salary Cap Desk",
-      "summary": "NFL Practice Squad Updates: 11/25/26 — Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "summary": "NFL Practice Squad Updates: 11/25/26 — Dolphins make roster moves",
       "updatedAt": "2026-11-26T03:17:20.000Z",
       "itemCount": 6,
       "sourceLinks": [
@@ -298,16 +277,16 @@
           "publishedAt": "2026-11-26T03:17:20.000Z"
         },
         {
-          "label": "Miami Dolphins Official",
-          "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
-          "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
-        },
-        {
           "label": "miamidolphins.com Official",
           "title": "Dolphins make roster moves",
           "url": "https://www.miamidolphins.com/news/dolphins-make-roster-moves-x8439",
           "publishedAt": "2026-11-25T15:30:00.000Z"
+        },
+        {
+          "label": "Miami Dolphins Official",
+          "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+          "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
         },
         {
           "label": "Miami Dolphins Official",
@@ -332,6 +311,465 @@
   ],
   "rawStream": [
     {
+      "id": "mia_brss_the_phinsider_9dd98d5b0383",
+      "type": "article",
+      "title": "Thanksgiving Day Live Game Thread and Discussion",
+      "summary": "I hope that everyone out there is enjoying the holiday today with your friends and family! Please use this live thread to follow today’s slate of Thanksgiving Day games and, as always, to discuss all things Miami Dolphins. Per SBNation poli",
+      "imageUrl": "",
+      "imageAlt": "Thanksgiving Day Live Game Thread and Discussion",
+      "publishedAt": "2026-11-26T17:02:32.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "James McKinney",
+      "author": "James McKinney",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-discussion/125307/thanksgiving-day-live-game-thread-and-discussion",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.8986
+    },
+    {
+      "id": "mia_nfltr_194b33c61dde",
+      "type": "article",
+      "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "summary": "Dolphins The Dolphins are in the first year of a massive organizational overhaul, where they changed the coaching staff, GM and much of the roster. Miami LB Jordyn Brooks is the only full-time veteran starter left on defense following DT Za",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "publishedAt": "2026-11-26T16:38:29.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4043130",
+          "name": "Jordyn Brooks",
+          "shortName": "J. Brooks",
+          "position": "LB",
+          "jersey": 20,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043130.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.0615
+    },
+    {
+      "id": "mia_brss_the_phinsider_48cd50a3124e",
+      "type": "article",
+      "title": "Top-5 Thanksgiving Day plays in Miami Dolphins history",
+      "summary": "Thanksgiving Day means a few things to most Americans: food, family and football. And while the Miami Dolphins won’t be playing on this year’s Turkey Day, they’ve had some very memorable moments for the franchise on Thanksgiving in the past",
+      "imageUrl": "",
+      "imageAlt": "Top-5 Thanksgiving Day plays in Miami Dolphins history",
+      "publishedAt": "2026-11-26T13:41:46.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-history/125298/top-5-thanksgiving-day-plays-in-miami-dolphins-history",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Marek Brave",
+      "author": "Marek Brave",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-history/125298/top-5-thanksgiving-day-plays-in-miami-dolphins-history",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.3189
+    },
+    {
+      "id": "mia_tyt_pgUJVC1Uodo",
+      "type": "video",
+      "category": "beat",
+      "videoId": "pgUJVC1Uodo",
+      "embeddable": false,
+      "title": "RB Ollie Gordon II meets with the media | Miami Dolphins",
+      "summary": "RB Ollie Gordon II meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.Miami",
+      "imageUrl": "https://i.ytimg.com/vi/pgUJVC1Uodo/hqdefault.jpg",
+      "imageAlt": "RB Ollie Gordon II meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:44:50.000Z",
+      "url": "https://www.youtube.com/watch?v=pgUJVC1Uodo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=pgUJVC1Uodo",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4711533",
+          "name": "Ollie Gordon II",
+          "shortName": "O. Gordon II",
+          "position": "RB",
+          "jersey": 0,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4711533.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "1:47",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.0416
+    },
+    {
+      "id": "mia_tyt_BIUszYU0mYk",
+      "type": "video",
+      "category": "beat",
+      "videoId": "BIUszYU0mYk",
+      "embeddable": false,
+      "title": "QB Kyle McCord meets with the media | Miami Dolphins",
+      "summary": "QB Kyle McCord meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDol",
+      "imageUrl": "https://i.ytimg.com/vi/BIUszYU0mYk/hqdefault.jpg",
+      "imageAlt": "QB Kyle McCord meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:43:52.000Z",
+      "url": "https://www.youtube.com/watch?v=BIUszYU0mYk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=BIUszYU0mYk",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4433971",
+          "name": "Kyle McCord",
+          "shortName": "K. McCord",
+          "position": "QB",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4433971.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "7:51",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.0335
+    },
+    {
+      "id": "mia_tyt_7eZnOg0U6ik",
+      "type": "video",
+      "category": "beat",
+      "videoId": "7eZnOg0U6ik",
+      "embeddable": false,
+      "title": "CB Jason Marshall meets with the media | Miami Dolphins",
+      "summary": "CB Jason Marshall meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiD",
+      "imageUrl": "https://i.ytimg.com/vi/7eZnOg0U6ik/hqdefault.jpg",
+      "imageAlt": "CB Jason Marshall meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:43:00.000Z",
+      "url": "https://www.youtube.com/watch?v=7eZnOg0U6ik",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=7eZnOg0U6ik",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4432730",
+          "name": "Jason Marshall Jr.",
+          "shortName": "J. Marshall Jr.",
+          "position": "CB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432730.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "1:27",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.0263
+    },
+    {
+      "id": "mia_tyt_sptON_em7qk",
+      "type": "video",
+      "category": "beat",
+      "videoId": "sptON_em7qk",
+      "embeddable": false,
+      "title": "C Aaron Brewer meets with the media | Miami Dolphins",
+      "summary": "C Aaron Brewer meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDolp",
+      "imageUrl": "https://i.ytimg.com/vi/sptON_em7qk/hqdefault.jpg",
+      "imageAlt": "C Aaron Brewer meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:41:34.000Z",
+      "url": "https://www.youtube.com/watch?v=sptON_em7qk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=sptON_em7qk",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4040537",
+          "name": "Aaron Brewer",
+          "shortName": "A. Brewer",
+          "position": "C",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040537.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "2:59",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.0144
+    },
+    {
+      "id": "mia_tyt_N2G8SBqHfgo",
+      "type": "video",
+      "category": "beat",
+      "videoId": "N2G8SBqHfgo",
+      "embeddable": false,
+      "title": "DC Sean Duggan meets with the media | Miami Dolphins",
+      "summary": "DC Sean Duggan meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDol",
+      "imageUrl": "https://i.ytimg.com/vi/N2G8SBqHfgo/hqdefault.jpg",
+      "imageAlt": "DC Sean Duggan meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:40:35.000Z",
+      "url": "https://www.youtube.com/watch?v=N2G8SBqHfgo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=N2G8SBqHfgo",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "13:47",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.0063
+    },
+    {
+      "id": "mia_tyt_DSjsxnrs7tE",
+      "type": "video",
+      "category": "beat",
+      "videoId": "DSjsxnrs7tE",
+      "embeddable": false,
+      "title": "OC Bobby Slowik meets with the media | Miami Dolphins",
+      "summary": "OC Bobby Slowik meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDo",
+      "imageUrl": "https://i.ytimg.com/vi/DSjsxnrs7tE/hqdefault.jpg",
+      "imageAlt": "OC Bobby Slowik meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:31:40.000Z",
+      "url": "https://www.youtube.com/watch?v=DSjsxnrs7tE",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=DSjsxnrs7tE",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "11:24",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.9343
+    },
+    {
+      "id": "mia_tyt_WYICSy4StDQ",
+      "type": "video",
+      "category": "beat",
+      "videoId": "WYICSy4StDQ",
+      "embeddable": false,
+      "title": "DL Coach Austin Clark meets with the media | Miami Dolphins",
+      "summary": "DL Coach Austin Clark meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.Mi",
+      "imageUrl": "https://i.ytimg.com/vi/WYICSy4StDQ/hqdefault.jpg",
+      "imageAlt": "DL Coach Austin Clark meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:30:29.000Z",
+      "url": "https://www.youtube.com/watch?v=WYICSy4StDQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=WYICSy4StDQ",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "12:45",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.925
+    },
+    {
+      "id": "mia_tyt_byw5tlDYOwY",
+      "type": "video",
+      "category": "beat",
+      "videoId": "byw5tlDYOwY",
+      "embeddable": false,
+      "title": "QB Coach Bush Hamdan meets with the media | Miami Dolphins",
+      "summary": "QB Coach Bush Hamdan meets with the media on Wednesday, November 25, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.Mi",
+      "imageUrl": "https://i.ytimg.com/vi/byw5tlDYOwY/hqdefault.jpg",
+      "imageAlt": "QB Coach Bush Hamdan meets with the media | Miami Dolphins",
+      "publishedAt": "2026-11-26T11:29:09.000Z",
+      "url": "https://www.youtube.com/watch?v=byw5tlDYOwY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=byw5tlDYOwY",
+      "channel": "Miami Dolphins",
+      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "outletName": "Miami Dolphins",
+      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "8:05",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.9146
+    },
+    {
       "id": "mia_pfr_b2d319489831",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/25/26",
@@ -351,18 +789,18 @@
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.76,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "minor_roster",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5696
+      "storyRank": 1.1322
     },
     {
       "id": "mia_pwire_4360488_64982428",
@@ -403,7 +841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7545
+      "storyRank": 0.9838
     },
     {
       "id": "mia_rss_95a00c2abbcf",
@@ -437,7 +875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1202
+      "storyRank": 0.9137
     },
     {
       "id": "mia_tyt_34RCI_hN9U8",
@@ -470,13 +908,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:59",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0132,
-      "duration": "10:59"
+      "storyRank": 0.9004
     },
     {
       "id": "x_tl_miamidolphins_2125731920226951251",
@@ -486,7 +924,7 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125731698935529472/img/G1CwL9cVGuwL0F5X.jpg",
-      "imageAlt": "Jon-Eric Sullivan post",
+      "imageAlt": "Miami Dolphins post",
       "videoStreamUrl": "https://video.twimg.com/amplify_video/2125731698935529472/vid/avc1/1920x1080/AfJSKJQzRWNd5Abb.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "3:39",
@@ -507,12 +945,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "dolphins_official",
-      "outletName": "MiamiDolphins.com / Official Team",
-      "reporterId": "jon_eric_sullivan",
-      "reporterName": "Jon-Eric Sullivan",
-      "author": "Jon-Eric Sullivan",
+      "outletName": "@MiamiDolphins Official",
+      "reporterId": null,
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
       "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://x.com/MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -523,12 +961,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9803
+      "storyRank": 0.9458
     },
     {
       "id": "mia_espn_b0138ebe84858",
@@ -563,7 +1001,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9
+      "storyRank": 0.8859
     },
     {
       "id": "mia_tyt_cM7jJmstwsc",
@@ -572,7 +1010,7 @@
       "videoId": "cM7jJmstwsc",
       "embeddable": false,
       "title": "Josh Uche honors his godmother and lifelong Dolphins fan for My Cause My Cleats | Miami Dolphins",
-      "summary": "Josh Uche shares why he chose to honor his godmother and lifelong Dolphins fan, Collette A. Reece, as part of My Cause My Cleats. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolph",
+      "summary": "Josh Uche shares why he chose to honor his godmother and lifelong Dolphins fan, Collette A. Reece, as part of My Cause My Cleats. Presented by Truist. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphin",
       "imageUrl": "https://i.ytimg.com/vi/cM7jJmstwsc/hqdefault.jpg",
       "imageAlt": "Josh Uche honors his godmother and lifelong Dolphins fan for My Cause My Cleats | Miami Dolphins",
       "publishedAt": "2026-11-25T23:26:03.000Z",
@@ -605,13 +1043,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "3:39",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7342,
-      "duration": "3:39"
+      "storyRank": 0.8635
     },
     {
       "id": "mia_pwire_4430681_64982628",
@@ -652,68 +1090,26 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0243
+      "storyRank": 0.3865
     },
     {
-      "id": "mia_espn_87de3f19417a9",
-      "type": "video",
-      "title": "Jets still feeling effects of loss to Dolphins",
-      "summary": "Rich Cimini reports on how Aaron Glenn and the Jets are using the loss to the Dolphins as motivation.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1125/dm_261125_Jets_still_feeling_effects_of_loss_to_Dolphins/dm_261125_Jets_still_feeling_effects_of_loss_to_Dolphins.jpg",
-      "imageCaption": "Rich Cimini reports on how Aaron Glenn and the Jets are using the loss to the Dolphins as motivation.",
-      "imageAlt": "Jets still feeling effects of loss to Dolphins",
-      "publishedAt": "2026-11-26T00:22:12.000Z",
-      "url": "https://www.espn.com/video/clip/_/id/50599300/jets-feeling-effects-loss-dolphins",
-      "outletId": "espn_mia",
-      "outletName": "ESPN",
-      "reporterId": "espn_mia",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "duration": "0:46",
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.2911
-    },
-    {
-      "id": "mia_yts_vplFhoV0C9M",
-      "type": "video",
-      "videoId": "vplFhoV0C9M",
-      "embeddable": false,
-      "title": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
-      "summary": "",
-      "duration": "11:01",
-      "imageUrl": "https://i.ytimg.com/vi/vplFhoV0C9M/hqdefault.jpg",
-      "imageAlt": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
-      "publishedAt": "2026-11-25T19:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=vplFhoV0C9M",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=vplFhoV0C9M",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
+      "id": "mia_brss_the_phinsider_cd8f67f170b4",
+      "type": "article",
+      "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
+      "summary": "The Miami Dolphins lost their ninth game of the 2026 NFL season in Week 11 when they visited the Buffalo Bills. Miami has struggled throughout the season, often keeping games close but unable to come away with a win. In fact, the team has o",
+      "imageUrl": "",
+      "imageAlt": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
+      "publishedAt": "2026-11-25T19:36:30.000Z",
+      "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+      "outletId": "the_phinsider",
+      "outletName": "The Phinsider",
+      "reporterId": "the_phinsider",
+      "reporterName": "Kevin Nogle",
+      "author": "Kevin Nogle",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
@@ -728,7 +1124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6483
+      "storyRank": 0.4825
     },
     {
       "id": "mia_brss_the_phinsider_c9b8351333aa",
@@ -762,7 +1158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5585
+      "storyRank": 0.651
     },
     {
       "id": "mia_brss_the_phinsider_1e2b922f8ff9",
@@ -805,51 +1201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7604
-    },
-    {
-      "id": "mia_tx_f7f351f4753a",
-      "type": "tweet",
-      "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
-      "fullText": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
-      "outletId": "dolphins_official",
-      "outletName": "miamidolphins.com Official",
-      "reporterId": "dolphins_official",
-      "reporterName": "Miami Dolphins Official",
-      "author": "Miami Dolphins Official",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.miamidolphins.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [
-        {
-          "id": "4876013",
-          "name": "Jack Browning",
-          "shortName": "J. Browning",
-          "position": "P",
-          "jersey": 31,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4876013.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.1
+      "storyRank": 0.9646
     },
     {
       "id": "mia_rss_8ec04da79958",
@@ -883,41 +1235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3225
-    },
-    {
-      "id": "mia_brss_the_phinsider_cd8f67f170b4",
-      "type": "article",
-      "title": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-      "summary": "The Miami Dolphins lost their ninth game of the 2026 NFL season in Week 11 when they visited the Buffalo Bills. Miami has struggled throughout the season, often keeping games close but unable to come away with a win. In fact, the team has o",
-      "imageUrl": "",
-      "imageAlt": "NFL 2026 odds: Predictions, winners picks for Jets vs. Dolphins, all Thanksgiving and Week 12 games",
-      "publishedAt": "2026-11-25T19:36:30.000Z",
-      "url": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-      "outletId": "the_phinsider",
-      "outletName": "The Phinsider",
-      "reporterId": "the_phinsider",
-      "reporterName": "Kevin Nogle",
-      "author": "Kevin Nogle",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-game-information/125276/nfl-2026-odds-predictions-winners-picks-for-jets-vs-dolphins-all-thanksgiving-and-week-12-games",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1851
+      "storyRank": 0.5148
     },
     {
       "id": "x_tl_miamidolphins_2125614312299385227",
@@ -933,7 +1251,7 @@
         "https://pbs.twimg.com/media/HX-yv0NXAAA3dfz.jpg?name=orig",
         "https://pbs.twimg.com/media/HX-yv0DXAAA7SYp.jpg?name=orig"
       ],
-      "imageAlt": "Jon-Eric Sullivan post",
+      "imageAlt": "Miami Dolphins post",
       "hasInlineChartImage": true,
       "mentionedPlayers": [],
       "publishedAt": "2026-11-25T15:35:18.713Z",
@@ -942,12 +1260,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "dolphins_official",
-      "outletName": "MiamiDolphins.com / Official Team",
-      "reporterId": "jon_eric_sullivan",
-      "reporterName": "Jon-Eric Sullivan",
-      "author": "Jon-Eric Sullivan",
+      "outletName": "@MiamiDolphins Official",
+      "reporterId": null,
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
       "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://x.com/MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -958,12 +1276,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2601
+      "storyRank": 0.6061
     },
     {
       "id": "mia_brss_the_phinsider_62e5cccb16c0",
@@ -1006,7 +1324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1557
+      "storyRank": 0.5502
     },
     {
       "id": "mia_rss_0778aea2baaa",
@@ -1049,30 +1367,42 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1377
+      "storyRank": 0.5489
     },
     {
-      "id": "mia_pwire_4869645_50588158",
-      "type": "article",
-      "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
-      "summary": "Greetings from above the clouds! Jan from Milford, a librarian and gardening enthusiast, has just nodded off and the plane's Wi-Fi has finally decided to connect. It's been another action-packed few days in Bristol and I",
-      "publishedAt": "2026-11-25T15:22:54.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Liz Loza",
-      "author": "Liz Loza",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4869645/caleb-douglas#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
+      "id": "mia_tx_f7f351f4753a",
+      "type": "tweet",
+      "title": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "fullText": "Dolphins roster move: Signed P Jack Browning from the practice squad to the active roster. Signed DE Max Llewellyn to the practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.miamidolphins.com/team/transactions/#tx-f7f351f4753a",
+      "outletId": "dolphins_official",
+      "outletName": "miamidolphins.com Official",
+      "reporterId": "dolphins_official",
+      "reporterName": "Miami Dolphins Official",
+      "author": "Miami Dolphins Official",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.miamidolphins.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4876013",
+          "name": "Jack Browning",
+          "shortName": "J. Browning",
+          "position": "P",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4876013.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1081,7 +1411,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.108
+      "storyRank": 0.3965
     },
     {
       "id": "mia_tyt_c_pVIEauCPQ",
@@ -1124,13 +1454,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "3:35",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.495,
-      "duration": "3:35"
+      "storyRank": 0.3163
     },
     {
       "id": "mia_tyt_RJGgbBSMdSw",
@@ -1172,13 +1502,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:47",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3919,
-      "duration": "5:47"
+      "storyRank": 0.2659
     },
     {
       "id": "mia_tyt_jzyl8w5KUPU",
@@ -1220,13 +1550,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:46",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3919,
-      "duration": "8:46"
+      "storyRank": 0.2659
     },
     {
       "id": "mia_tyt_DWdvHdkzfGc",
@@ -1268,13 +1598,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:06",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3918,
-      "duration": "8:06"
+      "storyRank": 0.2659
     },
     {
       "id": "mia_tyt_vl6FhOOgYlc",
@@ -1316,13 +1646,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:39",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3918,
-      "duration": "6:39"
+      "storyRank": 0.2659
     },
     {
       "id": "mia_brss_the_phinsider_2c69e56a3b4b",
@@ -1356,7 +1686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.385
+      "storyRank": 0.2613
     },
     {
       "id": "mia_vid_78f7c08f36c4",
@@ -1402,7 +1732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3888
+      "storyRank": 0.2643
     },
     {
       "id": "mia_vid_e1c4814bf001",
@@ -1448,7 +1778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3882
+      "storyRank": 0.264
     },
     {
       "id": "mia_vid_e081cf362c91",
@@ -1494,7 +1824,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3862
+      "storyRank": 0.263
     },
     {
       "id": "mia_vid_a9e67a7bdc6b",
@@ -1540,7 +1870,94 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3848
+      "storyRank": 0.2623
+    },
+    {
+      "id": "mia_yts_EBjZ45Xgxt4",
+      "type": "video",
+      "videoId": "EBjZ45Xgxt4",
+      "embeddable": true,
+      "title": "That's how you turn pressure into possession 😮‍💨 | Up next: #NYJvsMIA 11/29 1pm on @NFLonCBS",
+      "summary": "",
+      "duration": "0:35",
+      "imageUrl": "https://i.ytimg.com/vi/EBjZ45Xgxt4/hqdefault.jpg",
+      "imageAlt": "That's how you turn pressure into possession 😮‍💨 | Up next: #NYJvsMIA 11/29 1pm on @NFLonCBS",
+      "publishedAt": "2026-11-24T19:06:37.757Z",
+      "url": "https://www.youtube.com/watch?v=EBjZ45Xgxt4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=EBjZ45Xgxt4",
+      "channel": "Miami Dolphins",
+      "outletId": "dolphins_official",
+      "outletName": "Miami Dolphins",
+      "reporterId": "dolphins_official",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
+    },
+    {
+      "id": "mia_yts_tKToAE1yFuE",
+      "type": "video",
+      "videoId": "tKToAE1yFuE",
+      "embeddable": true,
+      "title": "WR Caleb Douglas meets with the media after #MIAvsBUF | Miami Dolphins",
+      "summary": "",
+      "duration": "1:22",
+      "imageUrl": "https://i.ytimg.com/vi/tKToAE1yFuE/hqdefault.jpg",
+      "imageAlt": "WR Caleb Douglas meets with the media after #MIAvsBUF | Miami Dolphins",
+      "publishedAt": "2026-11-24T19:06:37.757Z",
+      "url": "https://www.youtube.com/watch?v=tKToAE1yFuE",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=tKToAE1yFuE",
+      "channel": "Miami Dolphins",
+      "outletId": "dolphins_official",
+      "outletName": "Miami Dolphins",
+      "reporterId": "dolphins_official",
+      "reporterName": "Miami Dolphins",
+      "author": "Miami Dolphins",
+      "authorHandle": "@MiamiDolphins",
+      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4869645",
+          "name": "Caleb Douglas",
+          "shortName": "C. Douglas",
+          "position": "WR",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2588
     },
     {
       "id": "mia_rss_99e3333ab8aa",
@@ -1574,7 +1991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3324
+      "storyRank": 0.2343
     },
     {
       "id": "mia_rss_410c32ba79cb",
@@ -1608,7 +2025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3297
+      "storyRank": 0.2328
     },
     {
       "id": "mia_brss_the_phinsider_156e16ff854a",
@@ -1642,7 +2059,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.311
+      "storyRank": 0.2216
     },
     {
       "id": "mia_brss_the_phinsider_07843ff48968",
@@ -1676,84 +2093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3101
-    },
-    {
-      "id": "mia_brss_the_phinsider_554fe8743736",
-      "type": "article",
-      "title": "Tuesday Miami Dolphins Thoughts With The Earl",
-      "summary": "The result of the game was expected. The mechanics of how it got there were not expected, however. Once again, the game was a tale of uncomplimentary football, with one side showing up to play and the other failing to show up. Let’s get int",
-      "imageUrl": "",
-      "imageAlt": "Tuesday Miami Dolphins Thoughts With The Earl",
-      "publishedAt": "2026-11-24T13:52:12.000Z",
-      "url": "https://www.thephinsider.com/miami-dolphins-analysis/125229/tuesday-miami-dolphins-thoughts-with-the-earl",
-      "outletId": "the_phinsider",
-      "outletName": "The Phinsider",
-      "reporterId": "the_phinsider",
-      "reporterName": "Chris Early",
-      "author": "Chris Early",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-analysis/125229/tuesday-miami-dolphins-thoughts-with-the-earl",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.3096
-    },
-    {
-      "id": "mia_brss_the_phinsider_5d84a6980d8d",
-      "type": "article",
-      "title": "Dolphins considering offensive line change as Austin Jackson struggles",
-      "summary": "Miami Dolphins offensive tackle Austin Jackson has struggled this season. While the primary concern with Jackson since Miami selected him in the first round of the 2020 NFL Draft has been his availability, his on-field play in 2026 has not",
-      "imageUrl": "",
-      "imageAlt": "Dolphins considering offensive line change as Austin Jackson struggles",
-      "publishedAt": "2026-11-24T13:12:23.000Z",
-      "url": "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
-      "outletId": "the_phinsider",
-      "outletName": "The Phinsider",
-      "reporterId": "the_phinsider",
-      "reporterName": "Kevin Nogle",
-      "author": "Kevin Nogle",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.thephinsider.com/miami-dolphins-depth-chart/125245/miami-dolphins-offensive-line-tackle-austin-jackson-kadyn-proctor-guard-news-changes",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4271632",
-          "name": "Austin Jackson",
-          "shortName": "A. Jackson",
-          "position": "OT",
-          "jersey": 73,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4271632.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.303
+      "storyRank": 0.2211
     },
     {
       "id": "mia_tx_edc11cd77e06",
@@ -1797,46 +2137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2628
-    },
-    {
-      "id": "mia_yts_EBjZ45Xgxt4",
-      "type": "video",
-      "videoId": "EBjZ45Xgxt4",
-      "embeddable": true,
-      "title": "That's how you turn pressure into possession 😮‍💨 | Up next: #NYJvsMIA 11/29 1pm on @NFLonCBS",
-      "summary": "",
-      "duration": "0:35",
-      "imageUrl": "https://i.ytimg.com/vi/EBjZ45Xgxt4/hqdefault.jpg",
-      "imageAlt": "That's how you turn pressure into possession 😮‍💨 | Up next: #NYJvsMIA 11/29 1pm on @NFLonCBS",
-      "publishedAt": "2026-11-24T07:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=EBjZ45Xgxt4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=EBjZ45Xgxt4",
-      "channel": "Miami Dolphins",
-      "outletId": "dolphins_official",
-      "outletName": "Miami Dolphins",
-      "reporterId": "dolphins_official",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
+      "storyRank": 0.1945
     },
     {
       "id": "mia_pfr_3f25ec249d90",
@@ -1869,7 +2170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2108
+      "storyRank": 0.1619
     },
     {
       "id": "mia_rss_744c97882539",
@@ -1903,7 +2204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1975
+      "storyRank": 0.1538
     },
     {
       "id": "mia_pwire_4360488_64937928",
@@ -1944,7 +2245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1958
+      "storyRank": 0.1527
     },
     {
       "id": "mia_vid_e971863354f1",
@@ -1990,7 +2291,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1956
+      "storyRank": 0.1526
     },
     {
       "id": "mia_rss_3aa03423228d",
@@ -2024,45 +2325,37 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1928
+      "storyRank": 0.1507
     },
     {
-      "id": "mia_tyt_XZzVHIk_3Lk",
+      "id": "mia_yts_F69kepglAY0",
       "type": "video",
-      "category": "beat",
-      "videoId": "XZzVHIk_3Lk",
+      "videoId": "F69kepglAY0",
       "embeddable": false,
-      "title": "DL Kenneth Grant meets with the media after #MIAvsBUF | Miami Dolphins",
-      "summary": "DL Kenneth Grant meets with the media after #MIAvsBUF Presented by UHealth Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDolphins.com Like us on Fa",
-      "imageUrl": "https://i.ytimg.com/vi/XZzVHIk_3Lk/hqdefault.jpg",
-      "imageAlt": "DL Kenneth Grant meets with the media after #MIAvsBUF | Miami Dolphins",
-      "publishedAt": "2026-11-23T19:21:29.000Z",
-      "url": "https://www.youtube.com/watch?v=XZzVHIk_3Lk",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=XZzVHIk_3Lk",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
+      "title": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
+      "summary": "",
+      "duration": "15:19",
+      "imageUrl": "https://i.ytimg.com/vi/F69kepglAY0/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
+      "publishedAt": "2026-11-23T19:06:37.757Z",
+      "url": "https://www.youtube.com/watch?v=F69kepglAY0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=F69kepglAY0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
       "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4894654",
-          "name": "Kenneth Grant",
-          "shortName": "K. Grant",
-          "position": "DT",
-          "jersey": 78,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4894654.png"
-        }
-      ],
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
+      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2071,152 +2364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1901,
-      "duration": "1:51"
-    },
-    {
-      "id": "mia_tyt_ihVY9kXWo2A",
-      "type": "video",
-      "category": "beat",
-      "videoId": "ihVY9kXWo2A",
-      "embeddable": false,
-      "title": "EDGE Chop Robinson meets with the media after #MIAvsBUF | Miami Dolphins",
-      "summary": "EDGE Chop Robinson meets with the media after #MIAvsBUF Presented by UHealth Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDolphins.com Like us on",
-      "imageUrl": "https://i.ytimg.com/vi/ihVY9kXWo2A/hqdefault.jpg",
-      "imageAlt": "EDGE Chop Robinson meets with the media after #MIAvsBUF | Miami Dolphins",
-      "publishedAt": "2026-11-23T19:21:26.000Z",
-      "url": "https://www.youtube.com/watch?v=ihVY9kXWo2A",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=ihVY9kXWo2A",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4431586",
-          "name": "Chop Robinson",
-          "shortName": "C. Robinson",
-          "position": "LB",
-          "jersey": 44,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431586.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1901,
-      "duration": "1:22"
-    },
-    {
-      "id": "mia_tyt_WL5r6NfoTs0",
-      "type": "video",
-      "category": "beat",
-      "videoId": "WL5r6NfoTs0",
-      "embeddable": false,
-      "title": "Ollie Gordon II meets with the media after #MIAvsBUF | Miami Dolphins",
-      "summary": "Ollie Gordon II meets with the media after #MIAvsBUF Presented by UHealth Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDolphins.com Like us on Fac",
-      "imageUrl": "https://i.ytimg.com/vi/WL5r6NfoTs0/hqdefault.jpg",
-      "imageAlt": "Ollie Gordon II meets with the media after #MIAvsBUF | Miami Dolphins",
-      "publishedAt": "2026-11-23T19:21:22.000Z",
-      "url": "https://www.youtube.com/watch?v=WL5r6NfoTs0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=WL5r6NfoTs0",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4711533",
-          "name": "Ollie Gordon II",
-          "shortName": "O. Gordon II",
-          "position": "RB",
-          "jersey": 0,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4711533.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1901,
-      "duration": "2:00"
-    },
-    {
-      "id": "mia_tyt_tKToAE1yFuE",
-      "type": "video",
-      "category": "beat",
-      "videoId": "tKToAE1yFuE",
-      "embeddable": false,
-      "title": "WR Caleb Douglas meets with the media after #MIAvsBUF | Miami Dolphins",
-      "summary": "WR Caleb Douglas meets with the media after #DETvsMIA Presented by UHealth Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDolphins.com Like us on Fa",
-      "imageUrl": "https://i.ytimg.com/vi/tKToAE1yFuE/hqdefault.jpg",
-      "imageAlt": "WR Caleb Douglas meets with the media after #MIAvsBUF | Miami Dolphins",
-      "publishedAt": "2026-11-23T19:21:19.000Z",
-      "url": "https://www.youtube.com/watch?v=tKToAE1yFuE",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=tKToAE1yFuE",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4869645",
-          "name": "Caleb Douglas",
-          "shortName": "C. Douglas",
-          "position": "WR",
-          "jersey": 7,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869645.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1901,
-      "duration": "1:22"
+      "storyRank": 0.1482
     },
     {
       "id": "mia_vid_2080cf40272d",
@@ -2253,7 +2401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1848
+      "storyRank": 0.1455
     },
     {
       "id": "mia_vid_6de712b408ca",
@@ -2299,7 +2447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1847
+      "storyRank": 0.1454
     },
     {
       "id": "mia_vid_26a618baecfe",
@@ -2345,7 +2493,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1847
+      "storyRank": 0.1454
     },
     {
       "id": "mia_vid_91123f5a0b64",
@@ -2391,7 +2539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1847
+      "storyRank": 0.1454
     },
     {
       "id": "mia_pwire_4242512_64935228",
@@ -2423,7 +2571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1816
+      "storyRank": 0.1433
     },
     {
       "id": "mia_vid_88efefc446d1",
@@ -2469,7 +2617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1685
+      "storyRank": 0.1345
     },
     {
       "id": "mia_tx_117fe0a7a57c",
@@ -2504,181 +2652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1498
-    },
-    {
-      "id": "mia_yts_EHkTOd1ozwM",
-      "type": "video",
-      "videoId": "EHkTOd1ozwM",
-      "embeddable": true,
-      "title": "Zayne Anderson with the pick 👏 | @NFLonCBS",
-      "summary": "",
-      "duration": "0:19",
-      "imageUrl": "https://i.ytimg.com/vi/EHkTOd1ozwM/hqdefault.jpg",
-      "imageAlt": "Zayne Anderson with the pick 👏 | @NFLonCBS",
-      "publishedAt": "2026-11-23T07:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=EHkTOd1ozwM",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=EHkTOd1ozwM",
-      "channel": "Miami Dolphins",
-      "outletId": "dolphins_official",
-      "outletName": "Miami Dolphins",
-      "reporterId": "dolphins_official",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "3932335",
-          "name": "Zayne Anderson",
-          "shortName": "Z. Anderson",
-          "position": "S",
-          "jersey": 23,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932335.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "mia_yts_RsELRMxRryY",
-      "type": "video",
-      "videoId": "RsELRMxRryY",
-      "embeddable": true,
-      "title": "JB with the sack 💪 | 📺 @NFLonCBS",
-      "summary": "",
-      "duration": "0:16",
-      "imageUrl": "https://i.ytimg.com/vi/RsELRMxRryY/hqdefault.jpg",
-      "imageAlt": "JB with the sack 💪 | 📺 @NFLonCBS",
-      "publishedAt": "2026-11-23T07:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=RsELRMxRryY",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=RsELRMxRryY",
-      "channel": "Miami Dolphins",
-      "outletId": "dolphins_official",
-      "outletName": "Miami Dolphins",
-      "reporterId": "dolphins_official",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "mia_yts_F69kepglAY0",
-      "type": "video",
-      "videoId": "F69kepglAY0",
-      "embeddable": false,
-      "title": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
-      "summary": "",
-      "duration": "15:19",
-      "imageUrl": "https://i.ytimg.com/vi/F69kepglAY0/hqdefault.jpg",
-      "imageAlt": "Miami Dolphins vs. Buffalo Bills Game Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T07:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=F69kepglAY0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=F69kepglAY0",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "x_tl_davidfurones__2124675406494331065",
-      "type": "tweet",
-      "title": "Dolphins safety Zayne Anderson, on Sunday against Buffalo, became the first defensive back this millennium to total at least 11 tackles, a sack, an interception and three passes defensed in a game.",
-      "fullText": "Dolphins safety Zayne Anderson, on Sunday against Buffalo, became the first defensive back this millennium to total at least 11 tackles, a sack, an interception and three passes defensed in a game.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "David Furones post",
-      "mentionedPlayers": [
-        {
-          "id": "3932335",
-          "name": "Zayne Anderson",
-          "shortName": "Z. Anderson",
-          "position": "S",
-          "jersey": 23,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932335.png"
-        }
-      ],
-      "publishedAt": "2026-11-23T01:24:26.125Z",
-      "url": "https://x.com/DavidFurones_/status/2124675406494331065",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "south_florida_sun_sentinel_mia",
-      "outletName": "South Florida Sun Sentinel",
-      "reporterId": "david_furones",
-      "reporterName": "David Furones",
-      "author": "David Furones",
-      "authorHandle": "@DavidFurones_",
-      "authorProfileUrl": "https://x.com/DavidFurones_",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1458
+      "storyRank": 0.1216
     },
     {
       "id": "mia_vid_a640d715cb79",
@@ -2724,7 +2698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1305
+      "storyRank": 0.1079
     },
     {
       "id": "mia_espn_bfaeeeaa3d280",
@@ -2759,7 +2733,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1283
+      "storyRank": 0.1063
     },
     {
       "id": "mia_vid_11621c02e017",
@@ -2796,7 +2770,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1271
+      "storyRank": 0.1055
     },
     {
       "id": "mia_rss_deb85865defe",
@@ -2830,7 +2804,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1265
+      "storyRank": 0.105
     },
     {
       "id": "mia_nfilm_unexpected_points_e96746b51e37",
@@ -2864,7 +2838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1262
+      "storyRank": 0.1048
     },
     {
       "id": "mia_vid_a206291005bb",
@@ -2918,7 +2892,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1212
+      "storyRank": 0.1011
     },
     {
       "id": "mia_vid_f5fe4b711b2f",
@@ -2964,7 +2938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1212
+      "storyRank": 0.1011
     },
     {
       "id": "mia_pwire_4869961_64912528",
@@ -2996,7 +2970,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0026
     },
     {
       "id": "mia_vid_08972143590f",
@@ -3042,7 +3016,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1202
+      "storyRank": 0.1004
     },
     {
       "id": "mia_vid_2fe8b109ca37",
@@ -3088,7 +3062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1199
+      "storyRank": 0.1002
     },
     {
       "id": "mia_vid_677e66575c26",
@@ -3125,7 +3099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1192
+      "storyRank": 0.0997
     },
     {
       "id": "mia_vid_2579e0b1b5cc",
@@ -3171,7 +3145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1192
+      "storyRank": 0.0996
     },
     {
       "id": "mia_vid_37c27616880f",
@@ -3217,7 +3191,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1176
+      "storyRank": 0.0985
     },
     {
       "id": "mia_pfr_9af26dfbd9be",
@@ -3267,7 +3241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0447
+      "storyRank": 0.0383
     },
     {
       "id": "mia_vid_cee7474d9ede",
@@ -3304,7 +3278,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0086
     },
     {
       "id": "mia_rss_f19ca1eddc43",
@@ -3338,7 +3312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0389
+      "storyRank": 0.0339
     },
     {
       "id": "mia_tx_bd383f2e0632",
@@ -3390,7 +3364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
+      "storyRank": 0.031
     },
     {
       "id": "mia_rss_8e2c80cf1ae4",
@@ -3424,7 +3398,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.028
     },
     {
       "id": "mia_rss_877795445afb",
@@ -3458,46 +3432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0741
-    },
-    {
-      "id": "mia_tyt_qtWPIXoUygo",
-      "type": "video",
-      "category": "beat",
-      "videoId": "qtWPIXoUygo",
-      "embeddable": false,
-      "title": "Coach Hafley breaks down plays from Week 10 | Miami Dolphins",
-      "summary": "Coach Hafley breaks down plays from week 10 Tune in to the Coach Hafley show on CBS Miami this Sunday at 11am. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http:/",
-      "imageUrl": "https://i.ytimg.com/vi/qtWPIXoUygo/hqdefault.jpg",
-      "imageAlt": "Coach Hafley breaks down plays from Week 10 | Miami Dolphins",
-      "publishedAt": "2026-11-20T19:50:24.000Z",
-      "url": "https://www.youtube.com/watch?v=qtWPIXoUygo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=qtWPIXoUygo",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0309,
-      "duration": "4:28"
+      "storyRank": 0.0664
     },
     {
       "id": "mia_vid_01bb7de96eb6",
@@ -3534,7 +3469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0299
+      "storyRank": 0.0267
     },
     {
       "id": "mia_rss_f380d9d25730",
@@ -3568,7 +3503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0263
     },
     {
       "id": "mia_vid_82c6423d1f86",
@@ -3605,7 +3540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0261
     },
     {
       "id": "mia_vid_9a171fdebe82",
@@ -3642,7 +3577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0261
     },
     {
       "id": "mia_vid_6ccf4a75696d",
@@ -3679,7 +3614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0261
     },
     {
       "id": "mia_vid_f6a8be6d6ade",
@@ -3716,7 +3651,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0261
     },
     {
       "id": "mia_vid_3b83a5d47106",
@@ -3753,124 +3688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
-    },
-    {
-      "id": "mia_tyt_tWNs7izrd5Y",
-      "type": "video",
-      "category": "beat",
-      "videoId": "tWNs7izrd5Y",
-      "embeddable": false,
-      "title": "STC Chris Tabor meets with the media | Miami Dolphins",
-      "summary": "STC Chris Tabor meets with the media on Thursday, November 19, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDol",
-      "imageUrl": "https://i.ytimg.com/vi/tWNs7izrd5Y/hqdefault.jpg",
-      "imageAlt": "STC Chris Tabor meets with the media | Miami Dolphins",
-      "publishedAt": "2026-11-19T23:50:01.000Z",
-      "url": "https://www.youtube.com/watch?v=tWNs7izrd5Y",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=tWNs7izrd5Y",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0254,
-      "duration": "7:14"
-    },
-    {
-      "id": "mia_tyt_qChLFROa_o8",
-      "type": "video",
-      "category": "beat",
-      "videoId": "qChLFROa_o8",
-      "embeddable": false,
-      "title": "RB Coach Ladell Betts meets with the media | Miami Dolphins",
-      "summary": "RB Coach Ladell Betts meets with the media on Thursday, November 19, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.Mi",
-      "imageUrl": "https://i.ytimg.com/vi/qChLFROa_o8/hqdefault.jpg",
-      "imageAlt": "RB Coach Ladell Betts meets with the media | Miami Dolphins",
-      "publishedAt": "2026-11-19T23:49:58.000Z",
-      "url": "https://www.youtube.com/watch?v=qChLFROa_o8",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=qChLFROa_o8",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0254,
-      "duration": "8:09"
-    },
-    {
-      "id": "mia_tyt_z_TyxZDM93c",
-      "type": "video",
-      "category": "beat",
-      "videoId": "z_TyxZDM93c",
-      "embeddable": false,
-      "title": "Coach Joe Barry meets with the media | Miami Dolphins",
-      "summary": "Coach Joe Barry meets with the media on Thursday, November 19, 2026. Presented by Baptist Health. Subscribe: http://www.youtube.com/channel/MiamiDolphins #MiamiDolphins #NFL For more Dolphins content: http://www.MiamiDol",
-      "imageUrl": "https://i.ytimg.com/vi/z_TyxZDM93c/hqdefault.jpg",
-      "imageAlt": "Coach Joe Barry meets with the media | Miami Dolphins",
-      "publishedAt": "2026-11-19T23:49:54.000Z",
-      "url": "https://www.youtube.com/watch?v=z_TyxZDM93c",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=z_TyxZDM93c",
-      "channel": "Miami Dolphins",
-      "outletId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "outletName": "Miami Dolphins",
-      "reporterId": "UCHUSfEzpSRkUUsRkk_aJwDw",
-      "reporterName": "Miami Dolphins",
-      "author": "Miami Dolphins",
-      "authorHandle": "@MiamiDolphins",
-      "authorProfileUrl": "https://www.youtube.com/@MiamiDolphins",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0254,
-      "duration": "11:53"
+      "storyRank": 0.0261
     },
     {
       "id": "mia_espn_e65125cb896f7",
@@ -3914,79 +3732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.025
-    },
-    {
-      "id": "mia_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
-    },
-    {
-      "id": "mia_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0226
     },
     {
       "id": "mia_vid_75282241f46a",
@@ -4032,112 +3778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
-    },
-    {
-      "id": "mia_yts_dqRYfzOLzA8",
-      "type": "video",
-      "videoId": "dqRYfzOLzA8",
-      "embeddable": false,
-      "title": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "8:01",
-      "imageUrl": "https://i.ytimg.com/vi/dqRYfzOLzA8/hqdefault.jpg",
-      "imageAlt": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-19T07:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
-    },
-    {
-      "id": "mia_pfr_70041b3c4411",
-      "type": "article",
-      "title": "NFL Practice Squad Updates: 11/18/26",
-      "summary": "Here are today’s practice squad transactions: Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Michael Jordan Carolina Panthers Signed: OLB Nick Hampton Placed on practice squad/injured list: LB Claudin Cherelus Detroit Lio",
-      "imageUrl": "",
-      "publishedAt": "2026-11-19T01:20:47.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-18-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
-    },
-    {
-      "id": "mia_pfr_d6e9815eec79",
-      "type": "article",
-      "title": "Minor NFL Transactions: 11/18/26",
-      "summary": "Wednesday’s minor moves: Baltimore Ravens Activated from IR: RB Adam Randall Buffalo Bills Activated from reserve/PUP list: WR Tyrell Shavers Denver Broncos Practice window opened: TE Caleb Lohner Detroit Lions Placed on IR: DE Aidan Hutchi",
-      "imageUrl": "",
-      "publishedAt": "2026-11-19T00:42:16.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-18-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0222
     },
     {
       "id": "mia_vid_ecd3413261d7",
@@ -4183,7 +3824,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0188
     },
     {
       "id": "mia_vid_7e58913e6e6e",
@@ -4229,7 +3870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0188
     },
     {
       "id": "mia_vid_0abc7f5cb383",
@@ -4275,7 +3916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0188
     },
     {
       "id": "mia_vid_9e9ab2c8d931",
@@ -4321,7 +3962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0187
     },
     {
       "id": "mia_vid_77325a3e5cd6",
@@ -4358,7 +3999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0185
     },
     {
       "id": "mia_vid_f598baa1fd16",
@@ -4404,7 +4045,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0183
+    },
+    {
+      "id": "mia_yts_dqRYfzOLzA8",
+      "type": "video",
+      "videoId": "dqRYfzOLzA8",
+      "embeddable": false,
+      "title": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:01",
+      "imageUrl": "https://i.ytimg.com/vi/dqRYfzOLzA8/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs Buffalo Bills | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T19:06:37.757Z",
+      "url": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=dqRYfzOLzA8",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
     },
     {
       "id": "mia_vid_14be7844a959",
@@ -4441,7 +4121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0182
     },
     {
       "id": "mia_espn_2174513a3461e",
@@ -4476,7 +4156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0391
+      "storyRank": 0.036
     },
     {
       "id": "mia_tx_ef558f440a5c",
@@ -4520,40 +4200,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
-    },
-    {
-      "id": "mia_pfr_7952893c8067",
-      "type": "article",
-      "title": "Minor NFL Transactions: 11/17/26",
-      "summary": "Here are Tuesday’s minor moves from around the NFL: Arizona Cardinals Signed to active roster from practice squad: DL Jared Harrison-Hunte, S Wydett Williams Jr. Waived: OL Albert Reese Buffalo Bills Placed on IR: G Ar’maj Reed-Adams Clevel",
-      "imageUrl": "",
-      "publishedAt": "2026-11-17T23:59:41.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-17-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/miami-dolphins",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0169
     },
     {
       "id": "mia_espn_05ae0694fd1e1",
@@ -4597,7 +4244,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0158
     },
     {
       "id": "mia_pfr_e05aa9e7b04d",
@@ -4639,7 +4286,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0155
     },
     {
       "id": "mia_espn_97009130fefc4",
@@ -4699,7 +4346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0153
     },
     {
       "id": "mia_tx_f8b282b7530c",
@@ -4775,7 +4422,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0145
     },
     {
       "id": "mia_pfr_e257073d17c2",
@@ -4825,7 +4472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0148
+      "storyRank": 0.0138
     },
     {
       "id": "mia_pfr_e6aa64d4de47",
@@ -4858,7 +4505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0136
     },
     {
       "id": "mia_vid_79159664df40",
@@ -4904,7 +4551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0135
     },
     {
       "id": "mia_vid_45acc9d936bb",
@@ -4950,7 +4597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0134
     },
     {
       "id": "mia_vid_aed0b841b976",
@@ -4996,7 +4643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_a2a36c3dd9f4",
@@ -5042,7 +4689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_415a448b49e0",
@@ -5088,7 +4735,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0133
     },
     {
       "id": "mia_vid_2d21b937702d",
@@ -5124,7 +4771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0133
     },
     {
       "id": "mia_pfr_1cd79c58968f",
@@ -5157,7 +4804,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_ce9cc06f417a",
@@ -5203,7 +4850,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_62ad0de25908",
@@ -5249,7 +4896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_5f89cc4d4826",
@@ -5295,7 +4942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_fcdf6b052202",
@@ -5341,7 +4988,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_545f2947eeb4",
@@ -5387,7 +5034,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_86bc2d028fe7",
@@ -5433,7 +5080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_338f56fbeeaa",
@@ -5479,7 +5126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_d08cbb2f9d2a",
@@ -5525,7 +5172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_01ab027b007a",
@@ -5571,7 +5218,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_d31f977b6cce",
@@ -5617,7 +5264,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_vid_121553093af8",
@@ -5654,7 +5301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "mia_tx_f4e88fb0b899",
@@ -5689,46 +5336,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
-    },
-    {
-      "id": "mia_yts_8qPlVF26TS4",
-      "type": "video",
-      "videoId": "8qPlVF26TS4",
-      "embeddable": false,
-      "title": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "13:40",
-      "imageUrl": "https://i.ytimg.com/vi/8qPlVF26TS4/hqdefault.jpg",
-      "imageAlt": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T07:27:56.422Z",
-      "url": "https://www.youtube.com/watch?v=8qPlVF26TS4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=8qPlVF26TS4",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0126
     },
     {
       "id": "mia_vid_5cebb6bff01b",
@@ -5782,7 +5390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_e7e2ef38a9bf",
@@ -5828,7 +5436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_9216885c4ab1",
@@ -5874,7 +5482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_803b4c29ff42",
@@ -5928,7 +5536,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_08b16cf4301b",
@@ -5974,7 +5582,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_70f49799b44e",
@@ -6011,7 +5619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_7b712733194b",
@@ -6065,7 +5673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0118
     },
     {
       "id": "mia_vid_635563c72013",
@@ -6111,7 +5719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "mia_vid_9a62fc4999a7",
@@ -6165,7 +5773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "mia_vid_0e33ce2e7cc6",
@@ -6219,7 +5827,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "mia_tx_847127f90112",
@@ -6263,7 +5871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0098
     },
     {
       "id": "mia_vid_1f8dab0412d3",
@@ -6309,7 +5917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_67af614fdf17",
@@ -6355,7 +5963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0093
     },
     {
       "id": "mia_vid_97af8b155917",
@@ -6392,7 +6000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0092
     },
     {
       "id": "mia_vid_1ce36d3ca6e8",
@@ -6429,7 +6037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0023
     },
     {
       "id": "mia_vid_f8cda6fc52cd",
@@ -6466,7 +6074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0096
+      "storyRank": 0.0091
     },
     {
       "id": "mia_vid_3d6fbc05958f",
@@ -6503,7 +6111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.009
+      "storyRank": 0.0085
     },
     {
       "id": "mia_vid_20c6484086a3",
@@ -6540,7 +6148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "mia_vid_ccc66cd316a9",
@@ -6577,7 +6185,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "mia_vid_9c1fa75ce30e",
@@ -6614,7 +6222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "mia_vid_4b8835c2ff63",
@@ -6660,7 +6268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "mia_vid_70721cc4c812",
@@ -6706,7 +6314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "mia_vid_f7145556eeac",
@@ -6752,7 +6360,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0084
     },
     {
       "id": "mia_vid_c1a84443dbee",
@@ -6798,7 +6406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0084
     },
     {
       "id": "mia_vid_00176a7019cd",
@@ -6843,7 +6451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "mia_vid_35419a947a48",
@@ -6888,7 +6496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0077
     },
     {
       "id": "mia_vid_16d162ad5d71",
@@ -6924,7 +6532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "mia_vid_0b6faabd0833",
@@ -6960,7 +6568,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "mia_vid_c3a93b99f5cf",
@@ -7005,7 +6613,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "mia_tx_df3d8d5988b0",
@@ -7049,7 +6657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0073
     },
     {
       "id": "mia_tx_c823d582359e",
@@ -7101,7 +6709,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0067
     },
     {
       "id": "mia_vid_3bac4a48fe6a",
@@ -7147,7 +6755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_83abce95ec07",
@@ -7192,7 +6800,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_78f553f30b91",
@@ -7237,7 +6845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_9653bdbe69ce",
@@ -7283,7 +6891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_5d2523eec5f1",
@@ -7320,7 +6928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0064
     },
     {
       "id": "mia_vid_978e427757aa",
@@ -7357,7 +6965,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_a48eca448254",
@@ -7402,7 +7010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_9c7663f9bd69",
@@ -7448,7 +7056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_73bd42915dd5",
@@ -7494,7 +7102,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_f28b2ea3af83",
@@ -7540,7 +7148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_66ba13962580",
@@ -7586,7 +7194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_09e7cea7f246",
@@ -7632,7 +7240,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_aee7cc31112e",
@@ -7678,7 +7286,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "mia_vid_68b94fcf6926",
@@ -7724,7 +7332,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_vid_6f28375180be",
@@ -7770,7 +7378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_vid_04247795ff8d",
@@ -7816,7 +7424,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_vid_8f18e7d315cb",
@@ -7870,7 +7478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_vid_352dfe38ea99",
@@ -7907,7 +7515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_vid_8a8c50c10878",
@@ -7952,7 +7560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_vid_45aae2d7f738",
@@ -7997,7 +7605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "mia_tx_f52abd5c34d9",
@@ -8032,7 +7640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0053
     },
     {
       "id": "mia_vid_7e033eb36001",

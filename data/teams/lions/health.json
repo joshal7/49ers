@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:15.860Z",
+  "updatedAt": "2026-11-26T19:02:18.429Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.detroitlions.com/team/injury-report/",
@@ -9,6 +9,31 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
+    {
+      "playerId": "4038849",
+      "name": "DJ Wonnum",
+      "position": "LB",
+      "jersey": 98,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038849.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "LP",
+      "injuryType": "Back",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 52,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "Wonnum was able to practice in a limited capacity Wednesday, but that didn't end up being enough for him to suit up Thursday. He leads the Lions with 7.0 sacks this season, so the veteran defensive end's absence is a big deal for Detroit. Tyler Lacy, Ahmed Hassanein, Eric O'Neill and Anthony Lucas could all be involved in trying to fill the void left by Wonnum's absence Thursday."
+    },
     {
       "playerId": "4566092",
       "name": "Ennis Rakestraw Jr.",
@@ -32,32 +57,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Rakestraw did not participate in any Week 12 prep sessions due to the shoulder injury that kept him out of Sunday's game against the Buccaneers. The cornerback will now miss consecutive games, leaving Khalil Dorsey as the backup behind D.J. Reed and Rock Ya-Sin."
-    },
-    {
-      "playerId": "4038849",
-      "name": "DJ Wonnum",
-      "position": "LB",
-      "jersey": 98,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038849.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "DNP",
-      "fri": "LP",
-      "injuryType": "Back",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 56,
-      "priorDayPlayProbabilityPct": 52,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "56% • GTD",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance"
-      ],
-      "beatComment": "Wonnum missed two Week 12 prep sessions before participating in the Lions' practice session Wednesday as a limited participant. The defensive end likely picked up his back injury in the team's Week 11 win over the Buccaneers. If Wonnum cannot suit up for Thursday's game, Eric O'Neill and Tyler Lacy will likely see more snaps at defensive end opposite Derrick Moore in the game."
+      "beatComment": "inactive"
     },
     {
       "playerId": "3045463",
@@ -72,18 +72,92 @@
       "thu": "LP",
       "fri": "LP",
       "injuryType": "Hamstring",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 82,
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
       "priorDayPlayProbabilityPct": 80,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "82% • GTD",
+      "playBadgeLabel": "0% • Out",
       "archetypeNote": "Veteran starter profile (10th NFL season, 91% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior 84%)",
-        "Soft-tissue re-aggravation caution (Hamstring)"
+        "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Clark ended Week 12 prep with a limited practice after starting the week's walkthrough as a DNP. The free safety played 100 percent of the Lions' defensive snaps in Week 11 despite Kerby Joseph's return to the field, meaning an inactive status for Thursday's contest against the Bears would harm the Lions' starting secondary in a significant way."
+      "beatComment": "Clark dealt with a hamstring issue during Week 12 prep and is going to miss his first game of the campaign as a result. He's been a starter at safety for the Lions all season and played every defensive snap in three of Detroit's past four games. Kerby Joseph and Brian Branch will start at safety Thursday, with Andre Cisco working in reserve."
+    },
+    {
+      "playerId": "5093004",
+      "name": "Keith Abney II",
+      "position": "CB",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5093004.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Coach's Decision",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "inactive"
+    },
+    {
+      "playerId": "4689333",
+      "name": "Tyrus Wheat",
+      "position": "LB",
+      "jersey": 90,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4689333.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Coach's Decision",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "inactive"
+    },
+    {
+      "playerId": "4429035",
+      "name": "Tate Ratledge",
+      "position": "G",
+      "jersey": 69,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429035.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "LP",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 82,
+      "priorDayPlayProbabilityPct": 82,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "82% • GTD",
+      "archetypeNote": "Every-down starter workload (98% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Friday Limited (LP) — anchored to player Questionable play prior (82%)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "3139387",

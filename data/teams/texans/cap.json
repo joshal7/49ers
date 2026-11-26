@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:24.515Z",
+  "updatedAt": "2026-11-26T19:26:43.636Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/houston-texans",
   "spotracUrl": "https://www.spotrac.com/nfl/houston-texans/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 310062068,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 302329650,
       "top51": 211509272,
@@ -135,19 +135,19 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 85
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 325810000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 366282623,
       "top51": 365640372,
       "teamCapSpace": -40472623,
       "otcRawTeamCapSpace": -40472623,
-      "effectiveCapSpace": -53421219,
-      "activeCapSpending": 366830372,
+      "effectiveCapSpace": -48842623,
+      "activeCapSpending": 365640372,
       "offenseSpend": 159890341,
       "defenseSpend": 196811697,
       "specialSpend": 8938334,
@@ -176,12 +176,12 @@
         }
       ],
       "contractedCount": 42,
-      "totalSignedCount": 43
+      "totalSignedCount": 42
     },
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 261521809,
       "top51": 261521809,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:41.167Z",
+  "updatedAt": "2026-11-26T19:06:18.336Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-england-patriots",
   "spotracUrl": "https://www.spotrac.com/nfl/new-england-patriots/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 352289095,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 346884156,
       "top51": 286136794,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 82
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 310139263,
       "top51": 309247075,
       "teamCapSpace": 16860737,
       "otcRawTeamCapSpace": 16860737,
-      "effectiveCapSpace": 5962228,
+      "effectiveCapSpace": 12210737,
       "activeCapSpending": 309247075,
       "offenseSpend": 130510064,
       "defenseSpend": 176407472,
@@ -181,7 +181,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 242882027,
       "top51": 242882027,

@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-26T07:26:38.580Z",
+  "updatedAt": "2026-11-26T19:04:41.164Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-12-10T07:26:38.580Z",
-  "totalTrackedReporters": 45,
+  "nextAutoReviewAt": "2026-12-10T19:04:41.164Z",
+  "totalTrackedReporters": 46,
   "podiumSubjectIds": [
     "dan_quinn",
     "adam_peters",
@@ -202,6 +202,27 @@
       "outletUrl": "https://x.com/NickiJhabvala",
       "liveWeeklyMentions": 10,
       "popularityScore": 95
+    },
+    {
+      "id": "tashan_reed",
+      "name": "Tashan Reed",
+      "handle": "@tashanreed",
+      "outletId": "washington_post_public_beat_wire_was",
+      "role": "Commanders Beat Writer (Washington Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 93,
+      "trustTier": 1,
+      "xUrl": "https://x.com/tashanreed",
+      "bskyHandle": "tashanreed.bsky.social",
+      "defaultEnabled": true,
+      "scope": "local",
+      "trustTierLabel": "Tier 1 • Primary Trusted",
+      "bskyUrl": "https://bsky.app/profile/tashanreed.bsky.social",
+      "profileUrl": "https://x.com/tashanreed",
+      "outletUrl": "https://x.com/NickiJhabvala",
+      "liveWeeklyMentions": 10,
+      "popularityScore": 93
     },
     {
       "id": "jp_finlay",

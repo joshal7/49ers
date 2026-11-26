@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:41:23.012Z",
+  "updatedAt": "2026-11-26T19:26:37.201Z",
   "windowDays": 7,
-  "totalEpisodes": 14,
+  "totalEpisodes": 12,
   "shows": [
     {
       "id": "texans_locked_on_texans",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "texans_texans_on_tap",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ce/8a/dd/ce8addb0-df64-b057-6f36-65dd0ecacd22/mza_11507396649922582333.jpeg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -280,46 +280,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-on-tap-a-houston-texans-podcast/id1706775831?uo=4",
       "feedUrl": "https://feeds.simplecast.com/DTDqu9OA",
       "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/34156075-1f1c-48e7-9e0a-5f42dda25f93/episodes/4b10db7d-f36d-46b7-85f4-7502475feff9/audio/128/default.mp3?aid=rss_feed&awCollectionId=34156075-1f1c-48e7-9e0a-5f42dda25f93&awEpisodeId=4b10db7d-f36d-46b7-85f4-7502475feff9&feed=DTDqu9OA"
-    },
-    {
-      "id": "pod_texans_locked_on_texans_1000802978634",
-      "trackId": 1000802978634,
-      "collectionId": 1156158142,
-      "showId": "texans_locked_on_texans",
-      "showName": "Locked On Texans",
-      "showFullTitle": "Locked On Texans - Daily Podcast On The Houston Texans",
-      "hosts": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "network": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "title": "REVEALED: Indianapolis Colts Depleted Roster—No Quentin Nelson, No Josh Downs, CHAOS Ensues?",
-      "summary": "Houston Texans and Indianapolis Colts battle for AFC South bragging rights as both teams grapple with disappointing seasons, roster shakeups, and inconsistent play. Can CJ Stroud’s explosive aerial attack, led by rising star Nico Collins, overpower a depleted Colts secondary",
-      "publishedAt": "2026-11-19T18:11:33.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/revealed-indianapolis-colts-depleted-roster-no-quentin/id1156158142?i=1000802978634&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/de6246/lockedon.simplecastaudio.com/6f716782-2a27-4145-9fbb-3de5b45b2aa7/episodes/4851b275-7cac-4d53-a002-cc2aa2925289/audio/128/default.mp3?aid=rss_feed&awCollectionId=6f716782-2a27-4145-9fbb-3de5b45b2aa7&awEpisodeId=4851b275-7cac-4d53-a002-cc2aa2925289&feed=eO87ZWbO"
-    },
-    {
-      "id": "pod_texans_texans_today_1000802999100",
-      "trackId": 1000802999100,
-      "collectionId": 6815401698,
-      "showId": "texans_texans_today",
-      "showName": "Texans Today",
-      "showFullTitle": "Texans Today | Daily Houston Texans Podcast",
-      "hosts": "Fan Arch",
-      "network": "Fan Arch",
-      "title": "Things Just Took A MAJOR Turn... | Daily Houston Texans News & Rumors",
-      "summary": "For a limited time, download the Kalshi app and use code FANARCHFOOTBALL to get $25 dollars when you trade $25. https://kalshi.com/ 18+ only. Restrictions and eligibility requirements apply. Event contract trading involves risk and may not be suitable for all investors. Pric",
-      "publishedAt": "2026-11-19T17:00:00.000Z",
-      "durationMinutes": 24,
-      "durationDisplay": "24 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ce/8a/dd/ce8addb0-df64-b057-6f36-65dd0ecacd22/mza_11507396649922582333.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/things-just-took-a-major-turn-daily-houston-texans/id6815401698?i=1000802999100&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
-      "audioStreamUrl": "https://traffic.megaphone.fm/BVLLC3144921684.mp3"
     }
   ]
 }

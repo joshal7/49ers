@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:25:12.533Z",
+  "updatedAt": "2026-11-26T19:01:51.258Z",
   "windowDays": 7,
-  "totalEpisodes": 18,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "locked_on_lions",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/88/c9/7a/88c97a7a-9c2e-efce-49c6-52316c9989c7/mza_10034499116683220726.jpeg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 2
     },
     {
       "id": "detroit_lions_podcast",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/TTEOS7469992862",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-detroit-lions-podcast/id1003655963?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ab/ef/21/abef2155-093d-02ff-1e96-6c76fb94a2f0/mza_10688540341408589190.png/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "dungeon_of_doom",
@@ -364,66 +364,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
       "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/a0cc13/lockedon.simplecastaudio.com/05bcf1ce-c643-45f9-b7f9-bd4cf110ab06/episodes/ad935cd5-310e-4dfe-bdc9-2c7e390a7e9d/audio/128/default.mp3?aid=rss_feed&awCollectionId=05bcf1ce-c643-45f9-b7f9-bd4cf110ab06&awEpisodeId=ad935cd5-310e-4dfe-bdc9-2c7e390a7e9d&feed=ASw0G4io"
-    },
-    {
-      "id": "pod_pride_of_detroit_1000802968529",
-      "trackId": 1000802968529,
-      "collectionId": 1040380210,
-      "showId": "pride_of_detroit",
-      "showName": "Pride of Detroit PODcast",
-      "showFullTitle": "Pride of Detroit: for Detroit Lions fans",
-      "hosts": "Jeremy Reisman, Erik Schlitt & Ryan Mathews",
-      "network": "SB Nation / Vox Media",
-      "title": "Lions Mailbag: Aidan Hutchinson Fallout + Kerby Joseph's return",
-      "summary": "Jeremy and Erik answer your Detroit Lions questions about Aidan Hutchinson's injury impact, Kerby Joseph's return, and more. Learn more about your ad choices. Visit megaphone.fm/adchoices",
-      "publishedAt": "2026-11-19T17:00:00.000Z",
-      "durationMinutes": 66,
-      "durationDisplay": "66 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/88/c9/7a/88c97a7a-9c2e-efce-49c6-52316c9989c7/mza_10034499116683220726.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/lions-mailbag-aidan-hutchinson-fallout-kerby-josephs/id1040380210?i=1000802968529&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
-      "audioStreamUrl": "https://www.podtrac.com/pts/redirect.mp3/pdst.fm/e/pscrb.fm/rss/p/traffic.megaphone.fm/PMC9134711193.mp3"
-    },
-    {
-      "id": "pod_detroit_lions_podcast_1000802926063",
-      "trackId": 1000802926063,
-      "collectionId": 1003655963,
-      "showId": "detroit_lions_podcast",
-      "showName": "The Detroit Lions Podcast",
-      "showFullTitle": "The Detroit Lions Podcast",
-      "hosts": "Chris Risdon & Jeff Risdon",
-      "network": "Detroit Lions Podcast",
-      "title": "Daily DLP: How Kerby Joseph Might Impact the Lions D - Detroit Lions Podcast",
-      "summary": "The Detroit Lions activated safety Kerby Joseph and placed edge rusher Aidan Hutchinson on injured reserve, and Lions head coach Dan Campbell plans to play rookie edge Ahmed Hassanein against the Tampa Bay Buccaneers. Detroit will lean on three-safety flexibility with Brian ",
-      "publishedAt": "2026-11-19T12:30:00.000Z",
-      "durationMinutes": 33,
-      "durationDisplay": "33 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ab/ef/21/abef2155-093d-02ff-1e96-6c76fb94a2f0/mza_10688540341408589190.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/daily-dlp-how-kerby-joseph-might-impact-the-lions-d/id1003655963?i=1000802926063&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-detroit-lions-podcast/id1003655963?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/TTEOS7469992862",
-      "audioStreamUrl": "https://traffic.megaphone.fm/TTEOS5374709693.mp3"
-    },
-    {
-      "id": "pod_pride_of_detroit_1000802921902",
-      "trackId": 1000802921902,
-      "collectionId": 1040380210,
-      "showId": "pride_of_detroit",
-      "showName": "Pride of Detroit PODcast",
-      "showFullTitle": "Pride of Detroit: for Detroit Lions fans",
-      "hosts": "Jeremy Reisman, Erik Schlitt & Ryan Mathews",
-      "network": "SB Nation / Vox Media",
-      "title": "Before the Roar: Lions vs Buccaneers Week 11 Preview",
-      "summary": "The Detroit Lions host the Tampa Bay Buccaneers in a physical Week 11 showdown! Meko and Morgan break down Tampa Bay’s dominant rushing attack, aggressive defense, and the keys to a Lions victory. Learn more about your ad choices. Visit megaphone.fm/adchoices",
-      "publishedAt": "2026-11-19T12:00:00.000Z",
-      "durationMinutes": 58,
-      "durationDisplay": "58 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/88/c9/7a/88c97a7a-9c2e-efce-49c6-52316c9989c7/mza_10034499116683220726.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/before-the-roar-lions-vs-buccaneers-week-11-preview/id1040380210?i=1000802921902&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
-      "audioStreamUrl": "https://www.podtrac.com/pts/redirect.mp3/pdst.fm/e/pscrb.fm/rss/p/traffic.megaphone.fm/PMC5842923083.mp3"
     }
   ]
 }

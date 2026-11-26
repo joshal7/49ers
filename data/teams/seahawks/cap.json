@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:34.887Z",
+  "updatedAt": "2026-11-26T19:00:41.423Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/seattle-seahawks",
   "spotracUrl": "https://www.spotrac.com/nfl/seattle-seahawks/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 314413773,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 301271829,
       "top51": 282422640,
@@ -135,20 +135,20 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 77
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 294162063,
-      "top51": 293233606,
-      "teamCapSpace": 32837937,
-      "otcRawTeamCapSpace": 32837937,
-      "effectiveCapSpace": 13975806,
-      "activeCapSpending": 293233606,
-      "offenseSpend": 161818188,
+      "totalCapLiabilities": 295282063,
+      "top51": 294353606,
+      "teamCapSpace": 31717937,
+      "otcRawTeamCapSpace": 31717937,
+      "effectiveCapSpace": 19627937,
+      "activeCapSpending": 294353606,
+      "offenseSpend": 162938188,
       "defenseSpend": 126405418,
       "specialSpend": 5010000,
       "deadMoneyTotal": 928457,
@@ -189,13 +189,13 @@
           "otcUrl": "https://overthecap.com/player/andre-fuller/13380/"
         }
       ],
-      "contractedCount": 37,
-      "totalSignedCount": 37
+      "contractedCount": 38,
+      "totalSignedCount": 38
     },
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 224693408,
       "top51": 224693408,
@@ -273,11 +273,11 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/seattle-seahawks",
-    "summary": "Seattle Seahawks hold $13.14M in 2026 OverTheCap space ($13.14M effective) and +$32.84M projected for 2027.",
-    "executiveSummary": "John Schneider and the Seahawks front office hold $13.14M in gross 2026 cap space ($13.14M effective), while 2027 currently projects at +$32.84M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($6M–$10M target) helps manage scheduled cap escalations for Sam Darnold, Leonard Williams, Uchenna Nwosu, Cooper Kupp.",
+    "summary": "Seattle Seahawks hold $13.14M in 2026 OverTheCap space ($13.14M effective) and +$31.72M projected for 2027.",
+    "executiveSummary": "John Schneider and the Seahawks front office hold $13.14M in gross 2026 cap space ($13.14M effective), while 2027 currently projects at +$31.72M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($6M–$10M target) helps manage scheduled cap escalations for Sam Darnold, Leonard Williams, Uchenna Nwosu, Cooper Kupp.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($6M–$10M Target vs. +$32.84M 2027 Projection)",
+        "title": "1. CBA Article 13 Rollover Bridge ($6M–$10M Target vs. +$31.72M 2027 Projection)",
         "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Seattle's projected 2027 ledger without forcing premature void-year restructures."
       },
       {
@@ -6419,6 +6419,48 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1120000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1120000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
             }
           }
         }

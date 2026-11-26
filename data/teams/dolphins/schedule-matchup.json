@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:55.019Z",
+  "updatedAt": "2026-11-26T19:06:36.112Z",
   "sources": [
     {
       "label": "ESPN Dolphins Schedule",
@@ -534,7 +534,7 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": 4.5,
-      "totalLine": 40.5,
+      "totalLine": 39.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24646,10 +24646,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -8.9 (#29 Offense / #25 Defense) at 1-9 through Week 11.",
+        "blurb": "Betting market rating GPF -9.0 (#29 Offense / #27 Defense) at 1-9 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24664,10 +24664,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 6 (20.0% neutral-field win rating, 2.6 proj. wins) at 1-9 through Week 12.",
+        "blurb": "Tier 6 (19.4% neutral-field win rating, 2.5 proj. wins) at 1-9 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24682,10 +24682,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -11.3 (#26 Off / #27 Def efficiency, 2.6 proj. wins, 0.0% SB odds) at 1-9.",
+        "blurb": "FPI -11.4 (#26 Off / #27 Def efficiency, 2.6 proj. wins, 0.0% SB odds) at 1-9.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24720,10 +24720,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -8.9 (#29 Offense / #25 Defense) at 1-9 through Week 11."
+        "blurb": "Betting market rating GPF -9.0 (#29 Offense / #27 Defense) at 1-9 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24752,10 +24752,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 6 (20.0% neutral-field win rating, 2.6 proj. wins) at 1-9 through Week 12."
+        "blurb": "Tier 6 (19.4% neutral-field win rating, 2.5 proj. wins) at 1-9 through Week 12."
       },
       {
         "id": "cbs",
@@ -24785,10 +24785,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -11.3 (#26 Off / #27 Def efficiency, 2.6 proj. wins, 0.0% SB odds) at 1-9."
+        "blurb": "FPI -11.4 (#26 Off / #27 Def efficiency, 2.6 proj. wins, 0.0% SB odds) at 1-9."
       },
       {
         "id": "espn_panel",
@@ -24821,7 +24821,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:27:58.566Z"
+    "fetchedAtIso": "2026-11-26T19:06:41.425Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24845,7 +24845,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 76,
+      "tempF": 77,
       "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
@@ -25814,9 +25814,9 @@
       "favorite": "NYJ",
       "spread": "NYJ -4.5",
       "openingSpread": "Opened MIA -1.5 (Draft Kings)",
-      "overUnder": 40.5,
-      "moneyline": "MIA +181 | NYJ -217",
-      "impliedScore": "MIA 18.0 – NYJ 22.5",
+      "overUnder": 39.5,
+      "moneyline": "MIA +200 | NYJ -241",
+      "impliedScore": "MIA 17.5 – NYJ 22.0",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "26%"
     },

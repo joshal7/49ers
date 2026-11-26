@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:03.844Z",
+  "updatedAt": "2026-11-26T19:05:23.922Z",
   "teamAbbr": "NO",
   "teamSlug": "saints",
   "brandName": "Saints Who Dat",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:27:03.844Z",
+    "lastCheckedAt": "2026-11-26T19:05:23.922Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

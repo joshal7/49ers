@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:32.341Z",
+  "updatedAt": "2026-11-26T19:06:07.108Z",
   "week": 12,
   "units": [
     {
@@ -534,23 +534,23 @@
               "isAvailable": true
             },
             {
-              "playerId": "4573699",
-              "name": "Jackson Hawes",
-              "jersey": 85,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573699.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
-              "isAvailable": true
-            },
-            {
               "playerId": "4688552",
               "name": "Keleki Latu",
               "jersey": 83,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688552.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4573699",
+              "name": "Jackson Hawes",
+              "jersey": 85,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573699.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             }
           ],
@@ -576,23 +576,23 @@
               "isAvailable": true
             },
             {
-              "playerId": "4573699",
-              "name": "Jackson Hawes",
-              "jersey": 85,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573699.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
-              "isAvailable": true
-            },
-            {
               "playerId": "4688552",
               "name": "Keleki Latu",
               "jersey": 83,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688552.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4573699",
+              "name": "Jackson Hawes",
+              "jersey": 85,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573699.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             }
           ],

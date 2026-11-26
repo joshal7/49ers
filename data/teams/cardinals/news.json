@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:58.258Z",
+  "updatedAt": "2026-11-26T19:01:43.256Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17MT",
     "cycleKey": "2026-11-25@17MT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-8",
-    "generatedAt": "2026-11-26T07:24:58.258Z",
+    "generatedAt": "2026-11-26T19:01:43.256Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,46 +15,54 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 227,
-    "headline": "Cardinals (3-8) Week 12 Briefing: Injury Updates Ahead of Commanders",
+    "wordCount": 215,
+    "headline": "Cardinals (3-8) Week 12 Briefing: Wednesday Injury Report Ahead of Commanders",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: Entering Week 12 preparation, head coach Mike LaFleur and the medical staff evaluate C Hjalte Froholdt (concussion), QB Carson Beck (back), G Jon Gaines II (ankle), and LB Cody Simon (calf) ahead of Wednesday's initial participation report [Darren Urban](https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20%28back%29). DT Zachary Carter (knee) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation.",
-      "Week 12 Commanders Outlook: Mike LaFleur and DC Nick Rallis open installation for the Washington Commanders (4-5-1, WSH -7, HC Dan Quinn, OC David Blough & DC Daronte Jones (State Farm Stadium))—a unit ranked #3 in Turnover Differential (+7) as Arizona prepares for a pivotal NFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873092).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-8 (4th in NFC West • #16 Seed in NFC), Arizona carries a 0% postseason projection, 0% NFC West division title mark, and 0% #1 Seed Bye equity into the conference stretch [Monti Ossenfort](https://x.com/AZCardinals/status/2125683290640384075).",
-      "Around the Beat: Week 11 Film Room with @aqshipley and @jpshadrick ⬇ [Monti Ossenfort](https://x.com/AZCardinals/status/2125683290640384075).",
-      "Statistical Profile & Matchup Edge: Through Week 11, Arizona ranks #29 in Points / Game (17.4), #31 in Points Allowed / Game (29.4), #17 in Turnover Differential (-1), giving Mike LaFleur and Nick Rallis a clear benchmark ahead of Sun, Nov 29, 2:25 PM MST • NFL TV at [object Object] against the Washington Commanders [Darren Urban](https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20%28back%29)."
+      "Injury & Practice Status: Arizona opened DT Zachary Carter's 21-day IR practice window alongside limited work for LB Cody Simon (calf) and LB Mack Wilson Sr.. QB Carson Beck (back) and G Jon Gaines II (ankle) did not practice Wednesday, while DT Zachary Carter (knee) practiced in full [Arizona Cardinals](https://x.com/AZCardinals/status/2125724171145728001).",
+      "Week 12 Commanders Outlook: Mike LaFleur and DC Nick Rallis open installation for the Washington Commanders (4-5-1, WSH -6.5, HC Dan Quinn, OC David Blough & DC Daronte Jones (State Farm Stadium))—a unit ranked #3 in Turnover Differential (+7) as Arizona prepares for a pivotal NFC matchup [Darren Urban](https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Beck%20%28back%29%20wasn't%20spotted%20during%20the%20portion) [ESPN](https://www.espn.com/nfl/preview?gameId=401873092).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-8 (4th in NFC West • #16 Seed in NFC), Arizona carries a 0% postseason projection, 0% NFC West division title mark, and 0% #1 Seed Bye equity into the conference stretch [azcardinals.com Official](https://www.azcardinals.com/news/teryl-austin-hopes-simplicity-freedom-helps-cardinals-defense-improve).",
+      "Around the Beat: Bringing out a classic for this Thanksgiving [Arizona Cardinals](https://x.com/AZCardinals/status/2126007218323509542).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Arizona ranks #29 in Points / Game (17.4), #31 in Points Allowed / Game (29.4), #17 in Turnover Differential (-1), giving Mike LaFleur and Nick Rallis a clear benchmark ahead of Sun, Nov 29, 2:25 PM MST • NFL TV at [object Object] against the Washington Commanders [azcardinals.com Official](https://www.azcardinals.com/news/teryl-austin-hopes-simplicity-freedom-helps-cardinals-defense-improve)."
     ],
     "coveredStoryKeys": [
-      "claimedkedon::fa_signing::bal",
-      "carsonbeck::recovery_timeline",
-      "kedonslovis::roster_departure"
+      "carsonbeck::recovery_timeline"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
-      "https://www.espn.com/nfl/preview?gameId=401873092",
-      "https://x.com/AZCardinals/status/2125683290640384075",
       "https://x.com/AZCardinals/status/2125724171145728001",
-      "https://www.espn.com/nfl/player/_/id/4870808/jeremiyah-love#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
+      "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Beck%20(back)%20wasn't%20spotted%20during%20the%20portion",
+      "https://www.espn.com/nfl/preview?gameId=401873092",
+      "https://x.com/AZCardinals/status/2126007218323509542",
+      "https://www.azcardinals.com/news/teryl-austin-hopes-simplicity-freedom-helps-cardinals-defense-improve",
+      "https://x.com/AZCardinals/status/2125999666684965338",
+      "https://www.revengeofthebirds.com/arizona-cardinals-news/97498/do-arizona-cardinals-fans-have-a-whole-lot-to-be-thankful-for-this-year",
       "https://www.azcardinals.com/news/after-defensive-coordinator-change-players-adjust-on-the-fly",
-      "https://x.com/AZCardinals/status/2125716904123736377",
-      "https://www.azcardinals.com/team/transactions/#tx-76fa87ee4e8e",
       "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-25-26",
+      "https://www.espn.com/nfl/player/_/id/4870808/jeremiyah-love#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
       "https://www.azcardinals.com/news/carson-beck-remains-sidelined-for-now-with-bad-back-cardinals-qb",
+      "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
+      "https://www.rotowire.com/football/player/carson-beck-19287",
+      "https://www.espn.com/nfl/player/_/id/11394/josh-johnson#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
       "https://www.revengeofthebirds.com/arizona-cardinals-depth-chart/97442/another-qb-the-cardinals-could-be-interested-in",
       "https://www.revengeofthebirds.com/arizona-cardinals-analysis/97452/cardinals-extend-te-elijah-higgins-for-three-years",
-      "https://www.espn.com/nfl/player/_/id/11394/josh-johnson#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
-      "https://www.espn.com/nfl/player/_/id/4361307/trey-mcbride#:~:text=Why%20Dopp%20is%20still%20in%20on%20'target",
-      "https://x.com/MikeGarafolo/status/2125247749503267024"
+      "https://x.com/AZCardinals/status/2125968331253719290"
     ],
     "sources": [
+      {
+        "type": "tweet",
+        "author": "Arizona Cardinals",
+        "outlet": "@AZCardinals Official",
+        "title": "Wednesday's Injury Report",
+        "url": "https://x.com/AZCardinals/status/2125724171145728001",
+        "publishedAt": "2026-11-25T22:51:51.000Z"
+      },
       {
         "type": "article",
         "author": "Darren Urban",
         "outlet": "AZCardinals.com",
-        "title": "Head coach Mike LaFleur said Beck (back) won't practice Wednesday.",
-        "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
-        "publishedAt": "2026-11-25T19:21:31.000Z"
+        "title": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media.",
+        "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Beck%20(back)%20wasn't%20spotted%20during%20the%20portion",
+        "publishedAt": "2026-11-26T18:20:17.000Z"
       },
       {
         "type": "article",
@@ -66,19 +74,51 @@
       },
       {
         "type": "tweet",
-        "author": "Monti Ossenfort",
-        "outlet": "AZCardinals.com / Official Team",
-        "title": "Week 11 Film Room with @aqshipley and @jpshadrick ⬇",
-        "url": "https://x.com/AZCardinals/status/2125683290640384075",
-        "publishedAt": "2026-11-25T20:09:24.000Z"
+        "author": "Arizona Cardinals",
+        "outlet": "@AZCardinals Official",
+        "title": "Bringing out a classic for this Thanksgiving",
+        "url": "https://x.com/AZCardinals/status/2126007218323509542",
+        "publishedAt": "2026-11-26T17:36:34.000Z"
+      },
+      {
+        "type": "article",
+        "author": "azcardinals.com Official",
+        "outlet": "azcardinals.com Official",
+        "title": "Teryl Austin Hopes Simplicity, Freedom Helps Cardinals Defense Improve",
+        "url": "https://www.azcardinals.com/news/teryl-austin-hopes-simplicity-freedom-helps-cardinals-defense-improve",
+        "publishedAt": "2026-11-26T17:23:51.000Z"
       },
       {
         "type": "tweet",
-        "author": "Monti Ossenfort",
-        "outlet": "AZCardinals.com / Official Team",
-        "title": "Wednesday's Injury Report",
-        "url": "https://x.com/AZCardinals/status/2125724171145728001",
-        "publishedAt": "2026-11-25T22:51:51.000Z"
+        "author": "Arizona Cardinals",
+        "outlet": "@AZCardinals Official",
+        "title": "HBD to one of the best, Roger Wehrli",
+        "url": "https://x.com/AZCardinals/status/2125999666684965338",
+        "publishedAt": "2026-11-26T17:06:34.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Seth Cox",
+        "outlet": "Revenge of the Birds",
+        "title": "Do Arizona Cardinals fans have a whole lot to be thankful for this year?",
+        "url": "https://www.revengeofthebirds.com/arizona-cardinals-news/97498/do-arizona-cardinals-fans-have-a-whole-lot-to-be-thankful-for-this-year",
+        "publishedAt": "2026-11-26T16:02:23.000Z"
+      },
+      {
+        "type": "article",
+        "author": "azcardinals.com Official",
+        "outlet": "azcardinals.com Official",
+        "title": "After Defensive Coordinator Change, Players Adjust On The Fly",
+        "url": "https://www.azcardinals.com/news/after-defensive-coordinator-change-players-adjust-on-the-fly",
+        "publishedAt": "2026-11-25T22:56:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "title": "Minor NFL Transactions: 11/25/26",
+        "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-25-26",
+        "publishedAt": "2026-11-25T19:57:23.000Z"
       },
       {
         "type": "article",
@@ -92,57 +132,17 @@
         "type": "article",
         "author": "azcardinals.com Official",
         "outlet": "azcardinals.com Official",
-        "title": "After Defensive Coordinator Change, Players Adjust On The Fly",
-        "url": "https://www.azcardinals.com/news/after-defensive-coordinator-change-players-adjust-on-the-fly",
-        "publishedAt": "2026-11-25T22:56:00.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Monti Ossenfort",
-        "outlet": "AZCardinals.com / Official Team",
-        "title": "LIVE: TE Trey McBride",
-        "url": "https://x.com/AZCardinals/status/2125716904123736377",
-        "publishedAt": "2026-11-25T22:22:58.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Arizona Cardinals Official",
-        "outlet": "azcardinals.com Official",
-        "title": "Cardinals roster move: Claimed QB Kedon Slovis off waivers from Baltimore.",
-        "url": "https://www.azcardinals.com/team/transactions/#tx-76fa87ee4e8e",
-        "publishedAt": "2026-11-25T08:00:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "Minor NFL Transactions: 11/25/26",
-        "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-25-26",
-        "publishedAt": "2026-11-25T19:57:23.000Z"
-      },
-      {
-        "type": "article",
-        "author": "azcardinals.com Official",
-        "outlet": "azcardinals.com Official",
         "title": "Carson Beck Remains Sidelined For Now With Bad Back",
         "url": "https://www.azcardinals.com/news/carson-beck-remains-sidelined-for-now-with-bad-back-cardinals-qb",
         "publishedAt": "2026-11-25T19:47:00.000Z"
       },
       {
         "type": "article",
-        "author": "Barry Shuck",
-        "outlet": "Revenge of the Birds",
-        "title": "Another QB the Cardinals could be interested in",
-        "url": "https://www.revengeofthebirds.com/arizona-cardinals-depth-chart/97442/another-qb-the-cardinals-could-be-interested-in",
-        "publishedAt": "2026-11-25T04:48:39.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Barry Shuck",
-        "outlet": "Revenge of the Birds",
-        "title": "Cardinals extend TE Elijah Higgins for three-years",
-        "url": "https://www.revengeofthebirds.com/arizona-cardinals-analysis/97452/cardinals-extend-te-elijah-higgins-for-three-years",
-        "publishedAt": "2026-11-25T04:48:10.000Z"
+        "author": "Darren Urban",
+        "outlet": "AZCardinals.com",
+        "title": "Head coach Mike LaFleur said Beck (back) won't practice Wednesday.",
+        "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
+        "publishedAt": "2026-11-25T19:21:31.000Z"
       }
     ]
   },
@@ -151,45 +151,45 @@
       "id": "ari_cl_top",
       "category": "beat",
       "headline": "Arizona Cardinals Week 12 Top Headlines (3-8)",
-      "summary": "Wednesday's Injury Report — Commanders try to continue momentum while Cardinals work to end 11-game home losing streak",
-      "updatedAt": "2026-11-25T22:51:51.000Z",
+      "summary": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media. — Carson Beck: Not present Thursday: Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site re",
+      "updatedAt": "2026-11-26T18:20:17.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Monti Ossenfort",
-          "title": "Wednesday's Injury Report",
-          "url": "https://x.com/AZCardinals/status/2125724171145728001",
-          "publishedAt": "2026-11-25T22:51:51.000Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Commanders try to continue momentum while Cardinals work to end 11-game home losing streak",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873092",
-          "publishedAt": "2026-11-26T00:58:33.000Z"
-        },
-        {
-          "label": "Monti Ossenfort",
-          "title": "Week 11 Film Room with @aqshipley and @jpshadrick ⬇️",
-          "url": "https://x.com/AZCardinals/status/2125683290640384075",
-          "publishedAt": "2026-11-25T20:09:24.000Z"
-        },
-        {
-          "label": "Bo Brack",
-          "title": "Head coach Mike LaFleur said Wednesday that the Cardinals will evaluate Love (ankle) again Monday to hone in on a return date for the running back.",
-          "url": "https://www.espn.com/nfl/player/_/id/4870808/jeremiyah-love#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
-          "publishedAt": "2026-11-25T19:50:48.000Z"
-        },
-        {
           "label": "Darren Urban",
-          "title": "Head coach Mike LaFleur said Beck (back) won't practice Wednesday.",
-          "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
-          "publishedAt": "2026-11-25T19:21:31.000Z"
+          "title": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media.",
+          "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Beck%20(back)%20wasn't%20spotted%20during%20the%20portion",
+          "publishedAt": "2026-11-26T18:20:17.000Z"
+        },
+        {
+          "label": "RotoWire NFL Beat",
+          "title": "Carson Beck: Not present Thursday: Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site reports. Visit RotoWire.com for more analysis on this update.",
+          "url": "https://www.rotowire.com/football/player/carson-beck-19287",
+          "publishedAt": "2026-11-26T18:20:00.000Z"
+        },
+        {
+          "label": "Arizona Cardinals",
+          "title": "Bringing out a classic for this Thanksgiving 🦃",
+          "url": "https://x.com/AZCardinals/status/2126007218323509542",
+          "publishedAt": "2026-11-26T17:36:34.000Z"
         },
         {
           "label": "azcardinals.com Official",
-          "title": "After Defensive Coordinator Change, Players Adjust On The Fly",
-          "url": "https://www.azcardinals.com/news/after-defensive-coordinator-change-players-adjust-on-the-fly",
-          "publishedAt": "2026-11-25T22:56:00.000Z"
+          "title": "Teryl Austin Hopes Simplicity, Freedom Helps Cardinals Defense Improve",
+          "url": "https://www.azcardinals.com/news/teryl-austin-hopes-simplicity-freedom-helps-cardinals-defense-improve",
+          "publishedAt": "2026-11-26T17:23:51.000Z"
+        },
+        {
+          "label": "Arizona Cardinals",
+          "title": "HBD to one of the best, Roger Wehrli 🌟",
+          "url": "https://x.com/AZCardinals/status/2125999666684965338",
+          "publishedAt": "2026-11-26T17:06:34.000Z"
+        },
+        {
+          "label": "Arizona Cardinals",
+          "title": "👀 on Week 12",
+          "url": "https://x.com/AZCardinals/status/2125983014786314361",
+          "publishedAt": "2026-11-26T16:00:24.000Z"
         }
       ]
     },
@@ -197,12 +197,30 @@
       "id": "ari_cl_health",
       "category": "injury",
       "headline": "Cardinals Practice Report, Injury & IR Availability",
-      "summary": "Wednesday's Injury Report — Head coach Mike LaFleur said Wednesday that the Cardinals will evaluate Love (ankle) again Monday to hone in on a return date for the running back.",
-      "updatedAt": "2026-11-25T22:51:51.000Z",
+      "summary": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media. — Carson Beck: Not present Thursday: Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site re",
+      "updatedAt": "2026-11-26T18:20:17.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Monti Ossenfort",
+          "label": "Darren Urban",
+          "title": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media.",
+          "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Beck%20(back)%20wasn't%20spotted%20during%20the%20portion",
+          "publishedAt": "2026-11-26T18:20:17.000Z"
+        },
+        {
+          "label": "RotoWire NFL Beat",
+          "title": "Carson Beck: Not present Thursday: Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site reports. Visit RotoWire.com for more analysis on this update.",
+          "url": "https://www.rotowire.com/football/player/carson-beck-19287",
+          "publishedAt": "2026-11-26T18:20:00.000Z"
+        },
+        {
+          "label": "Arizona Cardinals",
+          "title": "Bringing out a classic for this Thanksgiving 🦃",
+          "url": "https://x.com/AZCardinals/status/2126007218323509542",
+          "publishedAt": "2026-11-26T17:36:34.000Z"
+        },
+        {
+          "label": "Arizona Cardinals",
           "title": "Wednesday's Injury Report",
           "url": "https://x.com/AZCardinals/status/2125724171145728001",
           "publishedAt": "2026-11-25T22:51:51.000Z"
@@ -214,28 +232,10 @@
           "publishedAt": "2026-11-25T19:50:48.000Z"
         },
         {
-          "label": "Darren Urban",
-          "title": "Head coach Mike LaFleur said Beck (back) won't practice Wednesday.",
-          "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
-          "publishedAt": "2026-11-25T19:21:31.000Z"
-        },
-        {
           "label": "Dani Sureck",
           "title": "Head coach Mike LaFleur said Wednesday that Johnson is preparing to start Sunday's game versus the Commanders due to Carson Beck's back injury.",
           "url": "https://www.espn.com/nfl/player/_/id/11394/josh-johnson#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
           "publishedAt": "2026-11-25T19:27:41.000Z"
-        },
-        {
-          "label": "Alex Rollins",
-          "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
-          "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
-          "publishedAt": "2026-11-25T14:00:38.000Z"
-        },
-        {
-          "label": "Monti Ossenfort",
-          "title": "shoutout @iam_trey_10 👏",
-          "url": "https://x.com/AZCardinals/status/2125331168921100503",
-          "publishedAt": "2026-11-24T20:50:12.000Z"
         }
       ]
     },
@@ -248,7 +248,7 @@
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Monti Ossenfort",
+          "label": "Arizona Cardinals",
           "title": "Week 11 Film Room with @aqshipley and @jpshadrick ⬇️",
           "url": "https://x.com/AZCardinals/status/2125683290640384075",
           "publishedAt": "2026-11-25T20:09:24.000Z"
@@ -272,16 +272,16 @@
           "publishedAt": "2026-11-25T19:02:10.000Z"
         },
         {
-          "label": "Alex Rollins",
-          "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
-          "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
-          "publishedAt": "2026-11-25T14:00:38.000Z"
-        },
-        {
           "label": "Cody Alexander",
           "title": "Chris Shula's Base-to-Dime Blueprint",
           "url": "https://www.matchquarters.com/p/rams-dime-defense-chris-shula",
           "publishedAt": "2026-11-23T11:02:49.000Z"
+        },
+        {
+          "label": "Kevin Cole",
+          "title": "Week 11 Sunday Early Window: Advanced Reviews",
+          "url": "https://www.unexpectedpoints.com/p/week-11-sunday-early-window-advanced",
+          "publishedAt": "2026-11-22T22:33:49.000Z"
         }
       ]
     },
@@ -334,6 +334,401 @@
   ],
   "rawStream": [
     {
+      "id": "ari_pwire_4430841_64992828",
+      "type": "article",
+      "title": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media.",
+      "summary": "Beck hasn't practice since last Thursday, when his back spasms flared up, and he's now in danger of missing a second consecutive game Sunday against the Commanders. Ultimately, Friday's session and the Cardinals' ensuing",
+      "publishedAt": "2026-11-26T18:20:17.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Beck%20(back)%20wasn't%20spotted%20during%20the%20portion",
+      "outletId": "cardinals_official",
+      "outletName": "AZCardinals.com",
+      "reporterId": "darren_urban",
+      "reporterName": "Darren Urban",
+      "author": "Darren Urban",
+      "authorHandle": "@Cardschatter",
+      "authorProfileUrl": "https://x.com/Cardschatter",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 89,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 27.0574
+    },
+    {
+      "id": "ari_roto_12145b0c1ff5",
+      "type": "tweet",
+      "title": "Carson Beck: Not present Thursday: Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site reports. Visit RotoWire.com for more analysis on this update.",
+      "fullText": "Carson Beck: Not present Thursday: Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site reports. Visit RotoWire.com for more analysis on this update.",
+      "isFullTweet": true,
+      "summary": "Beck (back) wasn't spotted during the portion of Thursday's practice open to the media, Darren Urban of the Cardinals' official site reports. Visit RotoWire.com for more analysis on this update.",
+      "imageUrl": "",
+      "publishedAt": "2026-11-26T18:20:00.000Z",
+      "url": "https://www.rotowire.com/football/player/carson-beck-19287",
+      "outletId": "rotowire",
+      "outletName": "RotoWire NFL Beat",
+      "reporterId": "rotowire_nfl_beat",
+      "reporterName": "RotoWire NFL Beat",
+      "author": "RotoWire NFL Beat",
+      "authorHandle": "@RotoWireNFL",
+      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
+      "trustTier": 2,
+      "wireSource": "rotowire_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4430841",
+          "name": "Carson Beck",
+          "shortName": "C. Beck",
+          "position": "QB",
+          "jersey": 19,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430841.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.5098
+    },
+    {
+      "id": "x_tl_azcardinals_2126007218323509542",
+      "type": "tweet",
+      "title": "Bringing out a classic for this Thanksgiving 🦃",
+      "fullText": "Bringing out a classic for this Thanksgiving 🦃",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2126007001310236673/img/T7bs9CzbXZdUBncV.jpg",
+      "imageAlt": "Arizona Cardinals post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2126007001310236673/vid/avc1/720x1280/a_LUkAtA-0W3cHDF.mp4",
+      "isHighlightClip": true,
+      "duration": "1:53",
+      "embeddable": true,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-26T17:36:34.000Z",
+      "url": "https://x.com/AZCardinals/status/2126007218323509542",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 18.3705
+    },
+    {
+      "id": "ari_rss_cbf99470fde5",
+      "type": "article",
+      "title": "Teryl Austin Hopes Simplicity, Freedom Helps Cardinals Defense Improve",
+      "summary": "Interim defensive coordinator will call plays from sideline",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/oupfkug6nh4dmuul35g8.jpg",
+      "imageAlt": "Teryl Austin Hopes Simplicity, Freedom Helps Cardinals Defense Improve",
+      "publishedAt": "2026-11-26T17:23:51.000Z",
+      "url": "https://www.azcardinals.com/news/teryl-austin-hopes-simplicity-freedom-helps-cardinals-defense-improve",
+      "outletId": "cardinals_official",
+      "outletName": "azcardinals.com Official",
+      "reporterId": "cardinals_official",
+      "reporterName": "azcardinals.com Official",
+      "author": "azcardinals.com Official",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.9097
+    },
+    {
+      "id": "x_tl_azcardinals_2125999666684965338",
+      "type": "tweet",
+      "title": "HBD to one of the best, Roger Wehrli 🌟",
+      "fullText": "HBD to one of the best, Roger Wehrli 🌟",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HYERbbDbkAATkMe.jpg",
+      "imageAlt": "Arizona Cardinals post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-26T17:06:34.000Z",
+      "url": "https://x.com/AZCardinals/status/2125999666684965338",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.2335
+    },
+    {
+      "id": "x_tl_azcardinals_2125983014786314361",
+      "type": "tweet",
+      "title": "👀 on Week 12",
+      "fullText": "👀 on Week 12",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HYECQwzb0AAuymV.jpg",
+      "imageUrls": [
+        "https://pbs.twimg.com/media/HYECQwzb0AAuymV.jpg",
+        "https://pbs.twimg.com/media/HYECQwva0AEZkL7.jpg",
+        "https://pbs.twimg.com/media/HYECQwyaUAA1PX8.jpg",
+        "https://pbs.twimg.com/media/HYECQwvakAA3o6F.jpg"
+      ],
+      "imageAlt": "Arizona Cardinals post",
+      "hasInlineChartImage": true,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-26T16:00:24.000Z",
+      "url": "https://x.com/AZCardinals/status/2125983014786314361",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.1841
+    },
+    {
+      "id": "ari_brss_revenge_of_the_birds_29baaf427c0a",
+      "type": "article",
+      "title": "Do Arizona Cardinals fans have a whole lot to be thankful for this year?",
+      "summary": "What are you thankful for? Typically it is easy, family, friends, faith. Yet, for Arizona Cardinals fans it gets really murky when you talk about football. That’s why I ask the question, do we as Cardinals fans have anything to be thankful",
+      "imageUrl": "",
+      "imageAlt": "Do Arizona Cardinals fans have a whole lot to be thankful for this year?",
+      "publishedAt": "2026-11-26T16:02:23.000Z",
+      "url": "https://www.revengeofthebirds.com/arizona-cardinals-news/97498/do-arizona-cardinals-fans-have-a-whole-lot-to-be-thankful-for-this-year",
+      "outletId": "revenge_of_the_birds",
+      "outletName": "Revenge of the Birds",
+      "reporterId": "seth_cox_ari",
+      "reporterName": "Seth Cox",
+      "author": "Seth Cox",
+      "authorHandle": "@SCoxFB",
+      "authorProfileUrl": "https://x.com/SCoxFB",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.3079
+    },
+    {
+      "id": "ari_tyt_oLbZtinn7OE",
+      "type": "video",
+      "category": "beat",
+      "videoId": "oLbZtinn7OE",
+      "embeddable": false,
+      "title": "La Tacleada Cardinals: Nueva era defensiva en Arizona",
+      "summary": "Teryl Austin toma las riendas de la defensiva de los Cardenales. En esta edición de La Tacleada, Rolando Cantú y Jesús Quiñónez analizan el cambio de coordinador defensivo, lo que podemos esperar de la unidad bajo su man",
+      "imageUrl": "https://i.ytimg.com/vi/oLbZtinn7OE/hqdefault.jpg",
+      "imageAlt": "La Tacleada Cardinals: Nueva era defensiva en Arizona",
+      "publishedAt": "2026-11-26T15:57:00.000Z",
+      "url": "https://www.youtube.com/watch?v=oLbZtinn7OE",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=oLbZtinn7OE",
+      "channel": "Arizona Cardinals",
+      "outletId": "UCzNfiKcvNjLHljohEkO83Rg",
+      "outletName": "Arizona Cardinals",
+      "reporterId": "UCzNfiKcvNjLHljohEkO83Rg",
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@azcardinals",
+      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "35:39",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.1941
+    },
+    {
+      "id": "x_tl_azcardinals_2125968331253719290",
+      "type": "tweet",
+      "title": "Happy Thanksgiving, #BirdGang ❤️",
+      "fullText": "Happy Thanksgiving, #BirdGang ❤️",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HYD07LoWYAA-oJu.jpg",
+      "imageAlt": "Arizona Cardinals post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-26T15:02:03.000Z",
+      "url": "https://x.com/AZCardinals/status/2125968331253719290",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.8192
+    },
+    {
+      "id": "x_tl_azcardinals_2125724171145728001",
+      "type": "tweet",
+      "title": "Wednesday's Injury Report",
+      "fullText": "Wednesday's Injury Report",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Arizona Cardinals post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-25T22:51:51.000Z",
+      "url": "https://x.com/AZCardinals/status/2125724171145728001",
+      "externalUrl": null,
+      "inlineLinks": [
+        {
+          "text": "",
+          "url": "https://twitter.com"
+        }
+      ],
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7744
+    },
+    {
       "id": "ari_tyt_mQZ5uFghULU",
       "type": "video",
       "category": "beat",
@@ -373,13 +768,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:10",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.5113,
-      "duration": "7:10"
+      "storyRank": 1.3174
     },
     {
       "id": "ari_tyt_RX27iOAN87Q",
@@ -429,93 +824,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:54",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.5053,
-      "duration": "6:54"
-    },
-    {
-      "id": "x_tl_azcardinals_2125724171145728001",
-      "type": "tweet",
-      "title": "Wednesday's Injury Report",
-      "fullText": "Wednesday's Injury Report",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Monti Ossenfort post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T22:51:51.000Z",
-      "url": "https://x.com/AZCardinals/status/2125724171145728001",
-      "externalUrl": null,
-      "inlineLinks": [
-        {
-          "text": "",
-          "url": "https://twitter.com"
-        }
-      ],
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.9598
-    },
-    {
-      "id": "ari_espn_191118c481ad8",
-      "type": "article",
-      "title": "Commanders try to continue momentum while Cardinals work to end 11-game home losing streak",
-      "summary": "— Some people around the NFL might have needed a reminder what Jayden Daniels can do on a football field before the quarterback led the Washington Commanders",
-      "imageUrl": "",
-      "imageCaption": "espn.applewatch.awayhome.1",
-      "imageAlt": "Commanders try to continue momentum while Cardinals work to end 11-game home losing streak",
-      "publishedAt": "2026-11-26T00:58:33.000Z",
-      "url": "https://www.espn.com/nfl/preview?gameId=401873092",
-      "outletId": "espn_ari",
-      "outletName": "ESPN",
-      "reporterId": "espn_ari",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.5751
+      "storyRank": 1.3172
     },
     {
       "id": "x_tl_azcardinals_2125683290640384075",
@@ -525,7 +840,7 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
-      "imageAlt": "Monti Ossenfort post",
+      "imageAlt": "Arizona Cardinals post",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-25T20:09:24.000Z",
       "url": "https://x.com/AZCardinals/status/2125683290640384075",
@@ -539,28 +854,28 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
       "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.433,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "film_trench",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5184
+      "storyRank": 1.486
     },
     {
       "id": "ari_tyt_zhCZqZnH1b8",
@@ -597,110 +912,38 @@
       ],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.432,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:55",
       "credibilityScore": 86,
       "storyTier": "film_trench",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5133,
-      "duration": "1:55"
+      "storyRank": 1.4849
     },
     {
-      "id": "ari_pwire_4870808_64973728",
+      "id": "ari_espn_191118c481ad8",
       "type": "article",
-      "title": "Head coach Mike LaFleur said Wednesday that the Cardinals will evaluate Love (ankle) again Monday to hone in on a return date for the running back.",
-      "summary": "Love must miss at least one more game due to the right high-ankle sprain that he picked up in a Week 8 win at Dallas, but the Cardinals have a decision to make next week, as they have a Week 13 matchup with the Eagles on",
-      "publishedAt": "2026-11-25T19:50:48.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4870808/jeremiyah-love#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
-      "outletId": "phnx_cardinals_ari",
-      "outletName": "PHNX Cardinals",
-      "reporterId": "bo_brack",
-      "reporterName": "Bo Brack",
-      "author": "Bo Brack",
-      "authorHandle": "@BoBrack",
-      "authorProfileUrl": "https://x.com/BoBrack",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 0.611,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 89,
-      "storyTier": "practice_injury",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.378
-    },
-    {
-      "id": "ari_pwire_4430841_64973128",
-      "type": "article",
-      "title": "Head coach Mike LaFleur said Beck (back) won't practice Wednesday.",
-      "summary": "Beck continues to deal with back spasms that sidelined him this past Sunday at Kansas City. LaFleur told Dani Sureck of the Cardinals' official site Wednesday that the team is preparing Josh Johnson to start Sunday's gam",
-      "publishedAt": "2026-11-25T19:21:31.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com",
-      "reporterId": "darren_urban",
-      "reporterName": "Darren Urban",
-      "author": "Darren Urban",
-      "authorHandle": "@Cardschatter",
-      "authorProfileUrl": "https://x.com/Cardschatter",
+      "title": "Commanders try to continue momentum while Cardinals work to end 11-game home losing streak",
+      "summary": "— Some people around the NFL might have needed a reminder what Jayden Daniels can do on a football field before the quarterback led the Washington Commanders",
+      "imageUrl": "",
+      "imageCaption": "espn.applewatch.awayhome.1",
+      "imageAlt": "Commanders try to continue momentum while Cardinals work to end 11-game home losing streak",
+      "publishedAt": "2026-11-26T00:58:33.000Z",
+      "url": "https://www.espn.com/nfl/preview?gameId=401873092",
+      "outletId": "espn_ari",
+      "outletName": "ESPN",
+      "reporterId": "espn_ari",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals",
       "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "11394",
-          "name": "Josh Johnson",
-          "shortName": "J. Johnson",
-          "position": "QB",
-          "jersey": 9,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/11394.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.584,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 89,
-      "storyTier": "practice_injury",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.2427
-    },
-    {
-      "id": "ari_rss_dcf7d9be0990",
-      "type": "article",
-      "title": "After Defensive Coordinator Change, Players Adjust On The Fly",
-      "summary": "Nick Rallis moves on as Teryl Austin tweaks current system",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/f7chkdwlfuukgvpfq4fh.jpg",
-      "imageAlt": "After Defensive Coordinator Change, Players Adjust On The Fly",
-      "publishedAt": "2026-11-25T22:56:00.000Z",
-      "url": "https://www.azcardinals.com/news/after-defensive-coordinator-change-players-adjust-on-the-fly",
-      "outletId": "cardinals_official",
-      "outletName": "azcardinals.com Official",
-      "reporterId": "cardinals_official",
-      "reporterName": "azcardinals.com Official",
-      "author": "azcardinals.com Official",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://www.azcardinals.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
+      "wireSource": "espn_team_news",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
@@ -715,61 +958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5543
-    },
-    {
-      "id": "x_tl_azcardinals_2125716904123736377",
-      "type": "tweet",
-      "title": "LIVE: TE Trey McBride",
-      "fullText": "LIVE: TE Trey McBride",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Monti Ossenfort post",
-      "mentionedPlayers": [
-        {
-          "id": "4361307",
-          "name": "Trey McBride",
-          "shortName": "T. McBride",
-          "position": "TE",
-          "jersey": 85,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361307.png"
-        }
-      ],
-      "publishedAt": "2026-11-25T22:22:58.000Z",
-      "url": "https://x.com/AZCardinals/status/2125716904123736377",
-      "externalUrl": null,
-      "inlineLinks": [
-        {
-          "text": "x.com/i/broadcasts/2…",
-          "url": "https://x.com/i/broadcasts/2EmYEbXOJarKra"
-        }
-      ],
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5968
+      "storyRank": 0.9678
     },
     {
       "id": "ari_vid_c07196808e28",
@@ -811,8 +1000,8 @@
       "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.389,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -822,7 +1011,95 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7788
+      "storyRank": 1.2702
+    },
+    {
+      "id": "ari_rss_dcf7d9be0990",
+      "type": "article",
+      "title": "After Defensive Coordinator Change, Players Adjust On The Fly",
+      "summary": "Nick Rallis moves on as Teryl Austin tweaks current system",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/f7chkdwlfuukgvpfq4fh.jpg",
+      "imageAlt": "After Defensive Coordinator Change, Players Adjust On The Fly",
+      "publishedAt": "2026-11-25T22:56:00.000Z",
+      "url": "https://www.azcardinals.com/news/after-defensive-coordinator-change-players-adjust-on-the-fly",
+      "outletId": "cardinals_official",
+      "outletName": "azcardinals.com Official",
+      "reporterId": "cardinals_official",
+      "reporterName": "azcardinals.com Official",
+      "author": "azcardinals.com Official",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8397
+    },
+    {
+      "id": "x_tl_azcardinals_2125716904123736377",
+      "type": "tweet",
+      "title": "LIVE: TE Trey McBride",
+      "fullText": "LIVE: TE Trey McBride",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Arizona Cardinals post",
+      "mentionedPlayers": [
+        {
+          "id": "4361307",
+          "name": "Trey McBride",
+          "shortName": "T. McBride",
+          "position": "TE",
+          "jersey": 85,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361307.png"
+        }
+      ],
+      "publishedAt": "2026-11-25T22:22:58.000Z",
+      "url": "https://x.com/AZCardinals/status/2125716904123736377",
+      "externalUrl": null,
+      "inlineLinks": [
+        {
+          "text": "x.com/i/broadcasts/2…",
+          "url": "https://x.com/i/broadcasts/2EmYEbXOJarKra"
+        }
+      ],
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8906
     },
     {
       "id": "ari_vid_c0480313816e",
@@ -867,7 +1144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3565
+      "storyRank": 0.8092
     },
     {
       "id": "ari_pwire_4428512_64975728",
@@ -885,7 +1162,16 @@
       "authorProfileUrl": "https://x.com/joshweinfuss",
       "trustTier": 1,
       "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "4428512",
+          "name": "Kedon Slovis",
+          "shortName": "K. Slovis",
+          "position": "QB",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -899,7 +1185,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1599
+      "storyRank": 0.7764
     },
     {
       "id": "ari_brss_revenge_of_the_birds_ea5427a06776",
@@ -919,7 +1205,16 @@
       "authorProfileUrl": "https://x.com/SCoxFB",
       "trustTier": 2,
       "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "4428512",
+          "name": "Kedon Slovis",
+          "shortName": "K. Slovis",
+          "position": "QB",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -929,13 +1224,11 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 90,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1063
+      "storyRank": 0.7605
     },
     {
       "id": "x_tl_azcardinals_2125704664196980747",
@@ -945,7 +1238,7 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/media/HYAFCWMa0AAatXZ.jpg",
-      "imageAlt": "Monti Ossenfort post",
+      "imageAlt": "Arizona Cardinals post",
       "mentionedPlayers": [
         {
           "id": "4428512",
@@ -962,12 +1255,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
       "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -978,14 +1271,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3312
+      "storyRank": 0.8461
     },
     {
       "id": "ari_rss_398cd176d22f",
@@ -1005,7 +1296,16 @@
       "authorProfileUrl": "https://www.azcardinals.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "4428512",
+          "name": "Kedon Slovis",
+          "shortName": "K. Slovis",
+          "position": "QB",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1015,105 +1315,11 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1153
-    },
-    {
-      "id": "x_tl_azcardinals_2125653436377239821",
-      "type": "tweet",
-      "title": "“When you were drafted he was… 5” 🤣\n\nwatch Simi's full Mic'd Up:",
-      "fullText": "“When you were drafted he was… 5” 🤣\n\nwatch Simi's full Mic'd Up:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125652666496040960/img/bcmU_rJ9TROKdKeO.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125652666496040960/vid/avc1/720x1280/FQeOzCl2iE91Vs21.mp4",
-      "isHighlightClip": true,
-      "duration": "0:15",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T18:10:46.000Z",
-      "url": "https://x.com/AZCardinals/status/2125653436377239821",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.343,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.4056
-    },
-    {
-      "id": "ari_tyt_EWKk5PmntFo",
-      "type": "video",
-      "category": "beat",
-      "isFunHighlightClip": true,
-      "videoId": "EWKk5PmntFo",
-      "embeddable": false,
-      "title": "Simi Fehoko Mic'd Up Week 11 | AZ Cardinals",
-      "summary": "Go on the field with Arizona Cardinal Simi Fehoko as he and the team take on the Kansas City Chiefs in Week 11. #ArizonaCardinals #NFL #AZCardinals #RiseUpRedSea 2026 Tickets: https://azcards.social/4du0IQI ✅ Instagram:",
-      "imageUrl": "https://i.ytimg.com/vi/EWKk5PmntFo/hqdefault.jpg",
-      "imageAlt": "Simi Fehoko Mic'd Up Week 11 | AZ Cardinals",
-      "publishedAt": "2026-11-25T17:42:51.000Z",
-      "url": "https://www.youtube.com/watch?v=EWKk5PmntFo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=EWKk5PmntFo",
-      "channel": "Arizona Cardinals",
-      "outletId": "UCzNfiKcvNjLHljohEkO83Rg",
-      "outletName": "Arizona Cardinals",
-      "reporterId": "UCzNfiKcvNjLHljohEkO83Rg",
-      "reporterName": "Arizona Cardinals",
-      "author": "Arizona Cardinals",
-      "authorHandle": "@azcardinals",
-      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4360739",
-          "name": "Simi Fehoko",
-          "shortName": "S. Fehoko",
-          "position": "WR",
-          "jersey": 80,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360739.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.331,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3222,
-      "duration": "4:48"
+      "storyRank": 0.7687
     },
     {
       "id": "ari_tyt_p-kv4rv3GLQ",
@@ -1146,48 +1352,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:59",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9362,
-      "duration": "10:59"
-    },
-    {
-      "id": "ari_tx_76fa87ee4e8e",
-      "type": "tweet",
-      "title": "Cardinals roster move: Claimed QB Kedon Slovis off waivers from Baltimore.",
-      "fullText": "Cardinals roster move: Claimed QB Kedon Slovis off waivers from Baltimore.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.azcardinals.com/team/transactions/#tx-76fa87ee4e8e",
-      "outletId": "cardinals_official",
-      "outletName": "azcardinals.com Official",
-      "reporterId": "cardinals_official",
-      "reporterName": "Arizona Cardinals Official",
-      "author": "Arizona Cardinals Official",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://www.azcardinals.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.1051
+      "storyRank": 0.7358
     },
     {
       "id": "ari_pfr_c867428cde6a",
@@ -1206,7 +1377,16 @@
       "authorProfileUrl": "https://www.profootballrumors.com/arizona-cardinals",
       "trustTier": 2,
       "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "4428512",
+          "name": "Kedon Slovis",
+          "shortName": "K. Slovis",
+          "position": "QB",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1220,7 +1400,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.719
+      "storyRank": 0.6869
+    },
+    {
+      "id": "ari_pwire_4870808_64973728",
+      "type": "article",
+      "title": "Head coach Mike LaFleur said Wednesday that the Cardinals will evaluate Love (ankle) again Monday to hone in on a return date for the running back.",
+      "summary": "Love must miss at least one more game due to the right high-ankle sprain that he picked up in a Week 8 win at Dallas, but the Cardinals have a decision to make next week, as they have a Week 13 matchup with the Eagles on",
+      "publishedAt": "2026-11-25T19:50:48.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4870808/jeremiyah-love#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Wednesday%20that",
+      "outletId": "phnx_cardinals_ari",
+      "outletName": "PHNX Cardinals",
+      "reporterId": "bo_brack",
+      "reporterName": "Bo Brack",
+      "author": "Bo Brack",
+      "authorHandle": "@BoBrack",
+      "authorProfileUrl": "https://x.com/BoBrack",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 89,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6825
     },
     {
       "id": "ari_rss_ad8602b618a9",
@@ -1263,7 +1475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7148
+      "storyRank": 0.6915
     },
     {
       "id": "ari_pwire_11394_64973228",
@@ -1304,46 +1516,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6283
+      "storyRank": 0.6676
     },
     {
-      "id": "ari_yts_jsQZjjj59hk",
-      "type": "video",
-      "videoId": "jsQZjjj59hk",
-      "embeddable": false,
-      "title": "Washington Commanders vs Arizona Cardinals | 2026 Week 12 Game Preview",
-      "summary": "",
-      "duration": "9:06",
-      "imageUrl": "https://i.ytimg.com/vi/jsQZjjj59hk/hqdefault.jpg",
-      "imageAlt": "Washington Commanders vs Arizona Cardinals | 2026 Week 12 Game Preview",
-      "publishedAt": "2026-11-25T19:25:00.804Z",
-      "url": "https://www.youtube.com/watch?v=jsQZjjj59hk",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=jsQZjjj59hk",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "id": "ari_pwire_4430841_64973128",
+      "type": "article",
+      "title": "Head coach Mike LaFleur said Beck (back) won't practice Wednesday.",
+      "summary": "Beck continues to deal with back spasms that sidelined him this past Sunday at Kansas City. LaFleur told Dani Sureck of the Cardinals' official site Wednesday that the team is preparing Josh Johnson to start Sunday's gam",
+      "publishedAt": "2026-11-25T19:21:31.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4430841/carson-beck#:~:text=Head%20coach%20Mike%20LaFleur%20said%20Beck%20(back)",
+      "outletId": "cardinals_official",
+      "outletName": "AZCardinals.com",
+      "reporterId": "darren_urban",
+      "reporterName": "Darren Urban",
+      "author": "Darren Urban",
+      "authorHandle": "@Cardschatter",
+      "authorProfileUrl": "https://x.com/Cardschatter",
       "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "11394",
+          "name": "Josh Johnson",
+          "shortName": "J. Johnson",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/11394.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 89,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6479
+      "storyRank": 0.6749
     },
     {
       "id": "ari_yt_h3OupmRNVUI",
@@ -1376,13 +1590,52 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:10",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3855,
-      "duration": "5:10"
+      "storyRank": 0.5801
+    },
+    {
+      "id": "ari_yts_jsQZjjj59hk",
+      "type": "video",
+      "videoId": "jsQZjjj59hk",
+      "embeddable": false,
+      "title": "Washington Commanders vs Arizona Cardinals | 2026 Week 12 Game Preview",
+      "summary": "",
+      "duration": "9:06",
+      "imageUrl": "https://i.ytimg.com/vi/jsQZjjj59hk/hqdefault.jpg",
+      "imageAlt": "Washington Commanders vs Arizona Cardinals | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:01:45.825Z",
+      "url": "https://www.youtube.com/watch?v=jsQZjjj59hk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=jsQZjjj59hk",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6626
     },
     {
       "id": "ari_vid_cd3ff81c0226",
@@ -1435,7 +1688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5771
+      "storyRank": 0.6615
     },
     {
       "id": "x_tl_azcardinals_2125661014670688389",
@@ -1445,7 +1698,7 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
-      "imageAlt": "Monti Ossenfort post",
+      "imageAlt": "Arizona Cardinals post",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-25T18:40:53.000Z",
       "url": "https://x.com/AZCardinals/status/2125661014670688389",
@@ -1459,12 +1712,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
       "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -1475,12 +1728,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6783
+      "storyRank": 0.7146
     },
     {
       "id": "ari_vid_7121e408f17b",
@@ -1516,7 +1769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5242
+      "storyRank": 0.6494
     },
     {
       "id": "ari_tyt_VoCPnIf7frY",
@@ -1550,13 +1803,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:15",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4893,
-      "duration": "0:15"
+      "storyRank": 0.6412
     },
     {
       "id": "x_tl_azcardinals_2125656301061742778",
@@ -1566,7 +1819,7 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
-      "imageAlt": "Monti Ossenfort post",
+      "imageAlt": "Arizona Cardinals post",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-25T18:22:09.000Z",
       "url": "https://x.com/AZCardinals/status/2125656301061742778",
@@ -1574,12 +1827,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
       "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -1590,12 +1843,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6266
+      "storyRank": 0.7025
     },
     {
       "id": "ari_tyt_6noscW-qvjE",
@@ -1628,13 +1881,105 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "57:56",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4693,
-      "duration": "57:56"
+      "storyRank": 0.6365
+    },
+    {
+      "id": "x_tl_azcardinals_2125653436377239821",
+      "type": "tweet",
+      "title": "“When you were drafted he was… 5” 🤣\n\nwatch Simi's full Mic'd Up:",
+      "fullText": "“When you were drafted he was… 5” 🤣\n\nwatch Simi's full Mic'd Up:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125652666496040960/img/bcmU_rJ9TROKdKeO.jpg",
+      "imageAlt": "Arizona Cardinals post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125652666496040960/vid/avc1/720x1280/FQeOzCl2iE91Vs21.mp4",
+      "isHighlightClip": true,
+      "duration": "0:15",
+      "embeddable": true,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-25T18:10:46.000Z",
+      "url": "https://x.com/AZCardinals/status/2125653436377239821",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "cardinals_official",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6999
+    },
+    {
+      "id": "ari_tyt_EWKk5PmntFo",
+      "type": "video",
+      "category": "beat",
+      "isFunHighlightClip": true,
+      "videoId": "EWKk5PmntFo",
+      "embeddable": false,
+      "title": "Simi Fehoko Mic'd Up Week 11 | AZ Cardinals",
+      "summary": "Go on the field with Arizona Cardinal Simi Fehoko as he and the team take on the Kansas City Chiefs in Week 11. #ArizonaCardinals #NFL #AZCardinals #RiseUpRedSea 2026 Tickets: https://azcards.social/4du0IQI ✅ Instagram:",
+      "imageUrl": "https://i.ytimg.com/vi/EWKk5PmntFo/hqdefault.jpg",
+      "imageAlt": "Simi Fehoko Mic'd Up Week 11 | AZ Cardinals",
+      "publishedAt": "2026-11-25T17:42:51.000Z",
+      "url": "https://www.youtube.com/watch?v=EWKk5PmntFo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=EWKk5PmntFo",
+      "channel": "Arizona Cardinals",
+      "outletId": "UCzNfiKcvNjLHljohEkO83Rg",
+      "outletName": "Arizona Cardinals",
+      "reporterId": "UCzNfiKcvNjLHljohEkO83Rg",
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@azcardinals",
+      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4360739",
+          "name": "Simi Fehoko",
+          "shortName": "S. Fehoko",
+          "position": "WR",
+          "jersey": 80,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360739.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "4:48",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6168
     },
     {
       "id": "ari_rss_e406bbf6e9ab",
@@ -1677,7 +2022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3289
+      "storyRank": 0.6018
     },
     {
       "id": "x_tl_azcardinals_2125638202644185383",
@@ -1693,7 +2038,7 @@
         "https://pbs.twimg.com/media/HX_IrgobcAAi9yK.jpg",
         "https://pbs.twimg.com/media/HX_IrgobUAAokGZ.jpg"
       ],
-      "imageAlt": "Monti Ossenfort post",
+      "imageAlt": "Arizona Cardinals post",
       "hasInlineChartImage": true,
       "mentionedPlayers": [
         {
@@ -1711,12 +2056,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
+      "outletName": "@AZCardinals Official",
+      "reporterId": null,
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
       "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -1727,51 +2072,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4514
-    },
-    {
-      "id": "x_tl_azcardinals_2125634370266652975",
-      "type": "tweet",
-      "title": "Week 12 on deck 🤝",
-      "fullText": "Week 12 on deck 🤝",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_FDcwXcAAbbs4.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T16:55:00.000Z",
-      "url": "https://x.com/AZCardinals/status/2125634370266652975",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4184
+      "storyRank": 0.6591
     },
     {
       "id": "ari_rss_50207fde8788",
@@ -1805,46 +2111,51 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0453
+      "storyRank": 0.5224
     },
     {
-      "id": "ari_yt_7XcG-6CAKAo",
-      "type": "video",
-      "category": "film",
-      "videoId": "7XcG-6CAKAo",
-      "embeddable": false,
-      "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
-      "summary": "Patrick Mahomes and Travis Kelce are reminding everyone just how dangerous the Kansas City Chiefs can be! Former NFL quarterback Chase Daniel dives into the All-22 film of Mahomes' Week 11 performance against the Arizona",
-      "imageUrl": "https://i.ytimg.com/vi/7XcG-6CAKAo/hqdefault.jpg",
-      "imageAlt": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
-      "publishedAt": "2026-11-25T14:00:38.000Z",
-      "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
-      "channel": "Alex Rollins",
-      "outletId": "alex_rollins",
-      "outletName": "Alex Rollins",
-      "reporterId": "alex_rollins",
-      "reporterName": "Alex Rollins",
-      "author": "Alex Rollins",
-      "authorHandle": "@AlexRollinsNFL",
-      "authorProfileUrl": "https://x.com/AlexRollinsNFL",
-      "trustTier": 2,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
+      "id": "ari_tx_76fa87ee4e8e",
+      "type": "tweet",
+      "title": "Cardinals roster move: Claimed QB Kedon Slovis off waivers from Baltimore.",
+      "fullText": "Cardinals roster move: Claimed QB Kedon Slovis off waivers from Baltimore.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.azcardinals.com/team/transactions/#tx-76fa87ee4e8e",
+      "outletId": "cardinals_official",
+      "outletName": "azcardinals.com Official",
+      "reporterId": "cardinals_official",
+      "reporterName": "Arizona Cardinals Official",
+      "author": "Arizona Cardinals Official",
+      "authorHandle": "@AZCardinals",
+      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4428512",
+          "name": "Kedon Slovis",
+          "shortName": "K. Slovis",
+          "position": "QB",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 91,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3086,
-      "duration": "20:38"
+      "storyRank": 0.3978
     },
     {
       "id": "ari_brss_revenge_of_the_birds_3ca766fe53fe",
@@ -1887,7 +2198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5673
+      "storyRank": 0.3475
     },
     {
       "id": "ari_brss_revenge_of_the_birds_8795090073f7",
@@ -1930,46 +2241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5671
-    },
-    {
-      "id": "x_tl_azcardinals_2125443028731273555",
-      "type": "tweet",
-      "title": "A statement from Michael Bidwill on the passing of Martha Firestone Ford.",
-      "fullText": "A statement from Michael Bidwill on the passing of Martha Firestone Ford.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX8XK4NakAAo-4v.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T04:14:41.000Z",
-      "url": "https://x.com/AZCardinals/status/2125443028731273555",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6166
+      "storyRank": 0.3474
     },
     {
       "id": "ari_vid_b445dc79ef77",
@@ -2015,50 +2287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4964
-    },
-    {
-      "id": "x_tl_azcardinals_2125331168921100503",
-      "type": "tweet",
-      "title": "shoutout @iam_trey_10 👏",
-      "fullText": "shoutout @iam_trey_10 👏",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125330760186122240/img/IBu-bgg5FGywHaSU.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125330760186122240/vid/avc1/720x1280/oCs7ByTzi8is8h6o.mp4",
-      "isHighlightClip": true,
-      "duration": "0:22",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-24T20:50:12.000Z",
-      "url": "https://x.com/AZCardinals/status/2125331168921100503",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.445
+      "storyRank": 0.3173
     },
     {
       "id": "ari_pwire_4361307_50585543",
@@ -2099,50 +2328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3928
-    },
-    {
-      "id": "x_tl_azcardinals_2125315327349461233",
-      "type": "tweet",
-      "title": "\"He's the utmost professional. He is a pro's pro.\"\n\nA message from Coach LaFleur on Nick Rallis.",
-      "fullText": "\"He's the utmost professional. He is a pro's pro.\"\n\nA message from Coach LaFleur on Nick Rallis.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125314546441302016/img/pfbaWToU3RlF0Rw8.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125314546441302016/vid/avc1/720x1280/3GmUn687CpeWijqF.mp4",
-      "isHighlightClip": true,
-      "duration": "1:04",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-24T19:47:15.000Z",
-      "url": "https://x.com/AZCardinals/status/2125315327349461233",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.4273
+      "storyRank": 0.2656
     },
     {
       "id": "ari_rss_da203be6cc26",
@@ -2176,7 +2362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3828
+      "storyRank": 0.2615
     },
     {
       "id": "ari_rss_a3741beb69bf",
@@ -2210,7 +2396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3688
+      "storyRank": 0.2542
     },
     {
       "id": "ari_brss_revenge_of_the_birds_b364fd162f71",
@@ -2244,7 +2430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3429
+      "storyRank": 0.2394
     },
     {
       "id": "x_tl_mikegarafolo_2125247749503267024",
@@ -2292,7 +2478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3638
+      "storyRank": 0.2569
     },
     {
       "id": "ari_tyt__XaqkLxRvGg",
@@ -2325,13 +2511,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "15:15",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2492,
-      "duration": "15:15"
+      "storyRank": 0.1865
     },
     {
       "id": "ari_pfr_2fea13c87bbf",
@@ -2364,7 +2550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.232
+      "storyRank": 0.1754
     },
     {
       "id": "ari_brss_revenge_of_the_birds_c46b18bd6abd",
@@ -2398,7 +2584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.229
+      "storyRank": 0.1735
     },
     {
       "id": "ari_rss_005871d54674",
@@ -2432,7 +2618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2294
+      "storyRank": 0.1743
     },
     {
       "id": "ari_tyt_tif_pDcCo10",
@@ -2474,13 +2660,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:38",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2095,
-      "duration": "0:38"
+      "storyRank": 0.1617
     },
     {
       "id": "ari_rss_01b1409317d4",
@@ -2514,7 +2700,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2072
+      "storyRank": 0.1602
     },
     {
       "id": "ari_espn_37271ad79a039",
@@ -2549,7 +2735,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2072
+      "storyRank": 0.1602
     },
     {
       "id": "ari_pwire_4870808_64939728",
@@ -2581,7 +2767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2019
+      "storyRank": 0.1563
     },
     {
       "id": "ari_vid_e59dabd3c8f2",
@@ -2618,7 +2804,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2
+      "storyRank": 0.1556
     },
     {
       "id": "ari_tyt_d9uwhVNLESQ",
@@ -2660,13 +2846,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:35",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1955,
-      "duration": "6:35"
+      "storyRank": 0.1526
     },
     {
       "id": "ari_brss_revenge_of_the_birds_ade9dc2af9da",
@@ -2700,7 +2886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1916
+      "storyRank": 0.1496
     },
     {
       "id": "x_tl_rapsheet_2124959836555096396",
@@ -2739,7 +2925,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2136
+      "storyRank": 0.1669
+    },
+    {
+      "id": "ari_yts_WwsNx--B79g",
+      "type": "video",
+      "videoId": "WwsNx--B79g",
+      "embeddable": false,
+      "title": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "12:46",
+      "imageUrl": "https://i.ytimg.com/vi/WwsNx--B79g/hqdefault.jpg",
+      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-23T19:01:45.825Z",
+      "url": "https://www.youtube.com/watch?v=WwsNx--B79g",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=WwsNx--B79g",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
     },
     {
       "id": "ari_rss_a2320b4f4b03",
@@ -2782,7 +3007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1855
+      "storyRank": 0.146
     },
     {
       "id": "ari_tyt_rZ-6OcqwUXA",
@@ -2824,13 +3049,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "23:11",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1854,
-      "duration": "23:11"
+      "storyRank": 0.1459
     },
     {
       "id": "ari_vid_32e7b0f0d684",
@@ -2876,7 +3101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1825
+      "storyRank": 0.144
     },
     {
       "id": "ari_tyt_U18qYGmJ6gA",
@@ -2950,13 +3175,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "9:51",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1784,
-      "duration": "9:51"
+      "storyRank": 0.1412
     },
     {
       "id": "ari_tyt_vu_1ViIv-V0",
@@ -2998,13 +3223,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:04",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1756,
-      "duration": "5:04"
+      "storyRank": 0.1394
     },
     {
       "id": "ari_brss_revenge_of_the_birds_c27548f58296",
@@ -3038,7 +3263,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1689
+      "storyRank": 0.1345
     },
     {
       "id": "ari_brss_revenge_of_the_birds_84b60e7e83b0",
@@ -3072,7 +3297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1684
+      "storyRank": 0.1342
     },
     {
       "id": "ari_nfilm_matchquarters_b376b794320b",
@@ -3115,46 +3340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1679
-    },
-    {
-      "id": "ari_yts_WwsNx--B79g",
-      "type": "video",
-      "videoId": "WwsNx--B79g",
-      "embeddable": false,
-      "title": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
-      "summary": "",
-      "duration": "12:46",
-      "imageUrl": "https://i.ytimg.com/vi/WwsNx--B79g/hqdefault.jpg",
-      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T07:25:00.804Z",
-      "url": "https://www.youtube.com/watch?v=WwsNx--B79g",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=WwsNx--B79g",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
+      "storyRank": 0.1352
     },
     {
       "id": "ari_tyt_cyzH_c-aMNk",
@@ -3187,13 +3373,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:16",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1373,
-      "duration": "1:16"
+      "storyRank": 0.1129
     },
     {
       "id": "ari_brss_revenge_of_the_birds_3c25157e73bb",
@@ -3227,7 +3413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1318
+      "storyRank": 0.1086
     },
     {
       "id": "ari_nfilm_unexpected_points_e96746b51e37",
@@ -3261,7 +3447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1263
+      "storyRank": 0.1049
     },
     {
       "id": "ari_rss_57b9b7f04aed",
@@ -3295,7 +3481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0262
     },
     {
       "id": "ari_vid_cdd3f7db9c35",
@@ -3332,7 +3518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0262
     },
     {
       "id": "ari_rss_a11eeb567cdb",
@@ -3375,41 +3561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1259
-    },
-    {
-      "id": "ari_brss_revenge_of_the_birds_8f54c0efe1c7",
-      "type": "article",
-      "title": "Beaks & Geeks: Cardinals, Chiefs Winners & Losers: Arizona taken to the woodshed – again",
-      "summary": "The Arizona Cardinals are on the road against the Kansas City Chiefs, who are one of the best teams in the AFC as well as in the league. They have a great offense. Perhaps they are looking beyond the matchup against the Cardinals since they",
-      "imageUrl": "",
-      "imageAlt": "Beaks & Geeks: Cardinals, Chiefs Winners & Losers: Arizona taken to the woodshed – again",
-      "publishedAt": "2026-11-22T22:21:00.000Z",
-      "url": "https://www.revengeofthebirds.com/arizona-cardinals-news/97274/cardinals-chiefs-winners-losers-arizona-taken-to-the-woodshed-again",
-      "outletId": "revenge_of_the_birds",
-      "outletName": "Revenge of the Birds",
-      "reporterId": "revenge_of_the_birds",
-      "reporterName": "Barry Shuck",
-      "author": "Barry Shuck",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.revengeofthebirds.com/arizona-cardinals-news/97274/cardinals-chiefs-winners-losers-arizona-taken-to-the-woodshed-again",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1238
+      "storyRank": 0.1046
     },
     {
       "id": "ari_espn_fc09dce5056e7",
@@ -3444,7 +3596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1255
+      "storyRank": 0.1043
     },
     {
       "id": "ari_vid_af0c2ae3c04b",
@@ -3522,7 +3674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1234
+      "storyRank": 0.1028
     },
     {
       "id": "ari_vid_ce0e6dbb0f14",
@@ -3568,7 +3720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1233
+      "storyRank": 0.1027
     },
     {
       "id": "ari_vid_e9a176e9a78b",
@@ -3605,7 +3757,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1233
+      "storyRank": 0.1027
     },
     {
       "id": "ari_pfr_c111a3306e4c",
@@ -3647,7 +3799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1187
+      "storyRank": 0.0991
     },
     {
       "id": "ari_vid_a486ff8f97ba",
@@ -3693,7 +3845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1199
+      "storyRank": 0.1002
     },
     {
       "id": "ari_vid_ab92389942d7",
@@ -3739,7 +3891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1198
+      "storyRank": 0.1002
     },
     {
       "id": "ari_vid_c14e8332cb41",
@@ -3793,7 +3945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.119
+      "storyRank": 0.0996
     },
     {
       "id": "ari_vid_5f8fea1cd007",
@@ -3847,93 +3999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1189
-    },
-    {
-      "id": "x_tl_azcardinals_2124577604514484693",
-      "type": "tweet",
-      "title": "We see you 9️⃣ 7️⃣\n\n📺:CBS",
-      "fullText": "We see you 9️⃣ 7️⃣\n\n📺:CBS",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124577502446108672/img/e4GAZKtsBfPfZmbi.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124577502446108672/vid/avc1/1280x720/PgxRxIpSeTPkC9pr.mp4",
-      "isHighlightClip": true,
-      "duration": "0:19",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-22T18:55:48.316Z",
-      "url": "https://x.com/AZCardinals/status/2124577604514484693",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1307
-    },
-    {
-      "id": "x_tl_azcardinals_2124575724354802068",
-      "type": "tweet",
-      "title": "9 ➡️ 80\n\n📺:CBS",
-      "fullText": "9 ➡️ 80\n\n📺:CBS",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124575507618406400/img/46zXx86XFto0V5bY.jpg",
-      "imageAlt": "Monti Ossenfort post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124575507618406400/vid/avc1/1280x720/CtuD_Nie4cvhK1P0.mp4",
-      "isHighlightClip": true,
-      "duration": "0:37",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-22T18:48:20.051Z",
-      "url": "https://x.com/AZCardinals/status/2124575724354802068",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "cardinals_official",
-      "outletName": "AZCardinals.com / Official Team",
-      "reporterId": "monti_ossenfort",
-      "reporterName": "Monti Ossenfort",
-      "author": "Monti Ossenfort",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://x.com/AZCardinals",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1304
+      "storyRank": 0.0995
     },
     {
       "id": "ari_pfr_d3775005498d",
@@ -3966,7 +4032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0548
+      "storyRank": 0.046
     },
     {
       "id": "ari_pwire_11394_64904028",
@@ -4007,7 +4073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0537
+      "storyRank": 0.0453
     },
     {
       "id": "ari_vid_d9e92733dc0d",
@@ -4061,7 +4127,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0523
+      "storyRank": 0.0442
     },
     {
       "id": "ari_tyt_WdRNlu4fiSI",
@@ -4111,13 +4177,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "20:42",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.052,
-      "duration": "20:42"
+      "storyRank": 0.044
     },
     {
       "id": "ari_pfr_e4b84b9ab405",
@@ -4150,7 +4216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0421
+      "storyRank": 0.0363
     },
     {
       "id": "ari_espn_d7b01b823dab7",
@@ -4202,7 +4268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0418
+      "storyRank": 0.0362
     },
     {
       "id": "x_tl_joshweinfuss_2124221782328762370",
@@ -4258,7 +4324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0446,
+      "storyRank": 0.0387,
       "isSupersededInjuryUpdate": true
     },
     {
@@ -4293,7 +4359,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0401
+      "storyRank": 0.0349
     },
     {
       "id": "ari_tx_fd391e4098e9",
@@ -4328,94 +4394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
-    },
-    {
-      "id": "ari_yts_0T49vg2_x2Y",
-      "type": "video",
-      "videoId": "0T49vg2_x2Y",
-      "embeddable": true,
-      "title": "Cardinals at Chiefs Preview: KC Insider Soren Petro Breaks Down The Matchup | Arizona Cardinals 2026",
-      "summary": "",
-      "duration": "14:23",
-      "imageUrl": "https://i.ytimg.com/vi/0T49vg2_x2Y/hqdefault.jpg",
-      "imageAlt": "Cardinals at Chiefs Preview: KC Insider Soren Petro Breaks Down The Matchup | Arizona Cardinals 2026",
-      "publishedAt": "2026-11-21T07:25:00.804Z",
-      "url": "https://www.youtube.com/watch?v=0T49vg2_x2Y",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=0T49vg2_x2Y",
-      "channel": "Arizona Cardinals",
-      "outletId": "cardinals_official",
-      "outletName": "Arizona Cardinals",
-      "reporterId": "cardinals_official",
-      "reporterName": "Arizona Cardinals",
-      "author": "Arizona Cardinals",
-      "authorHandle": "@azcardinals",
-      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0351
-    },
-    {
-      "id": "ari_tyt_2YqZ3SIz7Z4",
-      "type": "video",
-      "category": "beat",
-      "videoId": "2YqZ3SIz7Z4",
-      "embeddable": false,
-      "title": "Josh Johnson Arizona Cardinals Press Conference 11.20.26 | AZ Cardinals",
-      "summary": "AZ Cardinals QB Josh Johnson addresses the media. #ArizonaCardinals #NFL #AZCardinals #RiseUpRedSea 2026 Tickets: https://azcards.social/4du0IQI ✅ Instagram: https://www.instagram.com/azcardinals ✅ TikTok: https://www.ti",
-      "imageUrl": "https://i.ytimg.com/vi/2YqZ3SIz7Z4/hqdefault.jpg",
-      "imageAlt": "Josh Johnson Arizona Cardinals Press Conference 11.20.26 | AZ Cardinals",
-      "publishedAt": "2026-11-21T00:59:32.000Z",
-      "url": "https://www.youtube.com/watch?v=2YqZ3SIz7Z4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=2YqZ3SIz7Z4",
-      "channel": "Arizona Cardinals",
-      "outletId": "UCzNfiKcvNjLHljohEkO83Rg",
-      "outletName": "Arizona Cardinals",
-      "reporterId": "UCzNfiKcvNjLHljohEkO83Rg",
-      "reporterName": "Arizona Cardinals",
-      "author": "Arizona Cardinals",
-      "authorHandle": "@azcardinals",
-      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "11394",
-          "name": "Josh Johnson",
-          "shortName": "J. Johnson",
-          "position": "QB",
-          "jersey": 9,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/11394.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0326,
-      "duration": "5:01"
+      "storyRank": 0.0311
     },
     {
       "id": "ari_rss_8715570a83f7",
@@ -4466,7 +4445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0278
     },
     {
       "id": "ari_vid_d2f0d74f47e5",
@@ -4512,7 +4491,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0274
+    },
+    {
+      "id": "ari_yts_0T49vg2_x2Y",
+      "type": "video",
+      "videoId": "0T49vg2_x2Y",
+      "embeddable": true,
+      "title": "Cardinals at Chiefs Preview: KC Insider Soren Petro Breaks Down The Matchup | Arizona Cardinals 2026",
+      "summary": "",
+      "duration": "14:23",
+      "imageUrl": "https://i.ytimg.com/vi/0T49vg2_x2Y/hqdefault.jpg",
+      "imageAlt": "Cardinals at Chiefs Preview: KC Insider Soren Petro Breaks Down The Matchup | Arizona Cardinals 2026",
+      "publishedAt": "2026-11-20T19:01:45.825Z",
+      "url": "https://www.youtube.com/watch?v=0T49vg2_x2Y",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=0T49vg2_x2Y",
+      "channel": "Arizona Cardinals",
+      "outletId": "cardinals_official",
+      "outletName": "Arizona Cardinals",
+      "reporterId": "cardinals_official",
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@azcardinals",
+      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0272
     },
     {
       "id": "ari_rss_ea12aebba2bc",
@@ -4563,7 +4581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0303
+      "storyRank": 0.027
     },
     {
       "id": "ari_vid_12af71916f68",
@@ -4600,7 +4618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301
+      "storyRank": 0.0268
     },
     {
       "id": "ari_vid_a9e0a80c042e",
@@ -4646,7 +4664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0265
     },
     {
       "id": "ari_rss_496a695106c6",
@@ -4689,79 +4707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
-    },
-    {
-      "id": "ari_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.025
-    },
-    {
-      "id": "ari_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
+      "storyRank": 0.0228
     },
     {
       "id": "ari_espn_ebc1b0ad1a476",
@@ -4796,7 +4742,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0224
+    },
+    {
+      "id": "ari_yts_akdLQ9pf89M",
+      "type": "video",
+      "videoId": "akdLQ9pf89M",
+      "embeddable": true,
+      "title": "Thank you for your service, Pete ❤️ @SeatGeek #nfl #azcardinals #salutetoservice #surprise",
+      "summary": "",
+      "duration": "0:45",
+      "imageUrl": "https://i.ytimg.com/vi/akdLQ9pf89M/hqdefault.jpg",
+      "imageAlt": "Thank you for your service, Pete ❤️ @SeatGeek #nfl #azcardinals #salutetoservice #surprise",
+      "publishedAt": "2026-11-19T19:01:45.825Z",
+      "url": "https://www.youtube.com/watch?v=akdLQ9pf89M",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=akdLQ9pf89M",
+      "channel": "Arizona Cardinals",
+      "outletId": "cardinals_official",
+      "outletName": "Arizona Cardinals",
+      "reporterId": "cardinals_official",
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@azcardinals",
+      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
     },
     {
       "id": "ari_vid_fbc3b952bcc7",
@@ -4833,7 +4818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0239
+      "storyRank": 0.0217
     },
     {
       "id": "ari_vid_a1bec3999c26",
@@ -4879,7 +4864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0204
     },
     {
       "id": "ari_vid_1ee9a30c224c",
@@ -4916,85 +4901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
-    },
-    {
-      "id": "ari_yts_akdLQ9pf89M",
-      "type": "video",
-      "videoId": "akdLQ9pf89M",
-      "embeddable": true,
-      "title": "Thank you for your service, Pete ❤️ @SeatGeek #nfl #azcardinals #salutetoservice #surprise",
-      "summary": "",
-      "duration": "0:45",
-      "imageUrl": "https://i.ytimg.com/vi/akdLQ9pf89M/hqdefault.jpg",
-      "imageAlt": "Thank you for your service, Pete ❤️ @SeatGeek #nfl #azcardinals #salutetoservice #surprise",
-      "publishedAt": "2026-11-19T07:25:00.804Z",
-      "url": "https://www.youtube.com/watch?v=akdLQ9pf89M",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=akdLQ9pf89M",
-      "channel": "Arizona Cardinals",
-      "outletId": "cardinals_official",
-      "outletName": "Arizona Cardinals",
-      "reporterId": "cardinals_official",
-      "reporterName": "Arizona Cardinals",
-      "author": "Arizona Cardinals",
-      "authorHandle": "@azcardinals",
-      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
-    },
-    {
-      "id": "ari_yts_RgtJyKfaWc0",
-      "type": "video",
-      "videoId": "RgtJyKfaWc0",
-      "embeddable": false,
-      "title": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "8:01",
-      "imageUrl": "https://i.ytimg.com/vi/RgtJyKfaWc0/hqdefault.jpg",
-      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-19T07:25:00.804Z",
-      "url": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0204
     },
     {
       "id": "ari_pfr_70041b3c4411",
@@ -5027,7 +4934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0188
     },
     {
       "id": "ari_rss_a2384037b926",
@@ -5070,7 +4977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.019
     },
     {
       "id": "ari_vid_32f3a10d1137",
@@ -5116,7 +5023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0189
     },
     {
       "id": "ari_vid_6110174f8fa9",
@@ -5162,7 +5069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0188
     },
     {
       "id": "ari_vid_e4224dbeb629",
@@ -5208,7 +5115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0188
     },
     {
       "id": "ari_vid_044d10f46fc1",
@@ -5254,7 +5161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0187
     },
     {
       "id": "ari_rss_393cd8eac690",
@@ -5297,7 +5204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0187
     },
     {
       "id": "ari_vid_9450a8eab9f2",
@@ -5334,7 +5241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0185
     },
     {
       "id": "ari_vid_ccda6c38f9d3",
@@ -5380,26 +5287,31 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.0184
     },
     {
-      "id": "ari_rss_546e6ac85e20",
-      "type": "article",
-      "title": "How To Watch: Cardinals at Chiefs, Week 11",
-      "summary": "Check out all the ways to watch, listen and live stream the Arizona Cardinals against the Kansas City Chiefs on November 22, 2026",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/fcahmdrtqlp8lm1oqnx3.jpg",
-      "imageAlt": "How To Watch: Cardinals at Chiefs, Week 11",
-      "publishedAt": "2026-11-18T15:02:11.000Z",
-      "url": "https://www.azcardinals.com/news/how-to-watch-cardinals-at-chiefs-week-11",
-      "outletId": "cardinals_official",
-      "outletName": "azcardinals.com Official",
-      "reporterId": "cardinals_official",
-      "reporterName": "azcardinals.com Official",
-      "author": "azcardinals.com Official",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://www.azcardinals.com/news/",
+      "id": "ari_yts_RgtJyKfaWc0",
+      "type": "video",
+      "videoId": "RgtJyKfaWc0",
+      "embeddable": false,
+      "title": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:01",
+      "imageUrl": "https://i.ytimg.com/vi/RgtJyKfaWc0/hqdefault.jpg",
+      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T19:01:45.825Z",
+      "url": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
       "trustTier": 1,
-      "wireSource": "club_official_rss",
+      "wireSource": "youtube_search",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
@@ -5414,7 +5326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0193
+      "storyRank": 0.0183
     },
     {
       "id": "ari_tx_d9eaa83b28b6",
@@ -5449,7 +5361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0169
     },
     {
       "id": "ari_espn_1bf54df830186",
@@ -5493,7 +5405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0166
     },
     {
       "id": "ari_pfr_b8ba66f816a2",
@@ -5526,7 +5438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0162
     },
     {
       "id": "ari_pfr_c54cafa53f65",
@@ -5576,7 +5488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0174
+      "storyRank": 0.0161
     },
     {
       "id": "ari_pfr_7952893c8067",
@@ -5626,7 +5538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0157
     },
     {
       "id": "ari_vid_50de87a7a896",
@@ -5680,7 +5592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0157
     },
     {
       "id": "ari_tx_9027ba4f629c",
@@ -5748,7 +5660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0145
     },
     {
       "id": "ari_vid_c69fe672a398",
@@ -5785,7 +5697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0136
     },
     {
       "id": "ari_vid_c96e43eb404b",
@@ -5831,7 +5743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0134
     },
     {
       "id": "ari_vid_890d6209aa27",
@@ -5868,7 +5780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.003
     },
     {
       "id": "ari_vid_07b8c260feb6",
@@ -5930,7 +5842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0121
     },
     {
       "id": "ari_vid_ee96d41c0b5c",
@@ -5976,7 +5888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "ari_vid_e2427d5f5b17",
@@ -6013,7 +5925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "ari_vid_903be854f41e",
@@ -6059,7 +5971,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ari_vid_a60a4a275493",
@@ -6105,7 +6017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ari_vid_2897e8515a2e",
@@ -6151,7 +6063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ari_vid_f6267a292f48",
@@ -6197,7 +6109,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ari_vid_b02acda9a389",
@@ -6251,7 +6163,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ari_vid_db207f83c13c",
@@ -6297,7 +6209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0119
     },
     {
       "id": "ari_vid_69d38f28782c",
@@ -6359,7 +6271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0119
     },
     {
       "id": "ari_pfr_354cfeac067c",
@@ -6409,7 +6321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.0115
     },
     {
       "id": "ari_vid_f3a41ae247c0",
@@ -6455,7 +6367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.0115
     },
     {
       "id": "ari_pfr_61a6dbaa1f39",
@@ -6497,7 +6409,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0104
+    },
+    {
+      "id": "ari_yts_5I0UD-Ikn38",
+      "type": "video",
+      "videoId": "5I0UD-Ikn38",
+      "embeddable": true,
+      "title": "CB19 in action 🔜   #nfl #azcardinals #football #carsonbeck #rookie",
+      "summary": "",
+      "duration": "1:29",
+      "imageUrl": "https://i.ytimg.com/vi/5I0UD-Ikn38/hqdefault.jpg",
+      "imageAlt": "CB19 in action 🔜   #nfl #azcardinals #football #carsonbeck #rookie",
+      "publishedAt": "2026-11-14T19:01:45.825Z",
+      "url": "https://www.youtube.com/watch?v=5I0UD-Ikn38",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=5I0UD-Ikn38",
+      "channel": "Arizona Cardinals",
+      "outletId": "cardinals_official",
+      "outletName": "Arizona Cardinals",
+      "reporterId": "cardinals_official",
+      "reporterName": "Arizona Cardinals",
+      "author": "Arizona Cardinals",
+      "authorHandle": "@azcardinals",
+      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0104
     },
     {
       "id": "ari_tx_1e50bc9edf23",
@@ -6541,46 +6492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
-    },
-    {
-      "id": "ari_yts_5I0UD-Ikn38",
-      "type": "video",
-      "videoId": "5I0UD-Ikn38",
-      "embeddable": true,
-      "title": "CB19 in action 🔜   #nfl #azcardinals #football #carsonbeck #rookie",
-      "summary": "",
-      "duration": "1:29",
-      "imageUrl": "https://i.ytimg.com/vi/5I0UD-Ikn38/hqdefault.jpg",
-      "imageAlt": "CB19 in action 🔜   #nfl #azcardinals #football #carsonbeck #rookie",
-      "publishedAt": "2026-11-14T07:25:00.804Z",
-      "url": "https://www.youtube.com/watch?v=5I0UD-Ikn38",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=5I0UD-Ikn38",
-      "channel": "Arizona Cardinals",
-      "outletId": "cardinals_official",
-      "outletName": "Arizona Cardinals",
-      "reporterId": "cardinals_official",
-      "reporterName": "Arizona Cardinals",
-      "author": "Arizona Cardinals",
-      "authorHandle": "@azcardinals",
-      "authorProfileUrl": "https://www.youtube.com/@azcardinals",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0098
     },
     {
       "id": "ari_vid_89e1806176d7",
@@ -6617,7 +6529,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0092
     },
     {
       "id": "ari_vid_8ce6400f65b2",
@@ -6671,7 +6583,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0092
     },
     {
       "id": "ari_tx_3c1472522feb",
@@ -6706,7 +6618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0088
     },
     {
       "id": "ari_vid_f7c0669419f6",
@@ -6752,7 +6664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "ari_vid_79c453490612",
@@ -6789,7 +6701,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "ari_vid_bb5075e64cf9",
@@ -6826,7 +6738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "ari_vid_111cb04d7da3",
@@ -6863,7 +6775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
+      "storyRank": 0.0021
     },
     {
       "id": "ari_vid_5ae9c4cbce4e",
@@ -6908,7 +6820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "ari_vid_b3c7e9661950",
@@ -6944,7 +6856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "ari_vid_1bc7500c51a6",
@@ -6990,7 +6902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "ari_vid_75b2919a82b8",
@@ -7036,7 +6948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "ari_vid_904a634aaa8f",
@@ -7082,7 +6994,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "ari_vid_d952ace90c9d",
@@ -7127,7 +7039,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "ari_vid_858112361575",
@@ -7164,7 +7076,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "ari_vid_f772fafbca6f",
@@ -7209,7 +7121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0076
     },
     {
       "id": "ari_tx_6a1e06033ccc",
@@ -7261,7 +7173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0073
     },
     {
       "id": "ari_tx_d66c6b2846a4",
@@ -7329,7 +7241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0067
     },
     {
       "id": "ari_vid_fc4bf2eafd47",
@@ -7366,7 +7278,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "ari_vid_e67b6ce15bb9",
@@ -7412,7 +7324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0064
     },
     {
       "id": "ari_vid_6a938f9878b2",
@@ -7449,7 +7361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0015
     },
     {
       "id": "ari_vid_9050f1099fc5",
@@ -7511,7 +7423,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_6fe2a4b444ce",
@@ -7557,7 +7469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_6415d8af822a",
@@ -7594,7 +7506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_4fc4c8b9652d",
@@ -7640,7 +7552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_cb274f72152a",
@@ -7694,7 +7606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_ff37ef30596f",
@@ -7740,7 +7652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_004d6f770f4c",
@@ -7794,7 +7706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ari_vid_e5709eee93e8",
@@ -7840,7 +7752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0058
     },
     {
       "id": "ari_tx_832b1369993f",
@@ -7884,7 +7796,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0053
     },
     {
       "id": "ari_vid_0a6a12b6027b",
@@ -7921,7 +7833,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0051
     },
     {
       "id": "ari_vid_e5e5d6357828",
@@ -7958,7 +7870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0051
     },
     {
       "id": "ari_vid_ce4e6adb13a7",
@@ -8012,7 +7924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.005
     },
     {
       "id": "ari_vid_02bfd32d25f3",
@@ -8049,7 +7961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.005
     },
     {
       "id": "ari_tx_8fe3c2fbc22d",
@@ -8084,7 +7996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0049
     },
     {
       "id": "ari_vid_de8b85fc76f8",
@@ -8121,174 +8033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "ari_vid_14df7f25b011",
-      "type": "video",
-      "title": "Sideline Exchange: Hjalte Froholdt",
-      "summary": "Cardinals insider Dani Sureck sits down with center Hjalte Froholdt to chat about switching to new quarterback Gardner Minshew, his viral moment of his two-block play in Dallas, and needing to find boulders to lift for h",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/euemv8y5jy0ftuwozmzt.png",
-      "imageAlt": "Sideline Exchange: Hjalte Froholdt",
-      "publishedAt": "2026-11-05T17:59:00.000Z",
-      "url": "https://www.azcardinals.com/video/sideline-exchange-hjalte-froholdt",
-      "externalVideoUrl": "https://www.azcardinals.com/video/sideline-exchange-hjalte-froholdt",
-      "duration": "4:59",
-      "outletId": "cardinals_official",
-      "outletName": "azcardinals.com Video",
-      "reporterId": "cardinals_official",
-      "reporterName": "azcardinals.com Video",
-      "author": "azcardinals.com Video",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://www.azcardinals.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "3886633",
-          "name": "Hjalte Froholdt",
-          "shortName": "H. Froholdt",
-          "position": "C",
-          "jersey": 72,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3886633.png"
-        },
-        {
-          "id": "4038524",
-          "name": "Gardner Minshew II",
-          "shortName": "G. Minshew II",
-          "position": "QB",
-          "jersey": 15,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038524.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "ari_vid_972807ec24c1",
-      "type": "video",
-      "title": "DC Nick Rallis Press Conference | Week 9 vs. Seattle Seahawks",
-      "summary": "DC Nick Rallis addresses the media on Thursday, November 5th.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/w4uclcky9wtrv0yqyudz.jpg",
-      "imageAlt": "DC Nick Rallis Press Conference | Week 9 vs. Seattle Seahawks",
-      "publishedAt": "2026-11-05T17:10:00.000Z",
-      "url": "https://www.azcardinals.com/video/dc-nick-rallis-press-conference-week-9-vs-seattle-seahawks",
-      "externalVideoUrl": "https://www.azcardinals.com/video/dc-nick-rallis-press-conference-week-9-vs-seattle-seahawks",
-      "duration": "6:47",
-      "outletId": "cardinals_official",
-      "outletName": "azcardinals.com Video",
-      "reporterId": "cardinals_official",
-      "reporterName": "azcardinals.com Video",
-      "author": "azcardinals.com Video",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://www.azcardinals.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "ari_vid_592dcf23c246",
-      "type": "video",
-      "title": "STC Michael Ghobrial Press Conference | Week 9 vs. Seattle Seahawks",
-      "summary": "STC Michael Ghobrial addresses the media on Thursday, November 5th.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cardinals/ecgaa1l5l2qoozfsharg.jpg",
-      "imageAlt": "STC Michael Ghobrial Press Conference | Week 9 vs. Seattle Seahawks",
-      "publishedAt": "2026-11-05T17:00:00.000Z",
-      "url": "https://www.azcardinals.com/video/stc-michael-ghobrial-press-conference-week-9-vs-seattle-seahawks",
-      "externalVideoUrl": "https://www.azcardinals.com/video/stc-michael-ghobrial-press-conference-week-9-vs-seattle-seahawks",
-      "duration": "7:46",
-      "outletId": "cardinals_official",
-      "outletName": "azcardinals.com Video",
-      "reporterId": "cardinals_official",
-      "reporterName": "azcardinals.com Video",
-      "author": "azcardinals.com Video",
-      "authorHandle": "@AZCardinals",
-      "authorProfileUrl": "https://www.azcardinals.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
-    },
-    {
-      "id": "ari_yt__MMoNTxhE28",
-      "type": "video",
-      "category": "film",
-      "videoId": "_MMoNTxhE28",
-      "embeddable": true,
-      "title": "The TRUTH about JERRY JONES & The '26 Dallas Cowboys | PFF NFL Show",
-      "summary": "Jac & Cris talk about the Cowboys disastrous loss against the Cardinals and where the team can go from here. SUBSCRIBE TO OUR CHANNEL: / profootballfocus SUBSCRIBE TO PFF+ www.pff.com/subscribe FOLLOW US ON: Instagram -",
-      "imageUrl": "https://i.ytimg.com/vi/_MMoNTxhE28/hqdefault.jpg",
-      "imageAlt": "The TRUTH about JERRY JONES & The '26 Dallas Cowboys | PFF NFL Show",
-      "publishedAt": "2026-11-04T07:14:10.000Z",
-      "url": "https://www.youtube.com/watch?v=_MMoNTxhE28",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=_MMoNTxhE28",
-      "channel": "Pro Football Focus",
-      "outletId": "pff_official_yt",
-      "outletName": "Pro Football Focus",
-      "reporterId": "pff_official_yt",
-      "reporterName": "Pro Football Focus",
-      "author": "Pro Football Focus",
-      "authorHandle": "@ProFootballFocus",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 25,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.001,
-      "duration": "11:00"
+      "storyRank": 0.0048
     },
     {
       "id": "ari_pwire_4430841_64897128",

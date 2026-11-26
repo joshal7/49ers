@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:16.625Z",
+  "updatedAt": "2026-11-26T18:59:57.935Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 340563099,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 300660330,
       "top51": 222231773,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 84
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 342563856,
       "top51": 323180273,
       "teamCapSpace": -15563856,
       "otcRawTeamCapSpace": -15563856,
-      "effectiveCapSpace": -21250435,
+      "effectiveCapSpace": -17423856,
       "activeCapSpending": 323180273,
       "offenseSpend": 150695765,
       "defenseSpend": 169759508,
@@ -174,7 +174,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 323037517,
       "top51": 323037517,

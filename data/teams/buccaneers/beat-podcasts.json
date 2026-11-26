@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:26:52.931Z",
+  "updatedAt": "2026-11-26T19:05:04.328Z",
   "windowDays": 7,
-  "totalEpisodes": 10,
+  "totalEpisodes": 8,
   "shows": [
     {
       "id": "buccaneers_locked_on_bucs",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/f1/72/35/f17235e3-fa66-7d24-0928-a06495efadde/mza_2805909275589411514.jpg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "buccaneers_salty_dogs",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/d7/3d/60/d73d6058-06f3-1e86-807f-2a142c936c47/mza_8674259041146946255.jpg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "buccaneers_bucs_players_table",
@@ -212,46 +212,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
       "audioStreamUrl": "https://traffic.megaphone.fm/RTERE3617170925.mp3"
-    },
-    {
-      "id": "pod_buccaneers_locked_on_bucs_1000802968024",
-      "trackId": 1000802968024,
-      "collectionId": 1139752021,
-      "showId": "buccaneers_locked_on_bucs",
-      "showName": "Locked On Bucs",
-      "showFullTitle": "Locked On Bucs – Daily Podcast On The Tampa Bay Buccaneers",
-      "hosts": "Locked On Podcast Network, James Yarcho",
-      "network": "Locked On Podcast Network, James Yarcho",
-      "title": "Bucky vs Gibbs Is MUST SEE TV | Injuries PLAGUING Both Sides | Lions' Defense IS BEATABLE",
-      "summary": "Bucky Irving and Jahmyr Gibbs are the two most important players in this matchup and may be appointment television for NFL fans in Week 11 With Baker Mayfield dealing with a foot injury and Aiden Hutchinson out, both teams are dealing with major injuries to key players. The ",
-      "publishedAt": "2026-11-19T16:59:37.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/52/37/6d/52376d78-b535-4c3c-1895-5501567cfdb8/mza_14541153551318884920.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bucky-vs-gibbs-is-must-see-tv-injuries-plaguing-both/id1139752021?i=1000802968024&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/ca31e9/lockedon.simplecastaudio.com/8bf5e17f-ef5a-4b2a-b3a5-27a00de50027/episodes/45ba3387-bb03-4afe-8c55-3bcd880d0011/audio/128/default.mp3?aid=rss_feed&awCollectionId=8bf5e17f-ef5a-4b2a-b3a5-27a00de50027&awEpisodeId=45ba3387-bb03-4afe-8c55-3bcd880d0011&feed=mOWpQkH2"
-    },
-    {
-      "id": "pod_buccaneers_pewter_report_podcast_1000802880273",
-      "trackId": 1000802880273,
-      "collectionId": 1216727537,
-      "showId": "buccaneers_pewter_report_podcast",
-      "showName": "Pewter Report Podcast",
-      "showFullTitle": "Pewter Report Podcast",
-      "hosts": "Bucs",
-      "network": "Bucs",
-      "title": "Bucs At Lions Preview",
-      "summary": "The Bucs are back to playing this week following their bye and have a tough matchup against the Detroit Lions. Tampa Bay also have some injury concerns over quarterback Baker Mayfield, making it a big question about who's going to start at the position on Sunday. Pewter Repo",
-      "publishedAt": "2026-11-19T07:46:00.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/d7/3d/60/d73d6058-06f3-1e86-807f-2a142c936c47/mza_8674259041146946255.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bucs-at-lions-preview/id1216727537?i=1000802880273&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
-      "audioStreamUrl": "https://traffic.megaphone.fm/RTERE5244247003.mp3"
     }
   ]
 }

@@ -25950,6 +25950,268 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'All-32-Team Relevance & Freshness Guards: Zero Stale SumerSports/Other-Team/Retired-Player Film Leaks, Zero Fantasy Boilerplate, Zero Off-Beat Local Chatter & Team-First Film Ordering',
+  async () => {
+    const {
+      isLeagueWideFilmAnalyticsTweet,
+      isLocalBeatPostOffTopicForTeam,
+      isCommercialFantasyOrBettingFiller,
+      isGenericLeagueWideRoundupWithoutTeam
+    } = await import('../src/engine/linkIntegrity.js');
+    const { renderNewsViewHtml } = await import('../src/views/newsView.js');
+    const { getTeamByAbbr, setActiveTeamConfig } = await import('../src/config/teamRegistry.js');
+
+    const nowMs = Date.parse('2026-11-26T18:00:00Z');
+    const daysAgoIso = d => new Date(nowMs - d * 86_400_000).toISOString();
+    const tenTeam = getTeamByAbbr('TEN');
+    const lvTeam = getTeamByAbbr('LV');
+    const larTeam = getTeamByAbbr('LAR');
+    const sfTeam = getTeamByAbbr('SF');
+    const detTeam = getTeamByAbbr('DET');
+    const minTeam = getTeamByAbbr('MIN');
+    const carTeam = getTeamByAbbr('CAR');
+
+    // 1. Stale & off-team SumerSports / Brett Kollmann posts must NEVER pass league-wide film chart gate
+    assert.equal(
+      isLeagueWideFilmAnalyticsTweet(
+        {
+          title: "Pass-rush win rate leaders through Sunday's action (min. 20 pass-rush snaps)",
+          authorHandle: '@SumerSports',
+          imageUrl: 'https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:abc/chart@jpeg',
+          publishedAt: daysAgoIso(73)
+        },
+        tenTeam,
+        { nowMs }
+      ),
+      false,
+      '73-day-old SumerSports Week 1 chart must be rejected by freshness gate'
+    );
+    assert.equal(
+      isLeagueWideFilmAnalyticsTweet(
+        {
+          title:
+            "One matchup to watch in the opener: NE was one of the most effective pass defenses in the NFL when stunting in 2025, and Darnold ranked in the bottom 20% of QBs against stunts. It didn't end up being as big of an advantage for NE in the Super Bowl (-0.05 EPA/DB, 28% of DB).",
+          authorHandle: '@SumerSports',
+          imageUrl: 'https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:abc/ne-sea@jpeg',
+          publishedAt: daysAgoIso(2)
+        },
+        tenTeam,
+        { nowMs }
+      ),
+      false,
+      'NE/Darnold prior-season matchup post must be rejected on Titans even if recent'
+    );
+    assert.equal(
+      isLeagueWideFilmAnalyticsTweet(
+        {
+          title: 'Aaron Donald was the only interior DL with a pass-rush win rate above 20% in his last season (min. 250 pass-rush snaps)',
+          authorHandle: '@SumerSports',
+          imageUrl: 'https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:abc/donald@jpeg',
+          publishedAt: daysAgoIso(2)
+        },
+        tenTeam,
+        { nowMs }
+      ),
+      false,
+      'Retired player historical spotlight (Aaron Donald last season) must be rejected on Titans'
+    );
+    assert.equal(
+      isLeagueWideFilmAnalyticsTweet(
+        {
+          title: 'CB Separation prevented on all routes and on ball grade',
+          authorHandle: '@throwthedamball',
+          imageUrl: 'https://pbs.twimg.com/media/FreshChart.png',
+          publishedAt: daysAgoIso(2)
+        },
+        tenTeam,
+        { nowMs }
+      ),
+      true,
+      'Fresh 2-day-old genuine 32-team league-wide chart must remain allowed'
+    );
+
+    // 2. Local beat writer off-topic / reassigned / multi-sport / personal chatter guard across clubs
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam('The #Commanders are hosting WR Brandon Aiyuk for a visit Wednesday, per source.', {
+        team: lvTeam,
+        upcomingOpponentAbbr: 'CLE',
+        recentOpponentAbbr: 'DEN'
+      }),
+      true,
+      'Reassigned reporter Commanders tweet must be dropped on Raiders'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam("Giants are pushing around the Jags' offense (literally), and pushing them around on ST too.", {
+        team: larTeam,
+        upcomingOpponentAbbr: 'TB',
+        recentOpponentAbbr: 'SEA'
+      }),
+      true,
+      'Unrelated Giants/Jags tweet must be dropped on Rams'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam('OH HELLO', { team: larTeam }),
+      true,
+      'Cryptic personal tweet without football context must be dropped'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam('Keegan Murray showcase game?', { team: sfTeam }),
+      true,
+      'NBA Sacramento Kings tweet must be dropped on 49ers'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam("I'm guessing the Cubs and Mets don't think there'll be a salary cap in any new labor agreement.", {
+        team: sfTeam
+      }),
+      true,
+      'MLB Cubs/Mets tweet must be dropped on 49ers'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam("The 'Madden' movie whiffed on the title character, even if it has redeeming qualities", {
+        team: sfTeam
+      }),
+      true,
+      'Movie review tweet must be dropped on 49ers'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam('Gophers (6-0) up 43-35 over Utah in South Carolina', { team: minTeam }),
+      true,
+      'NCAA Gophers basketball tweet must be dropped on Vikings'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam(
+        '49ers have a pretty manageable schedule down the stretch to get the one seed. Not many gimmes, but not as tough.',
+        { team: detTeam }
+      ),
+      false,
+      'Same-conference playoff #1 seed race tweet must remain allowed on Lions (indirectly very applicable)'
+    );
+    assert.equal(
+      isLocalBeatPostOffTopicForTeam('Jaguars pass defense ranks top-10 in EPA/play heading into Sunday.', {
+        team: tenTeam,
+        upcomingOpponentAbbr: 'JAX'
+      }),
+      false,
+      'Upcoming division opponent scouting tweet must remain allowed on Titans'
+    );
+
+    // 3. ESPN Fantasy player-wire boilerplate & generic PFR/NFLTR roundups without team mention
+    assert.equal(
+      isCommercialFantasyOrBettingFiller(
+        'Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.',
+        'Which players are on the rise and which ones are falling'
+      ),
+      true,
+      'Eric Karabell fantasy trade-value boilerplate must be blocked'
+    );
+    assert.equal(
+      isCommercialFantasyOrBettingFiller(
+        'Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.',
+        'Liz Loza breaks down Week 12 flex plays'
+      ),
+      true,
+      'Liz Loza fantasy flex boilerplate must be blocked'
+    );
+    assert.equal(
+      isGenericLeagueWideRoundupWithoutTeam(
+        'NFL Practice Squad Updates: 11/17/26',
+        'Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Kyle Hergel',
+        carTeam
+      ),
+      true,
+      'Generic PFR Practice Squad roundup without Panthers in visible snippet must be blocked on Panthers'
+    );
+    assert.equal(
+      isGenericLeagueWideRoundupWithoutTeam(
+        'NFL Practice Squad Updates: 11/17/26',
+        'Carolina Panthers Signed: CB Marco Wilson to practice squad',
+        carTeam
+      ),
+      false,
+      'PFR roundup explicitly highlighting Panthers in visible snippet may stay on Panthers'
+    );
+
+    // 4. Film & Trench runtime view defense: drops stale >14d filmOnlyScope, caps fresh filmOnlyScope <=2, ranks direct team film first
+    setActiveTeamConfig(tenTeam);
+    try {
+      const filmItems = [
+        {
+          id: 'ten_stale_sumer',
+          type: 'tweet',
+          category: 'film',
+          filmOnlyScope: true,
+          isLeagueWideFilmChart: true,
+          title: 'Stale 75d SumerSports Week 1 pass-rush win rate chart',
+          author: 'SumerSports',
+          url: 'https://bsky.app/profile/sumersports.bsky.social/post/stale1',
+          publishedAt: daysAgoIso(75)
+        },
+        {
+          id: 'ten_fresh_chart_1',
+          type: 'tweet',
+          category: 'film',
+          filmOnlyScope: true,
+          isLeagueWideFilmChart: true,
+          title: 'Fresh 32-Team CB Separation Chart Alpha',
+          author: 'Judah Fortgang',
+          url: 'https://x.com/throwthedamball/status/2199000000000000001',
+          publishedAt: daysAgoIso(0.2)
+        },
+        {
+          id: 'ten_fresh_chart_2',
+          type: 'tweet',
+          category: 'film',
+          filmOnlyScope: true,
+          isLeagueWideFilmChart: true,
+          title: 'Fresh 32-Team EPA/Play Chart Beta',
+          author: 'Judah Fortgang',
+          url: 'https://x.com/throwthedamball/status/2199000000000000002',
+          publishedAt: daysAgoIso(0.4)
+        },
+        {
+          id: 'ten_fresh_chart_3',
+          type: 'tweet',
+          category: 'film',
+          filmOnlyScope: true,
+          isLeagueWideFilmChart: true,
+          title: 'Fresh 32-Team Coverage Grade Chart Gamma Overflow',
+          author: 'Judah Fortgang',
+          url: 'https://x.com/throwthedamball/status/2199000000000000003',
+          publishedAt: daysAgoIso(0.6)
+        },
+        {
+          id: 'ten_direct_film',
+          type: 'article',
+          category: 'film',
+          title: 'Titans vs. Jaguars Trench & Pass-Rush Preview',
+          author: 'Check the Mic',
+          url: 'https://www.youtube.com/watch?v=abc12345678',
+          publishedAt: daysAgoIso(2)
+        }
+      ];
+      const renderedFilmHtml = renderNewsViewHtml({
+        appData: {
+          meta: { teamAbbr: 'TEN', teamSlug: 'titans', currentWeek: 12 },
+          roster: { players: [] },
+          scheduleMatchup: { schedule: [] },
+          news: { rawStream: filmItems }
+        },
+        newsCategoryFilter: 'film',
+        filteredRawItems: filmItems,
+        nowMs
+      });
+      assert.ok(!renderedFilmHtml.includes('Stale 75d SumerSports'), 'Film & Trench must strip stale >14d filmOnlyScope items at render');
+      assert.ok(!renderedFilmHtml.includes('Chart Gamma Overflow'), 'Film & Trench must cap filmOnlyScope items at <=2');
+      const idxDirect = renderedFilmHtml.indexOf('Titans vs. Jaguars Trench');
+      const idxChart1 = renderedFilmHtml.indexOf('Fresh 32-Team CB Separation Chart Alpha');
+      assert.ok(idxDirect > 0 && idxChart1 > idxDirect, 'Direct team film must render BEFORE filmOnlyScope league-wide charts in Top sort');
+    } finally {
+      setActiveTeamConfig(sfTeam);
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

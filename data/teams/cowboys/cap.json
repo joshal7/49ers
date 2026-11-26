@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:40:46.136Z",
+  "updatedAt": "2026-11-26T19:04:17.809Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/dallas-cowboys",
   "spotracUrl": "https://www.spotrac.com/nfl/dallas-cowboys/cap/",
@@ -8,14 +8,14 @@
     "2026": {
       "year": 2026,
       "capCeiling": 331022787,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 314320819,
       "top51": 253626648,
       "teamCapSpace": 16701968,
       "otcRawTeamCapSpace": 16701968,
       "effectiveCapSpace": 16701968,
-      "activeCapSpending": 264297841,
+      "activeCapSpending": 263967541,
       "offenseSpend": 161099199,
       "defenseSpend": 93885009,
       "specialSpend": 8983333,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 54,
-      "totalSignedCount": 78
+      "totalSignedCount": 54
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 326701794,
       "top51": 325977572,
       "teamCapSpace": 298206,
       "otcRawTeamCapSpace": 298206,
-      "effectiveCapSpace": -17663786,
+      "effectiveCapSpace": -12721794,
       "activeCapSpending": 325977572,
       "offenseSpend": 207914336,
       "defenseSpend": 109884902,
@@ -188,7 +188,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 281351571,
       "top51": 281351571,

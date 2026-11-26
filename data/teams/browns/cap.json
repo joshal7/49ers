@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:33.886Z",
+  "updatedAt": "2026-11-26T19:07:40.763Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/cleveland-browns",
   "spotracUrl": "https://www.spotrac.com/nfl/cleveland-browns/cap/",
@@ -8,18 +8,18 @@
     "2026": {
       "year": 2026,
       "capCeiling": 338447347,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 326310062,
+      "totalCapLiabilities": 326576062,
       "top51": 193211511,
-      "teamCapSpace": 12137285,
-      "otcRawTeamCapSpace": 12137285,
-      "effectiveCapSpace": 12137285,
+      "teamCapSpace": 11871285,
+      "otcRawTeamCapSpace": 11871285,
+      "effectiveCapSpace": 11871285,
       "activeCapSpending": 204639634,
       "offenseSpend": 104740344,
       "defenseSpend": 96208040,
       "specialSpend": 3691250,
-      "deadMoneyTotal": 121670428,
+      "deadMoneyTotal": 121936428,
       "injuredReserveTotal": 11721606,
       "practiceSquadTotal": 3392933,
       "pupTotal": 4772765,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 80
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 265751086,
       "top51": 214094824,
       "teamCapSpace": 61248914,
       "otcRawTeamCapSpace": 61248914,
-      "effectiveCapSpace": 42103996,
+      "effectiveCapSpace": 51948914,
       "activeCapSpending": 214094824,
       "offenseSpend": 108997075,
       "defenseSpend": 105097749,
@@ -188,7 +188,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 296425333,
       "top51": 296425333,
@@ -266,8 +266,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/cleveland-browns",
-    "summary": "Cleveland Browns hold $12.14M in 2026 OverTheCap space ($12.14M effective) and +$61.25M projected for 2027.",
-    "executiveSummary": "Andrew Berry and the Browns front office hold $12.14M in gross 2026 cap space ($12.14M effective), while 2027 currently projects at +$61.25M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($5M–$9M target) helps manage scheduled cap escalations for Deshaun Watson, Denzel Ward, Jerry Jeudy, Mason Graham.",
+    "summary": "Cleveland Browns hold $11.87M in 2026 OverTheCap space ($11.87M effective) and +$61.25M projected for 2027.",
+    "executiveSummary": "Andrew Berry and the Browns front office hold $11.87M in gross 2026 cap space ($11.87M effective), while 2027 currently projects at +$61.25M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($5M–$9M target) helps manage scheduled cap escalations for Deshaun Watson, Denzel Ward, Jerry Jeudy, Mason Graham.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($5M–$9M Target vs. +$61.25M 2027 Projection)",

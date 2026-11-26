@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:01.409Z",
+  "updatedAt": "2026-11-26T19:01:16.675Z",
   "week": 13,
   "byeWeek": 11,
   "sourceUrl": "https://www.therams.com/team/injury-report/",
@@ -160,6 +160,31 @@
       "beatComment": "inactive"
     },
     {
+      "playerId": "3912189",
+      "name": "Bill Murray",
+      "position": "G",
+      "jersey": 66,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Leg",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 73,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "73% • GTD",
+      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Exited prior game with injury and did not return — awaiting Wednesday practice evaluation"
+      ],
+      "beatComment": "Murray limped to the locker room early in the fourth quarter and never returned. Head coach Sean McVay didn't mention Murray's status following the win, but it sounds like he may be dealing with a more-than-minor injury. That would further deplete a Los Angeles offensive line that has been without starting left guard Steve Avila (hamstring) since he was hurt Week 9."
+    },
+    {
       "playerId": "2573401",
       "name": "Tyler Higbee",
       "position": "TE",
@@ -233,32 +258,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Turner has been officially cleared by medical staff to return from a four-game absence due to a groin injury, and his presence gives the Rams additional depth in the pass rush alongside Ty Hamilton, Aaron Donald, Myles Garrett and Byron Young. Prior to his injury, Turner posted 22 tackles (seven solo) and two pass defenses across six regular-season games."
-    },
-    {
-      "playerId": "2575907",
-      "name": "Joe Cardona",
-      "position": "LS",
-      "jersey": 49,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2575907.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Cleared without restrictive game-day designation",
-        "Beat/podium consensus: on track to suit up"
-      ],
-      "beatComment": "The Rams' long snapper was injured last Sunday against Arizona, but should be good to go for Wednesday versus Green Bay."
     },
     {
       "playerId": "4360859",

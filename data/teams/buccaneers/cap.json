@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:26:54.963Z",
+  "updatedAt": "2026-11-26T19:05:09.245Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/tampa-bay-buccaneers",
   "spotracUrl": "https://www.spotrac.com/nfl/tampa-bay-buccaneers/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 316695507,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 301646166,
       "top51": 274825685,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 74
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 333064022,
       "top51": 332433037,
       "teamCapSpace": -6064022,
       "otcRawTeamCapSpace": -6064022,
-      "effectiveCapSpace": -30616617,
+      "effectiveCapSpace": -20944022,
       "activeCapSpending": 332433037,
       "offenseSpend": 209106288,
       "defenseSpend": 123326749,
@@ -174,7 +174,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 232031630,
       "top51": 232031630,

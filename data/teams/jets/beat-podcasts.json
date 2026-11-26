@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:28:00.725Z",
+  "updatedAt": "2026-11-26T19:06:43.810Z",
   "windowDays": 7,
-  "totalEpisodes": 16,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "jets_locked_on_jets",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/d9/19/bf/d919bf93-e799-c221-a67c-df0bd0d0ca1f/mza_1440374589601243224.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "jets_play_like_a_jet",
@@ -352,26 +352,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/otjetspod",
       "audioStreamUrl": "https://pdst.fm/e/tracking.swap.fm/track/t7yC0rGPUqahTF4et8YD/traffic.megaphone.fm/AMPP9572331809.mp3"
-    },
-    {
-      "id": "pod_jets_locked_on_jets_1000802984991",
-      "trackId": 1000802984991,
-      "collectionId": 1149033319,
-      "showId": "jets_locked_on_jets",
-      "showName": "Locked On Jets",
-      "showFullTitle": "Locked On Jets - Daily Podcast On The New York Jets",
-      "hosts": "Locked On Podcast Network, John Butchko",
-      "network": "Locked On Podcast Network, John Butchko",
-      "title": "What Every New York Jets Fan Needs To Know Before The Next Coaching Search",
-      "summary": "Is Johnson ready to let his football people lead, or will the franchise repeat its history of questionable hires? Insider debate spotlights rumored candidates like Mike Tomlin, Sean McDermott, and Jim Harbaugh, while skepticism remains over who truly controls the coaching se",
-      "publishedAt": "2026-11-19T19:00:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/5a/f5/75/5af57553-652f-1ea6-d688-30e24a295105/mza_1227900423767158943.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/what-every-new-york-jets-fan-needs-to-know-before-the/id1149033319?i=1000802984991&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/118578/lockedon.simplecastaudio.com/b4965cc8-c978-4924-980c-6904ce8a533a/episodes/a972fe2e-33f9-4574-837f-9403eea461ae/audio/128/default.mp3?aid=rss_feed&awCollectionId=b4965cc8-c978-4924-980c-6904ce8a533a&awEpisodeId=a972fe2e-33f9-4574-837f-9403eea461ae&feed=x5WGS9vX"
     }
   ]
 }

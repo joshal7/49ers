@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:30:12.378Z",
+  "updatedAt": "2026-11-26T19:25:02.083Z",
   "sources": [
     {
       "label": "ESPN Raiders Schedule",
@@ -24677,10 +24677,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -6.7 (#24 Offense / #29 Defense) at 4-7 through Week 11.",
+        "blurb": "Betting market rating GPF -6.6 (#23 Offense / #29 Defense) at 4-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24695,10 +24695,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 5 (31.2% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 12.",
+        "blurb": "Tier 5 (31.3% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24731,10 +24731,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -8.0 (#16 Off / #28 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 4-7.",
+        "blurb": "FPI -8.0 (#15 Off / #28 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 4-7.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24751,10 +24751,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -6.7 (#24 Offense / #29 Defense) at 4-7 through Week 11."
+        "blurb": "Betting market rating GPF -6.6 (#23 Offense / #29 Defense) at 4-7 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24783,10 +24783,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 5 (31.2% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 12."
+        "blurb": "Tier 5 (31.3% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 12."
       },
       {
         "id": "cbs",
@@ -24816,10 +24816,10 @@
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -8.0 (#16 Off / #28 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 4-7."
+        "blurb": "FPI -8.0 (#15 Off / #28 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 4-7."
       },
       {
         "id": "espn_panel",
@@ -24852,7 +24852,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:30:17.394Z"
+    "fetchedAtIso": "2026-11-26T19:25:07.826Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24876,7 +24876,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 48,
+      "tempF": 51,
       "condition": "Rain",
       "windMph": null,
       "windDir": "",
@@ -25887,7 +25887,7 @@
       "spread": "CLE -4.5",
       "openingSpread": "Opened LV +2.5 (Draft Kings)",
       "overUnder": 40.5,
-      "moneyline": "LV +202 | CLE -244",
+      "moneyline": "LV +201 | CLE -244",
       "impliedScore": "LV 18.0 – CLE 22.5",
       "restAdvantage": "-7 Days Rest Differential (CLE extra rest)",
       "impliedWinProb": "26%"

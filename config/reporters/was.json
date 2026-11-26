@@ -138,6 +138,20 @@
       "defaultEnabled": true
     },
     {
+      "id": "tashan_reed",
+      "name": "Tashan Reed",
+      "handle": "@tashanreed",
+      "outletId": "washington_post_public_beat_wire_was",
+      "role": "Commanders Beat Writer (Washington Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 93,
+      "trustTier": 1,
+      "xUrl": "https://x.com/tashanreed",
+      "bskyHandle": "tashanreed.bsky.social",
+      "defaultEnabled": true
+    },
+    {
       "id": "jp_finlay",
       "name": "JP Finlay",
       "handle": "@JPFinlayNBCS",

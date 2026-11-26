@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:04.110Z",
+  "updatedAt": "2026-11-26T19:06:53.657Z",
   "sources": [
     {
       "label": "ESPN Jets Schedule",
@@ -572,7 +572,7 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -4.5,
-      "totalLine": 40.5,
+      "totalLine": 39.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24656,14 +24656,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 24,
-    "averageRank": 24.2,
+    "averageRank": 24,
     "medianRank": 23,
     "previousRank": 27,
     "rangeMin": 22,
     "rangeMax": 27,
     "rangeShort": "#22–#27",
     "rangeDisplay": "#22–#27 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 3-8 Jets at #24 consensus (avg #24.2) through Week 11, ranging from #22 (Inpredictable) to #27 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 3-8 Jets at #24 consensus (avg #24.0) through Week 11, ranging from #22 (Inpredictable) to #27 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24676,10 +24676,28 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -4.1 (#20 Offense / #26 Defense) at 3-8 through Week 11.",
+        "blurb": "Betting market rating GPF -3.6 (#19 Offense / #24 Defense) at 3-8 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 22,
+        "previousRank": 23,
+        "delta": "+1",
+        "reportedRecord": "3-8",
+        "gamesIncluded": 11,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "Tier 4 (40.2% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24694,28 +24712,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "FPI -4.5 (#17 Off / #29 Def efficiency, 5.4 proj. wins, 0.0% SB odds) at 3-8.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 23,
-        "previousRank": 23,
-        "delta": "0",
-        "reportedRecord": "3-8",
-        "gamesIncluded": 11,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "Tier 4 (39.9% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24769,10 +24769,10 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -4.1 (#20 Offense / #26 Defense) at 3-8 through Week 11."
+        "blurb": "Betting market rating GPF -3.6 (#19 Offense / #24 Defense) at 3-8 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24795,16 +24795,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 23,
+        "rank": 22,
         "previousRank": 23,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 4 (39.9% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 12."
+        "blurb": "Tier 4 (40.2% neutral-field win rating, 5.8 proj. wins) at 3-8 through Week 12."
       },
       {
         "id": "cbs",
@@ -24834,7 +24834,7 @@
         "reportedRecord": "3-8",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "FPI -4.5 (#17 Off / #29 Def efficiency, 5.4 proj. wins, 0.0% SB odds) at 3-8."
@@ -24870,7 +24870,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:28:08.856Z"
+    "fetchedAtIso": "2026-11-26T19:06:58.554Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24894,7 +24894,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 76,
+      "tempF": 77,
       "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
@@ -26016,9 +26016,9 @@
       "favorite": "NYJ",
       "spread": "NYJ -4.5",
       "openingSpread": "Opened NYJ +1.5 (Draft Kings)",
-      "overUnder": 40.5,
-      "moneyline": "NYJ -217 | MIA +181",
-      "impliedScore": "NYJ 22.5 – MIA 18.0",
+      "overUnder": 39.5,
+      "moneyline": "NYJ -241 | MIA +200",
+      "impliedScore": "NYJ 22.0 – MIA 17.5",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "74%"
     },

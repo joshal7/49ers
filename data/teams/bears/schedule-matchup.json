@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:51.929Z",
+  "updatedAt": "2026-11-26T19:03:20.505Z",
   "sources": [
     {
       "label": "ESPN Bears Schedule",
@@ -505,11 +505,11 @@
       "preseasonWeek": null,
       "week": 12,
       "weekLabel": "Wk 12",
-      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873081/bears-lions",
+      "gameUrl": "https://www.espn.com/nfl/game?gameId=401873081",
       "dateIso": "2026-11-26T18:00Z",
-      "statusDetail": "11/26 - 1:00 PM EST",
-      "statusState": "pre",
-      "isLive": false,
+      "statusDetail": "8:09 - 2nd",
+      "statusState": "in",
+      "isLive": true,
       "completed": false,
       "result": null,
       "sfScore": null,
@@ -534,7 +534,7 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -1.5,
-      "totalLine": 55.5,
+      "totalLine": 56.5,
       "broadcast": "NFL TV"
     },
     {
@@ -571,8 +571,6 @@
         "surface": "Turf"
       },
       "restAdvantageDays": 3,
-      "spreadLineSf": -3,
-      "totalLine": 49.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24652,51 +24650,15 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 6,
-    "averageRank": 6,
+    "averageRank": 6.4,
     "medianRank": 4,
     "previousRank": 5,
-    "rangeMin": 3,
+    "rangeMin": 4,
     "rangeMax": 11,
-    "rangeShort": "#3–#11",
-    "rangeDisplay": "#3–#11 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 8-2 Bears at #6 consensus (avg #6.0) through Week 11, ranging from #3 (Inpredictable) to #11 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeShort": "#4–#11",
+    "rangeDisplay": "#4–#11 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 8-2 Bears at #6 consensus (avg #6.4) through Week 11, ranging from #4 (ESPN Panel) to #11 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
-      {
-        "id": "inpredictable",
-        "outlet": "Inpredictable / Betting Market Power Rating",
-        "shortName": "Inpredictable",
-        "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 3,
-        "previousRank": 2,
-        "delta": "-1",
-        "reportedRecord": "8-2",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
-        "verified": true,
-        "blurb": "Betting market rating GPF +5.1 (#6 Offense / #16 Defense) at 8-2 through Week 11.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 3,
-        "previousRank": 3,
-        "delta": "0",
-        "reportedRecord": "8-2",
-        "gamesIncluded": 10,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "Tier 1 (71.3% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
       {
         "id": "espn_panel",
         "outlet": "ESPN NFL Power Rankings Panel",
@@ -24717,6 +24679,42 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "inpredictable",
+        "outlet": "Inpredictable / Betting Market Power Rating",
+        "shortName": "Inpredictable",
+        "url": "https://stats.inpredictable.com/rankings/nfl.php",
+        "rank": 4,
+        "previousRank": 3,
+        "delta": "-1",
+        "reportedRecord": "8-2",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
+        "verified": true,
+        "blurb": "Betting market rating GPF +5.1 (#6 Offense / #16 Defense) at 8-2 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 4,
+        "previousRank": 3,
+        "delta": "-1",
+        "reportedRecord": "8-2",
+        "gamesIncluded": 10,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "Tier 1 (71.4% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
@@ -24727,10 +24725,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +3.7 (#10 Off / #7 Def efficiency, 11.8 proj. wins, 4.4% SB odds) at 8-2.",
+        "blurb": "FPI +3.7 (#10 Off / #7 Def efficiency, 11.8 proj. wins, 4.5% SB odds) at 8-2.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24759,14 +24757,14 @@
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 3,
-        "previousRank": 2,
+        "rank": 4,
+        "previousRank": 3,
         "delta": "-1",
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
         "blurb": "Betting market rating GPF +5.1 (#6 Offense / #16 Defense) at 8-2 through Week 11."
       },
@@ -24791,16 +24789,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 3,
+        "rank": 4,
         "previousRank": 3,
-        "delta": "0",
+        "delta": "-1",
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 1 (71.3% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12."
+        "blurb": "Tier 1 (71.4% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12."
       },
       {
         "id": "cbs",
@@ -24830,10 +24828,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +3.7 (#10 Off / #7 Def efficiency, 11.8 proj. wins, 4.4% SB odds) at 8-2."
+        "blurb": "FPI +3.7 (#10 Off / #7 Def efficiency, 11.8 proj. wins, 4.5% SB odds) at 8-2."
       },
       {
         "id": "espn_panel",
@@ -24866,13 +24864,13 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:25:56.791Z"
+    "fetchedAtIso": "2026-11-26T19:03:26.072Z"
   },
   "upcomingMatchup": {
     "week": 12,
     "gameId": "401873081",
     "homeAway": "away",
-    "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873081/bears-lions",
+    "gameUrl": "https://www.espn.com/nfl/game?gameId=401873081",
     "injurySourceUrl": "https://www.cbssports.com/nfl/teams/DET/detroit-lions/injuries/",
     "sfInjuryReportUrl": "https://www.chicagobears.com/team/injury-report/",
     "statsSourceUrl": "https://www.espn.com/nfl/team/stats/_/name/chi/chicago-bears",
@@ -24902,7 +24900,7 @@
     "completed": false,
     "sfScore": null,
     "oppScore": null,
-    "statusDetail": "11/26 - 1:00 PM EST",
+    "statusDetail": "8:09 - 2nd",
     "featuredPlayers": [
       {
         "playerId": "4259545",
@@ -24966,24 +24964,24 @@
       "teamInjuriesUrl": "https://www.cbssports.com/nfl/teams/DET/detroit-lions/injuries/",
       "byeWeek": null,
       "summary": {
-        "overallAvailabilityScore": 95,
-        "activeStartersHealthy": 20,
+        "overallAvailabilityScore": 93,
+        "activeStartersHealthy": 19,
         "totalStarters": 22,
         "startersOutCount": 0,
         "startersDoubtfulOnlyCount": 0,
         "startersLongShotCount": 0,
         "startersDoubtfulCount": 0,
-        "startersQuestionableCount": 2,
-        "startersGtdCount": 2,
-        "startersUnresolvedCount": 2,
-        "ruledOutCount": 2,
+        "startersQuestionableCount": 3,
+        "startersGtdCount": 3,
+        "startersUnresolvedCount": 3,
+        "ruledOutCount": 4,
         "doubtfulCount": 0,
         "longShotCount": 0,
         "doubtfulOrLongShotCount": 0,
-        "gtdCount": 2,
-        "questionableOrDoubtfulCount": 2,
+        "gtdCount": 3,
+        "questionableOrDoubtfulCount": 3,
         "clearedCount": 3,
-        "irCount": 1,
+        "irCount": 0,
         "irOpenWindowCount": 0,
         "irSeasonEndingCount": 0
       },
@@ -25615,16 +25613,6 @@
           "playProbabilityPct": 95
         },
         {
-          "playerId": "4429035",
-          "name": "Tate Ratledge",
-          "position": "G",
-          "unit": "Offense",
-          "slot": "RG",
-          "jersey": 69,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429035.png",
-          "playProbabilityPct": 95
-        },
-        {
           "playerId": "5081450",
           "name": "Blake Miller",
           "position": "OT",
@@ -25657,6 +25645,93 @@
       ],
       "injuryReport": [
         {
+          "playerId": "4566092",
+          "name": "Ennis Rakestraw Jr.",
+          "position": "CB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566092.png",
+          "injuryType": "Shoulder",
+          "gameStatus": "Out",
+          "status": "Out",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "DNP",
+          "thu": "DNP",
+          "fri": "DNP",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "archetypeNote": "CB availability projection",
+          "factors": [
+            "Officially ruled Out on weekly game status report"
+          ],
+          "beatComment": "inactive",
+          "isStarter": false,
+          "role": "Depth",
+          "priorDayPlayProbabilityPct": 28,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "4689333",
+          "name": "Tyrus Wheat",
+          "position": "LB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4689333.png",
+          "injuryType": "Coach's Decision",
+          "gameStatus": "Out",
+          "status": "Out",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "archetypeNote": "LB availability projection",
+          "factors": [
+            "Officially ruled Out on weekly game status report"
+          ],
+          "beatComment": "inactive",
+          "isStarter": false,
+          "role": "Depth",
+          "priorDayPlayProbabilityPct": null,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "5093004",
+          "name": "Keith Abney II",
+          "position": "CB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5093004.png",
+          "injuryType": "Coach's Decision",
+          "gameStatus": "Out",
+          "status": "Out",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "archetypeNote": "CB availability projection",
+          "factors": [
+            "Officially ruled Out on weekly game status report"
+          ],
+          "beatComment": "inactive",
+          "isStarter": false,
+          "role": "Depth",
+          "priorDayPlayProbabilityPct": null,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
           "playerId": "5103940",
           "name": "Skyler Gill-Howard",
           "position": "DT",
@@ -25686,35 +25761,6 @@
           "isMidWeekAdditionDelta": false
         },
         {
-          "playerId": "4566092",
-          "name": "Ennis Rakestraw Jr.",
-          "position": "CB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566092.png",
-          "injuryType": "Shoulder",
-          "gameStatus": "Out",
-          "status": "Out",
-          "isSeasonEnding": false,
-          "isPracticeWindowOpen": false,
-          "earliestEligibleWeek": null,
-          "projectedReturnWeek": null,
-          "byeWeekNote": null,
-          "wed": "DNP",
-          "thu": "DNP",
-          "fri": "DNP",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "archetypeNote": "CB availability projection",
-          "factors": [
-            "Officially ruled Out on weekly game status report"
-          ],
-          "beatComment": "Rakestraw did not participate in any Week 12 prep sessions due to the shoulder injury that kept him out of Sunday's game against the Buccaneers. The cornerback will now miss consecutive games, leaving Khalil Dorsey as the backup behind D.J. Reed and Rock Ya-Sin.",
-          "isStarter": false,
-          "role": "Depth",
-          "priorDayPlayProbabilityPct": 28,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
           "playerId": "4038849",
           "name": "DJ Wonnum",
           "position": "LB",
@@ -25736,7 +25782,7 @@
           "factors": [
             "Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance"
           ],
-          "beatComment": "Wonnum missed two Week 12 prep sessions before participating in the Lions' practice session Wednesday as a limited participant. The defensive end likely picked up his back injury in the team's Week 11 win over the Buccaneers. If Wonnum cannot suit up for Thursday's game, Eric O'Neill and Tyler Lacy will likely see more snaps at defensive end opposite Derrick Moore in the game.",
+          "beatComment": "Wonnum was able to practice in a limited capacity Wednesday, but that didn't end up being enough for him to suit up Thursday. He leads the Lions with 7.0 sacks this season, so the veteran defensive end's absence is a big deal for Detroit. Tyler Lacy, Ahmed Hassanein, Eric O'Neill and Anthony Lucas could all be involved in trying to fill the void left by Wonnum's absence Thursday.",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": 28,
@@ -25766,10 +25812,39 @@
             "Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior 78%)",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
-          "beatComment": "Clark ended Week 12 prep with a limited practice after starting the week's walkthrough as a DNP. The free safety played 100 percent of the Lions' defensive snaps in Week 11 despite Kerby Joseph's return to the field, meaning an inactive status for Thursday's contest against the Bears would harm the Lions' starting secondary in a significant way.",
+          "beatComment": "Clark dealt with a hamstring issue during Week 12 prep and is going to miss his first game of the campaign as a result. He's been a starter at safety for the Lions all season and played every defensive snap in three of Detroit's past four games. Kerby Joseph and Brian Branch will start at safety Thursday, with Andre Cisco working in reserve.",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": 71,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "4429035",
+          "name": "Tate Ratledge",
+          "position": "G",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429035.png",
+          "injuryType": "Ankle",
+          "gameStatus": "Questionable",
+          "status": "Questionable",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "playProbabilityPct": 81,
+          "playBadgeLabel": "81% • GTD",
+          "archetypeNote": "G availability projection",
+          "factors": [
+            "Questionable tag adjusted by player career prior (81%)"
+          ],
+          "beatComment": "questionable",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
@@ -25861,40 +25936,15 @@
           "isMidWeekAdditionDelta": false
         }
       ],
-      "irReserve": [
-        {
-          "playerId": "4361788",
-          "name": "Cade Mays",
-          "position": "C",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361788.png",
-          "injuryType": "Ankle (Sprain)",
-          "gameStatus": "Injured Reserve",
-          "status": "Injured Reserve",
-          "isSeasonEnding": false,
-          "isPracticeWindowOpen": false,
-          "earliestEligibleWeek": 15,
-          "projectedReturnWeek": "Est. Week 15 (Dec 19)",
-          "byeWeekNote": "4-game NFL minimum requirement",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR",
-          "archetypeNote": "C availability projection",
-          "factors": [
-            "Missed weekly NFL 53-man IR activation deadline — remains on Injured Reserve for this game"
-          ],
-          "beatComment": "Mays missed the Lions' two prior games due to an ankle injury that he sustained against the Vikings in Week 8. His placement on IR means he's required to miss at least the next four games, so the earliest he can return is Week 15 against Minnesota. Juice Scruggs figures to be the Lions' starting center for as long as Mays is sidelined."
-        }
-      ]
+      "irReserve": []
     },
     "betting": {
       "favorite": "CHI",
       "spread": "CHI -1.5",
       "openingSpread": "Opened CHI +2.5 (Draft Kings)",
-      "overUnder": 55.5,
-      "moneyline": "CHI -120 | DET +102",
-      "impliedScore": "CHI 28.5 – DET 27.0",
+      "overUnder": 56.5,
+      "moneyline": "CHI -128 | DET +108",
+      "impliedScore": "CHI 29.0 – DET 27.5",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "59%"
     },
@@ -27564,16 +27614,16 @@
     "keyMatchupsMatrix": [
       {
         "phaseTag": "Middle-Field Passing Spine",
-        "unitMatchup": "Caleb Williams, Colston Loveland & Rome Odunze vs. CB D.J. Reed & LB Derrick Barnes",
+        "unitMatchup": "Caleb Williams, Sam Roush & Rome Odunze vs. CB D.J. Reed & LB Derrick Barnes",
         "advantage": "CHI Edge",
         "sfPlayers": [
           "Caleb Williams",
-          "Colston Loveland",
+          "Sam Roush",
           "Rome Odunze"
         ],
         "statComparison": "CHI: #14 Pass Off (233.4 yds) · #12 Off. Scoring (+1.46) | DET: #23 Pass Def (+3.65)",
-        "tacticalDetail": "Caleb Williams, Colston Loveland & Rome Odunze attack the intermediate seams and middle-of-the-field leverage windows against Detroit Lions's #23 pass defense (+3.65). Winning early-down timing throws keeps Chicago's offense ahead of the chains and punishes disguised single-high rotations.",
-        "filmTell": "Watch Caleb Williams (#18) scanning Lions's deep safeties at the snap—when LB Derrick Barnes widens to take away the crossers, the intermediate seam opens immediately for Colston Loveland (#84)."
+        "tacticalDetail": "Caleb Williams, Sam Roush & Rome Odunze attack the intermediate seams and middle-of-the-field leverage windows against Detroit Lions's #23 pass defense (+3.65). Winning early-down timing throws keeps Chicago's offense ahead of the chains and punishes disguised single-high rotations.",
+        "filmTell": "Watch Caleb Williams (#18) scanning Lions's deep safeties at the snap—when LB Derrick Barnes widens to take away the crossers, the intermediate seam opens immediately for Sam Roush (#87)."
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",

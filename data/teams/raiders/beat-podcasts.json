@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:30:09.572Z",
+  "updatedAt": "2026-11-26T19:24:56.299Z",
   "windowDays": 7,
-  "totalEpisodes": 17,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "raiders_locked_on_raiders",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/427f18/feeds.simplecast.com/FW_wEF1P",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-raiders-daily-podcast-on-the-las-vegas-raiders/id1139751780?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/23/ca/cc/23cacc10-b6b1-3d4a-07f4-d56332bfc8a6/mza_11375532871087976353.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 5
     },
     {
       "id": "raiders_las_vegas_raiders_insider",
@@ -340,46 +340,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-raiders-daily-podcast-on-the-las-vegas-raiders/id1139751780?uo=4",
       "feedUrl": "https://rss.pdrl.fm/427f18/feeds.simplecast.com/FW_wEF1P",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/427f18/lockedon.simplecastaudio.com/7ad47211-b3d3-4242-aeee-7a93df87b660/episodes/6649a4b2-5d6a-4ad3-ad53-1203e9b0413f/audio/128/default.mp3?aid=rss_feed&awCollectionId=7ad47211-b3d3-4242-aeee-7a93df87b660&awEpisodeId=6649a4b2-5d6a-4ad3-ad53-1203e9b0413f&feed=FW_wEF1P"
-    },
-    {
-      "id": "pod_raiders_locked_on_raiders_1000802962032",
-      "trackId": 1000802962032,
-      "collectionId": 1139751780,
-      "showId": "raiders_locked_on_raiders",
-      "showName": "Locked On Raiders",
-      "showFullTitle": "Locked On Raiders - Daily Podcast On The Las Vegas Raiders",
-      "hosts": "Locked On Podcast Network, Your Boy Q",
-      "network": "Locked On Podcast Network, Your Boy Q",
-      "title": "RAIDERS SQUAD SHOW: Las Vegas RAIDERS @ Denver BRONCOS PREVIEW | Raiders head to PRIMETIME",
-      "summary": "Support Us By Supporting Our Sponsors! Gusto Try Gusto today at http://gusto.com/LOCKEDONNFL, and get three months free when you run your first payroll. Odoo Great organizations win because operations matter. And that’s why you should get Odoo. Try for free today at https://",
-      "publishedAt": "2026-11-19T16:27:07.000Z",
-      "durationMinutes": 60,
-      "durationDisplay": "60 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/47/fe/e0/47fee041-c81c-7b42-62c1-f5ba4efdf7df/mza_15551393417926711704.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/raiders-squad-show-las-vegas-raiders-denver-broncos/id1139751780?i=1000802962032&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-raiders-daily-podcast-on-the-las-vegas-raiders/id1139751780?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/427f18/feeds.simplecast.com/FW_wEF1P",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/427f18/lockedon.simplecastaudio.com/7ad47211-b3d3-4242-aeee-7a93df87b660/episodes/93b08b51-83f6-4c3b-96ef-734e76a42e02/audio/128/default.mp3?aid=rss_feed&awCollectionId=7ad47211-b3d3-4242-aeee-7a93df87b660&awEpisodeId=93b08b51-83f6-4c3b-96ef-734e76a42e02&feed=FW_wEF1P"
-    },
-    {
-      "id": "pod_raiders_locked_on_raiders_1000802884209",
-      "trackId": 1000802884209,
-      "collectionId": 1139751780,
-      "showId": "raiders_locked_on_raiders",
-      "showName": "Locked On Raiders",
-      "showFullTitle": "Locked On Raiders - Daily Podcast On The Las Vegas Raiders",
-      "hosts": "Locked On Podcast Network, Your Boy Q",
-      "network": "Locked On Podcast Network, Your Boy Q",
-      "title": "Fernando Mendoza welcome to Raiders vs Broncos Round 1",
-      "summary": "On today’s Locked On Raiders Podcast, we completely turn our attention to week 11 and the Denver Broncos with our Crossover Edition. Sayre Bedinger Host of Locked on Broncos and Me discuss the biggest storylines, the key matchups and the must-do’s when it comes to getting a ",
-      "publishedAt": "2026-11-19T08:05:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/0c/e7/8b/0ce78bf3-4fde-7e91-ae4d-83c2fdf4368d/mza_17180936944229858575.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/fernando-mendoza-welcome-to-raiders-vs-broncos-round-1/id1139751780?i=1000802884209&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-raiders-daily-podcast-on-the-las-vegas-raiders/id1139751780?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/427f18/feeds.simplecast.com/FW_wEF1P",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/427f18/lockedon.simplecastaudio.com/7ad47211-b3d3-4242-aeee-7a93df87b660/episodes/4488f609-40d8-416b-bc05-4f68082bbbf0/audio/128/default.mp3?aid=rss_feed&awCollectionId=7ad47211-b3d3-4242-aeee-7a93df87b660&awEpisodeId=4488f609-40d8-416b-bc05-4f68082bbbf0&feed=FW_wEF1P"
     }
   ]
 }

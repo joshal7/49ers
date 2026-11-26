@@ -33,7 +33,7 @@
       "name": "The Athletic Las Vegas (Public Beat Wire)",
       "tier": 1,
       "type": "beat",
-      "url": "https://x.com/tashanreed"
+      "url": "https://x.com/VicTafur"
     },
     {
       "id": "las_vegas_review_journal_lv",
@@ -103,20 +103,6 @@
       "defaultEnabled": true
     },
     {
-      "id": "tashan_reed",
-      "name": "Tashan Reed",
-      "handle": "@tashanreed",
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "role": "Lead Raiders Beat Writer (The Athletic)",
-      "category": "beat",
-      "styleTag": "practice-injury-beat",
-      "baseScore": 95,
-      "trustTier": 1,
-      "xUrl": "https://x.com/tashanreed",
-      "bskyHandle": "tashanreed.bsky.social",
-      "defaultEnabled": true
-    },
-    {
       "id": "vic_tafur",
       "name": "Vic Tafur",
       "handle": "@VicTafur",
@@ -124,6 +110,7 @@
       "role": "Senior Raiders Columnist (The Athletic)",
       "category": "beat",
       "styleTag": "practice-injury-beat",
+      "requireTeamMention": true,
       "baseScore": 95,
       "trustTier": 1,
       "xUrl": "https://x.com/VicTafur",

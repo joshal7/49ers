@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:32.341Z",
+  "updatedAt": "2026-11-26T19:06:07.108Z",
   "sources": [
     {
       "label": "ESPN Bills Schedule",
@@ -24700,10 +24700,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +6.7 (#3 Offense / #8 Defense) at 9-1 through Week 11.",
+        "blurb": "Betting market rating GPF +7.2 (#2 Offense / #8 Defense) at 9-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24718,10 +24718,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +6.0 (#5 Off / #15 Def efficiency, 13.9 proj. wins, 15.8% SB odds) at 9-1.",
+        "blurb": "FPI +6.0 (#5 Off / #15 Def efficiency, 13.9 proj. wins, 16.3% SB odds) at 9-1.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24755,10 +24755,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 1 (72.1% neutral-field win rating, 13.7 proj. wins) at 9-1 through Week 12.",
+        "blurb": "Tier 1 (71.9% neutral-field win rating, 13.6 proj. wins) at 9-1 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24793,10 +24793,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +6.7 (#3 Offense / #8 Defense) at 9-1 through Week 11."
+        "blurb": "Betting market rating GPF +7.2 (#2 Offense / #8 Defense) at 9-1 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24825,10 +24825,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 1 (72.1% neutral-field win rating, 13.7 proj. wins) at 9-1 through Week 12."
+        "blurb": "Tier 1 (71.9% neutral-field win rating, 13.6 proj. wins) at 9-1 through Week 12."
       },
       {
         "id": "cbs",
@@ -24858,10 +24858,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +6.0 (#5 Off / #15 Def efficiency, 13.9 proj. wins, 15.8% SB odds) at 9-1."
+        "blurb": "FPI +6.0 (#5 Off / #15 Def efficiency, 13.9 proj. wins, 16.3% SB odds) at 9-1."
       },
       {
         "id": "espn_panel",
@@ -24894,7 +24894,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:27:37.259Z"
+    "fetchedAtIso": "2026-11-26T19:06:11.722Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24918,8 +24918,8 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 36,
-      "condition": "Cloudy",
+      "tempF": 35,
+      "condition": "Rain",
       "windMph": null,
       "windDir": "",
       "precipPct": null,
@@ -25776,10 +25776,6 @@
           "beatComment": "Though Walker was able to log a limited practice Tuesday, he was listed as a non-participant Wednesday and will wind up missing a third straight contest while he continues to nurse a sore groin. With Walker sidelined, rookie Emmett Johnson is set for another turn as the Chiefs' lead back, with Jaydn Ott serving as his top backup and Nate Carter a possible practice-squad elevation. Given that the Chiefs on are on a short week, Walker -- who last saw game action Nov. 8 -- will have added time to heal before the team's next contest Dec. 3 against the Rams.",
           "isStarter": false,
           "role": "Depth",
-          "longComment": "Buffalo Bills won’t face Chiefs star running back Kenneth Walker on Thanksgiving. The injury that has kept Kenneth Walker out of the Chiefs’ past two games continues to linger, as he’s been ruled out of Kansas City’s monumental showdown against the Buffalo Bills on Thanksgiving. Jordan Schultz was first on the major news.",
-          "shortComment": "Buffalo Bills won’t face Chiefs star running back Kenneth Walker on Thanksgiving. The injury that has kept Kenneth Walker out of the Chiefs’ past two games continues to linger, as he’s been ruled out of Kansas City’s monumental showdown against the Buffalo Bills on Thanksgiving. Jordan Schultz was first on the major news.",
-          "playTier": "OUT",
-          "hasPreReportPracticeReturn": false,
           "priorDayPlayProbabilityPct": 69,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
@@ -26011,7 +26007,7 @@
       "spread": "BUF -3",
       "openingSpread": "Opened BUF -2.5 (Draft Kings)",
       "overUnder": 45.5,
-      "moneyline": "BUF -151 | KC +127",
+      "moneyline": "BUF -153 | KC +130",
       "impliedScore": "BUF 24.3 – KC 21.3",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "67%"

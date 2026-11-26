@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:40:59.387Z",
+  "updatedAt": "2026-11-26T19:00:49.205Z",
   "windowDays": 7,
-  "totalEpisodes": 8,
+  "totalEpisodes": 7,
   "shows": [
     {
       "id": "rams_locked_on_rams",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/3fd73b/feeds.simplecast.com/a4Q6EDeU",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-rams-daily-podcast-on-the-los-angeles-rams/id1148968947?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/00/88/8e/00888e5c-287d-7f27-2cd9-fa530f2d5981/mza_5396726408017298124.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "rams_11_personnel",
@@ -192,26 +192,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/rams-brothers-the-pod-an-la-rams-podcast/id1446481503?uo=4",
       "feedUrl": "https://feeds.simplecast.com/tsCGHzbj",
       "audioStreamUrl": "https://mgln.ai/e/256/bluewire.simplecastaudio.com/af0f8899-bd22-4d50-9a0d-f60f3e24e944/episodes/f1e0af9c-aff8-449a-8000-cbf4ef5fdd6a/audio/128/default.mp3?aid=rss_feed&awCollectionId=af0f8899-bd22-4d50-9a0d-f60f3e24e944&awEpisodeId=f1e0af9c-aff8-449a-8000-cbf4ef5fdd6a&feed=tsCGHzbj"
-    },
-    {
-      "id": "pod_rams_locked_on_rams_1000802966435",
-      "trackId": 1000802966435,
-      "collectionId": 1148968947,
-      "showId": "rams_locked_on_rams",
-      "showName": "Locked On Rams",
-      "showFullTitle": "Locked On Rams - Daily Podcast On The Los Angeles Rams",
-      "hosts": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
-      "network": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
-      "title": "Stats PROVE Sean McVay's \"20 Pony\" REVOLUTION Could UNLOCK Matthew Stafford | Rams' Playoff Odds",
-      "summary": "Can 20-pony personnel be the game-changer the Los Angeles Rams need to secure a playoff spot? The conversation focused on Sean McVay's creative offensive tactics, including the bold deployment of two running backs—Kyren Williams and Blake Corum—without a fullback. Statistica",
-      "publishedAt": "2026-11-19T16:56:55.000Z",
-      "durationMinutes": 34,
-      "durationDisplay": "34 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/2c/dd/5d/2cdd5dc5-674a-a429-4664-17a704ffb215/mza_5822328558051297184.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/stats-prove-sean-mcvays-20-pony-revolution-could-unlock/id1148968947?i=1000802966435&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-rams-daily-podcast-on-the-los-angeles-rams/id1148968947?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/3fd73b/feeds.simplecast.com/a4Q6EDeU",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3fd73b/lockedon.simplecastaudio.com/8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc/episodes/1b982088-9607-4400-a1df-124f36b9862b/audio/128/default.mp3?aid=rss_feed&awCollectionId=8dce8ffe-a488-4ce0-b9c9-e364b7dbd0dc&awEpisodeId=1b982088-9607-4400-a1df-124f36b9862b&feed=a4Q6EDeU"
     }
   ]
 }

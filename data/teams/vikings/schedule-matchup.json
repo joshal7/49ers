@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:28.876Z",
+  "updatedAt": "2026-11-26T19:02:38.479Z",
   "sources": [
     {
       "label": "ESPN Vikings Schedule",
@@ -24687,10 +24687,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 2 (65.7% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 12.",
+        "blurb": "Tier 2 (65.9% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24705,10 +24705,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +2.4 (#31 Off / #2 Def efficiency, 11.7 proj. wins, 3.2% SB odds) at 7-3.",
+        "blurb": "FPI +2.4 (#31 Off / #2 Def efficiency, 11.6 proj. wins, 2.9% SB odds) at 7-3.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24741,10 +24741,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +2.2 (#16 Offense / #3 Defense) at 7-3 through Week 11.",
+        "blurb": "Betting market rating GPF +2.0 (#16 Offense / #5 Defense) at 7-3 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24761,10 +24761,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +2.2 (#16 Offense / #3 Defense) at 7-3 through Week 11."
+        "blurb": "Betting market rating GPF +2.0 (#16 Offense / #5 Defense) at 7-3 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24793,10 +24793,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 2 (65.7% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 12."
+        "blurb": "Tier 2 (65.9% neutral-field win rating, 11.5 proj. wins) at 7-3 through Week 12."
       },
       {
         "id": "cbs",
@@ -24826,10 +24826,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +2.4 (#31 Off / #2 Def efficiency, 11.7 proj. wins, 3.2% SB odds) at 7-3."
+        "blurb": "FPI +2.4 (#31 Off / #2 Def efficiency, 11.6 proj. wins, 2.9% SB odds) at 7-3."
       },
       {
         "id": "espn_panel",
@@ -24862,7 +24862,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:25:34.651Z"
+    "fetchedAtIso": "2026-11-26T19:02:43.737Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24916,7 +24916,7 @@
         "jersey": 43,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3133487.png",
         "primarySnapPct": 79,
-        "playProbabilityPct": 95
+        "playProbabilityPct": 99
       },
       {
         "playerId": "3042519",
@@ -24962,23 +24962,23 @@
       "teamInjuriesUrl": "https://www.cbssports.com/nfl/teams/ATL/atlanta-falcons/injuries/",
       "byeWeek": null,
       "summary": {
-        "overallAvailabilityScore": 96,
-        "activeStartersHealthy": 18,
+        "overallAvailabilityScore": 84,
+        "activeStartersHealthy": 16,
         "totalStarters": 22,
         "startersOutCount": 0,
         "startersDoubtfulOnlyCount": 0,
-        "startersLongShotCount": 0,
-        "startersDoubtfulCount": 0,
-        "startersQuestionableCount": 4,
-        "startersGtdCount": 4,
-        "startersUnresolvedCount": 4,
+        "startersLongShotCount": 3,
+        "startersDoubtfulCount": 3,
+        "startersQuestionableCount": 3,
+        "startersGtdCount": 3,
+        "startersUnresolvedCount": 6,
         "ruledOutCount": 0,
         "doubtfulCount": 0,
-        "longShotCount": 0,
-        "doubtfulOrLongShotCount": 0,
-        "gtdCount": 6,
-        "questionableOrDoubtfulCount": 6,
-        "clearedCount": 0,
+        "longShotCount": 5,
+        "doubtfulOrLongShotCount": 5,
+        "gtdCount": 4,
+        "questionableOrDoubtfulCount": 9,
+        "clearedCount": 1,
         "irCount": 0,
         "irOpenWindowCount": 0,
         "irSeasonEndingCount": 0
@@ -25457,26 +25457,6 @@
           "playProbabilityPct": 95
         },
         {
-          "playerId": "4361510",
-          "name": "Cameron Thomas",
-          "position": "DE",
-          "unit": "Defense",
-          "slot": "WLB",
-          "jersey": 99,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png",
-          "playProbabilityPct": 95
-        },
-        {
-          "playerId": "4595343",
-          "name": "Kendal Daniels",
-          "position": "LB",
-          "unit": "Defense",
-          "slot": "LILB",
-          "jersey": 53,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png",
-          "playProbabilityPct": 95
-        },
-        {
           "playerId": "4037626",
           "name": "Divine Deablo",
           "position": "LB",
@@ -25484,6 +25464,16 @@
           "slot": "RILB",
           "jersey": 0,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
+          "playProbabilityPct": 95
+        },
+        {
+          "playerId": "5081394",
+          "name": "James Pearce Jr.",
+          "position": "LB",
+          "unit": "Defense",
+          "slot": "SLB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
           "playProbabilityPct": 95
         },
         {
@@ -25577,16 +25567,6 @@
           "playProbabilityPct": 95
         },
         {
-          "playerId": "4034961",
-          "name": "Jawaan Taylor",
-          "position": "OT",
-          "unit": "Offense",
-          "slot": "RT",
-          "jersey": 71,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034961.png",
-          "playProbabilityPct": 95
-        },
-        {
           "playerId": "4360423",
           "name": "Michael Penix Jr.",
           "position": "QB",
@@ -25621,20 +25601,20 @@
           "earliestEligibleWeek": null,
           "projectedReturnWeek": null,
           "byeWeekNote": null,
-          "wed": "-",
-          "thu": "-",
+          "wed": "DNP",
+          "thu": "DNP",
           "fri": "-",
-          "playProbabilityPct": 71,
-          "playBadgeLabel": "71% • GTD",
+          "playProbabilityPct": 23,
+          "playBadgeLabel": "23% • Long Shot",
           "archetypeNote": "WR availability projection",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)",
+            "Consecutive Wed/Thu DNPs",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
           "beatComment": "After being sidelined for the Falcons' previous two games, Branch isn't yet back to full health coming out of a Week 11 bye. The Falcons will see what, if anything, Branch is able to do at practices Thursday and Friday before deciding whether he'll carry a designation into Sunday's game against the Vikings. The rookie third-round pick out of Georgia has been a regular presence on the Falcons' return units but hasn't seen much involvement on offense when healthy; he's recorded 10 catches for 64 yards on 12 targets through his first eight NFL appearances.",
           "isStarter": false,
           "role": "Depth",
-          "priorDayPlayProbabilityPct": null,
+          "priorDayPlayProbabilityPct": 30,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
@@ -25651,20 +25631,20 @@
           "earliestEligibleWeek": null,
           "projectedReturnWeek": null,
           "byeWeekNote": null,
-          "wed": "-",
-          "thu": "-",
+          "wed": "DNP",
+          "thu": "DNP",
           "fri": "-",
-          "playProbabilityPct": 71,
-          "playBadgeLabel": "71% • GTD",
+          "playProbabilityPct": 23,
+          "playBadgeLabel": "23% • Long Shot",
           "archetypeNote": "WR availability projection",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)",
+            "Consecutive Wed/Thu DNPs",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
           "beatComment": "Dotson was a spectator for the Falcons' first Week 12 practice along with rookie Zachariah Branch (hamstring), making the activity of both receivers worth tracking the next two days to get a sense of whether either has a chance to play Sunday in Minnesota. Up until the Falcons' Week 11 bye, Dotson has been a picture of health during his first season in Atlanta, appearing in all 10 games while recording 19 receptions for 416 yards and two touchdowns on 39 targets.",
           "isStarter": true,
           "role": "Starter",
-          "priorDayPlayProbabilityPct": null,
+          "priorDayPlayProbabilityPct": 30,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
@@ -25681,20 +25661,20 @@
           "earliestEligibleWeek": null,
           "projectedReturnWeek": null,
           "byeWeekNote": null,
-          "wed": "-",
-          "thu": "-",
+          "wed": "DNP",
+          "thu": "DNP",
           "fri": "-",
-          "playProbabilityPct": 71,
-          "playBadgeLabel": "71% • GTD",
+          "playProbabilityPct": 23,
+          "playBadgeLabel": "23% • Long Shot",
           "archetypeNote": "CB availability projection",
           "factors": [
-            "Questionable tag adjusted by player career prior (76%)",
+            "Consecutive Wed/Thu DNPs",
             "Soft-tissue re-aggravation caution (Hamstring)"
           ],
           "beatComment": "questionable",
           "isStarter": false,
           "role": "Depth",
-          "priorDayPlayProbabilityPct": null,
+          "priorDayPlayProbabilityPct": 30,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
@@ -25711,48 +25691,19 @@
           "earliestEligibleWeek": null,
           "projectedReturnWeek": null,
           "byeWeekNote": null,
-          "wed": "-",
-          "thu": "-",
+          "wed": "DNP",
+          "thu": "DNP",
           "fri": "-",
-          "playProbabilityPct": 78,
-          "playBadgeLabel": "78% • GTD",
+          "playProbabilityPct": 28,
+          "playBadgeLabel": "28% • Long Shot",
           "archetypeNote": "S availability projection",
           "factors": [
-            "Questionable tag adjusted by player career prior (78%)"
+            "Consecutive Wed/Thu DNPs"
           ],
           "beatComment": "questionable",
           "isStarter": true,
           "role": "Starter",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "5081394",
-          "name": "James Pearce Jr.",
-          "position": "LB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
-          "injuryType": "Back",
-          "gameStatus": "Questionable",
-          "status": "Questionable",
-          "isSeasonEnding": false,
-          "isPracticeWindowOpen": false,
-          "earliestEligibleWeek": null,
-          "projectedReturnWeek": null,
-          "byeWeekNote": null,
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 81,
-          "playBadgeLabel": "81% • GTD",
-          "archetypeNote": "LB availability projection",
-          "factors": [
-            "Questionable tag adjusted by player career prior (81%)"
-          ],
-          "beatComment": "Pearce was dealing with a back injury in early November but has played in each of the Falcons' last two games. He has two more chances to log a full practice and avoid an injury designation ahead of Sunday's road game against the Vikings.",
-          "isStarter": true,
-          "role": "Starter",
-          "priorDayPlayProbabilityPct": null,
+          "priorDayPlayProbabilityPct": 36,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
@@ -25769,19 +25720,160 @@
           "earliestEligibleWeek": null,
           "projectedReturnWeek": null,
           "byeWeekNote": null,
-          "wed": "-",
-          "thu": "-",
+          "wed": "DNP",
+          "thu": "DNP",
           "fri": "-",
-          "playProbabilityPct": 81,
-          "playBadgeLabel": "81% • GTD",
+          "playProbabilityPct": 28,
+          "playBadgeLabel": "28% • Long Shot",
           "archetypeNote": "G availability projection",
           "factors": [
-            "Questionable tag adjusted by player career prior (81%)"
+            "Consecutive Wed/Thu DNPs"
           ],
           "beatComment": "questionable",
           "isStarter": true,
           "role": "Starter",
-          "priorDayPlayProbabilityPct": null,
+          "priorDayPlayProbabilityPct": 37,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "4361510",
+          "name": "Cameron Thomas",
+          "position": "DE",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png",
+          "injuryType": "Groin",
+          "gameStatus": "Questionable",
+          "status": "Questionable",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "FP",
+          "thu": "LP",
+          "fri": "-",
+          "playProbabilityPct": 59,
+          "playBadgeLabel": "59% • GTD",
+          "archetypeNote": "DE availability projection",
+          "factors": [
+            "Mid-week downgrade (Wed FP -> Thu LP); monitoring Friday clearance",
+            "Soft-tissue re-aggravation caution (Groin)"
+          ],
+          "beatComment": "questionable",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": 86,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "4595343",
+          "name": "Kendal Daniels",
+          "position": "LB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png",
+          "injuryType": "Achilles",
+          "gameStatus": "Questionable",
+          "status": "Questionable",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "FP",
+          "thu": "LP",
+          "fri": "-",
+          "playProbabilityPct": 62,
+          "playBadgeLabel": "62% • GTD",
+          "archetypeNote": "LB availability projection",
+          "factors": [
+            "Mid-week downgrade (Wed FP -> Thu LP); monitoring Friday clearance",
+            "Soft-tissue re-aggravation caution (Achilles)"
+          ],
+          "beatComment": "questionable",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": 86,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "3043168",
+          "name": "Za'Darius Smith",
+          "position": "DE",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043168.png",
+          "injuryType": "Knee",
+          "gameStatus": "Questionable",
+          "status": "Questionable",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "DNP",
+          "thu": "LP",
+          "fri": "-",
+          "playProbabilityPct": 76,
+          "playBadgeLabel": "76% • GTD",
+          "archetypeNote": "DE availability projection",
+          "factors": [
+            "Positive upward rehab ramp (Wed DNP -> Thu LP; player prior 78%)"
+          ],
+          "beatComment": "questionable",
+          "isStarter": false,
+          "role": "Depth",
+          "priorDayPlayProbabilityPct": 36,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "",
+          "name": "Jawaan Taylor",
+          "position": "OT",
+          "headshotUrl": "",
+          "injuryType": "NIR - Rest",
+          "gameStatus": "Questionable",
+          "wed": "FP",
+          "thu": "Vet Rest",
+          "fri": "-",
+          "playProbabilityPct": 78,
+          "playBadgeLabel": "78% • GTD",
+          "archetypeNote": "OT availability projection",
+          "factors": [
+            "Official injury report"
+          ],
+          "beatComment": "",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": 91,
+          "hasPreReportPracticeReturnDelta": false,
+          "isMidWeekAdditionDelta": false
+        },
+        {
+          "playerId": "5081394",
+          "name": "James Pearce Jr.",
+          "position": "LB",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
+          "injuryType": "Back",
+          "gameStatus": "Active",
+          "status": "Active",
+          "isSeasonEnding": false,
+          "isPracticeWindowOpen": false,
+          "earliestEligibleWeek": null,
+          "projectedReturnWeek": null,
+          "byeWeekNote": null,
+          "wed": "LP",
+          "thu": "FP",
+          "fri": "-",
+          "playProbabilityPct": 95,
+          "playBadgeLabel": "95% • Cleared",
+          "archetypeNote": "LB availability projection",
+          "factors": [
+            "Cleared without restrictive game-day designation"
+          ],
+          "beatComment": "Pearce was dealing with a back injury in early November but has played in each of the Falcons' last two games. He has two more chances to log a full practice and avoid an injury designation ahead of Sunday's road game against the Vikings.",
+          "isStarter": true,
+          "role": "Starter",
+          "priorDayPlayProbabilityPct": 81,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         }
@@ -25793,7 +25885,7 @@
       "spread": "MIN -7",
       "openingSpread": "Opened MIN -4.5 (Draft Kings)",
       "overUnder": 41.5,
-      "moneyline": "MIN -309 | ATL +251",
+      "moneyline": "MIN -310 | ATL +252",
       "impliedScore": "MIN 24.3 – ATL 17.3",
       "restAdvantage": "-7 Days Rest Differential (ATL extra rest)",
       "impliedWinProb": "84%"
@@ -27497,7 +27589,7 @@
     "keyMatchupsMatrix": [
       {
         "phaseTag": "Middle-Field Passing Spine",
-        "unitMatchup": "Kirk Cousins, T.J. Hockenson & Justin Jefferson vs. CB A.J. Terrell Jr. & LB Kendal Daniels",
+        "unitMatchup": "Kirk Cousins, T.J. Hockenson & Justin Jefferson vs. CB A.J. Terrell Jr. & LB Divine Deablo",
         "advantage": "Even Star Clash",
         "sfPlayers": [
           "Kirk Cousins",
@@ -27506,7 +27598,7 @@
         ],
         "statComparison": "MIN: #27 Pass Off (172.4 yds) · #29 Off. Scoring (-4.83) | ATL: #25 Pass Def (+4.00)",
         "tacticalDetail": "Kirk Cousins, T.J. Hockenson & Justin Jefferson attack the intermediate seams and middle-of-the-field leverage windows against Atlanta Falcons's #25 pass defense (+4.00). Winning early-down timing throws keeps Minnesota's offense ahead of the chains and punishes disguised single-high rotations.",
-        "filmTell": "Watch Kirk Cousins (#8) scanning Falcons's deep safeties at the snap—when LB Kendal Daniels widens to take away the crossers, the intermediate seam opens immediately for T.J. Hockenson (#87)."
+        "filmTell": "Watch Kirk Cousins (#8) scanning Falcons's deep safeties at the snap—when LB Divine Deablo widens to take away the crossers, the intermediate seam opens immediately for T.J. Hockenson (#87)."
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",
@@ -27536,7 +27628,7 @@
       },
       {
         "phaseTag": "Early-Down Ground Game & Run Fits",
-        "unitMatchup": "Aaron Jones Sr. & Max Bredeson vs. Falcons Front Seven & LB Kendal Daniels",
+        "unitMatchup": "Aaron Jones Sr. & Max Bredeson vs. Falcons Front Seven & LB Divine Deablo",
         "advantage": "ATL Heavy Edge",
         "sfPlayers": [
           "Aaron Jones Sr.",

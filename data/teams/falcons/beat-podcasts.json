@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:12.277Z",
+  "updatedAt": "2026-11-26T19:05:31.664Z",
   "windowDays": 7,
   "totalEpisodes": 8,
   "shows": [
@@ -41,6 +41,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_falcons_locked_on_falcons_1000804125313",
+      "trackId": 1000804125313,
+      "collectionId": 1147245791,
+      "showId": "falcons_locked_on_falcons",
+      "showName": "Locked On Falcons",
+      "showFullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
+      "hosts": "Locked On Podcast Network, Aaron Freeman",
+      "network": "Locked On Podcast Network, Aaron Freeman",
+      "title": "Can Michael Penix Beat Brian Flores' BLITZ? Atlanta Falcons Face Kirk Cousins and the Vikings",
+      "summary": "Atlanta Falcons at Minnesota Vikings crossover: Kirk Cousins vs. Michael Penix, Brian Flores' blitz and Bijan Robinson's chance to swing Sunday's game. Aaron Freeman and Luke Braun (Locked On Vikings) team up to discuss whether Atlanta was right to move on from Kirk Cousins ",
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ea/43/e3/ea43e3a4-da06-697a-398a-e689e5b20f0e/mza_3479539245034595218.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/can-michael-penix-beat-brian-flores-blitz-atlanta-falcons/id1147245791?i=1000804125313&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/52349ffe-bfb3-4db2-bc4a-60dfde9692dd/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=52349ffe-bfb3-4db2-bc4a-60dfde9692dd&feed=l96cnojt"
+    },
     {
       "id": "pod_falcons_locked_on_falcons_1000803915003",
       "trackId": 1000803915003,
@@ -180,26 +200,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
       "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/aebcf14f-791a-4679-a4fe-643620955671/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=aebcf14f-791a-4679-a4fe-643620955671&feed=l96cnojt"
-    },
-    {
-      "id": "pod_falcons_locked_on_falcons_1000802978988",
-      "trackId": 1000802978988,
-      "collectionId": 1147245791,
-      "showId": "falcons_locked_on_falcons",
-      "showName": "Locked On Falcons",
-      "showFullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
-      "hosts": "Locked On Podcast Network, Aaron Freeman",
-      "network": "Locked On Podcast Network, Aaron Freeman",
-      "title": "FALCONS SQUAD: Atlanta Falcons Fight for Playoff HOPE Despite 3-7 Record and Michael Penix Struggles",
-      "summary": "Atlanta Falcons’ playoff hopes hang by a thread as they limp into the bye week on a three-game losing streak and a disappointing 3-7 record. Are coaching missteps and the lack of a true locker room edge dooming their season, or can stars like Bijan Robinson and Drake London ",
-      "publishedAt": "2026-11-19T18:19:29.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/8f/6f/63/8f6f6379-f142-74be-8644-26793a6ca949/mza_2845498961781100624.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/falcons-squad-atlanta-falcons-fight-for-playoff-hope/id1147245791?i=1000802978988&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/a9c28f8f-f96f-483a-908e-819b814b24be/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=a9c28f8f-f96f-483a-908e-819b814b24be&feed=l96cnojt"
     }
   ]
 }

@@ -115,7 +115,7 @@ export const BEAT_REPORTER_DIRECTORY = [
   { id: 'gregg_bell', name: 'Gregg Bell', handle: '@gbellseattle', outletId: 'national_nfl', outletName: 'Tacoma News Tribune', trustTier: 2, credibilityScore: 90, teamAbbr: 'SEA' },
   { id: 'bob_condotta', name: 'Bob Condotta', handle: '@bcondotta', outletId: 'national_nfl', outletName: 'Seattle Times', trustTier: 2, credibilityScore: 90, teamAbbr: 'SEA' },
   { id: 'michael_shawn_dugar', name: 'Michael-Shawn Dugar', handle: '@MikeDugar', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90, teamAbbr: 'SEA' },
-  { id: 'jourdan_rodrigue', name: 'Jourdan Rodrigue', handle: '@JourdanRodrigue', outletId: 'athletic', outletName: 'The Athletic', trustTier: 1, credibilityScore: 94, teamAbbr: 'LAR' },
+  { id: 'jourdan_rodrigue', name: 'Jourdan Rodrigue', handle: '@JourdanRodrigue', outletId: 'athletic', outletName: 'The Athletic', trustTier: 1, credibilityScore: 94, scope: 'national' },
   { id: 'sarah_barshop', name: 'Sarah Barshop', handle: '@sarahbarshop', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90, teamAbbr: 'LAR' },
   { id: 'gary_klein', name: 'Gary Klein', handle: '@LATimesklein', outletId: 'national_nfl', outletName: 'Los Angeles Times', trustTier: 2, credibilityScore: 90, teamAbbr: 'LAR' },
   { id: 'stu_jackson', name: 'Stu Jackson', handle: '@StuJRams', outletId: 'national_nfl', outletName: 'TheRams.com', trustTier: 2, credibilityScore: 89, teamAbbr: 'LAR' },

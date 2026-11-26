@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:01.409Z",
+  "updatedAt": "2026-11-26T19:01:16.675Z",
   "sources": [
     {
       "label": "ESPN Rams Schedule",
@@ -572,7 +572,7 @@
       },
       "restAdvantageDays": 1,
       "spreadLineSf": -1.5,
-      "totalLine": 45.5,
+      "totalLine": 44.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24644,95 +24644,76 @@
     }
   ],
   "powerRankings": {
-    "weekLabel": "Through Week 11 • Updating After Week 12",
-    "consistentThroughWeek": 11,
+    "weekLabel": "Through Week 12 • Entering Week 13",
+    "consistentThroughWeek": 12,
     "latestCompletedWeek": 12,
     "sfCompletedGames": 11,
     "pastFreshnessCutoff": false,
     "cutoffHours": 24,
-    "cohortStatus": "pre_cutoff_prior_week",
-    "consensusRank": 6,
-    "averageRank": 6.3,
-    "medianRank": 6,
+    "cohortStatus": "latest_game_partial",
+    "consensusRank": 4,
+    "averageRank": 4.3,
+    "medianRank": 4,
     "previousRank": 6,
-    "rangeMin": 2,
-    "rangeMax": 11,
-    "rangeShort": "#2–#11",
-    "rangeDisplay": "#2–#11 across 4 verified models & polls",
-    "synthesizedTakeaway": "4 verified models & polls place the 7-4 Rams at #6 consensus (avg #6.3) through Week 11, ranging from #2 (nfelo) to #11 (ESPN Panel). Showing the consistent Week 11 cohort while post-game updates publish.",
+    "rangeMin": 3,
+    "rangeMax": 6,
+    "rangeShort": "#3–#6",
+    "rangeDisplay": "#3–#6 across 3 verified models & polls",
+    "synthesizedTakeaway": "3 verified models & polls place the 7-4 Rams at #4 consensus (avg #4.3) through Week 12, ranging from #3 (RBSDM) to #6 (Inpredictable). 3 outlets still on an older week are excluded for week consistency.",
     "sources": [
       {
-        "id": "nfelo",
-        "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
-        "shortName": "nfelo",
-        "url": "https://nfeloapp.com/nfl-power-ratings/",
-        "rank": 2,
-        "previousRank": 2,
-        "delta": "0",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": null,
-        "asOfLabel": "6-4 record",
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 3,
+        "previousRank": 5,
+        "delta": "+2",
+        "reportedRecord": "7-4",
+        "gamesIncluded": 11,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "nfelo 1666 (+7.2 spread value, #9 Off EPA, #7 Net EPA) at 6-4.",
-        "includesLatestGame": false,
-        "freshnessReason": "record_behind"
+        "blurb": "Tier 1 (71.8% neutral-field win rating, 10.3 proj. wins) at 7-4 through Week 12.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
       },
       {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 5,
+        "rank": 4,
         "previousRank": 6,
-        "delta": "+1",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25T19:02Z",
+        "delta": "+2",
+        "reportedRecord": "7-4",
+        "gamesIncluded": 11,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +4.8 (#7 Off / #6 Def efficiency, 9.9 proj. wins, 3.0% SB odds) at 6-4.",
-        "includesLatestGame": false,
-        "freshnessReason": "record_behind"
+        "blurb": "FPI +5.5 (#7 Off / #3 Def efficiency, 10.4 proj. wins, 5.6% SB odds) at 7-4.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
       },
       {
         "id": "inpredictable",
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 7,
-        "previousRank": 6,
-        "delta": "-1",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "rank": 6,
+        "previousRank": 7,
+        "delta": "+1",
+        "reportedRecord": "7-4",
+        "gamesIncluded": 11,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +4.0 (#9 Offense / #9 Defense) at 6-4 through Week 10.",
-        "includesLatestGame": false,
-        "freshnessReason": "record_behind"
-      },
-      {
-        "id": "espn_panel",
-        "outlet": "ESPN NFL Power Rankings Panel",
-        "shortName": "ESPN Panel",
-        "url": "https://www.espn.com/nfl/story/_/id/50574413/nfl-power-rankings-week-12-offseason-contract-extension-candidates",
-        "rank": 11,
-        "previousRank": 11,
-        "delta": "0",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "forWeek": 12,
-        "asOfIso": "2026-11-24T16:49:36Z",
-        "asOfLabel": "Week 12",
-        "verified": true,
-        "blurb": "Week 11 bye. Extension candidate: WR Puka Nacua The Rams have a long list of potential free agents, including Nacua, defensive tackle Kobie Turner, edge rusher Byron Young, wide receiver Davante…",
-        "includesLatestGame": false,
-        "freshnessReason": "record_behind"
+        "blurb": "Betting market rating GPF +4.6 (#8 Offense / #9 Defense) at 7-4 through Week 12.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
       }
     ],
     "allSources": [
@@ -24741,16 +24722,16 @@
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 7,
-        "previousRank": 6,
-        "delta": "-1",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 10,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "rank": 6,
+        "previousRank": 7,
+        "delta": "+1",
+        "reportedRecord": "7-4",
+        "gamesIncluded": 11,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +4.0 (#9 Offense / #9 Defense) at 6-4 through Week 10."
+        "blurb": "Betting market rating GPF +4.6 (#8 Offense / #9 Defense) at 7-4 through Week 12."
       },
       {
         "id": "nfelo",
@@ -24773,16 +24754,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 5,
+        "rank": 3,
         "previousRank": 5,
-        "delta": "0",
+        "delta": "+2",
         "reportedRecord": "7-4",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 1 (69.9% neutral-field win rating, 9.8 proj. wins) at 7-4 through Week 12."
+        "blurb": "Tier 1 (71.8% neutral-field win rating, 10.3 proj. wins) at 7-4 through Week 12."
       },
       {
         "id": "cbs",
@@ -24806,16 +24787,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 5,
+        "rank": 4,
         "previousRank": 6,
-        "delta": "+1",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
+        "delta": "+2",
+        "reportedRecord": "7-4",
+        "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +4.8 (#7 Off / #6 Def efficiency, 9.9 proj. wins, 3.0% SB odds) at 6-4."
+        "blurb": "FPI +5.5 (#7 Off / #3 Def efficiency, 10.4 proj. wins, 5.6% SB odds) at 7-4."
       },
       {
         "id": "espn_panel",
@@ -24835,9 +24816,40 @@
         "blurb": "Week 11 bye. Extension candidate: WR Puka Nacua The Rams have a long list of potential free agents, including Nacua, defensive tackle Kobie Turner, edge rusher Byron Young, wide receiver Davante…"
       }
     ],
-    "excludedStaleSources": [],
-    "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-26T07:41:09.821Z"
+    "excludedStaleSources": [
+      {
+        "id": "nfelo",
+        "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
+        "shortName": "nfelo",
+        "url": "https://nfeloapp.com/nfl-power-ratings/",
+        "throughWeek": 11,
+        "reportedRecord": "6-4",
+        "asOfLabel": "6-4 record",
+        "freshnessReason": "record_behind"
+      },
+      {
+        "id": "cbs",
+        "outlet": "CBS Sports NFL Power Rankings",
+        "shortName": "CBS Sports",
+        "url": "https://www.cbssports.com/nfl/powerrankings/",
+        "throughWeek": 10,
+        "reportedRecord": "7-4",
+        "asOfLabel": "Week 11",
+        "freshnessReason": "week_behind"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50574413/nfl-power-rankings-week-12-offseason-contract-extension-candidates",
+        "throughWeek": 11,
+        "reportedRecord": "6-4",
+        "asOfLabel": "Week 12",
+        "freshnessReason": "record_behind"
+      }
+    ],
+    "disregardedStaleCount": 3,
+    "fetchedAtIso": "2026-11-26T19:01:23.150Z"
   },
   "upcomingMatchup": {
     "week": 13,
@@ -24861,7 +24873,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 68,
+      "tempF": 69,
       "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
@@ -24886,7 +24898,7 @@
         "position": "QB",
         "jersey": 9,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/12483.png",
-        "primarySnapPct": 98,
+        "primarySnapPct": 99,
         "playProbabilityPct": 99
       },
       {
@@ -24895,7 +24907,7 @@
         "position": "RB",
         "jersey": 23,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430737.png",
-        "primarySnapPct": 65,
+        "primarySnapPct": 64,
         "playProbabilityPct": 99
       },
       {
@@ -24904,7 +24916,7 @@
         "position": "RB",
         "jersey": 24,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429096.png",
-        "primarySnapPct": 33,
+        "primarySnapPct": 37,
         "playProbabilityPct": 99
       },
       {
@@ -24931,7 +24943,7 @@
         "position": "TE",
         "jersey": 89,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2573401.png",
-        "primarySnapPct": 64,
+        "primarySnapPct": 62,
         "playProbabilityPct": 70
       }
     ],
@@ -25838,9 +25850,9 @@
       "favorite": "LAR",
       "spread": "LAR -1.5",
       "openingSpread": "Opened LAR -3.5 (Draft Kings)",
-      "overUnder": 45.5,
+      "overUnder": 44.5,
       "moneyline": "LAR -110 | KC -108",
-      "impliedScore": "LAR 23.5 – KC 22.0",
+      "impliedScore": "LAR 23.0 – KC 21.5",
       "restAdvantage": "+1 Days Rest Advantage",
       "impliedWinProb": "59%"
     },
@@ -27386,16 +27398,16 @@
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",
-        "unitMatchup": "Aaron Donald, Kobie Turner & Braden Fiske vs. QB Patrick Mahomes & OT Kahlil Benson",
+        "unitMatchup": "Aaron Donald, Myles Garrett & Kobie Turner vs. QB Patrick Mahomes & OT Kahlil Benson",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Aaron Donald",
-          "Kobie Turner",
-          "Braden Fiske"
+          "Myles Garrett",
+          "Kobie Turner"
         ],
         "statComparison": "LAR: #16 Def Sacks (2.3/gm) | KC: #16 Pass Protection (6.5%)",
-        "tacticalDetail": "Aaron Donald, Kobie Turner & Braden Fiske lead Los Angeles's #16 NFL pass rush (2.3/gm) against Kansas City Chiefs's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Rams keep seven defenders in coverage.",
-        "filmTell": "On 3rd-and-6+, watch whether Aaron Donald (#99) draw chip help from Chiefs's tight ends or backs—creating 1-on-1 rush lanes inside for Kobie Turner (#91)."
+        "tacticalDetail": "Aaron Donald, Myles Garrett & Kobie Turner lead Los Angeles's #16 NFL pass rush (2.3/gm) against Kansas City Chiefs's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Rams keep seven defenders in coverage.",
+        "filmTell": "On 3rd-and-6+, watch whether Aaron Donald (#99) draw chip help from Chiefs's tight ends or backs—creating 1-on-1 rush lanes inside for Myles Garrett (#95)."
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",

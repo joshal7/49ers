@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:16.625Z",
+  "updatedAt": "2026-11-26T18:59:57.935Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -9,56 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "13241",
-      "name": "Trent Williams",
-      "position": "OT",
-      "jersey": 71,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": true,
-      "wed": "Vet Rest",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "NIR - Rest",
-      "gameStatus": "Active",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out for Season",
-      "archetypeNote": "Habitual Wed/Thu veteran rest; suits up at ~98% when NIR-Rest, but historically cautious with acute high/low ankle sprains.",
-      "factors": [
-        "Season-ending Injured Reserve — ineligible to return this season"
-      ],
-      "beatComment": "49ers 49ers RT Colton McKivitz was bent backward on a running play and suffered a season-ending ankle injury, prompting emotional reactions from teammates such as LT Trent Williams and RB Christian McCaffrey."
-    },
-    {
-      "playerId": "3117251",
-      "name": "Christian McCaffrey",
-      "position": "RB",
-      "jersey": 23,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": true,
-      "wed": "Vet Rest",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "NIR - Rest",
-      "gameStatus": "Active",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out for Season",
-      "archetypeNote": "Scheduled Wednesday maintenance workload; high vigilance on calf/Achilles tightness.",
-      "factors": [
-        "Season-ending Injured Reserve — ineligible to return this season"
-      ],
-      "beatComment": "49ers 49ers RT Colton McKivitz was bent backward on a running play and suffered a season-ending ankle injury, prompting emotional reactions from teammates such as LT Trent Williams and RB Christian McCaffrey. “It’s brutal,” McCaffrey said o."
-    },
     {
       "playerId": "4431466",
       "name": "Jordan Watkins",
@@ -366,6 +316,56 @@
         "High pain-tolerance / toughness prior (+4% boost)"
       ],
       "beatComment": "Lenoir has been playing through a foot injury since Week 9 against the Raiders, so it's not surprising to see his practice reps limited Wednesday. Unless he suffers a setback, Lenoir should be available for Sunday's NFC West tilt against the Seahawks."
+    },
+    {
+      "playerId": "13241",
+      "name": "Trent Williams",
+      "position": "OT",
+      "jersey": 71,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Habitual Wed/Thu veteran rest; suits up at ~98% when NIR-Rest, but historically cautious with acute high/low ankle sprains.",
+      "factors": [
+        "Habitual Veteran Rest prior (Trent Williams maintenance schedule)"
+      ],
+      "beatComment": "49ers right tackle Colton McKivitz left-lower leg is severly injured and getting put into aircast He's getting carted off and all 49ers are on field to say farewell Left tackle Trent Williams slammed his helmet into ground upon seeing McKivitz down after getting rolled up."
+    },
+    {
+      "playerId": "3117251",
+      "name": "Christian McCaffrey",
+      "position": "RB",
+      "jersey": 23,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Scheduled Wednesday maintenance workload; high vigilance on calf/Achilles tightness.",
+      "factors": [
+        "Habitual Veteran Rest prior (Christian McCaffrey maintenance schedule)"
+      ],
+      "beatComment": "McKivitz was carted off the field after going down with the injury during the second quarter, when Vikings linebacker Ivan Pace appeared to roll up on back of McKivitz's left leg at the end of a Christian McCaffrey run."
     },
     {
       "playerId": "15818",

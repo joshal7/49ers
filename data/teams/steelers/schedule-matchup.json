@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:42.333Z",
+  "updatedAt": "2026-11-26T19:07:54.408Z",
   "sources": [
     {
       "label": "ESPN Steelers Schedule",
@@ -533,7 +533,7 @@
         "surface": "Turf"
       },
       "restAdvantageDays": 0,
-      "spreadLineSf": 3.5,
+      "spreadLineSf": 4.5,
       "totalLine": 36.5,
       "broadcast": "NFL TV"
     },
@@ -24656,15 +24656,33 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 18,
-    "averageRank": 18,
-    "medianRank": 16,
+    "averageRank": 17.6,
+    "medianRank": 15,
     "previousRank": 17,
-    "rangeMin": 15,
+    "rangeMin": 14,
     "rangeMax": 24,
-    "rangeShort": "#15–#24",
-    "rangeDisplay": "#15–#24 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 6-4 Steelers at #18 consensus (avg #18.0) through Week 11, ranging from #15 (ESPN Panel) to #24 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeShort": "#14–#24",
+    "rangeDisplay": "#14–#24 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 6-4 Steelers at #18 consensus (avg #17.6) through Week 11, ranging from #14 (ESPN FPI) to #24 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
+      {
+        "id": "espn_fpi",
+        "outlet": "ESPN Football Power Index (FPI)",
+        "shortName": "ESPN FPI",
+        "url": "https://www.espn.com/nfl/fpi",
+        "rank": 14,
+        "previousRank": 16,
+        "delta": "+2",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T07:00Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "FPI +1.7 (#22 Off / #8 Def efficiency, 10.2 proj. wins, 0.1% SB odds) at 6-4.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
       {
         "id": "espn_panel",
         "outlet": "ESPN NFL Power Rankings Panel",
@@ -24703,24 +24721,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "espn_fpi",
-        "outlet": "ESPN Football Power Index (FPI)",
-        "shortName": "ESPN FPI",
-        "url": "https://www.espn.com/nfl/fpi",
-        "rank": 16,
-        "previousRank": 16,
-        "delta": "0",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "FPI +1.7 (#22 Off / #8 Def efficiency, 10.2 proj. wins, 0.2% SB odds) at 6-4.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "inpredictable",
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
@@ -24731,10 +24731,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -2.6 (#22 Offense / #14 Defense) at 6-4 through Week 11.",
+        "blurb": "Betting market rating GPF -3.3 (#22 Offense / #17 Defense) at 6-4 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24749,10 +24749,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 5 (35.0% neutral-field win rating, 8.7 proj. wins) at 6-4 through Week 12.",
+        "blurb": "Tier 5 (36.4% neutral-field win rating, 8.8 proj. wins) at 6-4 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24769,10 +24769,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -2.6 (#22 Offense / #14 Defense) at 6-4 through Week 11."
+        "blurb": "Betting market rating GPF -3.3 (#22 Offense / #17 Defense) at 6-4 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24801,10 +24801,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 5 (35.0% neutral-field win rating, 8.7 proj. wins) at 6-4 through Week 12."
+        "blurb": "Tier 5 (36.4% neutral-field win rating, 8.8 proj. wins) at 6-4 through Week 12."
       },
       {
         "id": "cbs",
@@ -24828,16 +24828,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 16,
+        "rank": 14,
         "previousRank": 16,
-        "delta": "0",
+        "delta": "+2",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +1.7 (#22 Off / #8 Def efficiency, 10.2 proj. wins, 0.2% SB odds) at 6-4."
+        "blurb": "FPI +1.7 (#22 Off / #8 Def efficiency, 10.2 proj. wins, 0.1% SB odds) at 6-4."
       },
       {
         "id": "espn_panel",
@@ -24870,7 +24870,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:28:49.542Z"
+    "fetchedAtIso": "2026-11-26T19:08:01.298Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25699,7 +25699,7 @@
           "factors": [
             "Officially ruled Out on weekly game status report"
           ],
-          "beatComment": "Jones was held out of the first two practices of Week 12 prep due to a hamstring injury that he may have picked up in Denver's 38-24 win over Las Vegas on Sunday. Tyler Onyedium and Jordan Jackson are in line for more rotational snaps on the defensive line in the absence of Jones, whose next opportunity to play is Week 13 against the Dolphins on Sunday, Dec. 6.",
+          "beatComment": "Jones was held out of the first two practices of Week 12 prep due to a hamstring injury that he may have picked up in Denver's 38-24 win over Las Vegas on Sunday. Tyler Onyedim and Jordan Jackson are in line for more rotational snaps on the defensive line in the absence of Jones, whose next opportunity to play is Week 13 against the Dolphins on Sunday, Dec. 6.",
           "isStarter": false,
           "role": "Depth",
           "priorDayPlayProbabilityPct": 31,
@@ -25929,13 +25929,13 @@
     },
     "betting": {
       "favorite": "DEN",
-      "spread": "DEN -3.5",
+      "spread": "DEN -4.5",
       "openingSpread": "Opened PIT +1.5 (Draft Kings)",
       "overUnder": 36.5,
-      "moneyline": "PIT +170 | DEN -203",
-      "impliedScore": "PIT 16.5 – DEN 20.0",
+      "moneyline": "PIT +190 | DEN -228",
+      "impliedScore": "PIT 16.0 – DEN 20.5",
       "restAdvantage": "Even Rest (Standard Prep Week)",
-      "impliedWinProb": "30%"
+      "impliedWinProb": "26%"
     },
     "franchiseHistory": {
       "allTimeRecord": "Steelers vs. Broncos",

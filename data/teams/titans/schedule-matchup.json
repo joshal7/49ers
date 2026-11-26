@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:29.404Z",
+  "updatedAt": "2026-11-26T19:24:05.984Z",
   "sources": [
     {
       "label": "ESPN Titans Schedule",
@@ -24648,13 +24648,13 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 29,
-        "previousRank": 29,
-        "delta": "0",
+        "previousRank": 28,
+        "delta": "-1",
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
         "blurb": "Betting market rating GPF -7.5 (#21 Offense / #32 Defense) at 1-9 through Week 11.",
         "includesLatestGame": true,
@@ -24689,10 +24689,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 6 (24.8% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 12.",
+        "blurb": "Tier 6 (25.1% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24707,10 +24707,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -6.6 (#25 Off / #31 Def efficiency, 3.0 proj. wins, 0.0% SB odds) at 1-9.",
+        "blurb": "FPI -6.5 (#25 Off / #31 Def efficiency, 3.0 proj. wins, 0.0% SB odds) at 1-9.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24741,13 +24741,13 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 29,
-        "previousRank": 29,
-        "delta": "0",
+        "previousRank": 28,
+        "delta": "-1",
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
         "blurb": "Betting market rating GPF -7.5 (#21 Offense / #32 Defense) at 1-9 through Week 11."
       },
@@ -24778,10 +24778,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 6 (24.8% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 12."
+        "blurb": "Tier 6 (25.1% neutral-field win rating, 3.2 proj. wins) at 1-9 through Week 12."
       },
       {
         "id": "cbs",
@@ -24811,10 +24811,10 @@
         "reportedRecord": "1-9",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -6.6 (#25 Off / #31 Def efficiency, 3.0 proj. wins, 0.0% SB odds) at 1-9."
+        "blurb": "FPI -6.5 (#25 Off / #31 Def efficiency, 3.0 proj. wins, 0.0% SB odds) at 1-9."
       },
       {
         "id": "espn_panel",
@@ -24847,7 +24847,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:29:33.716Z"
+    "fetchedAtIso": "2026-11-26T19:24:13.413Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24871,8 +24871,8 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 67,
-      "condition": "Intermittent clouds",
+      "tempF": 64,
+      "condition": "Partly sunny",
       "windMph": null,
       "windDir": "",
       "precipPct": null,
@@ -25979,7 +25979,7 @@
       "spread": "JAX -14.5",
       "openingSpread": "Opened TEN +5.5 (Draft Kings)",
       "overUnder": 49.5,
-      "moneyline": "TEN +730 | JAX -1160",
+      "moneyline": "TEN +740 | JAX -1180",
       "impliedScore": "TEN 17.5 – JAX 32.0",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "3%"

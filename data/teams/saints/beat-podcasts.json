@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:27:02.157Z",
+  "updatedAt": "2026-11-26T19:05:16.024Z",
   "windowDays": 7,
-  "totalEpisodes": 18,
+  "totalEpisodes": 17,
   "shows": [
     {
       "id": "saints_locked_on_saints",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e2/d8/d8/e2d8d8b9-642e-7108-c0fe-e8e970baf5c5/mza_11287861227660812670.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "saints_neworleans_football",
@@ -380,26 +380,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/neworleans-football-saints-podcast/id1153789570?uo=4",
       "feedUrl": "https://feeds.transistor.fm/neworleans-football-saints-podcast",
       "audioStreamUrl": "https://pscrb.fm/rss/p/media.transistor.fm/5b12a95b/f074c038.mp3"
-    },
-    {
-      "id": "pod_saints_locked_on_saints_1000802884619",
-      "trackId": 1000802884619,
-      "collectionId": 997872651,
-      "showId": "saints_locked_on_saints",
-      "showName": "Locked On Saints",
-      "showFullTitle": "Locked On Saints - Daily Podcast On The New Orleans Saints",
-      "hosts": "Locked On Podcast Network, Ross Jackson",
-      "network": "Locked On Podcast Network, Ross Jackson",
-      "title": "Saints, Kellen Moore Face Future-Defining Test Against Superior Bears Teams",
-      "summary": "The New Orleans Saints face a desperate test against the Chicago Bears, with a loss potentially pushing New Orleans toward a season-ending collapse. How Tyler Shough exploit can Chicago’s vulnerable secondary and keep the Saints competitive against Caleb Williams and a 7-2 B",
-      "publishedAt": "2026-11-19T08:05:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d2/e1/ac/d2e1ac46-7579-42b2-7232-773f69c26bb0/mza_18401544869897778518.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/saints-kellen-moore-face-future-defining-test-against/id997872651?i=1000802884619&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/83ac39/lockedon.simplecastaudio.com/26a658f6-15f1-4878-ab5f-d78d7d886aa9/episodes/521291b9-7003-4989-aaaa-7385292bfd84/audio/128/default.mp3?aid=rss_feed&awCollectionId=26a658f6-15f1-4878-ab5f-d78d7d886aa9&awEpisodeId=521291b9-7003-4989-aaaa-7385292bfd84&feed=aKgoC4uX"
     }
   ]
 }

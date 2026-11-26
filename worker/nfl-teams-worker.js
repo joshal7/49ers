@@ -1173,9 +1173,11 @@ export function parseOfficialXSyndicationTimelineHtml(
               summary: quotedText,
               authorHandle: `@${tw.user?.screen_name || handle}`,
               imageUrl: thumbUrl,
-              videoStreamUrl: mp4Url
+              videoStreamUrl: mp4Url,
+              publishedAt: new Date(pubMs).toISOString()
             },
-            team
+            team,
+            { nowMs }
           )
         ) {
           isLeagueWideFilmChart = true;

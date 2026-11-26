@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:23.140Z",
+  "updatedAt": "2026-11-26T19:07:25.464Z",
   "teamAbbr": "CIN",
   "teamSlug": "bengals",
   "brandName": "Bengals Who Dey",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:28:23.140Z",
+    "lastCheckedAt": "2026-11-26T19:07:25.464Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

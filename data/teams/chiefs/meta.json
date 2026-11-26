@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:37.620Z",
+  "updatedAt": "2026-11-26T19:24:19.069Z",
   "teamAbbr": "KC",
   "teamSlug": "chiefs",
   "brandName": "Chiefs Kingdom",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:29:37.620Z",
+    "lastCheckedAt": "2026-11-26T19:24:19.069Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

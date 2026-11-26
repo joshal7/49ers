@@ -100,7 +100,10 @@ import {
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
+  isCommercialFantasyOrBettingFiller,
+  isGenericLeagueWideRoundupWithoutTeam,
   isLeagueWideFilmAnalyticsTweet,
+  isLocalBeatPostOffTopicForTeam,
   isCompatiblePositionToken,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
@@ -250,8 +253,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@minakimes',
     outletId: 'espn',
     outletName: 'ESPN NFL',
-    isNationalInsider: true,
-    allowLeagueWideFilmCharts: true
+    isNationalInsider: true
   },
   {
     actor: 'throwthedamball.bsky.social',
@@ -280,8 +282,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@Nate_Tice',
     outletId: 'national_film',
     outletName: 'Yahoo Sports NFL',
-    isNationalInsider: true,
-    allowLeagueWideFilmCharts: true
+    isNationalInsider: true
   },
   {
     actor: 'benjaminsolak.bsky.social',
@@ -290,8 +291,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@BenjaminSolak',
     outletId: 'espn',
     outletName: 'ESPN NFL',
-    isNationalInsider: true,
-    allowLeagueWideFilmCharts: true
+    isNationalInsider: true
   },
   {
     actor: 'brettkollmann.bsky.social',
@@ -300,8 +300,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@BrettKollmann',
     outletId: 'youtube_film',
     outletName: 'The Film Room',
-    isNationalInsider: true,
-    allowLeagueWideFilmCharts: true
+    isNationalInsider: true
   },
   {
     actor: 'adamscheftermirror.bsky.social',
@@ -2843,6 +2842,14 @@ function getLiveBlueskyBeatAccountsForTeam(appData = null) {
     const actor = String(rep?.bskyHandle || '').trim();
     if (!actor || seen.has(actor.toLowerCase())) continue;
     seen.add(actor.toLowerCase());
+    const repHandleLow = String(rep.handle || '').replace(/^@/, '').trim().toLowerCase();
+    const isGenuineLeagueChartPublisher = new Set([
+      'throwthedamball',
+      'ghatz_28',
+      'benbbaldwin',
+      'fball_insights',
+      'tejfbanalytics'
+    ]).has(repHandleLow);
     out.push({
       actor,
       reporterId: rep.id,
@@ -2852,8 +2859,11 @@ function getLiveBlueskyBeatAccountsForTeam(appData = null) {
       outletId: rep.outletId || `${activeTeam.slug}_beat`,
       outletName: rep.outletName || rep.name,
       trustTier: Number(rep.trustTier) || 2,
-      isNationalInsider: ['national_insider', 'film_analyst', 'cap_analyst', 'analytics', 'draft'].includes(rep.category),
-      allowLeagueWideFilmCharts: rep.category === 'film_analyst' || rep.category === 'analytics'
+      isNationalInsider:
+        Boolean(rep.requireTeamMention) ||
+        rep.scope === 'national' ||
+        ['national_insider', 'film_analyst', 'cap_analyst', 'analytics', 'draft'].includes(rep.category),
+      allowLeagueWideFilmCharts: isGenuineLeagueChartPublisher
     });
   }
   return out;
@@ -2932,6 +2942,14 @@ export async function hydrateLiveBlueskyBeatWire(
 
   const pendingItems = [];
   const shortUrlsToExpand = new Set();
+  const bskyMaxAgeMs = 10 * 86_400_000;
+  const bskyNowMs = Date.now();
+  let leagueWideChartsAdded = 0;
+  const upcomingOppAbbr = String(appData?.scheduleMatchup?.upcomingMatchup?.oppAbbr || '').toUpperCase();
+  const recentCompletedGame = (appData?.scheduleMatchup?.schedule || [])
+    .filter(g => g && g.completed && g.oppAbbr)
+    .slice(-1)[0];
+  const recentOppAbbr = String(recentCompletedGame?.oppAbbr || '').toUpperCase();
   await mapWithConcurrency(teamAccounts, 6, async acct => {
       try {
         const limit = acct.isNationalInsider ? 28 : isGameLive || manual ? 30 : 28;
@@ -2949,6 +2967,12 @@ export async function hydrateLiveBlueskyBeatWire(
             post?.author?.did &&
             row.reply.parent.author.did !== post.author.did
           ) {
+            continue;
+          }
+          // Strict recency gate: never pull stale weeks-old or prior-season Bluesky posts (e.g. dormant SumerSports / Brett Kollmann feeds)
+          const bskyPubIsoPre = rec?.createdAt || post?.indexedAt || '';
+          const bskyPubMsPre = bskyPubIsoPre ? Date.parse(bskyPubIsoPre) : NaN;
+          if (!Number.isFinite(bskyPubMsPre) || bskyNowMs - bskyPubMsPre > bskyMaxAgeMs) {
             continue;
           }
           const extLink = extractBlueskyBestExternalLink(post, rec);
@@ -2998,22 +3022,40 @@ export async function hydrateLiveBlueskyBeatWire(
           ) {
             if (
               acct.allowLeagueWideFilmCharts &&
+              leagueWideChartsAdded < 2 &&
               isLeagueWideFilmAnalyticsTweet(
                 {
                   title: cleanFull,
                   fullText: cleanFull,
                   summary: `${cleanExtTitle} ${nonBioExtDesc}`,
                   authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
-                  imageUrl: bskyPhotoPre || extLink.thumb || ''
+                  imageUrl: bskyPhotoPre || extLink.thumb || '',
+                  publishedAt: bskyPubIsoPre
                 },
-                activeTeam
+                activeTeam,
+                { nowMs: bskyNowMs }
               )
             ) {
               isLeagueWideChart = true;
               filmOnlyScope = true;
+              leagueWideChartsAdded += 1;
             } else {
               continue;
             }
+          }
+
+          if (
+            !acct.isNationalInsider &&
+            isLocalBeatPostOffTopicForTeam(combinedNonBioCheck, {
+              team: activeTeam,
+              hasDirectTeamOrRosterMatch:
+                hasExplicitSfInLead || hasExplicitSfInBody || leadMentioned.length > 0 || bodyMentioned.length > 0,
+              hasPlayableMedia: bskyHasMediaPre,
+              upcomingOpponentAbbr: upcomingOppAbbr,
+              recentOpponentAbbr: recentOppAbbr
+            })
+          ) {
+            continue;
           }
 
           if (
@@ -3031,19 +3073,23 @@ export async function hydrateLiveBlueskyBeatWire(
           ) {
             if (
               acct.allowLeagueWideFilmCharts &&
+              leagueWideChartsAdded < 2 &&
               isLeagueWideFilmAnalyticsTweet(
                 {
                   title: cleanFull,
                   fullText: cleanFull,
                   summary: `${cleanExtTitle} ${nonBioExtDesc}`,
                   authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
-                  imageUrl: bskyPhotoPre || extLink.thumb || ''
+                  imageUrl: bskyPhotoPre || extLink.thumb || '',
+                  publishedAt: bskyPubIsoPre
                 },
-                activeTeam
+                activeTeam,
+                { nowMs: bskyNowMs }
               )
             ) {
               isLeagueWideChart = true;
               filmOnlyScope = true;
+              leagueWideChartsAdded += 1;
             } else {
               // Buffer upcoming-opponent insider injury/practice/trend tweets into `_oppNewsWire` (strictly separate from 49ers feed!)
               const umOpp = appData.scheduleMatchup?.upcomingMatchup;
@@ -3485,7 +3531,10 @@ export async function hydrateLiveEspnPlayerBeatWire(
           });
 
           const cleanFull = cleanSensationalistText(parsedAttr.cleanedText || leadText);
-          if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${cleanFull}`)) {
+          if (
+            /\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${cleanFull}`) ||
+            isCommercialFantasyOrBettingFiller(rawHeadline, `${rawDesc} ${rawStory} ${cleanFull}`, entry.links?.web?.href || '')
+          ) {
             continue;
           }
           const directWebUrl = sanitizeExternalUrl(entry.links?.web?.href, null);
@@ -5043,6 +5092,19 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         allowUniqueSurnames: !isNationalEdgeOutlet || hasExplicit49ersEntity(`${leadTextEdge} ${nonBioSummary}`)
       });
       const isEdgeLeagueWideFilmChart = Boolean(raw.isLeagueWideFilmChart);
+      if (
+        isEdgeLeagueWideFilmChart &&
+        Number.isFinite(pubMs) &&
+        nowMs - pubMs > 10 * 86_400_000
+      ) {
+        continue;
+      }
+      if (isCommercialFantasyOrBettingFiller(leadTextEdge, nonBioSummary, raw.externalUrl || url || '')) {
+        continue;
+      }
+      if (isGenericLeagueWideRoundupWithoutTeam(title, nonBioSummary, activeTeam)) {
+        continue;
+      }
       if (
         !isEdgeLeagueWideFilmChart &&
         isOffTopicLeagueFiller({

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:42.572Z",
+  "updatedAt": "2026-11-26T19:02:58.466Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/green-bay-packers",
   "spotracUrl": "https://www.spotrac.com/nfl/green-bay-packers/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 314259464,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 307704590,
       "top51": 242953368,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 54,
-      "totalSignedCount": 82
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 332901697,
       "top51": 322945701,
       "teamCapSpace": -5901697,
       "otcRawTeamCapSpace": -5901697,
-      "effectiveCapSpace": -15259080,
+      "effectiveCapSpace": -12411697,
       "activeCapSpending": 322945701,
       "offenseSpend": 180563466,
       "defenseSpend": 136583102,
@@ -188,7 +188,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 296769253,
       "top51": 296769253,

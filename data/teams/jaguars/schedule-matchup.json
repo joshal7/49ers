@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:16.731Z",
+  "updatedAt": "2026-11-26T19:23:50.399Z",
   "sources": [
     {
       "label": "ESPN Jaguars Schedule",
@@ -571,8 +571,6 @@
         "surface": "Turf"
       },
       "restAdvantageDays": -3,
-      "spreadLineSf": 3,
-      "totalLine": 49.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24671,48 +24669,30 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 6,
-    "averageRank": 5.6,
-    "medianRank": 6,
+    "averageRank": 6.4,
+    "medianRank": 7,
     "previousRank": 3,
-    "rangeMin": 4,
+    "rangeMin": 5,
     "rangeMax": 7,
-    "rangeShort": "#4–#7",
-    "rangeDisplay": "#4–#7 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 7-3 Jaguars at #6 consensus (avg #5.6) through Week 11, ranging from #4 (ESPN FPI) to #7 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeShort": "#5–#7",
+    "rangeDisplay": "#5–#7 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 7-3 Jaguars at #6 consensus (avg #6.4) through Week 11, ranging from #5 (ESPN FPI) to #7 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 4,
+        "rank": 5,
         "previousRank": 2,
-        "delta": "-2",
+        "delta": "-3",
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +5.1 (#9 Off / #3 Def efficiency, 11.7 proj. wins, 8.7% SB odds) at 7-3.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "inpredictable",
-        "outlet": "Inpredictable / Betting Market Power Rating",
-        "shortName": "Inpredictable",
-        "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 5,
-        "previousRank": 3,
-        "delta": "-2",
-        "reportedRecord": "7-3",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
-        "verified": true,
-        "blurb": "Betting market rating GPF +4.5 (#7 Offense / #10 Defense) at 7-3 through Week 11.",
+        "blurb": "FPI +5.2 (#9 Off / #4 Def efficiency, 11.7 proj. wins, 8.4% SB odds) at 7-3.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24735,24 +24715,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 6,
-        "previousRank": 6,
-        "delta": "0",
-        "reportedRecord": "7-3",
-        "gamesIncluded": 10,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "Tier 1 (69.7% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 12.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "espn_panel",
         "outlet": "ESPN NFL Power Rankings Panel",
         "shortName": "ESPN Panel",
@@ -24770,6 +24732,42 @@
         "blurb": "Lost to the Giants 23-18. Extension candidate: WR Parker Washington Washington is the Jags' No. 1 receiver, and more importantly, he's the one quarterback Trevor Lawrence goes to in critical…",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
+      },
+      {
+        "id": "inpredictable",
+        "outlet": "Inpredictable / Betting Market Power Rating",
+        "shortName": "Inpredictable",
+        "url": "https://stats.inpredictable.com/rankings/nfl.php",
+        "rank": 7,
+        "previousRank": 2,
+        "delta": "-5",
+        "reportedRecord": "7-3",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
+        "verified": true,
+        "blurb": "Betting market rating GPF +4.5 (#7 Offense / #10 Defense) at 7-3 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 7,
+        "previousRank": 6,
+        "delta": "-1",
+        "reportedRecord": "7-3",
+        "gamesIncluded": 10,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "Tier 1 (69.7% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 12.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
       }
     ],
     "allSources": [
@@ -24778,14 +24776,14 @@
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 5,
-        "previousRank": 3,
-        "delta": "-2",
+        "rank": 7,
+        "previousRank": 2,
+        "delta": "-5",
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
         "blurb": "Betting market rating GPF +4.5 (#7 Offense / #10 Defense) at 7-3 through Week 11."
       },
@@ -24810,13 +24808,13 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 6,
+        "rank": 7,
         "previousRank": 6,
-        "delta": "0",
+        "delta": "-1",
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "Tier 1 (69.7% neutral-field win rating, 11.7 proj. wins) at 7-3 through Week 12."
@@ -24843,16 +24841,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 4,
+        "rank": 5,
         "previousRank": 2,
-        "delta": "-2",
+        "delta": "-3",
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +5.1 (#9 Off / #3 Def efficiency, 11.7 proj. wins, 8.7% SB odds) at 7-3."
+        "blurb": "FPI +5.2 (#9 Off / #4 Def efficiency, 11.7 proj. wins, 8.4% SB odds) at 7-3."
       },
       {
         "id": "espn_panel",
@@ -24885,7 +24883,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:29:23.156Z"
+    "fetchedAtIso": "2026-11-26T19:23:59.014Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24909,8 +24907,8 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 67,
-      "condition": "Intermittent clouds",
+      "tempF": 64,
+      "condition": "Partly sunny",
       "windMph": null,
       "windDir": "",
       "precipPct": null,
@@ -25757,7 +25755,7 @@
           "factors": [
             "Wednesday Limited Participation (LP); player toughness prior = 78%"
           ],
-          "beatComment": "Franklin-Meyers played 42 percent of the Titans' snaps in the Week 11 loss to the Cowboys, close to his regular snap share, while playing through a back injury. The defensive tackle will likely continue to practice through the issue in a limited capacity before suiting up for Sunday's game against the Jaguars.",
+          "beatComment": "Franklin-Meyers played 42 percent of the Titans' snaps in the Week 11 loss to the Cowboys, which is close to his regular snap share, while playing through a back injury. The defensive tackle will likely continue to practice through the issue in a limited capacity before suiting up for Sunday's game against the Jaguars.",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": null,
@@ -25911,7 +25909,7 @@
       "spread": "JAX -14.5",
       "openingSpread": "Opened JAX -5.5 (Draft Kings)",
       "overUnder": 49.5,
-      "moneyline": "JAX -1160 | TEN +730",
+      "moneyline": "JAX -1180 | TEN +740",
       "impliedScore": "JAX 32.0 – TEN 17.5",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "97%"

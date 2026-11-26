@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:13.966Z",
+  "updatedAt": "2026-11-26T19:05:40.099Z",
   "week": 12,
   "units": [
     {
@@ -26,8 +26,8 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 2,
-              "playProbabilityPct": 23,
-              "statusBadge": "23% • Long Shot",
+              "playProbabilityPct": 17,
+              "statusBadge": "17% • Doubtful",
               "isAvailable": false
             }
           ],
@@ -48,8 +48,8 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 2,
-              "playProbabilityPct": 23,
-              "statusBadge": "23% • Long Shot",
+              "playProbabilityPct": 17,
+              "statusBadge": "17% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -66,8 +66,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 1,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
               "isAvailable": false
             },
             {
@@ -98,8 +98,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 1,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -235,8 +235,8 @@
               "jersey": 65,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png",
               "baselineRank": 1,
-              "playProbabilityPct": 37,
-              "statusBadge": "37% • Long Shot",
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
               "isAvailable": false
             },
             {
@@ -267,8 +267,8 @@
               "jersey": 65,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png",
               "baselineRank": 1,
-              "playProbabilityPct": 37,
-              "statusBadge": "37% • Long Shot",
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -363,8 +363,8 @@
               "jersey": 71,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034961.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
               "isAvailable": true
             },
             {
@@ -405,8 +405,8 @@
               "jersey": 71,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034961.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
               "isAvailable": true
             },
             {
@@ -898,8 +898,8 @@
               "jersey": 99,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 59,
+              "statusBadge": "59% • GTD",
               "isAvailable": true
             },
             {
@@ -908,8 +908,8 @@
               "jersey": 55,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043168.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 76,
+              "statusBadge": "76% • GTD",
               "isAvailable": true
             },
             {
@@ -940,8 +940,8 @@
               "jersey": 99,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361510.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 59,
+              "statusBadge": "59% • GTD",
               "isAvailable": true
             },
             {
@@ -950,8 +950,8 @@
               "jersey": 55,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043168.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 76,
+              "statusBadge": "76% • GTD",
               "isAvailable": true
             },
             {
@@ -989,9 +989,9 @@
               "jersey": 53,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
-              "isAvailable": true
+              "playProbabilityPct": 31,
+              "statusBadge": "31% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "3128303",
@@ -1006,16 +1006,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4595343",
-              "name": "Kendal Daniels",
-              "jersey": 53,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
-              "isAvailable": true
-            },
-            {
               "playerId": "3128303",
               "name": "Josh Woods",
               "jersey": 46,
@@ -1024,9 +1014,20 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4595343",
+              "name": "Kendal Daniels",
+              "jersey": 53,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 31,
+              "statusBadge": "31% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "rilb",
@@ -1038,8 +1039,8 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1070,8 +1071,8 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1108,8 +1109,8 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
               "baselineRank": 1,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
+              "playProbabilityPct": 92,
+              "statusBadge": "92% • Cleared",
               "isAvailable": true
             },
             {
@@ -1150,8 +1151,8 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
               "baselineRank": 1,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
+              "playProbabilityPct": 92,
+              "statusBadge": "92% • Cleared",
               "isAvailable": true
             },
             {
@@ -1267,8 +1268,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png",
               "baselineRank": 1,
-              "playProbabilityPct": 36,
-              "statusBadge": "36% • Long Shot",
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
               "isAvailable": false
             },
             {
@@ -1299,8 +1300,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png",
               "baselineRank": 1,
-              "playProbabilityPct": 36,
-              "statusBadge": "36% • Long Shot",
+              "playProbabilityPct": 28,
+              "statusBadge": "28% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1425,9 +1426,9 @@
               "jersey": 33,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431194.png",
               "baselineRank": 2,
-              "playProbabilityPct": 71,
-              "statusBadge": "71% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1447,9 +1448,10 @@
               "jersey": 33,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431194.png",
               "baselineRank": 2,
-              "playProbabilityPct": 71,
-              "statusBadge": "71% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -1557,8 +1559,8 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 1,
-              "playProbabilityPct": 23,
-              "statusBadge": "23% • Long Shot",
+              "playProbabilityPct": 17,
+              "statusBadge": "17% • Doubtful",
               "isAvailable": false
             },
             {
@@ -1577,8 +1579,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 3,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
               "isAvailable": false
             }
           ],
@@ -1599,8 +1601,8 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 1,
-              "playProbabilityPct": 23,
-              "statusBadge": "23% • Long Shot",
+              "playProbabilityPct": 17,
+              "statusBadge": "17% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -1610,8 +1612,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 3,
-              "playProbabilityPct": 32,
-              "statusBadge": "32% • Long Shot",
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1638,8 +1640,8 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 2,
-              "playProbabilityPct": 23,
-              "statusBadge": "23% • Long Shot",
+              "playProbabilityPct": 17,
+              "statusBadge": "17% • Doubtful",
               "isAvailable": false
             },
             {
@@ -1690,8 +1692,8 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 2,
-              "playProbabilityPct": 23,
-              "statusBadge": "23% • Long Shot",
+              "playProbabilityPct": 17,
+              "statusBadge": "17% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             },

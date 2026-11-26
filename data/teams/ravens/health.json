@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:13.469Z",
+  "updatedAt": "2026-11-26T19:07:09.083Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.baltimoreravens.com/team/injury-report/",
@@ -86,6 +86,32 @@
       "beatComment": "The Ravens had previously announced that Henry cleared the five-step protocol after being checked for a concussion late in Sunday's 35-33 loss to Carolina. However, Minter noted that the running back later had \"a couple of small symptoms\" crop up, resulting in him being subject to the protocol as the Ravens kicked off Week 12 prep, per Jeff Zrebiec of The Athletic. The fact that Henry was able to practice in some fashion Wednesday indicates that he's already cleared a couple steps of the protocol, but he'll still need to upgrade to full activity and pass neurological tests before he's officially given the green light to play Sunday."
     },
     {
+      "playerId": "11284",
+      "name": "Calais Campbell",
+      "position": "DE",
+      "jersey": 93,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/11284.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest / Ribs",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 60,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "60% • GTD",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Did Not Participate (DNP) on Wednesday with combined medical + veteran rest tag (NIR - Rest / Ribs); awaiting Thursday participation",
+        "Manageable pain-tolerance injury profile (NIR - Rest / Ribs)"
+      ],
+      "beatComment": ""
+    },
+    {
       "playerId": "4360939",
       "name": "Rashod Bateman",
       "position": "WR",
@@ -120,7 +146,7 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Groin",
@@ -132,7 +158,7 @@
       "playBadgeLabel": "79% • GTD",
       "archetypeNote": "Veteran starter profile (7th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Questionable tag adjusted by player career prior (84%)",
+        "Wednesday Limited Participation (LP); player toughness prior = 84%",
         "Soft-tissue re-aggravation caution (Groin)"
       ],
       "beatComment": "questionable"
@@ -146,7 +172,7 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Elbow",
@@ -158,7 +184,7 @@
       "playBadgeLabel": "81% • GTD",
       "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Questionable tag adjusted by player career prior (81%)"
+        "Wednesday Limited Participation (LP); player toughness prior = 81%"
       ],
       "beatComment": "questionable"
     },
@@ -212,31 +238,6 @@
         "Coaching/beat trend (beat report): trending upward / optimistic to suit up"
       ],
       "beatComment": "Green may have tweaked his knee during the Ravens' 35-33 loss to the Panthers in Week 11, when he recorded five tackles (four solo), including 2.0 sacks. He'll have two more opportunities to upgrade his practice participation and avoid an injury designation ahead of Sunday's game against the Texans. Green's 7.5 sacks through 11 regular-season games leads the Ravens and are 12th-most in the NFL."
-    },
-    {
-      "playerId": "3126356",
-      "name": "Marlon Humphrey",
-      "position": "CB",
-      "jersey": 44,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Personal",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (10th NFL season, 79% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Humphrey was a healthy inactive for Week 11 against the Panthers after making negative comments about the city of Baltimore on his podcast. It's unclear whether he'll play against the Texans on Sunday, with head coach Jesse Minter telling reporters Monday that the Ravens will make a decision about Humphrey's availability by the end of the week."
     }
   ],
   "irAndReserveTracker": [

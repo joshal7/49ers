@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:25:25.809Z",
+  "updatedAt": "2026-11-26T19:02:27.314Z",
   "windowDays": 7,
-  "totalEpisodes": 30,
+  "totalEpisodes": 29,
   "shows": [
     {
       "id": "vikings_locked_on_vikings",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/PuzMMWua",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/purple-insider-a-minnesota-vikings-and-nfl-podcast/id1513529873?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4b/9b/9c/4b9b9cc1-07a6-21e2-d23d-42739e5d1b3a/mza_9069811501852224230.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "vikings_purple_daily",
@@ -620,26 +620,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-vikings-daily-podcast-on-the-minnesota-vikings/id1144153403?uo=4",
       "feedUrl": "https://rss.pdrl.fm/dbd095/feeds.simplecast.com/sa0QprVo",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/dbd095/lockedon.simplecastaudio.com/45c4791c-a99d-4f76-9042-8c89b4ab6424/episodes/bb70abe6-c61b-4b1f-b64a-27ba4baf5344/audio/128/default.mp3?aid=rss_feed&awCollectionId=45c4791c-a99d-4f76-9042-8c89b4ab6424&awEpisodeId=bb70abe6-c61b-4b1f-b64a-27ba4baf5344&feed=sa0QprVo"
-    },
-    {
-      "id": "pod_vikings_purple_insider_1000802929092",
-      "trackId": 1000802929092,
-      "collectionId": 1513529873,
-      "showId": "vikings_purple_insider",
-      "showName": "Purple Insider",
-      "showFullTitle": "Purple Insider - a Minnesota Vikings and NFL podcast",
-      "hosts": "Matthew Coller, Bleav",
-      "network": "Matthew Coller, Bleav",
-      "title": "49ers analyst thinks Cousins can thrive vs. SF defense",
-      "summary": "Matthew Coller is joined by Kyle Madson of the Candlestick Chronicles to preview this Sunday's huge showdown between the Vikings and 49ers. Trade $25, get $25 when you sign up with code BLEAV at https://kalshi.com/BLEAV Hosted by Simplecast, an AdsWizz company. See https://p",
-      "publishedAt": "2026-11-19T13:00:00.000Z",
-      "durationMinutes": 42,
-      "durationDisplay": "42 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4b/9b/9c/4b9b9cc1-07a6-21e2-d23d-42739e5d1b3a/mza_9069811501852224230.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/49ers-analyst-thinks-cousins-can-thrive-vs-sf-defense/id1513529873?i=1000802929092&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/purple-insider-a-minnesota-vikings-and-nfl-podcast/id1513529873?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/PuzMMWua",
-      "audioStreamUrl": "https://pdrl.fm/7da6b5/pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/aacd4ad0-7bb7-4821-ac82-45d8772fbeeb/episodes/de0fd510-777a-4c7f-8bae-e26ab1177e0f/audio/128/default.mp3?aid=rss_feed&awCollectionId=aacd4ad0-7bb7-4821-ac82-45d8772fbeeb&awEpisodeId=de0fd510-777a-4c7f-8bae-e26ab1177e0f&feed=PuzMMWua"
     }
   ]
 }

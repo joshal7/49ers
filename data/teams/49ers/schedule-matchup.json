@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:16.625Z",
+  "updatedAt": "2026-11-26T18:59:57.935Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -533,8 +533,8 @@
         "surface": "Turf"
       },
       "restAdvantageDays": -7,
-      "spreadLineSf": -2.5,
-      "totalLine": 44.5,
+      "spreadLineSf": -3,
+      "totalLine": 43.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24685,10 +24685,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +7.5 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 29.7% SB odds) at 9-1.",
+        "blurb": "FPI +7.6 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 28.2% SB odds) at 9-1.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24740,7 +24740,7 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "Tier 1 (76.2% neutral-field win rating, 13.9 proj. wins) at 9-1 through Week 12.",
@@ -24758,10 +24758,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +5.8 (#1 Offense / #17 Defense) at 9-1 through Week 11.",
+        "blurb": "Betting market rating GPF +5.5 (#3 Offense / #13 Defense) at 9-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24778,10 +24778,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +5.8 (#1 Offense / #17 Defense) at 9-1 through Week 11."
+        "blurb": "Betting market rating GPF +5.5 (#3 Offense / #13 Defense) at 9-1 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24810,7 +24810,7 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "Tier 1 (76.2% neutral-field win rating, 13.9 proj. wins) at 9-1 through Week 12."
@@ -24843,10 +24843,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +7.5 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 29.7% SB odds) at 9-1."
+        "blurb": "FPI +7.6 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 28.2% SB odds) at 9-1."
       },
       {
         "id": "espn_panel",
@@ -24879,7 +24879,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:24:26.627Z"
+    "fetchedAtIso": "2026-11-26T19:00:10.984Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24903,7 +24903,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 65,
+      "tempF": 68,
       "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
@@ -26040,13 +26040,13 @@
     },
     "betting": {
       "favorite": "SF",
-      "spread": "SF -2.5",
+      "spread": "SF -3",
       "openingSpread": "Opened SF -1.5 (Draft Kings)",
-      "overUnder": 44.5,
-      "moneyline": "SF -147 | SEA +124",
-      "impliedScore": "SF 23.5 – SEA 21.0",
+      "overUnder": 43.5,
+      "moneyline": "SF -152 | SEA +129",
+      "impliedScore": "SF 23.3 – SEA 20.3",
       "restAdvantage": "-7 Days Rest Differential (SEA extra rest)",
-      "impliedWinProb": "64%"
+      "impliedWinProb": "67%"
     },
     "franchiseHistory": {
       "allTimeRecord": "49ers vs. Seahawks",

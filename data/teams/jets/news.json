@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:04.110Z",
+  "updatedAt": "2026-11-26T19:06:53.657Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17ET",
     "cycleKey": "2026-11-25@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-8",
-    "generatedAt": "2026-11-26T07:28:04.110Z",
+    "generatedAt": "2026-11-26T19:06:53.657Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,37 +15,37 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 181,
+    "wordCount": 179,
     "headline": "Jets (3-8) Week 12 Briefing: Wednesday Injury Report Ahead of Dolphins",
     "summary": "",
     "bullets": [
       "Injury & Practice Status: New York opened DT David Onyemata's 21-day IR practice window alongside limited work for WR Isaiah Williams (ribs), DE Joseph Ossai (ankle / foot), and G Dylan Parham (knee). WR Omar Cooper Jr. (ankle / groin) and DT Harrison Phillips (ankle) did not practice Wednesday, while DT T'Vondre Sweat (knee) and DT David Onyemata (abdomen (surgery)) practiced in full [newyorkjets.com Official](https://www.newyorkjets.com/news/jets-injury-report-week-12-vs-dolphins-wednesday-11-25-2026).",
-      "Week 12 Dolphins Outlook: Aaron Glenn and DC Brian Duker open installation for the Miami Dolphins (1-9, NYJ -4.5, HC Jeff Hafley, OC Bobby Slowik & DC Sean Duggan (Road Test))—a unit ranked #2 in Rush EPA Allowed / Gm (-1.82) as New York prepares for a pivotal AFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873089) [newyorkjets.com Official](https://www.newyorkjets.com/news/geno-smith-focused-on-fast-start-four-quarter-effort-vs-dolphins-11-25-2026).",
-      "AFC Playoff Trajectory: Entering Week 12 at 3-8 (3rd in AFC East • #12 Seed in AFC), New York carries a 0.9% postseason projection, 0% AFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [ESPN](https://www.espn.com/nfl/preview?gameId=401873089).",
-      "Around the Beat: The defensive lineman was a full participant in Wednesday's practice [Eric Allen](https://www.espn.com/nfl/player/_/id/4428617/tvondre-sweat#:~:text=The%20Jets%20designated%20Sweat%20%28knee%29%20for%20return)."
+      "Week 12 Dolphins Outlook: Aaron Glenn and DC Brian Duker open installation for the Miami Dolphins (1-9, NYJ -4.5, HC Jeff Hafley, OC Bobby Slowik & DC Sean Duggan (Road Test))—a unit ranked #2 in Rush EPA Allowed / Gm (-1.82) as New York prepares for a pivotal AFC matchup [NFL Trade Rumors](https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/) [newyorkjets.com Official](https://www.newyorkjets.com/news/jets-dolphins-game-preview-geno-smith-kyle-mccord-week-11-11-29-2026).",
+      "AFC Playoff Trajectory: Entering Week 12 at 3-8 (3rd in AFC East • #12 Seed in AFC), New York carries a 0.9% postseason projection, 0% AFC East division title mark, and 0% #1 Seed Bye equity into the conference stretch [NFL Trade Rumors](https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/).",
+      "Around the Beat: Jets Sign DT Payton Page to Practice Squad [newyorkjets.com Official](https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026)."
     ],
     "coveredStoryKeys": [
-      "tvondresweat::ir_roster_move",
-      "team::watch_guide"
+      "tvondresweat::ir_roster_move"
     ],
     "coveredUrls": [
       "https://www.newyorkjets.com/news/jets-injury-report-week-12-vs-dolphins-wednesday-11-25-2026",
+      "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+      "https://www.newyorkjets.com/news/jets-dolphins-game-preview-geno-smith-kyle-mccord-week-11-11-29-2026",
+      "https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026",
+      "https://www.ganggreennation.com/new-york-jets-history/98913/jets-thanksgiving-game-history",
+      "https://www.newyorkjets.com/news/jets-pass-rush-freak-personnel-package-11-26-2026",
+      "https://www.ganggreennation.com/new-york-jets-news/98904/happy-thanksgiving-spend-time-with-your-loved-ones",
       "https://www.espn.com/nfl/preview?gameId=401873089",
-      "https://www.newyorkjets.com/news/geno-smith-focused-on-fast-start-four-quarter-effort-vs-dolphins-11-25-2026",
       "https://www.espn.com/nfl/player/_/id/4428617/tvondre-sweat#:~:text=The%20Jets%20designated%20Sweat%20(knee)%20for%20return",
-      "https://www.newyorkjets.com/news/stock-report-young-tackles-olu-fashanu-armand-membou-hitting-their-stride-11-25-2026",
       "https://www.ganggreennation.com/new-york-jets-news/98880/did-jets-win-the-aaron-rodgers-debate-after-steelers-benching",
-      "https://www.ganggreennation.com/new-york-jets-nfl-draft/98874/jets-hold-a-pair-of-top-five-picks-in-the-2027-nfl-draft-after-week-11",
-      "https://www.ganggreennation.com/new-york-jets-news/98870/put-some-more-respect-on-geno-smiths-name",
+      "https://www.newyorkjets.com/news/geno-smith-focused-on-fast-start-four-quarter-effort-vs-dolphins-11-25-2026",
       "https://www.newyorkjets.com/news/garrett-wilson-geno-smith-seek-new-miami-memories-11-25-2026",
-      "https://www.newyorkjets.com/news/jets-head-to-miami-in-week-12-for-round-2-against-dolphins-11-25-2026",
-      "https://www.profootballrumors.com/2026/11/updated-2027-nfl-draft-order",
-      "https://www.newyorkjets.com/news/jets-at-dolphins-ways-to-watch-stream-week-12-11-29-2026",
+      "https://nfltraderumors.co/jets-re-signed-dt-payton-page-to-practice-squad/",
       "https://www.profootballrumors.com/2026/11/jets-designate-dt-tvondre-sweat-for-return",
       "https://www.newyorkjets.com/news/jets-open-practice-window--tvondre-sweat-11-25-2026",
       "https://www.newyorkjets.com/team/transactions/#tx-7beb31d14c20",
-      "https://www.espn.com/nfl/story/_/id/50573133/jets-geno-smith-return-2027",
-      "https://www.newyorkjets.com/news/film-breakdown-jets-defense-sacks-chargers-qb-justin-herbert-6-times-in-27-24-victory-11-24-2026"
+      "https://www.newyorkjets.com/news/stock-report-young-tackles-olu-fashanu-armand-membou-hitting-their-stride-11-25-2026",
+      "https://www.newyorkjets.com/news/jets-head-to-miami-in-week-12-for-round-2-against-dolphins-11-25-2026"
     ],
     "sources": [
       {
@@ -58,19 +58,59 @@
       },
       {
         "type": "article",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "title": "Dolphins playing host to Jets, as the NFL's youngest team remains mindful of rookie wall",
-        "url": "https://www.espn.com/nfl/preview?gameId=401873089",
-        "publishedAt": "2026-11-25T23:48:34.000Z"
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+        "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+        "publishedAt": "2026-11-26T16:38:29.000Z"
       },
       {
         "type": "article",
         "author": "newyorkjets.com Official",
         "outlet": "newyorkjets.com Official",
-        "title": "Jets QB Geno Smith Looks Ahead to Rematch vs. Dolphins",
-        "url": "https://www.newyorkjets.com/news/geno-smith-focused-on-fast-start-four-quarter-effort-vs-dolphins-11-25-2026",
-        "publishedAt": "2026-11-25T21:30:00.000Z"
+        "title": "Jets-Dolphins Game Preview | A Dirty Style Good for All Seasons",
+        "url": "https://www.newyorkjets.com/news/jets-dolphins-game-preview-geno-smith-kyle-mccord-week-11-11-29-2026",
+        "publishedAt": "2026-11-26T14:45:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "newyorkjets.com Official",
+        "outlet": "newyorkjets.com Official",
+        "title": "Jets Sign DT Payton Page to Practice Squad",
+        "url": "https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026",
+        "publishedAt": "2026-11-26T12:00:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "John B",
+        "outlet": "Gang Green Nation",
+        "title": "Jets Thanksgiving Game History",
+        "url": "https://www.ganggreennation.com/new-york-jets-history/98913/jets-thanksgiving-game-history",
+        "publishedAt": "2026-11-26T15:06:50.000Z"
+      },
+      {
+        "type": "article",
+        "author": "newyorkjets.com Official",
+        "outlet": "newyorkjets.com Official",
+        "title": "Jets' 'Freak Package' Has Pass Rushers Feasting",
+        "url": "https://www.newyorkjets.com/news/jets-pass-rush-freak-personnel-package-11-26-2026",
+        "publishedAt": "2026-11-26T13:02:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "BoyGreen25",
+        "outlet": "Gang Green Nation",
+        "title": "New York Jets News: Happy Thanksgiving, Spend Time With Your Loved Ones",
+        "url": "https://www.ganggreennation.com/new-york-jets-news/98904/happy-thanksgiving-spend-time-with-your-loved-ones",
+        "publishedAt": "2026-11-26T11:21:12.000Z"
+      },
+      {
+        "type": "article",
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "title": "Dolphins playing host to Jets, as the NFL's youngest team remains mindful of rookie wall",
+        "url": "https://www.espn.com/nfl/preview?gameId=401873089",
+        "publishedAt": "2026-11-25T23:48:34.000Z"
       },
       {
         "type": "article",
@@ -82,14 +122,6 @@
       },
       {
         "type": "article",
-        "author": "newyorkjets.com Official",
-        "outlet": "newyorkjets.com Official",
-        "title": "Stock Report | Young Tackles Olu Fashanu & Armand Membou Hitting Their Stride",
-        "url": "https://www.newyorkjets.com/news/stock-report-young-tackles-olu-fashanu-armand-membou-hitting-their-stride-11-25-2026",
-        "publishedAt": "2026-11-25T19:45:55.000Z"
-      },
-      {
-        "type": "article",
         "author": "BoyGreen25",
         "outlet": "Gang Green Nation",
         "title": "New York Jets News: Did Jets win the Aaron Rodgers Debate After Steelers Benching Decision?",
@@ -98,19 +130,11 @@
       },
       {
         "type": "article",
-        "author": "John B",
-        "outlet": "Gang Green Nation",
-        "title": "Jets hold a pair of top five picks in the 2027 NFL Draft after Week 11",
-        "url": "https://www.ganggreennation.com/new-york-jets-nfl-draft/98874/jets-hold-a-pair-of-top-five-picks-in-the-2027-nfl-draft-after-week-11",
-        "publishedAt": "2026-11-24T15:03:32.000Z"
-      },
-      {
-        "type": "article",
-        "author": "BoyGreen25",
-        "outlet": "Gang Green Nation",
-        "title": "New York Jets News: Put Some More Respect on Geno Smith’s Name",
-        "url": "https://www.ganggreennation.com/new-york-jets-news/98870/put-some-more-respect-on-geno-smiths-name",
-        "publishedAt": "2026-11-24T11:41:49.000Z"
+        "author": "newyorkjets.com Official",
+        "outlet": "newyorkjets.com Official",
+        "title": "Jets QB Geno Smith Looks Ahead to Rematch vs. Dolphins",
+        "url": "https://www.newyorkjets.com/news/geno-smith-focused-on-fast-start-four-quarter-effort-vs-dolphins-11-25-2026",
+        "publishedAt": "2026-11-25T21:30:00.000Z"
       },
       {
         "type": "article",
@@ -119,30 +143,6 @@
         "title": "Garrett Wilson Seeks to Collaborate with Geno Smith and Teammates on New Miami Memories",
         "url": "https://www.newyorkjets.com/news/garrett-wilson-geno-smith-seek-new-miami-memories-11-25-2026",
         "publishedAt": "2026-11-25T21:25:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "newyorkjets.com Official",
-        "outlet": "newyorkjets.com Official",
-        "title": "Jets Head to Miami for Round 2 Against Dolphins in Week 12",
-        "url": "https://www.newyorkjets.com/news/jets-head-to-miami-in-week-12-for-round-2-against-dolphins-11-25-2026",
-        "publishedAt": "2026-11-25T19:44:24.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "Updated 2027 NFL Draft Order",
-        "url": "https://www.profootballrumors.com/2026/11/updated-2027-nfl-draft-order",
-        "publishedAt": "2026-11-24T03:53:27.000Z"
-      },
-      {
-        "type": "article",
-        "author": "newyorkjets.com Official",
-        "outlet": "newyorkjets.com Official",
-        "title": "Ways to Watch and Stream | Jets at Dolphins",
-        "url": "https://www.newyorkjets.com/news/jets-at-dolphins-ways-to-watch-stream-week-12-11-29-2026",
-        "publishedAt": "2026-11-25T13:00:01.000Z"
       }
     ]
   },
@@ -151,45 +151,45 @@
       "id": "nyj_cl_top",
       "category": "beat",
       "headline": "New York Jets Week 12 Top Headlines (3-8)",
-      "summary": "Jets Injury Report | Week 12 vs. Dolphins - Wednesday — Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
-      "updatedAt": "2026-11-25T21:00:00.000Z",
+      "summary": "Jets Re-Signed DT Payton Page To Practice Squad — AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "updatedAt": "2026-11-26T16:50:48.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "newyorkjets.com Official",
-          "title": "Jets Injury Report | Week 12 vs. Dolphins - Wednesday",
-          "url": "https://www.newyorkjets.com/news/jets-injury-report-week-12-vs-dolphins-wednesday-11-25-2026",
-          "publishedAt": "2026-11-25T21:00:00.000Z"
+          "label": "NFL Trade Rumors",
+          "title": "Jets Re-Signed DT Payton Page To Practice Squad",
+          "url": "https://nfltraderumors.co/jets-re-signed-dt-payton-page-to-practice-squad/",
+          "publishedAt": "2026-11-26T16:50:48.000Z"
+        },
+        {
+          "label": "NFL Trade Rumors",
+          "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+          "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+          "publishedAt": "2026-11-26T16:38:29.000Z"
+        },
+        {
+          "label": "John B",
+          "title": "Jets Thanksgiving Game History",
+          "url": "https://www.ganggreennation.com/new-york-jets-history/98913/jets-thanksgiving-game-history",
+          "publishedAt": "2026-11-26T15:06:50.000Z"
         },
         {
           "label": "newyorkjets.com Official",
-          "title": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
-          "url": "https://www.newyorkjets.com/news/jets-open-practice-window--tvondre-sweat-11-25-2026",
-          "publishedAt": "2026-11-25T16:55:01.000Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Dolphins playing host to Jets, as the NFL's youngest team remains mindful of rookie wall",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873089",
-          "publishedAt": "2026-11-25T23:48:34.000Z"
-        },
-        {
-          "label": "Eric Allen",
-          "title": "The Jets designated Sweat (knee) for return from injured reserve Wednesday.",
-          "url": "https://www.espn.com/nfl/player/_/id/4428617/tvondre-sweat#:~:text=The%20Jets%20designated%20Sweat%20(knee)%20for%20return",
-          "publishedAt": "2026-11-25T22:18:56.000Z"
+          "title": "Jets-Dolphins Game Preview | A Dirty Style Good for All Seasons",
+          "url": "https://www.newyorkjets.com/news/jets-dolphins-game-preview-geno-smith-kyle-mccord-week-11-11-29-2026",
+          "publishedAt": "2026-11-26T14:45:00.000Z"
         },
         {
           "label": "newyorkjets.com Official",
-          "title": "Jets QB Geno Smith Looks Ahead to Rematch vs. Dolphins",
-          "url": "https://www.newyorkjets.com/news/geno-smith-focused-on-fast-start-four-quarter-effort-vs-dolphins-11-25-2026",
-          "publishedAt": "2026-11-25T21:30:00.000Z"
+          "title": "Jets' 'Freak Package' Has Pass Rushers Feasting",
+          "url": "https://www.newyorkjets.com/news/jets-pass-rush-freak-personnel-package-11-26-2026",
+          "publishedAt": "2026-11-26T13:02:00.000Z"
         },
         {
           "label": "newyorkjets.com Official",
-          "title": "Garrett Wilson Seeks to Collaborate with Geno Smith and Teammates on New Miami Memories",
-          "url": "https://www.newyorkjets.com/news/garrett-wilson-geno-smith-seek-new-miami-memories-11-25-2026",
-          "publishedAt": "2026-11-25T21:25:00.000Z"
+          "title": "Jets Sign DT Payton Page to Practice Squad",
+          "url": "https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026",
+          "publishedAt": "2026-11-26T12:00:00.000Z"
         }
       ]
     },
@@ -197,10 +197,22 @@
       "id": "nyj_cl_health",
       "category": "injury",
       "headline": "Jets Practice Report, Injury & IR Availability",
-      "summary": "Jets Injury Report | Week 12 vs. Dolphins - Wednesday — Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
-      "updatedAt": "2026-11-25T21:00:00.000Z",
+      "summary": "Jets Re-Signed DT Payton Page To Practice Squad — Jets Sign DT Payton Page to Practice Squad",
+      "updatedAt": "2026-11-26T16:50:48.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "NFL Trade Rumors",
+          "title": "Jets Re-Signed DT Payton Page To Practice Squad",
+          "url": "https://nfltraderumors.co/jets-re-signed-dt-payton-page-to-practice-squad/",
+          "publishedAt": "2026-11-26T16:50:48.000Z"
+        },
+        {
+          "label": "newyorkjets.com Official",
+          "title": "Jets Sign DT Payton Page to Practice Squad",
+          "url": "https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026",
+          "publishedAt": "2026-11-26T12:00:00.000Z"
+        },
         {
           "label": "newyorkjets.com Official",
           "title": "Jets Injury Report | Week 12 vs. Dolphins - Wednesday",
@@ -208,22 +220,10 @@
           "publishedAt": "2026-11-25T21:00:00.000Z"
         },
         {
-          "label": "newyorkjets.com Official",
-          "title": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
-          "url": "https://www.newyorkjets.com/news/jets-open-practice-window--tvondre-sweat-11-25-2026",
-          "publishedAt": "2026-11-25T16:55:01.000Z"
-        },
-        {
           "label": "Eric Allen",
           "title": "The Jets designated Sweat (knee) for return from injured reserve Wednesday.",
           "url": "https://www.espn.com/nfl/player/_/id/4428617/tvondre-sweat#:~:text=The%20Jets%20designated%20Sweat%20(knee)%20for%20return",
           "publishedAt": "2026-11-25T22:18:56.000Z"
-        },
-        {
-          "label": "New York Jets Official",
-          "title": "Jets roster move: Designated DT T'Vondre Sweat to return from injured reserve.",
-          "url": "https://www.newyorkjets.com/team/transactions/#tx-7beb31d14c20",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
         },
         {
           "label": "newyorkjets.com Official",
@@ -232,10 +232,10 @@
           "publishedAt": "2026-11-25T19:45:55.000Z"
         },
         {
-          "label": "John B",
-          "title": "Jets hold a pair of top five picks in the 2027 NFL Draft after Week 11",
-          "url": "https://www.ganggreennation.com/new-york-jets-nfl-draft/98874/jets-hold-a-pair-of-top-five-picks-in-the-2027-nfl-draft-after-week-11",
-          "publishedAt": "2026-11-24T15:03:32.000Z"
+          "label": "newyorkjets.com Official",
+          "title": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
+          "url": "https://www.newyorkjets.com/news/jets-open-practice-window--tvondre-sweat-11-25-2026",
+          "publishedAt": "2026-11-25T16:55:01.000Z"
         }
       ]
     },
@@ -278,10 +278,10 @@
           "publishedAt": "2026-11-21T21:52:00.000Z"
         },
         {
-          "label": "Cody Alexander",
-          "title": "Split-Field Quarters Foundations",
-          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-          "publishedAt": "2026-11-19T22:01:55.000Z"
+          "label": "newyorkjets.com Video",
+          "title": "Azareye'h Thomas Interception Film Breakdown",
+          "url": "https://www.newyorkjets.com/video/azareyeh-thomas-interception-film-breakdown-jets-vs-bills",
+          "publishedAt": "2026-11-16T13:00:00.000Z"
         }
       ]
     },
@@ -289,10 +289,22 @@
       "id": "nyj_cl_roster",
       "category": "roster",
       "headline": "Jets Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat — Jets roster move: Designated DT T'Vondre Sweat to return from injured reserve.",
-      "updatedAt": "2026-11-25T16:55:01.000Z",
+      "summary": "Jets Re-Signed DT Payton Page To Practice Squad — Jets Sign DT Payton Page to Practice Squad",
+      "updatedAt": "2026-11-26T16:50:48.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "NFL Trade Rumors",
+          "title": "Jets Re-Signed DT Payton Page To Practice Squad",
+          "url": "https://nfltraderumors.co/jets-re-signed-dt-payton-page-to-practice-squad/",
+          "publishedAt": "2026-11-26T16:50:48.000Z"
+        },
+        {
+          "label": "newyorkjets.com Official",
+          "title": "Jets Sign DT Payton Page to Practice Squad",
+          "url": "https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026",
+          "publishedAt": "2026-11-26T12:00:00.000Z"
+        },
         {
           "label": "newyorkjets.com Official",
           "title": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
@@ -316,23 +328,369 @@
           "title": "Jets roster move: Waived DT Payton Page. Released DT Isaiahh Loudermilk from the practice squad.",
           "url": "https://www.newyorkjets.com/team/transactions/#tx-273a764ee8b2",
           "publishedAt": "2026-11-24T08:00:00.000Z"
-        },
-        {
-          "label": "Zack Rosenblatt",
-          "title": "The Jets elevated Shepard from the practice squad to the active roster Saturday.",
-          "url": "https://www.espn.com/nfl/player/_/id/2976592/sterling-shepard#:~:text=The%20Jets%20elevated%20Shepard%20from%20the%20practice",
-          "publishedAt": "2026-11-21T19:36:39.000Z"
-        },
-        {
-          "label": "New York Jets Official",
-          "title": "Jets roster move: Elevated WR Sterling Shepard from the practice squad.",
-          "url": "https://www.newyorkjets.com/team/transactions/#tx-252526788649",
-          "publishedAt": "2026-11-21T08:00:00.000Z"
         }
       ]
     }
   ],
   "rawStream": [
+    {
+      "id": "nyj_nfltr_d9adc4563ec8",
+      "type": "article",
+      "title": "Jets Re-Signed DT Payton Page To Practice Squad",
+      "summary": "The New York Jets announced on Thursday they have re-signed DT Payton Page to the practice squad. New York’s practice squad now includes: DB Mory Bamba DE Paschal Ekeji (International) RB Al’Jay Henderson DB Sam Womack T Brant Banks WR Ster",
+      "imageUrl": "",
+      "imageAlt": "Jets Re-Signed DT Payton Page To Practice Squad",
+      "publishedAt": "2026-11-26T16:50:48.000Z",
+      "url": "https://nfltraderumors.co/jets-re-signed-dt-payton-page-to-practice-squad/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.919,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "minor_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.7004
+    },
+    {
+      "id": "nyj_nfltr_194b33c61dde",
+      "type": "article",
+      "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "summary": "Dolphins The Dolphins are in the first year of a massive organizational overhaul, where they changed the coaching staff, GM and much of the roster. Miami LB Jordyn Brooks is the only full-time veteran starter left on defense following DT Za",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "publishedAt": "2026-11-26T16:38:29.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685248",
+          "name": "David Bailey",
+          "shortName": "D. Bailey",
+          "position": "LB",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685248.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.0428
+    },
+    {
+      "id": "nyj_espn_87de3f19417a9",
+      "type": "video",
+      "title": "Jets still feeling effects of loss to Dolphins",
+      "summary": "Rich Cimini reports on how Aaron Glenn and the Jets are using the loss to the Dolphins as motivation.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1125/dm_261125_Jets_still_feeling_effects_of_loss_to_Dolphins/dm_261125_Jets_still_feeling_effects_of_loss_to_Dolphins.jpg",
+      "imageCaption": "Rich Cimini reports on how Aaron Glenn and the Jets are using the loss to the Dolphins as motivation.",
+      "imageAlt": "Jets still feeling effects of loss to Dolphins",
+      "publishedAt": "2026-11-26T15:19:18.000Z",
+      "url": "https://www.espn.com/video/clip/_/id/50599300/jets-feeling-effects-loss-dolphins",
+      "outletId": "espn_nyj",
+      "outletName": "ESPN",
+      "reporterId": "espn_nyj",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "0:46",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.564
+    },
+    {
+      "id": "nyj_brss_gang_green_nation_0c35284a1be2",
+      "type": "article",
+      "title": "Jets Thanksgiving Game History",
+      "summary": "The Jets have played eight times on Thanksgiving in the past. They are an even 4-4 in those games. Below we will take a look at them. November 24, 1960: New York Titans 41 Dallas Texans 35 The American Football League played games on Thanks",
+      "imageUrl": "",
+      "imageAlt": "Jets Thanksgiving Game History",
+      "publishedAt": "2026-11-26T15:06:50.000Z",
+      "url": "https://www.ganggreennation.com/new-york-jets-history/98913/jets-thanksgiving-game-history",
+      "outletId": "gang_green_nation",
+      "outletName": "Gang Green Nation",
+      "reporterId": "gang_green_nation",
+      "reporterName": "John B",
+      "author": "John B",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.ganggreennation.com/new-york-jets-history/98913/jets-thanksgiving-game-history",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.0888
+    },
+    {
+      "id": "nyj_rss_05e642fbe12c",
+      "type": "article",
+      "title": "Jets-Dolphins Game Preview | A Dirty Style Good for All Seasons",
+      "summary": "After OC Frank Reich Made a Move, Green & White Leaned Into Their Identity",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/cl3nhwnthdpc1ayi5gfo.jpg",
+      "imageAlt": "Jets-Dolphins Game Preview | A Dirty Style Good for All Seasons",
+      "publishedAt": "2026-11-26T14:45:00.000Z",
+      "url": "https://www.newyorkjets.com/news/jets-dolphins-game-preview-geno-smith-kyle-mccord-week-11-11-29-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.6202
+    },
+    {
+      "id": "nyj_rss_4bf0e946ee90",
+      "type": "article",
+      "title": "Jets' 'Freak Package' Has Pass Rushers Feasting",
+      "summary": "Edge Rushers David Bailey, Kingsley Enagbare, Joseph Ossai and Will McDonald IV Are Being Utilized in a Unique Way",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/ltqnn7kkzd3pud2rzhlc.png",
+      "imageAlt": "Jets' 'Freak Package' Has Pass Rushers Feasting",
+      "publishedAt": "2026-11-26T13:02:00.000Z",
+      "url": "https://www.newyorkjets.com/news/jets-pass-rush-freak-personnel-package-11-26-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685248",
+          "name": "David Bailey",
+          "shortName": "D. Bailey",
+          "position": "LB",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685248.png"
+        },
+        {
+          "id": "4362840",
+          "name": "Kingsley Enagbare",
+          "shortName": "K. Enagbare",
+          "position": "LB",
+          "jersey": 52,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362840.png"
+        },
+        {
+          "id": "4361767",
+          "name": "Will McDonald IV",
+          "shortName": "W. McDonald IV",
+          "position": "DE",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361767.png"
+        },
+        {
+          "id": "4362094",
+          "name": "Joseph Ossai",
+          "shortName": "J. Ossai",
+          "position": "DE",
+          "jersey": 46,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362094.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.8297
+    },
+    {
+      "id": "nyj_vid_94fc3bad01cf",
+      "type": "video",
+      "title": "Baldy's 3 Matchups to Watch in Jets vs. Dolphins | Week 12 Game Preview",
+      "summary": "Brian Baldinger discusses three key matchups for the Jets in their Week 12 trip to South Florida for a matchup against the AFC East rival Dolphins.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/gztua1ibsgd3adywjess.jpg",
+      "imageAlt": "Baldy's 3 Matchups to Watch in Jets vs. Dolphins | Week 12 Game Preview",
+      "publishedAt": "2026-11-26T13:00:00.000Z",
+      "url": "https://www.newyorkjets.com/video/brian-baldinger-key-matchups-jets-vs-dolphins-week-12-game-preview-11-26-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/brian-baldinger-key-matchups-jets-vs-dolphins-week-12-game-preview-11-26-2026",
+      "duration": "1:37",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.8049
+    },
+    {
+      "id": "nyj_rss_4a049a72d1a2",
+      "type": "article",
+      "title": "Jets Sign DT Payton Page to Practice Squad",
+      "summary": "Clemson Product Played 8 Games in 2025-26",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/r6vvacr1jbepiviyg4up.jpg",
+      "imageAlt": "Jets Sign DT Payton Page to Practice Squad",
+      "publishedAt": "2026-11-26T12:00:00.000Z",
+      "url": "https://www.newyorkjets.com/news/jets-sign-payton-page-to-practice-squad-11-26-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.568,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "minor_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.1179
+    },
+    {
+      "id": "nyj_brss_gang_green_nation_9eff274ce36d",
+      "type": "article",
+      "title": "New York Jets News: Happy Thanksgiving, Spend Time With Your Loved Ones",
+      "summary": "Yes, we’re in the middle of another game week between the New York Jets and the Miami Dolphins. In our flight connections down below, we will catch you up on injury reports, interesting stories, and more, but let’s take a moment to apprecia",
+      "imageUrl": "",
+      "imageAlt": "New York Jets News: Happy Thanksgiving, Spend Time With Your Loved Ones",
+      "publishedAt": "2026-11-26T11:21:12.000Z",
+      "url": "https://www.ganggreennation.com/new-york-jets-news/98904/happy-thanksgiving-spend-time-with-your-loved-ones",
+      "outletId": "gang_green_nation",
+      "outletName": "Gang Green Nation",
+      "reporterId": "gang_green_nation",
+      "reporterName": "BoyGreen25",
+      "author": "BoyGreen25",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.ganggreennation.com/new-york-jets-news/98904/happy-thanksgiving-spend-time-with-your-loved-ones",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.8042
+    },
     {
       "id": "nyj_rss_32a217fd84c3",
       "type": "article",
@@ -374,50 +732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6697
-    },
-    {
-      "id": "nyj_rss_321c35d57dc7",
-      "type": "article",
-      "title": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
-      "summary": "Sweat Sustained a Knee Injury in Week 7",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/yxywrsbxhgsm5repfk8f.jpg",
-      "imageAlt": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
-      "publishedAt": "2026-11-25T16:55:01.000Z",
-      "url": "https://www.newyorkjets.com/news/jets-open-practice-window--tvondre-sweat-11-25-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4428617",
-          "name": "T'Vondre Sweat",
-          "shortName": "T. Sweat",
-          "position": "DT",
-          "jersey": 99,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428617.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.634,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.7415
+      "storyRank": 1.4822
     },
     {
       "id": "nyj_vid_6001b4212cc5",
@@ -451,8 +766,8 @@
       "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.438,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -462,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3576
+      "storyRank": 1.4013
     },
     {
       "id": "nyj_espn_b0138ebe84858",
@@ -497,47 +812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8987
-    },
-    {
-      "id": "nyj_tyt_N2K81xpU2ew",
-      "type": "video",
-      "category": "beat",
-      "isFunHighlightClip": true,
-      "videoId": "N2K81xpU2ew",
-      "embeddable": false,
-      "title": "We Mic'd Up Josh Peck for a Jets WIN (He Lost It) 😂",
-      "summary": "Josh Peck was mic'd up on the sideline for a Jets WIN over the Chargers, and he brought the energy all game long. 🎤🟢 The Drake & Josh star and lifelong Jets fan got an all-access look at gameday, from hyping up Garrett",
-      "imageUrl": "https://i.ytimg.com/vi/N2K81xpU2ew/hqdefault.jpg",
-      "imageAlt": "We Mic'd Up Josh Peck for a Jets WIN (He Lost It) 😂",
-      "publishedAt": "2026-11-25T20:20:00.000Z",
-      "url": "https://www.youtube.com/watch?v=N2K81xpU2ew",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=N2K81xpU2ew",
-      "channel": "New York Jets",
-      "outletId": "UCROj9vBjc4ZW3AL4cd_BjHg",
-      "outletName": "New York Jets",
-      "reporterId": "UCROj9vBjc4ZW3AL4cd_BjHg",
-      "reporterName": "New York Jets",
-      "author": "New York Jets",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.youtube.com/@nyjets",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.403,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.9877,
-      "duration": "4:56"
+      "storyRank": 0.8856
     },
     {
       "id": "nyj_pwire_4428617_64976128",
@@ -574,74 +849,11 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3241
-    },
-    {
-      "id": "nyj_vid_25c9598802a8",
-      "type": "video",
-      "title": "Celebrity Josh Peck Mic'd Up During Jets Win vs Chargers",
-      "summary": "The Drake & Josh star and lifelong Jets fan Josh Peck got an all-access look at gameday, from hyping up Garrett Wilson before kickoff to celebrating with Breece Hall and Geno Smith after the game. Check out the Mic'd up.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/k4alrf4rybgynihts1ks.png",
-      "imageAlt": "Celebrity Josh Peck Mic'd Up During Jets Win vs Chargers",
-      "publishedAt": "2026-11-25T19:00:00.000Z",
-      "url": "https://www.newyorkjets.com/video/celebrity-josh-peck-micd-up-during-jets-win-vs-chargers-11-25-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/celebrity-josh-peck-micd-up-during-jets-win-vs-chargers-11-25-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4427366",
-          "name": "Breece Hall",
-          "shortName": "B. Hall",
-          "position": "RB",
-          "jersey": 20,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427366.png"
-        },
-        {
-          "id": "15864",
-          "name": "Geno Smith",
-          "shortName": "G. Smith",
-          "position": "QB",
-          "jersey": 7,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15864.png"
-        },
-        {
-          "id": "4569618",
-          "name": "Garrett Wilson",
-          "shortName": "G. Wilson",
-          "position": "WR",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569618.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.364,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6059
+      "storyRank": 0.8021
     },
     {
       "id": "nyj_rss_2467cceaa039",
@@ -684,7 +896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0876
+      "storyRank": 0.762
     },
     {
       "id": "nyj_rss_203b94fbd147",
@@ -735,51 +947,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0657
+      "storyRank": 0.7581
     },
     {
-      "id": "nyj_tx_7beb31d14c20",
-      "type": "tweet",
-      "title": "Jets roster move: Designated DT T'Vondre Sweat to return from injured reserve.",
-      "fullText": "Jets roster move: Designated DT T'Vondre Sweat to return from injured reserve.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.newyorkjets.com/team/transactions/#tx-7beb31d14c20",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "New York Jets Official",
-      "author": "New York Jets Official",
+      "id": "nyj_tyt_N2K81xpU2ew",
+      "type": "video",
+      "category": "beat",
+      "isFunHighlightClip": true,
+      "videoId": "N2K81xpU2ew",
+      "embeddable": false,
+      "title": "We Mic'd Up Josh Peck for a Jets WIN (He Lost It) 😂",
+      "summary": "Josh Peck was mic'd up on the sideline for a Jets WIN over the Chargers, and he brought the energy all game long. 🎤🟢 The Drake & Josh star and lifelong Jets fan got an all-access look at gameday, from hyping up Garrett",
+      "imageUrl": "https://i.ytimg.com/vi/N2K81xpU2ew/hqdefault.jpg",
+      "imageAlt": "We Mic'd Up Josh Peck for a Jets WIN (He Lost It) 😂",
+      "publishedAt": "2026-11-25T20:20:00.000Z",
+      "url": "https://www.youtube.com/watch?v=N2K81xpU2ew",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=N2K81xpU2ew",
+      "channel": "New York Jets",
+      "outletId": "UCROj9vBjc4ZW3AL4cd_BjHg",
+      "outletName": "New York Jets",
+      "reporterId": "UCROj9vBjc4ZW3AL4cd_BjHg",
+      "reporterName": "New York Jets",
+      "author": "New York Jets",
       "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "authorProfileUrl": "https://www.youtube.com/@nyjets",
       "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [
-        {
-          "id": "4428617",
-          "name": "T'Vondre Sweat",
-          "shortName": "T. Sweat",
-          "position": "DT",
-          "jersey": 99,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428617.png"
-        }
-      ],
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:56",
       "credibilityScore": 86,
-      "storyTier": "tier2_roster",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0997
+      "storyRank": 0.7104
     },
     {
       "id": "nyj_vid_72a4500fbc2a",
@@ -827,13 +1035,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "17:41",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7468,
-      "duration": "17:41"
+      "storyRank": 0.6967
     },
     {
       "id": "nyj_rss_5d498ac92584",
@@ -884,7 +1092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7021
+      "storyRank": 0.6874
     },
     {
       "id": "nyj_rss_00fa3cfca156",
@@ -918,46 +1126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6974
-    },
-    {
-      "id": "nyj_yts_vplFhoV0C9M",
-      "type": "video",
-      "videoId": "vplFhoV0C9M",
-      "embeddable": false,
-      "title": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
-      "summary": "",
-      "duration": "11:01",
-      "imageUrl": "https://i.ytimg.com/vi/vplFhoV0C9M/hqdefault.jpg",
-      "imageAlt": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
-      "publishedAt": "2026-11-25T19:28:05.982Z",
-      "url": "https://www.youtube.com/watch?v=vplFhoV0C9M",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=vplFhoV0C9M",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.6482
+      "storyRank": 0.6864
     },
     {
       "id": "nyj_vid_c97614c946cc",
@@ -1002,7 +1171,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6034
+      "storyRank": 0.666
+    },
+    {
+      "id": "nyj_yts_vplFhoV0C9M",
+      "type": "video",
+      "videoId": "vplFhoV0C9M",
+      "embeddable": false,
+      "title": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
+      "summary": "",
+      "duration": "11:01",
+      "imageUrl": "https://i.ytimg.com/vi/vplFhoV0C9M/hqdefault.jpg",
+      "imageAlt": "New York Jets vs Miami Dolphins | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:06:55.678Z",
+      "url": "https://www.youtube.com/watch?v=vplFhoV0C9M",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=vplFhoV0C9M",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6626
     },
     {
       "id": "nyj_vid_a6233b8769b7",
@@ -1048,7 +1256,68 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5739
+      "storyRank": 0.6594
+    },
+    {
+      "id": "nyj_vid_25c9598802a8",
+      "type": "video",
+      "title": "Celebrity Josh Peck Mic'd Up During Jets Win vs Chargers",
+      "summary": "The Drake & Josh star and lifelong Jets fan Josh Peck got an all-access look at gameday, from hyping up Garrett Wilson before kickoff to celebrating with Breece Hall and Geno Smith after the game. Check out the Mic'd up.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/k4alrf4rybgynihts1ks.png",
+      "imageAlt": "Celebrity Josh Peck Mic'd Up During Jets Win vs Chargers",
+      "publishedAt": "2026-11-25T19:00:00.000Z",
+      "url": "https://www.newyorkjets.com/video/celebrity-josh-peck-micd-up-during-jets-win-vs-chargers-11-25-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/celebrity-josh-peck-micd-up-during-jets-win-vs-chargers-11-25-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4427366",
+          "name": "Breece Hall",
+          "shortName": "B. Hall",
+          "position": "RB",
+          "jersey": 20,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427366.png"
+        },
+        {
+          "id": "15864",
+          "name": "Geno Smith",
+          "shortName": "G. Smith",
+          "position": "QB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15864.png"
+        },
+        {
+          "id": "4569618",
+          "name": "Garrett Wilson",
+          "shortName": "G. Wilson",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569618.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6583
     },
     {
       "id": "nyj_pfr_80bdf5ba9700",
@@ -1090,7 +1359,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4168
+      "storyRank": 0.618
     },
     {
       "id": "nyj_vid_a68fcdb1a124",
@@ -1126,7 +1395,50 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.309
+      "storyRank": 0.5955
+    },
+    {
+      "id": "nyj_rss_321c35d57dc7",
+      "type": "article",
+      "title": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
+      "summary": "Sweat Sustained a Knee Injury in Week 7",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/yxywrsbxhgsm5repfk8f.jpg",
+      "imageAlt": "Jets Open Up 21-Day Practice Window for DT T'Vondre Sweat",
+      "publishedAt": "2026-11-25T16:55:01.000Z",
+      "url": "https://www.newyorkjets.com/news/jets-open-practice-window--tvondre-sweat-11-25-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4428617",
+          "name": "T'Vondre Sweat",
+          "shortName": "T. Sweat",
+          "position": "DT",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428617.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.589
     },
     {
       "id": "nyj_vid_4650446301da",
@@ -1157,13 +1469,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:00",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0827,
-      "duration": "1:00"
+      "storyRank": 0.5328
     },
     {
       "id": "nyj_rss_58480cbcd4bd",
@@ -1197,7 +1509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9392
+      "storyRank": 0.4882
     },
     {
       "id": "nyj_vid_ae5b414ee732",
@@ -1243,7 +1555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8758
+      "storyRank": 0.4671
     },
     {
       "id": "nyj_vid_bfdcd4c9cba7",
@@ -1289,7 +1601,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8758
+      "storyRank": 0.4671
     },
     {
       "id": "nyj_brss_gang_green_nation_3a77b8846990",
@@ -1323,7 +1635,51 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8535
+      "storyRank": 0.4567
+    },
+    {
+      "id": "nyj_tx_7beb31d14c20",
+      "type": "tweet",
+      "title": "Jets roster move: Designated DT T'Vondre Sweat to return from injured reserve.",
+      "fullText": "Jets roster move: Designated DT T'Vondre Sweat to return from injured reserve.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.newyorkjets.com/team/transactions/#tx-7beb31d14c20",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "New York Jets Official",
+      "author": "New York Jets Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4428617",
+          "name": "T'Vondre Sweat",
+          "shortName": "T. Sweat",
+          "position": "DT",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428617.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3964
     },
     {
       "id": "nyj_rss_cf1e1b4d9313",
@@ -1362,11 +1718,11 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "film_trench",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8561
+      "storyRank": 0.2799
     },
     {
       "id": "nyj_tyt_FWaNEH8b5NY",
@@ -1416,13 +1772,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:17",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4068,
-      "duration": "7:17"
+      "storyRank": 0.2735
     },
     {
       "id": "nyj_vid_98833182411d",
@@ -1476,7 +1832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4066
+      "storyRank": 0.2734
     },
     {
       "id": "nyj_rss_a52597d015e5",
@@ -1510,7 +1866,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3771
+      "storyRank": 0.2583
     },
     {
       "id": "nyj_rss_f403ff49671a",
@@ -1544,7 +1900,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3731
+      "storyRank": 0.2562
     },
     {
       "id": "nyj_brss_gang_green_nation_8415b4dcb3b7",
@@ -1578,7 +1934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3221
+      "storyRank": 0.2278
     },
     {
       "id": "nyj_rss_008ff54eaf33",
@@ -1629,7 +1985,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3236
+      "storyRank": 0.2295
     },
     {
       "id": "nyj_rss_4e97d474188f",
@@ -1680,7 +2036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3174
+      "storyRank": 0.226
     },
     {
       "id": "nyj_vid_b42ad10a9073",
@@ -1726,7 +2082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3077
+      "storyRank": 0.2205
     },
     {
       "id": "nyj_vid_59abd93f5b11",
@@ -1788,7 +2144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3068
+      "storyRank": 0.2201
     },
     {
       "id": "nyj_brss_gang_green_nation_bfca4de4f6b6",
@@ -1839,7 +2195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2888
+      "storyRank": 0.209
     },
     {
       "id": "nyj_tx_273a764ee8b2",
@@ -1874,7 +2230,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2628
+      "storyRank": 0.1945
     },
     {
       "id": "nyj_pfr_bd268d96b3e7",
@@ -1907,7 +2263,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2307
+      "storyRank": 0.1744
     },
     {
       "id": "nyj_tyt_VirRalF2laY",
@@ -1940,13 +2296,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "31:41",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2047,
-      "duration": "31:41"
+      "storyRank": 0.1584
     },
     {
       "id": "nyj_brss_gang_green_nation_767da57f3f37",
@@ -1980,7 +2336,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1996
+      "storyRank": 0.1547
     },
     {
       "id": "nyj_brss_gang_green_nation_cea1ee961370",
@@ -2014,7 +2370,94 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1989
+      "storyRank": 0.1543
+    },
+    {
+      "id": "nyj_yts_9UaCO4acAvw",
+      "type": "video",
+      "videoId": "9UaCO4acAvw",
+      "embeddable": true,
+      "title": "David Bailey is UNREAL 🤯 #nyjets #nfl #shorts #davidbailey",
+      "summary": "",
+      "duration": "0:18",
+      "imageUrl": "https://i.ytimg.com/vi/9UaCO4acAvw/hqdefault.jpg",
+      "imageAlt": "David Bailey is UNREAL 🤯 #nyjets #nfl #shorts #davidbailey",
+      "publishedAt": "2026-11-23T19:06:55.678Z",
+      "url": "https://www.youtube.com/watch?v=9UaCO4acAvw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=9UaCO4acAvw",
+      "channel": "New York Jets",
+      "outletId": "jets_official",
+      "outletName": "New York Jets",
+      "reporterId": "jets_official",
+      "reporterName": "New York Jets",
+      "author": "New York Jets",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.youtube.com/@nyjets",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4685248",
+          "name": "David Bailey",
+          "shortName": "D. Bailey",
+          "position": "LB",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685248.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
+    },
+    {
+      "id": "nyj_yts_gvZYsXcr_6g",
+      "type": "video",
+      "videoId": "gvZYsXcr_6g",
+      "embeddable": false,
+      "title": "New York Jets vs. Los Angeles Chargers Highlights | NFL 2026 Season Week 11",
+      "summary": "",
+      "duration": "11:58",
+      "imageUrl": "https://i.ytimg.com/vi/gvZYsXcr_6g/hqdefault.jpg",
+      "imageAlt": "New York Jets vs. Los Angeles Chargers Highlights | NFL 2026 Season Week 11",
+      "publishedAt": "2026-11-23T19:06:55.678Z",
+      "url": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
     },
     {
       "id": "nyj_rss_fd151bbd915e",
@@ -2073,7 +2516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1864
+      "storyRank": 0.1465
     },
     {
       "id": "nyj_rss_0d95f4e62200",
@@ -2107,7 +2550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0464
+      "storyRank": 0.0365
     },
     {
       "id": "nyj_brss_gang_green_nation_8f374fa7cc00",
@@ -2141,7 +2584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1795
+      "storyRank": 0.1415
     },
     {
       "id": "nyj_vid_0b7e8e2ac058",
@@ -2187,7 +2630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.182
+      "storyRank": 0.1436
     },
     {
       "id": "nyj_vid_65b112a1495e",
@@ -2233,7 +2676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1816
+      "storyRank": 0.1433
     },
     {
       "id": "nyj_tyt_0OSCqEZww60",
@@ -2275,47 +2718,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:32",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1803,
-      "duration": "1:32"
-    },
-    {
-      "id": "nyj_rss_515f5f0e8a5a",
-      "type": "article",
-      "title": "3 Takeaways | Frank Reich Orchestrates an Efficient Offensive Attack From the Field",
-      "summary": "Jets Set Highest Third Down Conversion Rate in Franchise History",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/plhdjtfd918b3nwvy9f3.png",
-      "imageAlt": "3 Takeaways | Frank Reich Orchestrates an Efficient Offensive Attack From the Field",
-      "publishedAt": "2026-11-23T16:20:00.000Z",
-      "url": "https://www.newyorkjets.com/news/3-takeaways-frank-reich-orchestrates-an-efficient-offensive-attack-from-the-field",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1777
+      "storyRank": 0.1425
     },
     {
       "id": "nyj_espn_3d8ba41670991",
@@ -2359,84 +2768,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1773
-    },
-    {
-      "id": "nyj_rss_1342cce86b61",
-      "type": "article",
-      "title": "5 Plays That Made the Difference in the Jets' 27-24 Victory Over the Chargers",
-      "summary": "The Green & White Made Big Plays on Offense and on Defense",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/uyxlcp4tzb781rtgqlir.png",
-      "imageAlt": "5 Plays That Made the Difference in the Jets' 27-24 Victory Over the Chargers",
-      "publishedAt": "2026-11-23T16:00:00.000Z",
-      "url": "https://www.newyorkjets.com/news/5-plays-that-made-the-difference-in-the-jets-victory-over-the-chargers-11-23-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1764
-    },
-    {
-      "id": "nyj_rss_0030633d293b",
-      "type": "article",
-      "title": "Jets Week 11 Stats & Notes | Geno Smith, Jets Offense Shine in Los Angeles",
-      "summary": "Green & White Scored on First Five Offensive Possessions",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/mxeoori3odvretxjpmpp.jpg",
-      "imageAlt": "Jets Week 11 Stats & Notes | Geno Smith, Jets Offense Shine in Los Angeles",
-      "publishedAt": "2026-11-23T14:56:59.000Z",
-      "url": "https://www.newyorkjets.com/news/jets-week-11-stats-notes-geno-smith-jets-offense-david-baily-chargers-game-11-23-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "15864",
-          "name": "Geno Smith",
-          "shortName": "G. Smith",
-          "position": "QB",
-          "jersey": 7,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15864.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1724
+      "storyRank": 0.1404
     },
     {
       "id": "nyj_vid_f8d0e4decc96",
@@ -2473,7 +2805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1723
+      "storyRank": 0.1371
     },
     {
       "id": "nyj_vid_3288e9aff40b",
@@ -2510,7 +2842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1708
+      "storyRank": 0.1361
     },
     {
       "id": "nyj_tyt_5bBx5gz_H8A",
@@ -2552,13 +2884,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "2:40",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1677,
-      "duration": "2:40"
+      "storyRank": 0.134
     },
     {
       "id": "nyj_vid_8bb47f6aafa3",
@@ -2595,7 +2927,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1658
+      "storyRank": 0.1327
     },
     {
       "id": "nyj_vid_f040e260978a",
@@ -2641,7 +2973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1655
+      "storyRank": 0.1325
     },
     {
       "id": "nyj_brss_gang_green_nation_69b9bc07cdc3",
@@ -2675,94 +3007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1592
-    },
-    {
-      "id": "nyj_yts_9UaCO4acAvw",
-      "type": "video",
-      "videoId": "9UaCO4acAvw",
-      "embeddable": true,
-      "title": "David Bailey is UNREAL 🤯 #nyjets #nfl #shorts #davidbailey",
-      "summary": "",
-      "duration": "0:18",
-      "imageUrl": "https://i.ytimg.com/vi/9UaCO4acAvw/hqdefault.jpg",
-      "imageAlt": "David Bailey is UNREAL 🤯 #nyjets #nfl #shorts #davidbailey",
-      "publishedAt": "2026-11-23T07:28:05.982Z",
-      "url": "https://www.youtube.com/watch?v=9UaCO4acAvw",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=9UaCO4acAvw",
-      "channel": "New York Jets",
-      "outletId": "jets_official",
-      "outletName": "New York Jets",
-      "reporterId": "jets_official",
-      "reporterName": "New York Jets",
-      "author": "New York Jets",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.youtube.com/@nyjets",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "4685248",
-          "name": "David Bailey",
-          "shortName": "D. Bailey",
-          "position": "LB",
-          "jersey": 31,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685248.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "nyj_yts_gvZYsXcr_6g",
-      "type": "video",
-      "videoId": "gvZYsXcr_6g",
-      "embeddable": false,
-      "title": "New York Jets vs. Los Angeles Chargers Highlights | NFL 2026 Season Week 11",
-      "summary": "",
-      "duration": "11:58",
-      "imageUrl": "https://i.ytimg.com/vi/gvZYsXcr_6g/hqdefault.jpg",
-      "imageAlt": "New York Jets vs. Los Angeles Chargers Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T07:28:05.982Z",
-      "url": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
+      "storyRank": 0.1278
     },
     {
       "id": "nyj_espn_c66b1cfb0eee8",
@@ -2797,7 +3042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1411
+      "storyRank": 0.1155
     },
     {
       "id": "nyj_pfr_7f7e0286912c",
@@ -2830,7 +3075,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1387
+      "storyRank": 0.1135
     },
     {
       "id": "nyj_vid_1c8dc106f686",
@@ -2867,41 +3112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1363
-    },
-    {
-      "id": "nyj_brss_gang_green_nation_19649eaaa4dd",
-      "type": "article",
-      "title": "Jets vs. Dolphins odds: Opening lines for Week 12 matchup",
-      "summary": "The New York Jets broke a five game losing streak and got their third win of the season on Sunday against the Los Angeles Chargers. The Jets are now 3-8 on the season, in third place in the AFC East. The Jets scored on the opening drive of",
-      "imageUrl": "",
-      "imageAlt": "Jets vs. Dolphins odds: Opening lines for Week 12 matchup",
-      "publishedAt": "2026-11-23T02:40:19.000Z",
-      "url": "https://www.ganggreennation.com/new-york-jets-odds/98784/jets-vs-dolphins-odds-week-12-opening-lines-point-spread-total",
-      "outletId": "gang_green_nation",
-      "outletName": "Gang Green Nation",
-      "reporterId": "gang_green_nation",
-      "reporterName": "MacGregor Wells",
-      "author": "MacGregor Wells",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.ganggreennation.com/new-york-jets-odds/98784/jets-vs-dolphins-odds-week-12-opening-lines-point-spread-total",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1334
+      "storyRank": 0.1121
     },
     {
       "id": "nyj_vid_1dcc7ccfb742",
@@ -2938,7 +3149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1352
+      "storyRank": 0.1113
     },
     {
       "id": "nyj_vid_f54fc9c7b273",
@@ -2984,7 +3195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.135
+      "storyRank": 0.1111
     },
     {
       "id": "x_tl_jakeasmanshow_2124678764516839830",
@@ -3027,7 +3238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1442
+      "storyRank": 0.1189
     },
     {
       "id": "nyj_vid_b4f9333aabd7",
@@ -3064,7 +3275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1334
+      "storyRank": 0.11
     },
     {
       "id": "nyj_nfilm_unexpected_points_e9d639257448",
@@ -3098,7 +3309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1333
+      "storyRank": 0.11
     },
     {
       "id": "nyj_vid_a51846fa1380",
@@ -3144,7 +3355,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1332
+      "storyRank": 0.1099
     },
     {
       "id": "nyj_vid_50479ba87f64",
@@ -3181,7 +3392,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.133
+      "storyRank": 0.1097
     },
     {
       "id": "nyj_espn_7a956123b6c0f",
@@ -3225,7 +3436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1329
+      "storyRank": 0.1096
     },
     {
       "id": "nyj_tyt_QMrw26N9QcE",
@@ -3265,7 +3476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1327
+      "storyRank": 0.1095
     },
     {
       "id": "nyj_tyt_loIXc2ODorA",
@@ -3298,13 +3509,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "19:15",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1325,
-      "duration": "19:15"
+      "storyRank": 0.1093
     },
     {
       "id": "nyj_vid_be97321b561c",
@@ -3374,7 +3585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1318
+      "storyRank": 0.1089
     },
     {
       "id": "nyj_vid_781eded9fcfa",
@@ -3420,7 +3631,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1306
+      "storyRank": 0.108
     },
     {
       "id": "nyj_vid_55b01d73747f",
@@ -3466,7 +3677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1304
+      "storyRank": 0.1078
     },
     {
       "id": "nyj_vid_e943a6ea6583",
@@ -3512,7 +3723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1302
+      "storyRank": 0.1077
     },
     {
       "id": "nyj_tyt_PK1fIkMMJMk",
@@ -3545,13 +3756,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:00",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1301,
-      "duration": "5:00"
+      "storyRank": 0.1076
     },
     {
       "id": "nyj_vid_0547d711edca",
@@ -3588,7 +3799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1301
+      "storyRank": 0.1076
     },
     {
       "id": "nyj_vid_339de467d943",
@@ -3634,41 +3845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1293
-    },
-    {
-      "id": "nyj_brss_gang_green_nation_fd07525f0b1f",
-      "type": "article",
-      "title": "Jets vs Chargers: Jets Win!",
-      "summary": "In the New York Jets’ 11th game of the 2026 season, in Los Angeles, California, the Jets beat the Los Angeles Chargers, 27 – 24. The game opened with the Jets on offense. They moved down the field with their running game and a completion to",
-      "imageUrl": "",
-      "imageAlt": "Jets vs Chargers: Jets Win!",
-      "publishedAt": "2026-11-22T23:50:34.000Z",
-      "url": "https://www.ganggreennation.com/new-york-jets-scores-results/98802/jets-vs-chargers-jets-win",
-      "outletId": "gang_green_nation",
-      "outletName": "Gang Green Nation",
-      "reporterId": "gang_green_nation",
-      "reporterName": "MacGregor Wells",
-      "author": "MacGregor Wells",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.ganggreennation.com/new-york-jets-scores-results/98802/jets-vs-chargers-jets-win",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1269
+      "storyRank": 0.107
     },
     {
       "id": "nyj_vid_cba13e8c4a98",
@@ -3722,7 +3899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1288
+      "storyRank": 0.1067
     },
     {
       "id": "nyj_vid_0e7a2abab344",
@@ -3768,7 +3945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1281
+      "storyRank": 0.1062
     },
     {
       "id": "nyj_vid_8b67cdc18a11",
@@ -3814,7 +3991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.128
+      "storyRank": 0.1061
     },
     {
       "id": "nyj_vid_9ee1840115e0",
@@ -3860,7 +4037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1278
+      "storyRank": 0.1059
     },
     {
       "id": "nyj_vid_f2c1e3043b39",
@@ -3906,7 +4083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1266
+      "storyRank": 0.1051
     },
     {
       "id": "nyj_vid_21897e5647d3",
@@ -3952,7 +4129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1254
+      "storyRank": 0.1042
     },
     {
       "id": "nyj_vid_d6a3c86d1f93",
@@ -4006,7 +4183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1251
+      "storyRank": 0.104
     },
     {
       "id": "nyj_vid_e2432142377d",
@@ -4052,7 +4229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.125
+      "storyRank": 0.1039
     },
     {
       "id": "nyj_vid_2bcefb871101",
@@ -4106,7 +4283,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1246
+      "storyRank": 0.1036
     },
     {
       "id": "nyj_vid_6640b35ea189",
@@ -4152,7 +4329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1236
+      "storyRank": 0.1029
     },
     {
       "id": "nyj_vid_039b34071c50",
@@ -4189,41 +4366,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0575
-    },
-    {
-      "id": "nyj_brss_gang_green_nation_a403f9d4e263",
-      "type": "article",
-      "title": "New York Jets discussion: Week 11 live chat during the Chargers game",
-      "summary": "Last week the New York Jets lost their fifth straight game, getting blown out by the Buffalo Bills in the second half after being down by just four points at halftime. The loss to the Bills gave the Jets a 2-8 record on the season. Today th",
-      "imageUrl": "",
-      "imageAlt": "New York Jets discussion: Week 11 live chat during the Chargers game",
-      "publishedAt": "2026-11-22T18:15:09.000Z",
-      "url": "https://www.ganggreennation.com/new-york-jets-discussion/98795/new-york-jets-discussion-week-11-live-chat-during-the-chargers-game",
-      "outletId": "gang_green_nation",
-      "outletName": "Gang Green Nation",
-      "reporterId": "gang_green_nation",
-      "reporterName": "MacGregor Wells",
-      "author": "MacGregor Wells",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.ganggreennation.com/new-york-jets-discussion/98795/new-york-jets-discussion-week-11-live-chat-during-the-chargers-game",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0555
+      "storyRank": 0.0481
     },
     {
       "id": "nyj_espn_f6aa6be9753b2",
@@ -4258,7 +4401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0504
+      "storyRank": 0.0427
     },
     {
       "id": "nyj_vid_1e8c978e0b02",
@@ -4295,7 +4438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0363
     },
     {
       "id": "nyj_vid_175440c61e1a",
@@ -4332,7 +4475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0419
+      "storyRank": 0.0363
     },
     {
       "id": "nyj_vid_68a83fd60589",
@@ -4369,7 +4512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0419
+      "storyRank": 0.0362
     },
     {
       "id": "nyj_pwire_2976592_64897328",
@@ -4418,7 +4561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0407
+      "storyRank": 0.0353
     },
     {
       "id": "nyj_pwire_4427366_64895828",
@@ -4459,7 +4602,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0379
+      "storyRank": 0.033
     },
     {
       "id": "nyj_vid_ae518ccb67cc",
@@ -4505,7 +4648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0384
+      "storyRank": 0.0335
     },
     {
       "id": "nyj_vid_f136c422cd3c",
@@ -4542,7 +4685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0375
+      "storyRank": 0.0328
     },
     {
       "id": "nyj_tyt_9hAXVRUjIeo",
@@ -4584,13 +4727,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "20:47",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0372,
-      "duration": "20:47"
+      "storyRank": 0.0326
     },
     {
       "id": "nyj_tx_252526788649",
@@ -4625,7 +4768,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
+      "storyRank": 0.031
     },
     {
       "id": "nyj_espn_3e3b9e9f984f4",
@@ -4669,7 +4812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0317
+      "storyRank": 0.0281
     },
     {
       "id": "nyj_espn_45b75505a0499",
@@ -4704,7 +4847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0281
     },
     {
       "id": "nyj_vid_53fa4cfc90e9",
@@ -4750,7 +4893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.027
     },
     {
       "id": "nyj_tyt_bjoI3OfLDQg",
@@ -4808,13 +4951,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "17:41",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295,
-      "duration": "17:41"
+      "storyRank": 0.0263
     },
     {
       "id": "nyj_pwire_15864_64877128",
@@ -4846,7 +4989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0263
     },
     {
       "id": "nyj_vid_b626bd9776a0",
@@ -4883,79 +5026,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
-    },
-    {
-      "id": "nyj_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
-    },
-    {
-      "id": "nyj_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0263
     },
     {
       "id": "nyj_tyt_9JeAg6KyTY8",
@@ -4988,13 +5059,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:22",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0248,
-      "duration": "6:22"
+      "storyRank": 0.0224
     },
     {
       "id": "nyj_vid_4b52985a1f2a",
@@ -5040,7 +5111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0223
     },
     {
       "id": "nyj_vid_db06aa68662e",
@@ -5102,7 +5173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0222
     },
     {
       "id": "nyj_vid_dcf0525fbb45",
@@ -5139,7 +5210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.024
+      "storyRank": 0.0217
     },
     {
       "id": "nyj_vid_6c51c16c1d55",
@@ -5176,7 +5247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0239
+      "storyRank": 0.0217
     },
     {
       "id": "nyj_vid_71897d8bc7cb",
@@ -5213,7 +5284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0239
+      "storyRank": 0.0216
     },
     {
       "id": "nyj_tyt_8rgE3WoxCZY",
@@ -5255,13 +5326,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "36:02",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234,
-      "duration": "36:02"
+      "storyRank": 0.0213
     },
     {
       "id": "nyj_vid_f237629dd526",
@@ -5307,46 +5378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
-    },
-    {
-      "id": "nyj_yts_24xA94YJFno",
-      "type": "video",
-      "videoId": "24xA94YJFno",
-      "embeddable": false,
-      "title": "New York Jets vs Los Angeles Chargers | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "10:01",
-      "imageUrl": "https://i.ytimg.com/vi/24xA94YJFno/hqdefault.jpg",
-      "imageAlt": "New York Jets vs Los Angeles Chargers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-19T07:28:05.982Z",
-      "url": "https://www.youtube.com/watch?v=24xA94YJFno",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=24xA94YJFno",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0209
     },
     {
       "id": "nyj_pfr_950c6989c7d9",
@@ -5388,7 +5420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0197
+      "storyRank": 0.0181
     },
     {
       "id": "nyj_vid_d958e24d2849",
@@ -5434,7 +5466,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0183
+    },
+    {
+      "id": "nyj_yts_24xA94YJFno",
+      "type": "video",
+      "videoId": "24xA94YJFno",
+      "embeddable": false,
+      "title": "New York Jets vs Los Angeles Chargers | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "10:01",
+      "imageUrl": "https://i.ytimg.com/vi/24xA94YJFno/hqdefault.jpg",
+      "imageAlt": "New York Jets vs Los Angeles Chargers | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T19:06:55.678Z",
+      "url": "https://www.youtube.com/watch?v=24xA94YJFno",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=24xA94YJFno",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
     },
     {
       "id": "nyj_vid_e4615a76e97c",
@@ -5480,7 +5551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0182
     },
     {
       "id": "nyj_vid_cce89a1f68a0",
@@ -5526,42 +5597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
-    },
-    {
-      "id": "nyj_espn_2174513a3461e",
-      "type": "article",
-      "title": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
-      "summary": "Five NFL teams have at least 5% odds to land the No. 1 pick in 2027, per ESPN's Football Power Index: the Dolphins, Titans, Eagles, Jets and Chargers.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747125_608x342_16-9.jpg",
-      "imageCaption": "Jeff Hafley",
-      "imageAlt": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
-      "publishedAt": "2026-11-18T13:32:42.000Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50510863/2027-nfl-draft-top-pick-dolphins-titans-eagles-jets-chargers",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "seth_walder",
-      "reporterName": "Seth Walder",
-      "author": "Seth Walder",
-      "authorHandle": "@SethWalder",
-      "authorProfileUrl": "https://x.com/SethWalder",
-      "trustTier": 2,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0391
+      "storyRank": 0.018
     },
     {
       "id": "nyj_tx_97d7ff984bf1",
@@ -5605,7 +5641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0169
     },
     {
       "id": "nyj_vid_e2a43cee5058",
@@ -5642,7 +5678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0156
     },
     {
       "id": "nyj_tyt_B5LlZQQlWFQ",
@@ -5684,13 +5720,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:36",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167,
-      "duration": "1:36"
+      "storyRank": 0.0154
     },
     {
       "id": "nyj_tx_52271b30ec9a",
@@ -5725,7 +5761,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0145
     },
     {
       "id": "nyj_pfr_2c89d4273656",
@@ -5758,7 +5794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.015
+      "storyRank": 0.014
     },
     {
       "id": "nyj_pfr_4e58b0d73c70",
@@ -5808,7 +5844,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0149
+      "storyRank": 0.0139
     },
     {
       "id": "nyj_tyt_8t52W6Nt66Y",
@@ -5841,13 +5877,52 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:39",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147,
-      "duration": "4:39"
+      "storyRank": 0.0137
+    },
+    {
+      "id": "nyj_yts_Ix5ccUgKSh4",
+      "type": "video",
+      "videoId": "Ix5ccUgKSh4",
+      "embeddable": false,
+      "title": "Buffalo Bills vs. New York Jets Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "16:19",
+      "imageUrl": "https://i.ytimg.com/vi/Ix5ccUgKSh4/hqdefault.jpg",
+      "imageAlt": "Buffalo Bills vs. New York Jets Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T19:06:55.678Z",
+      "url": "https://www.youtube.com/watch?v=Ix5ccUgKSh4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Ix5ccUgKSh4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0134
     },
     {
       "id": "nyj_vid_e43120d93511",
@@ -5893,7 +5968,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.014
+      "storyRank": 0.0131
     },
     {
       "id": "nyj_vid_0f6f38aa6f91",
@@ -5939,7 +6014,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.014
+      "storyRank": 0.0131
     },
     {
       "id": "nyj_vid_da9ec76bfabb",
@@ -5976,7 +6051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.014
+      "storyRank": 0.013
     },
     {
       "id": "nyj_vid_164c711df927",
@@ -6022,46 +6097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0138
-    },
-    {
-      "id": "nyj_yts_Ix5ccUgKSh4",
-      "type": "video",
-      "videoId": "Ix5ccUgKSh4",
-      "embeddable": false,
-      "title": "Buffalo Bills vs. New York Jets Game Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "16:19",
-      "imageUrl": "https://i.ytimg.com/vi/Ix5ccUgKSh4/hqdefault.jpg",
-      "imageAlt": "Buffalo Bills vs. New York Jets Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T07:28:05.982Z",
-      "url": "https://www.youtube.com/watch?v=Ix5ccUgKSh4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=Ix5ccUgKSh4",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0129
     },
     {
       "id": "nyj_vid_f566afdf5dd9",
@@ -6107,7 +6143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "nyj_vid_d207f7ee05e3",
@@ -6177,7 +6213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "nyj_vid_42cffb6530c4",
@@ -6214,7 +6250,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_4b825c392e5a",
@@ -6260,7 +6296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_2a30bdb19235",
@@ -6297,7 +6333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_tyt_hcYCVwhts-I",
@@ -6339,13 +6375,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:46",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127,
-      "duration": "4:46"
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_d5deccc670ab",
@@ -6391,7 +6427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_e3502d9391a7",
@@ -6437,7 +6473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_65c99fb019d3",
@@ -6483,7 +6519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_fa9e47b9591d",
@@ -6520,7 +6556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "nyj_vid_8a143a25d729",
@@ -6574,7 +6610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "nyj_vid_54547f1268f0",
@@ -6620,7 +6656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "nyj_vid_b84a8d7a80db",
@@ -6666,7 +6702,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "nyj_vid_ace7c803d812",
@@ -6712,7 +6748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0118
     },
     {
       "id": "nyj_vid_abb1710d3899",
@@ -6766,7 +6802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0118
     },
     {
       "id": "nyj_vid_126a47e0ca4c",
@@ -6820,7 +6856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "nyj_vid_5766b481b9ae",
@@ -6866,7 +6902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "nyj_vid_2a9d1d29ecd0",
@@ -6912,7 +6948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "nyj_vid_505a9cb069b3",
@@ -6966,7 +7002,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "nyj_vid_4e8ee83448b3",
@@ -7003,7 +7039,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0116
     },
     {
       "id": "nyj_vid_23b3f37fddb0",
@@ -7040,7 +7076,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_319db4999000",
@@ -7077,7 +7113,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0112
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_2d9bf881db6f",
@@ -7114,7 +7150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_0012ab78d437",
@@ -7151,7 +7187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_pfr_03b5124b42ba",
@@ -7184,7 +7220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0101
     },
     {
       "id": "nyj_vid_d7c8ef672a4d",
@@ -7221,7 +7257,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0102
     },
     {
       "id": "nyj_vid_38558ebc4e9d",
@@ -7267,7 +7303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0101
     },
     {
       "id": "nyj_vid_3c515210bc03",
@@ -7313,7 +7349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0093
     },
     {
       "id": "nyj_vid_fa9e91b04567",
@@ -7350,7 +7386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0096
+      "storyRank": 0.0091
     },
     {
       "id": "nyj_pfr_2c02575a2356",
@@ -7392,7 +7428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.009
+      "storyRank": 0.0086
     },
     {
       "id": "nyj_vid_25bcd819407f",
@@ -7462,7 +7498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "nyj_vid_583ef99520d3",
@@ -7508,7 +7544,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "nyj_vid_52cf9b22e378",
@@ -7554,7 +7590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "nyj_vid_5fd4dd2983dd",
@@ -7600,7 +7636,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "nyj_vid_b53524df0565",
@@ -7637,7 +7673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "nyj_vid_243127ebe4d4",
@@ -7674,7 +7710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "nyj_vid_27ce4fb2d3ec",
@@ -7711,7 +7747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "nyj_vid_c5a2ea661130",
@@ -7757,7 +7793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0082
     },
     {
       "id": "nyj_vid_aa208ce75ac9",
@@ -7803,7 +7839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0082
     },
     {
       "id": "nyj_vid_ec99fc125901",
@@ -7848,52 +7884,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
-    },
-    {
-      "id": "nyj_vid_25862059e334",
-      "type": "video",
-      "title": "QB Geno Smith Media Availability (11/11) | Week 10",
-      "summary": "The Jets' quarterback takes questions from the media Wednesday of Week 10.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/fd1ga0sksndliawvqv3i.png",
-      "imageAlt": "QB Geno Smith Media Availability (11/11) | Week 10",
-      "publishedAt": "2026-11-11T18:37:05.000Z",
-      "url": "https://www.newyorkjets.com/video/geno-smith-jets-quarterback-media-availability-11-11-2026-week-10",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/geno-smith-jets-quarterback-media-availability-11-11-2026-week-10",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@nyjets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "15864",
-          "name": "Geno Smith",
-          "shortName": "G. Smith",
-          "position": "QB",
-          "jersey": 7,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15864.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0076
     },
     {
       "id": "nyj_tx_05e29e0e6357",
@@ -7937,7 +7928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0061
     },
     {
       "id": "nyj_tx_fabfecb56aa5",
@@ -7981,7 +7972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0053
     },
     {
       "id": "nyj_pwire_4723820_64877028",

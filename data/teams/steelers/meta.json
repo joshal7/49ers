@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:42.333Z",
+  "updatedAt": "2026-11-26T19:07:54.408Z",
   "teamAbbr": "PIT",
   "teamSlug": "steelers",
   "brandName": "Steeler Nation",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:28:42.333Z",
+    "lastCheckedAt": "2026-11-26T19:07:54.408Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

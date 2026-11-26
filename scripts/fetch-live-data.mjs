@@ -176,7 +176,9 @@ import {
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   isCommercialFantasyOrBettingFiller,
+  isGenericLeagueWideRoundupWithoutTeam,
   isLeagueWideFilmAnalyticsTweet,
+  isLocalBeatPostOffTopicForTeam,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
   isPaywalledSubstackOrNewsletterEntry,
@@ -1354,8 +1356,22 @@ async function fetchRawBlueskyFeedsForReporters(reportersData) {
   return rawEntries;
 }
 
-function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = []) {
+const GENUINE_LEAGUE_CHART_HANDLES_BSKY = new Set([
+  'throwthedamball',
+  'ghatz_28',
+  'benbbaldwin',
+  'fball_insights',
+  'tejfbanalytics'
+]);
+
+function filterRawBlueskyPostsForTeam(
+  rawEntries = [],
+  team,
+  rosterPlayers = [],
+  { upcomingOpponentAbbr = '', recentOpponentAbbr = '' } = {}
+) {
   const items = [];
+  let leagueWideChartsAdded = 0;
   const nickRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
   const includeCity = !team.keywordRules?.excludeGenericCity && team.city && team.city !== team.nickname;
   const teamTerms = [
@@ -1411,7 +1427,12 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
     const resolvedVideoStreamUrl = isTenorGif ? extUrl : bskyVideoMp4Url || undefined;
     if (text.length < (embedImg || resolvedVideoStreamUrl ? 6 : 18)) continue;
 
+    const pubIso = rec.createdAt || post.indexedAt || new Date().toISOString();
+    const ageDays = (Date.now() - Date.parse(pubIso)) / 86_400_000;
+    if (!Number.isFinite(ageDays) || ageDays > 10) continue;
+
     const isNational =
+      Boolean(rep.requireTeamMention) ||
       rep.scope === 'national' ||
       rep.category === 'national_insider' ||
       rep.category === 'film_analyst' ||
@@ -1422,36 +1443,40 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
       teamEntityRe.test(text) ||
       (team.abbr === 'SF' && hasExplicit49ersEntity(text)) ||
       Boolean(starFullRe && starFullRe.test(text));
-    // Guard against multi-sport local columnists (e.g. NBA Warriors / MLB SF Giants / NHL Sharks posts)
+    // Systemic local-beat off-topic guard (drops other sports, movies, unrelated NFL teams, cryptic personal posts)
     if (
-      !mentionsClubOrPlayer &&
-      /\b(warriors|lakers|celtics|kings|nba\b|steph\s+curry|\bcurry\b|draymond|sabonis|layup|homecourt|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series)\b/i.test(
-        text
-      )
+      !isNational &&
+      isLocalBeatPostOffTopicForTeam(text, {
+        team,
+        hasDirectTeamOrRosterMatch: mentionsClubOrPlayer,
+        hasPlayableMedia: Boolean(resolvedVideoStreamUrl || embedPhoto),
+        upcomingOpponentAbbr,
+        recentOpponentAbbr
+      })
     ) {
       continue;
     }
     let isLeagueWideChart = false;
     let filmOnlyScope = false;
     if (isNational && !mentionsClubOrPlayer) {
+      const repHandleClean = String(rep.handle || '').replace(/^@/, '').trim().toLowerCase();
       if (
-        (rep.category === 'film_analyst' || rep.category === 'analytics') &&
+        GENUINE_LEAGUE_CHART_HANDLES_BSKY.has(repHandleClean) &&
+        leagueWideChartsAdded < 2 &&
         isLeagueWideFilmAnalyticsTweet(
-          { title: text, fullText: text, authorHandle: rep.handle || '', imageUrl: embedImg },
+          { title: text, fullText: text, authorHandle: rep.handle || '', imageUrl: embedImg, publishedAt: pubIso },
           team
         )
       ) {
         isLeagueWideChart = true;
         filmOnlyScope = true;
+        leagueWideChartsAdded += 1;
       } else {
         continue;
       }
     }
     const rkey = String(post.uri || '').split('/').pop() || '';
     const bskyUrl = `https://bsky.app/profile/${rep.bskyHandle}/post/${rkey}`;
-    const pubIso = rec.createdAt || post.indexedAt || new Date().toISOString();
-    const ageDays = (Date.now() - Date.parse(pubIso)) / 86_400_000;
-    if (!Number.isFinite(ageDays) || ageDays > 10) continue;
     const tweetDisplay = formatTweetBodyForDisplay(text, SHORT_TWEET_FULL_TEXT_LIMIT);
     const bskyInlineLinks = extractBlueskyInlineLinks(rec, post);
     const isFilmAnalystRep = rep.category === 'film_analyst' || rep.category === 'film' || rep.category === 'analytics';
@@ -3486,6 +3511,10 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
   }
 
   // 9e. Team-filtered RotoWire NFL RSS + Pro Football Rumors + ProFootballTalk + NFL Trade Rumors + YouTube Film/Highlights
+  const nextUnplayedForWire = (schedule || []).find(g => g && !g.completed && g.oppAbbr);
+  const recentCompletedForWire = (schedule || []).filter(g => g && g.completed && g.oppAbbr).slice(-1)[0];
+  const upcomingOppAbbrForWire = String(nextUnplayedForWire?.oppAbbr || '').toUpperCase();
+  const recentOppAbbrForWire = String(recentCompletedForWire?.oppAbbr || '').toUpperCase();
   const teamMatchRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
   const starterNamesForMedia = players
     .filter(p => p.rosterBucket === 'active' && (p.position === 'QB' || Number(p.primarySnapPct || 0) >= 65))
@@ -3508,6 +3537,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
     const link = decodeXmlEntities((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
     const pubRaw = decodeXmlEntities((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
     if (!title || !link || isOpposingTeamSubjectLead(`${title} ${desc}`, {}, team)) continue;
+    if (isCommercialFantasyOrBettingFiller(title, desc, link)) continue;
+    if (isGenericLeagueWideRoundupWithoutTeam(title, desc, team)) continue;
     const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
     if (!Number.isFinite(pubMs) || Date.now() - pubMs > 14 * 86_400_000) continue;
     pushNewsItem({
@@ -3562,6 +3593,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
       const pubRaw = decodeXmlEntities((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
       if (!title || !link || !teamMatchRe.test(`${title} ${desc}`)) continue;
       if (isOpposingTeamSubjectLead(title, {}, team)) continue;
+      if (isCommercialFantasyOrBettingFiller(title, desc, link)) continue;
+      if (isGenericLeagueWideRoundupWithoutTeam(title, desc, team)) continue;
       const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > 12 * 86_400_000) continue;
       const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+)"/i) || [])[1] || '').replace(/&amp;/g, '&');
@@ -3672,22 +3705,11 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
       if (isCommercialFantasyOrBettingFiller(title, desc)) continue;
       const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
       if (Number.isFinite(pubMs)) atomPubByVideoId.set(videoId, new Date(pubMs).toISOString());
-      const isDirectTeamMatch = teamOrStarRe.test(`${title} ${desc.slice(0, 260)}`);
-      let filmOnlyScope = false;
-      if (!isDirectTeamMatch) {
-        if (
-          ytFeed.allowLeagueWideFilmOnly &&
-          ytFeed.category === 'film' &&
-          leagueWideFilmVideosAdded < 2 &&
-          !isOpposingTeamSubjectLead(title, {}, team)
-        ) {
-          filmOnlyScope = true;
-          leagueWideFilmVideosAdded += 1;
-        } else {
-          continue;
-        }
-      }
-      if (ytFeed.category !== 'film' && isOpposingTeamSubjectLead(title, {}, team)) continue;
+      const isDirectTeamInTitle = teamOrStarRe.test(title);
+      const isDirectTeamMatch = isDirectTeamInTitle || teamOrStarRe.test(desc.slice(0, 260));
+      if (!isDirectTeamMatch) continue;
+      // Reject opposing-team-subject titles (e.g. "Chiefs QB Film Breakdown" on Cardinals) unless the active team/star is explicitly in the title
+      if (!isDirectTeamInTitle && isOpposingTeamSubjectLead(title, {}, team)) continue;
       const maxAgeDays = ytFeed.category === 'film' ? 60 : 21;
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
       const embCheck = ytFeed.embeddable === false ? null : leagueCtx.youtubeEmbeddableById?.get(videoId) || null;
@@ -3704,7 +3726,6 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
         id: `${team.abbr.toLowerCase()}_yt_${videoId}`,
         type: 'video',
         category: ytFeed.category,
-        ...(filmOnlyScope ? { filmOnlyScope: true } : {}),
         videoId,
         embeddable: resolvedEmbeddable,
         title,
@@ -3852,6 +3873,20 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
       }
       if (spec.filterByTeam && !teamOrStarRe.test(`${title} ${desc}`)) continue;
       if (isOpposingTeamSubjectLead(`${title} ${desc}`, {}, team)) continue;
+      if (isCommercialFantasyOrBettingFiller(title, desc, link)) continue;
+      if (isGenericLeagueWideRoundupWithoutTeam(title, desc, team)) continue;
+      if (
+        !teamOrStarRe.test(`${title} ${desc}`) &&
+        isLocalBeatPostOffTopicForTeam(`${title} ${desc}`, {
+          team,
+          hasDirectTeamOrRosterMatch: false,
+          hasPlayableMedia: false,
+          upcomingOpponentAbbr: upcomingOppAbbrForWire,
+          recentOpponentAbbr: recentOppAbbrForWire
+        })
+      ) {
+        continue;
+      }
       const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > 12 * 86_400_000) continue;
       const img = (
@@ -4081,7 +4116,10 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
     });
   }
 
-  const bskyPosts = filterRawBlueskyPostsForTeam(rawBskyEntries || [], team, players);
+  const bskyPosts = filterRawBlueskyPostsForTeam(rawBskyEntries || [], team, players, {
+    upcomingOpponentAbbr: upcomingOppAbbrForWire,
+    recentOpponentAbbr: recentOppAbbrForWire
+  });
   // Load previous news.json once for 96h X carry-forward across rotating 30-min handle slices
   let prevNewsSnapshot = null;
   try {
@@ -4180,7 +4218,21 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
         const prunedMentions = Array.isArray(it.mentionedPlayers)
           ? it.mentionedPlayers.filter(mp => mp?.id && currentRosterIds.has(String(mp.id)))
           : [];
-        carriedXItems.push({ ...it, mentionedPlayers: prunedMentions });
+        const isOfficialCarried = hLow && hLow === String(OFFICIAL_TEAM_X_HANDLES_BY_ABBR[team.abbr] || '').toLowerCase();
+        const needsAuthorFix = isOfficialCarried && (isPodiumSubjectId(it.reporterId) || it.author !== team.fullName);
+        carriedXItems.push({
+          ...it,
+          ...(needsAuthorFix
+            ? {
+                author: team.fullName,
+                reporterName: team.fullName,
+                reporterId: `${team.slug}_official`,
+                outletId: `${team.slug}_official`,
+                outletName: `@${OFFICIAL_TEAM_X_HANDLES_BY_ABBR[team.abbr]} Official`
+              }
+            : {}),
+          mentionedPlayers: prunedMentions
+        });
       }
     }
   } catch {}
@@ -4222,7 +4274,23 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApi
           const rawStory = cleanSensationalistText(stripHtmlAndDecodeEntities(String(entry.story || '')));
           const lead = rawDesc || rawHeadline;
           if (!lead || lead.length < 20) continue;
-          if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${rawDesc}`)) continue;
+          if (
+            /\b(fantasy|lineup help|sleepers|waiver wire|d\/st|start\/sit)\b/i.test(`${rawHeadline} ${rawDesc}`) ||
+            isCommercialFantasyOrBettingFiller(rawHeadline, `${rawDesc} ${rawStory}`, entry.links?.web?.href || '')
+          ) {
+            continue;
+          }
+          // Ensure general league roundups attached to player profiles actually mention this player or the active team
+          const pNameParts = String(p.name || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim().split(/\s+/);
+          const pSurname = pNameParts[pNameParts.length - 1] || p.name;
+          const pRelBlob = `${rawHeadline} ${rawDesc}`;
+          if (
+            pSurname &&
+            !new RegExp(`\\b${pSurname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(pRelBlob) &&
+            !teamOrStarRe.test(pRelBlob)
+          ) {
+            continue;
+          }
           const bylineHint = entry.byline
             ? String(entry.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim()
             : '';

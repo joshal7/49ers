@@ -9,7 +9,7 @@
  *   3) Dynamically advance with `seasonYear` / `draftYear` and roster transactions.
  */
 
-import { ALL_NFL_TEAMS, getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, NFL_DIVISIONS, getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 const PAYWALLED_HOST_RULES = [
   // Hard-paywalled or subscription-gated sports/news domains & subpaths
@@ -287,10 +287,10 @@ const OFF_TOPIC_LEAGUE_FILLER_URL_REGEX =
   /^https?:\/\/(?:(?:www\.|m\.)?espn\.com\/(?:fantasy\/|espn\/betting\/)|[^/]+\/(?:mlb|nba|nhl|wnba|mls|golf|tennis|soccer)\/)/i;
 
 const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
-  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates|nfl week \d+ uniforms?|week \d+ uniforms?)\b/i;
+  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates|minor nfl transactions|nfl transactions:\s*(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)|poll:\s*who fared best|nfl week \d+ game picks|nfl week \d+ uniforms?|week \d+ uniforms?|which high school game do you want featured|metro['’]?s [‘'"]?gold line|double-digit favorites.*double-digit spreads)\b/i;
 
 const NON_NFL_OTHER_SPORT_HEADLINE_REGEX =
-  /\b(warriors|lakers|celtics|nba\b|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series|premier league|champions league|pga tour|ufc\b|wwe\b)\b/i;
+  /\b(warriors|lakers|celtics|knicks|nuggets|mavericks|cavaliers|clippers|grizzlies|timberwolves|pelicans|raptors|pacers|blazers|sixers|76ers|sacramento kings|phoenix suns|miami heat|milwaukee bucks|okc thunder|san antonio spurs|houston rockets|orlando magic|utah jazz|brooklyn nets|atlanta hawks|charlotte hornets|keegan murray|steph curry|draymond|lebron|jokic|giannis|nba\b|wnba\b|sf giants|san francisco giants|ny mets|new york mets|chicago cubs|cubs and mets|yankees|red sox|white sox|phillies|dodgers|astros|padres|mariners|twins|orioles|brewers|blue jays|guardians|diamondbacks|marlins|pirates|mlb\b|spring training|world series|sharks|maple leafs|bruins|blackhawks|avalanche|oilers|golden knights|kraken|canucks|red wings|flyers|nhl\b|stanley cup|gophers|big ten|march madness|ncaa tournament|final four|high school (?:football )?game|premier league|champions league|pga tour|ufc\b|wwe\b|[‘'"]madden[’'"]\s+(?:movie|exclusive\s+interview)|return of the king|alfred hitchcock)\b/i;
 
 const COMMERCIAL_FOOD_RETAIL_BRAND_MENTION_PATTERN =
   '(?:@(?:mountainmikes|papajohns|dominos|littlecaesars|pizzahut|roundtablepizza|jackbox|mcdonalds|wendys|tacobell|dunkindonuts|dunkin|chickfila|wingstop|raisingcanes|chipotletweets|jerseymikes|subway|bojangles|whataburger|culvers|krispykreme|popeyes|sonicdrivein|starbucks|7eleven|wawa|sheetz|doordash|ubereats|instacart|budlight|coorslight|michelobultra|pepsi|cocacola|fanatics|nflshop)\\b|\\b(?:mountain\\s*mike[\'’]?s|papa\\s+john[\'’]?s|domino[\'’]?s|little\\s+caesars|pizza\\s+hut|round\\s+table\\s+pizza|jack\\s+in\\s+the\\s+box|mcdonald[\'’]?s|taco\\s+bell|dunkin[\'’]?|chick-fil-a|wingstop|raising\\s+cane[\'’]?s|jersey\\s+mike[\'’]?s|krispy\\s+kreme|whataburger|bojangles|culver[\'’]?s|doordash|uber\\s+eats|instacart|nfl\\s+shop|fanatics)\\b)';
@@ -916,15 +916,85 @@ function escapeLinkRegex(s = '') {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const UNAMBIGUOUS_NFL_ABBRS = [
+  'ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN', 'DET',
+  'GB', 'HOU', 'IND', 'JAX', 'JAC', 'KC', 'LAC', 'LAR', 'LV', 'MIA', 'MIN',
+  'NE', 'NYG', 'NYJ', 'PHI', 'PIT', 'SEA', 'SF', 'SFO', 'TB', 'TEN', 'WAS', 'WSH'
+];
+
+const TEAM_ABBR_EQUIV = {
+  SF: ['SF', 'SFO'],
+  JAX: ['JAX', 'JAC'],
+  WAS: ['WAS', 'WSH'],
+  LAR: ['LAR'],
+  LV: ['LV', 'OAK']
+};
+
+function buildTeamDivisionAndOtherMatchers(active) {
+  const ownAbbrs = new Set(TEAM_ABBR_EQUIV[active.abbr] || [active.abbr]);
+  const otherAbbrList = UNAMBIGUOUS_NFL_ABBRS.filter(a => !ownAbbrs.has(a));
+  const otherAbbrRe = new RegExp(`\\b(${otherAbbrList.join('|')})\\b`);
+
+  const ownCityLow = String(active.city || '').trim().toLowerCase();
+  const otherCities = [];
+  const otherTokens = [];
+  const divisionName = NFL_DIVISIONS[active.abbr] || '';
+  const conferenceName = divisionName ? divisionName.split(' ')[0] : '';
+  const divTokens = [];
+  const confTokens = [];
+
+  for (const t of ALL_NFL_TEAMS) {
+    if (t.abbr === active.abbr) continue;
+    otherTokens.push(escapeLinkRegex(t.nickname));
+    if (t.abbr === 'SF') otherTokens.push('niners');
+    if (t.abbr === 'TB') otherTokens.push('bucs');
+    if (t.abbr === 'JAX') otherTokens.push('jags');
+    if (t.abbr === 'NE') otherTokens.push('pats');
+    const c = String(t.city || '').trim();
+    if (c && c.toLowerCase() !== ownCityLow && !/^(?:new york|los angeles)$/i.test(c)) {
+      otherCities.push(escapeLinkRegex(c));
+    }
+    const tDiv = NFL_DIVISIONS[t.abbr] || '';
+    if (divisionName && tDiv === divisionName) {
+      divTokens.push(escapeLinkRegex(t.nickname));
+      if (t.abbr === 'SF') divTokens.push('niners');
+      if (t.abbr === 'TB') divTokens.push('bucs');
+      if (t.abbr === 'JAX') divTokens.push('jags');
+      if (t.abbr === 'NE') divTokens.push('pats');
+    }
+    if (conferenceName && tDiv.startsWith(conferenceName)) {
+      confTokens.push(escapeLinkRegex(t.nickname));
+      if (t.abbr === 'SF') confTokens.push('niners');
+      if (t.abbr === 'TB') confTokens.push('bucs');
+      if (t.abbr === 'JAX') confTokens.push('jags');
+      if (t.abbr === 'NE') confTokens.push('pats');
+    }
+  }
+  const otherTeamsRe = new RegExp(`\\b(${otherTokens.join('|')})\\b`, 'i');
+  const otherCitiesRe = otherCities.length > 0 ? new RegExp(`\\b(${otherCities.join('|')})\\b`, 'i') : /$^/;
+  const divisionRe =
+    divisionName && divTokens.length > 0
+      ? new RegExp(`\\b(${escapeLinkRegex(divisionName)}|${divTokens.join('|')})\\b`, 'i')
+      : /$^/;
+  const conferenceRivalsRe = confTokens.length > 0 ? new RegExp(`\\b(${confTokens.join('|')})\\b`, 'i') : /$^/;
+  return { otherTeamsRe, otherAbbrRe, otherCitiesRe, divisionName, divisionRe, conferenceName, conferenceRivalsRe };
+}
+
 function getTeamWireMatchers(team = null) {
   const active = team || getActiveTeamConfig();
   if (!active || active.abbr === 'SF') {
-    return {
+    if (TEAM_WIRE_REGEX_CACHE.has('SF')) return TEAM_WIRE_REGEX_CACHE.get('SF');
+    const sfTeam = resolveTeamConfig('SF');
+    const shared = buildTeamDivisionAndOtherMatchers(sfTeam);
+    const built = {
       isSf: true,
       explicitEntityRe: EXPLICIT_SF_ENTITY_REGEX,
-      otherTeamsRe: OTHER_NFL_TEAM_LEAD_REGEX,
-      teamShortRe: /\b(49ers|niners|san francisco)\b/i
+      teamShortRe: /\b(49ers|niners|san francisco)\b/i,
+      ...shared,
+      otherTeamsRe: OTHER_NFL_TEAM_LEAD_REGEX
     };
+    TEAM_WIRE_REGEX_CACHE.set('SF', built);
+    return built;
   }
   const cacheKey = active.abbr;
   if (TEAM_WIRE_REGEX_CACHE.has(cacheKey)) return TEAM_WIRE_REGEX_CACHE.get(cacheKey);
@@ -951,13 +1021,7 @@ function getTeamWireMatchers(team = null) {
     `\\b(${shortParts.map(t => escapeLinkRegex(t)).join('|')})\\b`,
     'i'
   );
-  const otherTokens = [];
-  for (const t of ALL_NFL_TEAMS) {
-    if (t.abbr === active.abbr) continue;
-    otherTokens.push(escapeLinkRegex(t.nickname));
-    if (t.abbr === 'SF') otherTokens.push('niners');
-  }
-  const otherTeamsRe = new RegExp(`\\b(${otherTokens.join('|')})\\b`, 'i');
+  const shared = buildTeamDivisionAndOtherMatchers(active);
   const activeNickCityPat = [active.fullName, active.nickname, active.city].filter(Boolean).map(t => escapeLinkRegex(t)).join('|');
   const formerTeamPrefixRe = new RegExp(
     `\\b(?:former|ex[-\\s])\\s*(?:${activeNickCityPat})(?:\\s+(?:hc|oc|dc|gm|head\\s+coach|assistant|coach|coordinator|qb|rb|fb|wr|te|ol|dl|lb|cb|db|de|dt|s|k|p|ls|exec|executive|scout))?\\b`,
@@ -967,7 +1031,7 @@ function getTeamWireMatchers(team = null) {
     `\\b(originally signed (?:on )?with (?:the )?(?:${activeNickCityPat})|(?:was )?(?:selected|drafted|taken) [\\s\\S]{0,55}by (?:the )?(?:${activeNickCityPat})|began (?:his|their) (?:nfl )?career with (?:the )?(?:${activeNickCityPat})|spent (?:time|his rookie|the \\d{4} season|\\d+ seasons?) with (?:the )?(?:${activeNickCityPat})|stint with (?:the )?(?:${activeNickCityPat}))\\b`,
     'i'
   );
-  const built = { isSf: false, explicitEntityRe, otherTeamsRe, teamShortRe, formerTeamPrefixRe, historicalBioRe };
+  const built = { isSf: false, explicitEntityRe, teamShortRe, formerTeamPrefixRe, historicalBioRe, ...shared };
   TEAM_WIRE_REGEX_CACHE.set(cacheKey, built);
   return built;
 }
@@ -1063,7 +1127,7 @@ const COMMERCIAL_FANTASY_BETTING_URL_RE =
   /\/(?:news\/(?:bet-|fantasy-|free-pff-mock-draft-simulator)|fantasy\/|betting\/|sportsbook\/|odds\/|picks-and-predictions\/)/i;
 
 const COMMERCIAL_FANTASY_BETTING_TEXT_RE =
-  /\b(same[- ]game\s+parlay|best\s+bets?|prop\s+bets?|player\s+props?|against\s+the\s+spread|ats\s+picks?|moneyline\s+picks?|betting\s+odds|betting\s+picks?|parlay\s+picks?|fantasy\s+football|fantasy\s+worksheet|fantasy\s+rankings?|fantasy\s+sleepers?|fantasy\s+spin|fantasy\s+tips|fantasy\s+start|start\/sit|start-worthy|waiver\s+wire|lineup\s+help|survivor\s+pool|mock\s+draft\s+simulator|unlock\s+the\s+full\s+pff|draftsgiving|promo\s+code|sign[- ]?up\s+bonus)\b/i;
+  /\b(same[- ]game\s+parlay|best\s+bets?|prop\s+bets?|player\s+props?|against\s+the\s+spread|ats\s+picks?|moneyline\s+picks?|betting\s+odds|betting\s+picks?|parlay\s+picks?|fantasy\s+football|fantasy\s+worksheet|fantasy\s+rankings?|fantasy\s+sleepers?|fantasy\s+spin|fantasy\s+tips|fantasy\s+start|start\/sit|start-worthy|waiver\s+wire|lineup\s+help|survivor\s+pool|mock\s+draft\s+simulator|unlock\s+the\s+full\s+pff|draftsgiving|promo\s+code|sign[- ]?up\s+bonus|value\s+players\s+from\s+this\s+point\s+forward|for\s+production\s+or\s+trade\s+discussions|trade\s+value\s+chart|rest[- ]of[- ]season\s+(?:rankings?|value|outlook)|tough\s+flex\s+decision|flex\s+decision|flex\s+rankings?|eric\s+karabell|liz\s+loza|tristan\s+cockcroft|half[- ]ppr|\bppr\s+(?:rankings?|value|flex|wr|rb|te))\b/i;
 
 /**
  * Unconditionally identifies commercial betting/parlay, fantasy football, and SaaS tool-promo
@@ -1689,14 +1753,34 @@ export function createPlayerIdentityResolver({ nflPlayers = [], otcPlayers = [],
   };
 }
 
+const HISTORICAL_OR_RETIRED_SPOTLIGHT_RE =
+  /\b(in\s+his\s+last\s+season|last\s+season|retired|hall\s+of\s+fame|all[- ]time|in\s+20(?:0\d|1\d|2[0-5])\b|super\s+bowl\s+(?:[lvxi]+|\d+)|in\s+the\s+super\s+bowl|aaron\s+donald|tom\s+brady|peyton\s+manning|drew\s+brees|j\.?j\.?\s+watt|luke\s+kuechly)\b/i;
+
+const MULTI_TEAM_OR_GROUP_CHART_RE =
+  /\b(all\s+routes|all\s+32|nfl\s+(?:qbs|wrs|cbs|rbs|tes|defenses|offenses|teams)|leaders|league[- ]wide|across\s+the\s+nfl|cb\s+separation|qb\s+epa|team\s+tiers|efficiency|coverage\s+efficiency|pass[- ]rush\s+win\s+rate\s+leaders|pass[- ]block\s+win\s+rate\s+leaders)\b/i;
+
+const SINGLE_PLAYER_LEAD_SPOTLIGHT_RE =
+  /^(?:[A-Z][a-z'.-]{2,}\s+[A-Z][a-z'.-]{2,}\s+(?:was|is|has|had|leads|led|ranked|ranks|finished|posted|averaged|recorded)|one\s+matchup\s+to\s+watch\s+in\s+the\s+opener)\b/;
+
 /**
- * Identifies genuine league-wide NFL on-field analytics/grading charts (e.g. `@throwthedamball`
+ * Identifies genuine, fresh league-wide NFL on-field analytics/grading charts (e.g. `@throwthedamball`
  * "CB Separation prevented on all routes and on ball grade" scatter plot covering all 32 teams)
  * so they can be included in `Film & Trench` across all 32 team sites without polluting `All`/`Tweets`
- * or leaking single-other-team stories, fantasy filler, or promotional ads.
+ * or leaking stale prior-season/Week-1 posts, single-other-team stories, retired-player spotlights,
+ * fantasy filler, or promotional ads.
  */
-export function isLeagueWideFilmAnalyticsTweet(item = {}, teamInput = null) {
+export function isLeagueWideFilmAnalyticsTweet(
+  item = {},
+  teamInput = null,
+  { nowMs = Date.now(), maxAgeDays = 10 } = {}
+) {
   if (!item || typeof item !== 'object') return false;
+  if (item.publishedAt) {
+    const pubMs = Date.parse(item.publishedAt);
+    if (Number.isFinite(pubMs) && nowMs - pubMs > maxAgeDays * 86_400_000) {
+      return false;
+    }
+  }
   const text = stripAggregatorBoilerplate(
     `${item.title || ''} ${item.fullText || ''} ${item.summary || ''}`.trim()
   );
@@ -1722,14 +1806,121 @@ export function isLeagueWideFilmAnalyticsTweet(item = {}, teamInput = null) {
   const metricHits = text.match(new RegExp(LEAGUE_WIDE_ANALYTICS_CHART_METRIC_RE.source, 'gi')) || [];
   if (metricHits.length === 0) return false;
 
-  // Reject single-other-team-only posts (if another NFL team is named in the text without mentioning the active team,
-  // unless multiple teams are tagged like "#FTTB #GoPackGo #Skol" where the active team would already match directly).
   const matchers = getTeamWireMatchers(teamInput);
-  if (matchers.otherTeamsRe.test(text) && !matchers.explicitEntityRe.test(text)) {
+  const mentionsActiveTeam = matchers.explicitEntityRe.test(text);
+
+  // Reject single-other-team, uppercase 2/3-letter team-abbreviation ("NE", "SEA"), or other-city posts
+  // unless the active team is explicitly mentioned.
+  if (
+    !mentionsActiveTeam &&
+    (matchers.otherTeamsRe.test(text) || matchers.otherAbbrRe.test(text) || matchers.otherCitiesRe.test(text))
+  ) {
+    return false;
+  }
+
+  // Reject historical / prior-season / retired-player spotlights (e.g. Aaron Donald's last season, 2025 Super Bowl)
+  if (!mentionsActiveTeam && HISTORICAL_OR_RETIRED_SPOTLIGHT_RE.test(text)) {
+    return false;
+  }
+
+  // Reject single-other-player spotlight posts when no active team is mentioned
+  if (!mentionsActiveTeam && SINGLE_PLAYER_LEAD_SPOTLIGHT_RE.test(text) && !MULTI_TEAM_OR_GROUP_CHART_RE.test(text)) {
     return false;
   }
 
   return true;
+}
+
+const LOCAL_BEAT_FOOTBALL_CONTEXT_RE =
+  /\b(nfl|quarterback|qb\b|rb\b|wr\b|te\b|ol\b|dl\b|lb\b|cb\b|db\b|edge\b|tackle|guard|center|linebacker|cornerback|safety|kicker|punter|touchdown|td\b|interception|sack|fumble|first down|fourth down|4th down|third down|3rd down|red zone|snap|snaps|practice|injury|injured|ir\b|pup\b|dnp\b|questionable|doubtful|out for|playoff|seed|wild card|division|standings|draft|trade|waived|signed|roster|contract|cap\b|coach|coordinator|offense|defense|special teams|pass rush|coverage|blitz|route|all[- ]?22|film|tape|epa\b|pff\b|halftime|overtime|field goal|punt|kickoff|penalty|flag|scrimmage|combine|preseason|postseason|super bowl|week\s+\d+|locker room|sideline|training camp|free agent|depth chart|starter|backup|rookie)\b/i;
+
+const PLAYOFF_RACE_CONTEXT_RE =
+  /\b(playoff|seed|one seed|#1 seed|1 seed|wild card|clinch|standings|division|tiebreaker|bye week|postseason)\b/i;
+
+/**
+ * Systemic guard for dedicated local beat writers' social posts across ALL 32 clubs.
+ * Prevents off-beat/multi-sport chatter (NBA/MLB/NHL/NCAA/movies), personal cryptic posts,
+ * betting trivia, and unrelated-other-team posts (e.g. reassigned beat writers or Sunday RedZone
+ * live-tweeting of cross-conference games) from polluting a team's site, while preserving direct
+ * team/player/coach posts, upcoming/recent opponent scouting, division-rival context, and same-conference
+ * playoff-race updates.
+ */
+export function isLocalBeatPostOffTopicForTeam(
+  text = '',
+  {
+    team = null,
+    hasDirectTeamOrRosterMatch = false,
+    hasPlayableMedia = false,
+    upcomingOpponentAbbr = '',
+    recentOpponentAbbr = ''
+  } = {}
+) {
+  const clean = stripAggregatorBoilerplate(String(text || '').trim());
+  if (!clean) return true;
+  if (isPromotionalAdvertisement({ title: clean, fullText: clean })) return true;
+  if (isCommercialFantasyOrBettingFiller(clean)) return true;
+
+  const active = resolveTeamConfig(team || getActiveTeamConfig());
+  const matchers = getTeamWireMatchers(active);
+  const directHit = hasDirectTeamOrRosterMatch || matchers.explicitEntityRe.test(clean);
+  if (directHit) {
+    return false;
+  }
+
+  // Always drop non-NFL sports & movie/pop-culture filler when active team/roster isn't mentioned
+  if (NON_NFL_OTHER_SPORT_HEADLINE_REGEX.test(clean) || OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(clean)) {
+    return true;
+  }
+
+  // Check if tweet is primarily about another NFL team
+  const mentionsOtherTeam = matchers.otherTeamsRe.test(clean) || matchers.otherCitiesRe.test(clean);
+  if (mentionsOtherTeam) {
+    // Allow indirectly very applicable items: upcoming/recent opponent, division rival, or same-conference playoff race
+    const oppAbbrs = [upcomingOpponentAbbr, recentOpponentAbbr].filter(Boolean).map(a => String(a).toUpperCase());
+    for (const oa of oppAbbrs) {
+      const oppTeam = resolveTeamConfig(oa);
+      if (oppTeam && oppTeam.abbr !== active.abbr) {
+        const oppRe = new RegExp(`\\b(${escapeLinkRegex(oppTeam.nickname)}|${escapeLinkRegex(oppTeam.city)})\\b`, 'i');
+        if (oppRe.test(clean)) return false;
+      }
+    }
+    if (matchers.divisionRe.test(clean) && LOCAL_BEAT_FOOTBALL_CONTEXT_RE.test(clean)) {
+      return false;
+    }
+    if (matchers.conferenceRivalsRe.test(clean) && PLAYOFF_RACE_CONTEXT_RE.test(clean)) {
+      return false;
+    }
+    // Otherwise it's an unrelated other-team post (e.g. Commanders/Jags/Steelers on Raiders/Rams/49ers) -> drop!
+    return true;
+  }
+
+  // Drop cryptic personal / non-football chatter when there's no team/player mention and no playable media
+  if (!hasPlayableMedia && !LOCAL_BEAT_FOOTBALL_CONTEXT_RE.test(clean)) {
+    return true;
+  }
+
+  // Drop generic league-wide betting spread trivia with no team mention
+  if (/\b(double[- ]digit\s+(?:favorites|spreads)|point\s+spreads?|over\/under)\b/i.test(clean)) {
+    return true;
+  }
+
+  return false;
+}
+
+const GENERIC_LEAGUE_ROUNDUP_TITLE_RE =
+  /^(?:nfl\s+practice\s+squad\s+updates|minor\s+nfl\s+transactions|nfl\s+transactions:|poll:\s*who\s+fared\s+best|nfl\s+week\s+\d+\s+game\s+picks|nfl\s+week\s+\d+:\s*32\s+teams)/i;
+
+/**
+ * Rejects generic league-wide transaction/picks roundups (e.g. PFR "NFL Practice Squad Updates: 11/17/26",
+ * NFLTR "NFL Transactions: Wednesday 11/25") unless the active team is explicitly featured in the
+ * headline or visible summary snippet.
+ */
+export function isGenericLeagueWideRoundupWithoutTeam(title = '', summary = '', teamInput = null) {
+  const t = String(title || '').trim();
+  if (!t || !GENERIC_LEAGUE_ROUNDUP_TITLE_RE.test(t)) return false;
+  const matchers = getTeamWireMatchers(teamInput);
+  const visibleBlob = `${t} ${String(summary || '').slice(0, 240)}`;
+  return !matchers.explicitEntityRe.test(visibleBlob) && !matchers.teamShortRe.test(visibleBlob);
 }
 
 export const ALLOWED_INLINE_VIDEO_STREAM_HOST_RE =

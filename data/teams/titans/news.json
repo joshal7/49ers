@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:29.404Z",
+  "updatedAt": "2026-11-26T19:24:05.984Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17CT",
     "cycleKey": "2026-11-25@17CT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-26T07:29:29.404Z",
+    "generatedAt": "2026-11-26T19:24:05.984Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -36,13 +36,13 @@
       "https://www.tennesseetitans.com/news/quick-hits-on-the-titans-from-wednesday-of-jaguars-week-x6564",
       "https://www.tennesseetitans.com/news/qb-cam-ward-aims-to-keep-making-a-case-for-himself-with-titans",
       "https://x.com/jwyattsports/status/2125696324011954217",
-      "https://x.com/jwyattsports/status/2125683039275569558",
+      "https://x.com/jwyattsports/status/2125694353851248888",
       "https://www.espn.com/nfl/player/_/id/4871023/carnell-tate#:~:text=Why%20Mike%20Clay%20says%20Carnell%20Tate%20may",
       "https://www.espn.com/nfl/player/_/id/4431426/corey-thornton#:~:text=Tennessee%20signed%20Thornton%20(fibula)%20off%20the%20Panthers'",
       "https://www.musiccitymiracles.com/tennessee-titans-news/68073/tennessee-titans-news-week-12-vs-jaguars-provides-hope",
-      "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.musiccitymiracles.com/tennessee-titans-news/68070/do-the-titans-need-to-sign-another-big-money-cb-this-offseason",
       "https://www.musiccitymiracles.com/tennessee-titans-analysis/68062/grading-the-titans-rookie-class-vs-cowboys-in-week-11",
-      "https://www.musiccitymiracles.com/tennessee-titans-draft/68058/2027-nfl-draft-order-titans-still-hold-first-pick"
+      "https://x.com/jwyattsports/status/2125683039275569558"
     ],
     "sources": [
       {
@@ -105,9 +105,9 @@
         "type": "tweet",
         "author": "Jim Wyatt",
         "outlet": "TennesseeTitans.com / Official Team",
-        "title": ".@Titans ST coordinator John Fassel spots @JuliusChestnut during his media availability, and immediately praises him for his accomplishments.",
-        "url": "https://x.com/jwyattsports/status/2125683039275569558",
-        "publishedAt": "2026-11-25T20:08:24.501Z"
+        "title": ".@Titans d-linemen in Wednesday’s practice.",
+        "url": "https://x.com/jwyattsports/status/2125694353851248888",
+        "publishedAt": "2026-11-25T20:53:22.106Z"
       },
       {
         "type": "article",
@@ -135,11 +135,11 @@
       },
       {
         "type": "article",
-        "author": "Eric Karabell",
-        "outlet": "ESPN / X Beat Wire",
-        "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-        "url": "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Need%20to%20know%20how%20to%20value%20players",
-        "publishedAt": "2026-11-24T20:18:57.000Z"
+        "author": "Justin Melo",
+        "outlet": "Music City Miracles",
+        "title": "Do the Titans need to sign another big-money CB this offseason?",
+        "url": "https://www.musiccitymiracles.com/tennessee-titans-news/68070/do-the-titans-need-to-sign-another-big-money-cb-this-offseason",
+        "publishedAt": "2026-11-24T17:50:19.000Z"
       }
     ]
   },
@@ -229,10 +229,10 @@
           "publishedAt": "2026-11-25T15:00:00.000Z"
         },
         {
-          "label": "Tennessee Titans Official",
-          "title": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
-          "url": "https://www.tennesseetitans.com/team/transactions/#tx-faff962aee47",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
+          "label": "tennesseetitans.com Official",
+          "title": "Titans Sign CB Corey Thornton Off Carolina's Practice Squad",
+          "url": "https://www.tennesseetitans.com/news/titans-sign-cb-corey-thornton-off-carolina-s-practice-squad",
+          "publishedAt": "2026-11-25T15:56:28.000Z"
         }
       ]
     },
@@ -242,7 +242,7 @@
       "headline": "Titans All-22 Film, Trench & Efficiency Breakdowns",
       "summary": "Titans vs. Jaguars Preview + Predictions — Week 11 Sunday Early Window: Advanced Reviews",
       "updatedAt": "2026-11-25T19:19:43.000Z",
-      "itemCount": 6,
+      "itemCount": 4,
       "sourceLinks": [
         {
           "label": "Check the Mic",
@@ -257,28 +257,16 @@
           "publishedAt": "2026-11-22T22:33:49.000Z"
         },
         {
-          "label": "Cody Alexander",
-          "title": "Split-Field Quarters Foundations",
-          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-          "publishedAt": "2026-11-19T22:01:55.000Z"
-        },
-        {
-          "label": "Cody Alexander",
-          "title": "The Aranda-Roberts Creeper System",
-          "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-          "publishedAt": "2026-11-19T21:33:52.000Z"
-        },
-        {
           "label": "Ted Nguyen",
           "title": "Good lord Parker Washington put Alontae Taylor in a BLENDER",
           "url": "https://bsky.app/profile/tednguyen.bsky.social/post/3n2he3biyn22p",
           "publishedAt": "2026-11-16T20:20:31.930Z"
         },
         {
-          "label": "Pro Football Focus",
-          "title": "Bears BLOCKBUSTER trade fuels Super Bowl aspirations! | PFF NFL Show",
-          "url": "https://www.youtube.com/watch?v=TXjTnYJza3Y",
-          "publishedAt": "2026-10-29T21:31:50.000Z"
+          "label": "The QB School",
+          "title": "CJ Stroud vs the Titans Week 5, 2026 Analysis",
+          "url": "https://www.youtube.com/watch?v=ifp9pDMbD4o",
+          "publishedAt": "2026-10-13T17:49:13.000Z"
         }
       ]
     },
@@ -286,16 +274,10 @@
       "id": "ten_cl_roster",
       "category": "roster",
       "headline": "Titans Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad. — Titans Sign CB Corey Thornton Off Carolina's Practice Squad",
-      "updatedAt": "2026-11-25T08:00:00.000Z",
+      "summary": "Titans Sign CB Corey Thornton Off Carolina's Practice Squad — Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
+      "updatedAt": "2026-11-25T15:56:28.000Z",
       "itemCount": 6,
       "sourceLinks": [
-        {
-          "label": "Tennessee Titans Official",
-          "title": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
-          "url": "https://www.tennesseetitans.com/team/transactions/#tx-faff962aee47",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
-        },
         {
           "label": "tennesseetitans.com Official",
           "title": "Titans Sign CB Corey Thornton Off Carolina's Practice Squad",
@@ -303,16 +285,16 @@
           "publishedAt": "2026-11-25T15:56:28.000Z"
         },
         {
+          "label": "Tennessee Titans Official",
+          "title": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
+          "url": "https://www.tennesseetitans.com/team/transactions/#tx-faff962aee47",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
           "label": "Joe Person",
           "title": "Tennessee signed Thornton (fibula) off the Panthers' practice squad Tuesday.",
           "url": "https://www.espn.com/nfl/player/_/id/4431426/corey-thornton#:~:text=Tennessee%20signed%20Thornton%20(fibula)%20off%20the%20Panthers'",
           "publishedAt": "2026-11-25T02:11:14.000Z"
-        },
-        {
-          "label": "Eric Karabell",
-          "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Need%20to%20know%20how%20to%20value%20players",
-          "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
           "label": "Tennessee Titans Official",
@@ -325,11 +307,56 @@
           "title": "The Titans elevated Carter from the practice squad to the active roster Saturday.",
           "url": "https://www.espn.com/nfl/player/_/id/4240657/michael-carter#:~:text=The%20Titans%20elevated%20Carter%20from%20the%20practice",
           "publishedAt": "2026-11-21T20:17:59.000Z"
+        },
+        {
+          "label": "Tennessee Titans Official",
+          "title": "Titans roster move: Placed RB Tyjae Spears on injured reserve. Elevated RB Michael Carter from the practice squad.",
+          "url": "https://www.tennesseetitans.com/team/transactions/#tx-1409550ea7fe",
+          "publishedAt": "2026-11-21T08:00:00.000Z"
         }
       ]
     }
   ],
   "rawStream": [
+    {
+      "id": "ten_yt_aBz-4FaV1Ic",
+      "type": "video",
+      "category": "film",
+      "videoId": "aBz-4FaV1Ic",
+      "embeddable": true,
+      "title": "Titans vs. Jaguars Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Tennessee Titans and the Jacksonville Jaguars. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and",
+      "imageUrl": "https://i.ytimg.com/vi/aBz-4FaV1Ic/hqdefault.jpg",
+      "imageAlt": "Titans vs. Jaguars Preview + Predictions",
+      "publishedAt": "2026-11-25T19:19:43.000Z",
+      "url": "https://www.youtube.com/watch?v=aBz-4FaV1Ic",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=aBz-4FaV1Ic",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "9:14",
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.3793
+    },
     {
       "id": "ten_pwire_4429607_64983728",
       "type": "article",
@@ -369,7 +396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0995
+      "storyRank": 0.9968
     },
     {
       "id": "ten_espn_f0d001e9516b5",
@@ -404,46 +431,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1265
-    },
-    {
-      "id": "ten_yt_aBz-4FaV1Ic",
-      "type": "video",
-      "category": "film",
-      "videoId": "aBz-4FaV1Ic",
-      "embeddable": true,
-      "title": "Titans vs. Jaguars Preview + Predictions",
-      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Tennessee Titans and the Jacksonville Jaguars. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and",
-      "imageUrl": "https://i.ytimg.com/vi/aBz-4FaV1Ic/hqdefault.jpg",
-      "imageAlt": "Titans vs. Jaguars Preview + Predictions",
-      "publishedAt": "2026-11-25T19:19:43.000Z",
-      "url": "https://www.youtube.com/watch?v=aBz-4FaV1Ic",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=aBz-4FaV1Ic",
-      "channel": "Check the Mic",
-      "outletId": "check_the_mic",
-      "outletName": "Check the Mic",
-      "reporterId": "check_the_mic",
-      "reporterName": "Check the Mic",
-      "author": "Check the Mic",
-      "authorHandle": "@CheckTheMic",
-      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
-      "trustTier": 2,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.409,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.1756,
-      "duration": "9:14"
+      "storyRank": 0.8976
     },
     {
       "id": "ten_espn_61550668b212e",
@@ -480,7 +468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1881
+      "storyRank": 0.7668
     },
     {
       "id": "ten_rss_8387e143c9bf",
@@ -514,7 +502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1648
+      "storyRank": 0.7629
     },
     {
       "id": "ten_vid_27ee74cc940b",
@@ -550,7 +538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1246
+      "storyRank": 0.7561
     },
     {
       "id": "ten_vid_18ba29d1d79e",
@@ -586,7 +574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1072
+      "storyRank": 0.7532
     },
     {
       "id": "ten_vid_25b9d7afb272",
@@ -622,7 +610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0874
+      "storyRank": 0.7498
     },
     {
       "id": "x_tl_jwyattsports_2125696324011954217",
@@ -633,7 +621,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125696278059266048/img/07m2kprdbs6A-pJs.jpg",
       "imageAlt": "Jim Wyatt post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125696278059266048/vid/avc1/1080x1920/QDfTMAEc6a1j3a7a.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125696278059266048/vid/avc1/720x1280/0GTPugJNBIdnXS4q.mp4",
       "isHighlightClip": true,
       "duration": "0:11",
       "embeddable": true,
@@ -682,7 +670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1565
+      "storyRank": 0.7997
     },
     {
       "id": "x_tl_jwyattsports_2125695556710273437",
@@ -693,7 +681,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125695505325785088/img/w-M5dLLYVmg6V3lw.jpg",
       "imageAlt": "Jim Wyatt post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125695505325785088/vid/avc1/1080x1920/YPleHUkbMOVG6-rq.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125695505325785088/vid/avc1/720x1280/uDRSnLT_i1HAulxa.mp4",
       "isHighlightClip": true,
       "duration": "0:14",
       "embeddable": true,
@@ -734,7 +722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1432
+      "storyRank": 0.7973
     },
     {
       "id": "x_tl_jwyattsports_2125694353851248888",
@@ -745,7 +733,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125694280983281665/img/UHAccv3pexCbpqsl.jpg",
       "imageAlt": "Jim Wyatt post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125694280983281665/vid/avc1/1080x1920/3DaDOZc7pnll6v0x.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125694280983281665/vid/avc1/720x1280/8NSFsohmCnP9ooCf.mp4",
       "isHighlightClip": true,
       "duration": "0:26",
       "embeddable": true,
@@ -777,7 +765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1228
+      "storyRank": 0.7936
     },
     {
       "id": "ten_rss_3b7ef416b3fe",
@@ -820,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0257
+      "storyRank": 0.7389
     },
     {
       "id": "x_tl_jwyattsports_2125683039275569558",
@@ -831,7 +819,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125682959894093824/img/suBF4NrBdWrDn1TL.jpg",
       "imageAlt": "Jim Wyatt post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125682959894093824/vid/avc1/1080x1920/BxMT-AVq0qiHP-3E.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125682959894093824/vid/avc1/720x1280/vrWvzmoMQF6FDBL3.mp4",
       "isHighlightClip": true,
       "duration": "0:39",
       "embeddable": true,
@@ -872,7 +860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9459
+      "storyRank": 0.7596
     },
     {
       "id": "ten_rss_bf51376f1aad",
@@ -906,51 +894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1265
-    },
-    {
-      "id": "ten_tx_faff962aee47",
-      "type": "tweet",
-      "title": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
-      "fullText": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.tennesseetitans.com/team/transactions/#tx-faff962aee47",
-      "outletId": "titans_official",
-      "outletName": "tennesseetitans.com Official",
-      "reporterId": "titans_official",
-      "reporterName": "Tennessee Titans Official",
-      "author": "Tennessee Titans Official",
-      "authorHandle": "@Titans",
-      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [
-        {
-          "id": "4431426",
-          "name": "Corey Thornton",
-          "shortName": "C. Thornton",
-          "position": "CB",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431426.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.0971
+      "storyRank": 1.0852
     },
     {
       "id": "ten_vid_1bf80d72d0b5",
@@ -986,7 +930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.618
+      "storyRank": 0.6594
     },
     {
       "id": "ten_vid_a790835f9b60",
@@ -1031,7 +975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5953
+      "storyRank": 0.6545
     },
     {
       "id": "ten_vid_6c0a02350ef3",
@@ -1077,7 +1021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5466
+      "storyRank": 0.6438
     },
     {
       "id": "ten_vid_4c5e02633ac5",
@@ -1123,7 +1067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5442
+      "storyRank": 0.6433
     },
     {
       "id": "ten_vid_088972d19d63",
@@ -1168,7 +1112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5429
+      "storyRank": 0.643
     },
     {
       "id": "x_tl_jwyattsports_2125648866108494168",
@@ -1179,7 +1123,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125648774362001408/img/a5JQtIKtCDyizwGM.jpg",
       "imageAlt": "Jim Wyatt post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125648774362001408/vid/avc1/1080x1920/zJVBD-dC6GszNPUT.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125648774362001408/vid/avc1/720x1280/0xhCYejoVLBc5M-1.mp4",
       "isHighlightClip": true,
       "duration": "0:46",
       "embeddable": true,
@@ -1220,7 +1164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5397
+      "storyRank": 0.6707
     },
     {
       "id": "ten_tyt_5RCYc2ckJYU",
@@ -1253,13 +1197,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "38:30",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4177,
-      "duration": "38:30"
+      "storyRank": 0.6141
     },
     {
       "id": "ten_pwire_4871023_50594441",
@@ -1300,7 +1244,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2618
+      "storyRank": 0.5712
     },
     {
       "id": "ten_tyt_xOdCY5alLFE",
@@ -1334,13 +1278,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:24",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1843,
-      "duration": "0:24"
+      "storyRank": 0.5547
     },
     {
       "id": "ten_rss_e19bf836a301",
@@ -1383,7 +1327,51 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1776
+      "storyRank": 0.5529
+    },
+    {
+      "id": "ten_tx_faff962aee47",
+      "type": "tweet",
+      "title": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
+      "fullText": "Titans roster move: Waived DE Tanoh Kpassagnon from injured reserve. Signed DB Corey Thornton from Carolina's practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.tennesseetitans.com/team/transactions/#tx-faff962aee47",
+      "outletId": "titans_official",
+      "outletName": "tennesseetitans.com Official",
+      "reporterId": "titans_official",
+      "reporterName": "Tennessee Titans Official",
+      "author": "Tennessee Titans Official",
+      "authorHandle": "@Titans",
+      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4431426",
+          "name": "Corey Thornton",
+          "shortName": "C. Thornton",
+          "position": "CB",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431426.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3921
     },
     {
       "id": "ten_pwire_4431426_64967328",
@@ -1432,7 +1420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4309
+      "storyRank": 0.2712
     },
     {
       "id": "ten_vid_ae764e7ef66e",
@@ -1469,7 +1457,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.48
+      "storyRank": 0.3067
     },
     {
       "id": "ten_vid_4a8a831107d3",
@@ -1531,7 +1519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.48
+      "storyRank": 0.3067
     },
     {
       "id": "ten_vid_2bebbd0c14b3",
@@ -1568,7 +1556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.48
+      "storyRank": 0.3067
     },
     {
       "id": "ten_rss_c3f999392691",
@@ -1602,7 +1590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4776
+      "storyRank": 0.3055
     },
     {
       "id": "ten_rss_b68784b29d02",
@@ -1636,7 +1624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4772
+      "storyRank": 0.3053
     },
     {
       "id": "ten_rss_cbd83e511817",
@@ -1670,7 +1658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4771
+      "storyRank": 0.3053
     },
     {
       "id": "ten_tyt_5hP1tAtEHU8",
@@ -1713,13 +1701,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:40",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.436,
-      "duration": "1:40"
+      "storyRank": 0.2858
     },
     {
       "id": "ten_tyt_Gy_9VECwVHE",
@@ -1762,13 +1750,13 @@
       "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:11",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4346,
-      "duration": "6:11"
+      "storyRank": 0.2857
     },
     {
       "id": "ten_vid_bc1da8a69185",
@@ -1814,7 +1802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4205
+      "storyRank": 0.2787
     },
     {
       "id": "ten_brss_music_city_miracles_878c703c0bd1",
@@ -1848,39 +1836,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4017
-    },
-    {
-      "id": "ten_pwire_4688380_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.389
+      "storyRank": 0.2677
     },
     {
       "id": "ten_rss_e2f4a2c3fb41",
@@ -1914,7 +1870,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3907
+      "storyRank": 0.2633
+    },
+    {
+      "id": "ten_brss_music_city_miracles_dc7b9d1a8181",
+      "type": "article",
+      "title": "Do the Titans need to sign another big-money CB this offseason?",
+      "summary": "The Tennessee Titans entered this past offseason with no starting cornerbacks on the roster. Mike Borgonzi inherited the L’Jarius Sneed nightmare from the previous regime, and released him when it became financially plausible. He also trade",
+      "imageUrl": "",
+      "imageAlt": "Do the Titans need to sign another big-money CB this offseason?",
+      "publishedAt": "2026-11-24T17:50:19.000Z",
+      "url": "https://www.musiccitymiracles.com/tennessee-titans-news/68070/do-the-titans-need-to-sign-another-big-money-cb-this-offseason",
+      "outletId": "music_city_miracles",
+      "outletName": "Music City Miracles",
+      "reporterId": "music_city_miracles",
+      "reporterName": "Justin Melo",
+      "author": "Justin Melo",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.musiccitymiracles.com/tennessee-titans-news/68070/do-the-titans-need-to-sign-another-big-money-cb-this-offseason",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2436
     },
     {
       "id": "ten_brss_music_city_miracles_ac2bb555e903",
@@ -1973,7 +1963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3307
+      "storyRank": 0.2309
     },
     {
       "id": "ten_vid_20e1404b529f",
@@ -2021,13 +2011,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "45:13",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3301,
-      "duration": "45:13"
+      "storyRank": 0.2314
     },
     {
       "id": "ten_brss_music_city_miracles_4a42515b654f",
@@ -2061,7 +2051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3206
+      "storyRank": 0.2254
     },
     {
       "id": "ten_tx_afdc078c7e38",
@@ -2096,7 +2086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2626
+      "storyRank": 0.1932
     },
     {
       "id": "ten_tyt_BH5o8YHlVHM",
@@ -2146,13 +2136,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "45:13",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2264,
-      "duration": "45:13"
+      "storyRank": 0.1713
     },
     {
       "id": "ten_vid_efd47e5bf688",
@@ -2198,7 +2188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1996
+      "storyRank": 0.1544
     },
     {
       "id": "ten_vid_8dbab03b7bfd",
@@ -2243,7 +2233,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1996
+      "storyRank": 0.1544
     },
     {
       "id": "ten_brss_music_city_miracles_610bebb15bd7",
@@ -2277,185 +2267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1946
-    },
-    {
-      "id": "ten_pwire_4688380_50574035",
-      "type": "article",
-      "title": "Field Yates: Cam Ward paid off as the QB streamer of the week",
-      "summary": "",
-      "publishedAt": "2026-11-23T16:47:44.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Field%20Yates%3A%20Cam%20Ward%20paid%20off%20as",
-      "outletId": "espn_national",
-      "outletName": "ESPN NFL",
-      "reporterId": "field_yates",
-      "reporterName": "Field Yates",
-      "author": "Field Yates",
-      "authorHandle": "@FieldYates",
-      "authorProfileUrl": "https://x.com/FieldYates",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "4688380",
-          "name": "Cam Ward",
-          "shortName": "C. Ward",
-          "position": "QB",
-          "jersey": 1,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688380.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 92,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1794
-    },
-    {
-      "id": "ten_brss_music_city_miracles_9f8fbb3e15f9",
-      "type": "article",
-      "title": "The Titans’ 3 worst starters on defense need 2027 replacing",
-      "summary": "The Tennessee Titans put forth one of the worst defensive performances in franchise history on Sunday. They were defeated 51-30 by the Dallas Cowboys in Week 11. Dallas’ offense was totally unstoppable, scoring touchdowns on six consecutive",
-      "imageUrl": "",
-      "imageAlt": "The Titans’ 3 worst starters on defense need 2027 replacing",
-      "publishedAt": "2026-11-23T16:14:23.000Z",
-      "url": "https://www.musiccitymiracles.com/tennessee-titans-analysis/68037/the-titans-3-worst-starters-on-defense-need-2027-replacing",
-      "outletId": "music_city_miracles",
-      "outletName": "Music City Miracles",
-      "reporterId": "music_city_miracles",
-      "reporterName": "Justin Melo",
-      "author": "Justin Melo",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.musiccitymiracles.com/tennessee-titans-analysis/68037/the-titans-3-worst-starters-on-defense-need-2027-replacing",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1743
-    },
-    {
-      "id": "ten_rss_e5d554c84c35",
-      "type": "article",
-      "title": "Hot Topics From Titans HC Robert Saleh's Zoom Call on Monday",
-      "summary": "Titans coach Robert Saleh conducted a zoom conference call with reporters on Monday, one day after the team's 51-30 loss to the Dallas Cowboys. The Titans return to action on Sunday at the Jacksonville Jaguars.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/cuetuid8rwchxmb2jobv.jpg",
-      "imageAlt": "Hot Topics From Titans HC Robert Saleh's Zoom Call on Monday",
-      "publishedAt": "2026-11-23T15:38:15.000Z",
-      "url": "https://www.tennesseetitans.com/news/hot-topics-from-titans-hc-robert-saleh-s-monday-zoom-call-x7933",
-      "outletId": "titans_official",
-      "outletName": "tennesseetitans.com Official",
-      "reporterId": "titans_official",
-      "reporterName": "tennesseetitans.com Official",
-      "author": "tennesseetitans.com Official",
-      "authorHandle": "@Titans",
-      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1749
-    },
-    {
-      "id": "ten_brss_music_city_miracles_6afdfd2af4e1",
-      "type": "article",
-      "title": "Titans vs. Jaguars odds: Opening lines for Week 12 matchup",
-      "summary": "It gets harder and harder to write things about this team. The Tennessee Titans have opened as 14.5-point underdogs at the Jacksonville Jaguars in week 12. As I say every week, it’s not enough. This game was originally scheduled for a 3:05",
-      "imageUrl": "",
-      "imageAlt": "Titans vs. Jaguars odds: Opening lines for Week 12 matchup",
-      "publishedAt": "2026-11-23T14:58:48.000Z",
-      "url": "https://www.musiccitymiracles.com/tennessee-titans-odds/68007/titans-vs-jaguars-odds-week-12-opening-lines-point-spread-total",
-      "outletId": "music_city_miracles",
-      "outletName": "Music City Miracles",
-      "reporterId": "music_city_miracles",
-      "reporterName": "Jimmy Morris",
-      "author": "Jimmy Morris",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.musiccitymiracles.com/tennessee-titans-odds/68007/titans-vs-jaguars-odds-week-12-opening-lines-point-spread-total",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1696
-    },
-    {
-      "id": "ten_espn_e1794280d025b",
-      "type": "article",
-      "title": "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football'",
-      "summary": "Titans coach Robert Saleh couldn't hide his frustration when he stepped to the podium after Sunday's 51-30 loss to the Cowboys.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261122_16x9_Titans_IA515/dm_261122_16x9_Titans_IA515.jpg",
-      "imageCaption": "Turron Davenport recaps how the Titans defense was overwhelmed by the Cowboys in Sunday's loss.",
-      "imageAlt": "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football'",
-      "publishedAt": "2026-11-23T13:56:56.000Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting",
-      "outletId": "espn_ten",
-      "outletName": "ESPN",
-      "reporterId": "turron_davenport",
-      "reporterName": "Turron Davenport",
-      "author": "Turron Davenport",
-      "authorHandle": "@TDavenport_NFL",
-      "authorProfileUrl": "https://x.com/TDavenport_NFL",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1687
+      "storyRank": 0.1507
     },
     {
       "id": "ten_yts_qrlv60nl58o",
@@ -2467,7 +2279,7 @@
       "duration": "2:59",
       "imageUrl": "https://i.ytimg.com/vi/qrlv60nl58o/hqdefault.jpg",
       "imageAlt": "Cam Ward's best plays from 3 TD game vs Cowboys | Week 11",
-      "publishedAt": "2026-11-23T07:29:30.854Z",
+      "publishedAt": "2026-11-23T19:24:10.050Z",
       "url": "https://www.youtube.com/watch?v=qrlv60nl58o",
       "externalVideoUrl": "https://www.youtube.com/watch?v=qrlv60nl58o",
       "channel": "Tennessee Titans",
@@ -2515,7 +2327,7 @@
       "duration": "2:36",
       "imageUrl": "https://i.ytimg.com/vi/_M2szcTo5Q8/hqdefault.jpg",
       "imageAlt": "Tony Pollard's best plays from 110 yard game vs Cowboys | Week 11",
-      "publishedAt": "2026-11-23T07:29:30.854Z",
+      "publishedAt": "2026-11-23T19:24:10.050Z",
       "url": "https://www.youtube.com/watch?v=_M2szcTo5Q8",
       "externalVideoUrl": "https://www.youtube.com/watch?v=_M2szcTo5Q8",
       "channel": "Tennessee Titans",
@@ -2563,7 +2375,7 @@
       "duration": "15:07",
       "imageUrl": "https://i.ytimg.com/vi/8oWgHgf_c_w/hqdefault.jpg",
       "imageAlt": "Tennessee Titans vs Dallas Cowboys Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T07:29:30.854Z",
+      "publishedAt": "2026-11-23T19:24:10.049Z",
       "url": "https://www.youtube.com/watch?v=8oWgHgf_c_w",
       "externalVideoUrl": "https://www.youtube.com/watch?v=8oWgHgf_c_w",
       "channel": "NFL",
@@ -2602,7 +2414,7 @@
       "duration": "2:55",
       "imageUrl": "https://i.ytimg.com/vi/mYPhD1CFeSk/hqdefault.jpg",
       "imageAlt": "CeeDee Lamb's best plays from 132-yard game vs. Titans | Week 11",
-      "publishedAt": "2026-11-23T07:29:30.854Z",
+      "publishedAt": "2026-11-23T19:24:10.049Z",
       "url": "https://www.youtube.com/watch?v=mYPhD1CFeSk",
       "externalVideoUrl": "https://www.youtube.com/watch?v=mYPhD1CFeSk",
       "channel": "NFL",
@@ -2630,6 +2442,184 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.1482
+    },
+    {
+      "id": "ten_pwire_4688380_50574035",
+      "type": "article",
+      "title": "Field Yates: Cam Ward paid off as the QB streamer of the week",
+      "summary": "",
+      "publishedAt": "2026-11-23T16:47:44.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4688380/cam-ward#:~:text=Field%20Yates%3A%20Cam%20Ward%20paid%20off%20as",
+      "outletId": "espn_national",
+      "outletName": "ESPN NFL",
+      "reporterId": "field_yates",
+      "reporterName": "Field Yates",
+      "author": "Field Yates",
+      "authorHandle": "@FieldYates",
+      "authorProfileUrl": "https://x.com/FieldYates",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4688380",
+          "name": "Cam Ward",
+          "shortName": "C. Ward",
+          "position": "QB",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688380.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1411
+    },
+    {
+      "id": "ten_brss_music_city_miracles_9f8fbb3e15f9",
+      "type": "article",
+      "title": "The Titans’ 3 worst starters on defense need 2027 replacing",
+      "summary": "The Tennessee Titans put forth one of the worst defensive performances in franchise history on Sunday. They were defeated 51-30 by the Dallas Cowboys in Week 11. Dallas’ offense was totally unstoppable, scoring touchdowns on six consecutive",
+      "imageUrl": "",
+      "imageAlt": "The Titans’ 3 worst starters on defense need 2027 replacing",
+      "publishedAt": "2026-11-23T16:14:23.000Z",
+      "url": "https://www.musiccitymiracles.com/tennessee-titans-analysis/68037/the-titans-3-worst-starters-on-defense-need-2027-replacing",
+      "outletId": "music_city_miracles",
+      "outletName": "Music City Miracles",
+      "reporterId": "music_city_miracles",
+      "reporterName": "Justin Melo",
+      "author": "Justin Melo",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.musiccitymiracles.com/tennessee-titans-analysis/68037/the-titans-3-worst-starters-on-defense-need-2027-replacing",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1374
+    },
+    {
+      "id": "ten_rss_e5d554c84c35",
+      "type": "article",
+      "title": "Hot Topics From Titans HC Robert Saleh's Zoom Call on Monday",
+      "summary": "Titans coach Robert Saleh conducted a zoom conference call with reporters on Monday, one day after the team's 51-30 loss to the Dallas Cowboys. The Titans return to action on Sunday at the Jacksonville Jaguars.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/cuetuid8rwchxmb2jobv.jpg",
+      "imageAlt": "Hot Topics From Titans HC Robert Saleh's Zoom Call on Monday",
+      "publishedAt": "2026-11-23T15:38:15.000Z",
+      "url": "https://www.tennesseetitans.com/news/hot-topics-from-titans-hc-robert-saleh-s-monday-zoom-call-x7933",
+      "outletId": "titans_official",
+      "outletName": "tennesseetitans.com Official",
+      "reporterId": "titans_official",
+      "reporterName": "tennesseetitans.com Official",
+      "author": "tennesseetitans.com Official",
+      "authorHandle": "@Titans",
+      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1382
+    },
+    {
+      "id": "ten_brss_music_city_miracles_6afdfd2af4e1",
+      "type": "article",
+      "title": "Titans vs. Jaguars odds: Opening lines for Week 12 matchup",
+      "summary": "It gets harder and harder to write things about this team. The Tennessee Titans have opened as 14.5-point underdogs at the Jacksonville Jaguars in week 12. As I say every week, it’s not enough. This game was originally scheduled for a 3:05",
+      "imageUrl": "",
+      "imageAlt": "Titans vs. Jaguars odds: Opening lines for Week 12 matchup",
+      "publishedAt": "2026-11-23T14:58:48.000Z",
+      "url": "https://www.musiccitymiracles.com/tennessee-titans-odds/68007/titans-vs-jaguars-odds-week-12-opening-lines-point-spread-total",
+      "outletId": "music_city_miracles",
+      "outletName": "Music City Miracles",
+      "reporterId": "music_city_miracles",
+      "reporterName": "Jimmy Morris",
+      "author": "Jimmy Morris",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.musiccitymiracles.com/tennessee-titans-odds/68007/titans-vs-jaguars-odds-week-12-opening-lines-point-spread-total",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1343
+    },
+    {
+      "id": "ten_espn_e1794280d025b",
+      "type": "article",
+      "title": "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football'",
+      "summary": "Titans coach Robert Saleh couldn't hide his frustration when he stepped to the podium after Sunday's 51-30 loss to the Cowboys.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261122_16x9_Titans_IA515/dm_261122_16x9_Titans_IA515.jpg",
+      "imageCaption": "Turron Davenport recaps how the Titans defense was overwhelmed by the Cowboys in Sunday's loss.",
+      "imageAlt": "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football'",
+      "publishedAt": "2026-11-23T13:56:56.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting",
+      "outletId": "espn_ten",
+      "outletName": "ESPN",
+      "reporterId": "turron_davenport",
+      "reporterName": "Turron Davenport",
+      "author": "Turron Davenport",
+      "authorHandle": "@TDavenport_NFL",
+      "authorProfileUrl": "https://x.com/TDavenport_NFL",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.134
     },
     {
       "id": "ten_brss_music_city_miracles_54b622b7d23b",
@@ -2663,7 +2653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1404
+      "storyRank": 0.1142
     },
     {
       "id": "ten_rss_b210902a3c18",
@@ -2697,7 +2687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1283
+      "storyRank": 0.1059
     },
     {
       "id": "ten_espn_f0672a0e47f1d",
@@ -2732,7 +2722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0318
+      "storyRank": 0.0263
     },
     {
       "id": "ten_nfilm_unexpected_points_e96746b51e37",
@@ -2766,7 +2756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1262
+      "storyRank": 0.1043
     },
     {
       "id": "ten_brss_music_city_miracles_58820c82fed1",
@@ -2800,7 +2790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1212
+      "storyRank": 0.1005
     },
     {
       "id": "ten_rss_25cbcc5bd613",
@@ -2834,7 +2824,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.123
+      "storyRank": 0.102
     },
     {
       "id": "ten_rss_5ac75921962a",
@@ -2868,7 +2858,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1229
+      "storyRank": 0.102
     },
     {
       "id": "ten_pwire_4429607_64910828",
@@ -2917,7 +2907,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1201
+      "storyRank": 0.0999
     },
     {
       "id": "ten_brss_music_city_miracles_6201b9892990",
@@ -2951,7 +2941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0546
+      "storyRank": 0.0457
     },
     {
       "id": "ten_espn_63f177509966a",
@@ -2995,89 +2985,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0544
-    },
-    {
-      "id": "ten_yts_WGMfjiX69Ag",
-      "type": "video",
-      "videoId": "WGMfjiX69Ag",
-      "embeddable": true,
-      "title": "Dallas on deck",
-      "summary": "",
-      "duration": "0:26",
-      "imageUrl": "https://i.ytimg.com/vi/WGMfjiX69Ag/hqdefault.jpg",
-      "imageAlt": "Dallas on deck",
-      "publishedAt": "2026-11-22T07:29:30.854Z",
-      "url": "https://www.youtube.com/watch?v=WGMfjiX69Ag",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=WGMfjiX69Ag",
-      "channel": "Tennessee Titans",
-      "outletId": "titans_official",
-      "outletName": "Tennessee Titans",
-      "reporterId": "titans_official",
-      "reporterName": "Tennessee Titans",
-      "author": "Tennessee Titans",
-      "authorHandle": "@titans",
-      "authorProfileUrl": "https://www.youtube.com/@titans",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.012
-    },
-    {
-      "id": "ten_brss_music_city_miracles_cad2c2f69d35",
-      "type": "article",
-      "title": "Titans place Tyjae Spears on injured reserve",
-      "summary": "The Tennessee Titans placed running back Tyjae Spears on injured reserve with a knee injury on Saturday. We might have seen the last of Spears in a Titans uniform. There were high hopes for what Spears could bring to the offense when he was",
-      "imageUrl": "",
-      "imageAlt": "Titans place Tyjae Spears on injured reserve",
-      "publishedAt": "2026-11-22T04:17:18.000Z",
-      "url": "https://www.musiccitymiracles.com/tennessee-titans-injuries/68004/titans-place-tyjae-spears-on-injured-reserve",
-      "outletId": "music_city_miracles",
-      "outletName": "Music City Miracles",
-      "reporterId": "music_city_miracles",
-      "reporterName": "Jimmy Morris",
-      "author": "Jimmy Morris",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.musiccitymiracles.com/tennessee-titans-injuries/68004/titans-place-tyjae-spears-on-injured-reserve",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4428557",
-          "name": "Tyjae Spears",
-          "shortName": "T. Spears",
-          "position": "RB",
-          "jersey": 2,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428557.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0449
+      "storyRank": 0.0456
     },
     {
       "id": "ten_pfr_6c647a5657be",
@@ -3119,7 +3027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0438
+      "storyRank": 0.0375
     },
     {
       "id": "ten_pwire_4240657_64897828",
@@ -3160,7 +3068,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.041
+      "storyRank": 0.0355
+    },
+    {
+      "id": "ten_yts_WGMfjiX69Ag",
+      "type": "video",
+      "videoId": "WGMfjiX69Ag",
+      "embeddable": true,
+      "title": "Dallas on deck",
+      "summary": "",
+      "duration": "0:26",
+      "imageUrl": "https://i.ytimg.com/vi/WGMfjiX69Ag/hqdefault.jpg",
+      "imageAlt": "Dallas on deck",
+      "publishedAt": "2026-11-21T19:24:10.050Z",
+      "url": "https://www.youtube.com/watch?v=WGMfjiX69Ag",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=WGMfjiX69Ag",
+      "channel": "Tennessee Titans",
+      "outletId": "titans_official",
+      "outletName": "Tennessee Titans",
+      "reporterId": "titans_official",
+      "reporterName": "Tennessee Titans",
+      "author": "Tennessee Titans",
+      "authorHandle": "@titans",
+      "authorProfileUrl": "https://www.youtube.com/@titans",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0088
     },
     {
       "id": "ten_pwire_4428557_64896828",
@@ -3201,7 +3148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.0348
     },
     {
       "id": "ten_rss_8b7684335991",
@@ -3244,7 +3191,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0401
+      "storyRank": 0.0348
     },
     {
       "id": "ten_espn_5cda3e0ea9918",
@@ -3288,14 +3235,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0401
+      "storyRank": 0.0347
     },
     {
       "id": "x_tl_jwyattsports_2124194170843943252",
       "type": "tweet",
-      "title": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more information. At this time, Jaylen remains in…",
-      "fullText": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more information. At this time, Jaylen remains in the hospital and continues to receive care. We ask that Jaylen and his family’s privacy be respected at this time. We will provide an update when appropriate.",
-      "isFullTweet": false,
+      "title": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more",
+      "fullText": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more",
+      "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
       "imageAlt": "Jim Wyatt post",
@@ -3336,7 +3283,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0436
+      "storyRank": 0.0378
     },
     {
       "id": "ten_rss_0e1eacfb59dc",
@@ -3379,7 +3326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0398
+      "storyRank": 0.0345
     },
     {
       "id": "ten_tx_1409550ea7fe",
@@ -3423,85 +3370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
-    },
-    {
-      "id": "ten_yts_AbjSkGU_sds",
-      "type": "video",
-      "videoId": "AbjSkGU_sds",
-      "embeddable": true,
-      "title": "Throwback ThursdayTitans vs Cowboys 11/22 at 12 PM CT on @nflonfox",
-      "summary": "",
-      "duration": "1:13",
-      "imageUrl": "https://i.ytimg.com/vi/AbjSkGU_sds/hqdefault.jpg",
-      "imageAlt": "Throwback ThursdayTitans vs Cowboys 11/22 at 12 PM CT on @nflonfox",
-      "publishedAt": "2026-11-21T07:29:30.854Z",
-      "url": "https://www.youtube.com/watch?v=AbjSkGU_sds",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=AbjSkGU_sds",
-      "channel": "Tennessee Titans",
-      "outletId": "titans_official",
-      "outletName": "Tennessee Titans",
-      "reporterId": "titans_official",
-      "reporterName": "Tennessee Titans",
-      "author": "Tennessee Titans",
-      "authorHandle": "@titans",
-      "authorProfileUrl": "https://www.youtube.com/@titans",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
-    },
-    {
-      "id": "ten_yts_b1cyJ4BNMlM",
-      "type": "video",
-      "videoId": "b1cyJ4BNMlM",
-      "embeddable": true,
-      "title": "TP returns to Dallas Sunday 👀",
-      "summary": "",
-      "duration": "0:27",
-      "imageUrl": "https://i.ytimg.com/vi/b1cyJ4BNMlM/hqdefault.jpg",
-      "imageAlt": "TP returns to Dallas Sunday 👀",
-      "publishedAt": "2026-11-21T07:29:30.854Z",
-      "url": "https://www.youtube.com/watch?v=b1cyJ4BNMlM",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=b1cyJ4BNMlM",
-      "channel": "Tennessee Titans",
-      "outletId": "titans_official",
-      "outletName": "Tennessee Titans",
-      "reporterId": "titans_official",
-      "reporterName": "Tennessee Titans",
-      "author": "Tennessee Titans",
-      "authorHandle": "@titans",
-      "authorProfileUrl": "https://www.youtube.com/@titans",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0309
     },
     {
       "id": "ten_espn_948e2e73e7ffb",
@@ -3536,24 +3405,31 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0279
     },
     {
-      "id": "ten_pwire_4686728_50531472",
-      "type": "article",
-      "title": "Adam Rank catches you up on the vital information and insights before you make your toughest lineup decisions.",
-      "summary": "I've never been one to stream quarterbacks. I know that a lot of you live this life, but it isn't for me. It's kind of like people who took Thursday off to play Grand Theft Auto IV ; people are really into that, and I un",
-      "publishedAt": "2026-11-20T12:40:11.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4686728/gunnar-helm#:~:text=Adam%20Rank%20catches%20you%20up%20on%20the",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Adam Rank",
-      "author": "Adam Rank",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4686728/gunnar-helm#:~:text=Adam%20Rank%20catches%20you%20up%20on%20the",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
+      "id": "ten_yts_AbjSkGU_sds",
+      "type": "video",
+      "videoId": "AbjSkGU_sds",
+      "embeddable": true,
+      "title": "Throwback ThursdayTitans vs Cowboys 11/22 at 12 PM CT on @nflonfox",
+      "summary": "",
+      "duration": "1:13",
+      "imageUrl": "https://i.ytimg.com/vi/AbjSkGU_sds/hqdefault.jpg",
+      "imageAlt": "Throwback ThursdayTitans vs Cowboys 11/22 at 12 PM CT on @nflonfox",
+      "publishedAt": "2026-11-20T19:24:10.050Z",
+      "url": "https://www.youtube.com/watch?v=AbjSkGU_sds",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=AbjSkGU_sds",
+      "channel": "Tennessee Titans",
+      "outletId": "titans_official",
+      "outletName": "Tennessee Titans",
+      "reporterId": "titans_official",
+      "reporterName": "Tennessee Titans",
+      "author": "Tennessee Titans",
+      "authorHandle": "@titans",
+      "authorProfileUrl": "https://www.youtube.com/@titans",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
@@ -3568,7 +3444,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282
+      "storyRank": 0.0068
+    },
+    {
+      "id": "ten_yts_b1cyJ4BNMlM",
+      "type": "video",
+      "videoId": "b1cyJ4BNMlM",
+      "embeddable": true,
+      "title": "TP returns to Dallas Sunday 👀",
+      "summary": "",
+      "duration": "0:27",
+      "imageUrl": "https://i.ytimg.com/vi/b1cyJ4BNMlM/hqdefault.jpg",
+      "imageAlt": "TP returns to Dallas Sunday 👀",
+      "publishedAt": "2026-11-20T19:24:10.050Z",
+      "url": "https://www.youtube.com/watch?v=b1cyJ4BNMlM",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=b1cyJ4BNMlM",
+      "channel": "Tennessee Titans",
+      "outletId": "titans_official",
+      "outletName": "Tennessee Titans",
+      "reporterId": "titans_official",
+      "reporterName": "Tennessee Titans",
+      "author": "Tennessee Titans",
+      "authorHandle": "@titans",
+      "authorProfileUrl": "https://www.youtube.com/@titans",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0068
     },
     {
       "id": "ten_espn_8f943afa01997",
@@ -3603,7 +3518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282
+      "storyRank": 0.0252
     },
     {
       "id": "ten_espn_0b0bd363f0cef",
@@ -3647,7 +3562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0273
+      "storyRank": 0.0245
     },
     {
       "id": "ten_pfr_86c2f355b6ae",
@@ -3689,7 +3604,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0223
     },
     {
       "id": "ten_tyt_eCshSLMg7cM",
@@ -3722,85 +3637,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:06",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.025,
-      "duration": "8:06"
-    },
-    {
-      "id": "ten_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
-    },
-    {
-      "id": "ten_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0226
     },
     {
       "id": "ten_pfr_5ff13b5ff505",
@@ -3833,7 +3676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0192
     },
     {
       "id": "ten_tyt_zci1RZp3AFQ",
@@ -3899,13 +3742,52 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:48",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205,
-      "duration": "7:48"
+      "storyRank": 0.0187
+    },
+    {
+      "id": "ten_yts_TMbKki19e4Q",
+      "type": "video",
+      "videoId": "TMbKki19e4Q",
+      "embeddable": false,
+      "title": "Tennessee Titans vs Dallas Cowboys | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "7:31",
+      "imageUrl": "https://i.ytimg.com/vi/TMbKki19e4Q/hqdefault.jpg",
+      "imageAlt": "Tennessee Titans vs Dallas Cowboys | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T19:24:10.049Z",
+      "url": "https://www.youtube.com/watch?v=TMbKki19e4Q",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=TMbKki19e4Q",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
     },
     {
       "id": "ten_pfr_c34c90c0a050",
@@ -3947,7 +3829,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0193
+      "storyRank": 0.0177
     },
     {
       "id": "ten_tx_24d57b83bc7b",
@@ -3991,7 +3873,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0169
     },
     {
       "id": "ten_pfr_c3043104ec6a",
@@ -4033,7 +3915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0163
     },
     {
       "id": "ten_pfr_8563e2e4fb6e",
@@ -4066,7 +3948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0156
     },
     {
       "id": "ten_tx_7f62b710ec0f",
@@ -4118,7 +4000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0144
     },
     {
       "id": "ten_tyt_UMOB4arVwVU",
@@ -4168,46 +4050,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "56:56",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313,
-      "duration": "56:56"
-    },
-    {
-      "id": "ten_pfr_7159479bf80f",
-      "type": "article",
-      "title": "NFL Practice Squad Updates: 11/16/26",
-      "summary": "Today’s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB Shaun",
-      "imageUrl": "",
-      "publishedAt": "2026-11-17T01:04:36.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-16-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0291
     },
     {
       "id": "ten_bsky_ee502eba31e4",
@@ -4257,7 +4106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.014
+      "storyRank": 0.013
     },
     {
       "id": "ten_tx_e990003c9373",
@@ -4292,7 +4141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0125
     },
     {
       "id": "ten_pfr_cd01104e0fa2",
@@ -4334,7 +4183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0106
     },
     {
       "id": "ten_pfr_a2c38d548132",
@@ -4384,7 +4233,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.0103
     },
     {
       "id": "ten_tx_c3b3c71e4eda",
@@ -4468,7 +4317,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0098
     },
     {
       "id": "ten_tyt_8rMk9ZuTTUc",
@@ -4501,13 +4350,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "20:09",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089,
-      "duration": "20:09"
+      "storyRank": 0.0085
     },
     {
       "id": "ten_tyt_FxRVjOcXUVk",
@@ -4540,13 +4389,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "45:04",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081,
-      "duration": "45:04"
+      "storyRank": 0.0078
     },
     {
       "id": "ten_tx_0b2fced47a7e",
@@ -4590,7 +4439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0073
     },
     {
       "id": "ten_tx_298074f502b0",
@@ -4625,7 +4474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0067
     },
     {
       "id": "ten_tyt_uzrLedlKkT4",
@@ -4667,13 +4516,13 @@
       "signalScore": 80,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "52:23",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147,
-      "duration": "52:23"
+      "storyRank": 0.0141
     },
     {
       "id": "ten_tx_a8cf31efefac",
@@ -4725,7 +4574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0061
     },
     {
       "id": "ten_tyt_3wyR27O8PZQ",
@@ -4758,13 +4607,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "19:21",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056,
-      "duration": "19:21"
+      "storyRank": 0.0054
     },
     {
       "id": "ten_tyt_5ec2V-s6IIg",
@@ -4797,52 +4646,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:14:20",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005,
-      "duration": "1:14:20"
-    },
-    {
-      "id": "ten_yt_TXjTnYJza3Y",
-      "type": "video",
-      "category": "film",
-      "videoId": "TXjTnYJza3Y",
-      "embeddable": true,
-      "title": "Bears BLOCKBUSTER trade fuels Super Bowl aspirations! | PFF NFL Show",
-      "summary": "Jac & Cris discuss the Bears recent trade for Titans All-Pro DT Jeffery Simmons. The Bears are in win-now mode and they reinforced that by beefing up their defense ahead of the NFL trade deadline. Could the Bears win the",
-      "imageUrl": "https://i.ytimg.com/vi/TXjTnYJza3Y/hqdefault.jpg",
-      "imageAlt": "Bears BLOCKBUSTER trade fuels Super Bowl aspirations! | PFF NFL Show",
-      "publishedAt": "2026-10-29T21:31:50.000Z",
-      "url": "https://www.youtube.com/watch?v=TXjTnYJza3Y",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=TXjTnYJza3Y",
-      "channel": "Pro Football Focus",
-      "outletId": "pff_official_yt",
-      "outletName": "Pro Football Focus",
-      "reporterId": "pff_official_yt",
-      "reporterName": "Pro Football Focus",
-      "author": "Pro Football Focus",
-      "authorHandle": "@ProFootballFocus",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0008,
-      "duration": "9:10"
+      "storyRank": 0.0048
     },
     {
       "id": "ten_yt_ifp9pDMbD4o",
@@ -4875,13 +4685,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "39:06",
       "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017,
-      "duration": "39:06"
+      "storyRank": 0.0017
     },
     {
       "id": "ten_rss_eb6b59623c95",

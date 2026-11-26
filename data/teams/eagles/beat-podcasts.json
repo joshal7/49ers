@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:25:59.077Z",
+  "updatedAt": "2026-11-26T19:03:28.461Z",
   "windowDays": 7,
-  "totalEpisodes": 17,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "eagles_locked_on_eagles",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/32c77c/feeds.simplecast.com/yy6iqCPY",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-eagles-daily-podcast-on-the-philadelphia-eagles/id1139903017?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/64/04/19/6404194c-be67-0203-6304-601e858fe6c3/mza_13968169527345820808.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 6
     },
     {
       "id": "eagles_phly_philadelphia_eagles_podcast",
@@ -352,46 +352,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/phly-philadelphia-eagles-podcast/id1706944557?uo=4",
       "feedUrl": "https://feeds.simplecast.com/rR8B4DDE",
       "audioStreamUrl": "https://tracking.swap.fm/track/xt6bq09fJCm8CxP7DUGF/pscrb.fm/rss/p/mgln.ai/e/822/claritaspod.com/measure/dts.podtrac.com/redirect.mp3/prfx.byspotify.com/e/injector.simplecastaudio.com/f2573566-44a7-474c-acee-2d0893d6d0fa/episodes/190c7f85-6340-4939-a667-5725a0f33982/audio/128/default.mp3?aid=rss_feed&awCollectionId=f2573566-44a7-474c-acee-2d0893d6d0fa&awEpisodeId=190c7f85-6340-4939-a667-5725a0f33982&feed=rR8B4DDE"
-    },
-    {
-      "id": "pod_eagles_locked_on_eagles_1000802984884",
-      "trackId": 1000802984884,
-      "collectionId": 1139903017,
-      "showId": "eagles_locked_on_eagles",
-      "showName": "Locked On Eagles",
-      "showFullTitle": "Locked On Eagles - Daily Podcast On The Philadelphia Eagles",
-      "hosts": "Locked On Podcast Network, Louie DiBiase, Gino Cammilleri",
-      "network": "Locked On Podcast Network, Louie DiBiase, Gino Cammilleri",
-      "title": "EAGLES SQUAD SHOW: Nick Sirianni makes ONE change during the bye...will it be enough???",
-      "summary": "Harry and Marc react to the Philadelphia Eagles adding T.J. Paganetti BACK to the coaching staff. The show also talks about Jalen Hurts' future with the team and the future of the quarterback position of the Eagles Segment 1: Paganetti comes back Segment 2: Jalen Hurts and t",
-      "publishedAt": "2026-11-19T19:01:41.000Z",
-      "durationMinutes": 49,
-      "durationDisplay": "49 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/c2/e3/c1/c2e3c18a-ea39-a25f-31b6-2ce586a72822/mza_17044005620565567999.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/eagles-squad-show-nick-sirianni-makes-one-change-during/id1139903017?i=1000802984884&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-eagles-daily-podcast-on-the-philadelphia-eagles/id1139903017?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/32c77c/feeds.simplecast.com/yy6iqCPY",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/32c77c/lockedon.simplecastaudio.com/bef2c08a-0aeb-428e-a4e3-a2533de13c85/episodes/da427373-1a35-4ef4-bed4-2ca404029a72/audio/128/default.mp3?aid=rss_feed&awCollectionId=bef2c08a-0aeb-428e-a4e3-a2533de13c85&awEpisodeId=da427373-1a35-4ef4-bed4-2ca404029a72&feed=yy6iqCPY"
-    },
-    {
-      "id": "pod_eagles_locked_on_eagles_1000802943427",
-      "trackId": 1000802943427,
-      "collectionId": 1139903017,
-      "showId": "eagles_locked_on_eagles",
-      "showName": "Locked On Eagles",
-      "showFullTitle": "Locked On Eagles - Daily Podcast On The Philadelphia Eagles",
-      "hosts": "Locked On Podcast Network, Louie DiBiase, Gino Cammilleri",
-      "network": "Locked On Podcast Network, Louie DiBiase, Gino Cammilleri",
-      "title": "SPOILER: DeVonta Smith and Dontayvion Wicks COMING BACK is key to an Eagles upset win over Pittsburgh!",
-      "summary": "Can the Philadelphia Eagles play spoiler to the Pittsburgh Steelers on Sunday? Christopher Carter of Locked On Steelers joins the show for Crossover Thursday! How much will getting DeVonta Smith and Dontayvion Wicks back at wide receiver change things? Can Joe Milton show of",
-      "publishedAt": "2026-11-19T14:12:38.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/bd/63/07/bd63077c-b49e-5601-3a6c-21c3d4a6f9be/mza_7097260662633964781.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/spoiler-devonta-smith-and-dontayvion-wicks-coming/id1139903017?i=1000802943427&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-eagles-daily-podcast-on-the-philadelphia-eagles/id1139903017?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/32c77c/feeds.simplecast.com/yy6iqCPY",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/32c77c/lockedon.simplecastaudio.com/bef2c08a-0aeb-428e-a4e3-a2533de13c85/episodes/cacdc6a4-fc53-4b13-a891-f81617fe191f/audio/128/default.mp3?aid=rss_feed&awCollectionId=bef2c08a-0aeb-428e-a4e3-a2533de13c85&awEpisodeId=cacdc6a4-fc53-4b13-a891-f81617fe191f&feed=yy6iqCPY"
     }
   ]
 }

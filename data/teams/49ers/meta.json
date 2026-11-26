@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:16.625Z",
+  "updatedAt": "2026-11-26T18:59:57.935Z",
   "teamAbbr": "SF",
   "teamSlug": "49ers",
   "brandName": "49ers Faithful",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:24:16.625Z",
+    "lastCheckedAt": "2026-11-26T18:59:57.935Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

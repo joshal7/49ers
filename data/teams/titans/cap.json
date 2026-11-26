@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:29.404Z",
+  "updatedAt": "2026-11-26T19:24:05.984Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/tennessee-titans",
   "spotracUrl": "https://www.spotrac.com/nfl/tennessee-titans/cap/",
@@ -8,14 +8,14 @@
     "2026": {
       "year": 2026,
       "capCeiling": 342750211,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 303827590,
       "top51": 230385510,
       "teamCapSpace": 38922621,
       "otcRawTeamCapSpace": 38922621,
       "effectiveCapSpace": 38922621,
-      "activeCapSpending": 240655291,
+      "activeCapSpending": 240467119,
       "offenseSpend": 137655937,
       "defenseSpend": 96911182,
       "specialSpend": 5900000,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 55,
-      "totalSignedCount": 80
+      "totalSignedCount": 54
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 295322111,
       "top51": 267248677,
       "teamCapSpace": 31677889,
       "otcRawTeamCapSpace": 31677889,
-      "effectiveCapSpace": 2896311,
+      "effectiveCapSpace": 20517889,
       "activeCapSpending": 267248677,
       "offenseSpend": 157943195,
       "defenseSpend": 106405482,
@@ -195,7 +195,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 183887350,
       "top51": 183887350,

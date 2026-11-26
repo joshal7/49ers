@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:51.929Z",
+  "updatedAt": "2026-11-26T19:03:20.505Z",
   "teamAbbr": "CHI",
   "teamSlug": "bears",
   "brandName": "Da Bears",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:25:51.929Z",
+    "lastCheckedAt": "2026-11-26T19:03:20.505Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

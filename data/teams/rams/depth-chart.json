@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:01.409Z",
+  "updatedAt": "2026-11-26T19:01:16.675Z",
   "week": 13,
   "units": [
     {
@@ -21,10 +21,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4386544",
-              "name": "Xavier Smith",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
+              "playerId": "4360797",
+              "name": "Tutu Atwell",
+              "jersey": 8,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360797.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -53,10 +53,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4386544",
-              "name": "Xavier Smith",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
+              "playerId": "4360797",
+              "name": "Tutu Atwell",
+              "jersey": 8,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360797.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -152,10 +152,10 @@
           "slotLabel": "SLWR (11 Personnel)",
           "baselineChain": [
             {
-              "playerId": "4360797",
-              "name": "Tutu Atwell",
-              "jersey": 8,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360797.png",
+              "playerId": "4386544",
+              "name": "Xavier Smith",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -174,10 +174,10 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4360797",
-              "name": "Tutu Atwell",
-              "jersey": 8,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360797.png",
+              "playerId": "4386544",
+              "name": "Xavier Smith",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -266,8 +266,8 @@
               "jersey": 66,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 73,
+              "statusBadge": "73% • GTD",
               "isAvailable": true
             },
             {
@@ -288,8 +288,8 @@
               "jersey": 66,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912189.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 73,
+              "statusBadge": "73% • GTD",
               "isAvailable": true
             },
             {
@@ -711,20 +711,20 @@
           "slotLabel": "RB",
           "baselineChain": [
             {
-              "playerId": "4430737",
-              "name": "Kyren Williams",
-              "jersey": 23,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430737.png",
+              "playerId": "4429096",
+              "name": "Blake Corum",
+              "jersey": 24,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429096.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4429096",
-              "name": "Blake Corum",
-              "jersey": 24,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429096.png",
+              "playerId": "4430737",
+              "name": "Kyren Williams",
+              "jersey": 23,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430737.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -753,20 +753,20 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4430737",
-              "name": "Kyren Williams",
-              "jersey": 23,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430737.png",
+              "playerId": "4429096",
+              "name": "Blake Corum",
+              "jersey": 24,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429096.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4429096",
-              "name": "Blake Corum",
-              "jersey": 24,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429096.png",
+              "playerId": "4430737",
+              "name": "Kyren Williams",
+              "jersey": 23,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430737.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1727,20 +1727,20 @@
           "slotLabel": "KR",
           "baselineChain": [
             {
-              "playerId": "4386544",
-              "name": "Xavier Smith",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
+              "playerId": "4243003",
+              "name": "Ronnie Rivers",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243003.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4243003",
-              "name": "Ronnie Rivers",
-              "jersey": 20,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243003.png",
+              "playerId": "4386544",
+              "name": "Xavier Smith",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1779,20 +1779,20 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4386544",
-              "name": "Xavier Smith",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
+              "playerId": "4243003",
+              "name": "Ronnie Rivers",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243003.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4243003",
-              "name": "Ronnie Rivers",
-              "jersey": 20,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243003.png",
+              "playerId": "4386544",
+              "name": "Xavier Smith",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4386544.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1844,8 +1844,8 @@
               "jersey": 49,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2575907.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -1856,8 +1856,8 @@
               "jersey": 49,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2575907.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],

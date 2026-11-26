@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:24:31.094Z",
+  "updatedAt": "2026-11-26T19:00:13.870Z",
   "windowDays": 7,
-  "totalEpisodes": 17,
+  "totalEpisodes": 16,
   "shows": [
     {
       "id": "seahawks_locked_on_seahawks",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/099859/feeds.simplecast.com/nxLgqRTF",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-seahawks-daily-podcast-on-the-seattle-seahawks/id1151621299?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/43/48/f6/4348f69e-61d6-8ec2-80f2-e2b090d17789/mza_8715708506004177568.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "seahawks_seattle_overload",
@@ -360,26 +360,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/daily-seahawks-podcast-hb-mornings-real-hawk-talk/id1153170207?uo=4",
       "feedUrl": "https://feeds.simplecast.com/9EKSl0eW",
       "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/796/claritaspod.com/measure/injector.simplecastaudio.com/2bad0f2a-e709-4177-8f39-3934515d9813/episodes/6ccfb4ad-7ee8-44ff-8a56-dc7baa487e9f/audio/128/default.mp3?aid=rss_feed&awCollectionId=2bad0f2a-e709-4177-8f39-3934515d9813&awEpisodeId=6ccfb4ad-7ee8-44ff-8a56-dc7baa487e9f&feed=9EKSl0eW"
-    },
-    {
-      "id": "pod_seahawks_locked_on_seahawks_1000802883008",
-      "trackId": 1000802883008,
-      "collectionId": 1151621299,
-      "showId": "seahawks_locked_on_seahawks",
-      "showName": "Locked On Seahawks",
-      "showFullTitle": "Locked On Seahawks - Daily Podcast On The Seattle Seahawks",
-      "hosts": "Locked On Podcast Network, Corbin Smith, Rob Rang",
-      "network": "Locked On Podcast Network, Corbin Smith, Rob Rang",
-      "title": "Mike Macdonald Has Built the NFL's Most Dominant Defense in Seattle - And It Keeps Getting BETTER!!",
-      "summary": "Mike Macdonald has transformed the Seattle Seahawks defense into one of the NFL's most dominant units — and somehow, it keeps getting better. Since taking over in 2024, Macdonald has engineered a remarkable defensive transformation, with Seattle leading the league in several",
-      "publishedAt": "2026-11-19T08:05:00.000Z",
-      "durationMinutes": 28,
-      "durationDisplay": "28 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/da/b6/58/dab6588e-f032-0fe4-b36e-22c5571469f6/mza_15280288070963114801.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/mike-macdonald-has-built-the-nfls-most-dominant/id1151621299?i=1000802883008&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-seahawks-daily-podcast-on-the-seattle-seahawks/id1151621299?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/099859/feeds.simplecast.com/nxLgqRTF",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/099859/lockedon.simplecastaudio.com/34ed4499-b663-45dd-b2bb-c912e0aa9402/episodes/76fe62dc-247c-46ec-bad0-59b94acb85bd/audio/128/default.mp3?aid=rss_feed&awCollectionId=34ed4499-b663-45dd-b2bb-c912e0aa9402&awEpisodeId=76fe62dc-247c-46ec-bad0-59b94acb85bd&feed=nxLgqRTF"
     }
   ]
 }

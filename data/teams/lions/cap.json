@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:15.860Z",
+  "updatedAt": "2026-11-26T19:02:18.429Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/detroit-lions",
   "spotracUrl": "https://www.spotrac.com/nfl/detroit-lions/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 322416571,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 289865522,
       "top51": 239430951,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 85
+      "totalSignedCount": 52
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 264924992,
       "top51": 262779044,
       "teamCapSpace": 62075008,
       "otcRawTeamCapSpace": 62075008,
-      "effectiveCapSpace": 36728561,
+      "effectiveCapSpace": 41615008,
       "activeCapSpending": 262779044,
       "offenseSpend": 176837183,
       "defenseSpend": 85941861,
@@ -181,7 +181,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 289832625,
       "top51": 289832625,

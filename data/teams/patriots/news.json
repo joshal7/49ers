@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:41.167Z",
+  "updatedAt": "2026-11-26T19:06:18.336Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17ET",
     "cycleKey": "2026-11-25@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "5-5",
-    "generatedAt": "2026-11-26T07:27:41.167Z",
+    "generatedAt": "2026-11-26T19:06:18.336Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,58 +15,47 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 217,
+    "wordCount": 228,
     "headline": "Patriots (5-5) Week 12 Briefing: Wednesday Injury Report Ahead of Chargers",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: New England opened G Alijah Vera-Tucker's 21-day IR practice window alongside limited work for FB Reggie Gilliam (knee) [Pro Football Rumors](https://www.profootballrumors.com/2026/11/patriots-designate-g-alijah-vera-tucker-for-return). QB Drake Maye (fibula), WR A.J. Brown (hamstring), OL Walter Rouse (concussion protocol), and CB Carlton Davis III (knee) did not practice Wednesday, while C Ben Brown (knee) practiced in full [Oliver Thomas](https://www.patspulpit.com/new-england-patriots-news/145201/patriots-vs-chargers-wednesday-injury-report-four-non-participants-carlton-davis-aj-brown).",
-      "Week 12 Chargers Outlook: Mike Vrabel and DC Zak Kuhr open installation for the Los Angeles Chargers (1-9, NE -1.5, HC Jim Harbaugh, OC Mike McDaniel & DC Chris O'Leary (Road Test)) as New England prepares for a pivotal AFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873093) [patriots.com Official](https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers).",
-      "AFC Playoff Trajectory: Entering Week 12 at 5-5 (2nd in AFC East • #8 Seed in AFC), New England carries a 40.3% postseason projection, 1.1% AFC East division title mark, and 0.1% #1 Seed Bye equity into the conference stretch [Bernd Buchmasser](https://www.patspulpit.com/new-england-patriots-nfl-playoffs/145149/afc-playoffs-steelers-benche-starting-qb-aaron-rodgers).",
-      "Around the Beat: Patriots rooting guide for Thanksgiving weekend [Bernd Buchmasser](https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving).",
-      "Statistical Profile & Matchup Edge: Through Week 11, New England ranks #17 in Points / Game (22.1), #19 in Points Allowed / Game (24.2), #31 in Turnover Differential (-10), giving Mike Vrabel and Zak Kuhr a clear benchmark ahead of Sun, Nov 29, 4:05 PM EST • NFL TV at [object Object] against the Los Angeles Chargers [Marima](https://www.patspulpit.com/new-england-patriots-news/145136/patriots-news-pats-need-defense-in-top-form-to-tackle-chargers)."
+      "Injury & Practice Status: New England opened G Alijah Vera-Tucker's 21-day IR practice window alongside limited work for FB Reggie Gilliam (knee). QB Drake Maye (fibula), WR A.J. Brown (hamstring), OL Walter Rouse (concussion protocol), and CB Carlton Davis III (knee) did not practice Wednesday, while C Ben Brown (knee) practiced in full [patriots.com Official](https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers).",
+      "Week 12 Chargers Outlook: Mike Vrabel and DC Zak Kuhr open installation for the Los Angeles Chargers (1-9, NE -1.5, HC Jim Harbaugh, OC Mike McDaniel & DC Chris O'Leary (Road Test)) as New England prepares for a pivotal AFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873093) [patriots.com Official](https://www.patriots.com/news/3-to-watch-patriots-look-to-get-back-on-track-in-los-angeles-vs-chargers).",
+      "AFC Playoff Trajectory: Entering Week 12 at 5-5 (2nd in AFC East • #8 Seed in AFC), New England carries a 41.1% postseason projection, 1.1% AFC East division title mark, and 0.1% #1 Seed Bye equity into the conference stretch [NFL Trade Rumors](https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/).",
+      "Around the Beat: Stevenson hurt his knee in Week 9 against Green Bay and initially appeared slated to miss multiple games [Sophie Weller](https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots').",
+      "Statistical Profile & Matchup Edge: Through Week 11, New England ranks #17 in Points / Game (22.1), #19 in Points Allowed / Game (24.2), #31 in Turnover Differential (-10), giving Mike Vrabel and Zak Kuhr a clear benchmark ahead of Sun, Nov 29, 4:05 PM EST • NFL TV at [object Object] against the Los Angeles Chargers [patriots.com Official](https://www.patriots.com/news/patriots-gameplan-how-will-the-offense-adjust-for-qb-tommy-devito-in-sunday-s-week-12-matchup-vs-the-chargers)."
     ],
     "coveredStoryKeys": [
-      "team::weekly_injury_report",
-      "alijahveratucker::ir_roster_move"
+      "aaronrodgers::roster_departure",
+      "drakemaye::diagnostic_result"
     ],
     "coveredUrls": [
-      "https://www.profootballrumors.com/2026/11/patriots-designate-g-alijah-vera-tucker-for-return",
-      "https://www.patspulpit.com/new-england-patriots-news/145201/patriots-vs-chargers-wednesday-injury-report-four-non-participants-carlton-davis-aj-brown",
-      "https://www.espn.com/nfl/preview?gameId=401873093",
       "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
-      "https://www.patspulpit.com/new-england-patriots-nfl-playoffs/145149/afc-playoffs-steelers-benche-starting-qb-aaron-rodgers",
-      "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
-      "https://www.patspulpit.com/new-england-patriots-news/145136/patriots-news-pats-need-defense-in-top-form-to-tackle-chargers",
+      "https://www.espn.com/nfl/preview?gameId=401873093",
       "https://www.patriots.com/news/3-to-watch-patriots-look-to-get-back-on-track-in-los-angeles-vs-chargers",
-      "https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs#:~:text=Doubs%20(shoulder)%20was%20limited%20in%20Wednesday's%20practice",
-      "https://www.espn.com/nfl/player/_/id/4047646/aj-brown#:~:text=Brown%20(hamstring)%20didn't%20take%20part%20in%20practice",
+      "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+      "https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots'",
       "https://www.patriots.com/news/patriots-gameplan-how-will-the-offense-adjust-for-qb-tommy-devito-in-sunday-s-week-12-matchup-vs-the-chargers",
-      "https://www.patspulpit.com/new-england-patriots-news/145133/patriots-drake-maye-tommy-devito-backup-quarterback",
-      "https://www.patspulpit.com/new-england-patriots-news/145154/patriots-practice-update-2-new-absentees-chargers-game",
-      "https://nfltraderumors.co/patriots-designate-wr-romeo-doubs-to-return/",
-      "https://www.patspulpit.com/new-england-patriots-news/145218/romeo-doubs-return-patriots-practice-chargers-injured-reserve",
-      "https://www.patriots.com/team/transactions/#tx-ee7b8a399faf",
-      "https://www.patspulpit.com/new-england-patriots-analysis/145172/patriots-vs-chargers-preview-players-to-watch-stats-nfl-week-12",
-      "https://x.com/AaronWilson_NFL/status/2124991375175270481",
-      "https://www.patriots.com/team/transactions/#tx-32ffb1a8ad4c",
-      "https://www.patspulpit.com/new-england-patriots-analysis/143701/patriots-chargers-examining-roster-ties-nfl-week-12"
+      "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
+      "https://www.patspulpit.com/new-england-patriots-analysis/145270/aaron-rodgers-steelers-drama-release-free-agency",
+      "https://www.patspulpit.com/new-england-patriots-history/144990/thanksgiving-tradition-buttfumble-patriots-vs-jets-mark-sanchez-vince-wilfork",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/mailbag-tommy-devito-behren-morton-draft-needs/815633/",
+      "https://www.rotowire.com/football/player/rhamondre-stevenson-15372",
+      "https://www.patspulpit.com/new-england-patriots-nfl-playoffs/145149/afc-playoffs-steelers-benche-starting-qb-aaron-rodgers",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/"
     ],
     "sources": [
       {
         "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "Patriots Designate G Alijah Vera-Tucker For Return",
-        "url": "https://www.profootballrumors.com/2026/11/patriots-designate-g-alijah-vera-tucker-for-return",
-        "publishedAt": "2026-11-24T01:49:18.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Oliver Thomas",
-        "outlet": "Pats Pulpit",
-        "title": "Patriots vs. Chargers Wednesday injury report: Four non-participants heading out of bye week",
-        "url": "https://www.patspulpit.com/new-england-patriots-news/145201/patriots-vs-chargers-wednesday-injury-report-four-non-participants-carlton-davis-aj-brown",
-        "publishedAt": "2026-11-26T00:20:31.000Z"
+        "author": "patriots.com Official",
+        "outlet": "patriots.com Official",
+        "title": "Week 12 Injury Report: Patriots at Chargers",
+        "url": "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
+        "publishedAt": "2026-11-25T23:34:22.000Z"
       },
       {
         "type": "article",
@@ -80,57 +69,25 @@
         "type": "article",
         "author": "patriots.com Official",
         "outlet": "patriots.com Official",
-        "title": "Week 12 Injury Report: Patriots at Chargers",
-        "url": "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
-        "publishedAt": "2026-11-25T23:34:22.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Bernd Buchmasser",
-        "outlet": "Pats Pulpit",
-        "title": "Patriots’ closest playoff rival descends into chaos amid Aaron Rodgers drama",
-        "url": "https://www.patspulpit.com/new-england-patriots-nfl-playoffs/145149/afc-playoffs-steelers-benche-starting-qb-aaron-rodgers",
-        "publishedAt": "2026-11-25T20:25:16.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Bernd Buchmasser",
-        "outlet": "Pats Pulpit",
-        "title": "Patriots rooting guide for Thanksgiving weekend",
-        "url": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
-        "publishedAt": "2026-11-26T00:34:44.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Marima",
-        "outlet": "Pats Pulpit",
-        "title": "Patriots News: Pats need defense in top form to tackle Chargers",
-        "url": "https://www.patspulpit.com/new-england-patriots-news/145136/patriots-news-pats-need-defense-in-top-form-to-tackle-chargers",
-        "publishedAt": "2026-11-25T16:26:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "patriots.com Official",
-        "outlet": "patriots.com Official",
         "title": "3 to Watch: Patriots Look to Get Back on Track in Los Angeles vs. Chargers",
         "url": "https://www.patriots.com/news/3-to-watch-patriots-look-to-get-back-on-track-in-los-angeles-vs-chargers",
         "publishedAt": "2026-11-25T22:21:00.000Z"
       },
       {
         "type": "article",
-        "author": "Mike Reiss",
-        "outlet": "ESPN New England Patriots Beat",
-        "title": "Doubs (shoulder) was limited in Wednesday's practice.",
-        "url": "https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs#:~:text=Doubs%20(shoulder)%20was%20limited%20in%20Wednesday's%20practice",
-        "publishedAt": "2026-11-25T23:47:53.000Z"
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+        "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+        "publishedAt": "2026-11-26T16:38:29.000Z"
       },
       {
         "type": "article",
-        "author": "Evan Lazar",
-        "outlet": "Patriots.com",
-        "title": "Brown (hamstring) didn't take part in practice Wednesday.",
-        "url": "https://www.espn.com/nfl/player/_/id/4047646/aj-brown#:~:text=Brown%20(hamstring)%20didn't%20take%20part%20in%20practice",
-        "publishedAt": "2026-11-25T19:47:17.000Z"
+        "author": "Sophie Weller",
+        "outlet": "Patriots Wire",
+        "title": "Stevenson was not listed on the Patriots' practice report Wednesday.",
+        "url": "https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots'",
+        "publishedAt": "2026-11-26T18:31:21.000Z"
       },
       {
         "type": "article",
@@ -142,11 +99,51 @@
       },
       {
         "type": "article",
-        "author": "Brian Hines",
+        "author": "Bernd Buchmasser",
         "outlet": "Pats Pulpit",
-        "title": "Patriots don’t want a new Drake Maye. They want Tommy DeVito to be himself.",
-        "url": "https://www.patspulpit.com/new-england-patriots-news/145133/patriots-drake-maye-tommy-devito-backup-quarterback",
-        "publishedAt": "2026-11-25T14:32:59.000Z"
+        "title": "Patriots rooting guide for Thanksgiving weekend",
+        "url": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
+        "publishedAt": "2026-11-26T16:58:36.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Bernd Buchmasser",
+        "outlet": "Pats Pulpit",
+        "title": "Aaron Rodgers has been released. Should the Patriots go after him?",
+        "url": "https://www.patspulpit.com/new-england-patriots-analysis/145270/aaron-rodgers-steelers-drama-release-free-agency",
+        "publishedAt": "2026-11-26T13:45:42.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Alec Shane",
+        "outlet": "Pats Pulpit",
+        "title": "The Buttfumble is still worth remembering 14 years later",
+        "url": "https://www.patspulpit.com/new-england-patriots-history/144990/thanksgiving-tradition-buttfumble-patriots-vs-jets-mark-sanchez-vince-wilfork",
+        "publishedAt": "2026-11-26T14:04:30.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Nick Goss",
+        "outlet": "NBC Sports Boston",
+        "title": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
+        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
+        "publishedAt": "2026-11-26T02:35:52.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Justin Leger and Nick Goss",
+        "outlet": "NBC Sports Boston",
+        "title": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
+        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+        "publishedAt": "2026-11-26T02:35:52.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Phil Perry",
+        "outlet": "NBC Sports Boston",
+        "title": "Patriots mailbag: Morton over DeVito? Biggest draft needs, and more",
+        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mailbag-tommy-devito-behren-morton-draft-needs/815633/",
+        "publishedAt": "2026-11-26T02:35:52.000Z"
       }
     ]
   },
@@ -155,45 +152,45 @@
       "id": "ne_cl_top",
       "category": "beat",
       "headline": "New England Patriots Week 12 Top Headlines (5-5)",
-      "summary": "Patriots Designate WR Romeo Doubs To Return — Patriots vs. Chargers Wednesday injury report: Four non-participants heading out of bye week",
-      "updatedAt": "2026-11-25T21:49:37.000Z",
+      "summary": "Stevenson was not listed on the Patriots' practice report Wednesday. — Rhamondre Stevenson: Not on initial Week 12 practice report: Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+      "updatedAt": "2026-11-26T18:31:21.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "NFL Trade Rumors",
-          "title": "Patriots Designate WR Romeo Doubs To Return",
-          "url": "https://nfltraderumors.co/patriots-designate-wr-romeo-doubs-to-return/",
-          "publishedAt": "2026-11-25T21:49:37.000Z"
+          "label": "Sophie Weller",
+          "title": "Stevenson was not listed on the Patriots' practice report Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots'",
+          "publishedAt": "2026-11-26T18:31:21.000Z"
         },
         {
-          "label": "Oliver Thomas",
-          "title": "Patriots vs. Chargers Wednesday injury report: Four non-participants heading out of bye week",
-          "url": "https://www.patspulpit.com/new-england-patriots-news/145201/patriots-vs-chargers-wednesday-injury-report-four-non-participants-carlton-davis-aj-brown",
-          "publishedAt": "2026-11-26T00:20:31.000Z"
-        },
-        {
-          "label": "patriots.com Official",
-          "title": "Week 12 Injury Report: Patriots at Chargers",
-          "url": "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
-          "publishedAt": "2026-11-25T23:34:22.000Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Patriots-Chargers shaping up to be battle of backup QBs for 2 of AFC's biggest disappointments",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873093",
-          "publishedAt": "2026-11-26T00:38:32.000Z"
+          "label": "RotoWire NFL Beat",
+          "title": "Rhamondre Stevenson: Not on initial Week 12 practice report: Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+          "url": "https://www.rotowire.com/football/player/rhamondre-stevenson-15372",
+          "publishedAt": "2026-11-26T18:31:00.000Z"
         },
         {
           "label": "Bernd Buchmasser",
           "title": "Patriots rooting guide for Thanksgiving weekend",
           "url": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
-          "publishedAt": "2026-11-26T00:34:44.000Z"
+          "publishedAt": "2026-11-26T16:58:36.000Z"
         },
         {
-          "label": "patriots.com Official",
-          "title": "3 to Watch: Patriots Look to Get Back on Track in Los Angeles vs. Chargers",
-          "url": "https://www.patriots.com/news/3-to-watch-patriots-look-to-get-back-on-track-in-los-angeles-vs-chargers",
-          "publishedAt": "2026-11-25T22:21:00.000Z"
+          "label": "Bernd Buchmasser",
+          "title": "Aaron Rodgers has been released. Should the Patriots go after him?",
+          "url": "https://www.patspulpit.com/new-england-patriots-analysis/145270/aaron-rodgers-steelers-drama-release-free-agency",
+          "publishedAt": "2026-11-26T13:45:42.000Z"
+        },
+        {
+          "label": "NFL Trade Rumors",
+          "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+          "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+          "publishedAt": "2026-11-26T16:38:29.000Z"
+        },
+        {
+          "label": "Alec Shane",
+          "title": "The Buttfumble is still worth remembering 14 years later",
+          "url": "https://www.patspulpit.com/new-england-patriots-history/144990/thanksgiving-tradition-buttfumble-patriots-vs-jets-mark-sanchez-vince-wilfork",
+          "publishedAt": "2026-11-26T14:04:30.000Z"
         }
       ]
     },
@@ -201,10 +198,34 @@
       "id": "ne_cl_health",
       "category": "injury",
       "headline": "Patriots Practice Report, Injury & IR Availability",
-      "summary": "Patriots vs. Chargers Wednesday injury report: Four non-participants heading out of bye week — Week 12 Injury Report: Patriots at Chargers",
-      "updatedAt": "2026-11-26T00:20:31.000Z",
+      "summary": "Stevenson was not listed on the Patriots' practice report Wednesday. — Rhamondre Stevenson: Not on initial Week 12 practice report: Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+      "updatedAt": "2026-11-26T18:31:21.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Sophie Weller",
+          "title": "Stevenson was not listed on the Patriots' practice report Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots'",
+          "publishedAt": "2026-11-26T18:31:21.000Z"
+        },
+        {
+          "label": "RotoWire NFL Beat",
+          "title": "Rhamondre Stevenson: Not on initial Week 12 practice report: Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+          "url": "https://www.rotowire.com/football/player/rhamondre-stevenson-15372",
+          "publishedAt": "2026-11-26T18:31:00.000Z"
+        },
+        {
+          "label": "Nick Goss",
+          "title": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
+          "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
+          "publishedAt": "2026-11-26T02:35:52.000Z"
+        },
+        {
+          "label": "Bernd Buchmasser",
+          "title": "What Romeo Doubs returning to practice means for the Patriots",
+          "url": "https://www.patspulpit.com/new-england-patriots-analysis/145271/romeo-doubs-return-practice-injured-reserve-impact-roster",
+          "publishedAt": "2026-11-26T12:18:07.000Z"
+        },
         {
           "label": "Oliver Thomas",
           "title": "Patriots vs. Chargers Wednesday injury report: Four non-participants heading out of bye week",
@@ -216,30 +237,6 @@
           "title": "Week 12 Injury Report: Patriots at Chargers",
           "url": "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
           "publishedAt": "2026-11-25T23:34:22.000Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Romeo Doubs returns to Patriots practice",
-          "url": "https://www.espn.com/video/clip/_/id/50598290/romeo-doubs-returns-patriots-practice",
-          "publishedAt": "2026-11-25T22:54:11.000Z"
-        },
-        {
-          "label": "Mike Reiss",
-          "title": "Doubs (shoulder) was limited in Wednesday's practice.",
-          "url": "https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs#:~:text=Doubs%20(shoulder)%20was%20limited%20in%20Wednesday's%20practice",
-          "publishedAt": "2026-11-25T23:47:53.000Z"
-        },
-        {
-          "label": "Bernd Buchmasser",
-          "title": "Romeo Doubs returns to Patriots practice ahead of Chargers game",
-          "url": "https://www.patspulpit.com/new-england-patriots-news/145218/romeo-doubs-return-patriots-practice-chargers-injured-reserve",
-          "publishedAt": "2026-11-25T19:51:46.000Z"
-        },
-        {
-          "label": "Evan Lazar",
-          "title": "Brown (hamstring) didn't take part in practice Wednesday.",
-          "url": "https://www.espn.com/nfl/player/_/id/4047646/aj-brown#:~:text=Brown%20(hamstring)%20didn't%20take%20part%20in%20practice",
-          "publishedAt": "2026-11-25T19:47:17.000Z"
         }
       ]
     },
@@ -249,7 +246,7 @@
       "headline": "Patriots All-22 Film, Trench & Efficiency Breakdowns",
       "summary": "Patriots vs. Chargers Preview + Predictions — New England Patriots Film Breakdown | Tommy DeVito TD Pass to Lan Larison",
       "updatedAt": "2026-11-25T19:20:12.000Z",
-      "itemCount": 6,
+      "itemCount": 5,
       "sourceLinks": [
         {
           "label": "Check the Mic",
@@ -264,12 +261,6 @@
           "publishedAt": "2026-11-19T22:34:02.000Z"
         },
         {
-          "label": "Cody Alexander",
-          "title": "Split-Field Quarters Foundations",
-          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-          "publishedAt": "2026-11-19T22:01:55.000Z"
-        },
-        {
           "label": "patriots.com Video",
           "title": "X's & O's with Brian Hoyer: Breaking Down Key Moments from Loss vs. Lions",
           "url": "https://www.patriots.com/video/x-s-o-s-with-brian-hoyer-breaking-down-key-moments-from-loss-vs-lions",
@@ -277,15 +268,15 @@
         },
         {
           "label": "Cody Alexander",
-          "title": "The Aranda-Roberts Creeper System",
-          "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-          "publishedAt": "2026-11-19T21:33:52.000Z"
-        },
-        {
-          "label": "Cody Alexander",
           "title": "How the Packers' Split-Field Coverage Baited Drake Maye",
           "url": "https://www.matchquarters.com/p/packers-cover-8-maye-deep-cross",
           "publishedAt": "2026-11-18T11:02:57.000Z"
+        },
+        {
+          "label": "The QB School",
+          "title": "Jordan Love vs the Patriots Week 9, 2026 Analysis",
+          "url": "https://www.youtube.com/watch?v=ONCSUG9i00M",
+          "publishedAt": "2026-11-10T20:26:35.000Z"
         }
       ]
     },
@@ -293,27 +284,21 @@
       "id": "ne_cl_roster",
       "category": "roster",
       "headline": "Patriots Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Patriots Designate WR Romeo Doubs To Return — Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
-      "updatedAt": "2026-11-25T21:49:37.000Z",
+      "summary": "Aaron Rodgers has been released. Should the Patriots go after him? — Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
+      "updatedAt": "2026-11-26T13:45:42.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "NFL Trade Rumors",
-          "title": "Patriots Designate WR Romeo Doubs To Return",
-          "url": "https://nfltraderumors.co/patriots-designate-wr-romeo-doubs-to-return/",
-          "publishedAt": "2026-11-25T21:49:37.000Z"
+          "label": "Bernd Buchmasser",
+          "title": "Aaron Rodgers has been released. Should the Patriots go after him?",
+          "url": "https://www.patspulpit.com/new-england-patriots-analysis/145270/aaron-rodgers-steelers-drama-release-free-agency",
+          "publishedAt": "2026-11-26T13:45:42.000Z"
         },
         {
           "label": "New England Patriots Official",
           "title": "Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
           "url": "https://www.patriots.com/team/transactions/#tx-ee7b8a399faf",
           "publishedAt": "2026-11-25T08:00:00.000Z"
-        },
-        {
-          "label": "Oliver Thomas",
-          "title": "Examining the roster ties between Patriots, Chargers ahead of Week 12",
-          "url": "https://www.patspulpit.com/new-england-patriots-analysis/143701/patriots-chargers-examining-roster-ties-nfl-week-12",
-          "publishedAt": "2026-11-25T11:58:54.000Z"
         },
         {
           "label": "Pro Football Rumors",
@@ -332,11 +317,386 @@
           "title": "For now, Maye -- who suffered a fractured right fibula during a Week 10 loss to the Lions -- remains on the Patriots' 53-man roster rather than injured reserve, with coach Mike Vrabel citing the \"balance\" the team is hoping to strike with regard to managing its remaining designated to return from IR slots.",
           "url": "https://www.espn.com/nfl/player/_/id/4431452/drake-maye#:~:text=For%20now%2C%20Maye%20--%20who%20suffered%20a",
           "publishedAt": "2026-11-23T20:26:01.000Z"
+        },
+        {
+          "label": "New England Patriots Official",
+          "title": "Patriots roster move: Designated G Alijah Vera-Tucker to return from injured reserve.",
+          "url": "https://www.patriots.com/team/transactions/#tx-32ffb1a8ad4c",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
         }
       ]
     }
   ],
   "rawStream": [
+    {
+      "id": "ne_pwire_4569173_64992928",
+      "type": "article",
+      "title": "Stevenson was not listed on the Patriots' practice report Wednesday.",
+      "summary": "Stevenson hurt his knee in Week 9 against Green Bay and initially appeared slated to miss multiple games. However, he surprisingly was able to suit up in Week 10 against Detroit in Munich, Germany, though he logged just",
+      "publishedAt": "2026-11-26T18:31:21.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots'",
+      "outletId": "espn",
+      "outletName": "Patriots Wire",
+      "reporterId": "ext_sophie_weller",
+      "reporterName": "Sophie Weller",
+      "author": "Sophie Weller",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4569173/rhamondre-stevenson#:~:text=Stevenson%20was%20not%20listed%20on%20the%20Patriots'",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4569173",
+          "name": "Rhamondre Stevenson",
+          "shortName": "R. Stevenson",
+          "position": "RB",
+          "jersey": 38,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569173.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 44.9919
+    },
+    {
+      "id": "ne_roto_f5abc3f5f670",
+      "type": "tweet",
+      "title": "Rhamondre Stevenson: Not on initial Week 12 practice report: Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+      "fullText": "Rhamondre Stevenson: Not on initial Week 12 practice report: Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+      "isFullTweet": true,
+      "summary": "Stevenson was not listed on the Patriots' practice report Wednesday. Visit RotoWire.com for more analysis on this update.",
+      "imageUrl": "",
+      "publishedAt": "2026-11-26T18:31:00.000Z",
+      "url": "https://www.rotowire.com/football/player/rhamondre-stevenson-15372",
+      "outletId": "rotowire",
+      "outletName": "RotoWire NFL Beat",
+      "reporterId": "rotowire_nfl_beat",
+      "reporterName": "RotoWire NFL Beat",
+      "author": "RotoWire NFL Beat",
+      "authorHandle": "@RotoWireNFL",
+      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
+      "trustTier": 2,
+      "wireSource": "rotowire_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4569173",
+          "name": "Rhamondre Stevenson",
+          "shortName": "R. Stevenson",
+          "position": "RB",
+          "jersey": 38,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569173.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 44.7878
+    },
+    {
+      "id": "ne_brss_pats_pulpit_c0838a7c8a5a",
+      "type": "article",
+      "title": "Patriots rooting guide for Thanksgiving weekend",
+      "summary": "Happy Thanksgiving weekend, everybody. While the rest of us are going to enjoy some days with family and food, the NFL is quite busy: a total of 16 games will be played between Wednesday and Monday, with at least one game on on five of the",
+      "imageUrl": "",
+      "imageAlt": "Patriots rooting guide for Thanksgiving weekend",
+      "publishedAt": "2026-11-26T16:58:36.000Z",
+      "url": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
+      "outletId": "pats_pulpit",
+      "outletName": "Pats Pulpit",
+      "reporterId": "pats_pulpit",
+      "reporterName": "Bernd Buchmasser",
+      "author": "Bernd Buchmasser",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.5815
+    },
+    {
+      "id": "ne_brss_pats_pulpit_93fe22fe4f9c",
+      "type": "article",
+      "title": "Aaron Rodgers has been released. Should the Patriots go after him?",
+      "summary": "Last week, when the Indianapolis Colts released starting quarterback Daniel Jones, we took a deep dive into the why or the why not he should end up getting signed by the New England Patriots. Ultimately, our verdict was that Jones coming to",
+      "imageUrl": "",
+      "imageAlt": "Aaron Rodgers has been released. Should the Patriots go after him?",
+      "publishedAt": "2026-11-26T13:45:42.000Z",
+      "url": "https://www.patspulpit.com/new-england-patriots-analysis/145270/aaron-rodgers-steelers-drama-release-free-agency",
+      "outletId": "pats_pulpit",
+      "outletName": "Pats Pulpit",
+      "reporterId": "pats_pulpit",
+      "reporterName": "Bernd Buchmasser",
+      "author": "Bernd Buchmasser",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-analysis/145270/aaron-rodgers-steelers-drama-release-free-agency",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 1.578,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.5822
+    },
+    {
+      "id": "ne_nfltr_194b33c61dde",
+      "type": "article",
+      "title": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "summary": "Dolphins The Dolphins are in the first year of a massive organizational overhaul, where they changed the coaching staff, GM and much of the roster. Miami LB Jordyn Brooks is the only full-time veteran starter left on defense following DT Za",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Mike Vrabel, Tommy DeVito, David Bailey, Dolphins, Jets, Patriots",
+      "publishedAt": "2026-11-26T16:38:29.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-mike-vrabel-tommy-devito-david-bailey-dolphins-jets-patriots/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240391",
+          "name": "Tommy DeVito",
+          "shortName": "T. DeVito",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.0781
+    },
+    {
+      "id": "ne_brss_pats_pulpit_dd37b645f08c",
+      "type": "article",
+      "title": "The Buttfumble is still worth remembering 14 years later",
+      "summary": "Happy Buttfumble-versary, everyone! I can’t believe it has been 14 years since we all bore witness (or should I say bare witnass) to the single worst play in NFL history. It simultaneously feels like forever ago and last year. The world was",
+      "imageUrl": "",
+      "imageAlt": "The Buttfumble is still worth remembering 14 years later",
+      "publishedAt": "2026-11-26T14:04:30.000Z",
+      "url": "https://www.patspulpit.com/new-england-patriots-history/144990/thanksgiving-tradition-buttfumble-patriots-vs-jets-mark-sanchez-vince-wilfork",
+      "outletId": "pats_pulpit",
+      "outletName": "Pats Pulpit",
+      "reporterId": "pats_pulpit",
+      "reporterName": "Alec Shane",
+      "author": "Alec Shane",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-history/144990/thanksgiving-tradition-buttfumble-patriots-vs-jets-mark-sanchez-vince-wilfork",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.7026
+    },
+    {
+      "id": "ne_brss_pats_pulpit_0e0e19121319",
+      "type": "article",
+      "title": "Josh McDaniels draws on past experience as Patriots turn to Tommy DeVito",
+      "summary": "This is not Josh McDaniels’ first rodeo with a backup quarterback. Throughout his coaching career, McDaniels has called plenty of games with a backup under center. Perhaps most notably, he was the offensive coordinator in 2008 when Matt Cas",
+      "imageUrl": "",
+      "imageAlt": "Josh McDaniels draws on past experience as Patriots turn to Tommy DeVito",
+      "publishedAt": "2026-11-26T12:59:22.000Z",
+      "url": "https://www.patspulpit.com/new-england-patriots-news/145224/josh-mcdaniels-past-experience-tommy-devito-matt-cassel-tom-brady",
+      "outletId": "pats_pulpit",
+      "outletName": "Pats Pulpit",
+      "reporterId": "pats_pulpit",
+      "reporterName": "Brian Hines",
+      "author": "Brian Hines",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-news/145224/josh-mcdaniels-past-experience-tommy-devito-matt-cassel-tom-brady",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240391",
+          "name": "Tommy DeVito",
+          "shortName": "T. DeVito",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.7406
+    },
+    {
+      "id": "ne_brss_nbcs_bos_d23337a3dab0",
+      "type": "article",
+      "title": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Drake-Maye-Packers.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Nick Goss",
+      "author": "Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 0.76,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_injury",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.8938
+    },
+    {
+      "id": "ne_brss_pats_pulpit_7224ade8ff53",
+      "type": "article",
+      "title": "What Romeo Doubs returning to practice means for the Patriots",
+      "summary": "The New England Patriots offense is still missing some of its most important players, including quarterback Drake Maye, due to injury. However, in the last three days, it saw two starters return to practice: after left guard Alijah Vera-Tuc",
+      "imageUrl": "",
+      "imageAlt": "What Romeo Doubs returning to practice means for the Patriots",
+      "publishedAt": "2026-11-26T12:18:07.000Z",
+      "url": "https://www.patspulpit.com/new-england-patriots-analysis/145271/romeo-doubs-return-practice-injured-reserve-impact-roster",
+      "outletId": "pats_pulpit",
+      "outletName": "Pats Pulpit",
+      "reporterId": "pats_pulpit",
+      "reporterName": "Bernd Buchmasser",
+      "author": "Bernd Buchmasser",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-analysis/145271/romeo-doubs-return-practice-injured-reserve-impact-roster",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        },
+        {
+          "id": "4361432",
+          "name": "Romeo Doubs",
+          "shortName": "R. Doubs",
+          "position": "WR",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.2922
+    },
     {
       "id": "ne_vid_cea7d166e5d0",
       "type": "video",
@@ -371,7 +731,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.648,
+      "breakingPriority": 0.264,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -381,55 +741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.563
-    },
-    {
-      "id": "ne_nfltr_ed6c2788c394",
-      "type": "article",
-      "title": "Patriots Designate WR Romeo Doubs To Return",
-      "summary": "Per the NFL transaction wire, the Patriots have designated WR Romeo Doubs to return from injured reserve. This opens a three-week window for him to practice with the team before he has to be added to the active roster. Doubs, 26, was select",
-      "imageUrl": "",
-      "imageAlt": "Patriots Designate WR Romeo Doubs To Return",
-      "publishedAt": "2026-11-25T21:49:37.000Z",
-      "url": "https://nfltraderumors.co/patriots-designate-wr-romeo-doubs-to-return/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4361432",
-          "name": "Romeo Doubs",
-          "shortName": "R. Doubs",
-          "position": "WR",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.032,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "corroborationCount": 2,
-      "corroboratedBy": [
-        "Evan Lazar"
-      ],
-      "firstReportedBy": "Evan Lazar",
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.1852
+      "storyRank": 1.833
     },
     {
       "id": "ne_brss_pats_pulpit_ac54dea3ad00",
@@ -496,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6608
+      "storyRank": 1.7949
     },
     {
       "id": "ne_rss_ae9c8b82a114",
@@ -530,7 +842,507 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0959
+      "storyRank": 1.7279
+    },
+    {
+      "id": "ne_brss_nbcs_bos_40399312191a",
+      "type": "article",
+      "title": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/DeVito_Tommy_2026-11-15T164046Z_1773880997_MT1USATODAY30357853_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-DETROIT-LIONS-e1795555765633.jpg?quality=85&strip=all&fit=1280,720",
+      "imageAlt": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Justin Leger and Nick Goss",
+      "author": "Justin Leger and Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240391",
+          "name": "Tommy DeVito",
+          "shortName": "T. DeVito",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_efc4749792b1",
+      "type": "article",
+      "title": "Patriots mailbag: Morton over DeVito? Biggest draft needs, and more",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Morton_Behren_2026-10-22T223031Z_79859314_MT1USATODAY30156018_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-CHICAGO-BEARS-e1795558258372.jpg?quality=85&strip=all&fit=1280,720",
+      "imageAlt": "Patriots mailbag: Morton over DeVito? Biggest draft needs, and more",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mailbag-tommy-devito-behren-morton-draft-needs/815633/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "phil_perry",
+      "reporterName": "Phil Perry",
+      "author": "Phil Perry",
+      "authorHandle": "@PhilAPerry",
+      "authorProfileUrl": "https://x.com/PhilAPerry",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240391",
+          "name": "Tommy DeVito",
+          "shortName": "T. DeVito",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
+        },
+        {
+          "id": "4431465",
+          "name": "Behren Morton",
+          "shortName": "B. Morton",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431465.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_13f66cebb0f3",
+      "type": "article",
+      "title": "NFL playoff picture: Patriots still alive in AFC wild card race entering Week 12",
+      "summary": "Don’t make it about Tom Brady. Don’t be a stereotype. Be better than that. This has nothing to do with Tom Brady. You don’t have to make this about Tom Brady. Nobody is asking you to make this about Tom Brady. OK, here goes. Aaron Rodgers i",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Tommy-Devito-Lions.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "NFL playoff picture: Patriots still alive in AFC wild card race entering Week 12",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Nick Goss",
+      "author": "Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_d7b83e39b54a",
+      "type": "article",
+      "title": "How to watch Patriots vs. Chargers in Week 12: Time, channel and stream",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/261123-vrabel-harbaugh-getty.jpg?quality=85&strip=all&fit=5981,3365",
+      "imageAlt": "How to watch Patriots vs. Chargers in Week 12: Time, channel and stream",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Logan Reardon",
+      "author": "Logan Reardon",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_d095192a1746",
+      "type": "article",
+      "title": "Should Patriots sign Daniel Jones as free agent after Colts release?",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Daniel-Jones.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Should Patriots sign Daniel Jones as free agent after Colts release?",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Nick Goss",
+      "author": "Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_c19de89b2981",
+      "type": "article",
+      "title": "Anything remains possible for Patriots in final seven games",
+      "summary": "Don’t make it about Tom Brady. Don’t be a stereotype. Be better than that. This has nothing to do with Tom Brady. You don’t have to make this about Tom Brady. Nobody is asking you to make this about Tom Brady. OK, here goes. Aaron Rodgers i",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/mac-jones.jpg?quality=85&strip=all&fit=7075,3980",
+      "imageAlt": "Anything remains possible for Patriots in final seven games",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Michael Hurley",
+      "author": "Michael Hurley",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_97259822f80d",
+      "type": "article",
+      "title": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Brown-A.J.-leaves-field-injured-RP-111626-01.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "phil_perry",
+      "reporterName": "Phil Perry",
+      "author": "Phil Perry",
+      "authorHandle": "@PhilAPerry",
+      "authorProfileUrl": "https://x.com/PhilAPerry",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4047646",
+          "name": "A.J. Brown",
+          "shortName": "A.J. Brown",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047646.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_f4bbab0c5ec5",
+      "type": "article",
+      "title": "Drake Maye's value will be crystal clear during absence from Patriots",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/drake-maye_01f687.jpg?quality=85&strip=all&fit=2322,1306",
+      "imageAlt": "Drake Maye's value will be crystal clear during absence from Patriots",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Michael Hurley",
+      "author": "Michael Hurley",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_d84fe4e81e06",
+      "type": "article",
+      "title": "Garoppolo? Levis? 5 QB options for Patriots to consider amid Drake Maye's injury",
+      "summary": "Don’t make it about Tom Brady. Don’t be a stereotype. Be better than that. This has nothing to do with Tom Brady. You don’t have to make this about Tom Brady. Nobody is asking you to make this about Tom Brady. OK, here goes. Aaron Rodgers i",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Jimmy-Garoppolo.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Garoppolo? Levis? 5 QB options for Patriots to consider amid Drake Maye's injury",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/garoppolo-levis-5-qb-options-for-patriots-to-consider-amid-drake-mayes-injury/814143/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Nick Goss",
+      "author": "Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/garoppolo-levis-5-qb-options-for-patriots-to-consider-amid-drake-mayes-injury/814143/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_82b95ce0e7b4",
+      "type": "article",
+      "title": "Stock Watch: Pats' stock crashing across the board after embarrassment in Munich",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Gibbs_2026-11-15T155916Z_1984053593_MT1USATODAY30357734_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-DETROIT-LIONS-e1794782197929.jpg?quality=85&strip=all&fit=1280,720",
+      "imageAlt": "Stock Watch: Pats' stock crashing across the board after embarrassment in Munich",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "phil_perry",
+      "reporterName": "Phil Perry",
+      "author": "Phil Perry",
+      "authorHandle": "@PhilAPerry",
+      "authorProfileUrl": "https://x.com/PhilAPerry",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_df88067e6b18",
+      "type": "article",
+      "title": "Why Patriots should focus on 2027 NFL Draft positioning after Maye injury",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Drake-Maye-Packers-1.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Why Patriots should focus on 2027 NFL Draft positioning after Maye injury",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-s2027-nfl-draft-order-drake-maye-injury/814182/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Nick Goss",
+      "author": "Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-s2027-nfl-draft-order-drake-maye-injury/814182/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_brss_nbcs_bos_7b49ed1a4e4d",
+      "type": "article",
+      "title": "Is Vrabel's message not resonating with Patriots? Reacting to Lions loss",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Vrabel_2026-11-13T113359Z_1574373747_UP1EMBD0W4LEK_RTRMADP_3_FOOTBALL-NFL-DET-NEP-PREVIEW-e1794769420906.jpg?quality=85&strip=all&fit=1280,720",
+      "imageAlt": "Is Vrabel's message not resonating with Patriots? Reacting to Lions loss",
+      "publishedAt": "2026-11-26T02:35:52.000Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mike-vrabel-message-lions-loss-week-10/813869/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Justin Leger",
+      "author": "Justin Leger",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mike-vrabel-message-lions-loss-week-10/813869/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0888
+    },
+    {
+      "id": "ne_yt_u0JvYIm84TM",
+      "type": "video",
+      "category": "film",
+      "videoId": "u0JvYIm84TM",
+      "embeddable": true,
+      "title": "Patriots vs. Chargers Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the New England Patriots and the Los Angeles Chargers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday",
+      "imageUrl": "https://i.ytimg.com/vi/u0JvYIm84TM/hqdefault.jpg",
+      "imageAlt": "Patriots vs. Chargers Preview + Predictions",
+      "publishedAt": "2026-11-25T19:20:12.000Z",
+      "url": "https://www.youtube.com/watch?v=u0JvYIm84TM",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=u0JvYIm84TM",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "10:10",
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.4013
     },
     {
       "id": "ne_espn_7c0d1fce8bce8",
@@ -574,80 +1386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3378
-    },
-    {
-      "id": "ne_brss_pats_pulpit_c0838a7c8a5a",
-      "type": "article",
-      "title": "Patriots rooting guide for Thanksgiving weekend",
-      "summary": "Happy Thanksgiving weekend, everybody. While the rest of us are going to enjoy some days with family and food, the NFL is quite busy: a total of 16 games will be played between Wednesday and Monday, with at least one game on on five of the",
-      "imageUrl": "",
-      "imageAlt": "Patriots rooting guide for Thanksgiving weekend",
-      "publishedAt": "2026-11-26T00:34:44.000Z",
-      "url": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
-      "outletId": "pats_pulpit",
-      "outletName": "Pats Pulpit",
-      "reporterId": "pats_pulpit",
-      "reporterName": "Bernd Buchmasser",
-      "author": "Bernd Buchmasser",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-opinion/145243/patriots-rooting-guide-nfl-week-12-thanksgiving",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.246
-    },
-    {
-      "id": "ne_yt_u0JvYIm84TM",
-      "type": "video",
-      "category": "film",
-      "videoId": "u0JvYIm84TM",
-      "embeddable": true,
-      "title": "Patriots vs. Chargers Preview + Predictions",
-      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the New England Patriots and the Los Angeles Chargers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday",
-      "imageUrl": "https://i.ytimg.com/vi/u0JvYIm84TM/hqdefault.jpg",
-      "imageAlt": "Patriots vs. Chargers Preview + Predictions",
-      "publishedAt": "2026-11-25T19:20:12.000Z",
-      "url": "https://www.youtube.com/watch?v=u0JvYIm84TM",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=u0JvYIm84TM",
-      "channel": "Check the Mic",
-      "outletId": "check_the_mic",
-      "outletName": "Check the Mic",
-      "reporterId": "check_the_mic",
-      "reporterName": "Check the Mic",
-      "author": "Check the Mic",
-      "authorHandle": "@CheckTheMic",
-      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
-      "trustTier": 2,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.41,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.1871,
-      "duration": "10:10"
+      "storyRank": 0.9394
     },
     {
       "id": "ne_espn_a0ca94efbffe2",
@@ -693,7 +1432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5265
+      "storyRank": 0.8337
     },
     {
       "id": "ne_rss_bdf5d557fe5e",
@@ -727,7 +1466,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3367
+      "storyRank": 0.8043
     },
     {
       "id": "ne_vid_90152705c57b",
@@ -763,7 +1502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3354
+      "storyRank": 0.8041
     },
     {
       "id": "ne_vid_ed29bac153d0",
@@ -824,7 +1563,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3152
+      "storyRank": 0.8009
     },
     {
       "id": "ne_vid_5797a2b0766b",
@@ -860,7 +1599,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0833
+      "storyRank": 0.7615
     },
     {
       "id": "ne_tyt_h13omejEn5M",
@@ -910,13 +1649,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "56:19",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9974,
-      "duration": "56:19"
+      "storyRank": 0.7459
     },
     {
       "id": "ne_tyt_9y20-p_ssug",
@@ -958,13 +1697,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:52",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9641,
-      "duration": "0:52"
+      "storyRank": 0.7397
     },
     {
       "id": "ne_tyt_K03euORmNlg",
@@ -997,13 +1736,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "9:13",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8776,
-      "duration": "9:13"
+      "storyRank": 0.7231
     },
     {
       "id": "ne_brss_pats_pulpit_92b149691e9b",
@@ -1037,7 +1776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8029
+      "storyRank": 0.7026
     },
     {
       "id": "ne_vid_bdc7b0d27d2d",
@@ -1073,48 +1812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8275
-    },
-    {
-      "id": "ne_pwire_4361432_64979028",
-      "type": "article",
-      "title": "Doubs (shoulder) was limited in Wednesday's practice.",
-      "summary": "According to Mike Reiss of ESPN.com, Doubs did individual drills and ran routes against air, suggesting the wide receiver was especially limited after having his 21-day practice window opened earlier in the day. Doubs lo",
-      "publishedAt": "2026-11-25T23:47:53.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs#:~:text=Doubs%20(shoulder)%20was%20limited%20in%20Wednesday's%20practice",
-      "outletId": "espn_ne",
-      "outletName": "ESPN New England Patriots Beat",
-      "reporterId": "mike_reiss",
-      "reporterName": "Mike Reiss",
-      "author": "Mike Reiss",
-      "authorHandle": "@MikeReiss",
-      "authorProfileUrl": "https://x.com/MikeReiss",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "4361432",
-          "name": "Romeo Doubs",
-          "shortName": "R. Doubs",
-          "position": "WR",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4467
+      "storyRank": 0.7133
     },
     {
       "id": "ne_brss_pats_pulpit_396c65d3e488",
@@ -1165,7 +1863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6928
+      "storyRank": 0.6801
     },
     {
       "id": "ne_pwire_4047646_64973628",
@@ -1197,7 +1895,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7072
+      "storyRank": 0.6886
+    },
+    {
+      "id": "ne_pwire_4361432_64979028",
+      "type": "article",
+      "title": "Doubs (shoulder) was limited in Wednesday's practice.",
+      "summary": "According to Mike Reiss of ESPN.com, Doubs did individual drills and ran routes against air, suggesting the wide receiver was especially limited after having his 21-day practice window opened earlier in the day. Doubs lo",
+      "publishedAt": "2026-11-25T23:47:53.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs#:~:text=Doubs%20(shoulder)%20was%20limited%20in%20Wednesday's%20practice",
+      "outletId": "espn_ne",
+      "outletName": "ESPN New England Patriots Beat",
+      "reporterId": "mike_reiss",
+      "reporterName": "Mike Reiss",
+      "author": "Mike Reiss",
+      "authorHandle": "@MikeReiss",
+      "authorProfileUrl": "https://x.com/MikeReiss",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4361432",
+          "name": "Romeo Doubs",
+          "shortName": "R. Doubs",
+          "position": "WR",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3374
     },
     {
       "id": "ne_pwire_4361432_64973528",
@@ -1234,60 +1973,11 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 2,
-      "corroboratedBy": [
-        "NFL Trade Rumors"
-      ],
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.769
-    },
-    {
-      "id": "ne_tx_ee7b8a399faf",
-      "type": "tweet",
-      "title": "Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
-      "fullText": "Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.patriots.com/team/transactions/#tx-ee7b8a399faf",
-      "outletId": "patriots_official",
-      "outletName": "patriots.com Official",
-      "reporterId": "patriots_official",
-      "reporterName": "New England Patriots Official",
-      "author": "New England Patriots Official",
-      "authorHandle": "@Patriots",
-      "authorProfileUrl": "https://www.patriots.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [
-        {
-          "id": "4361432",
-          "name": "Romeo Doubs",
-          "shortName": "R. Doubs",
-          "position": "WR",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.1002
+      "storyRank": 0.6847
     },
     {
       "id": "ne_vid_78a96f4abcd5",
@@ -1323,7 +2013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6586
+      "storyRank": 0.6782
     },
     {
       "id": "ne_vid_bbdebdf41431",
@@ -1359,7 +2049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5694
+      "storyRank": 0.6585
     },
     {
       "id": "ne_vid_6924fe7b6857",
@@ -1395,7 +2085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5451
+      "storyRank": 0.653
     },
     {
       "id": "ne_vid_76a9dd1cc93d",
@@ -1431,7 +2121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4651
+      "storyRank": 0.6344
     },
     {
       "id": "ne_tyt_eaDT8u5Skbs",
@@ -1473,13 +2163,13 @@
       "signalScore": 70,
       "fluffScore": 25,
       "isClickbait": false,
+      "duration": "1:04:07",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2197,
-      "duration": "1:04:07"
+      "storyRank": 0.5344
     },
     {
       "id": "ne_tyt_tFJWoK1hvGg",
@@ -1521,13 +2211,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "3:10",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4179,
-      "duration": "3:10"
+      "storyRank": 0.623
     },
     {
       "id": "ne_vid_1fdcfe54050a",
@@ -1572,7 +2262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2479
+      "storyRank": 0.5795
     },
     {
       "id": "ne_brss_pats_pulpit_48e910869f21",
@@ -1606,7 +2296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2108
+      "storyRank": 0.5654
     },
     {
       "id": "ne_brss_pats_pulpit_2c9c5ca78c06",
@@ -1657,109 +2347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0372
-    },
-    {
-      "id": "ne_brss_pats_pulpit_28cefe1f49f0",
-      "type": "article",
-      "title": "Patriots vs. Chargers preview: Players to watch, stats, more for Week 12",
-      "summary": "After flying to Germany for their last game, a loss to the Detroit Lions ahead of last weekend’s bye, another long journey awaits the New England Patriots. The team of head coach Mike Vrabel will fly to Los Angeles to take on a Chargers tea",
-      "imageUrl": "",
-      "imageAlt": "Patriots vs. Chargers preview: Players to watch, stats, more for Week 12",
-      "publishedAt": "2026-11-25T14:01:28.000Z",
-      "url": "https://www.patspulpit.com/new-england-patriots-analysis/145172/patriots-vs-chargers-preview-players-to-watch-stats-nfl-week-12",
-      "outletId": "pats_pulpit",
-      "outletName": "Pats Pulpit",
-      "reporterId": "pats_pulpit",
-      "reporterName": "Bernd Buchmasser",
-      "author": "Bernd Buchmasser",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-analysis/145172/patriots-vs-chargers-preview-players-to-watch-stats-nfl-week-12",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9962
-    },
-    {
-      "id": "ne_brss_pats_pulpit_2b5e0f151d4f",
-      "type": "article",
-      "title": "Examining the roster ties between Patriots, Chargers ahead of Week 12",
-      "summary": "Last January’s AFC wild card is a distant memory now. But there’s still some familiarity between the 5-5 New England Patriots and the 1-9 Los Angeles Chargers. Between the active rosters, practice squads and reserve lists, four players in t",
-      "imageUrl": "",
-      "imageAlt": "Examining the roster ties between Patriots, Chargers ahead of Week 12",
-      "publishedAt": "2026-11-25T11:58:54.000Z",
-      "url": "https://www.patspulpit.com/new-england-patriots-analysis/143701/patriots-chargers-examining-roster-ties-nfl-week-12",
-      "outletId": "pats_pulpit",
-      "outletName": "Pats Pulpit",
-      "reporterId": "pats_pulpit",
-      "reporterName": "Oliver Thomas",
-      "author": "Oliver Thomas",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-analysis/143701/patriots-chargers-examining-roster-ties-nfl-week-12",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8605
-    },
-    {
-      "id": "ne_brss_pats_pulpit_cea3fbf66a08",
-      "type": "article",
-      "title": "Patriots have no regrets over Stefon Diggs decision",
-      "summary": "Before the start of this year’s free agency, the New England Patriots decided to part ways with their leading receiver. Despite having caught a combined 99 regular season and playoff passes for 1,123 yards and five touchdowns, Stefon Diggs",
-      "imageUrl": "",
-      "imageAlt": "Patriots have no regrets over Stefon Diggs decision",
-      "publishedAt": "2026-11-25T11:14:44.000Z",
-      "url": "https://www.patspulpit.com/new-england-patriots-news/145163/patriots-no-regrets-stefon-diggs-decision-mike-vrabel",
-      "outletId": "pats_pulpit",
-      "outletName": "Pats Pulpit",
-      "reporterId": "pats_pulpit",
-      "reporterName": "Bernd Buchmasser",
-      "author": "Bernd Buchmasser",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-news/145163/patriots-no-regrets-stefon-diggs-decision-mike-vrabel",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.8191
+      "storyRank": 0.5158
     },
     {
       "id": "ne_rss_4b9f854c98bc",
@@ -1810,32 +2398,42 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8197
+      "storyRank": 0.4477
     },
     {
-      "id": "ne_brss_pats_pulpit_d2545210653d",
-      "type": "article",
-      "title": "Patriots practice update: 2 new absentees before Chargers game",
-      "summary": "The New England Patriots were back on the practice fields on Tuesday for their second practice leading up to their Week 12 game against the Los Angeles Chargers. Like the previous day, the team of head coach. Mike Vrabel did not enjoy perfe",
+      "id": "ne_tx_ee7b8a399faf",
+      "type": "tweet",
+      "title": "Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
+      "fullText": "Patriots roster move: Designated WR Romeo Doubs to return from injured reserve.",
+      "isFullTweet": true,
+      "summary": "",
       "imageUrl": "",
-      "imageAlt": "Patriots practice update: 2 new absentees before Chargers game",
-      "publishedAt": "2026-11-25T09:31:52.000Z",
-      "url": "https://www.patspulpit.com/new-england-patriots-news/145154/patriots-practice-update-2-new-absentees-chargers-game",
-      "outletId": "pats_pulpit",
-      "outletName": "Pats Pulpit",
-      "reporterId": "pats_pulpit",
-      "reporterName": "Brian Hines",
-      "author": "Brian Hines",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.patspulpit.com/new-england-patriots-news/145154/patriots-practice-update-2-new-absentees-chargers-game",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.patriots.com/team/transactions/#tx-ee7b8a399faf",
+      "outletId": "patriots_official",
+      "outletName": "patriots.com Official",
+      "reporterId": "patriots_official",
+      "reporterName": "New England Patriots Official",
+      "author": "New England Patriots Official",
+      "authorHandle": "@Patriots",
+      "authorProfileUrl": "https://www.patriots.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4361432",
+          "name": "Romeo Doubs",
+          "shortName": "R. Doubs",
+          "position": "WR",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361432.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1844,7 +2442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.735
+      "storyRank": 0.3966
     },
     {
       "id": "ne_tyt_63D476Z0-E0",
@@ -1878,13 +2476,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:32",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4176,
-      "duration": "0:32"
+      "storyRank": 0.279
     },
     {
       "id": "ne_vid_458e16700950",
@@ -1930,7 +2528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4145
+      "storyRank": 0.2774
     },
     {
       "id": "ne_vid_95a19d3e34fc",
@@ -1992,7 +2590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4098
+      "storyRank": 0.2751
     },
     {
       "id": "ne_rss_34951ba6a6bc",
@@ -2026,7 +2624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4011
+      "storyRank": 0.2707
     },
     {
       "id": "ne_pwire_4047646_64959528",
@@ -2058,7 +2656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3879
+      "storyRank": 0.2639
     },
     {
       "id": "ne_rss_a6f80e885cb5",
@@ -2092,7 +2690,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3802
+      "storyRank": 0.2599
     },
     {
       "id": "ne_vid_450f286a5d32",
@@ -2129,7 +2727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3776
+      "storyRank": 0.2585
     },
     {
       "id": "ne_vid_7832c3a53ee1",
@@ -2166,7 +2764,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.369
+      "storyRank": 0.254
     },
     {
       "id": "ne_vid_a12838f94b3c",
@@ -2203,7 +2801,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3444
+      "storyRank": 0.2409
     },
     {
       "id": "ne_vid_33c91a69f08c",
@@ -2240,7 +2838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2491
+      "storyRank": 0.1863
     },
     {
       "id": "ne_pfr_a33b4f7986e0",
@@ -2282,7 +2880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2186
+      "storyRank": 0.1669
     },
     {
       "id": "ne_pwire_4240391_64946928",
@@ -2331,7 +2929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2207
+      "storyRank": 0.1689
     },
     {
       "id": "x_tl_aaronwilson_nfl_2124991375175270481",
@@ -2379,7 +2977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2208
+      "storyRank": 0.171
     },
     {
       "id": "ne_vid_a4278cbd1559",
@@ -2441,7 +3039,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2002
+      "storyRank": 0.1556
     },
     {
       "id": "ne_pwire_4047646_64938428",
@@ -2473,7 +3071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2002
+      "storyRank": 0.1556
     },
     {
       "id": "ne_pwire_4431452_64937628",
@@ -2505,7 +3103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1963
+      "storyRank": 0.1532
     },
     {
       "id": "ne_espn_5c7896f7f1356",
@@ -2557,7 +3155,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1915
+      "storyRank": 0.1499
     },
     {
       "id": "ne_vid_cf2e14a383dd",
@@ -2594,7 +3192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1828
+      "storyRank": 0.1441
     },
     {
       "id": "ne_pwire_4361432_64934728",
@@ -2635,7 +3233,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3971
+      "storyRank": 0.3194
     },
     {
       "id": "ne_pfr_e444f6589469",
@@ -2677,46 +3275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1733
-    },
-    {
-      "id": "ne_tyt_4BrMiDSELJA",
-      "type": "video",
-      "category": "beat",
-      "videoId": "4BrMiDSELJA",
-      "embeddable": false,
-      "title": "Mike Vrabel Discusses What’s Ahead Following the Bye Week on WEEI",
-      "summary": "Abstract: Patriots head coach Mike Vrabel joins The Greg Hill Show on Monday, November 23rd, 2026. Subscribe to the New England Patriots YouTube channel: http://bit.ly/2IOD2e9 For More Patriots NFL Action: https://bit.ly",
-      "imageUrl": "https://i.ytimg.com/vi/4BrMiDSELJA/hqdefault.jpg",
-      "imageAlt": "Mike Vrabel Discusses What’s Ahead Following the Bye Week on WEEI",
-      "publishedAt": "2026-11-23T14:27:58.000Z",
-      "url": "https://www.youtube.com/watch?v=4BrMiDSELJA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=4BrMiDSELJA",
-      "channel": "New England Patriots",
-      "outletId": "UCMm_V8YjmnZRhToXIqDYDuw",
-      "outletName": "New England Patriots",
-      "reporterId": "UCMm_V8YjmnZRhToXIqDYDuw",
-      "reporterName": "New England Patriots",
-      "author": "New England Patriots",
-      "authorHandle": "@patriots",
-      "authorProfileUrl": "https://www.youtube.com/@patriots",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1707,
-      "duration": "15:52"
+      "storyRank": 0.1374
     },
     {
       "id": "x_tl_dougkyed_2124866043910701274",
@@ -2755,7 +3314,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.186
+      "storyRank": 0.1484
+    },
+    {
+      "id": "ne_tyt_4BrMiDSELJA",
+      "type": "video",
+      "category": "beat",
+      "videoId": "4BrMiDSELJA",
+      "embeddable": false,
+      "title": "Mike Vrabel Discusses What’s Ahead Following the Bye Week on WEEI",
+      "summary": "Abstract: Patriots head coach Mike Vrabel joins The Greg Hill Show on Monday, November 23rd, 2026. Subscribe to the New England Patriots YouTube channel: http://bit.ly/2IOD2e9 For More Patriots NFL Action: https://bit.ly",
+      "imageUrl": "https://i.ytimg.com/vi/4BrMiDSELJA/hqdefault.jpg",
+      "imageAlt": "Mike Vrabel Discusses What’s Ahead Following the Bye Week on WEEI",
+      "publishedAt": "2026-11-23T14:27:58.000Z",
+      "url": "https://www.youtube.com/watch?v=4BrMiDSELJA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=4BrMiDSELJA",
+      "channel": "New England Patriots",
+      "outletId": "UCMm_V8YjmnZRhToXIqDYDuw",
+      "outletName": "New England Patriots",
+      "reporterId": "UCMm_V8YjmnZRhToXIqDYDuw",
+      "reporterName": "New England Patriots",
+      "author": "New England Patriots",
+      "authorHandle": "@patriots",
+      "authorProfileUrl": "https://www.youtube.com/@patriots",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "15:52",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.136
     },
     {
       "id": "x_tl_thegreghillshow_2124846246791667993",
@@ -2807,7 +3405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1782
+      "storyRank": 0.1428
     },
     {
       "id": "ne_vid_2cf35e099b42",
@@ -2844,7 +3442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1631
+      "storyRank": 0.1308
     },
     {
       "id": "ne_tx_32ffb1a8ad4c",
@@ -2888,7 +3486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1498
+      "storyRank": 0.1216
     },
     {
       "id": "ne_pfr_d3775005498d",
@@ -2921,7 +3519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.114
+      "storyRank": 0.0956
     },
     {
       "id": "ne_espn_99b1e4513f880",
@@ -2973,7 +3571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1065
+      "storyRank": 0.0902
     },
     {
       "id": "ne_pfr_bf0377c4bade",
@@ -3023,7 +3621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0691
+      "storyRank": 0.061
     },
     {
       "id": "ne_tyt_7HXr5xvcgqk",
@@ -3056,13 +3654,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "20:00",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0691,
-      "duration": "20:00"
+      "storyRank": 0.0611
     },
     {
       "id": "ne_vid_9ba2db3fb3b7",
@@ -3099,7 +3697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0691
+      "storyRank": 0.0611
     },
     {
       "id": "ne_tyt_eoQz65tz7cM",
@@ -3157,13 +3755,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "40:25",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068,
-      "duration": "40:25"
+      "storyRank": 0.0602
     },
     {
       "id": "ne_vid_16e155798697",
@@ -3225,7 +3823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0602
     },
     {
       "id": "ne_espn_281429b2d7a67",
@@ -3277,7 +3875,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0659
+      "storyRank": 0.0584
+    },
+    {
+      "id": "x_tl_philaperry_2123861320252481555",
+      "type": "tweet",
+      "title": "I’m told it is a broken fibula for Drake Maye, as @MikeReiss and @AdamSchefter reported. He will not undergo surgery to repair the injury, and a regular-season return has not been entirely ruled out.",
+      "fullText": "I’m told it is a broken fibula for Drake Maye, as @MikeReiss and @AdamSchefter reported. He will not undergo surgery to repair the injury, and a regular-season return has not been entirely ruled out.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Phil Perry post",
+      "mentionedPlayers": [
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "publishedAt": "2026-11-20T19:29:32.840Z",
+      "url": "https://x.com/PhilAPerry/status/2123861320252481555",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "nbc_sports_boston_ne",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "phil_perry",
+      "reporterName": "Phil Perry",
+      "author": "Phil Perry",
+      "authorHandle": "@PhilAPerry",
+      "authorProfileUrl": "https://x.com/PhilAPerry",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0626
     },
     {
       "id": "ne_espn_5766af6285303",
@@ -3329,8 +3975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0642,
-      "isSupersededInjuryUpdate": true
+      "storyRank": 0.057
     },
     {
       "id": "ne_espn_d05c955fa4747",
@@ -3376,7 +4021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0642
+      "storyRank": 0.057
     },
     {
       "id": "ne_pwire_4431452_64880628",
@@ -3408,7 +4053,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0639
+      "storyRank": 0.0568
     },
     {
       "id": "ne_tyt_1CJZ0pJaads",
@@ -3441,13 +4086,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:04",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0632,
-      "duration": "5:04"
+      "storyRank": 0.0562
     },
     {
       "id": "ne_tyt_IBh-jhYjvA4",
@@ -3505,13 +4150,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "2:25",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0632,
-      "duration": "2:25"
+      "storyRank": 0.0562
     },
     {
       "id": "ne_vid_f51a611fe62a",
@@ -3573,7 +4218,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0628
+      "storyRank": 0.0559
     },
     {
       "id": "ne_vid_6d03ffaccfc6",
@@ -3610,7 +4255,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0626
+      "storyRank": 0.0558
     },
     {
       "id": "ne_tyt_ljCRd4zUFpw",
@@ -3643,13 +4288,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "34:30",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0612,
-      "duration": "34:30"
+      "storyRank": 0.0546
     },
     {
       "id": "ne_tyt_kNXbSvJPtpw",
@@ -3682,13 +4327,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "22:30",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0542,
-      "duration": "22:30"
+      "storyRank": 0.0488
     },
     {
       "id": "ne_vid_ee07477295fd",
@@ -3734,7 +4379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0542
+      "storyRank": 0.0488
     },
     {
       "id": "ne_tyt_Cm8XDUhesHQ",
@@ -3784,49 +4429,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:32",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0522,
-      "duration": "5:32"
-    },
-    {
-      "id": "ne_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.052
+      "storyRank": 0.0472
     },
     {
       "id": "ne_vid_54e8ac100aeb",
@@ -3872,43 +4481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
-    },
-    {
-      "id": "ne_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0518
+      "storyRank": 0.0469
     },
     {
       "id": "ne_tyt_XWaaigKSHrk",
@@ -3941,13 +4514,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:21",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.051,
-      "duration": "4:21"
+      "storyRank": 0.0462
     },
     {
       "id": "ne_vid_0ec7a6491d4d",
@@ -3984,7 +4557,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0507
+      "storyRank": 0.0458
     },
     {
       "id": "ne_vid_4dec6b92819b",
@@ -4020,7 +4593,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0505
+      "storyRank": 0.0457
     },
     {
       "id": "ne_tyt_rqIJw_jMpjI",
@@ -4062,13 +4635,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "2:48",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0498,
-      "duration": "2:48"
+      "storyRank": 0.0451
     },
     {
       "id": "ne_vid_0b9ea92bbba6",
@@ -4114,7 +4687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0497
+      "storyRank": 0.045
     },
     {
       "id": "ne_vid_23123a36b00a",
@@ -4150,7 +4723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0494
+      "storyRank": 0.0448
     },
     {
       "id": "ne_vid_be20fae64efc",
@@ -4187,7 +4760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.0379
     },
     {
       "id": "ne_vid_8b314dfe91e5",
@@ -4224,7 +4797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.0379
     },
     {
       "id": "ne_nfilm_matchquarters_b799f1704412",
@@ -4267,7 +4840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0391
+      "storyRank": 0.0359
     },
     {
       "id": "ne_vid_8eb36f22f7d0",
@@ -4337,7 +4910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.035
+      "storyRank": 0.0324
     },
     {
       "id": "ne_vid_59cc8967a48d",
@@ -4374,7 +4947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0349
+      "storyRank": 0.0323
     },
     {
       "id": "ne_vid_e22bb780778a",
@@ -4420,7 +4993,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0343
+      "storyRank": 0.0317
     },
     {
       "id": "ne_bsky_c285b5012c08",
@@ -4468,7 +5041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.0297
     },
     {
       "id": "ne_pfr_08f8828837ae",
@@ -4510,7 +5083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0314
+      "storyRank": 0.0292
     },
     {
       "id": "ne_pfr_3002795b87da",
@@ -4552,7 +5125,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0281
+    },
+    {
+      "id": "ne_yts_oEWzIE47H7Q",
+      "type": "video",
+      "videoId": "oEWzIE47H7Q",
+      "embeddable": false,
+      "title": "Patriots vs. Lions Week 10 Recap | NFL Daily",
+      "summary": "",
+      "duration": "9:06",
+      "imageUrl": "https://i.ytimg.com/vi/oEWzIE47H7Q/hqdefault.jpg",
+      "imageAlt": "Patriots vs. Lions Week 10 Recap | NFL Daily",
+      "publishedAt": "2026-11-16T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=oEWzIE47H7Q",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=oEWzIE47H7Q",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
     },
     {
       "id": "ne_vid_4720d77be885",
@@ -4589,7 +5201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0277
     },
     {
       "id": "ne_vid_94ca9a2dc64b",
@@ -4635,202 +5247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0291
-    },
-    {
-      "id": "ne_yts_R0bF5z-qYe8",
-      "type": "video",
-      "videoId": "R0bF5z-qYe8",
-      "embeddable": false,
-      "title": "New England Patriots vs. Detroit Lions Game Highlights | 2026 NFL Season",
-      "summary": "",
-      "duration": "13:45",
-      "imageUrl": "https://i.ytimg.com/vi/R0bF5z-qYe8/hqdefault.jpg",
-      "imageAlt": "New England Patriots vs. Detroit Lions Game Highlights | 2026 NFL Season",
-      "publishedAt": "2026-11-16T07:27:48.198Z",
-      "url": "https://www.youtube.com/watch?v=R0bF5z-qYe8",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=R0bF5z-qYe8",
-      "channel": "New England Patriots",
-      "outletId": "patriots_official",
-      "outletName": "New England Patriots",
-      "reporterId": "patriots_official",
-      "reporterName": "New England Patriots",
-      "author": "New England Patriots",
-      "authorHandle": "@patriots",
-      "authorProfileUrl": "https://www.youtube.com/@patriots",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "ne_yts_1X4_ZK9Dzno",
-      "type": "video",
-      "videoId": "1X4_ZK9Dzno",
-      "embeddable": true,
-      "title": "Gonzo PICK 0️⃣ 📺FOX #patriots #nfl #shorts",
-      "summary": "",
-      "duration": "0:10",
-      "imageUrl": "https://i.ytimg.com/vi/1X4_ZK9Dzno/hqdefault.jpg",
-      "imageAlt": "Gonzo PICK 0️⃣ 📺FOX #patriots #nfl #shorts",
-      "publishedAt": "2026-11-16T07:27:48.198Z",
-      "url": "https://www.youtube.com/watch?v=1X4_ZK9Dzno",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=1X4_ZK9Dzno",
-      "channel": "New England Patriots",
-      "outletId": "patriots_official",
-      "outletName": "New England Patriots",
-      "reporterId": "patriots_official",
-      "reporterName": "New England Patriots",
-      "author": "New England Patriots",
-      "authorHandle": "@patriots",
-      "authorProfileUrl": "https://www.youtube.com/@patriots",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "ne_yts_u9ggzabBnEo",
-      "type": "video",
-      "videoId": "u9ggzabBnEo",
-      "embeddable": false,
-      "title": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "13:45",
-      "imageUrl": "https://i.ytimg.com/vi/u9ggzabBnEo/hqdefault.jpg",
-      "imageAlt": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T07:27:48.197Z",
-      "url": "https://www.youtube.com/watch?v=u9ggzabBnEo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "ne_yts_pbabdlypBO4",
-      "type": "video",
-      "videoId": "pbabdlypBO4",
-      "embeddable": false,
-      "title": "Jahmyr Gibbs' best plays from 252-yard, 2-TD game vs. Patriots in Munich | Week 10",
-      "summary": "",
-      "duration": "3:28",
-      "imageUrl": "https://i.ytimg.com/vi/pbabdlypBO4/hqdefault.jpg",
-      "imageAlt": "Jahmyr Gibbs' best plays from 252-yard, 2-TD game vs. Patriots in Munich | Week 10",
-      "publishedAt": "2026-11-16T07:27:48.197Z",
-      "url": "https://www.youtube.com/watch?v=pbabdlypBO4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=pbabdlypBO4",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "ne_yts_oEWzIE47H7Q",
-      "type": "video",
-      "videoId": "oEWzIE47H7Q",
-      "embeddable": false,
-      "title": "Patriots vs. Lions Week 10 Recap | NFL Daily",
-      "summary": "",
-      "duration": "9:06",
-      "imageUrl": "https://i.ytimg.com/vi/oEWzIE47H7Q/hqdefault.jpg",
-      "imageAlt": "Patriots vs. Lions Week 10 Recap | NFL Daily",
-      "publishedAt": "2026-11-16T07:27:48.197Z",
-      "url": "https://www.youtube.com/watch?v=oEWzIE47H7Q",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=oEWzIE47H7Q",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
+      "storyRank": 0.0272
     },
     {
       "id": "ne_pfr_27ac80b58367",
@@ -4872,7 +5289,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0021
+      "storyRank": 0.0019
     },
     {
       "id": "ne_vid_219df85406f0",
@@ -4918,7 +5335,163 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0264
+      "storyRank": 0.0248
+    },
+    {
+      "id": "ne_yts_R0bF5z-qYe8",
+      "type": "video",
+      "videoId": "R0bF5z-qYe8",
+      "embeddable": false,
+      "title": "New England Patriots vs. Detroit Lions Game Highlights | 2026 NFL Season",
+      "summary": "",
+      "duration": "13:45",
+      "imageUrl": "https://i.ytimg.com/vi/R0bF5z-qYe8/hqdefault.jpg",
+      "imageAlt": "New England Patriots vs. Detroit Lions Game Highlights | 2026 NFL Season",
+      "publishedAt": "2026-11-15T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=R0bF5z-qYe8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=R0bF5z-qYe8",
+      "channel": "New England Patriots",
+      "outletId": "patriots_official",
+      "outletName": "New England Patriots",
+      "reporterId": "patriots_official",
+      "reporterName": "New England Patriots",
+      "author": "New England Patriots",
+      "authorHandle": "@patriots",
+      "authorProfileUrl": "https://www.youtube.com/@patriots",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0244
+    },
+    {
+      "id": "ne_yts_1X4_ZK9Dzno",
+      "type": "video",
+      "videoId": "1X4_ZK9Dzno",
+      "embeddable": true,
+      "title": "Gonzo PICK 0️⃣ 📺FOX #patriots #nfl #shorts",
+      "summary": "",
+      "duration": "0:10",
+      "imageUrl": "https://i.ytimg.com/vi/1X4_ZK9Dzno/hqdefault.jpg",
+      "imageAlt": "Gonzo PICK 0️⃣ 📺FOX #patriots #nfl #shorts",
+      "publishedAt": "2026-11-15T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=1X4_ZK9Dzno",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=1X4_ZK9Dzno",
+      "channel": "New England Patriots",
+      "outletId": "patriots_official",
+      "outletName": "New England Patriots",
+      "reporterId": "patriots_official",
+      "reporterName": "New England Patriots",
+      "author": "New England Patriots",
+      "authorHandle": "@patriots",
+      "authorProfileUrl": "https://www.youtube.com/@patriots",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0244
+    },
+    {
+      "id": "ne_yts_u9ggzabBnEo",
+      "type": "video",
+      "videoId": "u9ggzabBnEo",
+      "embeddable": false,
+      "title": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "13:45",
+      "imageUrl": "https://i.ytimg.com/vi/u9ggzabBnEo/hqdefault.jpg",
+      "imageAlt": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-15T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=u9ggzabBnEo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0244
+    },
+    {
+      "id": "ne_yts_pbabdlypBO4",
+      "type": "video",
+      "videoId": "pbabdlypBO4",
+      "embeddable": false,
+      "title": "Jahmyr Gibbs' best plays from 252-yard, 2-TD game vs. Patriots in Munich | Week 10",
+      "summary": "",
+      "duration": "3:28",
+      "imageUrl": "https://i.ytimg.com/vi/pbabdlypBO4/hqdefault.jpg",
+      "imageAlt": "Jahmyr Gibbs' best plays from 252-yard, 2-TD game vs. Patriots in Munich | Week 10",
+      "publishedAt": "2026-11-15T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=pbabdlypBO4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=pbabdlypBO4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0244
     },
     {
       "id": "ne_vid_d5f08a29c745",
@@ -4996,7 +5569,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0244
     },
     {
       "id": "ne_vid_506c975e5036",
@@ -5033,7 +5606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0259
+      "storyRank": 0.0244
     },
     {
       "id": "ne_vid_96028bcb07ef",
@@ -5079,7 +5652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0259
+      "storyRank": 0.0243
     },
     {
       "id": "ne_vid_214edb76c5d2",
@@ -5116,7 +5689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0243
     },
     {
       "id": "ne_vid_a0f5735e061f",
@@ -5153,7 +5726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0242
     },
     {
       "id": "ne_vid_ca049beb894a",
@@ -5199,7 +5772,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0242
     },
     {
       "id": "ne_vid_55a93d100d0d",
@@ -5245,7 +5818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0242
     },
     {
       "id": "ne_vid_08becf5a6883",
@@ -5291,7 +5864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0256
+      "storyRank": 0.0241
     },
     {
       "id": "ne_vid_6e00f5e8c463",
@@ -5337,7 +5910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.024
     },
     {
       "id": "ne_vid_2d5ca4ee6e3b",
@@ -5383,7 +5956,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.024
     },
     {
       "id": "ne_vid_917cd65448ee",
@@ -5429,7 +6002,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
+      "storyRank": 0.0239
     },
     {
       "id": "ne_vid_2f2a08865732",
@@ -5483,7 +6056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
+      "storyRank": 0.0239
     },
     {
       "id": "ne_vid_56ab07df9f5f",
@@ -5529,7 +6102,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
+      "storyRank": 0.0239
     },
     {
       "id": "ne_pfr_1ff8775a6f08",
@@ -5579,7 +6152,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0233
     },
     {
       "id": "ne_pfr_bde372ef1501",
@@ -5637,7 +6210,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0215
+    },
+    {
+      "id": "ne_yts_sZ91fXzIFhc",
+      "type": "video",
+      "videoId": "sZ91fXzIFhc",
+      "embeddable": true,
+      "title": "Previewing Week 10 vs. the Detroit Lions in Germany | Patriots This Week",
+      "summary": "",
+      "duration": "20:01",
+      "imageUrl": "https://i.ytimg.com/vi/sZ91fXzIFhc/hqdefault.jpg",
+      "imageAlt": "Previewing Week 10 vs. the Detroit Lions in Germany | Patriots This Week",
+      "publishedAt": "2026-11-14T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=sZ91fXzIFhc",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=sZ91fXzIFhc",
+      "channel": "New England Patriots",
+      "outletId": "patriots_official",
+      "outletName": "New England Patriots",
+      "reporterId": "patriots_official",
+      "reporterName": "New England Patriots",
+      "author": "New England Patriots",
+      "authorHandle": "@patriots",
+      "authorProfileUrl": "https://www.youtube.com/@patriots",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0216
     },
     {
       "id": "ne_tx_8058cefb28f6",
@@ -5697,99 +6309,21 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0205
     },
     {
-      "id": "ne_yts_sZ91fXzIFhc",
+      "id": "ne_yts_fOoUggUAhdQ",
       "type": "video",
-      "videoId": "sZ91fXzIFhc",
+      "videoId": "fOoUggUAhdQ",
       "embeddable": true,
-      "title": "Previewing Week 10 vs. the Detroit Lions in Germany | Patriots This Week",
+      "title": "Mike Vrabel Talks Game Prep for the Lions in Munich, Germany | All Access 1-on-1",
       "summary": "",
-      "duration": "20:01",
-      "imageUrl": "https://i.ytimg.com/vi/sZ91fXzIFhc/hqdefault.jpg",
-      "imageAlt": "Previewing Week 10 vs. the Detroit Lions in Germany | Patriots This Week",
-      "publishedAt": "2026-11-14T07:27:48.198Z",
-      "url": "https://www.youtube.com/watch?v=sZ91fXzIFhc",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=sZ91fXzIFhc",
-      "channel": "New England Patriots",
-      "outletId": "patriots_official",
-      "outletName": "New England Patriots",
-      "reporterId": "patriots_official",
-      "reporterName": "New England Patriots",
-      "author": "New England Patriots",
-      "authorHandle": "@patriots",
-      "authorProfileUrl": "https://www.youtube.com/@patriots",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
-    },
-    {
-      "id": "ne_yts_j8GYlwt_p94",
-      "type": "video",
-      "videoId": "j8GYlwt_p94",
-      "embeddable": true,
-      "title": "PATRIOTS AND LIONS CRAZY FINISH IN MUNICH, GERMANY in Madden 27 Simulation",
-      "summary": "",
-      "duration": "13:23",
-      "imageUrl": "https://i.ytimg.com/vi/j8GYlwt_p94/hqdefault.jpg",
-      "imageAlt": "PATRIOTS AND LIONS CRAZY FINISH IN MUNICH, GERMANY in Madden 27 Simulation",
-      "publishedAt": "2026-11-13T07:27:48.198Z",
-      "url": "https://www.youtube.com/watch?v=j8GYlwt_p94",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=j8GYlwt_p94",
-      "channel": "New England Patriots",
-      "outletId": "patriots_official",
-      "outletName": "New England Patriots",
-      "reporterId": "patriots_official",
-      "reporterName": "New England Patriots",
-      "author": "New England Patriots",
-      "authorHandle": "@patriots",
-      "authorProfileUrl": "https://www.youtube.com/@patriots",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 25,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
-    },
-    {
-      "id": "ne_yts_S-IqLkMdbi0",
-      "type": "video",
-      "videoId": "S-IqLkMdbi0",
-      "embeddable": true,
-      "title": "Patriots Prep for the Lions in Munich in Week 10 | Patriots Unfiltered on TV",
-      "summary": "",
-      "duration": "22:30",
-      "imageUrl": "https://i.ytimg.com/vi/S-IqLkMdbi0/hqdefault.jpg",
-      "imageAlt": "Patriots Prep for the Lions in Munich in Week 10 | Patriots Unfiltered on TV",
-      "publishedAt": "2026-11-13T07:27:48.198Z",
-      "url": "https://www.youtube.com/watch?v=S-IqLkMdbi0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=S-IqLkMdbi0",
+      "duration": "5:07",
+      "imageUrl": "https://i.ytimg.com/vi/fOoUggUAhdQ/hqdefault.jpg",
+      "imageAlt": "Mike Vrabel Talks Game Prep for the Lions in Munich, Germany | All Access 1-on-1",
+      "publishedAt": "2026-11-13T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=fOoUggUAhdQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=fOoUggUAhdQ",
       "channel": "New England Patriots",
       "outletId": "patriots_official",
       "outletName": "New England Patriots",
@@ -5817,18 +6351,18 @@
       "storyRank": 0.0193
     },
     {
-      "id": "ne_yts_fOoUggUAhdQ",
+      "id": "ne_yts_S-IqLkMdbi0",
       "type": "video",
-      "videoId": "fOoUggUAhdQ",
+      "videoId": "S-IqLkMdbi0",
       "embeddable": true,
-      "title": "Mike Vrabel Talks Game Prep for the Lions in Munich, Germany | All Access 1-on-1",
+      "title": "Patriots Prep for the Lions in Munich in Week 10 | Patriots Unfiltered on TV",
       "summary": "",
-      "duration": "5:07",
-      "imageUrl": "https://i.ytimg.com/vi/fOoUggUAhdQ/hqdefault.jpg",
-      "imageAlt": "Mike Vrabel Talks Game Prep for the Lions in Munich, Germany | All Access 1-on-1",
-      "publishedAt": "2026-11-13T07:27:48.198Z",
-      "url": "https://www.youtube.com/watch?v=fOoUggUAhdQ",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=fOoUggUAhdQ",
+      "duration": "22:30",
+      "imageUrl": "https://i.ytimg.com/vi/S-IqLkMdbi0/hqdefault.jpg",
+      "imageAlt": "Patriots Prep for the Lions in Munich in Week 10 | Patriots Unfiltered on TV",
+      "publishedAt": "2026-11-13T19:06:20.746Z",
+      "url": "https://www.youtube.com/watch?v=S-IqLkMdbi0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=S-IqLkMdbi0",
       "channel": "New England Patriots",
       "outletId": "patriots_official",
       "outletName": "New England Patriots",
@@ -5897,7 +6431,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0152
     },
     {
       "id": "ne_yt_ONCSUG9i00M",
@@ -5930,13 +6464,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "36:30",
       "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0152,
-      "duration": "36:30"
+      "storyRank": 0.0145
     },
     {
       "id": "ne_tx_336e12a9315c",
@@ -5971,7 +6505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0128
     },
     {
       "id": "ne_tx_50d98b4a659c",
@@ -6015,42 +6549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
-    },
-    {
-      "id": "ne_tx_3fb66dae5c4e",
-      "type": "tweet",
-      "title": "Patriots roster move: Signed CB Kindle Vildor to the practice squad.",
-      "fullText": "Patriots roster move: Signed CB Kindle Vildor to the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-05T08:00:00.000Z",
-      "url": "https://www.patriots.com/team/transactions/#tx-3fb66dae5c4e",
-      "outletId": "patriots_official",
-      "outletName": "patriots.com Official",
-      "reporterId": "patriots_official",
-      "reporterName": "New England Patriots Official",
-      "author": "New England Patriots Official",
-      "authorHandle": "@Patriots",
-      "authorProfileUrl": "https://www.patriots.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.011
     }
   ]
 }

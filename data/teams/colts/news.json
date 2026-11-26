@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:05.583Z",
+  "updatedAt": "2026-11-26T19:23:35.788Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17ET",
     "cycleKey": "2026-11-25@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-8",
-    "generatedAt": "2026-11-26T07:29:05.583Z",
+    "generatedAt": "2026-11-26T19:23:35.788Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,48 +15,55 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 181,
+    "wordCount": 226,
     "headline": "Colts (3-8) Week 12 Briefing: Wednesday Injury Report Ahead of Giants",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: Indianapolis opened CB Cam Taylor-Britt's 21-day IR practice window [NFL Trade Rumors](https://nfltraderumors.co/colts-designate-cb-cam-taylor-britt-to-return/). RB Seth McGowan (hamstring), TE Will Mallory (hamstring), DT Jerry Tillery (calf), and OT Jalen Travis (knee) did not practice Wednesday, while CB Cam Taylor-Britt (groin) and CB Sauce Gardner (calf) practiced in full [Elliot Denton-Singh](https://www.stampedeblue.com/indianapolis-colts-injuries/130444/indianapolis-colts-injury-report-week-12-wednesday).",
+      "Roster & Front Office: Indianapolis signed TE Sean McKeon and DE Cam Sample to the practice squad [Pro Football Rumors](https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-24-26).",
+      "Injury & Practice Status: Indianapolis opened CB Cam Taylor-Britt's 21-day IR practice window [colts.com Official](https://www.colts.com/news/duo-of-colts-cbs-return-to-practice). RB Seth McGowan (hamstring), TE Will Mallory (hamstring), DT Jerry Tillery (calf), and OT Jalen Travis (knee) did not practice Wednesday, while CB Cam Taylor-Britt (groin) and CB Sauce Gardner (calf) practiced in full [Elliot Denton-Singh](https://www.stampedeblue.com/indianapolis-colts-injuries/130444/indianapolis-colts-injury-report-week-12-wednesday).",
       "Week 12 Giants Outlook: Shane Steichen and DC Lou Anarumo open installation for the New York Giants (6-3-1, NYG -6, HC John Harbaugh, OC Matt Nagy & DC Dennard Wilson (Lucas Oil Stadium))—a unit ranked #2 in Net Punt Average (46.7 yds) as Indianapolis prepares for a pivotal AFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873088) [Mike Chappell](https://www.espn.com/nfl/player/_/id/4242335/jonathan-taylor#:~:text=Taylor%20will%20be%20joined%20in%20the%20backfield).",
-      "AFC Playoff Trajectory: Entering Week 12 at 3-8 (3rd in AFC South • #13 Seed in AFC), Indianapolis carries a 0.4% postseason projection, 0.1% AFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Luke Schultheis](https://www.stampedeblue.com/indianapolis-colts-news/130438/colts-announce-tough-injury-update-on-rookie-edge-caden-curry).",
-      "Around the Beat: #Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen [James Boyd](https://x.com/RomeovilleKid/status/2125630540216684574)."
+      "AFC Playoff Trajectory: Entering Week 12 at 3-8 (3rd in AFC South • #13 Seed in AFC), Indianapolis carries a 0.5% postseason projection, 0.1% AFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [James Boyd](https://x.com/RomeovilleKid/status/2125630540216684574).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Indianapolis ranks #26 in Points / Game (19.2), #28 in Points Allowed / Game (27.0), #32 in Turnover Differential (-12), giving Shane Steichen and Lou Anarumo a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the New York Giants [James Boyd](https://x.com/RomeovilleKid/status/2125286123924607205)."
     ],
     "coveredStoryKeys": [
-      "camtaylorbritt::ir_roster_move",
       "cadencurry::in_game_injury_status",
       "team::weekly_injury_report",
-      "wanyamorris::ir_roster_move",
-      "alecpierce::ir_roster_move"
+      "minortransactions::ir_roster_move"
     ],
     "coveredUrls": [
-      "https://nfltraderumors.co/colts-designate-cb-cam-taylor-britt-to-return/",
+      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-24-26",
+      "https://www.colts.com/news/duo-of-colts-cbs-return-to-practice",
       "https://www.stampedeblue.com/indianapolis-colts-injuries/130444/indianapolis-colts-injury-report-week-12-wednesday",
       "https://www.espn.com/nfl/preview?gameId=401873088",
       "https://www.espn.com/nfl/player/_/id/4242335/jonathan-taylor#:~:text=Taylor%20will%20be%20joined%20in%20the%20backfield",
+      "https://x.com/RomeovilleKid/status/2125286123924607205",
       "https://x.com/RomeovilleKid/status/2125630540216684574",
+      "https://x.com/Colts/status/2126033033094685093",
+      "https://www.colts.com/news/practice-notebook-thanksgiving-practice-sees-multiple-players-sidelined",
+      "https://www.stampedeblue.com/indianapolis-colts-analysis/130457/stampede-blue-reacts-results-week-12-colts-fan-confidence-rebounds-but-doubts-remain-about-richardson",
       "https://www.stampedeblue.com/indianapolis-colts-news/130438/colts-announce-tough-injury-update-on-rookie-edge-caden-curry",
-      "https://www.colts.com/news/duo-of-colts-cbs-return-to-practice",
       "https://x.com/Colts/status/2125691220966178974",
       "https://www.espn.com/nfl/story/_/id/50597055/colts-alec-pierce-heel-injury-hopeful-return-season",
-      "https://www.colts.com/team/transactions/#tx-08b283d828c7",
-      "https://www.colts.com/news/alec-pierce-addresses-injury-recovery-feelings-on-missing-most-of-colts-2026-season-it-s-been-really-difficult",
-      "https://www.espn.com/nfl/player/_/id/4429084/anthony-richardson-sr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "https://x.com/AdamSchefter/status/2125287520099615129",
-      "https://www.espn.com/nfl/player/_/id/4360078/alec-pierce#:~:text=When%20addressing%20the%20press%20Wednesday%2C%20Pierce%20(heel)",
+      "https://www.colts.com/news/colts-de-caden-curry-to-miss-remainder-of-2026-season",
       "https://www.stampedeblue.com/indianapolis-colts-analysis/130429/is-there-anything-to-be-thankful-for-with-the-colts",
-      "https://www.stampedeblue.com/indianapolis-colts-news/130419/colts-coaches-weigh-in-on-anthony-richardsons-abrupt-return-to-the-starting-lineup"
+      "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-24-26"
     ],
     "sources": [
       {
         "type": "article",
-        "author": "NFL Trade Rumors",
-        "outlet": "NFL Trade Rumors",
-        "title": "Colts Designate CB Cam Taylor-Britt To Return",
-        "url": "https://nfltraderumors.co/colts-designate-cb-cam-taylor-britt-to-return/",
-        "publishedAt": "2026-11-25T21:51:40.000Z"
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "title": "NFL Practice Squad Updates: 11/24/26",
+        "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-24-26",
+        "publishedAt": "2026-11-25T00:51:01.000Z"
+      },
+      {
+        "type": "article",
+        "author": "colts.com Official",
+        "outlet": "colts.com Official",
+        "title": "Duo of Colts CBs return to practice",
+        "url": "https://www.colts.com/news/duo-of-colts-cbs-return-to-practice",
+        "publishedAt": "2026-11-25T20:42:03.000Z"
       },
       {
         "type": "article",
@@ -86,9 +93,41 @@
         "type": "tweet",
         "author": "James Boyd",
         "outlet": "The Athletic Indy",
+        "title": "#Colts OC Jim Bob Cooter on Anthony Richardson Sr.: \"We've obviously had an interesting four years at (QB). But Anthony's got to watch a lot of different guys go through their",
+        "url": "https://x.com/RomeovilleKid/status/2125286123924607205",
+        "publishedAt": "2026-11-24T17:51:12.507Z"
+      },
+      {
+        "type": "tweet",
+        "author": "James Boyd",
+        "outlet": "The Athletic Indy",
         "title": "#Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.",
         "url": "https://x.com/RomeovilleKid/status/2125630540216684574",
         "publishedAt": "2026-11-25T16:39:47.750Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Indianapolis Colts",
+        "outlet": "@Colts Official",
+        "title": "Thursday’s practice report for",
+        "url": "https://x.com/Colts/status/2126033033094685093",
+        "publishedAt": "2026-11-26T19:19:09.530Z"
+      },
+      {
+        "type": "article",
+        "author": "colts.com Official",
+        "outlet": "colts.com Official",
+        "title": "Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+        "url": "https://www.colts.com/news/practice-notebook-thanksgiving-practice-sees-multiple-players-sidelined",
+        "publishedAt": "2026-11-26T19:19:30.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Andrew Aziz",
+        "outlet": "Stampede Blue",
+        "title": "Stampede Blue Reacts results (Week 12): Colts fan confidence rebounds, but doubts remain about Richardson",
+        "url": "https://www.stampedeblue.com/indianapolis-colts-analysis/130457/stampede-blue-reacts-results-week-12-colts-fan-confidence-rebounds-but-doubts-remain-about-richardson",
+        "publishedAt": "2026-11-26T06:18:01.000Z"
       },
       {
         "type": "article",
@@ -99,52 +138,12 @@
         "publishedAt": "2026-11-25T17:20:52.000Z"
       },
       {
-        "type": "article",
-        "author": "colts.com Official",
-        "outlet": "colts.com Official",
-        "title": "Duo of Colts CBs return to practice",
-        "url": "https://www.colts.com/news/duo-of-colts-cbs-return-to-practice",
-        "publishedAt": "2026-11-25T20:42:03.000Z"
-      },
-      {
         "type": "tweet",
-        "author": "Ed Dodds",
-        "outlet": "Colts.com / Official Team",
+        "author": "Indianapolis Colts",
+        "outlet": "@Colts Official",
         "title": "Wednesday's practice report for.",
         "url": "https://x.com/Colts/status/2125691220966178974",
         "publishedAt": "2026-11-25T20:40:55.168Z"
-      },
-      {
-        "type": "article",
-        "author": "Stephen Holder",
-        "outlet": "ESPN",
-        "title": "Colts' Alec Pierce: 'Definitely a chance' to return from heel injury this season",
-        "url": "https://www.espn.com/nfl/story/_/id/50597055/colts-alec-pierce-heel-injury-hopeful-return-season",
-        "publishedAt": "2026-11-25T23:13:25.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Indianapolis Colts Official",
-        "outlet": "colts.com Official",
-        "title": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
-        "url": "https://www.colts.com/team/transactions/#tx-08b283d828c7",
-        "publishedAt": "2026-11-25T08:00:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "colts.com Official",
-        "outlet": "colts.com Official",
-        "title": "Alec Pierce addresses injury recovery, feelings on missing most of Colts' 2026 season: 'It's been really difficult'",
-        "url": "https://www.colts.com/news/alec-pierce-addresses-injury-recovery-feelings-on-missing-most-of-colts-2026-season-it-s-been-really-difficult",
-        "publishedAt": "2026-11-25T21:39:55.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Liz Loza",
-        "outlet": "ESPN / X Beat Wire",
-        "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
-        "url": "https://www.espn.com/nfl/player/_/id/4429084/anthony-richardson-sr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-        "publishedAt": "2026-11-25T15:22:54.000Z"
       }
     ]
   },
@@ -153,21 +152,33 @@
       "id": "ind_cl_top",
       "category": "beat",
       "headline": "Indianapolis Colts Week 12 Top Headlines (3-8)",
-      "summary": "Colts Designate CB Cam Taylor-Britt To Return — #Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him.",
-      "updatedAt": "2026-11-25T21:51:40.000Z",
+      "summary": "Thursday’s practice report for #NYGvsIND — Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+      "updatedAt": "2026-11-26T19:19:09.530Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "NFL Trade Rumors",
-          "title": "Colts Designate CB Cam Taylor-Britt To Return",
-          "url": "https://nfltraderumors.co/colts-designate-cb-cam-taylor-britt-to-return/",
-          "publishedAt": "2026-11-25T21:51:40.000Z"
+          "label": "Indianapolis Colts",
+          "title": "Thursday’s practice report for #NYGvsIND",
+          "url": "https://x.com/Colts/status/2126033033094685093",
+          "publishedAt": "2026-11-26T19:19:09.530Z"
+        },
+        {
+          "label": "colts.com Official",
+          "title": "Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+          "url": "https://www.colts.com/news/practice-notebook-thanksgiving-practice-sees-multiple-players-sidelined",
+          "publishedAt": "2026-11-26T19:19:30.000Z"
         },
         {
           "label": "James Boyd",
           "title": "#Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him. He was playing at a really high level defensively, special teams.\"",
           "url": "https://x.com/RomeovilleKid/status/2125630540216684574",
           "publishedAt": "2026-11-25T16:39:47.750Z"
+        },
+        {
+          "label": "Andrew Aziz",
+          "title": "Stampede Blue Reacts results (Week 12): Colts fan confidence rebounds, but doubts remain about Richardson",
+          "url": "https://www.stampedeblue.com/indianapolis-colts-analysis/130457/stampede-blue-reacts-results-week-12-colts-fan-confidence-rebounds-but-doubts-remain-about-richardson",
+          "publishedAt": "2026-11-26T06:18:01.000Z"
         },
         {
           "label": "Elliot Denton-Singh",
@@ -180,18 +191,6 @@
           "title": "Duo of Colts CBs return to practice",
           "url": "https://www.colts.com/news/duo-of-colts-cbs-return-to-practice",
           "publishedAt": "2026-11-25T20:42:03.000Z"
-        },
-        {
-          "label": "Ed Dodds",
-          "title": "Wednesday's practice report for #NYGvsIND.",
-          "url": "https://x.com/Colts/status/2125691220966178974",
-          "publishedAt": "2026-11-25T20:40:55.168Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "QB Anthony Richardson hopes to follow J.J. McCarthy's lead when he starts for Colts against Giants",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873088",
-          "publishedAt": "2026-11-25T23:33:33.000Z"
         }
       ]
     },
@@ -199,15 +198,33 @@
       "id": "ind_cl_health",
       "category": "injury",
       "headline": "Colts Practice Report, Injury & IR Availability",
-      "summary": "#Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him. He was playing at a really high level defensive",
-      "updatedAt": "2026-11-25T16:39:47.750Z",
+      "summary": "Thursday’s practice report for #NYGvsIND — Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+      "updatedAt": "2026-11-26T19:19:09.530Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Indianapolis Colts",
+          "title": "Thursday’s practice report for #NYGvsIND",
+          "url": "https://x.com/Colts/status/2126033033094685093",
+          "publishedAt": "2026-11-26T19:19:09.530Z"
+        },
+        {
+          "label": "colts.com Official",
+          "title": "Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+          "url": "https://www.colts.com/news/practice-notebook-thanksgiving-practice-sees-multiple-players-sidelined",
+          "publishedAt": "2026-11-26T19:19:30.000Z"
+        },
         {
           "label": "James Boyd",
           "title": "#Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him. He was playing at a really high level defensively, special teams.\"",
           "url": "https://x.com/RomeovilleKid/status/2125630540216684574",
           "publishedAt": "2026-11-25T16:39:47.750Z"
+        },
+        {
+          "label": "Andrew Aziz",
+          "title": "Stampede Blue Reacts results (Week 12): Colts fan confidence rebounds, but doubts remain about Richardson",
+          "url": "https://www.stampedeblue.com/indianapolis-colts-analysis/130457/stampede-blue-reacts-results-week-12-colts-fan-confidence-rebounds-but-doubts-remain-about-richardson",
+          "publishedAt": "2026-11-26T06:18:01.000Z"
         },
         {
           "label": "Elliot Denton-Singh",
@@ -220,24 +237,6 @@
           "title": "Duo of Colts CBs return to practice",
           "url": "https://www.colts.com/news/duo-of-colts-cbs-return-to-practice",
           "publishedAt": "2026-11-25T20:42:03.000Z"
-        },
-        {
-          "label": "Ed Dodds",
-          "title": "Wednesday's practice report for #NYGvsIND.",
-          "url": "https://x.com/Colts/status/2125691220966178974",
-          "publishedAt": "2026-11-25T20:40:55.168Z"
-        },
-        {
-          "label": "Stephen Holder",
-          "title": "Colts' Alec Pierce: 'Definitely a chance' to return from heel injury this season",
-          "url": "https://www.espn.com/nfl/story/_/id/50597055/colts-alec-pierce-heel-injury-hopeful-return-season",
-          "publishedAt": "2026-11-25T23:13:25.000Z"
-        },
-        {
-          "label": "colts.com Official",
-          "title": "Alec Pierce addresses injury recovery, feelings on missing most of Colts' 2026 season: 'It's been really difficult'",
-          "url": "https://www.colts.com/news/alec-pierce-addresses-injury-recovery-feelings-on-missing-most-of-colts-2026-season-it-s-been-really-difficult",
-          "publishedAt": "2026-11-25T21:39:55.000Z"
         }
       ]
     },
@@ -247,7 +246,7 @@
       "headline": "Colts All-22 Film, Trench & Efficiency Breakdowns",
       "summary": "Giants vs. Colts Preview + Predictions — CJ Stroud vs the Colts Week 11, 2026 Analysis",
       "updatedAt": "2026-11-25T19:19:35.000Z",
-      "itemCount": 6,
+      "itemCount": 4,
       "sourceLinks": [
         {
           "label": "Check the Mic",
@@ -268,18 +267,6 @@
           "publishedAt": "2026-11-20T13:50:00.000Z"
         },
         {
-          "label": "Cody Alexander",
-          "title": "Split-Field Quarters Foundations",
-          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-          "publishedAt": "2026-11-19T22:01:55.000Z"
-        },
-        {
-          "label": "Cody Alexander",
-          "title": "The Aranda-Roberts Creeper System",
-          "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-          "publishedAt": "2026-11-19T21:33:52.000Z"
-        },
-        {
           "label": "Pro Football Focus",
           "title": "Should the Bengals make a move for Jonathan Taylor? | PFF NFL Show",
           "url": "https://www.youtube.com/watch?v=cHWj9_y-5l4",
@@ -291,16 +278,10 @@
       "id": "ind_cl_roster",
       "category": "roster",
       "headline": "Colts Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Colts Designate CB Cam Taylor-Britt To Return — #Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him.",
-      "updatedAt": "2026-11-25T21:51:40.000Z",
+      "summary": "#Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him. He was playing at a really high level defensive",
+      "updatedAt": "2026-11-25T16:39:47.750Z",
       "itemCount": 6,
       "sourceLinks": [
-        {
-          "label": "NFL Trade Rumors",
-          "title": "Colts Designate CB Cam Taylor-Britt To Return",
-          "url": "https://nfltraderumors.co/colts-designate-cb-cam-taylor-britt-to-return/",
-          "publishedAt": "2026-11-25T21:51:40.000Z"
-        },
         {
           "label": "James Boyd",
           "title": "#Colts rookie DE Caden Curry landed on IR due to a wrist injury and is out for the rest of the season, per HC Shane Steichen. Curry recently underwent surgery on his wrist.\n\n\"Really unfortunate situation for him. He was playing at a really high level defensively, special teams.\"",
@@ -308,16 +289,16 @@
           "publishedAt": "2026-11-25T16:39:47.750Z"
         },
         {
-          "label": "Indianapolis Colts Official",
-          "title": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
-          "url": "https://www.colts.com/team/transactions/#tx-08b283d828c7",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
-        },
-        {
           "label": "colts.com Official",
           "title": "Colts sign T Wanya Morris to active roster",
           "url": "https://www.colts.com/news/colts-sign-t-wanya-morris-to-active-roster",
           "publishedAt": "2026-11-25T13:57:42.000Z"
+        },
+        {
+          "label": "Indianapolis Colts Official",
+          "title": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
+          "url": "https://www.colts.com/team/transactions/#tx-08b283d828c7",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
         },
         {
           "label": "Pro Football Rumors",
@@ -330,55 +311,152 @@
           "title": "Colts sign Shane Buechele and Wanya Morris in flurry of roster moves, place Caden Curry on IR",
           "url": "https://www.stampedeblue.com/indianapolis-colts-news/130408/colts-sign-shane-buechele-and-wanya-morris-in-flurry-of-roster-moves-place-caden-curry-on-ir",
           "publishedAt": "2026-11-24T20:57:35.000Z"
+        },
+        {
+          "label": "Indianapolis Colts",
+          "title": "We have signed QB Shane Buechele off of the Bills practice squad and signed DE Carl Lawson to the 53-man roster from the practice squad.\n\nWe have placed DE Caden Curry on IR.\n\nWe have waived T Charlie Heck and signed TE Sean McKeon and DE Cam Sample to the practice squad.",
+          "url": "https://x.com/Colts/status/2125319088138600730",
+          "publishedAt": "2026-11-24T20:02:11.788Z"
         }
       ]
     }
   ],
   "rawStream": [
     {
-      "id": "ind_nfltr_3374076b58c4",
-      "type": "article",
-      "title": "Colts Designate CB Cam Taylor-Britt To Return",
-      "summary": "The Indianapolis Colts have designated CB Cam Taylor-Britt to return from injured reserve, per the NFL transaction wire. This opens a three-week window for him to practice with the team before he has to be added to the active roster. Taylor",
-      "imageUrl": "",
-      "imageAlt": "Colts Designate CB Cam Taylor-Britt To Return",
-      "publishedAt": "2026-11-25T21:51:40.000Z",
-      "url": "https://nfltraderumors.co/colts-designate-cb-cam-taylor-britt-to-return/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4361196",
-          "name": "Cam Taylor-Britt",
-          "shortName": "C. Taylor-Britt",
-          "position": "CB",
-          "jersey": 29,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361196.png"
-        }
-      ],
+      "id": "x_tl_colts_2126033033094685093",
+      "type": "tweet",
+      "title": "Thursday’s practice report for #NYGvsIND",
+      "fullText": "Thursday’s practice report for #NYGvsIND",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HYEvxmSXAAAy24k.jpg",
+      "imageAlt": "Indianapolis Colts post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-26T19:19:09.530Z",
+      "url": "https://x.com/Colts/status/2126033033094685093",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "colts_official",
+      "outletName": "@Colts Official",
+      "reporterId": null,
+      "reporterName": "Indianapolis Colts",
+      "author": "Indianapolis Colts",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.033,
-      "category": "roster",
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
-      "storyTier": "tier2_roster",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.0263
+      "storyRank": 78.0612
+    },
+    {
+      "id": "ind_rss_68aed713c734",
+      "type": "article",
+      "title": "Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+      "summary": "TE Drew Ogletree (knee) and WR Deion Burks (person) returned in full Thursday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/dxxdthmjiwuu93npxowd.png",
+      "imageAlt": "Practice Notebook: Thanksgiving practice sees multiple players sidelined",
+      "publishedAt": "2026-11-26T19:19:30.000Z",
+      "url": "https://www.colts.com/news/practice-notebook-thanksgiving-practice-sees-multiple-players-sidelined",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4683151",
+          "name": "Deion Burks",
+          "shortName": "D. Burks",
+          "position": "WR",
+          "jersey": 80,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683151.png"
+        },
+        {
+          "id": "4722908",
+          "name": "Drew Ogletree",
+          "shortName": "D. Ogletree",
+          "position": "TE",
+          "jersey": 85,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4722908.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 49.5364
+    },
+    {
+      "id": "ind_vid_e79be1525497",
+      "type": "video",
+      "title": "How Colts can respond to Daniel Jones' release, Anthony Richardson Sr. being QB1 | The Jack Doyle Podcast",
+      "summary": "Matt Taylor and Jack Doyle return to examine last week's major news of Daniel Jones being released and Anthony Richardson Sr. being named the Colts' starting quarterback. The guys break down what went wrong for Jones in",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/effhaud1zrmtrkamigqc.jpg",
+      "imageAlt": "How Colts can respond to Daniel Jones' release, Anthony Richardson Sr. being QB1 | The Jack Doyle Podcast",
+      "publishedAt": "2026-11-26T11:01:00.000Z",
+      "url": "https://www.colts.com/video/how-colts-can-respond-to-daniel-jones-release-anthony-richardson-sr-being-qb1-the-jack-doyle-podcast",
+      "externalVideoUrl": "https://www.colts.com/video/how-colts-can-respond-to-daniel-jones-release-anthony-richardson-sr-being-qb1-the-jack-doyle-podcast",
+      "duration": "37:32",
+      "outletId": "colts_official",
+      "outletName": "colts.com Video",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Video",
+      "author": "colts.com Video",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429084",
+          "name": "Anthony Richardson Sr.",
+          "shortName": "A. Richardson Sr.",
+          "position": "QB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.5949
     },
     {
       "id": "x_tl_romeovillekid_2125630540216684574",
@@ -415,8 +493,8 @@
       "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.102,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -426,7 +504,50 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6211
+      "storyRank": 2.8423
+    },
+    {
+      "id": "ind_brss_stampede_blue_4b4f1619a2c3",
+      "type": "article",
+      "title": "Stampede Blue Reacts results (Week 12): Colts fan confidence rebounds, but doubts remain about Richardson",
+      "summary": "The latest SB Nation Reacts survey shows a surprising rebound in confidence among Indianapolis Colts fans, with 31 percent now believing the franchise is headed in the right direction. That’s a significant 19-percentage-point increase from",
+      "imageUrl": "",
+      "imageAlt": "Stampede Blue Reacts results (Week 12): Colts fan confidence rebounds, but doubts remain about Richardson",
+      "publishedAt": "2026-11-26T06:18:01.000Z",
+      "url": "https://www.stampedeblue.com/indianapolis-colts-analysis/130457/stampede-blue-reacts-results-week-12-colts-fan-confidence-rebounds-but-doubts-remain-about-richardson",
+      "outletId": "stampede_blue",
+      "outletName": "Stampede Blue",
+      "reporterId": "stampede_blue",
+      "reporterName": "Andrew Aziz",
+      "author": "Andrew Aziz",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.stampedeblue.com/indianapolis-colts-analysis/130457/stampede-blue-reacts-results-week-12-colts-fan-confidence-rebounds-but-doubts-remain-about-richardson",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4429084",
+          "name": "Anthony Richardson Sr.",
+          "shortName": "A. Richardson Sr.",
+          "position": "QB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.4484
     },
     {
       "id": "ind_brss_stampede_blue_2dabd5ff6a06",
@@ -477,7 +598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7469
+      "storyRank": 1.4671
     },
     {
       "id": "ind_rss_31e91e5f1837",
@@ -517,18 +638,18 @@
       ],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 0.657,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "practice_injury",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7181
+      "storyRank": 1.4355
     },
     {
       "id": "x_tl_colts_2125691220966178974",
@@ -537,8 +658,8 @@
       "fullText": "Wednesday's practice report for #NYGvsIND.",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_4za3WQAADMDu.jpg?name=orig",
-      "imageAlt": "Ed Dodds post",
+      "imageUrl": "https://pbs.twimg.com/media/HX_4za3WQAADMDu.jpg",
+      "imageAlt": "Indianapolis Colts post",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-25T20:40:55.168Z",
       "url": "https://x.com/Colts/status/2125691220966178974",
@@ -546,12 +667,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "colts_official",
-      "outletName": "Colts.com / Official Team",
-      "reporterId": "ed_dodds",
-      "reporterName": "Ed Dodds",
-      "author": "Ed Dodds",
+      "outletName": "@Colts Official",
+      "reporterId": null,
+      "reporterName": "Indianapolis Colts",
+      "author": "Indianapolis Colts",
       "authorHandle": "@Colts",
-      "authorProfileUrl": "https://x.com/Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -562,12 +683,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.776
+      "storyRank": 1.5315
     },
     {
       "id": "ind_espn_b959f17cd5a67",
@@ -611,7 +732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7789
+      "storyRank": 0.8543
     },
     {
       "id": "ind_espn_6c582c472376c",
@@ -655,7 +776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6402
+      "storyRank": 0.8355
     },
     {
       "id": "ind_rss_e4d4d683c632",
@@ -698,98 +819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1274
-    },
-    {
-      "id": "ind_tx_08b283d828c7",
-      "type": "tweet",
-      "title": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
-      "fullText": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.colts.com/team/transactions/#tx-08b283d828c7",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "Indianapolis Colts Official",
-      "author": "Indianapolis Colts Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [
-        {
-          "id": "4570577",
-          "name": "Wanya Morris",
-          "shortName": "W. Morris",
-          "position": "OT",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570577.png"
-        },
-        {
-          "id": "4361196",
-          "name": "Cam Taylor-Britt",
-          "shortName": "C. Taylor-Britt",
-          "position": "CB",
-          "jersey": 29,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361196.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.0978
-    },
-    {
-      "id": "ind_yts_-auhFwQ2iSQ",
-      "type": "video",
-      "videoId": "-auhFwQ2iSQ",
-      "embeddable": false,
-      "title": "New York Giants vs Indianapolis Colts | 2026 Week 12 Game Preview",
-      "summary": "",
-      "duration": "8:11",
-      "imageUrl": "https://i.ytimg.com/vi/-auhFwQ2iSQ/hqdefault.jpg",
-      "imageAlt": "New York Giants vs Indianapolis Colts | 2026 Week 12 Game Preview",
-      "publishedAt": "2026-11-25T19:29:07.214Z",
-      "url": "https://www.youtube.com/watch?v=-auhFwQ2iSQ",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=-auhFwQ2iSQ",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.6482
+      "storyRank": 0.7567
     },
     {
       "id": "ind_tyt_tZKrdFGoqiI",
@@ -831,13 +861,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:10",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6377,
-      "duration": "6:10"
+      "storyRank": 0.6637
     },
     {
       "id": "ind_vid_6facc0cd2427",
@@ -914,7 +944,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6362
+      "storyRank": 0.6634
     },
     {
       "id": "ind_tyt_1Gv-rf6ZBy8",
@@ -972,13 +1002,52 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:05",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6335,
-      "duration": "7:05"
+      "storyRank": 0.6628
+    },
+    {
+      "id": "ind_yts_-auhFwQ2iSQ",
+      "type": "video",
+      "videoId": "-auhFwQ2iSQ",
+      "embeddable": false,
+      "title": "New York Giants vs Indianapolis Colts | 2026 Week 12 Game Preview",
+      "summary": "",
+      "duration": "8:11",
+      "imageUrl": "https://i.ytimg.com/vi/-auhFwQ2iSQ/hqdefault.jpg",
+      "imageAlt": "New York Giants vs Indianapolis Colts | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-25T19:23:39.126Z",
+      "url": "https://www.youtube.com/watch?v=-auhFwQ2iSQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=-auhFwQ2iSQ",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6626
     },
     {
       "id": "ind_vid_5047b2ce40bd",
@@ -1023,7 +1092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6217
+      "storyRank": 0.6603
     },
     {
       "id": "ind_yt_fWiYDMNoQHg",
@@ -1056,13 +1125,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "9:11",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4183,
-      "duration": "9:11"
+      "storyRank": 0.5777
     },
     {
       "id": "ind_vid_afc2eb8ef2bc",
@@ -1123,7 +1192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6076
+      "storyRank": 0.6573
     },
     {
       "id": "ind_tyt_i0i1SS3lGIs",
@@ -1197,13 +1266,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "5:13",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5141,
-      "duration": "5:13"
+      "storyRank": 0.6366
     },
     {
       "id": "ind_pwire_4360078_64972428",
@@ -1244,7 +1313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5058
+      "storyRank": 0.6347
     },
     {
       "id": "ind_rss_5d2e66d5ce83",
@@ -1287,7 +1356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2802
+      "storyRank": 0.5801
     },
     {
       "id": "ind_vid_67fe3fde8dd4",
@@ -1333,239 +1402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2253
-    },
-    {
-      "id": "ind_pwire_4242335_64970328",
-      "type": "article",
-      "title": "Taylor will be joined in the backfield in Sunday's game against the Giants by Anthony Richardson, who was named the Colts' new starting quarterback after Daniel Jones was cut Friday.",
-      "summary": "Taylor is slated to take his first extended snaps alongside Richardson since the 2024 season, when the two started together 10 times. The threat that Richardson presented to defenses as a runner seemed to aid Taylor's ow",
-      "publishedAt": "2026-11-25T15:39:11.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4242335/jonathan-taylor#:~:text=Taylor%20will%20be%20joined%20in%20the%20backfield",
-      "outletId": "espn",
-      "outletName": "Fox 59 News Indianapolis",
-      "reporterId": "ext_mike_chappell",
-      "reporterName": "Mike Chappell",
-      "author": "Mike Chappell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4242335/jonathan-taylor#:~:text=Taylor%20will%20be%20joined%20in%20the%20backfield",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "4429084",
-          "name": "Anthony Richardson Sr.",
-          "shortName": "A. Richardson Sr.",
-          "position": "QB",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1312
-    },
-    {
-      "id": "ind_pwire_4429084_50588158",
-      "type": "article",
-      "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
-      "summary": "Greetings from above the clouds! Jan from Milford, a librarian and gardening enthusiast, has just nodded off and the plane's Wi-Fi has finally decided to connect. It's been another action-packed few days in Bristol and I",
-      "publishedAt": "2026-11-25T15:22:54.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4429084/anthony-richardson-sr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Liz Loza",
-      "author": "Liz Loza",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4429084/anthony-richardson-sr#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1062
-    },
-    {
-      "id": "ind_tyt_Cv9m4r_JjyI",
-      "type": "video",
-      "category": "beat",
-      "videoId": "Cv9m4r_JjyI",
-      "embeddable": false,
-      "title": "Jack Doyle on Daniel Jones’ release, Anthony Richardson Sr. being QB1 | The Jack Doyle Podcast | NFL",
-      "summary": "Matt Taylor and Jack Doyle return to examine last week’s major news of Daniel Jones being released and Anthony Richardson Sr. being named the Colts’ starting quarterback. The guys break down what went wrong for Jones in",
-      "imageUrl": "https://i.ytimg.com/vi/Cv9m4r_JjyI/hqdefault.jpg",
-      "imageAlt": "Jack Doyle on Daniel Jones’ release, Anthony Richardson Sr. being QB1 | The Jack Doyle Podcast | NFL",
-      "publishedAt": "2026-11-25T15:20:43.000Z",
-      "url": "https://www.youtube.com/watch?v=Cv9m4r_JjyI",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=Cv9m4r_JjyI",
-      "channel": "Indianapolis Colts",
-      "outletId": "UCyYn26HPC4HIedifGnNbjBw",
-      "outletName": "Indianapolis Colts",
-      "reporterId": "UCyYn26HPC4HIedifGnNbjBw",
-      "reporterName": "Indianapolis Colts",
-      "author": "Indianapolis Colts",
-      "authorHandle": "@colts",
-      "authorProfileUrl": "https://www.youtube.com/@colts",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4429084",
-          "name": "Anthony Richardson Sr.",
-          "shortName": "A. Richardson Sr.",
-          "position": "QB",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1216,
-      "duration": "37:32"
-    },
-    {
-      "id": "ind_rss_898c8290038f",
-      "type": "article",
-      "title": "Indiana Football Digest Insider 2026 - Semistate Finals recap",
-      "summary": "The 2026 Indiana Football Digest Insider",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/giwv7ckpjpsxnhtnnxdi.jpg",
-      "imageAlt": "Indiana Football Digest Insider 2026 - Semistate Finals recap",
-      "publishedAt": "2026-11-25T14:00:00.000Z",
-      "url": "https://www.colts.com/news/indianapolis-colts-high-school-football-development-indiana-football-digest-insider-2026-semistate-finals-recap",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0095
-    },
-    {
-      "id": "ind_rss_a66cc2a33961",
-      "type": "article",
-      "title": "Colts sign T Wanya Morris to active roster",
-      "summary": "The roster move was made Wednesday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/dchl8dlbrnjuxzmap97k.png",
-      "imageAlt": "Colts sign T Wanya Morris to active roster",
-      "publishedAt": "2026-11-25T13:57:42.000Z",
-      "url": "https://www.colts.com/news/colts-sign-t-wanya-morris-to-active-roster",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4570577",
-          "name": "Wanya Morris",
-          "shortName": "W. Morris",
-          "position": "OT",
-          "jersey": null,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570577.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0066
-    },
-    {
-      "id": "ind_rss_0a2f42e25a7e",
-      "type": "article",
-      "title": "Colts to spotlight mental health at November 29 'Kicking The Stigma' game",
-      "summary": "Kicking The Stigma and the Indianapolis Colts will highlight mental health and wellness at the team’s annual “Kicking The Stigma Game,” when the Colts will face the New York Giants this Sunday at Lucas Oil Stadium.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/vueo2eabfkjztur4rzs5.jpg",
-      "imageAlt": "Colts to spotlight mental health at November 29 'Kicking The Stigma' game",
-      "publishedAt": "2026-11-25T13:49:25.000Z",
-      "url": "https://www.colts.com/news/irsay-family-indianapolis-colts-game-kicking-the-stigma-new-york-giants-mental-health-lucas-oil-stadium-2026-action-grants-blue-mascot-cheerleaders",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9962
+      "storyRank": 0.5658
     },
     {
       "id": "ind_brss_stampede_blue_125b4dd91982",
@@ -1608,7 +1445,207 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5487
+      "storyRank": 0.203
+    },
+    {
+      "id": "ind_pwire_4242335_64970328",
+      "type": "article",
+      "title": "Taylor will be joined in the backfield in Sunday's game against the Giants by Anthony Richardson, who was named the Colts' new starting quarterback after Daniel Jones was cut Friday.",
+      "summary": "Taylor is slated to take his first extended snaps alongside Richardson since the 2024 season, when the two started together 10 times. The threat that Richardson presented to defenses as a runner seemed to aid Taylor's ow",
+      "publishedAt": "2026-11-25T15:39:11.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4242335/jonathan-taylor#:~:text=Taylor%20will%20be%20joined%20in%20the%20backfield",
+      "outletId": "espn",
+      "outletName": "Fox 59 News Indianapolis",
+      "reporterId": "ext_mike_chappell",
+      "reporterName": "Mike Chappell",
+      "author": "Mike Chappell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4242335/jonathan-taylor#:~:text=Taylor%20will%20be%20joined%20in%20the%20backfield",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4429084",
+          "name": "Anthony Richardson Sr.",
+          "shortName": "A. Richardson Sr.",
+          "position": "QB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5363
+    },
+    {
+      "id": "ind_tyt_Cv9m4r_JjyI",
+      "type": "video",
+      "category": "beat",
+      "videoId": "Cv9m4r_JjyI",
+      "embeddable": false,
+      "title": "Jack Doyle on Daniel Jones’ release, Anthony Richardson Sr. being QB1 | The Jack Doyle Podcast | NFL",
+      "summary": "Matt Taylor and Jack Doyle return to examine last week’s major news of Daniel Jones being released and Anthony Richardson Sr. being named the Colts’ starting quarterback. The guys break down what went wrong for Jones in",
+      "imageUrl": "https://i.ytimg.com/vi/Cv9m4r_JjyI/hqdefault.jpg",
+      "imageAlt": "Jack Doyle on Daniel Jones’ release, Anthony Richardson Sr. being QB1 | The Jack Doyle Podcast | NFL",
+      "publishedAt": "2026-11-25T15:20:43.000Z",
+      "url": "https://www.youtube.com/watch?v=Cv9m4r_JjyI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Cv9m4r_JjyI",
+      "channel": "Indianapolis Colts",
+      "outletId": "UCyYn26HPC4HIedifGnNbjBw",
+      "outletName": "Indianapolis Colts",
+      "reporterId": "UCyYn26HPC4HIedifGnNbjBw",
+      "reporterName": "Indianapolis Colts",
+      "author": "Indianapolis Colts",
+      "authorHandle": "@colts",
+      "authorProfileUrl": "https://www.youtube.com/@colts",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4429084",
+          "name": "Anthony Richardson Sr.",
+          "shortName": "A. Richardson Sr.",
+          "position": "QB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "37:32",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5373
+    },
+    {
+      "id": "ind_rss_898c8290038f",
+      "type": "article",
+      "title": "Indiana Football Digest Insider 2026 - Semistate Finals recap",
+      "summary": "The 2026 Indiana Football Digest Insider",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/giwv7ckpjpsxnhtnnxdi.jpg",
+      "imageAlt": "Indiana Football Digest Insider 2026 - Semistate Finals recap",
+      "publishedAt": "2026-11-25T14:00:00.000Z",
+      "url": "https://www.colts.com/news/indianapolis-colts-high-school-football-development-indiana-football-digest-insider-2026-semistate-finals-recap",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5044
+    },
+    {
+      "id": "ind_rss_a66cc2a33961",
+      "type": "article",
+      "title": "Colts sign T Wanya Morris to active roster",
+      "summary": "The roster move was made Wednesday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/dchl8dlbrnjuxzmap97k.png",
+      "imageAlt": "Colts sign T Wanya Morris to active roster",
+      "publishedAt": "2026-11-25T13:57:42.000Z",
+      "url": "https://www.colts.com/news/colts-sign-t-wanya-morris-to-active-roster",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4570577",
+          "name": "Wanya Morris",
+          "shortName": "W. Morris",
+          "position": "OT",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570577.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5035
+    },
+    {
+      "id": "ind_rss_0a2f42e25a7e",
+      "type": "article",
+      "title": "Colts to spotlight mental health at November 29 'Kicking The Stigma' game",
+      "summary": "Kicking The Stigma and the Indianapolis Colts will highlight mental health and wellness at the team’s annual “Kicking The Stigma Game,” when the Colts will face the New York Giants this Sunday at Lucas Oil Stadium.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/vueo2eabfkjztur4rzs5.jpg",
+      "imageAlt": "Colts to spotlight mental health at November 29 'Kicking The Stigma' game",
+      "publishedAt": "2026-11-25T13:49:25.000Z",
+      "url": "https://www.colts.com/news/irsay-family-indianapolis-colts-game-kicking-the-stigma-new-york-giants-mental-health-lucas-oil-stadium-2026-action-grants-blue-mascot-cheerleaders",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5003
     },
     {
       "id": "ind_brss_stampede_blue_58a16a191990",
@@ -1642,7 +1679,59 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8684
+      "storyRank": 0.4565
+    },
+    {
+      "id": "ind_tx_08b283d828c7",
+      "type": "tweet",
+      "title": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
+      "fullText": "Colts roster move: Signed T Wanya Morris from Dallas' practice squad. Designated CB Cam Taylor-Britt to return from injured reserve.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.colts.com/team/transactions/#tx-08b283d828c7",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "Indianapolis Colts Official",
+      "author": "Indianapolis Colts Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4570577",
+          "name": "Wanya Morris",
+          "shortName": "W. Morris",
+          "position": "OT",
+          "jersey": null,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570577.png"
+        },
+        {
+          "id": "4361196",
+          "name": "Cam Taylor-Britt",
+          "shortName": "C. Taylor-Britt",
+          "position": "CB",
+          "jersey": 29,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361196.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3922
     },
     {
       "id": "ind_brss_stampede_blue_bbb1e268f291",
@@ -1685,7 +1774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5268
+      "storyRank": 0.3263
     },
     {
       "id": "ind_tyt_IwUehQp1r3c",
@@ -1727,13 +1816,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:30",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5202,
-      "duration": "1:30"
+      "storyRank": 0.3249
     },
     {
       "id": "ind_pfr_34688f1b6eb7",
@@ -1775,7 +1864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.482
+      "storyRank": 0.3062
     },
     {
       "id": "ind_pfr_7cf8fc189f70",
@@ -1808,7 +1897,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4691
+      "storyRank": 0.3002
     },
     {
       "id": "ind_brss_stampede_blue_82848b5c0248",
@@ -1875,7 +1964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3989
+      "storyRank": 0.2664
     },
     {
       "id": "ind_pfr_3183d873d24f",
@@ -1917,7 +2006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.396
+      "storyRank": 0.2649
     },
     {
       "id": "ind_rss_d94384b6f5c4",
@@ -1951,7 +2040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3978
+      "storyRank": 0.2669
     },
     {
       "id": "ind_tyt_gk3MnPFd5dU",
@@ -1993,13 +2082,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "14:09",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3964,
-      "duration": "14:09"
+      "storyRank": 0.2662
     },
     {
       "id": "ind_vid_78f2c520077c",
@@ -2061,39 +2150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3959
-    },
-    {
-      "id": "ind_pwire_4431459_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4431459/tyler-warren#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4431459/tyler-warren#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.3891
+      "storyRank": 0.2659
     },
     {
       "id": "ind_tyt_f0KJ-GKVdNg",
@@ -2151,13 +2208,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:05",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3954,
-      "duration": "8:05"
+      "storyRank": 0.2657
     },
     {
       "id": "ind_tyt_2Bg_bfWkoFQ",
@@ -2199,13 +2256,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:19",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3949,
-      "duration": "4:19"
+      "storyRank": 0.2654
     },
     {
       "id": "ind_vid_888fc13e00a0",
@@ -2251,7 +2308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3946
+      "storyRank": 0.2653
     },
     {
       "id": "ind_vid_6e5cad1c7681",
@@ -2297,7 +2354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3933
+      "storyRank": 0.2647
     },
     {
       "id": "ind_tyt_Kspteb1wUF8",
@@ -2330,13 +2387,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "18:28",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3918,
-      "duration": "18:28"
+      "storyRank": 0.2639
     },
     {
       "id": "x_tl_colts_2125319088138600730",
@@ -2345,8 +2402,8 @@
       "fullText": "We have signed QB Shane Buechele off of the Bills practice squad and signed DE Carl Lawson to the 53-man roster from the practice squad.\n\nWe have placed DE Caden Curry on IR.\n\nWe have waived T Charlie Heck and signed TE Sean McKeon and DE Cam Sample to the practice squad.",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX6liRUWUAA4orI.jpg?name=orig",
-      "imageAlt": "Ed Dodds post",
+      "imageUrl": "",
+      "imageAlt": "Indianapolis Colts post",
       "mentionedPlayers": [
         {
           "id": "4039034",
@@ -2379,12 +2436,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "colts_official",
-      "outletName": "Colts.com / Official Team",
-      "reporterId": "ed_dodds",
-      "reporterName": "Ed Dodds",
-      "author": "Ed Dodds",
+      "outletName": "@Colts Official",
+      "reporterId": null,
+      "reporterName": "Indianapolis Colts",
+      "author": "Indianapolis Colts",
       "authorHandle": "@Colts",
-      "authorProfileUrl": "https://x.com/Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -2395,12 +2452,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4303
+      "storyRank": 0.2899
     },
     {
       "id": "ind_rss_76854cbd1c26",
@@ -2434,7 +2491,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3884
+      "storyRank": 0.2622
     },
     {
       "id": "ind_brss_stampede_blue_95d0ec9891bc",
@@ -2477,7 +2534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3762
+      "storyRank": 0.2549
     },
     {
       "id": "ind_rss_f657c27c7384",
@@ -2511,7 +2568,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3764
+      "storyRank": 0.256
     },
     {
       "id": "ind_vid_95d27eca2658",
@@ -2548,7 +2605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3761
+      "storyRank": 0.2558
     },
     {
       "id": "ind_brss_stampede_blue_5543450eb8bf",
@@ -2582,7 +2639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.365
+      "storyRank": 0.2491
     },
     {
       "id": "ind_rss_0251c6d836d1",
@@ -2616,7 +2673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3628
+      "storyRank": 0.2489
     },
     {
       "id": "x_tl_adamschefter_2125287520099615129",
@@ -2664,7 +2721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3981
+      "storyRank": 0.2732
     },
     {
       "id": "x_tl_romeovillekid_2125286123924607205",
@@ -2712,7 +2769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3967
+      "storyRank": 0.2725
     },
     {
       "id": "ind_brss_stampede_blue_424542e863af",
@@ -2755,7 +2812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2898
+      "storyRank": 0.2082
     },
     {
       "id": "ind_vid_88e126d758f4",
@@ -2792,7 +2849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2872
+      "storyRank": 0.2075
     },
     {
       "id": "ind_tx_5dfad8e5842d",
@@ -2852,7 +2909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2627
+      "storyRank": 0.1932
     },
     {
       "id": "ind_pfr_2fe42aa5dcec",
@@ -2885,7 +2942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2127
+      "storyRank": 0.1622
     },
     {
       "id": "ind_pwire_4874509_64942328",
@@ -2942,7 +2999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2139
+      "storyRank": 0.1635
     },
     {
       "id": "x_tl_romeovillekid_2124995368236494987",
@@ -2953,7 +3010,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124995324758335488/img/AEwOaihh5wCWnfif.jpg",
       "imageAlt": "James Boyd post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124995324758335488/vid/avc1/1280x718/OkiFr_0_MBXvTjzZ.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124995324758335488/vid/avc1/1280x718/OkiFr_0_MBXvTjzZ.mp4",
       "isHighlightClip": true,
       "duration": "0:35",
       "embeddable": true,
@@ -2994,7 +3051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2254
+      "storyRank": 0.1736
     },
     {
       "id": "ind_pfr_a3c01896ebf6",
@@ -3027,7 +3084,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1997
+      "storyRank": 0.154
     },
     {
       "id": "ind_brss_stampede_blue_1f7c049da063",
@@ -3061,7 +3118,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1995
+      "storyRank": 0.1539
     },
     {
       "id": "ind_pfr_6f837a0252c7",
@@ -3103,7 +3160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1942
+      "storyRank": 0.1504
     },
     {
       "id": "ind_rss_b82dd62d785e",
@@ -3137,7 +3194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1935
+      "storyRank": 0.1504
     },
     {
       "id": "ind_rss_e1e53b3e3646",
@@ -3188,7 +3245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1934
+      "storyRank": 0.1504
     },
     {
       "id": "ind_pwire_4686468_64937128",
@@ -3237,7 +3294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.193
+      "storyRank": 0.1501
     },
     {
       "id": "ind_tyt_QMb264pNI-c",
@@ -3285,7 +3342,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0171
     },
     {
       "id": "ind_vid_e9aaf832a199",
@@ -3331,7 +3388,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.0171
     },
     {
       "id": "ind_pwire_4360078_64936928",
@@ -3372,7 +3429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0168
     },
     {
       "id": "x_tl_holderstephen_2124946503185936556",
@@ -3420,7 +3477,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2089,
+      "storyRank": 0.1629,
       "isSupersededInjuryUpdate": true
     },
     {
@@ -3463,13 +3520,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:10",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1869,
-      "duration": "8:10"
+      "storyRank": 0.1461
     },
     {
       "id": "ind_rss_62fe74aca3b9",
@@ -3503,7 +3560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1726
+      "storyRank": 0.1366
     },
     {
       "id": "ind_tx_2ee7f07c72cf",
@@ -3538,41 +3595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1497
-    },
-    {
-      "id": "ind_brss_stampede_blue_be0c46a0bebf",
-      "type": "article",
-      "title": "Colts-Giants opening odds: A fresh start",
-      "summary": "The Indianapolis Colts have continued to look different as the season has progressed. This Sunday against the Giants, they will look incredibly different. At the game’s most important position, the Colts will start a new quarterback. Daniel",
-      "imageUrl": "",
-      "imageAlt": "Colts-Giants opening odds: A fresh start",
-      "publishedAt": "2026-11-23T01:10:20.000Z",
-      "url": "https://www.stampedeblue.com/indianapolis-colts-odds/130360/colts-giants-opening-odds-a-fresh-start",
-      "outletId": "stampede_blue",
-      "outletName": "Stampede Blue",
-      "reporterId": "stampede_blue",
-      "reporterName": "Jon Spradley",
-      "author": "Jon Spradley",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.stampedeblue.com/indianapolis-colts-odds/130360/colts-giants-opening-odds-a-fresh-start",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1298
+      "storyRank": 0.121
     },
     {
       "id": "ind_espn_ca4e834e831bf",
@@ -3616,7 +3639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1139
+      "storyRank": 0.0954
     },
     {
       "id": "ind_espn_878b9df448c16",
@@ -3651,7 +3674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1117
+      "storyRank": 0.0938
     },
     {
       "id": "ind_pwire_4360078_64903328",
@@ -3692,7 +3715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1079
+      "storyRank": 0.091
     },
     {
       "id": "ind_rss_524b276473fd",
@@ -3726,7 +3749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1065
+      "storyRank": 0.0899
     },
     {
       "id": "ind_vid_36f975ff64e1",
@@ -3763,7 +3786,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1057
+      "storyRank": 0.0893
     },
     {
       "id": "ind_espn_5f18e675a818f",
@@ -3798,7 +3821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0876
+      "storyRank": 0.0755
     },
     {
       "id": "ind_pfr_7890a695a61a",
@@ -3831,7 +3854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0796
+      "storyRank": 0.0692
     },
     {
       "id": "ind_pfr_02d2a1215dc5",
@@ -3864,7 +3887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0679
+      "storyRank": 0.0598
     },
     {
       "id": "ind_pwire_4683423_64882828",
@@ -3913,7 +3936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0648
+      "storyRank": 0.0574
     },
     {
       "id": "ind_espn_fb3e8b9b030e5",
@@ -3957,7 +3980,124 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0644
+      "storyRank": 0.0571
+    },
+    {
+      "id": "ind_yts_xEz2hG6EZww",
+      "type": "video",
+      "videoId": "xEz2hG6EZww",
+      "embeddable": false,
+      "title": "Shane Steichen on Texans loss in prime time",
+      "summary": "",
+      "duration": "3:36",
+      "imageUrl": "https://i.ytimg.com/vi/xEz2hG6EZww/hqdefault.jpg",
+      "imageAlt": "Shane Steichen on Texans loss in prime time",
+      "publishedAt": "2026-11-20T19:23:39.127Z",
+      "url": "https://www.youtube.com/watch?v=xEz2hG6EZww",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=xEz2hG6EZww",
+      "channel": "Indianapolis Colts",
+      "outletId": "colts_official",
+      "outletName": "Indianapolis Colts",
+      "reporterId": "colts_official",
+      "reporterName": "Indianapolis Colts",
+      "author": "Indianapolis Colts",
+      "authorHandle": "@colts",
+      "authorProfileUrl": "https://www.youtube.com/@colts",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0568
+    },
+    {
+      "id": "ind_yts_9vLBT9vk0qA",
+      "type": "video",
+      "videoId": "9vLBT9vk0qA",
+      "embeddable": true,
+      "title": "Week 11 Game Trailer | Colts at Texans",
+      "summary": "",
+      "duration": "0:57",
+      "imageUrl": "https://i.ytimg.com/vi/9vLBT9vk0qA/hqdefault.jpg",
+      "imageAlt": "Week 11 Game Trailer | Colts at Texans",
+      "publishedAt": "2026-11-20T19:23:39.127Z",
+      "url": "https://www.youtube.com/watch?v=9vLBT9vk0qA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=9vLBT9vk0qA",
+      "channel": "Indianapolis Colts",
+      "outletId": "colts_official",
+      "outletName": "Indianapolis Colts",
+      "reporterId": "colts_official",
+      "reporterName": "Indianapolis Colts",
+      "author": "Indianapolis Colts",
+      "authorHandle": "@colts",
+      "authorProfileUrl": "https://www.youtube.com/@colts",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0568
+    },
+    {
+      "id": "ind_yts_E4M4HIAfJl4",
+      "type": "video",
+      "videoId": "E4M4HIAfJl4",
+      "embeddable": false,
+      "title": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "13:34",
+      "imageUrl": "https://i.ytimg.com/vi/E4M4HIAfJl4/hqdefault.jpg",
+      "imageAlt": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-20T19:23:39.126Z",
+      "url": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0568
     },
     {
       "id": "ind_rss_f6898756253b",
@@ -4000,7 +4140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0639
+      "storyRank": 0.0567
     },
     {
       "id": "ind_rss_a240e8ba6f98",
@@ -4034,7 +4174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0635
+      "storyRank": 0.0564
     },
     {
       "id": "ind_tyt_n8hHiT5z-fg",
@@ -4076,13 +4216,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "6:51",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0635,
-      "duration": "6:51"
+      "storyRank": 0.0564
     },
     {
       "id": "ind_yt_Qu0Tg0l47ME",
@@ -4115,13 +4255,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "36:58",
       "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0635,
-      "duration": "36:58"
+      "storyRank": 0.0564
     },
     {
       "id": "ind_vid_269af39565ab",
@@ -4167,7 +4307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0635
+      "storyRank": 0.0563
     },
     {
       "id": "x_tl_romeovillekid_2123846768756658256",
@@ -4178,7 +4318,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2123846677823971328/img/uSoWpDtKHkV7d7uG.jpg",
       "imageAlt": "James Boyd post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123846677823971328/vid/avc1/1280x720/P_iFMlzC4uxzosyG.mp4?tag=29",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123846677823971328/vid/avc1/1280x720/P_iFMlzC4uxzosyG.mp4",
       "isHighlightClip": true,
       "duration": "1:02",
       "embeddable": true,
@@ -4219,7 +4359,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0697
+      "storyRank": 0.0619
     },
     {
       "id": "x_tl_albertbreer_2123842243647971491",
@@ -4258,7 +4398,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0695
+      "storyRank": 0.0617
     },
     {
       "id": "ind_rss_18ac474bcf77",
@@ -4301,7 +4441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0631
+      "storyRank": 0.0561
     },
     {
       "id": "ind_espn_158f845793561",
@@ -4338,7 +4478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0628
+      "storyRank": 0.0558
     },
     {
       "id": "ind_pfr_986a6c224c48",
@@ -4371,7 +4511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0613
+      "storyRank": 0.0545
     },
     {
       "id": "ind_rss_e524be8a2495",
@@ -4405,7 +4545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0605
+      "storyRank": 0.0539
     },
     {
       "id": "ind_nfilm_unexpected_points_e02e5e7e4573",
@@ -4439,7 +4579,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0604
+      "storyRank": 0.0539
     },
     {
       "id": "ind_tyt_OTh_uUe09zI",
@@ -4489,13 +4629,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:37",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0573,
-      "duration": "7:37"
+      "storyRank": 0.0512
     },
     {
       "id": "ind_tx_d71909e740e6",
@@ -4530,7 +4670,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.057
+      "storyRank": 0.0511
     },
     {
       "id": "ind_vid_0521b66a916b",
@@ -4567,124 +4707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0568
-    },
-    {
-      "id": "ind_yts_xEz2hG6EZww",
-      "type": "video",
-      "videoId": "xEz2hG6EZww",
-      "embeddable": false,
-      "title": "Shane Steichen on Texans loss in prime time",
-      "summary": "",
-      "duration": "3:36",
-      "imageUrl": "https://i.ytimg.com/vi/xEz2hG6EZww/hqdefault.jpg",
-      "imageAlt": "Shane Steichen on Texans loss in prime time",
-      "publishedAt": "2026-11-20T07:29:07.215Z",
-      "url": "https://www.youtube.com/watch?v=xEz2hG6EZww",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=xEz2hG6EZww",
-      "channel": "Indianapolis Colts",
-      "outletId": "colts_official",
-      "outletName": "Indianapolis Colts",
-      "reporterId": "colts_official",
-      "reporterName": "Indianapolis Colts",
-      "author": "Indianapolis Colts",
-      "authorHandle": "@colts",
-      "authorProfileUrl": "https://www.youtube.com/@colts",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0568
-    },
-    {
-      "id": "ind_yts_9vLBT9vk0qA",
-      "type": "video",
-      "videoId": "9vLBT9vk0qA",
-      "embeddable": true,
-      "title": "Week 11 Game Trailer | Colts at Texans",
-      "summary": "",
-      "duration": "0:57",
-      "imageUrl": "https://i.ytimg.com/vi/9vLBT9vk0qA/hqdefault.jpg",
-      "imageAlt": "Week 11 Game Trailer | Colts at Texans",
-      "publishedAt": "2026-11-20T07:29:07.215Z",
-      "url": "https://www.youtube.com/watch?v=9vLBT9vk0qA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=9vLBT9vk0qA",
-      "channel": "Indianapolis Colts",
-      "outletId": "colts_official",
-      "outletName": "Indianapolis Colts",
-      "reporterId": "colts_official",
-      "reporterName": "Indianapolis Colts",
-      "author": "Indianapolis Colts",
-      "authorHandle": "@colts",
-      "authorProfileUrl": "https://www.youtube.com/@colts",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0568
-    },
-    {
-      "id": "ind_yts_E4M4HIAfJl4",
-      "type": "video",
-      "videoId": "E4M4HIAfJl4",
-      "embeddable": false,
-      "title": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
-      "summary": "",
-      "duration": "13:34",
-      "imageUrl": "https://i.ytimg.com/vi/E4M4HIAfJl4/hqdefault.jpg",
-      "imageAlt": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-20T07:29:07.214Z",
-      "url": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0568
+      "storyRank": 0.0509
     },
     {
       "id": "ind_tyt_w3tsZoMBrgk",
@@ -4717,13 +4740,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:02",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.014,
-      "duration": "4:02"
+      "storyRank": 0.0126
     },
     {
       "id": "ind_tyt_8hwXhV-K7eY",
@@ -4762,7 +4785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0561
+      "storyRank": 0.0503
     },
     {
       "id": "ind_vid_79bd0eb820c8",
@@ -4799,7 +4822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0559
+      "storyRank": 0.0501
     },
     {
       "id": "ind_vid_c346ca801f2b",
@@ -4836,7 +4859,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0559
+      "storyRank": 0.0501
     },
     {
       "id": "ind_vid_a74cf61dbb2f",
@@ -4890,7 +4913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0558
+      "storyRank": 0.0501
     },
     {
       "id": "ind_espn_8009380056ffb",
@@ -4925,7 +4948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0557
+      "storyRank": 0.05
     },
     {
       "id": "ind_rss_31098123bfcb",
@@ -4959,7 +4982,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0556
+      "storyRank": 0.0499
     },
     {
       "id": "ind_pwire_4431459_64876528",
@@ -5000,7 +5023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0555
+      "storyRank": 0.0498
     },
     {
       "id": "ind_espn_7eb40fcb22b0c",
@@ -5035,7 +5058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0138
+      "storyRank": 0.0124
     },
     {
       "id": "ind_espn_816c979b95571",
@@ -5070,7 +5093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0552
+      "storyRank": 0.0495
     },
     {
       "id": "ind_vid_da50c9e4b63c",
@@ -5107,7 +5130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0551
+      "storyRank": 0.0495
     },
     {
       "id": "ind_rss_97e0dfb7135e",
@@ -5141,7 +5164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.055
+      "storyRank": 0.0493
     },
     {
       "id": "ind_vid_ecdf3387b15d",
@@ -5187,7 +5210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0542
+      "storyRank": 0.0487
     },
     {
       "id": "ind_vid_bc00f8dfab68",
@@ -5233,7 +5256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0539
+      "storyRank": 0.0485
     },
     {
       "id": "ind_vid_dfa2c1d8c4be",
@@ -5279,7 +5302,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0538
+      "storyRank": 0.0484
     },
     {
       "id": "ind_vid_8e2914b331fd",
@@ -5333,7 +5356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0538
+      "storyRank": 0.0484
     },
     {
       "id": "ind_vid_c3b630791d6a",
@@ -5379,7 +5402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0537
+      "storyRank": 0.0483
     },
     {
       "id": "x_tl_jamespalmertv_2123588057202930129",
@@ -5422,7 +5445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.058
+      "storyRank": 0.0522
     },
     {
       "id": "x_tl_jamespalmertv_2123579789327941700",
@@ -5465,7 +5488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0277
+      "storyRank": 0.0249
     },
     {
       "id": "ind_pfr_998734380091",
@@ -5498,79 +5521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0251
-    },
-    {
-      "id": "ind_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
-    },
-    {
-      "id": "ind_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0226
     },
     {
       "id": "ind_rss_a0549549104f",
@@ -5604,7 +5555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0223
     },
     {
       "id": "ind_vid_d1737ffa400c",
@@ -5641,7 +5592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.021
     },
     {
       "id": "ind_rss_6f3600950f9b",
@@ -5675,7 +5626,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0209
     },
     {
       "id": "ind_vid_8599915a79c7",
@@ -5721,7 +5672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0206
     },
     {
       "id": "ind_tx_903fc6f1296e",
@@ -5756,7 +5707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0201
     },
     {
       "id": "ind_yts_m6xFWXq-7uM",
@@ -5768,7 +5719,7 @@
       "duration": "7:01",
       "imageUrl": "https://i.ytimg.com/vi/m6xFWXq-7uM/hqdefault.jpg",
       "imageAlt": "Indianapolis Colts vs Houston Texans | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-19T07:29:07.214Z",
+      "publishedAt": "2026-11-18T19:23:39.126Z",
       "url": "https://www.youtube.com/watch?v=m6xFWXq-7uM",
       "externalVideoUrl": "https://www.youtube.com/watch?v=m6xFWXq-7uM",
       "channel": "NFL",
@@ -5795,7 +5746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0183
     },
     {
       "id": "ind_rss_0e84cf3e82b9",
@@ -5846,7 +5797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0182
     },
     {
       "id": "ind_rss_4fd0ae6e74ac",
@@ -5889,7 +5840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0179
     },
     {
       "id": "ind_vid_a3b3128cb32f",
@@ -5943,7 +5894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0179
     },
     {
       "id": "ind_rss_f1d4cf2513d1",
@@ -5977,7 +5928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
+      "storyRank": 0.0176
     },
     {
       "id": "ind_rss_43ad79fb9b3e",
@@ -6011,7 +5962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0157
     },
     {
       "id": "ind_pfr_ee50bded996b",
@@ -6053,7 +6004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0154
     },
     {
       "id": "ind_vid_9fd91cf41f97",
@@ -6099,7 +6050,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0157
     },
     {
       "id": "ind_vid_7f6989d453d3",
@@ -6153,7 +6104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0157
     },
     {
       "id": "ind_vid_9369fa62a81e",
@@ -6207,7 +6158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0157
     },
     {
       "id": "ind_rss_bf1ba9feb3ae",
@@ -6258,7 +6209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0155
     },
     {
       "id": "ind_rss_2afd1401a413",
@@ -6292,7 +6243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0151
     },
     {
       "id": "ind_vid_43eebeedc7bc",
@@ -6329,7 +6280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0151
     },
     {
       "id": "ind_vid_e6d1b5299b8a",
@@ -6366,7 +6317,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0151
     },
     {
       "id": "ind_vid_1e41528a27df",
@@ -6403,7 +6354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0147
     },
     {
       "id": "ind_tx_432ffb11edda",
@@ -6455,7 +6406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0144
     },
     {
       "id": "ind_pfr_7159479bf80f",
@@ -6488,7 +6439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0136
     },
     {
       "id": "ind_pfr_e6aa64d4de47",
@@ -6530,7 +6481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0136
     },
     {
       "id": "ind_rss_9993cebf9114",
@@ -6564,7 +6515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0137
     },
     {
       "id": "ind_rss_fbadd8b815dc",
@@ -6598,7 +6549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0135
     },
     {
       "id": "ind_rss_a67fdbea11a0",
@@ -6632,7 +6583,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0134
     },
     {
       "id": "ind_vid_a67ba57d2e2d",
@@ -6686,7 +6637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0134
     },
     {
       "id": "ind_vid_2589acaa2715",
@@ -6748,7 +6699,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0134
     },
     {
       "id": "ind_rss_2ff2872b07f3",
@@ -6791,7 +6742,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0134
+    },
+    {
+      "id": "ind_yts_8qPlVF26TS4",
+      "type": "video",
+      "videoId": "8qPlVF26TS4",
+      "embeddable": false,
+      "title": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "13:40",
+      "imageUrl": "https://i.ytimg.com/vi/8qPlVF26TS4/hqdefault.jpg",
+      "imageAlt": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T19:23:39.126Z",
+      "url": "https://www.youtube.com/watch?v=8qPlVF26TS4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=8qPlVF26TS4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0134
     },
     {
       "id": "ind_rss_4951c82c7e12",
@@ -6825,7 +6815,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0131
     },
     {
       "id": "ind_vid_972dcab17069",
@@ -6871,7 +6861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.013
     },
     {
       "id": "ind_tx_1d5ce2ec1f1f",
@@ -6915,46 +6905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
-    },
-    {
-      "id": "ind_yts_8qPlVF26TS4",
-      "type": "video",
-      "videoId": "8qPlVF26TS4",
-      "embeddable": false,
-      "title": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "13:40",
-      "imageUrl": "https://i.ytimg.com/vi/8qPlVF26TS4/hqdefault.jpg",
-      "imageAlt": "Miami Dolphins vs Indianapolis Colts Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T07:29:07.214Z",
-      "url": "https://www.youtube.com/watch?v=8qPlVF26TS4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=8qPlVF26TS4",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0125
     },
     {
       "id": "ind_rss_b20f2e6d0712",
@@ -7021,7 +6972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0123
     },
     {
       "id": "ind_vid_7b219a521529",
@@ -7075,7 +7026,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0121
     },
     {
       "id": "ind_vid_4da0dd58a097",
@@ -7112,7 +7063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "ind_vid_6ce4b843f8c5",
@@ -7149,7 +7100,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0119
     },
     {
       "id": "ind_rss_ab121b483fe9",
@@ -7200,7 +7151,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ind_vid_72ce3e228ea8",
@@ -7237,7 +7188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ind_vid_5dff568eaf15",
@@ -7274,7 +7225,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ind_vid_f2d8d05b9a13",
@@ -7328,7 +7279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ind_vid_4da4ea8de05f",
@@ -7365,7 +7316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ind_vid_c842f6d24df8",
@@ -7402,7 +7353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.003
     },
     {
       "id": "ind_vid_a10996c03faa",
@@ -7439,7 +7390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "ind_rss_4b278902b9ed",
@@ -7473,7 +7424,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "ind_vid_48f1ced453c9",
@@ -7519,7 +7470,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "ind_vid_84a8870351bc",
@@ -7565,7 +7516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "ind_vid_7e1d1e73978a",
@@ -7611,7 +7562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_f26912ef86d7",
@@ -7657,7 +7608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_81065832dad1",
@@ -7703,7 +7654,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_2fcc296fadad",
@@ -7749,7 +7700,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_e80930aa4e6d",
@@ -7795,7 +7746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_ad200b637567",
@@ -7841,7 +7792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_3bebb346f611",
@@ -7887,7 +7838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.0117
     },
     {
       "id": "ind_vid_e7166a65b0bc",
@@ -7924,7 +7875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.0114
     },
     {
       "id": "ind_rss_33b229791d5f",
@@ -7958,7 +7909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.0113
     },
     {
       "id": "ind_rss_2e7960f5d82a",
@@ -7992,7 +7943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0096
     },
     {
       "id": "ind_rss_d82f96ee30f7",
@@ -8059,7 +8010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.0103
     },
     {
       "id": "ind_tx_8f7158e2ae97",
@@ -8127,7 +8078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0098
     },
     {
       "id": "ind_vid_ca86d9a8f4d7",
@@ -8181,7 +8132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0093
     },
     {
       "id": "ind_vid_5e3efb7beb5a",
@@ -8227,7 +8178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0093
     },
     {
       "id": "ind_vid_a44b371ad4a4",
@@ -8273,7 +8224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0092
     },
     {
       "id": "ind_rss_fe520c24f1a1",
@@ -8307,7 +8258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0096
+      "storyRank": 0.0091
     },
     {
       "id": "ind_rss_489573e9d8c2",
@@ -8350,7 +8301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0221
     },
     {
       "id": "ind_rss_797ab8667317",
@@ -8384,7 +8335,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "ind_vid_44f3f7b185eb",
@@ -8429,7 +8380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "ind_vid_daba5245e389",
@@ -8483,7 +8434,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
       "id": "ind_vid_f9e959caf9b5",
@@ -8529,7 +8480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "ind_vid_e11982d9e4ed",
@@ -8583,7 +8534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0083
     },
     {
       "id": "ind_vid_f9ae37907c1f",
@@ -8619,41 +8570,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
-    },
-    {
-      "id": "ind_rss_2c4e51156b35",
-      "type": "article",
-      "title": "Colts Cheerleaders announce auditions for 2027 squad",
-      "summary": "Prospective candidates invited to begin their audition journey with December workshop and winter prep classes.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/hnae4ecdwjpe9qea7rsl.jpg",
-      "imageAlt": "Colts Cheerleaders announce auditions for 2027 squad",
-      "publishedAt": "2026-11-12T14:00:40.000Z",
-      "url": "https://www.colts.com/news/indianapolis-colts-cheer-cheerleaders-audition-information-process-2027-workshop-prep-classes-showcase-submission-guidelines-application",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0083
     },
     {
       "id": "ind_vid_0c8cfac72e78",
@@ -8689,7 +8606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "ind_vid_710435642d1f",
@@ -8725,7 +8642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "ind_vid_44983b14e83b",
@@ -8778,7 +8695,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0076
     },
     {
       "id": "ind_vid_689c5028a290",
@@ -8832,7 +8749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0078
+      "storyRank": 0.0075
     },
     {
       "id": "ind_tx_a8f9d3191bcc",
@@ -8876,7 +8793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0073
     },
     {
       "id": "ind_vid_90423f8c9281",
@@ -8922,7 +8839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0071
     },
     {
       "id": "ind_vid_3c983efe5597",
@@ -8976,7 +8893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0069
     },
     {
       "id": "ind_vid_ffa2095bdceb",
@@ -9022,7 +8939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0069
     },
     {
       "id": "ind_vid_e9a566fdf4f1",
@@ -9068,7 +8985,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0069
     },
     {
       "id": "ind_vid_976adc2370fe",
@@ -9105,7 +9022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0069
     },
     {
       "id": "ind_vid_f25904392d4c",
@@ -9151,7 +9068,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0067
     },
     {
       "id": "ind_tx_8cf2b8b3f951",
@@ -9186,7 +9103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0067
     },
     {
       "id": "ind_vid_f3aa686e919a",
@@ -9223,7 +9140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "ind_vid_6b816842f3e6",
@@ -9260,7 +9177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0062
     },
     {
       "id": "ind_vid_023c4ff1ade0",
@@ -9297,7 +9214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "ind_vid_9a96bcbec977",
@@ -9334,7 +9251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_3b9a2a93af73",
@@ -9396,7 +9313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_0dbcef9c2972",
@@ -9433,7 +9350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_ea974ddf439f",
@@ -9479,7 +9396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_475848041dac",
@@ -9525,7 +9442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_e1bf209ebc36",
@@ -9571,7 +9488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_10296cc4a826",
@@ -9617,7 +9534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_fce440f67cfd",
@@ -9663,7 +9580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_97a2b7d43d72",
@@ -9709,7 +9626,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_82e9abc9f522",
@@ -9755,7 +9672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_5f64b19d03e7",
@@ -9809,7 +9726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "ind_vid_4de8702b935e",
@@ -9846,7 +9763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0058
     },
     {
       "id": "ind_tx_3f0f9c322c1e",
@@ -9890,7 +9807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0053
     },
     {
       "id": "ind_vid_4328d17a9f7a",
@@ -9952,7 +9869,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0051
     },
     {
       "id": "ind_vid_97e394d719cd",
@@ -9998,7 +9915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0051
     },
     {
       "id": "ind_vid_b56e44ca3d31",
@@ -10044,190 +9961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
-    },
-    {
-      "id": "ind_vid_2ca68eef2ec8",
-      "type": "video",
-      "title": "Luke Rhodes' mic'd up at Salute to Service Flag Game",
-      "summary": "Long snapper and Salute to Service nominee Luke Rhodes is mic'd up for the annual Colts Community Salute to Service Flag Football game. Rhodes and teammates hype up flag football team members representing the Air Force,",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/ikzhz5xevwikn9iifnvu.jpg",
-      "imageAlt": "Luke Rhodes' mic'd up at Salute to Service Flag Game",
-      "publishedAt": "2026-11-05T18:45:00.000Z",
-      "url": "https://www.colts.com/video/luke-rhodes-mic-d-up-at-salute-to-service-flag-game",
-      "externalVideoUrl": "https://www.colts.com/video/luke-rhodes-mic-d-up-at-salute-to-service-flag-game",
-      "duration": "1:13",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "2566045",
-          "name": "Luke Rhodes",
-          "shortName": "L. Rhodes",
-          "position": "LS",
-          "jersey": 46,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2566045.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "ind_vid_4a8fb96f38df",
-      "type": "video",
-      "title": "Colts teammates surprise Luke Rhodes as the 2026 Salute to Service nominee",
-      "summary": "Watch as the Colts surprise Luke Rhodes as the team's Salute to Service nominee as he greets his ticket block of veterans ahead of a Colts home game. Hear from Colts Owner and Chief Brand Officer Kalen Jackson, punter Ri",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/omugmd3n5yeurrlrovyv.jpg",
-      "imageAlt": "Colts teammates surprise Luke Rhodes as the 2026 Salute to Service nominee",
-      "publishedAt": "2026-11-05T18:00:00.000Z",
-      "url": "https://www.colts.com/video/indianapolis-colts-teammates-surprise-luke-rhodes-as-the-2026-nfl-salute-to-service-nominee",
-      "externalVideoUrl": "https://www.colts.com/video/indianapolis-colts-teammates-surprise-luke-rhodes-as-the-2026-nfl-salute-to-service-nominee",
-      "duration": "2:47",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "2566045",
-          "name": "Luke Rhodes",
-          "shortName": "L. Rhodes",
-          "position": "LS",
-          "jersey": 46,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2566045.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "ind_vid_43dead594043",
-      "type": "video",
-      "title": "Jonathan Taylor & Caden Curry | Colts vs. Cowboys, Locker Talk Week 9",
-      "summary": "Colts running back Jonathan Taylor addresses swirling trade speculation surrounding him as the trade deadline quickly approaches Tuesday. While Taylor reads and hears things, he makes sure it does not impact his preparat",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/sv3508xaolzly86srtxh.jpg",
-      "imageAlt": "Jonathan Taylor & Caden Curry | Colts vs. Cowboys, Locker Talk Week 9",
-      "publishedAt": "2026-11-05T17:56:00.000Z",
-      "url": "https://www.colts.com/video/indianapolis-colts-running-back-jonathan-taylor-caden-curry-colts-vs-dallas-cowboys-locker-talk-week-9-discuss-trade-rumors-nfl-trade-deadline-deforest-buckner-san-francisco-49ers-cj-allen",
-      "externalVideoUrl": "https://www.colts.com/video/indianapolis-colts-running-back-jonathan-taylor-caden-curry-colts-vs-dallas-cowboys-locker-talk-week-9-discuss-trade-rumors-nfl-trade-deadline-deforest-buckner-san-francisco-49ers-cj-allen",
-      "duration": "13:26",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4242335",
-          "name": "Jonathan Taylor",
-          "shortName": "J. Taylor",
-          "position": "RB",
-          "jersey": 28,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242335.png"
-        },
-        {
-          "id": "4685324",
-          "name": "Caden Curry",
-          "shortName": "C. Curry",
-          "position": "LB",
-          "jersey": 55,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "ind_vid_9fb8f5610a6d",
-      "type": "video",
-      "title": "\"Who's going to step up?\" | The Jack Doyle Podcast",
-      "summary": "Matt Taylor and Jack Doyle return to digest the Colts' recent trades, their blowout loss to the Jaguars and what lies ahead for a team on a four-game losing streak as the calendar turns to November. 0:00 Pod intro 2:20 W",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/tqwzj26qolssnsznoggb.png",
-      "imageAlt": "\"Who's going to step up?\" | The Jack Doyle Podcast",
-      "publishedAt": "2026-11-05T11:01:00.000Z",
-      "url": "https://www.colts.com/video/who-s-going-to-step-up-the-jack-doyle-podcast",
-      "externalVideoUrl": "https://www.colts.com/video/who-s-going-to-step-up-the-jack-doyle-podcast",
-      "duration": "35:19",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.005
     },
     {
       "id": "ind_yt_cHWj9_y-5l4",
@@ -10269,13 +10003,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:40",
       "credibilityScore": 90,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046,
-      "duration": "8:40"
+      "storyRank": 0.0045
     },
     {
       "id": "ind_rss_525b06082155",

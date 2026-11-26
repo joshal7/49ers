@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:22.361Z",
+  "updatedAt": "2026-11-26T19:05:53.363Z",
   "sources": [
     {
       "label": "ESPN Panthers Schedule",
@@ -24736,10 +24736,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 7.8 proj. wins, 0.2% SB odds) at 5-5.",
+        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 7.8 proj. wins, 0.4% SB odds) at 5-5.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24773,10 +24773,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -1.5 (#14 Offense / #23 Defense) at 5-5 through Week 11.",
+        "blurb": "Betting market rating GPF -1.7 (#14 Offense / #23 Defense) at 5-5 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24809,10 +24809,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 3 (47.6% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 12.",
+        "blurb": "Tier 3 (47.3% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24829,10 +24829,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -1.5 (#14 Offense / #23 Defense) at 5-5 through Week 11."
+        "blurb": "Betting market rating GPF -1.7 (#14 Offense / #23 Defense) at 5-5 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24861,10 +24861,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 3 (47.6% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 12."
+        "blurb": "Tier 3 (47.3% neutral-field win rating, 8.2 proj. wins) at 5-5 through Week 12."
       },
       {
         "id": "cbs",
@@ -24894,10 +24894,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 7.8 proj. wins, 0.2% SB odds) at 5-5."
+        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 7.8 proj. wins, 0.4% SB odds) at 5-5."
       },
       {
         "id": "espn_panel",
@@ -24930,7 +24930,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:27:28.282Z"
+    "fetchedAtIso": "2026-11-26T19:05:58.597Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24954,8 +24954,8 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 70,
-      "condition": "Thunderstorms",
+      "tempF": 68,
+      "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
       "precipPct": null,
@@ -25883,7 +25883,7 @@
       "spread": "TB -3",
       "openingSpread": "Opened CAR +3.5 (Draft Kings)",
       "overUnder": 43.5,
-      "moneyline": "CAR +132 | TB -156",
+      "moneyline": "CAR +132 | TB -157",
       "impliedScore": "CAR 20.3 – TB 23.3",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "33%"

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:26:40.627Z",
+  "updatedAt": "2026-11-26T19:04:49.905Z",
   "sources": [
     {
       "label": "ESPN Commanders Schedule",
@@ -533,7 +533,7 @@
         "surface": "Turf"
       },
       "restAdvantageDays": -1,
-      "spreadLineSf": -7,
+      "spreadLineSf": -6.5,
       "totalLine": 41.5,
       "broadcast": "NFL TV"
     },
@@ -24660,15 +24660,33 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 17,
-    "averageRank": 17,
+    "averageRank": 16.8,
     "medianRank": 16,
     "previousRank": 18,
-    "rangeMin": 16,
+    "rangeMin": 15,
     "rangeMax": 19,
-    "rangeShort": "#16–#19",
-    "rangeDisplay": "#16–#19 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 4-5-1 Commanders at #17 consensus (avg #17.0) through Week 11, ranging from #16 (Inpredictable) to #19 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeShort": "#15–#19",
+    "rangeDisplay": "#15–#19 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 4-5-1 Commanders at #17 consensus (avg #16.8) through Week 11, ranging from #15 (RBSDM) to #19 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 15,
+        "previousRank": 16,
+        "delta": "+1",
+        "reportedRecord": "4-5-1",
+        "gamesIncluded": 10,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "Tier 3 (52.4% neutral-field win rating, 8.2 proj. wins) at 4-5-1 through Week 12.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
       {
         "id": "inpredictable",
         "outlet": "Inpredictable / Betting Market Power Rating",
@@ -24680,10 +24698,10 @@
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -0.9 (#15 Offense / #20 Defense) at 4-5-1 through Week 11.",
+        "blurb": "Betting market rating GPF -1.1 (#15 Offense / #19 Defense) at 4-5-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24706,24 +24724,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 16,
-        "previousRank": 16,
-        "delta": "0",
-        "reportedRecord": "4-5-1",
-        "gamesIncluded": 10,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "Tier 3 (51.3% neutral-field win rating, 8.1 proj. wins) at 4-5-1 through Week 12.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
@@ -24734,10 +24734,10 @@
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -2.1 (#18 Off / #18 Def efficiency, 7.2 proj. wins, 0.2% SB odds) at 4-5-1.",
+        "blurb": "FPI -2.0 (#18 Off / #18 Def efficiency, 7.2 proj. wins, 0.1% SB odds) at 4-5-1.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24773,10 +24773,10 @@
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -0.9 (#15 Offense / #20 Defense) at 4-5-1 through Week 11."
+        "blurb": "Betting market rating GPF -1.1 (#15 Offense / #19 Defense) at 4-5-1 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24799,16 +24799,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 16,
+        "rank": 15,
         "previousRank": 16,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 3 (51.3% neutral-field win rating, 8.1 proj. wins) at 4-5-1 through Week 12."
+        "blurb": "Tier 3 (52.4% neutral-field win rating, 8.2 proj. wins) at 4-5-1 through Week 12."
       },
       {
         "id": "cbs",
@@ -24838,10 +24838,10 @@
         "reportedRecord": "4-5-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -2.1 (#18 Off / #18 Def efficiency, 7.2 proj. wins, 0.2% SB odds) at 4-5-1."
+        "blurb": "FPI -2.0 (#18 Off / #18 Def efficiency, 7.2 proj. wins, 0.1% SB odds) at 4-5-1."
       },
       {
         "id": "espn_panel",
@@ -24874,7 +24874,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:26:50.568Z"
+    "fetchedAtIso": "2026-11-26T19:05:02.041Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24919,7 +24919,7 @@
         "jersey": 5,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426348.png",
         "primarySnapPct": 94,
-        "playProbabilityPct": 99
+        "playProbabilityPct": 91
       },
       {
         "playerId": "2976212",
@@ -24928,7 +24928,7 @@
         "jersey": 3,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976212.png",
         "primarySnapPct": 62,
-        "playProbabilityPct": 58
+        "playProbabilityPct": 95
       },
       {
         "playerId": "5081807",
@@ -24937,7 +24937,7 @@
         "jersey": 52,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081807.png",
         "primarySnapPct": 93,
-        "playProbabilityPct": 99
+        "playProbabilityPct": 91
       },
       {
         "playerId": "4697815",
@@ -24946,7 +24946,7 @@
         "jersey": 1,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4697815.png",
         "primarySnapPct": 49,
-        "playProbabilityPct": 99
+        "playProbabilityPct": 91
       },
       {
         "playerId": "5081432",
@@ -25695,7 +25695,7 @@
           "factors": [
             "Did Not Participate (DNP) on Wednesday; remains sidelined from practice"
           ],
-          "beatComment": "Beck continues to deal with back spasms that sidelined him this past Sunday at Kansas City. LaFleur told Dani Sureck of the Cardinals' official site Wednesday that the team is preparing Josh Johnson to start Sunday's game against the Commanders, so Beck seemingly is in danger of missing a second straight contest.",
+          "beatComment": "Beck hasn't practice since last Thursday, when his back spasms flared up, and he's now in danger of missing a second consecutive game Sunday against the Commanders. Ultimately, Friday's session and the Cardinals' ensuing injury report will dictate if Beck has a chance to play this weekend. Josh Johnson is waiting in the wings if Beck can't suit up.",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": null,
@@ -25919,13 +25919,13 @@
     },
     "betting": {
       "favorite": "WAS",
-      "spread": "WSH -7",
+      "spread": "WSH -6.5",
       "openingSpread": "Opened WAS -4.5 (Draft Kings)",
       "overUnder": 41.5,
-      "moneyline": "WAS -324 | ARI +262",
-      "impliedScore": "WAS 24.3 – ARI 17.3",
+      "moneyline": "WAS -351 | ARI +282",
+      "impliedScore": "WAS 24.0 – ARI 17.5",
       "restAdvantage": "-1 Days Rest Differential (ARI extra rest)",
-      "impliedWinProb": "84%"
+      "impliedWinProb": "82%"
     },
     "franchiseHistory": {
       "allTimeRecord": "Commanders vs. Cardinals",

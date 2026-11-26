@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:13.953Z",
+  "updatedAt": "2026-11-26T19:24:46.200Z",
   "week": 12,
   "units": [
     {
@@ -630,11 +630,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "3886812",
+              "name": "Jake Browning",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3886812.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
+            },
+            {
               "playerId": "4383351",
               "name": "Trey Lance",
               "jersey": 5,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4383351.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false
@@ -663,11 +673,22 @@
               "demotedDueToInjury": true
             },
             {
+              "playerId": "3886812",
+              "name": "Jake Browning",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3886812.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
               "playerId": "4383351",
               "name": "Trey Lance",
               "jersey": 5,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4383351.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false,
@@ -1467,8 +1488,8 @@
               "jersey": 33,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4690171.png",
               "baselineRank": 2,
-              "playProbabilityPct": 30,
-              "statusBadge": "30% • Long Shot",
+              "playProbabilityPct": 35,
+              "statusBadge": "35% • Long Shot",
               "isAvailable": false
             },
             {
@@ -1509,8 +1530,8 @@
               "jersey": 33,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4690171.png",
               "baselineRank": 2,
-              "playProbabilityPct": 30,
-              "statusBadge": "30% • Long Shot",
+              "playProbabilityPct": 35,
+              "statusBadge": "35% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:58.258Z",
+  "updatedAt": "2026-11-26T19:01:43.256Z",
   "week": 12,
   "byeWeek": 14,
   "sourceUrl": "https://www.azcardinals.com/team/injury-report/",
@@ -18,10 +18,10 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "Vet Rest",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Concussion",
+      "injuryType": "NIR - Rest",
       "gameStatus": "Active",
       "playProbabilityPct": 0,
       "priorDayPlayProbabilityPct": null,
@@ -43,22 +43,21 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Back",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 37,
+      "playProbabilityPct": 29,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "37% • Long Shot",
+      "playBadgeLabel": "29% • Long Shot",
       "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Missed prior game without practice participation — awaiting Wednesday report",
-        "Early-week update (2 corroborated reports): unlikely to practice Wednesday / questionable at best"
+        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice"
       ],
-      "beatComment": "Beck continues to deal with back spasms that sidelined him this past Sunday at Kansas City. LaFleur told Dani Sureck of the Cardinals' official site Wednesday that the team is preparing Josh Johnson to start Sunday's game against the Commanders, so Beck seemingly is in danger of missing a second straight contest."
+      "beatComment": "Beck hasn't practice since last Thursday, when his back spasms flared up, and he's now in danger of missing a second consecutive game Sunday against the Commanders. Ultimately, Friday's session and the Cardinals' ensuing injury report will dictate if Beck has a chance to play this weekend. Josh Johnson is waiting in the wings if Beck can't suit up."
     },
     {
       "playerId": "4367199",
@@ -69,47 +68,72 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Ankle",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 49,
+      "playProbabilityPct": 29,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "49% • Long Shot",
+      "playBadgeLabel": "29% • Long Shot",
       "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Missed 5 consecutive games without practice participation — awaiting Wednesday report"
+        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice"
       ],
       "beatComment": "questionable"
     },
     {
-      "playerId": "4240619",
-      "name": "Zachary Carter",
-      "position": "DT",
-      "jersey": 90,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240619.png",
-      "rosterBucket": "ir",
-      "isIrReturnWindow": true,
+      "playerId": "3127287",
+      "name": "Budda Baker",
+      "position": "S",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3127287.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "IR — 21-Day Window Open",
-      "playProbabilityPct": 74,
+      "injuryType": "NIR - Rest / Elbow",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 64,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "74% • GTD",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "playBadgeLabel": "64% • GTD",
+      "archetypeNote": "Veteran starter profile (10th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "21-day IR window open (Week 3); completed three Full Practices last week",
-        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
+        "Did Not Participate (DNP) on Wednesday with combined medical + veteran rest tag (NIR - Rest / Elbow); awaiting Thursday participation"
       ],
-      "beatComment": "Carter opened the regular season on injured reserve due to a knee injury he picked up in training camp in early August. He logged a trio of full practices during Week 11 prep but is not quite ready to return, so his next chance to make his 2026 debut is Week 12 against the Commanders on Sunday, Nov. 29."
+      "beatComment": "Baker was able to register at least six stops for the fourth week in a row and seventh time overall this year. The safety is about as steady as they come, compiling 74 total tackles (36 solo), including a career-high 3.5 sacks, while also adding an interception and a forced fumble over 11 contests so far during the 2026 season."
+    },
+    {
+      "playerId": "3693166",
+      "name": "Josh Sweat",
+      "position": "LB",
+      "jersey": 10,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3693166.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest / Shoulder",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 68,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "68% • GTD",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Did Not Participate (DNP) on Wednesday with combined medical + veteran rest tag (NIR - Rest / Shoulder); awaiting Thursday participation",
+        "Manageable pain-tolerance injury profile (NIR - Rest / Shoulder)"
+      ],
+      "beatComment": ""
     },
     {
       "playerId": "4429071",
@@ -120,7 +144,7 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Calf",
@@ -132,10 +156,36 @@
       "playBadgeLabel": "76% • GTD",
       "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Questionable tag adjusted by player career prior (81%)",
+        "Wednesday Limited Participation (LP); player toughness prior = 81%",
         "Soft-tissue re-aggravation caution (Calf)"
       ],
       "beatComment": "Simon is being evaluated by medical staff to determine whether he can return to Sunday's contest. His absence gives the Cardinals less depth at linebacker behind Jack Gibbens, Mack Wilson and Zaven Collins."
+    },
+    {
+      "playerId": "4240619",
+      "name": "Zachary Carter",
+      "position": "DT",
+      "jersey": 90,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240619.png",
+      "rosterBucket": "ir",
+      "isIrReturnWindow": true,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "IR — 21-Day Window Open",
+      "playProbabilityPct": 78,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "78% • GTD",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "21-day IR window open (Week 3 ramp); Full Participation (FP) on Wednesday",
+        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
+      ],
+      "beatComment": "Carter opened the regular season on injured reserve due to a knee injury he picked up in training camp in early August. He logged a trio of full practices during Week 11 prep but is not quite ready to return, so his next chance to make his 2026 debut is Week 12 against the Commanders on Sunday, Nov. 29."
     },
     {
       "playerId": "4686338",
@@ -161,6 +211,56 @@
         "Questionable tag adjusted by player career prior (78%)"
       ],
       "beatComment": "Minkins was not claimed off waivers and will now be waived off injured reserve with an injury settlement. The 24-year-old appeared in one preseason game for the Cardinals in 2026, recording two tackles (one solo) in the 42-38 loss to Green Bay on Aug. 28."
+    },
+    {
+      "playerId": "2978247",
+      "name": "Isaac Seumalo",
+      "position": "G",
+      "jersey": 73,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978247.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Veteran starter profile (11th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Habitual Veteran Rest prior (Isaac Seumalo maintenance schedule)"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4040983",
+      "name": "Mack Wilson Sr.",
+      "position": "LB",
+      "jersey": 1,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040983.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Habitual Veteran Rest prior (Mack Wilson Sr. maintenance schedule)"
+      ],
+      "beatComment": "Wilson was able to register at least eight stops for the second straight week and fifth time overall this season. The linebacker has now compiled 80 total tackles (35 solo), two passes defensed and a forced fumble over 11 contests so far during the 2026 campaign."
     }
   ],
   "irAndReserveTracker": [
@@ -175,15 +275,15 @@
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
       "isPracticeWindowExpected": false,
-      "wed": "-",
+      "wed": "FP",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
       "projectedReturnWeek": "Week 12 Activation Window (Nov 29)",
       "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 74,
-      "playBadgeLabel": "74% • GTD",
+      "playProbabilityPct": 78,
+      "playBadgeLabel": "78% • GTD",
       "beatNote": "Carter opened the regular season on injured reserve due to a knee injury he picked up in training camp in early August. He logged a trio of full practices during Week 11 prep but is not quite ready to return, so his next chance to make his 2026 debut is Week 12 against the Commanders on Sunday, Nov. 29."
     },
     {

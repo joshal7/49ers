@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:13.966Z",
+  "updatedAt": "2026-11-26T19:05:40.099Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/atlanta-falcons",
   "spotracUrl": "https://www.spotrac.com/nfl/atlanta-falcons/cap/",
@@ -8,18 +8,18 @@
     "2026": {
       "year": 2026,
       "capCeiling": 304846648,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 272109962,
+      "totalCapLiabilities": 272241351,
       "top51": 182162781,
-      "teamCapSpace": 32736686,
-      "otcRawTeamCapSpace": 32736686,
-      "effectiveCapSpace": 32736686,
+      "teamCapSpace": 32605297,
+      "otcRawTeamCapSpace": 32605297,
+      "effectiveCapSpace": 32605297,
       "activeCapSpending": 193012673,
       "offenseSpend": 107377928,
       "defenseSpend": 81400579,
       "specialSpend": 4234166,
-      "deadMoneyTotal": 79097289,
+      "deadMoneyTotal": 79228678,
       "injuredReserveTotal": 15605772,
       "practiceSquadTotal": 3472361,
       "pupTotal": 1330000,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 78
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 223019111,
       "top51": 196560933,
       "teamCapSpace": 103980889,
       "otcRawTeamCapSpace": 103980889,
-      "effectiveCapSpace": 80994769,
+      "effectiveCapSpace": 90030889,
       "activeCapSpending": 196560933,
       "offenseSpend": 118998290,
       "defenseSpend": 72865977,
@@ -195,7 +195,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 187554110,
       "top51": 187554110,
@@ -273,8 +273,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/atlanta-falcons",
-    "summary": "Atlanta Falcons hold $32.74M in 2026 OverTheCap space ($32.74M effective) and +$103.98M projected for 2027.",
-    "executiveSummary": "Ian Cunningham and the Falcons front office hold $32.74M in gross 2026 cap space ($32.74M effective), while 2027 currently projects at +$103.98M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($26M–$30M target) helps manage scheduled cap escalations for Jake Matthews, Chris Lindstrom, A.J. Terrell Jr., Bijan Robinson.",
+    "summary": "Atlanta Falcons hold $32.61M in 2026 OverTheCap space ($32.61M effective) and +$103.98M projected for 2027.",
+    "executiveSummary": "Ian Cunningham and the Falcons front office hold $32.61M in gross 2026 cap space ($32.61M effective), while 2027 currently projects at +$103.98M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($26M–$30M target) helps manage scheduled cap escalations for Jake Matthews, Chris Lindstrom, A.J. Terrell Jr., Bijan Robinson.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($26M–$30M Target vs. +$103.98M 2027 Projection)",

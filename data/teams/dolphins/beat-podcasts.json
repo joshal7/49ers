@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:27:53.285Z",
+  "updatedAt": "2026-11-26T19:06:28.518Z",
   "windowDays": 7,
-  "totalEpisodes": 15,
+  "totalEpisodes": 13,
   "shows": [
     {
       "id": "dolphins_locked_on_dolphins",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/781205/feeds.simplecast.com/f8EFrtWR",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-dolphins-daily-podcast-on-the-miami-dolphins/id1137170219?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/3e/e3/5f/3ee35fd4-8956-1287-4cfd-52828af0a712/mza_11136962253020114605.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "dolphins_drive_time_with_travis_wingfield",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/4ed207d2-7db7-4799-9aa5-aea90021be63/66d7bdfb-e635-4f56-bf92-aea90021be6c/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/drive-time-with-travis-wingfield/id1500281964?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/a1/ee/cc/a1eeccb5-2136-de62-d207-2b3ba338920c/mza_2721619063949278071.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "dolphins_3_yards_per_carry",
@@ -300,46 +300,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/3-yards-per-carry-miami-dolphins/id1363764781?uo=4",
       "feedUrl": "https://feeds.redcircle.com/94143856-5d8a-44d5-8fd4-430ec1776120",
       "audioStreamUrl": "https://pscrb.fm/rss/p/clrtpod.com/m/mgln.ai/e/274/audio4.redcircle.com/episodes/efefef0a-2e5b-4885-b38d-2452dad0ad29/stream.mp3"
-    },
-    {
-      "id": "pod_dolphins_drive_time_with_travis_wingfield_1000802945361",
-      "trackId": 1000802945361,
-      "collectionId": 1500281964,
-      "showId": "dolphins_drive_time_with_travis_wingfield",
-      "showName": "Drive Time with Travis Wingfield",
-      "showFullTitle": "Drive Time with Travis Wingfield",
-      "hosts": "Miami Dolphins",
-      "network": "Miami Dolphins",
-      "title": "Drive Time: Dolphins Bills Week 11 Preview",
-      "summary": "The Dolphins are on the road in Buffalo this week and Travis is breaking down the matchup from every angle. Personnel, schematics, keys to victory and a game prediction. Plus, we hear from Chris Johnson and Ollie Gordon at the team’s Thanksgiving event.See omnystudio.com/lis",
-      "publishedAt": "2026-11-19T14:37:31.000Z",
-      "durationMinutes": 28,
-      "durationDisplay": "28 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/a1/ee/cc/a1eeccb5-2136-de62-d207-2b3ba338920c/mza_2721619063949278071.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/drive-time-dolphins-bills-week-11-preview/id1500281964?i=1000802945361&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/drive-time-with-travis-wingfield/id1500281964?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/4ed207d2-7db7-4799-9aa5-aea90021be63/66d7bdfb-e635-4f56-bf92-aea90021be6c/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/4ed207d2-7db7-4799-9aa5-aea90021be63/e520c3d1-c826-4337-b14f-b5060138875c/audio.mp3?utm_source=Podcast&in_playlist=66d7bdfb-e635-4f56-bf92-aea90021be6c"
-    },
-    {
-      "id": "pod_dolphins_locked_on_dolphins_1000802945679",
-      "trackId": 1000802945679,
-      "collectionId": 1137170219,
-      "showId": "dolphins_locked_on_dolphins",
-      "showName": "Locked On Dolphins",
-      "showFullTitle": "Locked On Dolphins - Daily Podcast On The Miami Dolphins",
-      "hosts": "Kyle Crabbs, Locked On Podcast Network",
-      "network": "Kyle Crabbs, Locked On Podcast Network",
-      "title": "Jeff Hafley Is Set To Get His First Try At 'The Man' He'll Need To Beat In The AFC East",
-      "summary": "Miami Dolphins face a critical test as their depleted interior defensive line prepares to battle the surging Buffalo Bills at Highmark Stadium. With Zach Sieler and Jordan Phillips sidelined, rookie head coach Jeff Hafley must make tough choices against Joe Brady's balanced ",
-      "publishedAt": "2026-11-19T14:00:00.000Z",
-      "durationMinutes": 30,
-      "durationDisplay": "30 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/57/32/9e/57329e92-c122-6cc5-0556-4bc993ee2c05/mza_17680565063448609120.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/jeff-hafley-is-set-to-get-his-first-try-at-the-man/id1137170219?i=1000802945679&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-dolphins-daily-podcast-on-the-miami-dolphins/id1137170219?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/781205/feeds.simplecast.com/f8EFrtWR",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/781205/lockedon.simplecastaudio.com/eef279f6-758c-4812-91b6-c9da3440587b/episodes/dd176ced-6783-46f9-b15a-880151c48d8c/audio/128/default.mp3?aid=rss_feed&awCollectionId=eef279f6-758c-4812-91b6-c9da3440587b&awEpisodeId=dd176ced-6783-46f9-b15a-880151c48d8c&feed=f8EFrtWR"
     }
   ]
 }

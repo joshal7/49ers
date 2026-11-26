@@ -63,7 +63,7 @@ export const EXTRA_TEAM_BEAT_RSS_BY_ABBR = Object.freeze({
     { outletId: 'nbcs_chi', outletName: 'NBC Sports Chicago', url: 'https://www.nbcsportschicago.com/nfl/chicago-bears/?rss=1', trustTier: 1 }
   ],
   WAS: [
-    { outletId: 'nbcs_was', outletName: 'NBC4 Washington', url: 'https://www.nbcwashington.com/tag/washington-commanders/feed/', trustTier: 1 }
+    { outletId: 'nbcs_was', outletName: 'NBC4 Washington', url: 'https://www.nbcwashington.com/tag/washington-commanders/feed/', trustTier: 1, filterByTeam: true }
   ]
 });
 
@@ -121,7 +121,7 @@ export const NATIONAL_FILM_ANALYTICS_RSS_FEEDS = Object.freeze([
     category: 'film',
     trustTier: 1,
     checkSubstackPaywall: false,
-    allowLeagueWideFilmOnly: true,
+    allowLeagueWideFilmOnly: false,
     maxAgeDays: 14
   },
   {
@@ -147,7 +147,7 @@ export const NATIONAL_FILM_ANALYTICS_RSS_FEEDS = Object.freeze([
     category: 'film',
     trustTier: 1,
     checkSubstackPaywall: true,
-    allowLeagueWideFilmOnly: true,
+    allowLeagueWideFilmOnly: false,
     maxAgeDays: 14
   },
   {
@@ -160,7 +160,7 @@ export const NATIONAL_FILM_ANALYTICS_RSS_FEEDS = Object.freeze([
     category: 'film',
     trustTier: 2,
     checkSubstackPaywall: true,
-    allowLeagueWideFilmOnly: true,
+    allowLeagueWideFilmOnly: false,
     maxAgeDays: 14
   }
 ]);

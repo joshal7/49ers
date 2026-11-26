@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:26:38.849Z",
+  "updatedAt": "2026-11-26T19:04:41.419Z",
   "windowDays": 7,
-  "totalEpisodes": 25,
+  "totalEpisodes": 23,
   "shows": [
     {
       "id": "commanders_locked_on_commanders",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/7c3048/feeds.simplecast.com/psq7p3Ar",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-commanders-daily-podcast-on-the-washington/id1144183096?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/50/6f/a7/506fa798-360b-5250-e673-7b49c768b829/mza_14223364697315557013.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 6
     },
     {
       "id": "commanders_john_keim_report",
@@ -524,46 +524,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-kevin-sheehan-show/id1435515037?uo=4",
       "feedUrl": "https://feeds.simplecast.com/WN4LInTx",
       "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/256/clrtpod.com/m/bluewire.simplecastaudio.com/cb5c76dc-f08e-4542-82d3-d811e61cabd5/episodes/3c23b6b0-7536-4cd7-9ed4-3586c250c09d/audio/128/default.mp3?aid=rss_feed&awCollectionId=cb5c76dc-f08e-4542-82d3-d811e61cabd5&awEpisodeId=3c23b6b0-7536-4cd7-9ed4-3586c250c09d&feed=WN4LInTx"
-    },
-    {
-      "id": "pod_commanders_locked_on_commanders_1000802946385",
-      "trackId": 1000802946385,
-      "collectionId": 1144183096,
-      "showId": "commanders_locked_on_commanders",
-      "showName": "Locked On Commanders",
-      "showFullTitle": "Locked On Commanders - Daily Podcast On The Washington Commanders",
-      "hosts": "Locked On Podcast Network, David Harrison",
-      "network": "Locked On Podcast Network, David Harrison",
-      "title": "Should the Commanders Sign Brandon Aiyuk? Plus Washington’s 4th-and-1 Problem",
-      "summary": "Brandon Aiyuk and Jayden Daniels are good again, so should the Washington Commanders sign Aiyuk once the 49ers release him? We make the case for bringing him in for the 2026 push, explain why Adam Peters shouldn’t stay stuck on a resolved personal matter, and map out when Ai",
-      "publishedAt": "2026-11-19T14:42:39.000Z",
-      "durationMinutes": 29,
-      "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/5f/5b/1f/5f5b1f72-b1e5-effc-efb5-16dfe00556fd/mza_8443700667683759080.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/should-the-commanders-sign-brandon-aiyuk-plus/id1144183096?i=1000802946385&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-commanders-daily-podcast-on-the-washington/id1144183096?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/7c3048/feeds.simplecast.com/psq7p3Ar",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/7c3048/lockedon.simplecastaudio.com/dd4ec57b-d2e1-4378-a057-7e7fe1d38252/episodes/07309a47-97a0-4463-b96d-473acc906402/audio/128/default.mp3?aid=rss_feed&awCollectionId=dd4ec57b-d2e1-4378-a057-7e7fe1d38252&awEpisodeId=07309a47-97a0-4463-b96d-473acc906402&feed=psq7p3Ar"
-    },
-    {
-      "id": "pod_commanders_locked_on_commanders_1000802881794",
-      "trackId": 1000802881794,
-      "collectionId": 1144183096,
-      "showId": "commanders_locked_on_commanders",
-      "showName": "Locked On Commanders",
-      "showFullTitle": "Locked On Commanders - Daily Podcast On The Washington Commanders",
-      "hosts": "Locked On Podcast Network, David Harrison",
-      "network": "Locked On Podcast Network, David Harrison",
-      "title": "Bengals vs Commanders: Joe Burrow, Jayden Daniels and Monday Night Keys",
-      "summary": "Joe Burrow and the Cincinnati Bengals visit Jayden Daniels and the Washington Commanders on Monday Night Football. Cincinnati's offense has scored at least 31 points in five consecutive games, while Washington's defense has forced takeaways in seven straight. Which team can ",
-      "publishedAt": "2026-11-19T08:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/bf/4e/8f/bf4e8fac-c1cd-21b1-d49d-dd4f62d360be/mza_18274317244884208081.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bengals-vs-commanders-joe-burrow-jayden-daniels-and/id1144183096?i=1000802881794&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-commanders-daily-podcast-on-the-washington/id1144183096?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/7c3048/feeds.simplecast.com/psq7p3Ar",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/7c3048/lockedon.simplecastaudio.com/dd4ec57b-d2e1-4378-a057-7e7fe1d38252/episodes/8e80fd07-3a07-41b3-a805-0aeaa0cfaf67/audio/128/default.mp3?aid=rss_feed&awCollectionId=dd4ec57b-d2e1-4378-a057-7e7fe1d38252&awEpisodeId=8e80fd07-3a07-41b3-a805-0aeaa0cfaf67&feed=psq7p3Ar"
     }
   ]
 }

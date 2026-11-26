@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:25:50.209Z",
+  "updatedAt": "2026-11-26T19:03:06.760Z",
   "windowDays": 7,
-  "totalEpisodes": 24,
+  "totalEpisodes": 23,
   "shows": [
     {
       "id": "bears_locked_on_bears",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/16e145/feeds.simplecast.com/yvyasWU5",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bears-daily-podcast-on-the-chicago-bears/id1141591437?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e9/58/f1/e958f1ce-be6b-c29a-d3ea-8feda1038f15/mza_11238209768261625952.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "bears_chicago_bears_podcasts",
@@ -512,26 +512,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-chicago-bears-podcast/id1683659497?uo=4",
       "feedUrl": "https://rss.amperwave.net/v2/feed/good-karma/wmvp-am-the_chicago_bears_podcast/itunes_akrgV",
       "audioStreamUrl": "https://pdst.fm/e/pscrb.fm/rss/p/mgln.ai/e/879/serve.castfire.com/audio/9046798/9046798_2026-11-19-214238.128.mp3?rssID=805&source=itunes_akrgV"
-    },
-    {
-      "id": "pod_bears_locked_on_bears_1000802886704",
-      "trackId": 1000802886704,
-      "collectionId": 1141591437,
-      "showId": "bears_locked_on_bears",
-      "showName": "Locked On Bears",
-      "showFullTitle": "Locked On Bears - Daily Podcast On The Chicago Bears",
-      "hosts": "Locked On Podcast Network, Lorin Cox",
-      "network": "Locked On Podcast Network, Lorin Cox",
-      "title": "CRUSH THEM: Chicago Bears Can’t Overlook Desperate New Orleans Saints In First Game After Bye Week",
-      "summary": "The Chicago Bears need to crush the New Orleans Saints hopes and leave no doubts against an inferior opponent on the brink. Coming out of the bye week, Ben Johnson can't let his team look past the Saints with the Thanksgiving game against the Lions around the corner. - Subsc",
-      "publishedAt": "2026-11-19T08:30:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/5f/e8/38/5fe8389d-840a-4f5b-9ea2-31f5bffc4f5d/mza_7751016909614868176.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/crush-them-chicago-bears-cant-overlook-desperate-new/id1141591437?i=1000802886704&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bears-daily-podcast-on-the-chicago-bears/id1141591437?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/16e145/feeds.simplecast.com/yvyasWU5",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/16e145/lockedon.simplecastaudio.com/b6f00b5e-4060-4b88-8daf-e623f8204bda/episodes/9a625094-dc38-4276-a917-f297d265f0dd/audio/128/default.mp3?aid=rss_feed&awCollectionId=b6f00b5e-4060-4b88-8daf-e623f8204bda&awEpisodeId=9a625094-dc38-4276-a917-f297d265f0dd&feed=yvyasWU5"
     }
   ]
 }

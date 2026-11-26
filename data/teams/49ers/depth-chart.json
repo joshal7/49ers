@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:16.625Z",
+  "updatedAt": "2026-11-26T18:59:57.935Z",
   "week": 12,
   "units": [
     {
@@ -227,9 +227,9 @@
               "jersey": 71,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
-              "isAvailable": false
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
+              "isAvailable": true
             },
             {
               "playerId": "4240554",
@@ -264,6 +264,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "13241",
+              "name": "Trent Williams",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
+              "isAvailable": true
+            },
+            {
               "playerId": "4240554",
               "name": "Vederian Lowe",
               "jersey": 76,
@@ -292,20 +302,9 @@
               "playProbabilityPct": 52,
               "statusBadge": "52% • GTD",
               "isAvailable": true
-            },
-            {
-              "playerId": "13241",
-              "name": "Trent Williams",
-              "jersey": 71,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "lg",
@@ -735,9 +734,9 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
-              "isAvailable": false
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
+              "isAvailable": true
             },
             {
               "playerId": "4696044",
@@ -772,6 +771,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "3117251",
+              "name": "Christian McCaffrey",
+              "jersey": 23,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
+              "isAvailable": true
+            },
+            {
               "playerId": "4696044",
               "name": "Kaelon Black",
               "jersey": 26,
@@ -792,17 +801,6 @@
               "isAvailable": true
             },
             {
-              "playerId": "3117251",
-              "name": "Christian McCaffrey",
-              "jersey": 23,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
               "playerId": "4372561",
               "name": "Isaac Guerendo",
               "jersey": 31,
@@ -814,7 +812,7 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "fb",

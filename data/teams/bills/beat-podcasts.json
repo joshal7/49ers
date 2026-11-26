@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:27:30.623Z",
+  "updatedAt": "2026-11-26T19:06:00.943Z",
   "windowDays": 7,
-  "totalEpisodes": 24,
+  "totalEpisodes": 22,
   "shows": [
     {
       "id": "locked_on_bills",
@@ -61,7 +61,7 @@
       "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/57/11/ed57113a-56a2-4cd5-7459-ef8fde70753c/mza_81407331130477925.png/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "one_bills_live",
@@ -73,7 +73,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/one-bills-live/id1649776359?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/f6/ce/24/f6ce241c-8d09-8593-e4a1-d10d0920bcec/mza_6505286365999025020.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -516,46 +516,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bills-daily-podcast-on-the-buffalo-bills/id1145479962?uo=4",
       "feedUrl": "https://rss.pdrl.fm/8c06ff/feeds.simplecast.com/LIaoLB9Y",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8c06ff/lockedon.simplecastaudio.com/d5c86183-3556-42ef-a0fc-3e82326ec162/episodes/ab6f2508-c81d-4c76-ad11-db6d95ad0f83/audio/128/default.mp3?aid=rss_feed&awCollectionId=d5c86183-3556-42ef-a0fc-3e82326ec162&awEpisodeId=ab6f2508-c81d-4c76-ad11-db6d95ad0f83&feed=LIaoLB9Y"
-    },
-    {
-      "id": "pod_buffalo_plus_1000802977477",
-      "trackId": 1000802977477,
-      "collectionId": 1516732193,
-      "showId": "buffalo_plus",
-      "showName": "Buffalo Plus",
-      "showFullTitle": "Buffalo Plus: A Buffalo Bills podcast",
-      "hosts": "Mike Catalana, Jenna Cottrell & Dan Fetes",
-      "network": "Buffalo Plus",
-      "title": "Has the Bills DEFENSE Really Turned A Corner? Micah Hyde explains WHAT'S NEXT for Buffalo in the AFC",
-      "summary": "Buffalo Bills performance analysis shows the team trending in the right direction. We break down the latest roster updates. Micah Hyde breaks down whether the Bills defense has turned a corner. We analyze the unit's recent performance and path forward. After hitting a low po",
-      "publishedAt": "2026-11-19T18:05:00.000Z",
-      "durationMinutes": 58,
-      "durationDisplay": "58 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/57/11/ed57113a-56a2-4cd5-7459-ef8fde70753c/mza_81407331130477925.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/has-the-bills-defense-really-turned-a-corner-micah/id1516732193?i=1000802977477&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
-      "audioStreamUrl": "https://traffic.megaphone.fm/SINCL4990629087.mp3"
-    },
-    {
-      "id": "pod_one_bills_live_1000802973369",
-      "trackId": 1000802973369,
-      "collectionId": 1649776359,
-      "showId": "one_bills_live",
-      "showName": "One Bills Live",
-      "showFullTitle": "One Bills Live",
-      "hosts": "Chris Brown & Steve Tasker",
-      "network": "Buffalo Bills Official",
-      "title": "OBL 11/19: Terrel Bernard On The Rise Of The Defense, ESPN's Dan Orlovsky Previews Bills-Dolphins",
-      "summary": "Chris Brown and Steve Tasker shared the latest injury updates as the Bills return to practice ahead of Sunday's game. They then went around the NFL and asked the listeners what part of Buffalo's game still needs to prove itself to you on Sunday? Bills LB Terrel Bernard joine",
-      "publishedAt": "2026-11-19T17:35:47.000Z",
-      "durationMinutes": 89,
-      "durationDisplay": "89 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/f6/ce/24/f6ce241c-8d09-8593-e4a1-d10d0920bcec/mza_6505286365999025020.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/obl-11-19-terrel-bernard-on-the-rise-of-the/id1649776359?i=1000802973369&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/one-bills-live/id1649776359?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/74d454ef-6fc1-4a35-be92-b507011ee2ef/audio.mp3?utm_source=Podcast&in_playlist=6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a"
     }
   ]
 }

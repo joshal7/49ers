@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:33.886Z",
+  "updatedAt": "2026-11-26T19:07:40.763Z",
   "sources": [
     {
       "label": "ESPN Browns Schedule",
@@ -24677,15 +24677,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 20,
-    "averageRank": 19.7,
-    "medianRank": 21,
+    "consensusRank": 19,
+    "averageRank": 19.3,
+    "medianRank": 20,
     "previousRank": 20,
     "rangeMin": 14,
     "rangeMax": 24,
     "rangeShort": "#14–#24",
     "rangeDisplay": "#14–#24 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Browns at #20 consensus (avg #19.7) through Week 10, ranging from #14 (CBS Sports) to #24 (Inpredictable). All listed models include the Browns' latest result entering Week 12 vs. Raiders.",
+    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Browns at #19 consensus (avg #19.3) through Week 10, ranging from #14 (CBS Sports) to #24 (Inpredictable). All listed models include the Browns' latest result entering Week 12 vs. Raiders.",
     "sources": [
       {
         "id": "cbs",
@@ -24726,6 +24726,24 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 19,
+        "previousRank": 21,
+        "delta": "+2",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "Tier 4 (41.2% neutral-field win rating, 9.3 proj. wins) at 6-4 through Week 12.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "nfelo",
         "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
         "shortName": "nfelo",
@@ -24744,24 +24762,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 21,
-        "previousRank": 21,
-        "delta": "0",
-        "reportedRecord": "6-4",
-        "gamesIncluded": 10,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "Tier 4 (41.2% neutral-field win rating, 9.3 proj. wins) at 6-4 through Week 12.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
@@ -24772,7 +24772,7 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "FPI -5.0 (#23 Off / #11 Def efficiency, 8.9 proj. wins, 0.0% SB odds) at 6-4.",
@@ -24790,10 +24790,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -4.1 (#25 Offense / #18 Defense) at 6-4 through Week 10.",
+        "blurb": "Betting market rating GPF -4.2 (#25 Offense / #18 Defense) at 6-4 through Week 10.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24810,10 +24810,10 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -4.1 (#25 Offense / #18 Defense) at 6-4 through Week 10."
+        "blurb": "Betting market rating GPF -4.2 (#25 Offense / #18 Defense) at 6-4 through Week 10."
       },
       {
         "id": "nfelo",
@@ -24836,13 +24836,13 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 21,
+        "rank": 19,
         "previousRank": 21,
-        "delta": "0",
+        "delta": "+2",
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "Tier 4 (41.2% neutral-field win rating, 9.3 proj. wins) at 6-4 through Week 12."
@@ -24875,7 +24875,7 @@
         "reportedRecord": "6-4",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "FPI -5.0 (#23 Off / #11 Def efficiency, 8.9 proj. wins, 0.0% SB odds) at 6-4."
@@ -24900,7 +24900,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-26T07:28:38.486Z"
+    "fetchedAtIso": "2026-11-26T19:07:44.697Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24924,7 +24924,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 48,
+      "tempF": 51,
       "condition": "Rain",
       "windMph": null,
       "windDir": "",
@@ -25804,7 +25804,7 @@
           "factors": [
             "Wednesday Limited Participation (LP); player toughness prior = 81%"
           ],
-          "beatComment": "Hemingway did not play in the Raiders' Week 11 loss to the Broncos due to a stinger injury. The defensive lineman has continued to suffer the stingers affects in Week 12 prep, but has upgraded to a limited participant. Hemingway will likely need to upgrade to a full participant by Friday's practice for the chance to avoid any injury designation ahead of Sunday's game against the Browns.",
+          "beatComment": "Hemingway did not play in the Raiders' Week 11 loss to the Broncos due to a stinger injury. The defensive lineman has continued to suffer the stinger's effects in Week 12 prep but has upgraded to a limited participant. Hemingway will likely need to upgrade to a full participant by Friday's practice for a chance to avoid any injury designation ahead of Sunday's game against the Browns.",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": null,
@@ -25863,7 +25863,7 @@
           "factors": [
             "Cleared without restrictive game-day designation"
           ],
-          "beatComment": "Pegues exited the Raiders' Week 11 loss to the Broncos late in the fourth quarter and did not return to the contest. The defensive tackle's full participation and injury clearance in the first prep session of Week 12 imply Pegues did not return to the Week 11 loss because he exited too late, when the game was out of reach.",
+          "beatComment": "Pegues exited the Raiders' Week 11 loss to the Broncos late in the fourth quarter and did not return to the contest. The defensive tackle's full participation and injury clearance in the first prep session of Week 12 imply Pegues did not return to the Week 11 loss because he exited late, when the game was out of reach.",
           "isStarter": false,
           "role": "Depth",
           "priorDayPlayProbabilityPct": null,
@@ -25936,7 +25936,7 @@
       "spread": "CLE -4.5",
       "openingSpread": "Opened CLE -2.5 (Draft Kings)",
       "overUnder": 40.5,
-      "moneyline": "CLE -244 | LV +202",
+      "moneyline": "CLE -244 | LV +201",
       "impliedScore": "CLE 22.5 – LV 18.0",
       "restAdvantage": "+7 Days Rest Advantage (CLE off Week 11 Bye)",
       "impliedWinProb": "74%"

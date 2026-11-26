@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:32.341Z",
+  "updatedAt": "2026-11-26T19:06:07.108Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
   "spotracUrl": "https://www.spotrac.com/nfl/buffalo-bills/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 301071601,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 296971655,
       "top51": 236049761,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 73
+      "totalSignedCount": 54
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 375857631,
       "top51": 375400517,
       "teamCapSpace": -48857631,
       "otcRawTeamCapSpace": -48857631,
-      "effectiveCapSpace": -56603963,
+      "effectiveCapSpace": -52577631,
       "activeCapSpending": 375400517,
       "offenseSpend": 218055548,
       "defenseSpend": 149044426,
@@ -181,7 +181,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 357363040,
       "top51": 357363040,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:42.572Z",
+  "updatedAt": "2026-11-26T19:02:58.466Z",
   "week": 13,
   "units": [
     {
@@ -21,13 +21,13 @@
               "isAvailable": false
             },
             {
-              "playerId": "4430191",
-              "name": "Skyy Moore",
-              "jersey": 23,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
+              "playerId": "4259305",
+              "name": "Bo Melton",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -43,13 +43,13 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4430191",
-              "name": "Skyy Moore",
-              "jersey": 23,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
+              "playerId": "4259305",
+              "name": "Bo Melton",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -92,13 +92,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "4259305",
-              "name": "Bo Melton",
-              "jersey": 16,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
+              "playerId": "4635009",
+              "name": "J. Michael Sturdivant",
+              "jersey": 87,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4635009.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -114,13 +114,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "4259305",
-              "name": "Bo Melton",
-              "jersey": 16,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
+              "playerId": "4635009",
+              "name": "J. Michael Sturdivant",
+              "jersey": 87,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4635009.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -141,10 +141,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4635009",
-              "name": "J. Michael Sturdivant",
-              "jersey": 87,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4635009.png",
+              "playerId": "4430191",
+              "name": "Skyy Moore",
+              "jersey": 23,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -163,10 +163,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4635009",
-              "name": "J. Michael Sturdivant",
-              "jersey": 87,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4635009.png",
+              "playerId": "4430191",
+              "name": "Skyy Moore",
+              "jersey": 23,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -875,20 +875,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429023",
-              "name": "MarShawn Lloyd",
-              "jersey": 32,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429023.png",
+              "playerId": "3149687",
+              "name": "Chris Brooks",
+              "jersey": 30,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3149687.png",
               "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3149687",
-              "name": "Chris Brooks",
-              "jersey": 30,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3149687.png",
+              "playerId": "4429023",
+              "name": "MarShawn Lloyd",
+              "jersey": 32,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429023.png",
               "baselineRank": 4,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -907,20 +907,20 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429023",
-              "name": "MarShawn Lloyd",
-              "jersey": 32,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429023.png",
+              "playerId": "3149687",
+              "name": "Chris Brooks",
+              "jersey": 30,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3149687.png",
               "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3149687",
-              "name": "Chris Brooks",
-              "jersey": 30,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3149687.png",
+              "playerId": "4429023",
+              "name": "MarShawn Lloyd",
+              "jersey": 32,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429023.png",
               "baselineRank": 4,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1366,8 +1366,8 @@
               "jersey": 99,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683643.png",
               "baselineRank": 2,
-              "playProbabilityPct": 82,
-              "statusBadge": "82% • GTD",
+              "playProbabilityPct": 78,
+              "statusBadge": "78% • GTD",
               "isAvailable": true
             },
             {
@@ -1398,8 +1398,8 @@
               "jersey": 99,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683643.png",
               "baselineRank": 2,
-              "playProbabilityPct": 82,
-              "statusBadge": "82% • GTD",
+              "playProbabilityPct": 78,
+              "statusBadge": "78% • GTD",
               "isAvailable": true
             },
             {
@@ -1764,8 +1764,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1786,8 +1786,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1813,8 +1813,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1823,8 +1823,8 @@
               "jersey": 16,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1845,8 +1845,8 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430191.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1855,8 +1855,8 @@
               "jersey": 16,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259305.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {

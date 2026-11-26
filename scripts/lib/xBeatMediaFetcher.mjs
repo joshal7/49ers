@@ -20,6 +20,7 @@ import {
   extractXSyndicationMedia,
   hasSafeStandaloneSurnameMatch,
   isLeagueWideFilmAnalyticsTweet,
+  isLocalBeatPostOffTopicForTeam,
   isPaywalledPublisher,
   isPromotionalAdvertisement,
   normalizeMultilineSocialText,
@@ -906,10 +907,13 @@ export function filterXTimelineItemsForTeam(
     if (isOfficialTeamAccount) {
       // Official club account: keep all non-promo tweets/clips
     } else if (isLocalBeatOrFilm) {
-      const isOtherSport = NON_NFL_OTHER_SPORT_RE.test(relevanceText) && !explicitTeamHit && mentioned.length === 0;
-      if (isOtherSport) continue;
-      // Open inclusion for local beat video/GIF/film clips (e.g. Dieter Kurtenbach's Lowe All-22 GIF or StatsOnFire clip)
-      if (!explicitTeamHit && mentioned.length === 0 && !hasPlayableMedia && !FOOTBALL_OR_FILM_CONTEXT_RE.test(relevanceText)) {
+      if (
+        isLocalBeatPostOffTopicForTeam(relevanceText, {
+          team: active,
+          hasDirectTeamOrRosterMatch: explicitTeamHit || mentioned.length > 0,
+          hasPlayableMedia: Boolean(hasPlayableMedia || raw.isAnimatedGif)
+        })
+      ) {
         continue;
       }
     } else {
@@ -922,9 +926,10 @@ export function filterXTimelineItemsForTeam(
           summary: raw.quotedText || '',
           authorHandle: `@${raw.handle}`,
           imageUrl: raw.imageUrl || '',
-          videoStreamUrl: raw.mp4Url || ''
+          videoStreamUrl: raw.mp4Url || '',
+          publishedAt: raw.publishedAt || ''
         };
-        if (isLeagueWideFilmAnalyticsTweet(leagueWideCand, active)) {
+        if (isLeagueWideFilmAnalyticsTweet(leagueWideCand, active, { nowMs })) {
           isLeagueWideChart = true;
           filmOnlyScope = true;
         } else {
@@ -933,8 +938,11 @@ export function filterXTimelineItemsForTeam(
       }
     }
 
-    const dirEntry = resolveReporterFromNameOrHandle(`@${raw.handle}`, active);
-    const authorName = dirEntry?.name || raw.userName || `@${raw.handle}`;
+    const rawDirEntry = resolveReporterFromNameOrHandle(`@${raw.handle}`, active);
+    const dirEntry = isOfficialTeamAccount || rawDirEntry?.isPodiumSubject ? null : rawDirEntry;
+    const authorName = isOfficialTeamAccount
+      ? active.fullName || raw.userName || `@${raw.handle}`
+      : dirEntry?.name || raw.userName || `@${raw.handle}`;
     const authorHandle = `@${raw.handle}`;
     const outletId = dirEntry?.outletId || (isOfficialTeamAccount ? `${active.slug}_official` : 'x_beat');
     const outletName = dirEntry?.outletName || (isOfficialTeamAccount ? `@${raw.handle} Official` : 'X Beat');

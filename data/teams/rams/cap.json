@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:01.409Z",
+  "updatedAt": "2026-11-26T19:01:16.675Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/los-angeles-rams",
   "spotracUrl": "https://www.spotrac.com/nfl/los-angeles-rams/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 313607830,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 310359345,
       "top51": 282497190,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 82
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 251727951,
       "top51": 249030031,
       "teamCapSpace": 75272049,
       "otcRawTeamCapSpace": 75272049,
-      "effectiveCapSpace": 60602315,
+      "effectiveCapSpace": 62252049,
       "activeCapSpending": 249030031,
       "offenseSpend": 95253329,
       "defenseSpend": 151976702,
@@ -188,7 +188,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 174090535,
       "top51": 174090535,

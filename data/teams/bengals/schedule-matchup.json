@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:23.140Z",
+  "updatedAt": "2026-11-26T19:07:25.464Z",
   "sources": [
     {
       "label": "ESPN Bengals Schedule",
@@ -24669,10 +24669,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +4.4 (#3 Off / #13 Def efficiency, 12.2 proj. wins, 6.9% SB odds) at 7-3.",
+        "blurb": "FPI +4.4 (#3 Off / #13 Def efficiency, 12.2 proj. wins, 6.7% SB odds) at 7-3.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24705,10 +24705,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +3.9 (#4 Offense / #21 Defense) at 7-3 through Week 11.",
+        "blurb": "Betting market rating GPF +3.8 (#4 Offense / #20 Defense) at 7-3 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24723,7 +24723,7 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "Tier 1 (68.8% neutral-field win rating, 12.0 proj. wins) at 7-3 through Week 12.",
@@ -24762,10 +24762,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +3.9 (#4 Offense / #21 Defense) at 7-3 through Week 11."
+        "blurb": "Betting market rating GPF +3.8 (#4 Offense / #20 Defense) at 7-3 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24794,7 +24794,7 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
         "blurb": "Tier 1 (68.8% neutral-field win rating, 12.0 proj. wins) at 7-3 through Week 12."
@@ -24827,10 +24827,10 @@
         "reportedRecord": "7-3",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +4.4 (#3 Off / #13 Def efficiency, 12.2 proj. wins, 6.9% SB odds) at 7-3."
+        "blurb": "FPI +4.4 (#3 Off / #13 Def efficiency, 12.2 proj. wins, 6.7% SB odds) at 7-3."
       },
       {
         "id": "espn_panel",
@@ -24863,7 +24863,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:28:29.769Z"
+    "fetchedAtIso": "2026-11-26T19:07:30.382Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24887,7 +24887,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 53,
+      "tempF": 49,
       "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
@@ -25842,7 +25842,7 @@
       "spread": "CIN -10",
       "openingSpread": "Opened CIN -6.5 (Draft Kings)",
       "overUnder": 49.5,
-      "moneyline": "CIN -557 | NO +420",
+      "moneyline": "CIN -563 | NO +424",
       "impliedScore": "CIN 29.8 – NO 19.8",
       "restAdvantage": "-1 Days Rest Differential (NO extra rest)",
       "impliedWinProb": "92%"

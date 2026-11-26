@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-26T07:30:09.395Z",
+  "updatedAt": "2026-11-26T19:24:55.965Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-12-10T07:30:09.395Z",
-  "totalTrackedReporters": 45,
+  "nextAutoReviewAt": "2026-12-10T19:24:55.965Z",
+  "totalTrackedReporters": 44,
   "podiumSubjectIds": [
     "klint_kubiak",
     "john_spytek",
@@ -36,7 +36,7 @@
       "name": "The Athletic Las Vegas (Public Beat Wire)",
       "tier": 1,
       "type": "beat",
-      "url": "https://x.com/tashanreed"
+      "url": "https://x.com/VicTafur"
     },
     {
       "id": "las_vegas_review_journal_lv",
@@ -155,27 +155,6 @@
       "popularityScore": 95
     },
     {
-      "id": "tashan_reed",
-      "name": "Tashan Reed",
-      "handle": "@tashanreed",
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "role": "Lead Raiders Beat Writer (The Athletic)",
-      "category": "beat",
-      "styleTag": "practice-injury-beat",
-      "baseScore": 95,
-      "trustTier": 1,
-      "xUrl": "https://x.com/tashanreed",
-      "bskyHandle": "tashanreed.bsky.social",
-      "defaultEnabled": true,
-      "scope": "local",
-      "trustTierLabel": "Tier 1 • Primary Trusted",
-      "bskyUrl": "https://bsky.app/profile/tashanreed.bsky.social",
-      "profileUrl": "https://x.com/tashanreed",
-      "outletUrl": "https://x.com/tashanreed",
-      "liveWeeklyMentions": 10,
-      "popularityScore": 95
-    },
-    {
       "id": "vic_tafur",
       "name": "Vic Tafur",
       "handle": "@VicTafur",
@@ -183,6 +162,7 @@
       "role": "Senior Raiders Columnist (The Athletic)",
       "category": "beat",
       "styleTag": "practice-injury-beat",
+      "requireTeamMention": true,
       "baseScore": 95,
       "trustTier": 1,
       "xUrl": "https://x.com/VicTafur",
@@ -192,7 +172,7 @@
       "trustTierLabel": "Tier 1 • Primary Trusted",
       "bskyUrl": null,
       "profileUrl": "https://x.com/VicTafur",
-      "outletUrl": "https://x.com/tashanreed",
+      "outletUrl": "https://x.com/VicTafur",
       "liveWeeklyMentions": 10,
       "popularityScore": 95
     },

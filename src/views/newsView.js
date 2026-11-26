@@ -52,6 +52,8 @@ import {
 import {
   decodeHtmlEntities,
   formatWireSourceDisplayName,
+  isCommercialFantasyOrBettingFiller,
+  isGenericLeagueWideRoundupWithoutTeam,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
   sanitizeExternalUrl,
@@ -1194,8 +1196,15 @@ export function renderNewsViewHtml({
     appData,
     nowMs
   );
+  const activeTeamCfg = getActiveTeamConfig();
   const prioritizedRaw = sortNewsWithBreakingPriority(
     rawAfterAvailabilityHide.filter(i => {
+      if (isCommercialFantasyOrBettingFiller(i.title, i.summary, i.url)) return false;
+      if (isGenericLeagueWideRoundupWithoutTeam(i.title, i.summary, activeTeamCfg)) return false;
+      if (i.filmOnlyScope) {
+        const pubMs = Date.parse(i.publishedAt || '');
+        if (Number.isFinite(pubMs) && nowMs - pubMs > 14 * 86_400_000) return false;
+      }
       if (i.type === 'video' && (i.videoId || i.videoStreamUrl)) return true;
       return Boolean(sanitizeExternalUrl(i.url, null)) && !isPaywalledPublisher(i.outletName, i.url);
     }),
@@ -1256,11 +1265,18 @@ export function renderNewsViewHtml({
     ),
     { nowMs, appData, groupSimilarStories: shouldGroupSimilar }
   );
-  const dedupedFilmAndTrench = sortNewsFeedByMode(
+  const sortedFilmRaw = sortNewsFeedByMode(
     [...dedupedFilmVideos, ...dedupedFilmArticlesAndTweets],
     activeSort,
     { nowMs, appData }
   );
+  // Keep Film & Trench team-first: cap league-wide `filmOnlyScope` charts to <=2 and rank direct team film ahead in Top sort
+  const directFilmItems = sortedFilmRaw.filter(i => !i.filmOnlyScope);
+  const cappedLeagueWideFilmItems = sortedFilmRaw.filter(i => Boolean(i.filmOnlyScope)).slice(0, 2);
+  const dedupedFilmAndTrench =
+    activeSort === 'latest'
+      ? sortNewsFeedByMode([...directFilmItems, ...cappedLeagueWideFilmItems], 'latest', { nowMs, appData })
+      : [...directFilmItems, ...cappedLeagueWideFilmItems];
   // Trades & Roster: Trades, official roster moves, AND salient salary cap / contract news (excluding videos to avoid redundancy)
   const dedupedTradesAndRoster = sortNewsFeedByMode(
     deduplicateAndGroupWireItems(

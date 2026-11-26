@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:29:01.997Z",
+  "updatedAt": "2026-11-26T19:23:30.810Z",
   "windowDays": 7,
-  "totalEpisodes": 8,
+  "totalEpisodes": 7,
   "shows": [
     {
       "id": "colts_locked_on_colts",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/8b/44/c5/8b44c51a-396c-664f-d3bb-1e3b7f231b29/mza_17349827388397837920.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "colts_colts_corner_with_kevin_bowen",
@@ -180,26 +180,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
       "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/9766e6/lockedon.simplecastaudio.com/6d6f3aa0-08dc-478e-b916-bfc163c9fc9a/episodes/7a57a4c7-db17-4ec1-b027-209a26676ec1/audio/128/default.mp3?aid=rss_feed&awCollectionId=6d6f3aa0-08dc-478e-b916-bfc163c9fc9a&awEpisodeId=7a57a4c7-db17-4ec1-b027-209a26676ec1&feed=PpDN4Fbf"
-    },
-    {
-      "id": "pod_colts_locked_on_colts_1000802909154",
-      "trackId": 1000802909154,
-      "collectionId": 1151621306,
-      "showId": "colts_locked_on_colts",
-      "showName": "Locked On Colts",
-      "showFullTitle": "Locked On Colts - Daily Podcast On The Indianapolis Colts",
-      "hosts": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
-      "network": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
-      "title": "CROSSOVER: Indianapolis Colts vs. Houston Texans A Battle of Two of NFL's Biggest DISAPPOINTMENTS",
-      "summary": "Thursday Night Football is a rematch of the Indianapolis Colts' 19-17 Week 3 win over the Houston Texans, but that matchup was very different. How might things change eight weeks later? John Hickman of Locked On Texans joins Zach to break down the biggest storylines and matc",
-      "publishedAt": "2026-11-19T11:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/31/60/91/31609155-9286-2d9b-f8ff-6bec95babb08/mza_578045425369776685.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/crossover-indianapolis-colts-vs-houston-texans-a/id1151621306?i=1000802909154&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/9766e6/lockedon.simplecastaudio.com/6d6f3aa0-08dc-478e-b916-bfc163c9fc9a/episodes/b1970e12-51e0-41c7-aea2-f94d8ccb9eee/audio/128/default.mp3?aid=rss_feed&awCollectionId=6d6f3aa0-08dc-478e-b916-bfc163c9fc9a&awEpisodeId=b1970e12-51e0-41c7-aea2-f94d8ccb9eee&feed=PpDN4Fbf"
     }
   ]
 }

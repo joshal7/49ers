@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:28:40.726Z",
+  "updatedAt": "2026-11-26T19:07:46.615Z",
   "windowDays": 7,
-  "totalEpisodes": 27,
+  "totalEpisodes": 26,
   "shows": [
     {
       "id": "steelers_locked_on_steelers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/cc/b2/4c/ccb24c5f-7d57-d782-12b3-b4de95266b7d/mza_4050704953803715613.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "steelers_steel_curtain_network",
@@ -572,26 +572,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
       "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/cd1f3b/lockedon.simplecastaudio.com/d3024f78-38ca-429c-bc85-4ba27de4a8a7/episodes/3277f986-594b-4797-b362-874b4755d025/audio/128/default.mp3?aid=rss_feed&awCollectionId=d3024f78-38ca-429c-bc85-4ba27de4a8a7&awEpisodeId=3277f986-594b-4797-b362-874b4755d025&feed=y_l5uReM"
-    },
-    {
-      "id": "pod_steelers_locked_on_steelers_1000802900219",
-      "trackId": 1000802900219,
-      "collectionId": 1140522532,
-      "showId": "steelers_locked_on_steelers",
-      "showName": "Locked On Steelers",
-      "showFullTitle": "Locked On Steelers – Daily Podcast On The Pittsburgh Steelers",
-      "hosts": "Locked On Podcast Network, Christopher Carter",
-      "network": "Locked On Podcast Network, Christopher Carter",
-      "title": "Steelers' Matchup w/Eagles Highlights Chance to Play Strengths, Away from Quinyon Mitchell, Top CBs",
-      "summary": "Christopher Carter of the Pittsburgh Post-Gazette, hosts the Locked on Steelers podcast, and is joined by Louie DiBiase fro Crossover Thursday. The Pittsburgh Steelers aim to end their winless streak in Philadelphia as they face the struggling Philadelphia Eagles at Lincoln ",
-      "publishedAt": "2026-11-19T10:00:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/ba/fe/00/bafe0098-1f2b-f456-aa5d-da81b9d30f80/mza_536572682888619619.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/steelers-matchup-w-eagles-highlights-chance-to-play/id1140522532?i=1000802900219&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/cd1f3b/lockedon.simplecastaudio.com/d3024f78-38ca-429c-bc85-4ba27de4a8a7/episodes/a4156c7e-23eb-4cea-b3a2-3d19697d3586/audio/128/default.mp3?aid=rss_feed&awCollectionId=d3024f78-38ca-429c-bc85-4ba27de4a8a7&awEpisodeId=a4156c7e-23eb-4cea-b3a2-3d19697d3586&feed=y_l5uReM"
     }
   ]
 }

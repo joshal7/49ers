@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:58.258Z",
+  "updatedAt": "2026-11-26T19:01:43.256Z",
   "week": 12,
   "units": [
     {
@@ -276,8 +276,8 @@
               "jersey": 73,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978247.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
               "isAvailable": true
             },
             {
@@ -298,8 +298,8 @@
               "jersey": 73,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978247.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
               "isAvailable": true
             },
             {
@@ -335,9 +335,9 @@
               "jersey": 71,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367199.png",
               "baselineRank": 2,
-              "playProbabilityPct": 49,
-              "statusBadge": "49% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 29,
+              "statusBadge": "29% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "4431214",
@@ -351,16 +351,6 @@
             }
           ],
           "projectedActiveChain": [
-            {
-              "playerId": "4367199",
-              "name": "Jon Gaines II",
-              "jersey": 71,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367199.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 49,
-              "statusBadge": "49% • Long Shot",
-              "isAvailable": true
-            },
             {
               "playerId": "4431214",
               "name": "Hayden Conner",
@@ -379,6 +369,17 @@
               "baselineRank": 1,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4367199",
+              "name": "Jon Gaines II",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367199.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 29,
+              "statusBadge": "29% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -405,9 +406,9 @@
               "jersey": 71,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367199.png",
               "baselineRank": 2,
-              "playProbabilityPct": 49,
-              "statusBadge": "49% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 29,
+              "statusBadge": "29% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "4431214",
@@ -442,16 +443,6 @@
               "isAvailable": true
             },
             {
-              "playerId": "4367199",
-              "name": "Jon Gaines II",
-              "jersey": 71,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367199.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 49,
-              "statusBadge": "49% • Long Shot",
-              "isAvailable": true
-            },
-            {
               "playerId": "4431214",
               "name": "Hayden Conner",
               "jersey": 58,
@@ -460,6 +451,17 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4367199",
+              "name": "Jon Gaines II",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367199.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 29,
+              "statusBadge": "29% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             },
             {
               "playerId": "4870596",
@@ -554,8 +556,8 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430841.png",
               "baselineRank": 1,
-              "playProbabilityPct": 37,
-              "statusBadge": "37% • Long Shot",
+              "playProbabilityPct": 29,
+              "statusBadge": "29% • Long Shot",
               "isAvailable": false
             },
             {
@@ -584,9 +586,9 @@
               "jersey": null,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4038524",
@@ -621,24 +623,23 @@
               "isAvailable": true
             },
             {
-              "playerId": "4430841",
-              "name": "Carson Beck",
-              "jersey": 19,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430841.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 37,
-              "statusBadge": "37% • Long Shot",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
               "playerId": "4428512",
               "name": "Kedon Slovis",
               "jersey": null,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430841",
+              "name": "Carson Beck",
+              "jersey": 19,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430841.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 29,
+              "statusBadge": "29% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -914,8 +915,8 @@
               "jersey": 10,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3693166.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
               "isAvailable": true
             },
             {
@@ -946,8 +947,8 @@
               "jersey": 10,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3693166.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 68,
+              "statusBadge": "68% • GTD",
               "isAvailable": true
             },
             {
@@ -1004,8 +1005,8 @@
               "jersey": 90,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240619.png",
               "baselineRank": 3,
-              "playProbabilityPct": 74,
-              "statusBadge": "74% • GTD",
+              "playProbabilityPct": 78,
+              "statusBadge": "78% • GTD",
               "isAvailable": true
             }
           ],
@@ -1036,8 +1037,8 @@
               "jersey": 90,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240619.png",
               "baselineRank": 3,
-              "playProbabilityPct": 74,
-              "statusBadge": "74% • GTD",
+              "playProbabilityPct": 78,
+              "statusBadge": "78% • GTD",
               "isAvailable": true
             }
           ],
@@ -1241,8 +1242,8 @@
               "jersey": 1,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040983.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
               "isAvailable": true
             },
             {
@@ -1263,8 +1264,8 @@
               "jersey": 1,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040983.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 98,
+              "statusBadge": "98% • Vet Rest (Full Go)",
               "isAvailable": true
             },
             {
@@ -1409,8 +1410,8 @@
               "jersey": 3,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3127287.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 64,
+              "statusBadge": "64% • GTD",
               "isAvailable": true
             },
             {
@@ -1441,8 +1442,8 @@
               "jersey": 3,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3127287.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 64,
+              "statusBadge": "64% • GTD",
               "isAvailable": true
             },
             {

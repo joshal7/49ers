@@ -414,6 +414,51 @@ await test('2. All 32 teams have valid live 11-file 2026 JSON bundles with zero 
   setActiveTeamConfig(getTeamByAbbr('SF'));
 });
 
+await test('2b. All-32-Team News, Tweets, Videos & Film Relevance & Freshness Invariant (0 stale filmOnly, 0 fantasy boilerplate, 0 generic roundups, 0 beat misassignments)', async () => {
+  const {
+    isCommercialFantasyOrBettingFiller,
+    isGenericLeagueWideRoundupWithoutTeam
+  } = await import('../src/engine/linkIntegrity.js');
+  const nowMs = Date.now();
+  let staleFilmOnly = 0;
+  let fantasyLeaks = 0;
+  let roundupLeaks = 0;
+  let genericCoachingPrimers = 0;
+  let misassignedTashan = 0;
+  let podiumOfficialAuthors = 0;
+
+  for (const team of ALL_NFL_TEAMS) {
+    const news = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', team.slug, 'news.json'), 'utf8'));
+    const stream = Array.isArray(news.rawStream) ? news.rawStream : [];
+    assert.ok(stream.length >= 25, `${team.abbr} news stream unexpectedly thin (${stream.length})`);
+    for (const it of stream) {
+      if (it.filmOnlyScope) {
+        const pubMs = Date.parse(it.publishedAt || '');
+        if (Number.isFinite(pubMs) && nowMs - pubMs > 14 * 86_400_000) staleFilmOnly += 1;
+        if (/split-field quarters foundations|aranda-roberts creeper system/i.test(String(it.title || ''))) {
+          genericCoachingPrimers += 1;
+        }
+      }
+      if (isCommercialFantasyOrBettingFiller(it.title, it.summary, it.url)) fantasyLeaks += 1;
+      if (isGenericLeagueWideRoundupWithoutTeam(it.title, it.summary, team)) roundupLeaks += 1;
+      if (team.abbr === 'LV' && /tashan\s+reed/i.test(String(it.author || ''))) misassignedTashan += 1;
+      if (
+        it.wireSource === 'x_timeline_live' &&
+        it.outletId === `${team.slug}_official` &&
+        /monti ossenfort|adam peters|jerry jones/i.test(String(it.author || ''))
+      ) {
+        podiumOfficialAuthors += 1;
+      }
+    }
+  }
+  assert.equal(staleFilmOnly, 0, `Expected 0 stale (>14d) filmOnlyScope items across 32 teams (found ${staleFilmOnly})`);
+  assert.equal(fantasyLeaks, 0, `Expected 0 commercial fantasy/Eric Karabell boilerplate leaks across 32 teams (found ${fantasyLeaks})`);
+  assert.equal(roundupLeaks, 0, `Expected 0 generic league-wide practice-squad/transaction roundups without team mention (found ${roundupLeaks})`);
+  assert.equal(genericCoachingPrimers, 0, `Expected 0 generic coaching textbook primers dumped via filmOnlyScope (found ${genericCoachingPrimers})`);
+  assert.equal(misassignedTashan, 0, `Expected 0 misassigned Tashan Reed Commanders tweets on Raiders (found ${misassignedTashan})`);
+  assert.equal(podiumOfficialAuthors, 0, `Expected 0 official club X tweets misattributed to GM/owner podium subjects (found ${podiumOfficialAuthors})`);
+});
+
 await test('2a. Power Rankings form a clean 1..32 rank bijection across all 6 verified sources (zero CBS blurb hijacks or missing aliases)', () => {
   const expectedIds = ['inpredictable', 'nfelo', 'rbsdm', 'cbs', 'espn_fpi', 'espn_panel'];
   const ranksBySource = Object.fromEntries(expectedIds.map(id => [id, new Map()]));

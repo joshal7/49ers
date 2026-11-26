@@ -686,8 +686,7 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       outletId: 'national_film',
       outletName: 'Yahoo Sports NFL',
       tier: 1,
-      requireKeyword: true,
-      allowLeagueWideFilmCharts: true
+      requireKeyword: true
     },
     {
       actor: 'benjaminsolak.bsky.social',
@@ -697,8 +696,7 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       outletId: 'espn',
       outletName: 'ESPN NFL',
       tier: 2,
-      requireKeyword: true,
-      allowLeagueWideFilmCharts: true
+      requireKeyword: true
     },
     {
       actor: 'brettkollmann.bsky.social',
@@ -708,8 +706,7 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       outletId: 'youtube_film',
       outletName: 'The Film Room',
       tier: 2,
-      requireKeyword: true,
-      allowLeagueWideFilmCharts: true
+      requireKeyword: true
     },
     {
       actor: 'timkawakami.bsky.social',
@@ -962,7 +959,8 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
                 fullText: rawText,
                 summary: `${extTitle} ${nonBioExtDesc}`,
                 authorHandle: acc.authorHandle || '',
-                imageUrl: extThumb
+                imageUrl: extThumb,
+                publishedAt: pubIso
               })
             ) {
               isLeagueWideChart = true;
@@ -990,7 +988,8 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
                   fullText: rawText,
                   summary: `${extTitle} ${nonBioExtDesc}`,
                   authorHandle: acc.authorHandle || '',
-                  imageUrl: extThumb
+                  imageUrl: extThumb,
+                  publishedAt: pubIso
                 })
               ) {
                 isLeagueWideChart = true;
@@ -1518,7 +1517,8 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
           fullText: bodyText,
           authorHandle: `@${handle}`,
           imageUrl: mediaImageUrl || '',
-          videoStreamUrl: videoStreamUrl || ''
+          videoStreamUrl: videoStreamUrl || '',
+          publishedAt: new Date(snowMs).toISOString()
         })
       ) {
         return null;

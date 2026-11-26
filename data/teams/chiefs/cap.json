@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:37.620Z",
+  "updatedAt": "2026-11-26T19:24:19.069Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/kansas-city-chiefs",
   "spotracUrl": "https://www.spotrac.com/nfl/kansas-city-chiefs/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 301570083,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 299204541,
       "top51": 269639084,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 79
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 345338673,
       "top51": 345245334,
       "teamCapSpace": -18338673,
       "otcRawTeamCapSpace": -18338673,
-      "effectiveCapSpace": -28894748,
+      "effectiveCapSpace": -23918673,
       "activeCapSpending": 345245334,
       "offenseSpend": 210534491,
       "defenseSpend": 127463343,
@@ -166,7 +166,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 307819257,
       "top51": 307819257,

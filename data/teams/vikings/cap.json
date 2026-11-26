@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:28.876Z",
+  "updatedAt": "2026-11-26T19:02:38.479Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/minnesota-vikings",
   "spotracUrl": "https://www.spotrac.com/nfl/minnesota-vikings/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 314384729,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 309384054,
       "top51": 242676194,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 54,
-      "totalSignedCount": 77
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 302131820,
       "top51": 286117743,
       "teamCapSpace": 24868180,
       "otcRawTeamCapSpace": 24868180,
-      "effectiveCapSpace": 12350222,
+      "effectiveCapSpace": 17428180,
       "activeCapSpending": 286117743,
       "offenseSpend": 181963321,
       "defenseSpend": 101866767,
@@ -202,7 +202,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 216746699,
       "top51": 216746699,

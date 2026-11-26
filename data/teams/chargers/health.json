@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:41:13.953Z",
+  "updatedAt": "2026-11-26T19:24:46.200Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.chargers.com/team/injury-report/",
@@ -32,7 +32,7 @@
       "factors": [
         "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "Herbert entered the NFL's concussion protocol following this past Sunday's 27-24 loss to the Jets, and the QB's pending absence from Wednesday's session gives him two more chances to officially log practice reps before for this weekend's game against New England. In his current absence, DJ Uiagalelei is next up for Los Angeles' signal-caller reps, with practice squad member Jake Browning available for a Week 12 elevation, if needed."
+      "beatComment": "Herbert was placed in the concussion protocol following this past Sunday's 27-24 loss to the Jets, and a likely DNP on Thursday after not practicing Wednesday may put him on the outside looking in to gaining clearance ahead of Week 12 action. If Herbert doesn't suit up Sunday against the Patriots, DJ Uiagalelei is in line to start for the Chargers, with Jake Browning backing him up."
     },
     {
       "playerId": "4685553",
@@ -110,32 +110,6 @@
         "Did Not Participate (DNP) on Wednesday; remains sidelined from practice"
       ],
       "beatComment": "Henley did not play in the Chargers' Week 11 loss to the Jets due to his knee injury. The linebacker has not practiced since sustaining the injury after Week 10. If Henley cannot suit up for Sunday's game, Marlowe Wax and Troy Dye will likely see increased snap shares at inside linebacker next to Del'Shawn Phillips."
-    },
-    {
-      "playerId": "4690171",
-      "name": "Deane Leonard",
-      "position": "CB",
-      "jersey": 33,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4690171.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Groin",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 30,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "30% • Long Shot",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Did Not Participate (DNP) on Wednesday",
-        "Soft-tissue re-aggravation caution (Groin)"
-      ],
-      "beatComment": "questionable"
     },
     {
       "playerId": "4596334",

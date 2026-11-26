@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:29:37.620Z",
+  "updatedAt": "2026-11-26T19:24:19.069Z",
   "sources": [
     {
       "label": "ESPN Chiefs Schedule",
@@ -572,7 +572,7 @@
       },
       "restAdvantageDays": -1,
       "spreadLineSf": 1.5,
-      "totalLine": 45.5,
+      "totalLine": 44.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24688,14 +24688,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 4,
-    "averageRank": 4,
+    "averageRank": 3.6,
     "medianRank": 3,
     "previousRank": 6,
     "rangeMin": 3,
-    "rangeMax": 7,
-    "rangeShort": "#3–#7",
-    "rangeDisplay": "#3–#7 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 8-2 Chiefs at #4 consensus (avg #4.0) through Week 11, ranging from #3 (ESPN FPI) to #7 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeMax": 6,
+    "rangeShort": "#3–#6",
+    "rangeDisplay": "#3–#6 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 8-2 Chiefs at #4 consensus (avg #3.6) through Week 11, ranging from #3 (ESPN FPI) to #6 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
@@ -24708,10 +24708,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +5.7 (#2 Off / #5 Def efficiency, 12.5 proj. wins, 11.5% SB odds) at 8-2.",
+        "blurb": "FPI +5.7 (#2 Off / #6 Def efficiency, 12.5 proj. wins, 11.5% SB odds) at 8-2.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24735,6 +24735,24 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "inpredictable",
+        "outlet": "Inpredictable / Betting Market Power Rating",
+        "shortName": "Inpredictable",
+        "url": "https://stats.inpredictable.com/rankings/nfl.php",
+        "rank": 3,
+        "previousRank": 6,
+        "delta": "+3",
+        "reportedRecord": "8-2",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
+        "verified": true,
+        "blurb": "Betting market rating GPF +5.1 (#9 Offense / #2 Defense) at 8-2 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "nfelo",
         "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
         "shortName": "nfelo",
@@ -24753,38 +24771,20 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "inpredictable",
-        "outlet": "Inpredictable / Betting Market Power Rating",
-        "shortName": "Inpredictable",
-        "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 4,
-        "previousRank": 7,
-        "delta": "+3",
-        "reportedRecord": "8-2",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
-        "verified": true,
-        "blurb": "Betting market rating GPF +4.7 (#8 Offense / #5 Defense) at 8-2 through Week 11.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "rbsdm",
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 7,
+        "rank": 6,
         "previousRank": 7,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 1 (69.5% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12.",
+        "blurb": "Tier 1 (70.1% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24795,16 +24795,16 @@
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
-        "rank": 4,
-        "previousRank": 7,
+        "rank": 3,
+        "previousRank": 6,
         "delta": "+3",
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +4.7 (#8 Offense / #5 Defense) at 8-2 through Week 11."
+        "blurb": "Betting market rating GPF +5.1 (#9 Offense / #2 Defense) at 8-2 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24827,16 +24827,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 7,
+        "rank": 6,
         "previousRank": 7,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 1 (69.5% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12."
+        "blurb": "Tier 1 (70.1% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 12."
       },
       {
         "id": "cbs",
@@ -24866,10 +24866,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +5.7 (#2 Off / #5 Def efficiency, 12.5 proj. wins, 11.5% SB odds) at 8-2."
+        "blurb": "FPI +5.7 (#2 Off / #6 Def efficiency, 12.5 proj. wins, 11.5% SB odds) at 8-2."
       },
       {
         "id": "espn_panel",
@@ -24902,7 +24902,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:29:41.587Z"
+    "fetchedAtIso": "2026-11-26T19:24:25.022Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24926,8 +24926,8 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 36,
-      "condition": "Cloudy",
+      "tempF": 35,
+      "condition": "Rain",
       "windMph": null,
       "windDir": "",
       "precipPct": null,
@@ -26068,7 +26068,7 @@
       "spread": "BUF -3",
       "openingSpread": "Opened KC +2.5 (Draft Kings)",
       "overUnder": 45.5,
-      "moneyline": "KC +127 | BUF -151",
+      "moneyline": "KC +130 | BUF -153",
       "impliedScore": "KC 21.3 – BUF 24.3",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "33%"

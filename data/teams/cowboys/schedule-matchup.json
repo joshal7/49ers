@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:40:46.136Z",
+  "updatedAt": "2026-11-26T19:04:17.809Z",
   "sources": [
     {
       "label": "ESPN Cowboys Schedule",
@@ -572,7 +572,7 @@
       },
       "restAdvantageDays": 0,
       "spreadLineSf": -8.5,
-      "totalLine": 48.5,
+      "totalLine": 49.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24686,30 +24686,30 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 14,
-    "averageRank": 14.2,
+    "averageRank": 14.4,
     "medianRank": 14,
     "previousRank": 15,
-    "rangeMin": 12,
+    "rangeMin": 13,
     "rangeMax": 18,
-    "rangeShort": "#12–#18",
-    "rangeDisplay": "#12–#18 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 5-6 Cowboys at #14 consensus (avg #14.2) through Week 11, ranging from #12 (ESPN FPI) to #18 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "rangeShort": "#13–#18",
+    "rangeDisplay": "#13–#18 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 5-6 Cowboys at #14 consensus (avg #14.4) through Week 11, ranging from #13 (ESPN FPI) to #18 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 12,
+        "rank": 13,
         "previousRank": 14,
-        "delta": "+2",
+        "delta": "+1",
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +2.4 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 0.9% SB odds) at 5-6.",
+        "blurb": "FPI +2.3 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 0.9% SB odds) at 5-6.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24742,10 +24742,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +0.7 (#2 Offense / #31 Defense) at 5-6 through Week 11.",
+        "blurb": "Betting market rating GPF +0.8 (#1 Offense / #31 Defense) at 5-6 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24760,10 +24760,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 2 (58.5% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 12.",
+        "blurb": "Tier 2 (59.7% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24799,10 +24799,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF +0.7 (#2 Offense / #31 Defense) at 5-6 through Week 11."
+        "blurb": "Betting market rating GPF +0.8 (#1 Offense / #31 Defense) at 5-6 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24831,10 +24831,10 @@
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 2 (58.5% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 12."
+        "blurb": "Tier 2 (59.7% neutral-field win rating, 8.1 proj. wins) at 5-6 through Week 12."
       },
       {
         "id": "cbs",
@@ -24858,16 +24858,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 12,
+        "rank": 13,
         "previousRank": 14,
-        "delta": "+2",
+        "delta": "+1",
         "reportedRecord": "5-6",
         "gamesIncluded": 11,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +2.4 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 0.9% SB odds) at 5-6."
+        "blurb": "FPI +2.3 (#4 Off / #32 Def efficiency, 8.3 proj. wins, 0.9% SB odds) at 5-6."
       },
       {
         "id": "espn_panel",
@@ -24900,7 +24900,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:40:56.675Z"
+    "fetchedAtIso": "2026-11-26T19:04:22.746Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -26147,9 +26147,9 @@
       "favorite": "DAL",
       "spread": "DAL -8.5",
       "openingSpread": "Opened DAL -1.5 (Draft Kings)",
-      "overUnder": 48.5,
-      "moneyline": "DAL -447 | PHI +348",
-      "impliedScore": "DAL 28.5 – PHI 20.0",
+      "overUnder": 49.5,
+      "moneyline": "DAL -457 | PHI +355",
+      "impliedScore": "DAL 29.0 – PHI 20.5",
       "restAdvantage": "Even Rest (Standard Prep Week)",
       "impliedWinProb": "88%"
     },

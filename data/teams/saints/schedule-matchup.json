@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:03.844Z",
+  "updatedAt": "2026-11-26T19:05:23.922Z",
   "sources": [
     {
       "label": "ESPN Saints Schedule",
@@ -24624,14 +24624,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 23,
-    "averageRank": 23,
-    "medianRank": 22,
+    "averageRank": 23.2,
+    "medianRank": 23,
     "previousRank": 22,
     "rangeMin": 21,
     "rangeMax": 27,
     "rangeShort": "#21–#27",
     "rangeDisplay": "#21–#27 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Saints at #23 consensus (avg #23.0) through Week 11, ranging from #21 (ESPN FPI) to #27 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Saints at #23 consensus (avg #23.2) through Week 11, ranging from #21 (ESPN FPI) to #27 (ESPN Panel). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
@@ -24644,10 +24644,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -3.3 (#21 Off / #17 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 3-7.",
+        "blurb": "FPI -3.2 (#21 Off / #17 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 3-7.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24670,24 +24670,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 22,
-        "previousRank": 22,
-        "delta": "0",
-        "reportedRecord": "3-7",
-        "gamesIncluded": 10,
-        "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
-        "asOfLabel": "Thru Wk 12",
-        "verified": true,
-        "blurb": "Tier 4 (40.4% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "inpredictable",
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
@@ -24698,10 +24680,28 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -4.1 (#19 Offense / #27 Defense) at 3-7 through Week 11.",
+        "blurb": "Betting market rating GPF -4.1 (#20 Offense / #26 Defense) at 3-7 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 23,
+        "previousRank": 22,
+        "delta": "-1",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 12,
+        "asOfIso": "2026-11-26T10:08:32Z",
+        "asOfLabel": "Thru Wk 12",
+        "verified": true,
+        "blurb": "Tier 4 (38.8% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24737,10 +24737,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -4.1 (#19 Offense / #27 Defense) at 3-7 through Week 11."
+        "blurb": "Betting market rating GPF -4.1 (#20 Offense / #26 Defense) at 3-7 through Week 11."
       },
       {
         "id": "nfelo",
@@ -24763,16 +24763,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 22,
+        "rank": 23,
         "previousRank": 22,
-        "delta": "0",
+        "delta": "-1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 4 (40.4% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12."
+        "blurb": "Tier 4 (38.8% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12."
       },
       {
         "id": "cbs",
@@ -24802,10 +24802,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -3.3 (#21 Off / #17 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 3-7."
+        "blurb": "FPI -3.2 (#21 Off / #17 Def efficiency, 5.8 proj. wins, 0.0% SB odds) at 3-7."
       },
       {
         "id": "espn_panel",
@@ -24838,7 +24838,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-26T07:27:09.888Z"
+    "fetchedAtIso": "2026-11-26T19:05:29.171Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24862,7 +24862,7 @@
     },
     "weather": {
       "indoor": false,
-      "tempF": 53,
+      "tempF": 49,
       "condition": "Cloudy",
       "windMph": null,
       "windDir": "",
@@ -25775,7 +25775,7 @@
       "spread": "CIN -10",
       "openingSpread": "Opened NO +6.5 (Draft Kings)",
       "overUnder": 49.5,
-      "moneyline": "NO +420 | CIN -557",
+      "moneyline": "NO +424 | CIN -563",
       "impliedScore": "NO 19.8 – CIN 29.8",
       "restAdvantage": "+1 Days Rest Advantage",
       "impliedWinProb": "8%"

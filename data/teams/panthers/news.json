@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:22.361Z",
+  "updatedAt": "2026-11-26T19:05:53.363Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17ET",
     "cycleKey": "2026-11-25@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "5-5",
-    "generatedAt": "2026-11-26T07:27:22.361Z",
+    "generatedAt": "2026-11-26T19:05:53.363Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -19,35 +19,39 @@
     "headline": "Panthers (5-5) Week 12 Briefing: Injury Updates Ahead of Buccaneers",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: Entering Week 12 preparation, head coach Dave Canales and the medical staff evaluate WR Jalen Coker (concussion), LB Bobby Okereke (foot), WR Tetairoa McMillan (foot), and CB Mike Jackson (groin) ahead of Wednesday's initial participation report. G Brady Christensen (hamstring) and LB Thomas Incoom (calf) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Mike Kaye](https://www.espn.com/nfl/player/_/id/4678008/jonathon-brooks#:~:text=Head%20coach%20Dave%20Canales%20suggested%20Wednesday%20that).",
-      "Week 12 Buccaneers Outlook: Dave Canales and DC Todd Wash open installation for the Tampa Bay Buccaneers (3-7, TB -3, HC/DC Todd Bowles & OC Zac Robinson (Road Test))—a unit ranked #1 in Rushing Yards / Game (159.5 yds) as Carolina prepares for a pivotal NFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873094) [NFL Trade Rumors](https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/).",
-      "NFC Playoff Trajectory: Entering Week 12 at 5-5 (1st in NFC South • #4 Seed in NFC), Carolina carries a 52.1% postseason projection, 51.7% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Walker Clement](https://www.catscratchreader.com/carolina-panthers-nfl-playoffs/62529/cat-scratch-reader-reacts-survey-who-wins-in-tampa-bay-on-monday).",
-      "Around the Beat: From improving the run defense against Tampa Bay to Monroe Freeling's relationship with Rob Hunt, and the decision not to activate Brady Christensen, here are three Wednesday takeaways from the Panthers in Week 12 [panthers.com Official](https://www.panthers.com/news/three-takeaways-from-wednesday-including-lessons-learned-from-the-trenches-versus-the-bucs)."
+      "Injury & Practice Status: Entering Week 12 preparation, head coach Dave Canales and the medical staff evaluate WR Jalen Coker (concussion), LB Bobby Okereke (foot), WR Tetairoa McMillan (foot), and CB Mike Jackson (groin) ahead of Wednesday's initial participation report [Joe Person](https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=McMillan%20wasn't%20spotted%20at%20Wednesday's%20unofficial%20practice). G Brady Christensen (hamstring) and LB Thomas Incoom (calf) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Mike Kaye](https://www.espn.com/nfl/player/_/id/4678008/jonathon-brooks#:~:text=Head%20coach%20Dave%20Canales%20suggested%20Wednesday%20that).",
+      "Week 12 Buccaneers Outlook: Dave Canales and DC Todd Wash open installation for the Tampa Bay Buccaneers (3-7, TB -3, HC/DC Todd Bowles & OC Zac Robinson (Road Test))—a unit ranked #1 in Rushing Yards / Game (159.5 yds) as Carolina prepares for a pivotal NFC matchup [panthers.com Official](https://www.panthers.com/news/know-your-foe-week-12-tampa-bay-buccaneers) [ESPN](https://www.espn.com/nfl/preview?gameId=401873094).",
+      "NFC Playoff Trajectory: Entering Week 12 at 5-5 (1st in NFC South • #4 Seed in NFC), Carolina carries a 52.2% postseason projection, 51.9% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Walker Clement](https://www.catscratchreader.com/carolina-panthers-discussion/62568/thanksgiving-day-football-open-thread).",
+      "Around the Beat: Per NFL Network’s Cameron Wolfe, the Panthers and QB Bryce Young have not had contract talks in-season, but the two sides are on the same page regarding a new deal in the offseason [NFL Trade Rumors](https://nfltraderumors.co/bryce-young-panthers-on-same-page-regarding-offseason-contract-extension/)."
     ],
     "coveredStoryKeys": [
-      "thomasincoom::ir_roster_move",
-      "bradychristensen::ir_roster_move",
-      "bradychristensen::pre_game_availability"
+      "bradychristensen::ir_roster_move"
     ],
     "coveredUrls": [
+      "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=McMillan%20wasn't%20spotted%20at%20Wednesday's%20unofficial%20practice",
       "https://www.espn.com/nfl/player/_/id/4678008/jonathon-brooks#:~:text=Head%20coach%20Dave%20Canales%20suggested%20Wednesday%20that",
+      "https://www.panthers.com/news/know-your-foe-week-12-tampa-bay-buccaneers",
       "https://www.espn.com/nfl/preview?gameId=401873094",
-      "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
-      "https://www.catscratchreader.com/carolina-panthers-nfl-playoffs/62529/cat-scratch-reader-reacts-survey-who-wins-in-tampa-bay-on-monday",
+      "https://www.catscratchreader.com/carolina-panthers-discussion/62568/thanksgiving-day-football-open-thread",
       "https://www.espn.com/nfl/story/_/id/50567919/carolina-panthers-rookie-lee-iii-big-play",
+      "https://nfltraderumors.co/bryce-young-panthers-on-same-page-regarding-offseason-contract-extension/",
+      "https://www.panthers.com/news/panthers-preparing-for-big-games-thanks-to-more-experience-panthers-bucs-monday-night-football-nfc-south",
       "https://www.panthers.com/news/three-takeaways-from-wednesday-including-lessons-learned-from-the-trenches-versus-the-bucs",
-      "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
       "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=Head%20coach%20Dave%20Canales%20said%20Wednesday%20that",
-      "https://www.panthers.com/news/malcolm-dewalt-feels-supported-and-they-re-confident-he-ll-make-more-plays",
       "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-25-26",
       "https://www.matchquarters.com/p/vance-joseph-diner-sim-max-protection",
       "https://www.espn.com/espn/story/_/id/50590411/chuba-hubbard-makes-difference-again-another-tight-panthers-win",
-      "https://www.panthers.com/team/transactions/#tx-3ff5ce0eb77e",
-      "https://www.profootballrumors.com/2026/11/panthers-g-brady-christensen-reverts-to-season-ending-ir",
-      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-24-26",
-      "https://x.com/josephperson/status/2125340467801821324"
+      "https://www.profootballrumors.com/2026/11/panthers-g-brady-christensen-reverts-to-season-ending-ir"
     ],
     "sources": [
+      {
+        "type": "article",
+        "author": "Joe Person",
+        "outlet": "The Athletic Carolina",
+        "title": "McMillan wasn't spotted at Wednesday's unofficial practice.",
+        "url": "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=McMillan%20wasn't%20spotted%20at%20Wednesday's%20unofficial%20practice",
+        "publishedAt": "2026-11-25T18:50:21.000Z"
+      },
       {
         "type": "article",
         "author": "Mike Kaye",
@@ -55,6 +59,14 @@
         "title": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the",
         "url": "https://www.espn.com/nfl/player/_/id/4678008/jonathon-brooks#:~:text=Head%20coach%20Dave%20Canales%20suggested%20Wednesday%20that",
         "publishedAt": "2026-11-25T22:54:29.000Z"
+      },
+      {
+        "type": "article",
+        "author": "panthers.com Official",
+        "outlet": "panthers.com Official",
+        "title": "Know Your Foe: Week 12, Tampa Bay Buccaneers",
+        "url": "https://www.panthers.com/news/know-your-foe-week-12-tampa-bay-buccaneers",
+        "publishedAt": "2026-11-26T12:00:21.000Z"
       },
       {
         "type": "article",
@@ -66,19 +78,11 @@
       },
       {
         "type": "article",
-        "author": "NFL Trade Rumors",
-        "outlet": "NFL Trade Rumors",
-        "title": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
-        "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
-        "publishedAt": "2026-11-25T23:30:41.000Z"
-      },
-      {
-        "type": "article",
         "author": "Walker Clement",
         "outlet": "Cat Scratch Reader",
-        "title": "Cat Scratch Reader Reacts Survey: Who wins in Tampa Bay on Monday?",
-        "url": "https://www.catscratchreader.com/carolina-panthers-nfl-playoffs/62529/cat-scratch-reader-reacts-survey-who-wins-in-tampa-bay-on-monday",
-        "publishedAt": "2026-11-24T19:59:41.000Z"
+        "title": "Thanksgiving Day Football Open Thread",
+        "url": "https://www.catscratchreader.com/carolina-panthers-discussion/62568/thanksgiving-day-football-open-thread",
+        "publishedAt": "2026-11-25T11:23:01.000Z"
       },
       {
         "type": "article",
@@ -90,6 +94,22 @@
       },
       {
         "type": "article",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension",
+        "url": "https://nfltraderumors.co/bryce-young-panthers-on-same-page-regarding-offseason-contract-extension/",
+        "publishedAt": "2026-11-26T15:52:55.000Z"
+      },
+      {
+        "type": "article",
+        "author": "panthers.com Official",
+        "outlet": "panthers.com Official",
+        "title": "Panthers preparing for big games, thanks to (more) experience",
+        "url": "https://www.panthers.com/news/panthers-preparing-for-big-games-thanks-to-more-experience-panthers-bucs-monday-night-football-nfc-south",
+        "publishedAt": "2026-11-26T14:00:21.000Z"
+      },
+      {
+        "type": "article",
         "author": "panthers.com Official",
         "outlet": "panthers.com Official",
         "title": "Three takeaways from Wednesday, including lessons learned from the trenches versus the Bucs",
@@ -98,27 +118,11 @@
       },
       {
         "type": "article",
-        "author": "panthers.com Official",
-        "outlet": "panthers.com Official",
-        "title": "Panthers open the practice window for Thomas Incoom",
-        "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
-        "publishedAt": "2026-11-25T17:32:40.000Z"
-      },
-      {
-        "type": "article",
         "author": "Mike Kaye",
         "outlet": "Charlotte Observer",
         "title": "Head coach Dave Canales said Wednesday that the Panthers are \"optimistic\" that McMillan (foot) will play Monday in Tampa Bay.",
         "url": "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=Head%20coach%20Dave%20Canales%20said%20Wednesday%20that",
         "publishedAt": "2026-11-25T20:18:52.000Z"
-      },
-      {
-        "type": "article",
-        "author": "panthers.com Official",
-        "outlet": "panthers.com Official",
-        "title": "Malcolm DeWalt feels \"supported,\" and they're confident he'll make more plays",
-        "url": "https://www.panthers.com/news/malcolm-dewalt-feels-supported-and-they-re-confident-he-ll-make-more-plays",
-        "publishedAt": "2026-11-25T22:56:33.000Z"
       },
       {
         "type": "article",
@@ -135,14 +139,6 @@
         "title": "Vance Joseph's Diner Sim vs. Condensed Max Pro",
         "url": "https://www.matchquarters.com/p/vance-joseph-diner-sim-max-protection",
         "publishedAt": "2026-11-25T13:21:33.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Leonard Solms",
-        "outlet": "ESPN",
-        "title": "Chuba Hubbard makes the difference again in another tight Panthers win",
-        "url": "https://www.espn.com/espn/story/_/id/50590411/chuba-hubbard-makes-difference-again-another-tight-panthers-win",
-        "publishedAt": "2026-11-25T06:18:25.000Z"
       }
     ]
   },
@@ -151,15 +147,27 @@
       "id": "car_cl_top",
       "category": "beat",
       "headline": "Carolina Panthers Week 12 Top Headlines (5-5)",
-      "summary": "How Panthers rookie's big play became an all-timer for Dave Canales — Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having",
-      "updatedAt": "2026-11-26T04:43:05.000Z",
+      "summary": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension — Panthers preparing for big games, thanks to (more) experience",
+      "updatedAt": "2026-11-26T15:52:55.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Mike Kaye",
-          "title": "How Panthers rookie's big play became an all-timer for Dave Canales",
-          "url": "https://www.espn.com/nfl/story/_/id/50567919/carolina-panthers-rookie-lee-iii-big-play",
-          "publishedAt": "2026-11-26T04:43:05.000Z"
+          "label": "NFL Trade Rumors",
+          "title": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension",
+          "url": "https://nfltraderumors.co/bryce-young-panthers-on-same-page-regarding-offseason-contract-extension/",
+          "publishedAt": "2026-11-26T15:52:55.000Z"
+        },
+        {
+          "label": "panthers.com Official",
+          "title": "Panthers preparing for big games, thanks to (more) experience",
+          "url": "https://www.panthers.com/news/panthers-preparing-for-big-games-thanks-to-more-experience-panthers-bucs-monday-night-football-nfc-south",
+          "publishedAt": "2026-11-26T14:00:21.000Z"
+        },
+        {
+          "label": "panthers.com Official",
+          "title": "Know Your Foe: Week 12, Tampa Bay Buccaneers",
+          "url": "https://www.panthers.com/news/know-your-foe-week-12-tampa-bay-buccaneers",
+          "publishedAt": "2026-11-26T12:00:21.000Z"
         },
         {
           "label": "Mike Kaye",
@@ -168,28 +176,16 @@
           "publishedAt": "2026-11-25T22:54:29.000Z"
         },
         {
+          "label": "Mike Kaye",
+          "title": "How Panthers rookie's big play became an all-timer for Dave Canales",
+          "url": "https://www.espn.com/nfl/story/_/id/50567919/carolina-panthers-rookie-lee-iii-big-play",
+          "publishedAt": "2026-11-26T04:43:05.000Z"
+        },
+        {
           "label": "panthers.com Official",
           "title": "Three takeaways from Wednesday, including lessons learned from the trenches versus the Bucs",
           "url": "https://www.panthers.com/news/three-takeaways-from-wednesday-including-lessons-learned-from-the-trenches-versus-the-bucs",
           "publishedAt": "2026-11-25T22:40:21.000Z"
-        },
-        {
-          "label": "panthers.com Official",
-          "title": "Panthers open the practice window for Thomas Incoom",
-          "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
-          "publishedAt": "2026-11-25T17:32:40.000Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Buccaneers will need more from Baker Mayfield and struggling passing attack to beat the Panthers",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873094",
-          "publishedAt": "2026-11-26T02:24:54.000Z"
-        },
-        {
-          "label": "Mike Kaye",
-          "title": "Head coach Dave Canales said Wednesday that the Panthers are \"optimistic\" that McMillan (foot) will play Monday in Tampa Bay.",
-          "url": "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=Head%20coach%20Dave%20Canales%20said%20Wednesday%20that",
-          "publishedAt": "2026-11-25T20:18:52.000Z"
         }
       ]
     },
@@ -197,7 +193,7 @@
       "id": "car_cl_health",
       "category": "injury",
       "headline": "Panthers Practice Report, Injury & IR Availability",
-      "summary": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having a role available to him. — Panthers open the practice window for Thom",
+      "summary": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having a role available to him. — Panthers make practice squad change",
       "updatedAt": "2026-11-25T22:54:29.000Z",
       "itemCount": 6,
       "sourceLinks": [
@@ -209,27 +205,27 @@
         },
         {
           "label": "panthers.com Official",
-          "title": "Panthers open the practice window for Thomas Incoom",
-          "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
-          "publishedAt": "2026-11-25T17:32:40.000Z"
-        },
-        {
-          "label": "panthers.com Official",
           "title": "Panthers make practice squad change",
           "url": "https://www.panthers.com/news/panthers-make-practice-squad-changecam-horsley",
           "publishedAt": "2026-11-25T21:17:51.000Z"
-        },
-        {
-          "label": "Carolina Panthers Official",
-          "title": "Panthers roster move: Designated OLB Thomas Incoom to return from injured reserve. Released DT Cam Horsley from the practice squad.",
-          "url": "https://www.panthers.com/team/transactions/#tx-3ff5ce0eb77e",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
         },
         {
           "label": "Joe Person",
           "title": "McMillan wasn't spotted at Wednesday's unofficial practice.",
           "url": "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=McMillan%20wasn't%20spotted%20at%20Wednesday's%20unofficial%20practice",
           "publishedAt": "2026-11-25T18:50:21.000Z"
+        },
+        {
+          "label": "panthers.com Official",
+          "title": "Panthers open the practice window for Thomas Incoom",
+          "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
+          "publishedAt": "2026-11-25T17:32:40.000Z"
+        },
+        {
+          "label": "Carolina Panthers Official",
+          "title": "Panthers roster move: Designated OLB Thomas Incoom to return from injured reserve. Released DT Cam Horsley from the practice squad.",
+          "url": "https://www.panthers.com/team/transactions/#tx-3ff5ce0eb77e",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
         },
         {
           "label": "Pro Football Rumors",
@@ -289,10 +285,16 @@
       "id": "car_cl_roster",
       "category": "roster",
       "headline": "Panthers Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having a role available to him. — Panthers open the practice window for Thom",
-      "updatedAt": "2026-11-25T22:54:29.000Z",
+      "summary": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension — Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers",
+      "updatedAt": "2026-11-26T15:52:55.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "NFL Trade Rumors",
+          "title": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension",
+          "url": "https://nfltraderumors.co/bryce-young-panthers-on-same-page-regarding-offseason-contract-extension/",
+          "publishedAt": "2026-11-26T15:52:55.000Z"
+        },
         {
           "label": "Mike Kaye",
           "title": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having a role available to him.",
@@ -301,15 +303,15 @@
         },
         {
           "label": "panthers.com Official",
-          "title": "Panthers open the practice window for Thomas Incoom",
-          "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
-          "publishedAt": "2026-11-25T17:32:40.000Z"
-        },
-        {
-          "label": "panthers.com Official",
           "title": "Panthers make practice squad change",
           "url": "https://www.panthers.com/news/panthers-make-practice-squad-changecam-horsley",
           "publishedAt": "2026-11-25T21:17:51.000Z"
+        },
+        {
+          "label": "panthers.com Official",
+          "title": "Panthers open the practice window for Thomas Incoom",
+          "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
+          "publishedAt": "2026-11-25T17:32:40.000Z"
         },
         {
           "label": "Carolina Panthers Official",
@@ -322,17 +324,155 @@
           "title": "NFL Practice Squad Updates: 11/24/26",
           "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-24-26",
           "publishedAt": "2026-11-25T00:51:01.000Z"
-        },
-        {
-          "label": "panthers.com Official",
-          "title": "Panthers add defensive lineman to the practice squad",
-          "url": "https://www.panthers.com/news/panthers-add-defensive-lineman-to-the-practice-squad-cj-ravenell-corey-thornton",
-          "publishedAt": "2026-11-24T21:00:41.000Z"
         }
       ]
     }
   ],
   "rawStream": [
+    {
+      "id": "car_nfltr_e0b0dedaab14",
+      "type": "article",
+      "title": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension",
+      "summary": "Per NFL Network’s Cameron Wolfe, the Panthers and QB Bryce Young have not had contract talks in-season, but the two sides are on the same page regarding a new deal in the offseason. Reports earlier this month suggested the Panthers are “far",
+      "imageUrl": "",
+      "imageAlt": "Bryce Young & Panthers On Same Page Regarding Offseason Contract Extension",
+      "publishedAt": "2026-11-26T15:52:55.000Z",
+      "url": "https://nfltraderumors.co/bryce-young-panthers-on-same-page-regarding-offseason-contract-extension/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4685720",
+          "name": "Bryce Young",
+          "shortName": "B. Young",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685720.png"
+        }
+      ],
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "BREAKING",
+      "breakingPriority": 2.57,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "corroborationCount": 1,
+      "storyTier": "tier1_major",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.4921
+    },
+    {
+      "id": "car_rss_cce921f4ea13",
+      "type": "article",
+      "title": "Panthers preparing for big games, thanks to (more) experience",
+      "summary": "A year ago, the Panthers only had two players on the roster who had played in the postseason with this team. Now, nearly half the roster has, and that number could grow. That allows them to \"normalize\" the games that continue to get bigger.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/bsuxofa8gv2qo6xu1ng7.jpg",
+      "imageAlt": "Panthers preparing for big games, thanks to (more) experience",
+      "publishedAt": "2026-11-26T14:00:21.000Z",
+      "url": "https://www.panthers.com/news/panthers-preparing-for-big-games-thanks-to-more-experience-panthers-bucs-monday-night-football-nfc-south",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.7154
+    },
+    {
+      "id": "car_rss_3e4bfae66880",
+      "type": "article",
+      "title": "Know Your Foe: Week 12, Tampa Bay Buccaneers",
+      "summary": "The Panthers could take firm control of the NFC South on Monday night. But the Buccaneers have a Top 5 running game and a Top 2 rushing defense that will try to stand in the way.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qfb9qqvxjo8vngbbb7kz.jpg",
+      "imageAlt": "Know Your Foe: Week 12, Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-26T12:00:21.000Z",
+      "url": "https://www.panthers.com/news/know-your-foe-week-12-tampa-bay-buccaneers",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.2921
+    },
+    {
+      "id": "car_pwire_4678008_64977528",
+      "type": "article",
+      "title": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having a role available to him.",
+      "summary": "After having his window opened Nov. 11, Brooks was a limited practice participant throughout Week 10 before practicing fully for all three of the Panthers' Week 11 sessions. Brooks is poised to remain a full practice par",
+      "publishedAt": "2026-11-25T22:54:29.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4678008/jonathon-brooks#:~:text=Head%20coach%20Dave%20Canales%20suggested%20Wednesday%20that",
+      "outletId": "charlotte_observer_public_beat_wire_car",
+      "outletName": "Charlotte Observer",
+      "reporterId": "mike_kaye",
+      "reporterName": "Mike Kaye",
+      "author": "Mike Kaye",
+      "authorHandle": "@mike_e_kaye",
+      "authorProfileUrl": "https://x.com/mike_e_kaye",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.5224
+    },
     {
       "id": "car_espn_85df13b42780b",
       "type": "video",
@@ -377,7 +517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 24.8733
+      "storyRank": 1.5731
     },
     {
       "id": "car_espn_792a8281c2d38",
@@ -421,39 +561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.2344
-    },
-    {
-      "id": "car_pwire_4678008_64977528",
-      "type": "article",
-      "title": "Head coach Dave Canales suggested Wednesday that a decision on Brooks (core) being activated from injured reserve before his 21-day window expires next week will hinge on the Panthers having a role available to him.",
-      "summary": "After having his window opened Nov. 11, Brooks was a limited practice participant throughout Week 10 before practicing fully for all three of the Panthers' Week 11 sessions. Brooks is poised to remain a full practice par",
-      "publishedAt": "2026-11-25T22:54:29.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4678008/jonathon-brooks#:~:text=Head%20coach%20Dave%20Canales%20suggested%20Wednesday%20that",
-      "outletId": "charlotte_observer_public_beat_wire_car",
-      "outletName": "Charlotte Observer",
-      "reporterId": "mike_kaye",
-      "reporterName": "Mike Kaye",
-      "author": "Mike Kaye",
-      "authorHandle": "@mike_e_kaye",
-      "authorProfileUrl": "https://x.com/mike_e_kaye",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.149,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.9559
+      "storyRank": 1.3042
     },
     {
       "id": "car_rss_a4d2f6ee6b09",
@@ -493,8 +601,8 @@
       ],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.506,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -504,50 +612,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4019
+      "storyRank": 1.5983
     },
     {
-      "id": "car_rss_f2ef597e1f2a",
-      "type": "article",
-      "title": "Panthers open the practice window for Thomas Incoom",
-      "summary": "The team opened the 21-day window for the veteran outside linebacker and special teamer, who led the team in special teams tackles in 2025.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qnneggmpdp4z8s5qpqob.png",
-      "imageAlt": "Panthers open the practice window for Thomas Incoom",
-      "publishedAt": "2026-11-25T17:32:40.000Z",
-      "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4714157",
-          "name": "Thomas Incoom",
-          "shortName": "T. Incoom",
-          "position": "LB",
-          "jersey": 48,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714157.png"
-        }
-      ],
+      "id": "car_yt_yyR5Ru5sS0c",
+      "type": "video",
+      "category": "film",
+      "videoId": "yyR5Ru5sS0c",
+      "embeddable": true,
+      "title": "Panthers vs. Buccaneers Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Carolina Panthers and the Tampa Bay Buccaneers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and",
+      "imageUrl": "https://i.ytimg.com/vi/yyR5Ru5sS0c/hqdefault.jpg",
+      "imageAlt": "Panthers vs. Buccaneers Preview + Predictions",
+      "publishedAt": "2026-11-25T19:21:22.000Z",
+      "url": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.676,
-      "category": "roster",
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "9:41",
       "credibilityScore": 86,
-      "storyTier": "tier2_roster",
+      "storyTier": "film_trench",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9467
+      "storyRank": 1.4033
     },
     {
       "id": "car_espn_816b761024efc",
@@ -582,215 +686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4346
-    },
-    {
-      "id": "car_pwire_4685472_64974428",
-      "type": "article",
-      "title": "Head coach Dave Canales said Wednesday that the Panthers are \"optimistic\" that McMillan (foot) will play Monday in Tampa Bay.",
-      "summary": "McMillan didn't partake in Wednesday's unofficial practice, after which Canales revealed that the wide receiver dealt with soreness in his foot after Sunday's win against the Ravens in which he hauled in six of nine targ",
-      "publishedAt": "2026-11-25T20:18:52.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=Head%20coach%20Dave%20Canales%20said%20Wednesday%20that",
-      "outletId": "charlotte_observer_public_beat_wire_car",
-      "outletName": "Charlotte Observer",
-      "reporterId": "mike_kaye",
-      "reporterName": "Mike Kaye",
-      "author": "Mike Kaye",
-      "authorHandle": "@mike_e_kaye",
-      "authorProfileUrl": "https://x.com/mike_e_kaye",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "4685472",
-          "name": "Tetairoa McMillan",
-          "shortName": "T. McMillan",
-          "position": "WR",
-          "jersey": 4,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685472.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 0.636,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "practice_injury",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.5729
-    },
-    {
-      "id": "car_tyt_uy63HOobf-4",
-      "type": "video",
-      "category": "beat",
-      "videoId": "uy63HOobf-4",
-      "embeddable": false,
-      "title": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing | Carolina Panthers",
-      "summary": "The Carolina Panthers' 2026 Salute to Service Award nominee, Devin Lloyd, reflects on the military values that shaped his life and career. Raised by two Navy veterans, Lloyd shares how service, leadership, and family hav",
-      "imageUrl": "https://i.ytimg.com/vi/uy63HOobf-4/hqdefault.jpg",
-      "imageAlt": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing | Carolina Panthers",
-      "publishedAt": "2026-11-25T20:50:30.000Z",
-      "url": "https://www.youtube.com/watch?v=uy63HOobf-4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=uy63HOobf-4",
-      "channel": "Carolina Panthers",
-      "outletId": "UC6vl4XAyO5mZLczhFC8MgpA",
-      "outletName": "Carolina Panthers",
-      "reporterId": "UC6vl4XAyO5mZLczhFC8MgpA",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4243256",
-          "name": "Devin Lloyd",
-          "shortName": "D. Lloyd",
-          "position": "LB",
-          "jersey": 55,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243256.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.419,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.1641,
-      "duration": "3:17"
-    },
-    {
-      "id": "car_vid_92702f06c0c4",
-      "type": "video",
-      "title": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing",
-      "summary": "The Carolina Panthers' 2026 Salute to Service Award nominee, Devin Lloyd, reflects on the military values that shaped his life and career. Raised by two Navy veterans, Lloyd shares how service, leadership, and family hav",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sqhqjqjaedluk9k0phgf.webp",
-      "imageAlt": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing",
-      "publishedAt": "2026-11-25T20:50:00.000Z",
-      "url": "https://www.panthers.com/video/2026-salute-to-service-nominee-devin-lloyd-reflects-on-his-military-upbringing",
-      "externalVideoUrl": "https://www.panthers.com/video/2026-salute-to-service-nominee-devin-lloyd-reflects-on-his-military-upbringing",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4243256",
-          "name": "Devin Lloyd",
-          "shortName": "D. Lloyd",
-          "position": "LB",
-          "jersey": 55,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243256.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.419,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.1612,
-      "duration": "3:17"
-    },
-    {
-      "id": "car_yt_yyR5Ru5sS0c",
-      "type": "video",
-      "category": "film",
-      "videoId": "yyR5Ru5sS0c",
-      "embeddable": true,
-      "title": "Panthers vs. Buccaneers Preview + Predictions",
-      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Carolina Panthers and the Tampa Bay Buccaneers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and",
-      "imageUrl": "https://i.ytimg.com/vi/yyR5Ru5sS0c/hqdefault.jpg",
-      "imageAlt": "Panthers vs. Buccaneers Preview + Predictions",
-      "publishedAt": "2026-11-25T19:21:22.000Z",
-      "url": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
-      "channel": "Check the Mic",
-      "outletId": "check_the_mic",
-      "outletName": "Check the Mic",
-      "reporterId": "check_the_mic",
-      "reporterName": "Check the Mic",
-      "author": "Check the Mic",
-      "authorHandle": "@CheckTheMic",
-      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
-      "trustTier": 2,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.41,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.1952,
-      "duration": "9:41"
-    },
-    {
-      "id": "car_nfltr_34a36164a289",
-      "type": "article",
-      "title": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
-      "summary": "Buccaneers Buccaneers HC Todd Bowles said rookie WR Ted Hurst needs more work and experience, starting with consistency and avoiding dropped passes. “There is an emphasis on getting him [Hurst] more involved in the game,” Bowles said, via B",
-      "imageUrl": "",
-      "imageAlt": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
-      "publishedAt": "2026-11-25T23:30:41.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.7246
+      "storyRank": 0.7731
     },
     {
       "id": "car_rss_2d3c1d580c52",
@@ -833,7 +729,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5434
+      "storyRank": 0.8363
     },
     {
       "id": "car_vid_3614db395b05",
@@ -870,41 +766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.518
-    },
-    {
-      "id": "car_rss_0593276dea95",
-      "type": "article",
-      "title": "Panthers make practice squad change",
-      "summary": "The team released defensive tackle Cam Horsley from the practice squad on Wednesday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qnneggmpdp4z8s5qpqob.png",
-      "imageAlt": "Panthers make practice squad change",
-      "publishedAt": "2026-11-25T21:17:51.000Z",
-      "url": "https://www.panthers.com/news/panthers-make-practice-squad-changecam-horsley",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.42,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "minor_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6464
+      "storyRank": 0.8325
     },
     {
       "id": "car_tyt_5OnOIvfkqYM",
@@ -985,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1977
+      "storyRank": 0.7814
     },
     {
       "id": "car_vid_438995134b1e",
@@ -1063,7 +925,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.085
+      "storyRank": 0.7618
+    },
+    {
+      "id": "car_rss_0593276dea95",
+      "type": "article",
+      "title": "Panthers make practice squad change",
+      "summary": "The team released defensive tackle Cam Horsley from the practice squad on Wednesday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qnneggmpdp4z8s5qpqob.png",
+      "imageAlt": "Panthers make practice squad change",
+      "publishedAt": "2026-11-25T21:17:51.000Z",
+      "url": "https://www.panthers.com/news/panthers-make-practice-squad-changecam-horsley",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7534
     },
     {
       "id": "car_vid_63732f3d9732",
@@ -1103,13 +999,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:21",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0079,
-      "duration": "10:21"
+      "storyRank": 0.7479
     },
     {
       "id": "car_vid_8af7775f6e12",
@@ -1149,13 +1045,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "14:01",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.966,
-      "duration": "14:01"
+      "storyRank": 0.7401
     },
     {
       "id": "car_tyt_-gce-pR-wuA",
@@ -1197,13 +1093,107 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:21",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9626,
-      "duration": "10:21"
+      "storyRank": 0.7395
+    },
+    {
+      "id": "car_tyt_uy63HOobf-4",
+      "type": "video",
+      "category": "beat",
+      "videoId": "uy63HOobf-4",
+      "embeddable": false,
+      "title": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing | Carolina Panthers",
+      "summary": "The Carolina Panthers' 2026 Salute to Service Award nominee, Devin Lloyd, reflects on the military values that shaped his life and career. Raised by two Navy veterans, Lloyd shares how service, leadership, and family hav",
+      "imageUrl": "https://i.ytimg.com/vi/uy63HOobf-4/hqdefault.jpg",
+      "imageAlt": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing | Carolina Panthers",
+      "publishedAt": "2026-11-25T20:50:30.000Z",
+      "url": "https://www.youtube.com/watch?v=uy63HOobf-4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=uy63HOobf-4",
+      "channel": "Carolina Panthers",
+      "outletId": "UC6vl4XAyO5mZLczhFC8MgpA",
+      "outletName": "Carolina Panthers",
+      "reporterId": "UC6vl4XAyO5mZLczhFC8MgpA",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4243256",
+          "name": "Devin Lloyd",
+          "shortName": "D. Lloyd",
+          "position": "LB",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243256.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "3:17",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7329
+    },
+    {
+      "id": "car_vid_92702f06c0c4",
+      "type": "video",
+      "title": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing",
+      "summary": "The Carolina Panthers' 2026 Salute to Service Award nominee, Devin Lloyd, reflects on the military values that shaped his life and career. Raised by two Navy veterans, Lloyd shares how service, leadership, and family hav",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sqhqjqjaedluk9k0phgf.webp",
+      "imageAlt": "2026 Salute to Service Nominee Devin Lloyd Reflects on His Military Upbringing",
+      "publishedAt": "2026-11-25T20:50:00.000Z",
+      "url": "https://www.panthers.com/video/2026-salute-to-service-nominee-devin-lloyd-reflects-on-his-military-upbringing",
+      "externalVideoUrl": "https://www.panthers.com/video/2026-salute-to-service-nominee-devin-lloyd-reflects-on-his-military-upbringing",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4243256",
+          "name": "Devin Lloyd",
+          "shortName": "D. Lloyd",
+          "position": "LB",
+          "jersey": 55,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243256.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "3:17",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7325
     },
     {
       "id": "car_tyt_jVOZk2CjzVM",
@@ -1245,57 +1235,54 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "14:01",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9245,
-      "duration": "14:01"
+      "storyRank": 0.7323
     },
     {
-      "id": "car_tx_3ff5ce0eb77e",
-      "type": "tweet",
-      "title": "Panthers roster move: Designated OLB Thomas Incoom to return from injured reserve. Released DT Cam Horsley from the practice squad.",
-      "fullText": "Panthers roster move: Designated OLB Thomas Incoom to return from injured reserve. Released DT Cam Horsley from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.panthers.com/team/transactions/#tx-3ff5ce0eb77e",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers Official",
-      "author": "Carolina Panthers Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
+      "id": "car_pwire_4685472_64974428",
+      "type": "article",
+      "title": "Head coach Dave Canales said Wednesday that the Panthers are \"optimistic\" that McMillan (foot) will play Monday in Tampa Bay.",
+      "summary": "McMillan didn't partake in Wednesday's unofficial practice, after which Canales revealed that the wide receiver dealt with soreness in his foot after Sunday's win against the Ravens in which he hauled in six of nine targ",
+      "publishedAt": "2026-11-25T20:18:52.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4685472/tetairoa-mcmillan#:~:text=Head%20coach%20Dave%20Canales%20said%20Wednesday%20that",
+      "outletId": "charlotte_observer_public_beat_wire_car",
+      "outletName": "Charlotte Observer",
+      "reporterId": "mike_kaye",
+      "reporterName": "Mike Kaye",
+      "author": "Mike Kaye",
+      "authorHandle": "@mike_e_kaye",
+      "authorProfileUrl": "https://x.com/mike_e_kaye",
       "trustTier": 1,
-      "wireSource": "official_transactions",
+      "wireSource": "espn_player_wire",
       "mentionedPlayers": [
         {
-          "id": "4714157",
-          "name": "Thomas Incoom",
-          "shortName": "T. Incoom",
-          "position": "LB",
-          "jersey": 48,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714157.png"
+          "id": "4685472",
+          "name": "Tetairoa McMillan",
+          "shortName": "T. McMillan",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685472.png"
         }
       ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
+      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
+      "credibilityScore": 95,
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1009
+      "storyRank": 0.7103
     },
     {
       "id": "car_pfr_c867428cde6a",
@@ -1337,7 +1324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7116
+      "storyRank": 0.6841
     },
     {
       "id": "car_pwire_4685472_64972528",
@@ -1378,7 +1365,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5451
+      "storyRank": 0.6531
     },
     {
       "id": "car_nfilm_matchquarters_727061d9fa61",
@@ -1412,7 +1399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.855
+      "storyRank": 1.0012
     },
     {
       "id": "car_tyt_PSGvYILozR8",
@@ -1445,13 +1432,56 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "31:02",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3815,
-      "duration": "31:02"
+      "storyRank": 0.6141
+    },
+    {
+      "id": "car_rss_f2ef597e1f2a",
+      "type": "article",
+      "title": "Panthers open the practice window for Thomas Incoom",
+      "summary": "The team opened the 21-day window for the veteran outside linebacker and special teamer, who led the team in special teams tackles in 2025.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qnneggmpdp4z8s5qpqob.png",
+      "imageAlt": "Panthers open the practice window for Thomas Incoom",
+      "publishedAt": "2026-11-25T17:32:40.000Z",
+      "url": "https://www.panthers.com/news/panthers-open-the-practice-window-for-thomas-incoom",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4714157",
+          "name": "Thomas Incoom",
+          "shortName": "T. Incoom",
+          "position": "LB",
+          "jersey": 48,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714157.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6091
     },
     {
       "id": "car_rss_9f65c1494980",
@@ -1485,7 +1515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2242
+      "storyRank": 0.5731
     },
     {
       "id": "car_rss_ac3e8562203c",
@@ -1519,7 +1549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1659
+      "storyRank": 0.557
     },
     {
       "id": "car_rss_f36b0dfdc011",
@@ -1553,7 +1583,85 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9378
+      "storyRank": 0.4878
+    },
+    {
+      "id": "car_brss_cat_scratch_reader_3064730d9bc5",
+      "type": "article",
+      "title": "Thanksgiving Day Football Open Thread",
+      "summary": "Thanksgiving is a time to be thankful for many things, including family that you may love more than you like. That’s certainly true of the Carolina Panthers, whose divisional family has afforded them a healthy cushion in the NFC South race.",
+      "imageUrl": "",
+      "imageAlt": "Thanksgiving Day Football Open Thread",
+      "publishedAt": "2026-11-25T11:23:01.000Z",
+      "url": "https://www.catscratchreader.com/carolina-panthers-discussion/62568/thanksgiving-day-football-open-thread",
+      "outletId": "cat_scratch_reader",
+      "outletName": "Cat Scratch Reader",
+      "reporterId": "cat_scratch_reader",
+      "reporterName": "Walker Clement",
+      "author": "Walker Clement",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.catscratchreader.com/carolina-panthers-discussion/62568/thanksgiving-day-football-open-thread",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4476
+    },
+    {
+      "id": "car_tx_3ff5ce0eb77e",
+      "type": "tweet",
+      "title": "Panthers roster move: Designated OLB Thomas Incoom to return from injured reserve. Released DT Cam Horsley from the practice squad.",
+      "fullText": "Panthers roster move: Designated OLB Thomas Incoom to return from injured reserve. Released DT Cam Horsley from the practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.panthers.com/team/transactions/#tx-3ff5ce0eb77e",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers Official",
+      "author": "Carolina Panthers Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4714157",
+          "name": "Thomas Incoom",
+          "shortName": "T. Incoom",
+          "position": "LB",
+          "jersey": 48,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714157.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3967
     },
     {
       "id": "car_espn_5a72f27e24be7",
@@ -1597,7 +1705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6223
+      "storyRank": 0.3721
     },
     {
       "id": "car_pfr_5f70d4494a6a",
@@ -1639,7 +1747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5281
+      "storyRank": 0.3299
     },
     {
       "id": "car_vid_c90dcfb7a59f",
@@ -1685,7 +1793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4949
+      "storyRank": 0.3163
     },
     {
       "id": "car_pfr_7cf8fc189f70",
@@ -1718,7 +1826,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4697
+      "storyRank": 0.3031
     },
     {
       "id": "car_tyt_8Kn2mUL2eDI",
@@ -1761,13 +1869,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:16",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4684,
-      "duration": "10:16"
+      "storyRank": 0.3039
     },
     {
       "id": "car_tyt_j2KYsjVuHfE",
@@ -1801,13 +1909,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:31",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4354,
-      "duration": "0:31"
+      "storyRank": 0.2879
     },
     {
       "id": "car_tyt_qPa0EDdG7sg",
@@ -1855,7 +1963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4274
+      "storyRank": 0.2839
     },
     {
       "id": "car_vid_4369061654b2",
@@ -1901,7 +2009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4262
+      "storyRank": 0.2833
     },
     {
       "id": "x_tl_josephperson_2125340467801821324",
@@ -1973,7 +2081,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1458
+      "storyRank": 0.0401
     },
     {
       "id": "car_rss_63c56a3265f4",
@@ -2007,7 +2115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4177
+      "storyRank": 0.2791
     },
     {
       "id": "car_rss_2e6df660fb7f",
@@ -2041,7 +2149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4124
+      "storyRank": 0.2764
     },
     {
       "id": "car_rss_a3d60e7966c1",
@@ -2075,7 +2183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4069
+      "storyRank": 0.2737
     },
     {
       "id": "car_brss_cat_scratch_reader_0514838bcc2f",
@@ -2109,7 +2217,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3937
+      "storyRank": 0.2658
     },
     {
       "id": "car_brss_cat_scratch_reader_b15d1cc4ea6e",
@@ -2143,7 +2251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3932
+      "storyRank": 0.2656
     },
     {
       "id": "car_espn_c936d6944f9b0",
@@ -2189,39 +2297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3997
-    },
-    {
-      "id": "car_pwire_4241416_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4241416/chuba-hubbard#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4241416/chuba-hubbard#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.3895
+      "storyRank": 0.27
     },
     {
       "id": "car_rss_c486466e425a",
@@ -2255,7 +2331,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3915
+      "storyRank": 0.2658
     },
     {
       "id": "car_brss_cat_scratch_reader_7b8108b9b670",
@@ -2289,7 +2365,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0962
+      "storyRank": 0.0653
+    },
+    {
+      "id": "car_brss_cat_scratch_reader_90469be7a877",
+      "type": "article",
+      "title": "2027 CSR NFL “Thankful” Mock Draft",
+      "summary": "The NFL Draft is still five months away, but we have several things to be thankful for regardless. For example, the Panthers are leading the NFC South by two full games and are getting healthier by the week. In the spirit of Thanksgiving, I",
+      "imageUrl": "",
+      "imageAlt": "2027 CSR NFL “Thankful” Mock Draft",
+      "publishedAt": "2026-11-24T19:37:29.000Z",
+      "url": "https://www.catscratchreader.com/carolina-panthers-draft/62558/2027-csr-nfl-thankful-mock-draft",
+      "outletId": "cat_scratch_reader",
+      "outletName": "Cat Scratch Reader",
+      "reporterId": "cat_scratch_reader",
+      "reporterName": "Daniel Belton",
+      "author": "Daniel Belton",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.catscratchreader.com/carolina-panthers-draft/62558/2027-csr-nfl-thankful-mock-draft",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2584
     },
     {
       "id": "car_rss_d2afb84c4fcd",
@@ -2323,7 +2433,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.363
+      "storyRank": 0.2509
     },
     {
       "id": "car_tyt_7fz6aDB82tc",
@@ -2356,13 +2466,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "20:08",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3384,
-      "duration": "20:08"
+      "storyRank": 0.2376
     },
     {
       "id": "car_rss_3998352805e4",
@@ -2405,7 +2515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3346
+      "storyRank": 0.2355
     },
     {
       "id": "car_tx_7d09650664bc",
@@ -2440,7 +2550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2629
+      "storyRank": 0.1946
     },
     {
       "id": "car_tyt_zJTG47gz0O4",
@@ -2479,7 +2589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.223
+      "storyRank": 0.1701
     },
     {
       "id": "car_vid_ed7cdec09869",
@@ -2516,7 +2626,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2228
+      "storyRank": 0.17
     },
     {
       "id": "car_brss_cat_scratch_reader_75f638a42bae",
@@ -2550,7 +2660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.215
+      "storyRank": 0.1646
     },
     {
       "id": "car_tyt_QYFhVaktNJo",
@@ -2583,13 +2693,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "0:41",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2098,
-      "duration": "0:41"
+      "storyRank": 0.1618
     },
     {
       "id": "car_tyt_KjHRZnIL5q8",
@@ -2622,13 +2732,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "13:08",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2091,
-      "duration": "13:08"
+      "storyRank": 0.1613
     },
     {
       "id": "car_vid_80b873277def",
@@ -2665,7 +2775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2085
+      "storyRank": 0.1609
     },
     {
       "id": "car_tyt_xZebzHZQjJk",
@@ -2707,13 +2817,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "9:07",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2047,
-      "duration": "9:07"
+      "storyRank": 0.1585
     },
     {
       "id": "car_vid_a470444821f1",
@@ -2759,7 +2869,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2047
+      "storyRank": 0.1585
     },
     {
       "id": "car_pwire_4362847_64938828",
@@ -2791,7 +2901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2017
+      "storyRank": 0.1565
     },
     {
       "id": "car_vid_364b9310dda8",
@@ -2837,7 +2947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1998
+      "storyRank": 0.1553
     },
     {
       "id": "car_tyt_UyEo0eB8oUc",
@@ -2888,13 +2998,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:37",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1971,
-      "duration": "10:37"
+      "storyRank": 0.1536
     },
     {
       "id": "car_vid_8f01dc56cc15",
@@ -2948,7 +3058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.196
+      "storyRank": 0.1528
     },
     {
       "id": "car_rss_4050880f3ea1",
@@ -2991,7 +3101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1916
+      "storyRank": 0.1499
     },
     {
       "id": "car_tyt_DDtJrEgfx-Q",
@@ -3033,13 +3143,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "12:35",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1909,
-      "duration": "12:35"
+      "storyRank": 0.1495
     },
     {
       "id": "car_vid_1cb947c88efc",
@@ -3076,7 +3186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1902
+      "storyRank": 0.149
     },
     {
       "id": "car_brss_cat_scratch_reader_ade748f24120",
@@ -3110,7 +3220,241 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.186
+      "storyRank": 0.1459
+    },
+    {
+      "id": "car_yts_N1WPqVQgQcw",
+      "type": "video",
+      "videoId": "N1WPqVQgQcw",
+      "embeddable": true,
+      "title": "Locker Room Speech | Week 11 vs. Ravens",
+      "summary": "",
+      "duration": "1:24",
+      "imageUrl": "https://i.ytimg.com/vi/N1WPqVQgQcw/hqdefault.jpg",
+      "imageAlt": "Locker Room Speech | Week 11 vs. Ravens",
+      "publishedAt": "2026-11-23T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=N1WPqVQgQcw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=N1WPqVQgQcw",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0371
+    },
+    {
+      "id": "car_yts_GfPkM8eUg3Y",
+      "type": "video",
+      "videoId": "GfPkM8eUg3Y",
+      "embeddable": true,
+      "title": "Chuba lays out for the TD vs. Ravens #carolinapanthers #BALvsCAR",
+      "summary": "",
+      "duration": "0:43",
+      "imageUrl": "https://i.ytimg.com/vi/GfPkM8eUg3Y/hqdefault.jpg",
+      "imageAlt": "Chuba lays out for the TD vs. Ravens #carolinapanthers #BALvsCAR",
+      "publishedAt": "2026-11-23T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=GfPkM8eUg3Y",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=GfPkM8eUg3Y",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0371
+    },
+    {
+      "id": "car_yts_xJ_SfH3yZnw",
+      "type": "video",
+      "videoId": "xJ_SfH3yZnw",
+      "embeddable": true,
+      "title": "Top 5️⃣ Plays against the Ravens 🐈‍⬛ #nfl #carolinapanthers",
+      "summary": "",
+      "duration": "1:25",
+      "imageUrl": "https://i.ytimg.com/vi/xJ_SfH3yZnw/hqdefault.jpg",
+      "imageAlt": "Top 5️⃣ Plays against the Ravens 🐈‍⬛ #nfl #carolinapanthers",
+      "publishedAt": "2026-11-23T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=xJ_SfH3yZnw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=xJ_SfH3yZnw",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0371
+    },
+    {
+      "id": "car_yts_IihJO24S9KM",
+      "type": "video",
+      "videoId": "IihJO24S9KM",
+      "embeddable": true,
+      "title": "Postgame Locker Room Sound | Panthers vs. Ravens",
+      "summary": "",
+      "duration": "24:25",
+      "imageUrl": "https://i.ytimg.com/vi/IihJO24S9KM/hqdefault.jpg",
+      "imageAlt": "Postgame Locker Room Sound | Panthers vs. Ravens",
+      "publishedAt": "2026-11-23T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=IihJO24S9KM",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=IihJO24S9KM",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
+    },
+    {
+      "id": "car_yts_FGPVANjnQB4",
+      "type": "video",
+      "videoId": "FGPVANjnQB4",
+      "embeddable": true,
+      "title": "TMac touchdown vs. Baltimore! 🏈 #carolinapanthers #BALvsCAR",
+      "summary": "",
+      "duration": "0:34",
+      "imageUrl": "https://i.ytimg.com/vi/FGPVANjnQB4/hqdefault.jpg",
+      "imageAlt": "TMac touchdown vs. Baltimore! 🏈 #carolinapanthers #BALvsCAR",
+      "publishedAt": "2026-11-23T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=FGPVANjnQB4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=FGPVANjnQB4",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0371
+    },
+    {
+      "id": "car_yts_wdlsXc0by8U",
+      "type": "video",
+      "videoId": "wdlsXc0by8U",
+      "embeddable": false,
+      "title": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "16:17",
+      "imageUrl": "https://i.ytimg.com/vi/wdlsXc0by8U/hqdefault.jpg",
+      "imageAlt": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-23T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=wdlsXc0by8U",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=wdlsXc0by8U",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
     },
     {
       "id": "car_vid_b1e075740362",
@@ -3164,7 +3508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.189
+      "storyRank": 0.1482
     },
     {
       "id": "car_pwire_4695883_64936128",
@@ -3205,7 +3549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1874
+      "storyRank": 0.1472
     },
     {
       "id": "x_tl_nfl_2124919881145426430",
@@ -3257,7 +3601,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1979
+      "storyRank": 0.156
     },
     {
       "id": "car_yt_HRx-EHNPHnU",
@@ -3299,13 +3643,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "8:26",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1774,
-      "duration": "8:26"
+      "storyRank": 0.1401
     },
     {
       "id": "car_rss_5dacd8360a41",
@@ -3339,7 +3683,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1691
+      "storyRank": 0.1349
     },
     {
       "id": "car_brss_cat_scratch_reader_58fb9bb4833d",
@@ -3373,7 +3717,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1635
+      "storyRank": 0.1308
     },
     {
       "id": "car_rss_3f7827909f3a",
@@ -3407,367 +3751,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1599
-    },
-    {
-      "id": "car_yts_N1WPqVQgQcw",
-      "type": "video",
-      "videoId": "N1WPqVQgQcw",
-      "embeddable": true,
-      "title": "Locker Room Speech | Week 11 vs. Ravens",
-      "summary": "",
-      "duration": "1:24",
-      "imageUrl": "https://i.ytimg.com/vi/N1WPqVQgQcw/hqdefault.jpg",
-      "imageAlt": "Locker Room Speech | Week 11 vs. Ravens",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=N1WPqVQgQcw",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=N1WPqVQgQcw",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
-    },
-    {
-      "id": "car_yts_GfPkM8eUg3Y",
-      "type": "video",
-      "videoId": "GfPkM8eUg3Y",
-      "embeddable": true,
-      "title": "Chuba lays out for the TD vs. Ravens #carolinapanthers #BALvsCAR",
-      "summary": "",
-      "duration": "0:43",
-      "imageUrl": "https://i.ytimg.com/vi/GfPkM8eUg3Y/hqdefault.jpg",
-      "imageAlt": "Chuba lays out for the TD vs. Ravens #carolinapanthers #BALvsCAR",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=GfPkM8eUg3Y",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=GfPkM8eUg3Y",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
-    },
-    {
-      "id": "car_yts_xJ_SfH3yZnw",
-      "type": "video",
-      "videoId": "xJ_SfH3yZnw",
-      "embeddable": true,
-      "title": "Top 5️⃣ Plays against the Ravens 🐈‍⬛ #nfl #carolinapanthers",
-      "summary": "",
-      "duration": "1:25",
-      "imageUrl": "https://i.ytimg.com/vi/xJ_SfH3yZnw/hqdefault.jpg",
-      "imageAlt": "Top 5️⃣ Plays against the Ravens 🐈‍⬛ #nfl #carolinapanthers",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=xJ_SfH3yZnw",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=xJ_SfH3yZnw",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
-    },
-    {
-      "id": "car_yts_1IhMhommchI",
-      "type": "video",
-      "videoId": "1IhMhommchI",
-      "embeddable": true,
-      "title": "Trick-play touchdown vs. Ravens! #carolinapanthers #BALvsCAR",
-      "summary": "",
-      "duration": "0:46",
-      "imageUrl": "https://i.ytimg.com/vi/1IhMhommchI/hqdefault.jpg",
-      "imageAlt": "Trick-play touchdown vs. Ravens! #carolinapanthers #BALvsCAR",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=1IhMhommchI",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=1IhMhommchI",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
-    },
-    {
-      "id": "car_yts_IihJO24S9KM",
-      "type": "video",
-      "videoId": "IihJO24S9KM",
-      "embeddable": true,
-      "title": "Postgame Locker Room Sound | Panthers vs. Ravens",
-      "summary": "",
-      "duration": "24:25",
-      "imageUrl": "https://i.ytimg.com/vi/IihJO24S9KM/hqdefault.jpg",
-      "imageAlt": "Postgame Locker Room Sound | Panthers vs. Ravens",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=IihJO24S9KM",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=IihJO24S9KM",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "car_yts_gdYv3u03MFw",
-      "type": "video",
-      "videoId": "gdYv3u03MFw",
-      "embeddable": true,
-      "title": "Chuba Hubbard pregame speech vs. Baltimore #carolinapanthers",
-      "summary": "",
-      "duration": "0:12",
-      "imageUrl": "https://i.ytimg.com/vi/gdYv3u03MFw/hqdefault.jpg",
-      "imageAlt": "Chuba Hubbard pregame speech vs. Baltimore #carolinapanthers",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=gdYv3u03MFw",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=gdYv3u03MFw",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "4241416",
-          "name": "Chuba Hubbard",
-          "shortName": "C. Hubbard",
-          "position": "RB",
-          "jersey": 30,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241416.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "car_yts_FGPVANjnQB4",
-      "type": "video",
-      "videoId": "FGPVANjnQB4",
-      "embeddable": true,
-      "title": "TMac touchdown vs. Baltimore! 🏈 #carolinapanthers #BALvsCAR",
-      "summary": "",
-      "duration": "0:34",
-      "imageUrl": "https://i.ytimg.com/vi/FGPVANjnQB4/hqdefault.jpg",
-      "imageAlt": "TMac touchdown vs. Baltimore! 🏈 #carolinapanthers #BALvsCAR",
-      "publishedAt": "2026-11-23T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=FGPVANjnQB4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=FGPVANjnQB4",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
-    },
-    {
-      "id": "car_yts_wdlsXc0by8U",
-      "type": "video",
-      "videoId": "wdlsXc0by8U",
-      "embeddable": false,
-      "title": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
-      "summary": "",
-      "duration": "16:17",
-      "imageUrl": "https://i.ytimg.com/vi/wdlsXc0by8U/hqdefault.jpg",
-      "imageAlt": "Baltimore Ravens vs. Carolina Panthers Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T07:27:23.770Z",
-      "url": "https://www.youtube.com/watch?v=wdlsXc0by8U",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=wdlsXc0by8U",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
-    },
-    {
-      "id": "car_yts_alskSNZF8W0",
-      "type": "video",
-      "videoId": "alskSNZF8W0",
-      "embeddable": false,
-      "title": "Ravens VS Panthers down to the wire ending",
-      "summary": "",
-      "duration": "8:05",
-      "imageUrl": "https://i.ytimg.com/vi/alskSNZF8W0/hqdefault.jpg",
-      "imageAlt": "Ravens VS Panthers down to the wire ending",
-      "publishedAt": "2026-11-23T07:27:23.770Z",
-      "url": "https://www.youtube.com/watch?v=alskSNZF8W0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=alskSNZF8W0",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0371
+      "storyRank": 0.1287
     },
     {
       "id": "car_vid_03519ac18060",
@@ -3804,41 +3788,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0366
-    },
-    {
-      "id": "car_brss_cat_scratch_reader_7fa9a8c5799e",
-      "type": "article",
-      "title": "NFC South standings 2026: Where Panthers stand after Week 11",
-      "summary": "The Carolina Panthers have put some distance between themselves and the rest of the NFC South with their win today over the Baltimore Ravens. The Atlanta Falcons, the New Orleans Saints, and the Tampa Bay Buccaneers are tied for last place",
-      "imageUrl": "",
-      "imageAlt": "NFC South standings 2026: Where Panthers stand after Week 11",
-      "publishedAt": "2026-11-23T04:48:37.000Z",
-      "url": "https://www.catscratchreader.com/carolina-panthers-nfl-playoffs/62468/nfc-south-standings-nfl-playoff-picture-panthers-falcons-buccaneers-saints",
-      "outletId": "cat_scratch_reader",
-      "outletName": "Cat Scratch Reader",
-      "reporterId": "cat_scratch_reader",
-      "reporterName": "Walker Clement",
-      "author": "Walker Clement",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.catscratchreader.com/carolina-panthers-nfl-playoffs/62468/nfc-south-standings-nfl-playoff-picture-panthers-falcons-buccaneers-saints",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1387
+      "storyRank": 0.0298
     },
     {
       "id": "car_yt_WxvqIKTBjX8",
@@ -3871,13 +3821,13 @@
       "signalScore": 70,
       "fluffScore": 25,
       "isClickbait": false,
+      "duration": "31:09",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1174,
-      "duration": "31:09"
+      "storyRank": 0.0962
     },
     {
       "id": "car_brss_cat_scratch_reader_3260fd284f5e",
@@ -3911,7 +3861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1375
+      "storyRank": 0.1127
     },
     {
       "id": "car_rss_8ac185499b78",
@@ -3945,7 +3895,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1333
+      "storyRank": 0.1099
     },
     {
       "id": "car_espn_43feb3a96b1bc",
@@ -3989,7 +3939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1328
+      "storyRank": 0.1095
     },
     {
       "id": "car_rss_5480d6bc2c0c",
@@ -4048,7 +3998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1327
+      "storyRank": 0.1095
     },
     {
       "id": "car_tyt_CgWjUVA30wI",
@@ -4081,13 +4031,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:58",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1322,
-      "duration": "4:58"
+      "storyRank": 0.1091
     },
     {
       "id": "car_tyt_Ul9oYPdr8Sw",
@@ -4135,7 +4085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1322
+      "storyRank": 0.1091
     },
     {
       "id": "car_rss_a30b944b05d7",
@@ -4178,7 +4128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1309
+      "storyRank": 0.1082
     },
     {
       "id": "car_espn_a0caad20a15b2",
@@ -4230,7 +4180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1307
+      "storyRank": 0.1081
     },
     {
       "id": "car_rss_fd398ed90b3d",
@@ -4273,7 +4223,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1304
+      "storyRank": 0.1078
     },
     {
       "id": "car_espn_a394f7cfaad73",
@@ -4310,41 +4260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1304
-    },
-    {
-      "id": "car_brss_cat_scratch_reader_71d555a37dee",
-      "type": "article",
-      "title": "The Scratching Post",
-      "summary": "Greetings, internet users. Welcome to The Scratching Post, your home for open conversation with your fellow Carolina Panthers fans. Feel free to use this thread to chat about (almost) anything you want: video games, food, movies, non-footba",
-      "imageUrl": "",
-      "imageAlt": "The Scratching Post",
-      "publishedAt": "2026-11-23T00:25:08.000Z",
-      "url": "https://www.catscratchreader.com/the-scratching-post/62500/the-scratching-post",
-      "outletId": "cat_scratch_reader",
-      "outletName": "Cat Scratch Reader",
-      "reporterId": "cat_scratch_reader",
-      "reporterName": "Walker Clement",
-      "author": "Walker Clement",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.catscratchreader.com/the-scratching-post/62500/the-scratching-post",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1282
+      "storyRank": 0.1078
     },
     {
       "id": "car_vid_9b13fd275a56",
@@ -4430,41 +4346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1294
-    },
-    {
-      "id": "car_brss_cat_scratch_reader_dc376aba3571",
-      "type": "article",
-      "title": "Panthers vs. Buccaneers odds: Opening lines for Week 12 matchup",
-      "summary": "The Carolina Panthers have accomplished a first under head coach Dave Canales: they have won two games in a row that they were favored in. Two-game winning streaks are rare in recent Panthers history, but nowhere near as rare as the all-imp",
-      "imageUrl": "",
-      "imageAlt": "Panthers vs. Buccaneers odds: Opening lines for Week 12 matchup",
-      "publishedAt": "2026-11-22T23:58:16.000Z",
-      "url": "https://www.catscratchreader.com/carolina-panthers-odds/62478/panthers-vs-buccaneers-odds-week-12-opening-lines-point-spread-total",
-      "outletId": "cat_scratch_reader",
-      "outletName": "Cat Scratch Reader",
-      "reporterId": "cat_scratch_reader",
-      "reporterName": "Walker Clement",
-      "author": "Walker Clement",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.catscratchreader.com/carolina-panthers-odds/62478/panthers-vs-buccaneers-odds-week-12-opening-lines-point-spread-total",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1272
+      "storyRank": 0.1071
     },
     {
       "id": "car_rss_8fb5f9205d08",
@@ -4507,7 +4389,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1289
+      "storyRank": 0.1067
     },
     {
       "id": "car_vid_4b29b7d81124",
@@ -4544,7 +4426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0318
+      "storyRank": 0.0264
     },
     {
       "id": "car_vid_a017549fca6b",
@@ -4590,7 +4472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1266
+      "storyRank": 0.1051
     },
     {
       "id": "car_nfilm_unexpected_points_e96746b51e37",
@@ -4624,7 +4506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1262
+      "storyRank": 0.1048
     },
     {
       "id": "x_tl_nextgenstats_2124624824228323777",
@@ -4673,7 +4555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1376
+      "storyRank": 0.1144
     },
     {
       "id": "car_vid_c27ff9f4fbf0",
@@ -4710,7 +4592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1256
+      "storyRank": 0.1043
     },
     {
       "id": "car_vid_eb7a0e3e84b6",
@@ -4756,7 +4638,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.125
+      "storyRank": 0.1039
     },
     {
       "id": "car_vid_af33434fbec6",
@@ -4802,7 +4684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1248
+      "storyRank": 0.1038
     },
     {
       "id": "car_vid_a3c9b329be84",
@@ -4839,7 +4721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.0259
     },
     {
       "id": "x_tl_nfl_2124612752597786916",
@@ -4891,7 +4773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1158
+      "storyRank": 0.0964
     },
     {
       "id": "car_vid_59efcb601c84",
@@ -4937,7 +4819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1245
+      "storyRank": 0.1035
     },
     {
       "id": "car_vid_98a78189114f",
@@ -4983,7 +4865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1241
+      "storyRank": 0.1032
     },
     {
       "id": "x_tl_aggiefootball_2124609354993144055",
@@ -5043,7 +4925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1332
+      "storyRank": 0.111
     },
     {
       "id": "car_vid_ef5ef268347c",
@@ -5089,7 +4971,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.124
+      "storyRank": 0.1032
     },
     {
       "id": "car_vid_c427d6592483",
@@ -5135,7 +5017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1238
+      "storyRank": 0.103
     },
     {
       "id": "car_rss_6732d6e86cda",
@@ -5169,7 +5051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1236
+      "storyRank": 0.1029
     },
     {
       "id": "x_tl_nflonfox_2124605938749337947",
@@ -5221,7 +5103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1327
+      "storyRank": 0.1106
     },
     {
       "id": "car_vid_dd8fec097253",
@@ -5267,7 +5149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1226
+      "storyRank": 0.1022
     },
     {
       "id": "car_vid_c72a71a3a624",
@@ -5321,7 +5203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1219
+      "storyRank": 0.1017
     },
     {
       "id": "car_vid_35e54fa4670e",
@@ -5375,7 +5257,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1217
+      "storyRank": 0.1015
     },
     {
       "id": "car_vid_6459bf5de92d",
@@ -5421,7 +5303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1213
+      "storyRank": 0.1012
     },
     {
       "id": "car_vid_d34beade6205",
@@ -5467,7 +5349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1213
+      "storyRank": 0.1012
     },
     {
       "id": "car_vid_c5620c6507e1",
@@ -5513,7 +5395,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.12
+      "storyRank": 0.1002
     },
     {
       "id": "x_tl_nfl_2124577856496029932",
@@ -5556,7 +5438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1287
+      "storyRank": 0.1076
     },
     {
       "id": "x_tl_nfl_2124577086727991377",
@@ -5608,7 +5490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1286
+      "storyRank": 0.1076
     },
     {
       "id": "car_vid_1ac0650c51dc",
@@ -5662,7 +5544,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1196
+      "storyRank": 0.1
     },
     {
       "id": "x_tl_panthers_2124575100242382988",
@@ -5672,7 +5554,7 @@
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124574732053872640/img/FdKjFXq1tIfVBn-6.jpg",
-      "imageAlt": "Dan Morgan post",
+      "imageAlt": "Carolina Panthers post",
       "videoStreamUrl": "https://video.twimg.com/amplify_video/2124574732053872640/vid/avc1/1920x1080/ZShKMDLbExrJJyEk.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:46",
@@ -5684,12 +5566,12 @@
       "externalTitle": null,
       "externalDescription": null,
       "outletId": "panthers_official",
-      "outletName": "Panthers.com / Official Team",
-      "reporterId": "dan_morgan",
-      "reporterName": "Dan Morgan",
-      "author": "Dan Morgan",
+      "outletName": "@Panthers Official",
+      "reporterId": null,
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
       "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://x.com/Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
       "trustTier": 1,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
@@ -5700,12 +5582,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1303
+      "storyRank": 0.109
     },
     {
       "id": "car_vid_fbe90a7561de",
@@ -5751,7 +5633,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1192
+      "storyRank": 0.0997
     },
     {
       "id": "car_vid_cd5c42354e6c",
@@ -5797,7 +5679,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1192
+      "storyRank": 0.0997
+    },
+    {
+      "id": "car_yts_1IhMhommchI",
+      "type": "video",
+      "videoId": "1IhMhommchI",
+      "embeddable": true,
+      "title": "Trick-play touchdown vs. Ravens! #carolinapanthers #BALvsCAR",
+      "summary": "",
+      "duration": "0:46",
+      "imageUrl": "https://i.ytimg.com/vi/1IhMhommchI/hqdefault.jpg",
+      "imageAlt": "Trick-play touchdown vs. Ravens! #carolinapanthers #BALvsCAR",
+      "publishedAt": "2026-11-22T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=1IhMhommchI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=1IhMhommchI",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0249
     },
     {
       "id": "car_vid_099570d74cf7",
@@ -5843,7 +5764,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.119
+      "storyRank": 0.0996
     },
     {
       "id": "car_vid_72cdf8f47c00",
@@ -5897,7 +5818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1188
+      "storyRank": 0.0994
     },
     {
       "id": "car_vid_27d9b5aa5cc5",
@@ -5951,7 +5872,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1187
+      "storyRank": 0.0993
     },
     {
       "id": "car_vid_31e5fd30ff4b",
@@ -5997,7 +5918,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1181
+      "storyRank": 0.0989
     },
     {
       "id": "car_pwire_3917853_64909428",
@@ -6029,7 +5950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0117
     },
     {
       "id": "car_pwire_4372780_64905828",
@@ -6070,7 +5991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0551
+      "storyRank": 0.0463
     },
     {
       "id": "car_pwire_2576925_64905128",
@@ -6119,7 +6040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.055
+      "storyRank": 0.0462
     },
     {
       "id": "car_rss_fbccbf606be5",
@@ -6153,7 +6074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0512
+      "storyRank": 0.0434
     },
     {
       "id": "car_rss_2b883cbe693b",
@@ -6187,7 +6108,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0512
+      "storyRank": 0.0434
     },
     {
       "id": "car_pwire_3917853_64900228",
@@ -6219,7 +6140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.0373
     },
     {
       "id": "car_pfr_d2f9242efa19",
@@ -6261,7 +6182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0408
+      "storyRank": 0.0354
     },
     {
       "id": "car_rss_ea7c31d97ed5",
@@ -6312,7 +6233,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.0359
+    },
+    {
+      "id": "car_yts_5_VNN5hHNTA",
+      "type": "video",
+      "videoId": "5_VNN5hHNTA",
+      "embeddable": true,
+      "title": "Ravens at Panthers: Week 11 | Game Trailer",
+      "summary": "",
+      "duration": "0:26",
+      "imageUrl": "https://i.ytimg.com/vi/5_VNN5hHNTA/hqdefault.jpg",
+      "imageAlt": "Ravens at Panthers: Week 11 | Game Trailer",
+      "publishedAt": "2026-11-21T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=5_VNN5hHNTA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=5_VNN5hHNTA",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0351
     },
     {
       "id": "car_rss_6ec009715afa",
@@ -6346,7 +6306,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0399
+      "storyRank": 0.0347
     },
     {
       "id": "car_rss_b5a4768c1332",
@@ -6380,7 +6340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0375
+      "storyRank": 0.0328
     },
     {
       "id": "car_tx_ca63ef20e1c7",
@@ -6424,46 +6384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
-    },
-    {
-      "id": "car_yts_5_VNN5hHNTA",
-      "type": "video",
-      "videoId": "5_VNN5hHNTA",
-      "embeddable": true,
-      "title": "Ravens at Panthers: Week 11 | Game Trailer",
-      "summary": "",
-      "duration": "0:26",
-      "imageUrl": "https://i.ytimg.com/vi/5_VNN5hHNTA/hqdefault.jpg",
-      "imageAlt": "Ravens at Panthers: Week 11 | Game Trailer",
-      "publishedAt": "2026-11-21T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=5_VNN5hHNTA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=5_VNN5hHNTA",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0351
+      "storyRank": 0.031
     },
     {
       "id": "car_pfr_3b3fb834c85c",
@@ -6496,7 +6417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0283
     },
     {
       "id": "car_vid_a1aeb9ffe8a2",
@@ -6533,7 +6454,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0318
+      "storyRank": 0.0282
     },
     {
       "id": "car_vid_20945585ad9f",
@@ -6570,7 +6491,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.028
     },
     {
       "id": "car_rss_f070453fa303",
@@ -6604,7 +6525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0275
     },
     {
       "id": "car_rss_e9ff18aba127",
@@ -6655,7 +6576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.027
     },
     {
       "id": "car_vid_49d8e704f97e",
@@ -6701,7 +6622,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0269
     },
     {
       "id": "car_rss_73f6ef08a68b",
@@ -6735,7 +6656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0067
     },
     {
       "id": "car_rss_bcca30ef81c6",
@@ -6769,7 +6690,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0259
     },
     {
       "id": "car_rss_1def4fbca0e2",
@@ -6812,7 +6733,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0287
+      "storyRank": 0.0257
     },
     {
       "id": "car_tx_cb7fe53d7c42",
@@ -6847,7 +6768,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0274
+      "storyRank": 0.0246
     },
     {
       "id": "car_pfr_49c36ddfbc1c",
@@ -6880,7 +6801,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0228
     },
     {
       "id": "car_espn_87934e12e2247",
@@ -6924,7 +6845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0256
+      "storyRank": 0.0231
     },
     {
       "id": "car_vid_4419ed9cb671",
@@ -6970,7 +6891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.023
     },
     {
       "id": "car_rss_beb1d7a2f99c",
@@ -7013,43 +6934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
-    },
-    {
-      "id": "car_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
+      "storyRank": 0.0227
     },
     {
       "id": "car_rss_dd07f435b07e",
@@ -7092,7 +6977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
+      "storyRank": 0.0225
     },
     {
       "id": "car_vid_e7a02f9fc49f",
@@ -7146,43 +7031,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0249
-    },
-    {
-      "id": "car_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0225
     },
     {
       "id": "car_rss_aa07e617969a",
@@ -7233,7 +7082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0594
+      "storyRank": 0.0541
     },
     {
       "id": "car_rss_4973f21825c8",
@@ -7292,7 +7141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0241
+      "storyRank": 0.0218
     },
     {
       "id": "car_vid_b044ba01dc5e",
@@ -7329,7 +7178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0054
     },
     {
       "id": "car_tx_430e9a7908b8",
@@ -7364,46 +7213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
-    },
-    {
-      "id": "car_yts_axRtyvgNbkI",
-      "type": "video",
-      "videoId": "axRtyvgNbkI",
-      "embeddable": false,
-      "title": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "8:31",
-      "imageUrl": "https://i.ytimg.com/vi/axRtyvgNbkI/hqdefault.jpg",
-      "imageAlt": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-19T07:27:23.770Z",
-      "url": "https://www.youtube.com/watch?v=axRtyvgNbkI",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=axRtyvgNbkI",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0201
     },
     {
       "id": "car_pfr_70041b3c4411",
@@ -7436,7 +7246,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0188
     },
     {
       "id": "car_vid_d64f96036e30",
@@ -7473,7 +7283,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0047
     },
     {
       "id": "car_rss_9fb281f48c69",
@@ -7516,7 +7326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0187
     },
     {
       "id": "car_rss_493be180f59f",
@@ -7575,7 +7385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0186
     },
     {
       "id": "car_vid_bd21355dbe4d",
@@ -7637,7 +7447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0186
     },
     {
       "id": "car_vid_d9ec1c240871",
@@ -7691,7 +7501,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0186
     },
     {
       "id": "car_vid_33ecf741a614",
@@ -7728,7 +7538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0185
     },
     {
       "id": "car_rss_665779ecc63c",
@@ -7762,7 +7572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0185
     },
     {
       "id": "car_vid_6a5148b0a1e0",
@@ -7799,7 +7609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0046
     },
     {
       "id": "car_rss_8360d252b67b",
@@ -7842,7 +7652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0493
+      "storyRank": 0.0454
     },
     {
       "id": "car_rss_ef2038fd35ed",
@@ -7876,7 +7686,94 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0183
+    },
+    {
+      "id": "car_yts_O_qZTSRSCAY",
+      "type": "video",
+      "videoId": "O_qZTSRSCAY",
+      "embeddable": true,
+      "title": "Is Chuba Hubbard One of the NFL’s Most Underrated Backs? | The Avenue",
+      "summary": "",
+      "duration": "22:18",
+      "imageUrl": "https://i.ytimg.com/vi/O_qZTSRSCAY/hqdefault.jpg",
+      "imageAlt": "Is Chuba Hubbard One of the NFL’s Most Underrated Backs? | The Avenue",
+      "publishedAt": "2026-11-18T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=O_qZTSRSCAY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=O_qZTSRSCAY",
+      "channel": "Carolina Panthers",
+      "outletId": "panthers_official",
+      "outletName": "Carolina Panthers",
+      "reporterId": "panthers_official",
+      "reporterName": "Carolina Panthers",
+      "author": "Carolina Panthers",
+      "authorHandle": "@CarolinaPanthers",
+      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4241416",
+          "name": "Chuba Hubbard",
+          "shortName": "C. Hubbard",
+          "position": "RB",
+          "jersey": 30,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241416.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
+    },
+    {
+      "id": "car_yts_axRtyvgNbkI",
+      "type": "video",
+      "videoId": "axRtyvgNbkI",
+      "embeddable": false,
+      "title": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:31",
+      "imageUrl": "https://i.ytimg.com/vi/axRtyvgNbkI/hqdefault.jpg",
+      "imageAlt": "Baltimore Ravens vs Carolina Panthers | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-18T19:05:55.497Z",
+      "url": "https://www.youtube.com/watch?v=axRtyvgNbkI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=axRtyvgNbkI",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
     },
     {
       "id": "car_rss_3cc88065f8f0",
@@ -7935,7 +7832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.018
     },
     {
       "id": "car_rss_33987dd203b2",
@@ -7969,7 +7866,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.0044
     },
     {
       "id": "car_tx_350f0b2e061f",
@@ -8004,88 +7901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
-    },
-    {
-      "id": "car_yts_O_qZTSRSCAY",
-      "type": "video",
-      "videoId": "O_qZTSRSCAY",
-      "embeddable": true,
-      "title": "Is Chuba Hubbard One of the NFL’s Most Underrated Backs? | The Avenue",
-      "summary": "",
-      "duration": "22:18",
-      "imageUrl": "https://i.ytimg.com/vi/O_qZTSRSCAY/hqdefault.jpg",
-      "imageAlt": "Is Chuba Hubbard One of the NFL’s Most Underrated Backs? | The Avenue",
-      "publishedAt": "2026-11-18T07:27:23.771Z",
-      "url": "https://www.youtube.com/watch?v=O_qZTSRSCAY",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=O_qZTSRSCAY",
-      "channel": "Carolina Panthers",
-      "outletId": "panthers_official",
-      "outletName": "Carolina Panthers",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers",
-      "author": "Carolina Panthers",
-      "authorHandle": "@CarolinaPanthers",
-      "authorProfileUrl": "https://www.youtube.com/@CarolinaPanthers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "4241416",
-          "name": "Chuba Hubbard",
-          "shortName": "C. Hubbard",
-          "position": "RB",
-          "jersey": 30,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241416.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
-    },
-    {
-      "id": "car_pfr_b8ba66f816a2",
-      "type": "article",
-      "title": "NFL Practice Squad Updates: 11/17/26",
-      "summary": "Several NFL teams made changes to their practice squads on Tuesday. Here are the latest updates: Arizona Cardinals Signed: WR Ronnie Bell, S Jerrick Reed Released: WR James Proche Baltimore Ravens Released: K Harrison Mevis Buffalo Bills Si",
-      "imageUrl": "",
-      "publishedAt": "2026-11-18T04:20:49.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-17-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/carolina-panthers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0169
     },
     {
       "id": "car_rss_b5f57ec14c5e",
@@ -8128,7 +7944,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0157
     },
     {
       "id": "car_rss_570cf3fa45e4",
@@ -8162,7 +7978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0157
     },
     {
       "id": "car_vid_35c82a63bfe7",
@@ -8232,7 +8048,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0156
     },
     {
       "id": "car_rss_88b3e3d96e2f",
@@ -8266,7 +8082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0155
     },
     {
       "id": "car_rss_628869fc7cc9",
@@ -8300,7 +8116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0151
     },
     {
       "id": "car_tx_b20a95911bdc",
@@ -8335,7 +8151,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0145
     },
     {
       "id": "car_pfr_e6aa64d4de47",
@@ -8377,7 +8193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0136
     },
     {
       "id": "car_vid_8536f74477bb",
@@ -8414,7 +8230,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0148
+      "storyRank": 0.0138
     },
     {
       "id": "car_vid_4248927144fb",
@@ -8451,7 +8267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0137
     },
     {
       "id": "car_vid_5735fd992714",
@@ -8513,7 +8329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0136
     },
     {
       "id": "car_rss_f6fa875c4a71",
@@ -8547,7 +8363,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0034
     },
     {
       "id": "car_rss_e70e8afe965f",
@@ -8590,7 +8406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0134
     },
     {
       "id": "car_vid_d6ece2c56a5b",
@@ -8636,7 +8452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0134
     },
     {
       "id": "car_vid_7aedb7ddcf52",
@@ -8690,7 +8506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0134
     },
     {
       "id": "car_rss_ad4799ccc4ba",
@@ -8724,7 +8540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0137
+      "storyRank": 0.0128
     },
     {
       "id": "car_tx_52989f9e15d7",
@@ -8768,46 +8584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
-    },
-    {
-      "id": "car_yts_kpYlWvU7zjY",
-      "type": "video",
-      "videoId": "kpYlWvU7zjY",
-      "embeddable": false,
-      "title": "Carolina Panthers vs. New Orleans Saints Game Highlights | NFL 2026 Season Week 10",
-      "summary": "",
-      "duration": "11:12",
-      "imageUrl": "https://i.ytimg.com/vi/kpYlWvU7zjY/hqdefault.jpg",
-      "imageAlt": "Carolina Panthers vs. New Orleans Saints Game Highlights | NFL 2026 Season Week 10",
-      "publishedAt": "2026-11-16T07:27:23.770Z",
-      "url": "https://www.youtube.com/watch?v=kpYlWvU7zjY",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=kpYlWvU7zjY",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0126
     },
     {
       "id": "car_rss_776c9c2d57a2",
@@ -8874,7 +8651,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0122
     },
     {
       "id": "car_vid_97203fd04504",
@@ -8911,7 +8688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "car_rss_03a843d0f523",
@@ -8945,7 +8722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "car_rss_683cab27283d",
@@ -8988,7 +8765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.012
     },
     {
       "id": "car_vid_7d5561fc7486",
@@ -9074,7 +8851,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.012
     },
     {
       "id": "car_rss_6273d3d9867a",
@@ -9117,7 +8894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_dcced0a86257",
@@ -9163,7 +8940,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_fa91153a3386",
@@ -9200,7 +8977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_8cc564c3d9a8",
@@ -9237,7 +9014,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_3e892c89dd0c",
@@ -9283,7 +9060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_ce0a1400fc92",
@@ -9329,7 +9106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_69902921d39b",
@@ -9366,7 +9143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_7a5663a25304",
@@ -9412,7 +9189,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0119
     },
     {
       "id": "car_rss_397b85aa9c66",
@@ -9455,7 +9232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0119
     },
     {
       "id": "car_vid_a92764b56ad0",
@@ -9501,7 +9278,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "car_vid_b4823e29f249",
@@ -9547,7 +9324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "car_vid_68578c77e170",
@@ -9593,7 +9370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0118
     },
     {
       "id": "car_vid_066673177a01",
@@ -9639,7 +9416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "car_vid_42d45d54a680",
@@ -9685,7 +9462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "car_vid_93d4ae0db6cd",
@@ -9731,7 +9508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "car_vid_ed7c82ab4392",
@@ -9777,7 +9554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0117
     },
     {
       "id": "car_vid_9f602e6af9ee",
@@ -9823,7 +9600,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.0117
     },
     {
       "id": "car_rss_55f878e7c7a9",
@@ -9857,7 +9634,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.0113
     },
     {
       "id": "car_rss_48352baea165",
@@ -9891,7 +9668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.0113
     },
     {
       "id": "car_rss_83b0da0c7421",
@@ -9925,7 +9702,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0105
     },
     {
       "id": "car_pfr_0d754fafaca8",
@@ -9967,7 +9744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0102
     },
     {
       "id": "car_rss_d81b0cc7a187",
@@ -10010,7 +9787,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0104
     },
     {
       "id": "car_rss_2f3f8067e075",
@@ -10053,7 +9830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0101
     },
     {
       "id": "car_tx_e1a102cbfd05",
@@ -10105,7 +9882,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0098
     },
     {
       "id": "car_vid_03f4afdcbe8c",
@@ -10151,7 +9928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0094
     },
     {
       "id": "car_vid_6ac648a8b34c",
@@ -10188,7 +9965,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0093
     },
     {
       "id": "car_rss_8045086699db",
@@ -10239,7 +10016,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0093
     },
     {
       "id": "car_vid_a1469cab5035",
@@ -10285,7 +10062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0092
     },
     {
       "id": "car_rss_a48781986465",
@@ -10319,7 +10096,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0092
     },
     {
       "id": "car_rss_bba45035fc82",
@@ -10353,7 +10130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0023
     },
     {
       "id": "car_rss_f8b553511c58",
@@ -10396,7 +10173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0091
     },
     {
       "id": "car_rss_1a730ed0bc1d",
@@ -10439,7 +10216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "car_vid_90a6a750e969",
@@ -10493,7 +10270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "car_vid_d4f2e20a8a85",
@@ -10579,7 +10356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "car_rss_202fd505e75a",
@@ -10622,7 +10399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0085
     },
     {
       "id": "car_rss_4d01894b03b3",
@@ -10665,7 +10442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.022
     },
     {
       "id": "car_vid_609ab0768531",
@@ -10702,58 +10479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
-    },
-    {
-      "id": "car_rss_09bb3e3f7102",
-      "type": "article",
-      "title": "Three takeaways from coordinators on Thursday, including more action for Lee Hunter",
-      "summary": "Interim DC Todd Wash said that the rookie defensive tackle would play more this week. Plus more on getting Xavier Legette involved again, and more from Thursday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/bvjxnr8vgzppdj0nml8x.jpg",
-      "imageAlt": "Three takeaways from coordinators on Thursday, including more action for Lee Hunter",
-      "publishedAt": "2026-11-12T16:18:22.000Z",
-      "url": "https://www.panthers.com/news/three-takeaways-from-coordinators-on-thursday-including-more-action-for-lee-hunter-xavier-legette-tre-tyus",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4430034",
-          "name": "Xavier Legette",
-          "shortName": "X. Legette",
-          "position": "WR",
-          "jersey": 17,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430034.png"
-        },
-        {
-          "id": "4431551",
-          "name": "Lee Hunter",
-          "shortName": "L. Hunter",
-          "position": "DT",
-          "jersey": 92,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431551.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0021
     },
     {
       "id": "car_vid_124fbd6db75a",
@@ -10790,7 +10516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0078
     },
     {
       "id": "car_vid_827154354513",
@@ -10836,7 +10562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0077
     },
     {
       "id": "car_vid_665e7dff3b34",
@@ -10890,7 +10616,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0077
     },
     {
       "id": "car_vid_18ac409b271a",
@@ -10943,7 +10669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0077
     },
     {
       "id": "car_vid_2dae1e00083f",
@@ -10979,7 +10705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "car_vid_3acde5e0dece",
@@ -11016,7 +10742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0076
     },
     {
       "id": "car_tx_76f9b28132c4",
@@ -11068,7 +10794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0073
     },
     {
       "id": "car_vid_07cbee83707d",
@@ -11114,7 +10840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.007
     },
     {
       "id": "car_tx_0f81cd5c118d",
@@ -11149,7 +10875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0067
     },
     {
       "id": "car_vid_2b85081751e2",
@@ -11219,7 +10945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0064
     },
     {
       "id": "car_vid_eb7533635138",
@@ -11256,7 +10982,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0064
     },
     {
       "id": "car_vid_4a6533212da7",
@@ -11342,7 +11068,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "car_vid_bf2e2193ac17",
@@ -11388,7 +11114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.006
     },
     {
       "id": "car_vid_edb3591283b8",
@@ -11434,7 +11160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_82a8420f5c5b",
@@ -11480,7 +11206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_485a8502bee6",
@@ -11517,7 +11243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_43ae5f92e302",
@@ -11563,7 +11289,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_6a3b27dad08a",
@@ -11617,7 +11343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_6b7e509c3966",
@@ -11663,7 +11389,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_91679e61b7e6",
@@ -11717,7 +11443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_aec3feda6973",
@@ -11763,7 +11489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_59cf89065c40",
@@ -11816,7 +11542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_e11c81d53ada",
@@ -11869,7 +11595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0059
     },
     {
       "id": "car_tx_4273a081456b",
@@ -11913,7 +11639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0053
     },
     {
       "id": "car_tx_52463b5ccbda",
@@ -11948,7 +11674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0049
     },
     {
       "id": "car_pwire_4431588_64909128",

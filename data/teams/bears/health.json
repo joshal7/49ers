@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:51.929Z",
+  "updatedAt": "2026-11-26T19:03:20.505Z",
   "week": 12,
   "byeWeek": 10,
   "sourceUrl": "https://www.chicagobears.com/team/injury-report/",
@@ -35,6 +35,56 @@
       "beatComment": "The cornerback didn't practice at all this week and will miss a second straight game after he was injured in Week 9 against the Bucs. Clark Phillips handled third cornerback duties in last Sunday's win over the Saints."
     },
     {
+      "playerId": "4723086",
+      "name": "Colston Loveland",
+      "position": "TE",
+      "jersey": 84,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4723086.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Knee",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 28,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Every-down starter workload (87% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "After Loveland was rolled up on in the middle of the first quarter, he was favoring his left knee as made his way to the sideline, where we visited the sideline tent before being carted to the locker room. Now that he officially won't return to this Week 12 contest, rookie third-round pick Sam Roush and veteran Stephen Carlson are the team's healthy and available tight ends."
+    },
+    {
+      "playerId": "15168",
+      "name": "Case Keenum",
+      "position": "QB",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15168.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Coach's Decision",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "Keenum will fill the Bears' emergency quarterback role for a sixth consecutive week. He'll be able to enter Thursday's contest only if both Caleb Williams and Tyson Bagent have to exit due to injury, illness or ejection."
+    },
+    {
       "playerId": "4242402",
       "name": "Elijah Hicks",
       "position": "S",
@@ -57,7 +107,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Hicks was not listed on Monday's injury report, but he was unable to practice Tuesday due to a concussion. He's mostly played on special teams this season, but his absence thins the Bears' depth at safety behind starters Cam Lewis and rookie first-rounder Dillon Thieneman. Hicks' next opportunity to play is Week 12 against the Jaguars on Sunday, Dec. 6."
+      "beatComment": "Bears estimated injury report… DNP: Kyler Gordon, Roschon Johnson, Elijah Hicks Full: Theo Benedet, D’Marco Jackson"
     },
     {
       "playerId": "4426386",
@@ -85,6 +135,81 @@
       "beatComment": "Johnson injured his ankle in Sunday's win over the Saints, and with the quick turnaround for Week 12, he won't be available against the Lions. The Bears will roll with D'Andre Swift and Kyle Monangai as their only healthy backs for Thursday's game."
     },
     {
+      "playerId": "4360319",
+      "name": "Jordan McFadden",
+      "position": "G",
+      "jersey": 74,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360319.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Coach's Decision",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "inactive"
+    },
+    {
+      "playerId": "4877376",
+      "name": "Jayden Loving",
+      "position": "DT",
+      "jersey": 91,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877376.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Coach's Decision",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "inactive"
+    },
+    {
+      "playerId": "3122797",
+      "name": "Isaac Yiadom",
+      "position": "CB",
+      "jersey": null,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122797.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Coach's Decision",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 78,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "inactive"
+    },
+    {
       "playerId": "4426374",
       "name": "Tyrique Stevenson Sr.",
       "position": "CB",
@@ -108,7 +233,7 @@
         "Late-week injury addition (added Friday Limited after clean Wed–Thu; base prior 82%)",
         "Soft-tissue re-aggravation caution (Groin)"
       ],
-      "beatComment": "It's a new injury for Stevenson, who was added to the injury report Wednesday with a limited practice. If Stevenson is unable to play against Detroit, Clark Phillips and Malik Muhammad would be in line for heavy snaps alongside Jaylon Johnson at cornerback."
+      "beatComment": "Stevenson was a late addition to the injury report Wednesday as a limited practice participant due to a groin issue. However, he'll be able to push through the injury and suit up against Detroit. That's significant for the Bears, as Stevenson is tied for second on the team with five defensed passes this season."
     },
     {
       "playerId": "4241007",
@@ -133,7 +258,7 @@
       "factors": [
         "Logged Full Participation (FP) on Friday"
       ],
-      "beatComment": "Jackson is working through an elbow injury that he may have picked up during the Bears' 21-13 win over the Saints, when he did not log a tackle while playing solely on special teams. He was listed as a full practice participant for all three Week 12 sessions, but if he cannot play Thursday, then Chicago would have one less contributor on special teams and less depth at the linebacker position."
+      "beatComment": "Jackson dealt with an elbow issue through the short week of prep, but he's going to suit up Thursday. After playing a significant role on defense early in the campaign, the veteran linebacker has logged all but one of his snaps on special teams over Chicago's past three games, and that will likely continue to be his role against Detroit."
     },
     {
       "playerId": "5125873",

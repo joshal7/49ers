@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:24:34.887Z",
+  "updatedAt": "2026-11-26T19:00:41.423Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-25_17PT",
     "cycleKey": "2026-11-25@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "6-4",
-    "generatedAt": "2026-11-26T07:24:34.887Z",
+    "generatedAt": "2026-11-26T19:00:41.423Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,44 +15,43 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 187,
+    "wordCount": 188,
     "headline": "Seahawks (6-4) Week 12 Briefing: Wednesday Injury Report Ahead of 49ers",
     "summary": "",
     "bullets": [
-      "Injury & Practice Status: OT Charles Cross (ankle), DT Leonard Williams (stinger), and TE Nick Kallerup (ankle) logged limited practice reps Wednesday [Michael Hapanovich](https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full). OT Abraham Lucas (ankle), G Quenton Nelson (knee), DT Jarran Reed (toe), and LB DeMarcus Lawrence (shoulder) did not practice Wednesday, while QB Sam Darnold (quadricep) and LB Patrick O'Connell (toe) practiced in full [seahawks.com Official](https://www.seahawks.com/news/week-12-injury-report-seahawks-at-49ers).",
-      "Week 12 49ers Outlook: Mike Macdonald and DC Aden Durde open installation for the San Francisco 49ers (9-1, SF -2.5, HC Kyle Shanahan, OC Klay Kubiak & DC Raheem Morris (Road Test))—a unit ranked #1 in Points / Game (31.6) as Seattle prepares for a pivotal NFC matchup [NFL Trade Rumors](https://nfltraderumors.co/nfc-notes-puka-nacua-sam-darnold-49ers-rams-seahawks/) [ESPN](https://www.espn.com/nfl/preview?gameId=401873091).",
-      "NFC Playoff Trajectory: Entering Week 12 at 6-4 (3rd in NFC West • #8 Seed in NFC), Seattle carries a 49.1% postseason projection, 5.4% NFC West division title mark, and 1.2% #1 Seed Bye equity into the conference stretch [Mookie Alexander](https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings).",
-      "Around the Beat: It is unclear where Jones picked up his knee injury, but it still appears to be bothering the linebacker after the Seahawks' Week 11 bye [John Boyle](https://www.espn.com/nfl/player/_/id/4362851/ernest-jones-iv#:~:text=Jones%20%28knee%29%20was%20a%20limited%20participant%20in)."
+      "Injury & Practice Status: OT Charles Cross (ankle), DT Leonard Williams (stinger), and TE Nick Kallerup (ankle) logged limited practice reps Wednesday [Terrance Robinson](https://www.fieldgulls.com/seattle-seahawks-news/180797/seahawks-news-eat-well-be-thankful-beat-the-niners). OT Abraham Lucas (ankle), G Quenton Nelson (knee), DT Jarran Reed (toe), and LB DeMarcus Lawrence (shoulder) did not practice Wednesday, while QB Sam Darnold (quadricep) and LB Patrick O'Connell (toe) practiced in full [seahawks.com Official](https://www.seahawks.com/news/week-12-injury-report-seahawks-at-49ers).",
+      "Week 12 49ers Outlook: Mike Macdonald and DC Aden Durde open installation for the San Francisco 49ers (9-1, SF -3, HC Kyle Shanahan, OC Klay Kubiak & DC Raheem Morris (Road Test))—a unit ranked #1 in Points / Game (31.6) as Seattle prepares for a pivotal NFC matchup [Michael Hapanovich](https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full) [ESPN](https://www.espn.com/nfl/preview?gameId=401873091).",
+      "NFC Playoff Trajectory: Entering Week 12 at 6-4 (3rd in NFC West • #8 Seed in NFC), Seattle carries a 47.1% postseason projection, 5.3% NFC West division title mark, and 1.1% #1 Seed Bye equity into the conference stretch [Pro Football Rumors](https://www.profootballrumors.com/2026/11/seahawks-expecting-sam-darnold-week-12-return).",
+      "Around the Beat: Seahawks coach Mike Macdonald and his father, Hugh, reflect on the journey Hugh went through last year, culminating in him getting a new kidney last fall [seahawks.com Official](https://www.seahawks.com/news/following-last-fall-s-kidney-donation-seahawks-super-bowl-lx-run-was-extra-special-for-hugh-mike-macdonald)."
     ],
     "coveredStoryKeys": [
-      "samdarnold::ir_roster_move",
       "quentonnelson::pre_game_availability"
     ],
     "coveredUrls": [
-      "https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full",
+      "https://www.fieldgulls.com/seattle-seahawks-news/180797/seahawks-news-eat-well-be-thankful-beat-the-niners",
       "https://www.seahawks.com/news/week-12-injury-report-seahawks-at-49ers",
-      "https://nfltraderumors.co/nfc-notes-puka-nacua-sam-darnold-49ers-rams-seahawks/",
+      "https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full",
       "https://www.espn.com/nfl/preview?gameId=401873091",
-      "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
+      "https://www.profootballrumors.com/2026/11/seahawks-expecting-sam-darnold-week-12-return",
       "https://www.fieldgulls.com/seattle-seahawks-news/180746/chargers-claim-former-seahawks-corner-avery-smith-traded-to-seattle-3-months-ago",
+      "https://www.seahawks.com/news/following-last-fall-s-kidney-donation-seahawks-super-bowl-lx-run-was-extra-special-for-hugh-mike-macdonald",
       "https://www.espn.com/nfl/player/_/id/4362851/ernest-jones-iv#:~:text=Jones%20(knee)%20was%20a%20limited%20participant%20in",
       "https://www.seahawks.com/news/zach-charbonnet-jadarian-price-have-been-a-great-one-two-punch",
-      "https://www.profootballrumors.com/2026/11/seahawks-expecting-sam-darnold-week-12-return",
       "https://www.espn.com/nfl/player/_/id/3912547/sam-darnold#:~:text=Darnold%20(quadriceps)%20practiced%20fully%20Wednesday%2C%20John%20Boyle",
-      "https://www.espn.com/nfl/player/_/id/3129308/quenton-nelson#:~:text=Head%20coach%20Mike%20Macdonald%20told%20reporters%20Wednesday",
-      "https://www.seahawks.com/news/seahawks-to-wear-white-and-college-navy-uniform-combination-at-the-49ers-in-week-12",
-      "https://www.fieldgulls.com/seattle-seahawks-news/180737/49ers-brock-purdy-injury-update-ankle-seahawks-game-nfl-news",
       "https://x.com/bcondotta/status/2125686562826662241",
+      "https://www.espn.com/nfl/player/_/id/3129308/quenton-nelson#:~:text=Head%20coach%20Mike%20Macdonald%20told%20reporters%20Wednesday",
+      "https://www.fieldgulls.com/seattle-seahawks-news/180737/49ers-brock-purdy-injury-update-ankle-seahawks-game-nfl-news",
+      "https://www.fieldgulls.com/seattle-seahawks-game-analysis/180732/thanksgiving-games-separation-week-seahawks-rest-of-nfl",
       "https://www.espn.com/nfl/player/_/id/4430878/jaxon-smith-njigba#:~:text=Smith-Njigba%20was%20limited%20at%20Wednesday's%20practice%20due"
     ],
     "sources": [
       {
         "type": "article",
-        "author": "Michael Hapanovich",
+        "author": "Terrance Robinson",
         "outlet": "Field Gulls",
-        "title": "Seahawks-49ers Wednesday injury report: Sam Darnold practices in full",
-        "url": "https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full",
-        "publishedAt": "2026-11-26T04:06:24.000Z"
+        "title": "Seahawks News: Eat well. Be thankful. Beat the Niners.",
+        "url": "https://www.fieldgulls.com/seattle-seahawks-news/180797/seahawks-news-eat-well-be-thankful-beat-the-niners",
+        "publishedAt": "2026-11-26T14:50:56.000Z"
       },
       {
         "type": "article",
@@ -64,11 +63,11 @@
       },
       {
         "type": "article",
-        "author": "NFL Trade Rumors",
-        "outlet": "NFL Trade Rumors",
-        "title": "NFC Notes: Puka Nacua, Sam Darnold, 49ers, Rams, Seahawks",
-        "url": "https://nfltraderumors.co/nfc-notes-puka-nacua-sam-darnold-49ers-rams-seahawks/",
-        "publishedAt": "2026-11-26T01:00:48.000Z"
+        "author": "Michael Hapanovich",
+        "outlet": "Field Gulls",
+        "title": "Seahawks-49ers Wednesday injury report: Sam Darnold practices in full",
+        "url": "https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full",
+        "publishedAt": "2026-11-26T04:06:24.000Z"
       },
       {
         "type": "article",
@@ -80,11 +79,11 @@
       },
       {
         "type": "article",
-        "author": "Mookie Alexander",
-        "outlet": "Field Gulls",
-        "title": "NFC Playoff Picture: Seahawks win on Sunday puts them into a Wild Card spot",
-        "url": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
-        "publishedAt": "2026-11-26T04:30:52.000Z"
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "title": "Seahawks Expecting Sam Darnold Week 12 Return",
+        "url": "https://www.profootballrumors.com/2026/11/seahawks-expecting-sam-darnold-week-12-return",
+        "publishedAt": "2026-11-26T00:27:35.000Z"
       },
       {
         "type": "article",
@@ -93,6 +92,14 @@
         "title": "Chargers claim former Seahawks corner who was traded to Seattle 3 months ago",
         "url": "https://www.fieldgulls.com/seattle-seahawks-news/180746/chargers-claim-former-seahawks-corner-avery-smith-traded-to-seattle-3-months-ago",
         "publishedAt": "2026-11-25T22:30:56.000Z"
+      },
+      {
+        "type": "article",
+        "author": "seahawks.com Official",
+        "outlet": "seahawks.com Official",
+        "title": "Following Last Fall's Kidney Donation, Seahawks' Super Bowl LX Run Was 'Extra Special' For Hugh & Mike Macdonald",
+        "url": "https://www.seahawks.com/news/following-last-fall-s-kidney-donation-seahawks-super-bowl-lx-run-was-extra-special-for-hugh-mike-macdonald",
+        "publishedAt": "2026-11-26T16:30:17.000Z"
       },
       {
         "type": "article",
@@ -112,19 +119,19 @@
       },
       {
         "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "Seahawks Expecting Sam Darnold Week 12 Return",
-        "url": "https://www.profootballrumors.com/2026/11/seahawks-expecting-sam-darnold-week-12-return",
-        "publishedAt": "2026-11-26T00:27:35.000Z"
-      },
-      {
-        "type": "article",
         "author": "John Boyle",
         "outlet": "Seahawks.com / Official Team",
         "title": "Darnold (quadriceps) practiced fully Wednesday.",
         "url": "https://www.espn.com/nfl/player/_/id/3912547/sam-darnold#:~:text=Darnold%20(quadriceps)%20practiced%20fully%20Wednesday%2C%20John%20Boyle",
         "publishedAt": "2026-11-25T23:41:39.000Z"
+      },
+      {
+        "type": "tweet",
+        "author": "Bob Condotta",
+        "outlet": "Seattle Times",
+        "title": "Mike Macdonald reiterates that plan is for Sam Darnold to start Sunday as long as practice today goes well.",
+        "url": "https://x.com/bcondotta/status/2125686562826662241",
+        "publishedAt": "2026-11-25T20:22:24.581Z"
       },
       {
         "type": "article",
@@ -133,14 +140,6 @@
         "title": "Head coach Mike Macdonald told reporters Wednesday that Nelson (knee) will not play against the 49ers on Sunday.",
         "url": "https://www.espn.com/nfl/player/_/id/3129308/quenton-nelson#:~:text=Head%20coach%20Mike%20Macdonald%20told%20reporters%20Wednesday",
         "publishedAt": "2026-11-26T00:47:38.000Z"
-      },
-      {
-        "type": "article",
-        "author": "seahawks.com Official",
-        "outlet": "seahawks.com Official",
-        "title": "Seahawks To Wear White And College Navy Uniform Combination at The 49ers In Week 12",
-        "url": "https://www.seahawks.com/news/seahawks-to-wear-white-and-college-navy-uniform-combination-at-the-49ers-in-week-12",
-        "publishedAt": "2026-11-25T21:00:17.000Z"
       }
     ]
   },
@@ -149,15 +148,21 @@
       "id": "sea_cl_top",
       "category": "beat",
       "headline": "Seattle Seahawks Week 12 Top Headlines (6-4)",
-      "summary": "Seahawks-49ers Wednesday injury report: Sam Darnold practices in full — Chargers claim former Seahawks corner who was traded to Seattle 3 months ago",
-      "updatedAt": "2026-11-26T04:06:24.000Z",
+      "summary": "Following Last Fall's Kidney Donation, Seahawks' Super Bowl LX Run Was 'Extra Special' For Hugh & Mike Macdonald — Seahawks News: Eat well. Be thankful. Beat the Niners.",
+      "updatedAt": "2026-11-26T16:30:17.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Michael Hapanovich",
-          "title": "Seahawks-49ers Wednesday injury report: Sam Darnold practices in full",
-          "url": "https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full",
-          "publishedAt": "2026-11-26T04:06:24.000Z"
+          "label": "seahawks.com Official",
+          "title": "Following Last Fall's Kidney Donation, Seahawks' Super Bowl LX Run Was 'Extra Special' For Hugh & Mike Macdonald",
+          "url": "https://www.seahawks.com/news/following-last-fall-s-kidney-donation-seahawks-super-bowl-lx-run-was-extra-special-for-hugh-mike-macdonald",
+          "publishedAt": "2026-11-26T16:30:17.000Z"
+        },
+        {
+          "label": "Terrance Robinson",
+          "title": "Seahawks News: Eat well. Be thankful. Beat the Niners.",
+          "url": "https://www.fieldgulls.com/seattle-seahawks-news/180797/seahawks-news-eat-well-be-thankful-beat-the-niners",
+          "publishedAt": "2026-11-26T14:50:56.000Z"
         },
         {
           "label": "Mookie Alexander",
@@ -166,10 +171,10 @@
           "publishedAt": "2026-11-25T22:30:56.000Z"
         },
         {
-          "label": "Mookie Alexander",
-          "title": "NFC Playoff Picture: Seahawks win on Sunday puts them into a Wild Card spot",
-          "url": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
-          "publishedAt": "2026-11-26T04:30:52.000Z"
+          "label": "Michael Hapanovich",
+          "title": "Seahawks-49ers Wednesday injury report: Sam Darnold practices in full",
+          "url": "https://www.fieldgulls.com/seattle-seahawks-news/180756/seahawks-49ers-wednesday-injury-report-sam-darnold-practices-in-full",
+          "publishedAt": "2026-11-26T04:06:24.000Z"
         },
         {
           "label": "Michael Thompson",
@@ -182,12 +187,6 @@
           "title": "Week 12 Injury Report: Seahawks at 49ers",
           "url": "https://www.seahawks.com/news/week-12-injury-report-seahawks-at-49ers",
           "publishedAt": "2026-11-26T00:04:23.000Z"
-        },
-        {
-          "label": "John Boyle",
-          "title": "Jones (knee) was a limited participant in Wednesday's practice.",
-          "url": "https://www.espn.com/nfl/player/_/id/4362851/ernest-jones-iv#:~:text=Jones%20(knee)%20was%20a%20limited%20participant%20in",
-          "publishedAt": "2026-11-26T02:38:37.000Z"
         }
       ]
     },
@@ -218,22 +217,22 @@
           "publishedAt": "2026-11-26T02:38:37.000Z"
         },
         {
+          "label": "ESPN NFL Nation",
+          "title": "Purdy and the 49ers prepare for another tough test against Seahawks' stout defense",
+          "url": "https://www.espn.com/nfl/preview?gameId=401873091",
+          "publishedAt": "2026-11-26T00:25:33.000Z"
+        },
+        {
           "label": "John Boyle",
           "title": "Darnold (quadriceps) practiced fully Wednesday.",
           "url": "https://www.espn.com/nfl/player/_/id/3912547/sam-darnold#:~:text=Darnold%20(quadriceps)%20practiced%20fully%20Wednesday%2C%20John%20Boyle",
           "publishedAt": "2026-11-25T23:41:39.000Z"
         },
         {
-          "label": "Mookie Alexander",
-          "title": "Seahawks injury updates: Quenton Nelson, Abe Lucas ruled out of 49ers game",
-          "url": "https://www.fieldgulls.com/seattle-seahawks-injury-report/180742/seahawks-injury-update-quenton-nelson-abe-lucas-ruled-out-49ers",
-          "publishedAt": "2026-11-25T22:30:05.000Z"
-        },
-        {
-          "label": "ESPN NFL Nation",
-          "title": "Purdy and the 49ers prepare for another tough test against Seahawks' stout defense",
-          "url": "https://www.espn.com/nfl/preview?gameId=401873091",
-          "publishedAt": "2026-11-26T00:25:33.000Z"
+          "label": "seahawks.com Official",
+          "title": "Updates On Sam Darnold, O-Line & Other Seahawks Injuries From Mike Macdonald's Wednesday Press Conference",
+          "url": "https://www.seahawks.com/news/updates-on-sam-darnold-the-o-line-other-seahawks-injuries-from-mike-macdonald-s-wednesday-press-conference",
+          "publishedAt": "2026-11-25T22:55:56.000Z"
         }
       ]
     },
@@ -258,12 +257,6 @@
           "publishedAt": "2026-11-25T19:20:30.000Z"
         },
         {
-          "label": "Mookie Alexander",
-          "title": "Where the Seahawks’ still elite defense has fallen off from 2025",
-          "url": "https://www.fieldgulls.com/seattle-seahawks-game-analysis/180723/where-seahawks-still-elite-defense-has-fallen-off-2025-nfl-stats",
-          "publishedAt": "2026-11-25T18:56:36.000Z"
-        },
-        {
           "label": "Lindsey Thiry",
           "title": "From camcorder to Super Bowl mantra, inside Mike Macdonald's love for game film",
           "url": "https://www.espn.com/nfl/story/_/id/50543051/seahawks-mike-macdonald-camcorder-super-bowl-game-film",
@@ -276,10 +269,16 @@
           "publishedAt": "2026-11-20T04:30:10.000Z"
         },
         {
-          "label": "Cody Alexander",
-          "title": "Split-Field Quarters Foundations",
-          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-          "publishedAt": "2026-11-19T22:01:55.000Z"
+          "label": "Ted Nguyen",
+          "title": "Wrote about the Seahawks offensive struggles this season with Andrew Destin.\n\nOne area they’ve fallen off a cliff is their ability to beat man coverage. Everyone outside of JSN needs help from the scheme to do it.",
+          "url": "https://bsky.app/profile/tednguyen.bsky.social/post/3n2oif6qpas2s",
+          "publishedAt": "2026-11-19T16:26:17.713Z"
+        },
+        {
+          "label": "SumerSports",
+          "title": "Seahawks DOMINATE the Chiefs. Here’s how they did it.",
+          "url": "https://www.youtube.com/watch?v=jHbRQmuR274",
+          "publishedAt": "2026-10-26T21:03:22.000Z"
         }
       ]
     },
@@ -332,6 +331,108 @@
   ],
   "rawStream": [
     {
+      "id": "sea_rss_3bc364cb8a3f",
+      "type": "article",
+      "title": "Following Last Fall's Kidney Donation, Seahawks' Super Bowl LX Run Was 'Extra Special' For Hugh & Mike Macdonald",
+      "summary": "Seahawks coach Mike Macdonald and his father, Hugh, reflect on the journey Hugh went through last year, culminating in him getting a new kidney last fall.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/seahawks/rkq3wptuq2shs83kr5hu.jpg",
+      "imageAlt": "Following Last Fall's Kidney Donation, Seahawks' Super Bowl LX Run Was 'Extra Special' For Hugh & Mike Macdonald",
+      "publishedAt": "2026-11-26T16:30:17.000Z",
+      "url": "https://www.seahawks.com/news/following-last-fall-s-kidney-donation-seahawks-super-bowl-lx-run-was-extra-special-for-hugh-mike-macdonald",
+      "outletId": "seahawks_official",
+      "outletName": "seahawks.com Official",
+      "reporterId": "seahawks_official",
+      "reporterName": "seahawks.com Official",
+      "author": "seahawks.com Official",
+      "authorHandle": "@Seahawks",
+      "authorProfileUrl": "https://www.seahawks.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.0792
+    },
+    {
+      "id": "sea_brss_field_gulls_cfcb35beb19d",
+      "type": "article",
+      "title": "Seahawks News: Eat well. Be thankful. Beat the Niners.",
+      "summary": "In Today’s Links: injury updates for both the Seattle Seahawks and the San Francisco 49ers, a look at a resurgent run game, a look at what could be post-bye for the ‘Hawks, and a bit more. The Niners await and Sunday’s game carries implicat",
+      "imageUrl": "",
+      "imageAlt": "Seahawks News: Eat well. Be thankful. Beat the Niners.",
+      "publishedAt": "2026-11-26T14:50:56.000Z",
+      "url": "https://www.fieldgulls.com/seattle-seahawks-news/180797/seahawks-news-eat-well-be-thankful-beat-the-niners",
+      "outletId": "field_gulls",
+      "outletName": "Field Gulls",
+      "reporterId": "field_gulls",
+      "reporterName": "Terrance Robinson",
+      "author": "Terrance Robinson",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-news/180797/seahawks-news-eat-well-be-thankful-beat-the-niners",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.8274
+    },
+    {
+      "id": "sea_brss_field_gulls_ff7a478104e1",
+      "type": "article",
+      "title": "Chargers claim former Seahawks corner who was traded to Seattle 3 months ago",
+      "summary": "The Seattle Seahawks gave up a draft pick to get cornerback Avery Smith from the Los Angeles Chargers, and now the Chargers have both the pick and Smith back. Per the NFL transaction wire, Smith was claimed off waivers by the Chargers, who",
+      "imageUrl": "",
+      "imageAlt": "Chargers claim former Seahawks corner who was traded to Seattle 3 months ago",
+      "publishedAt": "2026-11-25T22:30:56.000Z",
+      "url": "https://www.fieldgulls.com/seattle-seahawks-news/180746/chargers-claim-former-seahawks-corner-avery-smith-traded-to-seattle-3-months-ago",
+      "outletId": "field_gulls",
+      "outletName": "Field Gulls",
+      "reporterId": "field_gulls",
+      "reporterName": "Mookie Alexander",
+      "author": "Mookie Alexander",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-news/180746/chargers-claim-former-seahawks-corner-avery-smith-traded-to-seattle-3-months-ago",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "tier1_major",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.7089
+    },
+    {
       "id": "sea_brss_field_gulls_e66b3fbb6360",
       "type": "article",
       "title": "Seahawks-49ers Wednesday injury report: Sam Darnold practices in full",
@@ -372,75 +473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.7778
-    },
-    {
-      "id": "sea_brss_field_gulls_ff7a478104e1",
-      "type": "article",
-      "title": "Chargers claim former Seahawks corner who was traded to Seattle 3 months ago",
-      "summary": "The Seattle Seahawks gave up a draft pick to get cornerback Avery Smith from the Los Angeles Chargers, and now the Chargers have both the pick and Smith back. Per the NFL transaction wire, Smith was claimed off waivers by the Chargers, who",
-      "imageUrl": "",
-      "imageAlt": "Chargers claim former Seahawks corner who was traded to Seattle 3 months ago",
-      "publishedAt": "2026-11-25T22:30:56.000Z",
-      "url": "https://www.fieldgulls.com/seattle-seahawks-news/180746/chargers-claim-former-seahawks-corner-avery-smith-traded-to-seattle-3-months-ago",
-      "outletId": "field_gulls",
-      "outletName": "Field Gulls",
-      "reporterId": "field_gulls",
-      "reporterName": "Mookie Alexander",
-      "author": "Mookie Alexander",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-news/180746/chargers-claim-former-seahawks-corner-avery-smith-traded-to-seattle-3-months-ago",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.698,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier1_major",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.506
-    },
-    {
-      "id": "sea_brss_field_gulls_67596b7ade9a",
-      "type": "article",
-      "title": "NFC Playoff Picture: Seahawks win on Sunday puts them into a Wild Card spot",
-      "summary": "The Seattle Seahawks have fallen in the NFC West standings as a result of the Los Angeles Rams’ 26-13 Thanksgiving Eve win over the Green Bay Packers, but there is a silver lining here for the reigning Super Bowl champions. Green Bay has dr",
-      "imageUrl": "",
-      "imageAlt": "NFC Playoff Picture: Seahawks win on Sunday puts them into a Wild Card spot",
-      "publishedAt": "2026-11-26T04:30:52.000Z",
-      "url": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
-      "outletId": "field_gulls",
-      "outletName": "Field Gulls",
-      "reporterId": "field_gulls",
-      "reporterName": "Mookie Alexander",
-      "author": "Mookie Alexander",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 8.5831
+      "storyRank": 2.3776
     },
     {
       "id": "sea_brss_field_gulls_42b31b9c39cf",
@@ -463,8 +496,8 @@
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.564,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -474,7 +507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.585
+      "storyRank": 1.7656
     },
     {
       "id": "sea_rss_f97015c7c3f1",
@@ -508,7 +541,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.5354
+      "storyRank": 1.7949
+    },
+    {
+      "id": "sea_brss_field_gulls_67596b7ade9a",
+      "type": "article",
+      "title": "NFC Playoff Picture: Seahawks win on Sunday puts them into a Wild Card spot",
+      "summary": "The Seattle Seahawks have fallen in the NFC West standings as a result of the Los Angeles Rams’ 26-13 Thanksgiving Eve win over the Green Bay Packers, but there is a silver lining here for the reigning Super Bowl champions. Green Bay has dr",
+      "imageUrl": "",
+      "imageAlt": "NFC Playoff Picture: Seahawks win on Sunday puts them into a Wild Card spot",
+      "publishedAt": "2026-11-26T04:30:52.000Z",
+      "url": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
+      "outletId": "field_gulls",
+      "outletName": "Field Gulls",
+      "reporterId": "field_gulls",
+      "reporterName": "Mookie Alexander",
+      "author": "Mookie Alexander",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180680/nfc-playoff-picture-seattle-seahawks-wild-card-standings",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.2691
+    },
+    {
+      "id": "sea_brss_field_gulls_acfbd099041e",
+      "type": "article",
+      "title": "Seahawks fan chat: Thanksgiving Day 2026 tripleheader game thread!",
+      "summary": "Happy Thanksgiving, Field Gulls! It’s a tripleheader of NFL football on Thursday, starting with the Chicago Bears at Detroit Lions in a battle of 8-2 juggernauts (10 am PT, CBS), followed by the Dallas Cowboys hosting the Philadelphia Eagle",
+      "imageUrl": "",
+      "imageAlt": "Seahawks fan chat: Thanksgiving Day 2026 tripleheader game thread!",
+      "publishedAt": "2026-11-26T04:03:59.000Z",
+      "url": "https://www.fieldgulls.com/seattle-seahawks-discussion/180775/seahawks-fan-chat-thanksgiving-day-2026-tripleheader-game-thread",
+      "outletId": "field_gulls",
+      "outletName": "Field Gulls",
+      "reporterId": "field_gulls",
+      "reporterName": "Mookie Alexander",
+      "author": "Mookie Alexander",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-discussion/180775/seahawks-fan-chat-thanksgiving-day-2026-tripleheader-game-thread",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.2197
     },
     {
       "id": "sea_pwire_4362851_64986128",
@@ -540,90 +641,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0875
+      "storyRank": 1.1011
     },
     {
-      "id": "sea_tyt_ZDo7Hy1ucb0",
+      "id": "sea_yt__aYqKwm4RW4",
       "type": "video",
-      "category": "beat",
-      "isFunHighlightClip": true,
-      "videoId": "ZDo7Hy1ucb0",
-      "embeddable": false,
-      "title": "Best of Mic'd Up, part one🎙️📺: Watch Mic'd Up on Seahawks YouTube. Presented by @Microsoft.Copilot",
-      "summary": "",
-      "imageUrl": "https://i.ytimg.com/vi/ZDo7Hy1ucb0/hqdefault.jpg",
-      "imageAlt": "Best of Mic'd Up, part one🎙️📺: Watch Mic'd Up on Seahawks YouTube. Presented by @Microsoft.Copilot",
-      "publishedAt": "2026-11-25T23:59:22.000Z",
-      "url": "https://www.youtube.com/watch?v=ZDo7Hy1ucb0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=ZDo7Hy1ucb0",
-      "channel": "Seattle Seahawks",
-      "outletId": "UCzkFCRiMcOBeef8xcaqipmw",
-      "outletName": "Seattle Seahawks",
-      "reporterId": "UCzkFCRiMcOBeef8xcaqipmw",
-      "reporterName": "Seattle Seahawks",
-      "author": "Seattle Seahawks",
-      "authorHandle": "@seahawks",
-      "authorProfileUrl": "https://www.youtube.com/@seahawks",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
+      "category": "film",
+      "videoId": "_aYqKwm4RW4",
+      "embeddable": true,
+      "title": "Seahawks vs. 49ers Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Seattle Seahawks and the San Francisco 49ers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and T",
+      "imageUrl": "https://i.ytimg.com/vi/_aYqKwm4RW4/hqdefault.jpg",
+      "imageAlt": "Seahawks vs. 49ers Preview + Predictions",
+      "publishedAt": "2026-11-25T19:20:30.000Z",
+      "url": "https://www.youtube.com/watch?v=_aYqKwm4RW4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=_aYqKwm4RW4",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.536,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "salient_feature",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.8207,
-      "duration": "0:44"
-    },
-    {
-      "id": "sea_nfltr_5f3a4ea9a8a7",
-      "type": "article",
-      "title": "NFC Notes: Puka Nacua, Sam Darnold, 49ers, Rams, Seahawks",
-      "summary": "49ers 49ers RT Colton McKivitz was bent backward on a running play and suffered a season-ending ankle injury, prompting emotional reactions from teammates such as LT Trent Williams and RB Christian McCaffrey. “It’s brutal,” McCaffrey said o",
-      "imageUrl": "",
-      "imageAlt": "NFC Notes: Puka Nacua, Sam Darnold, 49ers, Rams, Seahawks",
-      "publishedAt": "2026-11-26T01:00:48.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-puka-nacua-sam-darnold-49ers-rams-seahawks/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "mentionedPlayers": [
-        {
-          "id": "3912547",
-          "name": "Sam Darnold",
-          "shortName": "S. Darnold",
-          "position": "QB",
-          "jersey": 14,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "12:24",
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "film_trench",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5459
+      "storyRank": 1.4086
     },
     {
       "id": "sea_rss_cf7aa8314f6b",
@@ -674,7 +731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.54
+      "storyRank": 0.9646
     },
     {
       "id": "sea_brss_field_gulls_374b554ccaf4",
@@ -708,7 +765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3847
+      "storyRank": 0.9381
     },
     {
       "id": "sea_tyt_Mvnj2QpnNuY",
@@ -741,13 +798,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "27:59",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2633,
-      "duration": "27:59"
+      "storyRank": 0.9336
     },
     {
       "id": "sea_pfr_cece77e1e4e1",
@@ -789,52 +846,116 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2085
+      "storyRank": 0.918
     },
     {
-      "id": "sea_vid_27dd1f6b6425",
-      "type": "video",
-      "title": "Cooper Kupp: \"The Energy In This Building Has Been Fantastic\"",
-      "summary": "Seahawks wide receiver Cooper Kupp reflects on his bye week spent with family. He discusses how the team has evolved since their first meeting with the 49ers, emphasizing that they have addressed mistakes from the earlie",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/seahawks/igcyxf5uridce4tpfmfy.png",
-      "imageAlt": "Cooper Kupp: \"The Energy In This Building Has Been Fantastic\"",
-      "publishedAt": "2026-11-25T21:25:18.000Z",
-      "url": "https://www.seahawks.com/video/cooper-kupp-the-energy-in-this-building-has-been-fantastic-press-conference-november-25-2026",
-      "externalVideoUrl": "https://www.seahawks.com/video/cooper-kupp-the-energy-in-this-building-has-been-fantastic-press-conference-november-25-2026",
-      "outletId": "seahawks_official",
-      "outletName": "seahawks.com Video",
-      "reporterId": "seahawks_official",
-      "reporterName": "seahawks.com Video",
-      "author": "seahawks.com Video",
-      "authorHandle": "@Seahawks",
-      "authorProfileUrl": "https://www.seahawks.com/news/",
+      "id": "sea_espn_9829e130a167f",
+      "type": "article",
+      "title": "Purdy and the 49ers prepare for another tough test against Seahawks' stout defense",
+      "summary": "— The San Francisco 49ers passed the first of back-to-back tests against two of the NFL's top defenses with flying colors as Brock Prudy",
+      "imageUrl": "",
+      "imageCaption": "espn.applewatch.awayhome.1",
+      "imageAlt": "Purdy and the 49ers prepare for another tough test against Seahawks' stout defense",
+      "publishedAt": "2026-11-26T00:25:33.000Z",
+      "url": "https://www.espn.com/nfl/preview?gameId=401873091",
+      "outletId": "espn_sea",
+      "outletName": "ESPN",
+      "reporterId": "espn_sea",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/sea/seattle-seahawks",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "2977187",
-          "name": "Cooper Kupp",
-          "shortName": "C. Kupp",
-          "position": "WR",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2977187.png"
-        }
-      ],
-      "embeddable": false,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.44,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "salient_feature",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4026
+      "storyRank": 0.6705
+    },
+    {
+      "id": "sea_tyt_ZDo7Hy1ucb0",
+      "type": "video",
+      "category": "beat",
+      "isFunHighlightClip": true,
+      "videoId": "ZDo7Hy1ucb0",
+      "embeddable": false,
+      "title": "Best of Mic'd Up, part one🎙️📺: Watch Mic'd Up on Seahawks YouTube. Presented by @Microsoft.Copilot",
+      "summary": "",
+      "imageUrl": "https://i.ytimg.com/vi/ZDo7Hy1ucb0/hqdefault.jpg",
+      "imageAlt": "Best of Mic'd Up, part one🎙️📺: Watch Mic'd Up on Seahawks YouTube. Presented by @Microsoft.Copilot",
+      "publishedAt": "2026-11-25T23:59:22.000Z",
+      "url": "https://www.youtube.com/watch?v=ZDo7Hy1ucb0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ZDo7Hy1ucb0",
+      "channel": "Seattle Seahawks",
+      "outletId": "UCzkFCRiMcOBeef8xcaqipmw",
+      "outletName": "Seattle Seahawks",
+      "reporterId": "UCzkFCRiMcOBeef8xcaqipmw",
+      "reporterName": "Seattle Seahawks",
+      "author": "Seattle Seahawks",
+      "authorHandle": "@seahawks",
+      "authorProfileUrl": "https://www.youtube.com/@seahawks",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "0:44",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9031
+    },
+    {
+      "id": "sea_brss_field_gulls_cdae6f9477c9",
+      "type": "article",
+      "title": "Marshawn Lynch, Richard Sherman, among former Seahawks advanced in Pro Football Hall of Fame voting",
+      "summary": "The Pro Football Hall of Fame has announced the 52 players who’ve advanced in the voting process for the Class of 2027. Of the 52 players, there are multiple with ties to the Seattle Seahawks. Running backs Shaun Alexander, Marshawn Lynch,",
+      "imageUrl": "",
+      "imageAlt": "Marshawn Lynch, Richard Sherman, among former Seahawks advanced in Pro Football Hall of Fame voting",
+      "publishedAt": "2026-11-25T23:54:27.000Z",
+      "url": "https://www.fieldgulls.com/seattle-seahawks-nfl-history/180727/marshawn-lynch-richard-sherman-among-former-seahawks-advanced-pro-football-hall-of-fame-voting",
+      "outletId": "field_gulls",
+      "outletName": "Field Gulls",
+      "reporterId": "field_gulls",
+      "reporterName": "John Tapia",
+      "author": "John Tapia",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-nfl-history/180727/marshawn-lynch-richard-sherman-among-former-seahawks-advanced-pro-football-hall-of-fame-voting",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8831
     },
     {
       "id": "sea_pwire_3912547_64978628",
@@ -875,96 +996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8722
-    },
-    {
-      "id": "sea_brss_field_gulls_2f9f7481a384",
-      "type": "article",
-      "title": "Seahawks injury updates: Quenton Nelson, Abe Lucas ruled out of 49ers game",
-      "summary": "The Seattle Seahawks are set to release their first injury report for Week 12 against the San Francisco 49ers, but we can already rule out a couple of players before Wednesday’s practice is even completed. Mike Macdonald told reporters that",
-      "imageUrl": "",
-      "imageAlt": "Seahawks injury updates: Quenton Nelson, Abe Lucas ruled out of 49ers game",
-      "publishedAt": "2026-11-25T22:30:05.000Z",
-      "url": "https://www.fieldgulls.com/seattle-seahawks-injury-report/180742/seahawks-injury-update-quenton-nelson-abe-lucas-ruled-out-49ers",
-      "outletId": "field_gulls",
-      "outletName": "Field Gulls",
-      "reporterId": "field_gulls",
-      "reporterName": "Mookie Alexander",
-      "author": "Mookie Alexander",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-injury-report/180742/seahawks-injury-update-quenton-nelson-abe-lucas-ruled-out-49ers",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "3129308",
-          "name": "Quenton Nelson",
-          "shortName": "Q. Nelson",
-          "position": "G",
-          "jersey": 53,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129308.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.194,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
-      "storyTier": "in_game_injury",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "injurySeverityScore": 0.82,
-      "injurySeverityTier": "serious",
-      "playerValueScore": 0.7,
-      "playerValueTier": "core_starter",
-      "injuryImpactScore": 0.772,
-      "storyRank": 3.0787
-    },
-    {
-      "id": "sea_yt__aYqKwm4RW4",
-      "type": "video",
-      "category": "film",
-      "videoId": "_aYqKwm4RW4",
-      "embeddable": true,
-      "title": "Seahawks vs. 49ers Preview + Predictions",
-      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Seattle Seahawks and the San Francisco 49ers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and T",
-      "imageUrl": "https://i.ytimg.com/vi/_aYqKwm4RW4/hqdefault.jpg",
-      "imageAlt": "Seahawks vs. 49ers Preview + Predictions",
-      "publishedAt": "2026-11-25T19:20:30.000Z",
-      "url": "https://www.youtube.com/watch?v=_aYqKwm4RW4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=_aYqKwm4RW4",
-      "channel": "Check the Mic",
-      "outletId": "check_the_mic",
-      "outletName": "Check the Mic",
-      "reporterId": "check_the_mic",
-      "reporterName": "Check the Mic",
-      "author": "Check the Mic",
-      "authorHandle": "@CheckTheMic",
-      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
-      "trustTier": 2,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.411,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.2053,
-      "duration": "12:24"
+      "storyRank": 0.8848
     },
     {
       "id": "sea_tyt_6L54NGkVLxs",
@@ -997,82 +1029,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "22:36",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7178,
-      "duration": "22:36"
-    },
-    {
-      "id": "sea_brss_field_gulls_a65c01d3a041",
-      "type": "article",
-      "title": "Where the Seahawks’ still elite defense has fallen off from 2025",
-      "summary": "If you look at some of the major stats for the Seattle Seahawks defense, they’re roughly averaging the same points allowed as last season’s Super Bowl team, they’re once again ranked No. 1 overall by DVOA, No. 1 in EPA/play, No. 1 in fewest",
-      "imageUrl": "",
-      "imageAlt": "Where the Seahawks’ still elite defense has fallen off from 2025",
-      "publishedAt": "2026-11-25T18:56:36.000Z",
-      "url": "https://www.fieldgulls.com/seattle-seahawks-game-analysis/180723/where-seahawks-still-elite-defense-has-fallen-off-2025-nfl-stats",
-      "outletId": "field_gulls",
-      "outletName": "Field Gulls",
-      "reporterId": "field_gulls",
-      "reporterName": "Mookie Alexander",
-      "author": "Mookie Alexander",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-game-analysis/180723/where-seahawks-still-elite-defense-has-fallen-off-2025-nfl-stats",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.401,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.8807
-    },
-    {
-      "id": "sea_espn_9829e130a167f",
-      "type": "article",
-      "title": "Purdy and the 49ers prepare for another tough test against Seahawks' stout defense",
-      "summary": "— The San Francisco 49ers passed the first of back-to-back tests against two of the NFL's top defenses with flying colors as Brock Prudy",
-      "imageUrl": "",
-      "imageCaption": "espn.applewatch.awayhome.1",
-      "imageAlt": "Purdy and the 49ers prepare for another tough test against Seahawks' stout defense",
-      "publishedAt": "2026-11-26T00:25:33.000Z",
-      "url": "https://www.espn.com/nfl/preview?gameId=401873091",
-      "outletId": "espn_sea",
-      "outletName": "ESPN",
-      "reporterId": "espn_sea",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/sea/seattle-seahawks",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3353
+      "storyRank": 0.8638
     },
     {
       "id": "sea_vid_0e3333cc57a2",
@@ -1103,13 +1066,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "27:59",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6594,
-      "duration": "27:59"
+      "storyRank": 0.8555
     },
     {
       "id": "sea_vid_4c9f7d744d9e",
@@ -1145,7 +1108,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6553
+      "storyRank": 0.8549
     },
     {
       "id": "sea_rss_8802004846bc",
@@ -1188,48 +1151,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5569
-    },
-    {
-      "id": "sea_pwire_3129308_64981328",
-      "type": "article",
-      "title": "Head coach Mike Macdonald told reporters Wednesday that Nelson (knee) will not play against the 49ers on Sunday.",
-      "summary": "Nelson underwent a minor procedure on his knee in early November and will be sidelined for a second consecutive game. He's had additional time to rest thanks to the Seahawks' Week 11 bye, and Macdonald relayed Wednesday",
-      "publishedAt": "2026-11-26T00:47:38.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/3129308/quenton-nelson#:~:text=Head%20coach%20Mike%20Macdonald%20told%20reporters%20Wednesday",
-      "outletId": "espn_sea",
-      "outletName": "ESPN",
-      "reporterId": "brady_henderson",
-      "reporterName": "Brady Henderson",
-      "author": "Brady Henderson",
-      "authorHandle": "@BradyHenderson",
-      "authorProfileUrl": "https://x.com/BradyHenderson",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "3129308",
-          "name": "Quenton Nelson",
-          "shortName": "Q. Nelson",
-          "position": "G",
-          "jersey": 53,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129308.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 92,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8021
+      "storyRank": 0.8406
     },
     {
       "id": "sea_vid_354cae8c35bc",
@@ -1282,7 +1204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1203
+      "storyRank": 0.77
     },
     {
       "id": "sea_vid_45ad9c855f3c",
@@ -1328,7 +1250,52 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1139
+      "storyRank": 0.7689
+    },
+    {
+      "id": "sea_vid_27dd1f6b6425",
+      "type": "video",
+      "title": "Cooper Kupp: \"The Energy In This Building Has Been Fantastic\"",
+      "summary": "Seahawks wide receiver Cooper Kupp reflects on his bye week spent with family. He discusses how the team has evolved since their first meeting with the 49ers, emphasizing that they have addressed mistakes from the earlie",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/seahawks/igcyxf5uridce4tpfmfy.png",
+      "imageAlt": "Cooper Kupp: \"The Energy In This Building Has Been Fantastic\"",
+      "publishedAt": "2026-11-25T21:25:18.000Z",
+      "url": "https://www.seahawks.com/video/cooper-kupp-the-energy-in-this-building-has-been-fantastic-press-conference-november-25-2026",
+      "externalVideoUrl": "https://www.seahawks.com/video/cooper-kupp-the-energy-in-this-building-has-been-fantastic-press-conference-november-25-2026",
+      "outletId": "seahawks_official",
+      "outletName": "seahawks.com Video",
+      "reporterId": "seahawks_official",
+      "reporterName": "seahawks.com Video",
+      "author": "seahawks.com Video",
+      "authorHandle": "@Seahawks",
+      "authorProfileUrl": "https://www.seahawks.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "2977187",
+          "name": "Cooper Kupp",
+          "shortName": "C. Kupp",
+          "position": "WR",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2977187.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7632
     },
     {
       "id": "sea_rss_3d69dfd25f68",
@@ -1362,7 +1329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9771
+      "storyRank": 0.744
     },
     {
       "id": "x_tl_bcondotta_2125686562826662241",
@@ -1414,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.017
+      "storyRank": 0.7877
     },
     {
       "id": "sea_pwire_3912547_64974828",
@@ -1455,7 +1422,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8986
+      "storyRank": 0.729
+    },
+    {
+      "id": "sea_pwire_3129308_64981328",
+      "type": "article",
+      "title": "Head coach Mike Macdonald told reporters Wednesday that Nelson (knee) will not play against the 49ers on Sunday.",
+      "summary": "Nelson underwent a minor procedure on his knee in early November and will be sidelined for a second consecutive game. He's had additional time to rest thanks to the Seahawks' Week 11 bye, and Macdonald relayed Wednesday",
+      "publishedAt": "2026-11-26T00:47:38.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/3129308/quenton-nelson#:~:text=Head%20coach%20Mike%20Macdonald%20told%20reporters%20Wednesday",
+      "outletId": "espn_sea",
+      "outletName": "ESPN",
+      "reporterId": "brady_henderson",
+      "reporterName": "Brady Henderson",
+      "author": "Brady Henderson",
+      "authorHandle": "@BradyHenderson",
+      "authorProfileUrl": "https://x.com/BradyHenderson",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "3129308",
+          "name": "Quenton Nelson",
+          "shortName": "Q. Nelson",
+          "position": "G",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129308.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3708
     },
     {
       "id": "sea_brss_field_gulls_2cb65ea76b53",
@@ -1498,7 +1506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7792
+      "storyRank": 0.6996
     },
     {
       "id": "sea_pwire_4430878_64978528",
@@ -1539,7 +1547,50 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4091
+      "storyRank": 0.3348
+    },
+    {
+      "id": "sea_brss_field_gulls_2f9f7481a384",
+      "type": "article",
+      "title": "Seahawks injury updates: Quenton Nelson, Abe Lucas ruled out of 49ers game",
+      "summary": "The Seattle Seahawks are set to release their first injury report for Week 12 against the San Francisco 49ers, but we can already rule out a couple of players before Wednesday’s practice is even completed. Mike Macdonald told reporters that",
+      "imageUrl": "",
+      "imageAlt": "Seahawks injury updates: Quenton Nelson, Abe Lucas ruled out of 49ers game",
+      "publishedAt": "2026-11-25T22:30:05.000Z",
+      "url": "https://www.fieldgulls.com/seattle-seahawks-injury-report/180742/seahawks-injury-update-quenton-nelson-abe-lucas-ruled-out-49ers",
+      "outletId": "field_gulls",
+      "outletName": "Field Gulls",
+      "reporterId": "field_gulls",
+      "reporterName": "Mookie Alexander",
+      "author": "Mookie Alexander",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-injury-report/180742/seahawks-injury-update-quenton-nelson-abe-lucas-ruled-out-49ers",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3129308",
+          "name": "Quenton Nelson",
+          "shortName": "Q. Nelson",
+          "position": "G",
+          "jersey": 53,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129308.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3007
     },
     {
       "id": "x_tl_victafur_2125671473213997469",
@@ -1578,75 +1629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6846
-    },
-    {
-      "id": "sea_brss_field_gulls_8e4b3b38d749",
-      "type": "article",
-      "title": "Why Packers vs. Rams could have major Seahawks playoff ramifications",
-      "summary": "The NFL is getting Thanksgiving week started earlier than ever before, with the Los Angeles Rams hosting the Green Bay Packers on Wednesday night on Netflix. Both teams are 6-4, just like the Seattle Seahawks, who will have their own huge c",
-      "imageUrl": "",
-      "imageAlt": "Why Packers vs. Rams could have major Seahawks playoff ramifications",
-      "publishedAt": "2026-11-25T06:41:16.000Z",
-      "url": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180706/nfc-playoff-picture-packers-vs-rams-major-seahawks-playoff-ramifications",
-      "outletId": "field_gulls",
-      "outletName": "Field Gulls",
-      "reporterId": "field_gulls",
-      "reporterName": "Mookie Alexander",
-      "author": "Mookie Alexander",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-nfl-playoffs/180706/nfc-playoff-picture-packers-vs-rams-major-seahawks-playoff-ramifications",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6262
-    },
-    {
-      "id": "sea_brss_field_gulls_0232d558f6ab",
-      "type": "article",
-      "title": "Seahawks Week 12 national power rankings: Seattle barely hanging onto top 10 status",
-      "summary": "Entering Week 11, the Seattle Seahawks slightly moved up power rankings, although the national media still shows skepticism over the team’s offense. Will that skeptic tune change after the bye week? Let’s take a look at five national media",
-      "imageUrl": "",
-      "imageAlt": "Seahawks Week 12 national power rankings: Seattle barely hanging onto top 10 status",
-      "publishedAt": "2026-11-25T04:04:05.000Z",
-      "url": "https://www.fieldgulls.com/seattle-seahawks-power-rankings/180694/seahawks-week-12-national-power-rankings-seattle-barely-hanging-onto-top-10-status",
-      "outletId": "field_gulls",
-      "outletName": "Field Gulls",
-      "reporterId": "field_gulls",
-      "reporterName": "John Tapia",
-      "author": "John Tapia",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.fieldgulls.com/seattle-seahawks-power-rankings/180694/seahawks-week-12-national-power-rankings-seattle-barely-hanging-onto-top-10-status",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5469
+      "storyRank": 0.2302
     },
     {
       "id": "sea_tyt_2PUjuobI3vw",
@@ -1680,13 +1663,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:18",
       "credibilityScore": 86,
       "storyTier": "side_note",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.159,
-      "duration": "1:18"
+      "storyRank": 0.0954
     },
     {
       "id": "sea_rss_287e810a755e",
@@ -1720,7 +1703,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.412
+      "storyRank": 0.2766
     },
     {
       "id": "sea_rss_086cedd1e60d",
@@ -1763,7 +1746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4024
+      "storyRank": 0.2716
     },
     {
       "id": "sea_rss_63ade4588999",
@@ -1797,7 +1780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3915
+      "storyRank": 0.2661
     },
     {
       "id": "sea_pwire_3912547_64958428",
@@ -1838,7 +1821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3334
+      "storyRank": 0.2352
     },
     {
       "id": "sea_espn_ba099af842987",
@@ -1875,7 +1858,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3027
+      "storyRank": 0.218
     },
     {
       "id": "sea_espn_28e3bd3fe62a8",
@@ -1910,7 +1893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2879
+      "storyRank": 0.2095
     },
     {
       "id": "sea_tx_c9011d5b85c7",
@@ -1978,7 +1961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2633
+      "storyRank": 0.195
     },
     {
       "id": "sea_espn_c967c6cbdb0ac",
@@ -2015,7 +1998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2527
+      "storyRank": 0.1886
     },
     {
       "id": "sea_espn_2e03802a310dc",
@@ -2059,7 +2042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2257
+      "storyRank": 0.172
     },
     {
       "id": "sea_rss_f853a795d0c2",
@@ -2102,7 +2085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2254
+      "storyRank": 0.1718
     },
     {
       "id": "sea_rss_5af3baa71897",
@@ -2145,7 +2128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2176
+      "storyRank": 0.1668
     },
     {
       "id": "sea_pfr_2fe42aa5dcec",
@@ -2178,7 +2161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2131
+      "storyRank": 0.1635
     },
     {
       "id": "sea_pwire_5155179_64944628",
@@ -2210,7 +2193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2167
+      "storyRank": 0.1663
     },
     {
       "id": "sea_pwire_4361182_64944228",
@@ -2242,7 +2225,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2164
+      "storyRank": 0.1661
     },
     {
       "id": "sea_pfr_3f25ec249d90",
@@ -2292,7 +2275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.211
+      "storyRank": 0.1622
     },
     {
       "id": "sea_vid_caad4e43846d",
@@ -2329,7 +2312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2135
+      "storyRank": 0.1643
     },
     {
       "id": "sea_pwire_4429835_64940328",
@@ -2370,7 +2353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2084
+      "storyRank": 0.161
     },
     {
       "id": "sea_rss_d15354498fcf",
@@ -2421,7 +2404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2068
+      "storyRank": 0.16
     },
     {
       "id": "sea_bsky_f17abfa6e744",
@@ -2459,7 +2442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1358
+      "storyRank": 0.1113
     },
     {
       "id": "sea_bsky_b47f617d4861",
@@ -2497,7 +2480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1356
+      "storyRank": 0.1112
     },
     {
       "id": "sea_tyt_dVj33chfSPg",
@@ -2536,7 +2519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0689
+      "storyRank": 0.0609
     },
     {
       "id": "sea_vid_b507af533ca6",
@@ -2573,7 +2556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0688
+      "storyRank": 0.0609
     },
     {
       "id": "sea_tyt_tZzO4IFf5Xk",
@@ -2622,7 +2605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0557
+      "storyRank": 0.0501
     },
     {
       "id": "sea_yt_uDnN8NbJdfg",
@@ -2664,85 +2647,13 @@
       "signalScore": 70,
       "fluffScore": 25,
       "isClickbait": false,
+      "duration": "24:54",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463,
-      "duration": "24:54"
-    },
-    {
-      "id": "sea_nfilm_matchquarters_d432699c0cba",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "Split-Field Quarters Foundations",
-      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
-      "imageAlt": "Split-Field Quarters Foundations",
-      "publishedAt": "2026-11-19T22:01:55.000Z",
-      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.052
-    },
-    {
-      "id": "sea_nfilm_matchquarters_a64862556914",
-      "type": "article",
-      "category": "film",
-      "filmOnlyScope": true,
-      "isLeagueWideFilmChart": true,
-      "title": "The Aranda-Roberts Creeper System",
-      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
-      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
-      "imageAlt": "The Aranda-Roberts Creeper System",
-      "publishedAt": "2026-11-19T21:33:52.000Z",
-      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
-      "outletId": "matchquarters",
-      "outletName": "MatchQuarters",
-      "reporterId": "matchquarters",
-      "reporterName": "Cody Alexander",
-      "author": "Cody Alexander",
-      "authorHandle": "@The_Coach_A",
-      "authorProfileUrl": "https://www.matchquarters.com",
-      "trustTier": 1,
-      "wireSource": "national_film_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0518
+      "storyRank": 0.0416
     },
     {
       "id": "sea_vid_630eaeb39727",
@@ -2788,7 +2699,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0513
+      "storyRank": 0.0464
     },
     {
       "id": "sea_bsky_2bdf9b29bb8c",
@@ -2827,46 +2738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0478
-    },
-    {
-      "id": "sea_yts_rvJdpesrW5k",
-      "type": "video",
-      "videoId": "rvJdpesrW5k",
-      "embeddable": false,
-      "title": "1️⃣ of 1️⃣. 📺: Re-watch the game on NFL+.",
-      "summary": "",
-      "duration": "0:22",
-      "imageUrl": "https://i.ytimg.com/vi/rvJdpesrW5k/hqdefault.jpg",
-      "imageAlt": "1️⃣ of 1️⃣. 📺: Re-watch the game on NFL+.",
-      "publishedAt": "2026-11-19T07:24:37.886Z",
-      "url": "https://www.youtube.com/watch?v=rvJdpesrW5k",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=rvJdpesrW5k",
-      "channel": "Seattle Seahawks",
-      "outletId": "seahawks_official",
-      "outletName": "Seattle Seahawks",
-      "reporterId": "seahawks_official",
-      "reporterName": "Seattle Seahawks",
-      "author": "Seattle Seahawks",
-      "authorHandle": "@seahawks",
-      "authorProfileUrl": "https://www.youtube.com/@seahawks",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0458
+      "storyRank": 0.0434
     },
     {
       "id": "sea_pfr_94b8cdd6045f",
@@ -2908,7 +2780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.044
+      "storyRank": 0.0402
     },
     {
       "id": "sea_bsky_7b1c80e01214",
@@ -2959,7 +2831,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0385
     },
     {
       "id": "sea_tyt_xV-kY6bgugA",
@@ -2999,7 +2871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0431
+      "storyRank": 0.0395
     },
     {
       "id": "sea_vid_2e95b7d5e42d",
@@ -3036,7 +2908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0391
     },
     {
       "id": "sea_rss_8948e143236b",
@@ -3087,7 +2959,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0385
+    },
+    {
+      "id": "sea_yts_rvJdpesrW5k",
+      "type": "video",
+      "videoId": "rvJdpesrW5k",
+      "embeddable": false,
+      "title": "1️⃣ of 1️⃣. 📺: Re-watch the game on NFL+.",
+      "summary": "",
+      "duration": "0:22",
+      "imageUrl": "https://i.ytimg.com/vi/rvJdpesrW5k/hqdefault.jpg",
+      "imageAlt": "1️⃣ of 1️⃣. 📺: Re-watch the game on NFL+.",
+      "publishedAt": "2026-11-18T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=rvJdpesrW5k",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=rvJdpesrW5k",
+      "channel": "Seattle Seahawks",
+      "outletId": "seahawks_official",
+      "outletName": "Seattle Seahawks",
+      "reporterId": "seahawks_official",
+      "reporterName": "Seattle Seahawks",
+      "author": "Seattle Seahawks",
+      "authorHandle": "@seahawks",
+      "authorProfileUrl": "https://www.youtube.com/@seahawks",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.038
     },
     {
       "id": "sea_rss_c04913f5f110",
@@ -3130,7 +3041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0409
+      "storyRank": 0.0375
     },
     {
       "id": "sea_vid_3519d4a81f05",
@@ -3167,7 +3078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0405
+      "storyRank": 0.0372
     },
     {
       "id": "sea_vid_83059d5bb53d",
@@ -3204,7 +3115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0405
+      "storyRank": 0.0372
     },
     {
       "id": "sea_vid_3271a8b52346",
@@ -3241,7 +3152,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0403
+      "storyRank": 0.037
     },
     {
       "id": "sea_vid_82582e61166f",
@@ -3278,7 +3189,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.037
     },
     {
       "id": "sea_tx_144ba4ca181d",
@@ -3313,7 +3224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0382
+      "storyRank": 0.0352
     },
     {
       "id": "sea_rss_1345a7deb008",
@@ -3347,7 +3258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.036
+      "storyRank": 0.0332
     },
     {
       "id": "sea_yts_T246CInoOpc",
@@ -3359,7 +3270,7 @@
       "duration": "0:39",
       "imageUrl": "https://i.ytimg.com/vi/T246CInoOpc/hqdefault.jpg",
       "imageAlt": "“I have never seen this before in my life!” 🤯 📺: Re-watch the game on NFL+.",
-      "publishedAt": "2026-11-17T07:24:37.886Z",
+      "publishedAt": "2026-11-17T19:00:44.559Z",
       "url": "https://www.youtube.com/watch?v=T246CInoOpc",
       "externalVideoUrl": "https://www.youtube.com/watch?v=T246CInoOpc",
       "channel": "Seattle Seahawks",
@@ -3398,7 +3309,7 @@
       "duration": "0:12",
       "imageUrl": "https://i.ytimg.com/vi/NeD57ICcifE/hqdefault.jpg",
       "imageAlt": "Care to dance?",
-      "publishedAt": "2026-11-17T07:24:37.886Z",
+      "publishedAt": "2026-11-17T19:00:44.559Z",
       "url": "https://www.youtube.com/watch?v=NeD57ICcifE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=NeD57ICcifE",
       "channel": "Seattle Seahawks",
@@ -3476,7 +3387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0287
     },
     {
       "id": "sea_tyt_QuVsZ8YSy_c",
@@ -3509,13 +3420,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "26:06",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311,
-      "duration": "26:06"
+      "storyRank": 0.0289
     },
     {
       "id": "sea_vid_207289aed9c0",
@@ -3552,7 +3463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.031
+      "storyRank": 0.0289
     },
     {
       "id": "sea_rss_441ffb54757d",
@@ -3586,7 +3497,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0286
     },
     {
       "id": "sea_rss_effcc3c6f89f",
@@ -3620,7 +3531,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0305
+      "storyRank": 0.0285
     },
     {
       "id": "sea_rss_f445bc0ab222",
@@ -3654,7 +3565,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0284
     },
     {
       "id": "sea_rss_026b3ce05774",
@@ -3688,7 +3599,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0283
     },
     {
       "id": "sea_espn_b49c32c48998d",
@@ -3732,7 +3643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0303
+      "storyRank": 0.0283
     },
     {
       "id": "sea_rss_cd5f2deb9fdd",
@@ -3775,7 +3686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.028
     },
     {
       "id": "sea_rss_6883477d5b71",
@@ -3809,7 +3720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.028
     },
     {
       "id": "sea_rss_758ab1ff1209",
@@ -3843,7 +3754,202 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0299
+      "storyRank": 0.0279
+    },
+    {
+      "id": "sea_yts_mP_JqLGWQmw",
+      "type": "video",
+      "videoId": "mP_JqLGWQmw",
+      "embeddable": false,
+      "title": "Nothing but respect.",
+      "summary": "",
+      "duration": "0:06",
+      "imageUrl": "https://i.ytimg.com/vi/mP_JqLGWQmw/hqdefault.jpg",
+      "imageAlt": "Nothing but respect.",
+      "publishedAt": "2026-11-16T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=mP_JqLGWQmw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=mP_JqLGWQmw",
+      "channel": "Seattle Seahawks",
+      "outletId": "seahawks_official",
+      "outletName": "Seattle Seahawks",
+      "reporterId": "seahawks_official",
+      "reporterName": "Seattle Seahawks",
+      "author": "Seattle Seahawks",
+      "authorHandle": "@seahawks",
+      "authorProfileUrl": "https://www.youtube.com/@seahawks",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
+    },
+    {
+      "id": "sea_yts_iek9h7EACaQ",
+      "type": "video",
+      "videoId": "iek9h7EACaQ",
+      "embeddable": false,
+      "title": "JUST LIKE HE DREW IT UP 🎯 📺: @NFLonCBS",
+      "summary": "",
+      "duration": "0:44",
+      "imageUrl": "https://i.ytimg.com/vi/iek9h7EACaQ/hqdefault.jpg",
+      "imageAlt": "JUST LIKE HE DREW IT UP 🎯 📺: @NFLonCBS",
+      "publishedAt": "2026-11-16T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=iek9h7EACaQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=iek9h7EACaQ",
+      "channel": "Seattle Seahawks",
+      "outletId": "seahawks_official",
+      "outletName": "Seattle Seahawks",
+      "reporterId": "seahawks_official",
+      "reporterName": "Seattle Seahawks",
+      "author": "Seattle Seahawks",
+      "authorHandle": "@seahawks",
+      "authorProfileUrl": "https://www.youtube.com/@seahawks",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
+    },
+    {
+      "id": "sea_yts_IPX2q_kBS6c",
+      "type": "video",
+      "videoId": "IPX2q_kBS6c",
+      "embeddable": false,
+      "title": "BIG PLAY JSN 📺: @NFLonCBS",
+      "summary": "",
+      "duration": "0:49",
+      "imageUrl": "https://i.ytimg.com/vi/IPX2q_kBS6c/hqdefault.jpg",
+      "imageAlt": "BIG PLAY JSN 📺: @NFLonCBS",
+      "publishedAt": "2026-11-16T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=IPX2q_kBS6c",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=IPX2q_kBS6c",
+      "channel": "Seattle Seahawks",
+      "outletId": "seahawks_official",
+      "outletName": "Seattle Seahawks",
+      "reporterId": "seahawks_official",
+      "reporterName": "Seattle Seahawks",
+      "author": "Seattle Seahawks",
+      "authorHandle": "@seahawks",
+      "authorProfileUrl": "https://www.youtube.com/@seahawks",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
+    },
+    {
+      "id": "sea_yts_2vwjrJF6RxQ",
+      "type": "video",
+      "videoId": "2vwjrJF6RxQ",
+      "embeddable": false,
+      "title": "Seattle Seahawks vs Las Vegas Raiders Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "14:24",
+      "imageUrl": "https://i.ytimg.com/vi/2vwjrJF6RxQ/hqdefault.jpg",
+      "imageAlt": "Seattle Seahawks vs Las Vegas Raiders Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=2vwjrJF6RxQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=2vwjrJF6RxQ",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
+    },
+    {
+      "id": "sea_yts_orxSw5S7Omo",
+      "type": "video",
+      "videoId": "orxSw5S7Omo",
+      "embeddable": false,
+      "title": "Every Pass and Rush Attempt from Fernando Mendoza first NFL start vs. Seahawks | Week 10",
+      "summary": "",
+      "duration": "7:50",
+      "imageUrl": "https://i.ytimg.com/vi/orxSw5S7Omo/hqdefault.jpg",
+      "imageAlt": "Every Pass and Rush Attempt from Fernando Mendoza first NFL start vs. Seahawks | Week 10",
+      "publishedAt": "2026-11-16T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=orxSw5S7Omo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=orxSw5S7Omo",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
     },
     {
       "id": "sea_vid_538f43aeb6b5",
@@ -3889,7 +3995,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0299
+      "storyRank": 0.0279
     },
     {
       "id": "sea_tx_7d300e976684",
@@ -3924,202 +4030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.028
-    },
-    {
-      "id": "sea_yts_mP_JqLGWQmw",
-      "type": "video",
-      "videoId": "mP_JqLGWQmw",
-      "embeddable": false,
-      "title": "Nothing but respect.",
-      "summary": "",
-      "duration": "0:06",
-      "imageUrl": "https://i.ytimg.com/vi/mP_JqLGWQmw/hqdefault.jpg",
-      "imageAlt": "Nothing but respect.",
-      "publishedAt": "2026-11-16T07:24:37.886Z",
-      "url": "https://www.youtube.com/watch?v=mP_JqLGWQmw",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=mP_JqLGWQmw",
-      "channel": "Seattle Seahawks",
-      "outletId": "seahawks_official",
-      "outletName": "Seattle Seahawks",
-      "reporterId": "seahawks_official",
-      "reporterName": "Seattle Seahawks",
-      "author": "Seattle Seahawks",
-      "authorHandle": "@seahawks",
-      "authorProfileUrl": "https://www.youtube.com/@seahawks",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "sea_yts_iek9h7EACaQ",
-      "type": "video",
-      "videoId": "iek9h7EACaQ",
-      "embeddable": false,
-      "title": "JUST LIKE HE DREW IT UP 🎯 📺: @NFLonCBS",
-      "summary": "",
-      "duration": "0:44",
-      "imageUrl": "https://i.ytimg.com/vi/iek9h7EACaQ/hqdefault.jpg",
-      "imageAlt": "JUST LIKE HE DREW IT UP 🎯 📺: @NFLonCBS",
-      "publishedAt": "2026-11-16T07:24:37.886Z",
-      "url": "https://www.youtube.com/watch?v=iek9h7EACaQ",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=iek9h7EACaQ",
-      "channel": "Seattle Seahawks",
-      "outletId": "seahawks_official",
-      "outletName": "Seattle Seahawks",
-      "reporterId": "seahawks_official",
-      "reporterName": "Seattle Seahawks",
-      "author": "Seattle Seahawks",
-      "authorHandle": "@seahawks",
-      "authorProfileUrl": "https://www.youtube.com/@seahawks",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "sea_yts_1Eqvv-Uy08U",
-      "type": "video",
-      "videoId": "1Eqvv-Uy08U",
-      "embeddable": false,
-      "title": "THE FIRST OF HIS NFL CAREER 📺: @NFLonCBS",
-      "summary": "",
-      "duration": "0:36",
-      "imageUrl": "https://i.ytimg.com/vi/1Eqvv-Uy08U/hqdefault.jpg",
-      "imageAlt": "THE FIRST OF HIS NFL CAREER 📺: @NFLonCBS",
-      "publishedAt": "2026-11-16T07:24:37.886Z",
-      "url": "https://www.youtube.com/watch?v=1Eqvv-Uy08U",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=1Eqvv-Uy08U",
-      "channel": "Seattle Seahawks",
-      "outletId": "seahawks_official",
-      "outletName": "Seattle Seahawks",
-      "reporterId": "seahawks_official",
-      "reporterName": "Seattle Seahawks",
-      "author": "Seattle Seahawks",
-      "authorHandle": "@seahawks",
-      "authorProfileUrl": "https://www.youtube.com/@seahawks",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "sea_yts_2vwjrJF6RxQ",
-      "type": "video",
-      "videoId": "2vwjrJF6RxQ",
-      "embeddable": false,
-      "title": "Seattle Seahawks vs Las Vegas Raiders Game Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "14:24",
-      "imageUrl": "https://i.ytimg.com/vi/2vwjrJF6RxQ/hqdefault.jpg",
-      "imageAlt": "Seattle Seahawks vs Las Vegas Raiders Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T07:24:37.886Z",
-      "url": "https://www.youtube.com/watch?v=2vwjrJF6RxQ",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=2vwjrJF6RxQ",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
-    },
-    {
-      "id": "sea_yts_orxSw5S7Omo",
-      "type": "video",
-      "videoId": "orxSw5S7Omo",
-      "embeddable": false,
-      "title": "Every Pass and Rush Attempt from Fernando Mendoza first NFL start vs. Seahawks | Week 10",
-      "summary": "",
-      "duration": "7:50",
-      "imageUrl": "https://i.ytimg.com/vi/orxSw5S7Omo/hqdefault.jpg",
-      "imageAlt": "Every Pass and Rush Attempt from Fernando Mendoza first NFL start vs. Seahawks | Week 10",
-      "publishedAt": "2026-11-16T07:24:37.886Z",
-      "url": "https://www.youtube.com/watch?v=orxSw5S7Omo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=orxSw5S7Omo",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
+      "storyRank": 0.0262
     },
     {
       "id": "sea_rss_46842c85452f",
@@ -4162,7 +4073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0275
+      "storyRank": 0.0258
     },
     {
       "id": "sea_rss_203d92bfa277",
@@ -4205,7 +4116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0274
+      "storyRank": 0.0257
     },
     {
       "id": "sea_rss_8e2cdf760e87",
@@ -4248,7 +4159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0273
+      "storyRank": 0.0256
     },
     {
       "id": "sea_rss_72c95f7c79c5",
@@ -4299,7 +4210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0273
+      "storyRank": 0.0256
     },
     {
       "id": "sea_rss_616ed2147182",
@@ -4342,7 +4253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272
+      "storyRank": 0.0255
     },
     {
       "id": "sea_rss_7b979d7dce14",
@@ -4376,7 +4287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.027
+      "storyRank": 0.0253
     },
     {
       "id": "sea_rss_f8f7fb78ae6a",
@@ -4410,7 +4321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0253
     },
     {
       "id": "sea_tyt_tQf9dxYrRPE",
@@ -4450,7 +4361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_670012a6db1d",
@@ -4487,7 +4398,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_f1abf2c078cc",
@@ -4541,7 +4452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_d598ea63db8d",
@@ -4595,7 +4506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_e39174b92625",
@@ -4641,7 +4552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_40936d59edd2",
@@ -4687,7 +4598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_1403abc165b3",
@@ -4733,7 +4644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_2c4590dbaa00",
@@ -4779,7 +4690,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0252
     },
     {
       "id": "sea_tyt_4VX6adbQVDQ",
@@ -4812,13 +4723,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:59",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0268,
-      "duration": "4:59"
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_c6e0146ec9ea",
@@ -4855,7 +4766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0268
+      "storyRank": 0.0252
     },
     {
       "id": "sea_vid_e736a304be32",
@@ -4892,7 +4803,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0268
+      "storyRank": 0.0252
     },
     {
       "id": "sea_rss_4a760907bb77",
@@ -4926,7 +4837,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.0251
     },
     {
       "id": "sea_vid_854813324d65",
@@ -4972,7 +4883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.0251
     },
     {
       "id": "sea_vid_69671fb49016",
@@ -5018,7 +4929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.0251
     },
     {
       "id": "sea_vid_f5c733cbfaa6",
@@ -5064,7 +4975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.025
     },
     {
       "id": "sea_vid_003d6a90c759",
@@ -5110,7 +5021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.025
     },
     {
       "id": "sea_vid_49ef30757f93",
@@ -5156,7 +5067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.025
     },
     {
       "id": "sea_vid_d890163b37b5",
@@ -5202,7 +5113,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.025
     },
     {
       "id": "sea_rss_b6b4c171d94e",
@@ -5253,7 +5164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0263
+      "storyRank": 0.0247
     },
     {
       "id": "sea_rss_1edadbda1ff6",
@@ -5287,7 +5198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0242
     },
     {
       "id": "sea_rss_4af4ca6de01d",
@@ -5321,7 +5232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.006
     },
     {
       "id": "sea_rss_63433bc54da5",
@@ -5372,7 +5283,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.0219
+    },
+    {
+      "id": "sea_yts_cH7Lfw6zZMw",
+      "type": "video",
+      "videoId": "cH7Lfw6zZMw",
+      "embeddable": false,
+      "title": "Welcome to the NFL.",
+      "summary": "",
+      "duration": "1:19",
+      "imageUrl": "https://i.ytimg.com/vi/cH7Lfw6zZMw/hqdefault.jpg",
+      "imageAlt": "Welcome to the NFL.",
+      "publishedAt": "2026-11-14T19:00:44.559Z",
+      "url": "https://www.youtube.com/watch?v=cH7Lfw6zZMw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=cH7Lfw6zZMw",
+      "channel": "Seattle Seahawks",
+      "outletId": "seahawks_official",
+      "outletName": "Seattle Seahawks",
+      "reporterId": "seahawks_official",
+      "reporterName": "Seattle Seahawks",
+      "author": "Seattle Seahawks",
+      "authorHandle": "@seahawks",
+      "authorProfileUrl": "https://www.youtube.com/@seahawks",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0216
     },
     {
       "id": "sea_tyt_KqUS1Jvqmig",
@@ -5414,13 +5364,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "10:14",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228,
-      "duration": "10:14"
+      "storyRank": 0.0215
     },
     {
       "id": "sea_tx_914bf33c9742",
@@ -5472,7 +5422,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0205
     },
     {
       "id": "sea_rss_de95e4e94b76",
@@ -5515,7 +5465,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0209
+      "storyRank": 0.0198
     },
     {
       "id": "sea_rss_80cad27b9ae1",
@@ -5558,7 +5508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0197
     },
     {
       "id": "sea_rss_294692acf18f",
@@ -5592,7 +5542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0535
+      "storyRank": 0.051
     },
     {
       "id": "sea_rss_7ddd2bad7d66",
@@ -5626,7 +5576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0196
     },
     {
       "id": "sea_rss_65b0952be377",
@@ -5660,7 +5610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0195
     },
     {
       "id": "sea_tyt_F_EhisPX0yE",
@@ -5693,13 +5643,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:52",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051,
-      "duration": "7:52"
+      "storyRank": 0.0049
     },
     {
       "id": "sea_rss_4fb56184e791",
@@ -5742,7 +5692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0194
     },
     {
       "id": "sea_tyt_NmRPgp1LtAA",
@@ -5785,46 +5735,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "12:00",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0191,
-      "duration": "12:00"
-    },
-    {
-      "id": "sea_pfr_2b5016db5b0f",
-      "type": "article",
-      "title": "NFL Practice Squad Updates: 11/12/26",
-      "summary": "Here are Thursday’s practice squad moves: Baltimore Ravens Signed: G Kyle Hergel Placed on practice squad/injured list: T Gerad Christian-Lichtenhan Jacksonville Jaguars Signed: CB Alijah Huzzie Minnesota Vikings Signed: WR Odell Beckham Jr",
-      "imageUrl": "",
-      "publishedAt": "2026-11-13T03:44:12.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-12-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/seattle-seahawks",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0182
     },
     {
       "id": "sea_tyt_C5PCK_6-l14",
@@ -5857,13 +5774,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "29:13",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0188,
-      "duration": "29:13"
+      "storyRank": 0.0179
     },
     {
       "id": "sea_rss_df482c9309b3",
@@ -5897,7 +5814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0178
     },
     {
       "id": "sea_rss_b4027fd7e031",
@@ -5940,7 +5857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0177
     },
     {
       "id": "sea_tyt_0tkbQ8EYNus",
@@ -5973,81 +5890,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "27:27",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0185,
-      "duration": "27:27"
-    },
-    {
-      "id": "sea_rss_dafba9b897ff",
-      "type": "article",
-      "title": "Seahawks 2026 Midseason Honors",
-      "summary": "Players, plays and trends that stood out over the first half of the Seahawks’ 2026 season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/seahawks/l66to5hz27cxrw8zm3of.jpg",
-      "imageAlt": "Seahawks 2026 Midseason Honors",
-      "publishedAt": "2026-11-12T18:53:04.000Z",
-      "url": "https://www.seahawks.com/news/seahawks-2026-midseason-honors",
-      "outletId": "seahawks_official",
-      "outletName": "seahawks.com Official",
-      "reporterId": "seahawks_official",
-      "reporterName": "seahawks.com Official",
-      "author": "seahawks.com Official",
-      "authorHandle": "@Seahawks",
-      "authorProfileUrl": "https://www.seahawks.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
-    },
-    {
-      "id": "sea_rss_f78eec1b8f71",
-      "type": "article",
-      "title": "Seahawks Sign G Cordell Volson To Practice Squad",
-      "summary": "The Seahawks added offensive line depth, signing guard Cordell Volson to their practice squad on Thursday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/seahawks/h1tdzro0pbgzw1bd6tfq.jpg",
-      "imageAlt": "Seahawks Sign G Cordell Volson To Practice Squad",
-      "publishedAt": "2026-11-12T17:35:37.000Z",
-      "url": "https://www.seahawks.com/news/seahawks-sign-g-cordell-volson-to-practice-squad",
-      "outletId": "seahawks_official",
-      "outletName": "seahawks.com Official",
-      "reporterId": "seahawks_official",
-      "reporterName": "seahawks.com Official",
-      "author": "seahawks.com Official",
-      "authorHandle": "@Seahawks",
-      "authorProfileUrl": "https://www.seahawks.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
+      "storyRank": 0.0176
     },
     {
       "id": "sea_tx_7227f5a6ed00",
@@ -6082,7 +5931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0167
     },
     {
       "id": "sea_tyt_jFfspgK9zRs",
@@ -6116,13 +5965,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "7:33",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017,
-      "duration": "7:33"
+      "storyRank": 0.0162
     },
     {
       "id": "sea_tx_a4699ff08a5a",
@@ -6157,7 +6006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0152
     },
     {
       "id": "sea_tx_eac9db29f291",
@@ -6192,7 +6041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0139
     },
     {
       "id": "sea_tyt_6VdCJsdf2rU",
@@ -6225,13 +6074,13 @@
       "signalScore": 75,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "23:25",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144,
-      "duration": "23:25"
+      "storyRank": 0.0138
     },
     {
       "id": "sea_tx_bed3b4ffd9b0",
@@ -6275,81 +6124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
-    },
-    {
-      "id": "sea_tx_ab72e8b2d7cc",
-      "type": "tweet",
-      "title": "Seahawks roster move: Signed QB Adrian Martinez and LB Jamie Sheriff to the practice squad. Released LB Jimmy Ciarlo and WR Malick Meiga from the practice squad.",
-      "fullText": "Seahawks roster move: Signed QB Adrian Martinez and LB Jamie Sheriff to the practice squad. Released LB Jimmy Ciarlo and WR Malick Meiga from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-05T08:00:00.000Z",
-      "url": "https://www.seahawks.com/team/transactions/#tx-ab72e8b2d7cc",
-      "outletId": "seahawks_official",
-      "outletName": "seahawks.com Official",
-      "reporterId": "seahawks_official",
-      "reporterName": "Seattle Seahawks Official",
-      "author": "Seattle Seahawks Official",
-      "authorHandle": "@Seahawks",
-      "authorProfileUrl": "https://www.seahawks.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
-    },
-    {
-      "id": "sea_yt__ztOU6p67Zo",
-      "type": "video",
-      "category": "film",
-      "videoId": "_ztOU6p67Zo",
-      "embeddable": true,
-      "title": "Bears STATEMENT game on Monday night, Bears vs. Buccaneers Preview | PFF NFL Show",
-      "summary": "Jac & Cris talk about the Bears win against the defending Super Bowl Champion Seattle Seahawks in their own stadium. The Buccaneers are coming off a rain-soaked game in which they won without completing a single pass. Th",
-      "imageUrl": "https://i.ytimg.com/vi/_ztOU6p67Zo/hqdefault.jpg",
-      "imageAlt": "Bears STATEMENT game on Monday night, Bears vs. Buccaneers Preview | PFF NFL Show",
-      "publishedAt": "2026-11-03T23:55:55.000Z",
-      "url": "https://www.youtube.com/watch?v=_ztOU6p67Zo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=_ztOU6p67Zo",
-      "channel": "Pro Football Focus",
-      "outletId": "pff_official_yt",
-      "outletName": "Pro Football Focus",
-      "reporterId": "pff_official_yt",
-      "reporterName": "Pro Football Focus",
-      "author": "Pro Football Focus",
-      "authorHandle": "@ProFootballFocus",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0023,
-      "duration": "19:24"
+      "storyRank": 0.011
     },
     {
       "id": "sea_yt_jHbRQmuR274",
@@ -6382,13 +6157,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:23",
       "credibilityScore": 91,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059,
-      "duration": "4:23"
+      "storyRank": 0.0058
     },
     {
       "id": "sea_yt_Hya40kjfhN4",
@@ -6421,13 +6196,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "42:57",
       "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035,
-      "duration": "42:57"
+      "storyRank": 0.0034
     },
     {
       "id": "sea_rss_9a0b49119366",

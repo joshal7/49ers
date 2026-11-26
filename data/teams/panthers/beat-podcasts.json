@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:27:19.612Z",
+  "updatedAt": "2026-11-26T19:05:46.670Z",
   "windowDays": 7,
-  "totalEpisodes": 10,
+  "totalEpisodes": 9,
   "shows": [
     {
       "id": "panthers_locked_on_panthers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/1d/a1/17/1da1178e-87ed-440c-a844-2a2471ca7a8f/mza_4393349406579144163.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "panthers_panthers_playbook",
@@ -220,26 +220,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/748e1922-b22d-4c17-8320-1111f19936e4/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=748e1922-b22d-4c17-8320-1111f19936e4&feed=3JTeh8Y2"
-    },
-    {
-      "id": "pod_panthers_locked_on_panthers_1000802881708",
-      "trackId": 1000802881708,
-      "collectionId": 1150966073,
-      "showId": "panthers_locked_on_panthers",
-      "showName": "Locked On Panthers",
-      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
-      "hosts": "Locked On Podcast Network, Julian Council",
-      "network": "Locked On Podcast Network, Julian Council",
-      "title": "PREVIEW: Carolina Panthers LOOK to Capitalize Amid Ravens Turmoil in Pivotal Week 11 Matchup",
-      "summary": "The Baltimore Ravens face internal turmoil as Marlon Humphrey’s controversial podcast remarks spark a media storm ahead of a must-win Week 11 clash with the Carolina Panthers. The conversation focused on the fallout from Humphrey’s comments about Baltimore, the impact of dis",
-      "publishedAt": "2026-11-19T08:00:00.000Z",
-      "durationMinutes": 33,
-      "durationDisplay": "33 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/49/3f/3f/493f3ff3-1aad-a016-a5f0-6b8671ebb52a/mza_12063227216084850559.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/preview-carolina-panthers-look-to-capitalize-amid-ravens/id1150966073?i=1000802881708&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/e1272457-449e-4a9f-8fca-79a6ad91290b/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=e1272457-449e-4a9f-8fca-79a6ad91290b&feed=3JTeh8Y2"
     }
   ]
 }

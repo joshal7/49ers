@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:26:40.627Z",
+  "updatedAt": "2026-11-26T19:04:49.905Z",
   "teamAbbr": "WAS",
   "teamSlug": "commanders",
   "brandName": "Hail Washington",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:26:40.627Z",
+    "lastCheckedAt": "2026-11-26T19:04:49.905Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:28:31.891Z",
+  "updatedAt": "2026-11-26T19:07:32.537Z",
   "windowDays": 7,
-  "totalEpisodes": 10,
+  "totalEpisodes": 9,
   "shows": [
     {
       "id": "browns_locked_on_browns",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/10/6d/43/106d43ad-fd8c-6e60-5dda-6fe02d487ee8/mza_12975464127955923763.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "browns_orange_and_brown_report",
@@ -220,26 +220,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
       "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM1335013370.mp3"
-    },
-    {
-      "id": "pod_browns_locked_on_browns_1000802961526",
-      "trackId": 1000802961526,
-      "collectionId": 1149989450,
-      "showId": "browns_locked_on_browns",
-      "showName": "Locked On Browns",
-      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
-      "hosts": "Locked On Podcast Network, Spencer German",
-      "network": "Locked On Podcast Network, Spencer German",
-      "title": "DIVIDED: Cleveland Browns Fans Should Brace For A Shocking Deshaun Watson Twist",
-      "summary": "Cleveland Browns’ future takes center stage as Deshaun Watson’s potential contract extension sparks fierce debate. Is it time for the Browns to move on, or does Watson still offer untapped value as a bridge quarterback? Spencer German navigates the nuances of the complex dec",
-      "publishedAt": "2026-11-19T16:22:25.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/69/d9/94/69d994ce-1051-54b9-6221-ad91e091ce50/mza_5020782860860127275.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/divided-cleveland-browns-fans-should-brace-for-a/id1149989450?i=1000802961526&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/26e816f3-8ea2-47b9-91ba-5aac1650ad02/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=26e816f3-8ea2-47b9-91ba-5aac1650ad02&feed=KHgFdYZS"
     }
   ]
 }

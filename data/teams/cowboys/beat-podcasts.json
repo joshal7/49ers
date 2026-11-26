@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:40:42.383Z",
+  "updatedAt": "2026-11-26T19:04:09.091Z",
   "windowDays": 7,
-  "totalEpisodes": 31,
+  "totalEpisodes": 29,
   "shows": [
     {
       "id": "cowboys_locked_on_cowboys",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/3e3416/feeds.simplecast.com/4NoEmSg7",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cowboys-daily-podcast-on-the-dallas-cowboys/id1151519475?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/8a/b2/65/8ab2655d-bb8d-f9aa-3e51-32812fe16309/mza_3488372169603760881.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "cowboys_dallas_cowboys_podcasts",
@@ -49,7 +49,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/daa09c7f-6c6b-44bd-b906-aeac01489de7/f8250829-ef85-42cf-90ff-aeac01489e03/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/talkin-cowboys/id213508091?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/16/b4/06/16b4060f-6f37-2c85-a7b9-16dfd447d317/mza_11309135297807350563.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -632,46 +632,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cowboys-daily-podcast-on-the-dallas-cowboys/id1151519475?uo=4",
       "feedUrl": "https://rss.pdrl.fm/3e3416/feeds.simplecast.com/4NoEmSg7",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3e3416/lockedon.simplecastaudio.com/2323c1f1-284a-42c4-972d-4a4a829eac66/episodes/19c42354-846a-4052-aeda-94ecbafe5b79/audio/128/default.mp3?aid=rss_feed&awCollectionId=2323c1f1-284a-42c4-972d-4a4a829eac66&awEpisodeId=19c42354-846a-4052-aeda-94ecbafe5b79&feed=4NoEmSg7"
-    },
-    {
-      "id": "pod_cowboys_talkin_cowboys_1000802964239",
-      "trackId": 1000802964239,
-      "collectionId": 213508091,
-      "showId": "cowboys_talkin_cowboys",
-      "showName": "Talkin' Cowboys",
-      "showFullTitle": "Talkin' Cowboys",
-      "hosts": "Dallas Cowboys",
-      "network": "Dallas Cowboys",
-      "title": "Talkin’ Cowboys: On to Tennessee…?",
-      "summary": "Nicole Hutchison, Isaiah Stanback, Patrik Walker and Josh Rodriguez share their thoughts on Brian Schottenheimer’s comments after the breaking Christian Parker news, how might Mike Pettine call his first game, and preview the Cowboys matchup against the Tennessee Titans. Plu",
-      "publishedAt": "2026-11-19T17:16:08.000Z",
-      "durationMinutes": 51,
-      "durationDisplay": "51 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/16/b4/06/16b4060f-6f37-2c85-a7b9-16dfd447d317/mza_11309135297807350563.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/talkin-cowboys-on-to-tennessee/id213508091?i=1000802964239&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/talkin-cowboys/id213508091?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/daa09c7f-6c6b-44bd-b906-aeac01489de7/f8250829-ef85-42cf-90ff-aeac01489e03/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/daa09c7f-6c6b-44bd-b906-aeac01489de7/29d7170e-d269-450c-8545-b507010ffe51/audio.mp3?utm_source=Podcast&in_playlist=f8250829-ef85-42cf-90ff-aeac01489e03"
-    },
-    {
-      "id": "pod_cowboys_locked_on_cowboys_1000802882566",
-      "trackId": 1000802882566,
-      "collectionId": 1151519475,
-      "showId": "cowboys_locked_on_cowboys",
-      "showName": "Locked On Cowboys",
-      "showFullTitle": "Locked On Cowboys - Daily Podcast On The Dallas Cowboys",
-      "hosts": "Landon McCool, Marcus Mosher, Locked On Podcast Network",
-      "network": "Landon McCool, Marcus Mosher, Locked On Podcast Network",
-      "title": "SPOTLIGHT: Titans QB Cam Ward vs. Dallas Cowboys | Can Mike Pettine Slow Down RED HOT QB In Week 11?",
-      "summary": "The Dallas Cowboys and Tennessee Titans enter Week 11 with their seasons on the line. Can Cam Ward exploit Dallas’ struggling defense, or will Mike Pettine’s promotion spark a turnaround? The matchup preview examines Ward’s recent breakout, Tennessee’s no-huddle offense, RPO",
-      "publishedAt": "2026-11-19T08:00:00.000Z",
-      "durationMinutes": 29,
-      "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/22/2f/f6/222ff63f-ed0b-4ba9-1d9e-340a3a03c42f/mza_9004764322297593150.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/spotlight-titans-qb-cam-ward-vs-dallas-cowboys-can/id1151519475?i=1000802882566&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cowboys-daily-podcast-on-the-dallas-cowboys/id1151519475?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/3e3416/feeds.simplecast.com/4NoEmSg7",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3e3416/lockedon.simplecastaudio.com/2323c1f1-284a-42c4-972d-4a4a829eac66/episodes/0fa20205-11c9-4264-a5b7-56957f2758c1/audio/128/default.mp3?aid=rss_feed&awCollectionId=2323c1f1-284a-42c4-972d-4a4a829eac66&awEpisodeId=0fa20205-11c9-4264-a5b7-56957f2758c1&feed=4NoEmSg7"
     }
   ]
 }

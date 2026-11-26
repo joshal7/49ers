@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-26T07:24:13.369Z",
+  "updatedAt": "2026-11-26T18:59:44.908Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-12-10T07:24:13.369Z",
+  "nextAutoReviewAt": "2026-12-10T18:59:44.908Z",
   "totalTrackedReporters": 71,
   "podiumSubjectIds": [
     "kyle_shanahan",
@@ -445,6 +445,7 @@
       "outletId": "sf_standard",
       "role": "Editor-at-Large • TK Show & 49ers +/-",
       "category": "beat",
+      "requireTeamMention": true,
       "styleTag": "columnist-insider",
       "baseScore": 88,
       "trustTier": 2,
@@ -550,6 +551,7 @@
       "outletId": "athletic",
       "role": "49ers Beat Writer (The Athletic)",
       "category": "beat",
+      "requireTeamMention": true,
       "styleTag": "factual-beat",
       "baseScore": 89,
       "trustTier": 2,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:30:12.378Z",
+  "updatedAt": "2026-11-26T19:25:02.083Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/las-vegas-raiders",
   "spotracUrl": "https://www.spotrac.com/nfl/las-vegas-raiders/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 314432085,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 304958302,
       "top51": 234789225,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 73
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 260543955,
       "top51": 260088418,
       "teamCapSpace": 66456045,
       "otcRawTeamCapSpace": 66456045,
-      "effectiveCapSpace": 48586211,
+      "effectiveCapSpace": 56226045,
       "activeCapSpending": 260088418,
       "offenseSpend": 132763775,
       "defenseSpend": 124424643,
@@ -181,7 +181,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 220528699,
       "top51": 220528699,

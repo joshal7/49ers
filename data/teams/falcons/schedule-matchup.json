@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:13.966Z",
+  "updatedAt": "2026-11-26T19:05:40.099Z",
   "sources": [
     {
       "label": "ESPN Falcons Schedule",
@@ -571,8 +571,6 @@
         "surface": "Turf"
       },
       "restAdvantageDays": -3,
-      "spreadLineSf": 3.5,
-      "totalLine": 49.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24611,15 +24609,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 22,
-    "averageRank": 22.3,
+    "consensusRank": 23,
+    "averageRank": 22.5,
     "medianRank": 22,
     "previousRank": 22,
     "rangeMin": 19,
-    "rangeMax": 26,
-    "rangeShort": "#19–#26",
-    "rangeDisplay": "#19–#26 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #22 consensus (avg #22.3) through Week 10, ranging from #19 (Inpredictable) to #26 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
+    "rangeMax": 27,
+    "rangeShort": "#19–#27",
+    "rangeDisplay": "#19–#27 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #23 consensus (avg #22.5) through Week 10, ranging from #19 (Inpredictable) to #27 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24627,15 +24625,15 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 19,
-        "previousRank": 19,
-        "delta": "0",
+        "previousRank": 20,
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -2.6 (#18 Offense / #22 Defense) at 3-7 through Week 10.",
+        "blurb": "Betting market rating GPF -2.7 (#18 Offense / #22 Defense) at 3-7 through Week 10.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24650,10 +24648,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 4 (41.8% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12.",
+        "blurb": "Tier 4 (41.1% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24718,16 +24716,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 26,
+        "rank": 27,
         "previousRank": 25,
-        "delta": "-1",
+        "delta": "-2",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -5.8 (#27 Off / #25 Def efficiency, 5.1 proj. wins, 0.0% SB odds) at 3-7.",
+        "blurb": "FPI -5.9 (#27 Off / #25 Def efficiency, 5.1 proj. wins, 0.0% SB odds) at 3-7.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24739,15 +24737,15 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 19,
-        "previousRank": 19,
-        "delta": "0",
+        "previousRank": 20,
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-25",
-        "asOfLabel": "November 25",
+        "asOfIso": "2026-11-26",
+        "asOfLabel": "November 26",
         "verified": true,
-        "blurb": "Betting market rating GPF -2.6 (#18 Offense / #22 Defense) at 3-7 through Week 10."
+        "blurb": "Betting market rating GPF -2.7 (#18 Offense / #22 Defense) at 3-7 through Week 10."
       },
       {
         "id": "nfelo",
@@ -24776,10 +24774,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfIso": "2026-11-26T10:08:32Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "Tier 4 (41.8% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12."
+        "blurb": "Tier 4 (41.1% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 12."
       },
       {
         "id": "cbs",
@@ -24803,16 +24801,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 26,
+        "rank": 27,
         "previousRank": 25,
-        "delta": "-1",
+        "delta": "-2",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T19:02Z",
+        "asOfIso": "2026-11-26T07:00Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -5.8 (#27 Off / #25 Def efficiency, 5.1 proj. wins, 0.0% SB odds) at 3-7."
+        "blurb": "FPI -5.9 (#27 Off / #25 Def efficiency, 5.1 proj. wins, 0.0% SB odds) at 3-7."
       },
       {
         "id": "espn_panel",
@@ -24834,7 +24832,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-26T07:27:17.565Z"
+    "fetchedAtIso": "2026-11-26T19:05:44.449Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24906,7 +24904,7 @@
         "jersey": 4,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
         "primarySnapPct": 70,
-        "playProbabilityPct": 32
+        "playProbabilityPct": 23
       },
       {
         "playerId": "4595343",
@@ -24915,7 +24913,7 @@
         "jersey": 53,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4595343.png",
         "primarySnapPct": 72,
-        "playProbabilityPct": 95
+        "playProbabilityPct": 45
       },
       {
         "playerId": "4360248",
@@ -25805,7 +25803,7 @@
       "spread": "MIN -7",
       "openingSpread": "Opened ATL +4.5 (Draft Kings)",
       "overUnder": 41.5,
-      "moneyline": "ATL +251 | MIN -309",
+      "moneyline": "ATL +252 | MIN -310",
       "impliedScore": "ATL 17.3 – MIN 24.3",
       "restAdvantage": "+7 Days Rest Advantage (ATL off Week 11 Bye)",
       "impliedWinProb": "16%"
@@ -27549,16 +27547,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Matthew Bergeron, Chris Lindstrom & Jawaan Taylor vs. DT Levi Drake Rodriguez & Vikings Simulated Pressures",
+        "unitMatchup": "Chris Lindstrom, Jawaan Taylor & Jake Matthews vs. DT Levi Drake Rodriguez & Vikings Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Matthew Bergeron",
           "Chris Lindstrom",
-          "Jawaan Taylor"
+          "Jawaan Taylor",
+          "Jake Matthews"
         ],
         "statComparison": "ATL: #16 Pass Protection (6.0%) | MIN: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Matthew Bergeron, Chris Lindstrom & Jawaan Taylor protect Michael Penix Jr. (#16 protection at 6.0%) against DT Levi Drake Rodriguez and Minnesota Vikings's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Matthew Bergeron (#65) on obvious passing downs—if DT Levi Drake Rodriguez cannot win clean around the arc, Vikings must dial up interior stunts that stress Chris Lindstrom (#63)."
+        "tacticalDetail": "Chris Lindstrom, Jawaan Taylor & Jake Matthews protect Michael Penix Jr. (#16 protection at 6.0%) against DT Levi Drake Rodriguez and Minnesota Vikings's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Chris Lindstrom (#63) on obvious passing downs—if DT Levi Drake Rodriguez cannot win clean around the arc, Vikings must dial up interior stunts that stress Jawaan Taylor (#71)."
       }
     ]
   }

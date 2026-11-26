@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:25:28.876Z",
+  "updatedAt": "2026-11-26T19:02:38.479Z",
   "teamAbbr": "MIN",
   "teamSlug": "vikings",
   "brandName": "Vikings Skol",
@@ -53,7 +53,7 @@
       "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-26T07:25:28.876Z",
+    "lastCheckedAt": "2026-11-26T19:02:38.479Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

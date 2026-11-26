@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:26:30.118Z",
+  "updatedAt": "2026-11-26T19:04:33.119Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-york-giants",
   "spotracUrl": "https://www.spotrac.com/nfl/new-york-giants/cap/",
@@ -8,7 +8,7 @@
     "2026": {
       "year": 2026,
       "capCeiling": 300195334,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 294211519,
       "top51": 232132108,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 83
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 308030955,
       "top51": 304913726,
       "teamCapSpace": 18969045,
       "otcRawTeamCapSpace": 18969045,
-      "effectiveCapSpace": 2034744,
+      "effectiveCapSpace": 6879045,
       "activeCapSpending": 304913726,
       "offenseSpend": 124431736,
       "defenseSpend": 173825324,
@@ -174,7 +174,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 223030415,
       "top51": 223030415,

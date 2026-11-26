@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:27:03.844Z",
+  "updatedAt": "2026-11-26T19:05:23.922Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-orleans-saints",
   "spotracUrl": "https://www.spotrac.com/nfl/new-orleans-saints/cap/",
@@ -8,14 +8,14 @@
     "2026": {
       "year": 2026,
       "capCeiling": 316722549,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 309335943,
       "top51": 170045165,
       "teamCapSpace": 7386606,
       "otcRawTeamCapSpace": 7386606,
       "effectiveCapSpace": 7386606,
-      "activeCapSpending": 180898081,
+      "activeCapSpending": 180615164,
       "offenseSpend": 101867639,
       "defenseSpend": 74825858,
       "specialSpend": 3921667,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 78
+      "totalSignedCount": 53
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 298386754,
       "top51": 277911303,
       "teamCapSpace": 28613246,
       "otcRawTeamCapSpace": 28613246,
-      "effectiveCapSpace": 12379002,
+      "effectiveCapSpace": 21173246,
       "activeCapSpending": 277911303,
       "offenseSpend": 153651637,
       "defenseSpend": 117619666,
@@ -202,7 +202,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 179394806,
       "top51": 179394806,

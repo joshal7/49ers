@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T07:28:13.469Z",
+  "updatedAt": "2026-11-26T19:07:09.083Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/baltimore-ravens",
   "spotracUrl": "https://www.spotrac.com/nfl/baltimore-ravens/cap/",
@@ -8,13 +8,13 @@
     "2026": {
       "year": 2026,
       "capCeiling": 314063975,
-      "baseLeagueCap": 301200000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 306870988,
       "top51": 272983529,
       "teamCapSpace": 7192987,
       "otcRawTeamCapSpace": 7192987,
-      "effectiveCapSpace": 7192987,
+      "effectiveCapSpace": 6307987,
       "activeCapSpending": 284063793,
       "offenseSpend": 117688423,
       "defenseSpend": 162370965,
@@ -135,18 +135,18 @@
         }
       ],
       "contractedCount": 51,
-      "totalSignedCount": 78
+      "totalSignedCount": 50
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
-      "baseLeagueCap": 327000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 374761487,
       "top51": 374030929,
       "teamCapSpace": -47761487,
       "otcRawTeamCapSpace": -47761487,
-      "effectiveCapSpace": -60965116,
+      "effectiveCapSpace": -53341487,
       "activeCapSpending": 374030929,
       "offenseSpend": 201320894,
       "defenseSpend": 168918130,
@@ -181,7 +181,7 @@
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
-      "baseLeagueCap": 352000000,
+      "baseLeagueCap": null,
       "capCeilingProjected": false,
       "totalCapLiabilities": 296499459,
       "top51": 296499459,
@@ -259,8 +259,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/baltimore-ravens",
-    "summary": "Baltimore Ravens hold $7.19M in 2026 OverTheCap space ($7.19M effective) and -$47.76M projected for 2027.",
-    "executiveSummary": "Eric DeCosta and the Ravens front office hold $7.19M in gross 2026 cap space ($7.19M effective), while 2027 currently projects at -$47.76M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Roquan Smith, Marlon Humphrey, Nnamdi Madubuike, Trey Hendrickson.",
+    "summary": "Baltimore Ravens hold $7.19M in 2026 OverTheCap space ($6.31M effective) and -$47.76M projected for 2027.",
+    "executiveSummary": "Eric DeCosta and the Ravens front office hold $7.19M in gross 2026 cap space ($6.31M effective), while 2027 currently projects at -$47.76M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Roquan Smith, Marlon Humphrey, Nnamdi Madubuike, Trey Hendrickson.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$47.76M 2027 Projection)",
