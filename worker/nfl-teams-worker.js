@@ -77,7 +77,7 @@ function stripEdgeTrackingParams(raw) {
   }
 }
 
-const SF_RESERVED_DAILY_CALLS = 6;
+const SF_RESERVED_DAILY_CALLS = 8;
 const DAILY_LEAGUE_SOFT_BUDGET = 48;
 const UPSTREAM_AI_PAGES_ORIGIN = 'https://nfl-teams.pages.dev';
 const ALLOWED_VIDEO_HOSTS = [

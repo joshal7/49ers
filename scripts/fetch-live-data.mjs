@@ -68,12 +68,16 @@ import {
 import { buildTeamDraftPrep2027 } from './lib/teamDraftIntelBuilder.mjs';
 import { attachDraftClassHighlightVideos } from './lib/draftVideoResolver.mjs';
 import {
+  GEMINI_X_DISCOVERY_QUOTA_POLICY,
   NATIONAL_FILM_ANALYTICS_X_HANDLES,
   OFFICIAL_TEAM_X_HANDLES_BY_ABBR,
+  discoverXStatusesViaGeminiSearch,
   fetchBeatArticleHtmlForXEmbeds,
   fetchXTimelinesBatch,
   filterXTimelineItemsForTeam,
   harvestEmbeddedXForTeamRss,
+  hydrateRawXStatusUrlsBatch,
+  resolveGeminiXDiscoveryPlan,
   selectRotatingXHandleSlice,
   selectTeamLocalXHandles
 } from './lib/xBeatMediaFetcher.mjs';
@@ -928,6 +932,86 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     }
   }
 
+  // Option B (Stage 1 Shared National Film & Analytics Discovery):
+  // Runs up to 2 grounded Gemini Search sweeps/day (AM = All-22 video/GIF creators, PM = PFF/EPA scatter charts)
+  // and hydrates discovered x.com/<handle>/status/<id> URLs ONCE for all 32 teams via FxTwitter/Syndication.
+  const natDiscoveryPath = path.join(leagueDir, 'x-film-discovery.json');
+  let prevNatDiscovery = null;
+  try {
+    if (fs.existsSync(natDiscoveryPath)) {
+      prevNatDiscovery = JSON.parse(fs.readFileSync(natDiscoveryPath, 'utf8'));
+    }
+  } catch {}
+  const natNowMs = Date.now();
+  const natCutoffMs = natNowMs - 96 * 3_600_000;
+  let sharedDiscoveredRawItems = (Array.isArray(prevNatDiscovery?.rawItems) ? prevNatDiscovery.rawItems : []).filter(
+    it => it?.statusId && Number.isFinite(Date.parse(it.publishedAt || '')) && Date.parse(it.publishedAt) >= natCutoffMs
+  );
+  const natPlan = resolveGeminiXDiscoveryPlan({
+    scope: 'national',
+    nowMs: natNowMs,
+    prevMeta: prevNatDiscovery,
+    hasApiKey: Boolean(geminiApiKey),
+    force: process.argv.includes('--force-x-discovery')
+  });
+  if (natPlan.shouldRun) {
+    const natHandles =
+      natPlan.slotKey === 'pm'
+        ? GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalAnalyticsChartHandles
+        : GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalVideoHandles;
+    const natDisc = await discoverXStatusesViaGeminiSearch({
+      scope: 'national',
+      slotKey: natPlan.slotKey,
+      handles: natHandles,
+      apiKey: geminiApiKey,
+      modelCascade: natPlan.modelCascade,
+      nowMs: natNowMs
+    }).catch(() => ({ ok: false, statusUrls: [] }));
+    if (natDisc.ok) {
+      const freshlyHydrated = await hydrateRawXStatusUrlsBatch(natDisc.statusUrls || [], {
+        nowMs: natNowMs,
+        maxHydrate: 24,
+        concurrency: 4
+      }).catch(() => []);
+      const mergedBySid = new Map();
+      for (const it of [...freshlyHydrated, ...sharedDiscoveredRawItems]) {
+        if (it?.statusId && !mergedBySid.has(String(it.statusId))) {
+          mergedBySid.set(String(it.statusId), it);
+        }
+      }
+      sharedDiscoveredRawItems = [...mergedBySid.values()].slice(0, 60);
+      const nextSlots = Array.from(new Set([...(natPlan.completedSlotsToday || []), natPlan.slotKey]));
+      try {
+        fs.writeFileSync(
+          natDiscoveryPath,
+          JSON.stringify(
+            {
+              updatedAt: new Date(natNowMs).toISOString(),
+              datePt: natPlan.datePt,
+              completedSlots: nextSlots,
+              lastModelUsed: natDisc.modelUsed || null,
+              lastUrlCount: (natDisc.statusUrls || []).length,
+              rawItems: sharedDiscoveredRawItems
+            },
+            null,
+            2
+          )
+        );
+      } catch {}
+      console.log(
+        `[stage-1/x-discovery] National ${natPlan.slotKey.toUpperCase()} sweep (${natDisc.modelUsed}): found=${(natDisc.statusUrls || []).length} URLs, hydrated=${freshlyHydrated.length}, cached96h=${sharedDiscoveredRawItems.length}`
+      );
+    }
+  }
+  const combinedNationalFilmXItems = [];
+  const seenNatSid = new Set();
+  for (const it of [...(Array.isArray(nationalFilmXItems) ? nationalFilmXItems : []), ...sharedDiscoveredRawItems]) {
+    const sid = String(it?.statusId || (String(it?.url || '').match(/\/status\/(\d{15,22})/) || [])[1] || '');
+    if (sid && seenNatSid.has(sid)) continue;
+    if (sid) seenNatSid.add(sid);
+    combinedNationalFilmXItems.push(it);
+  }
+
   return {
     seasonYear,
     aiModelDiscovery,
@@ -955,7 +1039,7 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
       liveDraftBigBoardIntel?.bigBoardMethodology || sfSeasonal?.draftPrep2027?.bigBoardMethodology || null,
     sharedCombineLeaderboard: sfSeasonal?.draftPrep2027?.combineLeaderboard || null,
     leagueMockHtmls: { tkMockHtml, dtMockHtml, wfMock1Html, wfMock2Html },
-    nationalFilmXItems: Array.isArray(nationalFilmXItems) ? nationalFilmXItems : []
+    nationalFilmXItems: combinedNationalFilmXItems
   };
 }
 
@@ -3564,8 +3648,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     ),
     fetchXTimelinesBatch(
       process.env.X_BEARER_TOKEN
-        ? selectTeamLocalXHandles(team, reportersData, 12)
-        : selectRotatingXHandleSlice(selectTeamLocalXHandles(team, reportersData, 12), {
+        ? selectTeamLocalXHandles(team, reportersData, 18)
+        : selectRotatingXHandleSlice(selectTeamLocalXHandles(team, reportersData, 18), {
             maxPerRun: 3,
             bucketMinutes: 30,
             seedOffset: (team.abbr.charCodeAt(0) || 0) + (team.abbr.charCodeAt(1) || 0)
@@ -3824,7 +3908,62 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   }
 
   const bskyPosts = filterRawBlueskyPostsForTeam(rawBskyEntries || [], team, players);
-  // Deep Beat-Article HTML Embed Harvesting (100% free via api.fxtwitter.com across ALL 32 clubs):
+  // Load previous news.json once for both Option B daily X-discovery slot tracking & 96h X carry-forward
+  let prevNewsSnapshot = null;
+  try {
+    const prevNewsPath = path.join(getTeamOutDir(team), 'news.json');
+    if (fs.existsSync(prevNewsPath)) {
+      prevNewsSnapshot = JSON.parse(fs.readFileSync(prevNewsPath, 'utf8'));
+    }
+  } catch {}
+
+  // Option B (Stage 2 Per-Team Grounded Gemini Search X-Status Discovery):
+  // SF runs FIRST (ALL_NFL_TEAMS[0]) with 2x daily quota (am + pm) on best tokens (`gemini-4-hydrogen` -> Flash);
+  // all other 31 clubs get an even 1x daily sweep (`daily`) on Flash-first tokens (`gemini-3.8-flash` -> `2.5-flash`).
+  // Every discovered URL is verified & hydrated via Syndication/FxTwitter (zero hallucinated IDs).
+  let teamXSearchDiscoveryMeta = prevNewsSnapshot?.xSearchDiscoveryMeta || null;
+  let geminiDiscoveredXPayload = '';
+  const teamDiscoveryNowMs = Date.now();
+  const teamDiscoveryPlan = resolveGeminiXDiscoveryPlan({
+    scope: 'team',
+    team,
+    nowMs: teamDiscoveryNowMs,
+    prevMeta: teamXSearchDiscoveryMeta,
+    hasApiKey: Boolean(geminiApiKey),
+    force: process.argv.includes('--force-x-discovery')
+  });
+  if (teamDiscoveryPlan.shouldRun) {
+    const teamSearchHandles = selectTeamLocalXHandles(team, reportersData, 18);
+    const teamDiscRes = await discoverXStatusesViaGeminiSearch({
+      scope: 'team',
+      team,
+      slotKey: teamDiscoveryPlan.slotKey,
+      handles: teamSearchHandles,
+      rosterPlayers: players,
+      apiKey: geminiApiKey,
+      modelCascade: teamDiscoveryPlan.modelCascade,
+      nowMs: teamDiscoveryNowMs
+    }).catch(() => ({ ok: false, statusUrls: [], rawPayloadText: '' }));
+    if (teamDiscRes.ok) {
+      geminiDiscoveredXPayload = teamDiscRes.rawPayloadText || '';
+      const updatedSlots = Array.from(
+        new Set([...(teamDiscoveryPlan.completedSlotsToday || []), teamDiscoveryPlan.slotKey])
+      );
+      teamXSearchDiscoveryMeta = {
+        datePt: teamDiscoveryPlan.datePt,
+        dailyQuota: teamDiscoveryPlan.dailyQuota,
+        completedSlots: updatedSlots,
+        lastModelUsed: teamDiscRes.modelUsed || null,
+        lastUrlCount: (teamDiscRes.statusUrls || []).length,
+        updatedAt: new Date(teamDiscoveryNowMs).toISOString()
+      };
+      console.log(
+        `[stage-2/x-discovery] ${team.abbr} ${teamDiscoveryPlan.slotKey.toUpperCase()} (${teamDiscRes.modelUsed}, quota=${updatedSlots.length}/${teamDiscoveryPlan.dailyQuota}): found=${(teamDiscRes.statusUrls || []).length} X status URLs`
+      );
+    }
+  }
+
+  // Deep Beat-Article HTML Embed Harvesting + Option B Gemini-Discovered Status Hydration (100% free via api.fxtwitter.com across ALL 32 clubs):
   // Fetch public HTML of up to 10 recent film/takeaway/grade local beat articles to extract embedded X clips/GIFs/charts
   const recentLocalBeatArticlesForEmbeds = rawStream.filter(
     it =>
@@ -3839,12 +3978,19 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     timeoutMs: 4500
   }).catch(() => []);
   const embeddedXItems = await harvestEmbeddedXForTeamRss(
-    [clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {}), ...localBeatRssXmls, ...beatArticleHtmlPayloads],
+    [
+      ...(geminiDiscoveredXPayload ? [geminiDiscoveredXPayload] : []),
+      clubNewsRssXml,
+      pfrTeamRssXml,
+      JSON.stringify(espnNewsRaw || {}),
+      ...localBeatRssXmls,
+      ...beatArticleHtmlPayloads
+    ],
     {
       team,
       rosterPlayers: players,
       reportersData,
-      maxHydrate: 28,
+      maxHydrate: 36,
       allowEmbeddedBeatQuotes: true
     }
   ).catch(() => []);
@@ -3875,9 +4021,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   const currentRosterIds = new Set(players.map(p => String(p.id || '')).filter(Boolean));
   const carriedXItems = [];
   try {
-    const prevNewsPath = path.join(getTeamOutDir(team), 'news.json');
-    if (fs.existsSync(prevNewsPath)) {
-      const prevNews = JSON.parse(fs.readFileSync(prevNewsPath, 'utf8'));
+    if (prevNewsSnapshot) {
+      const prevNews = prevNewsSnapshot;
       const carryCutoffMs = Date.now() - 96 * 3_600_000;
       const otherTeamHandlesLow = new Set(
         Object.entries(OFFICIAL_TEAM_X_HANDLES_BY_ABBR)
@@ -4817,7 +4962,13 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     reporters: reportersData,
     scheduleMatchup: scheduleMatchupJson,
     seasonal: seasonalJson,
-    news: { updatedAt: nowIso, dailyTopNewsBrief: null, clusteredBriefs: [], rawStream }
+    news: {
+      updatedAt: nowIso,
+      ...(teamXSearchDiscoveryMeta ? { xSearchDiscoveryMeta: teamXSearchDiscoveryMeta } : {}),
+      dailyTopNewsBrief: null,
+      clusteredBriefs: [],
+      rawStream
+    }
   };
 
   tempAppData.news.rawStream = sortNewsWithBreakingPriority(rawStream, Date.now(), { appData: tempAppData });

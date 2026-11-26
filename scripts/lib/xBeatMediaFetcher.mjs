@@ -41,6 +41,7 @@ import {
 } from '../../src/engine/beatAttributionEngine.js';
 import { cleanSensationalistText, scoreContentSignal } from '../../src/engine/antiFluffFilter.js';
 import { resolveTeamConfig } from '../../src/config/teamRegistry.js';
+import { buildGeminiThinkingConfig } from '../../src/engine/geminiStudioPrompts.js';
 
 export const OFFICIAL_TEAM_X_HANDLES_BY_ABBR = Object.freeze({
   SF: '49ers',
@@ -596,7 +597,7 @@ const NATIONAL_HANDLE_SET_LOWER = new Set(NATIONAL_FILM_ANALYTICS_X_HANDLES.map(
  * from its `reportersData` + official club handle, ensuring local `film`/`film_analyst`/`analytics`
  * accounts are prioritized alongside top beat reporters (never accidentally dropped as national!).
  */
-export function selectTeamLocalXHandles(team, reportersData = null, maxHandles = 12) {
+export function selectTeamLocalXHandles(team, reportersData = null, maxHandles = 18) {
   const active = resolveTeamConfig(team);
   const out = [];
   const seen = new Set();
@@ -646,26 +647,36 @@ export function selectTeamLocalXHandles(team, reportersData = null, maxHandles =
     return primary || aliases[0] || '';
   };
 
+  const isExplicitFilmCat = r =>
+    ['film', 'film_analyst', 'analytics'].includes(String(r.category || '').toLowerCase());
   const isLocalFilmOrAnalyt = r =>
-    ['film', 'film_analyst', 'analytics'].includes(String(r.category || '').toLowerCase()) ||
+    isExplicitFilmCat(r) ||
     /all[- ]?22|film|tape|scheme|analytics|chart|grade|trench/i.test(`${r.role || ''} ${r.styleTag || ''}`);
+  const isExplicitClipCat = r =>
+    ['video_pod', 'audio_beat'].includes(String(r.category || '').toLowerCase());
   const isLocalClipOrPod = r =>
-    ['video_pod', 'audio_beat'].includes(String(r.category || '').toLowerCase()) ||
-    /clip|video|pod|highlight/i.test(`${r.role || ''} ${r.styleTag || ''}`);
+    isExplicitClipCat(r) ||
+    (String(r.category || '').toLowerCase() !== 'beat' &&
+      /clip|video|highlight/i.test(`${r.role || ''} ${r.styleTag || ''}`));
 
   const byScoreDesc = (a, b) =>
     (Number(b.baseScore) || 85) - (Number(a.baseScore) || 85) ||
     (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2);
 
-  const filmReps = localReps.filter(isLocalFilmOrAnalyt).sort(byScoreDesc);
-  const clipReps = localReps.filter(r => !isLocalFilmOrAnalyt(r) && isLocalClipOrPod(r)).sort(byScoreDesc);
+  // Prioritize explicit film/analytics category creators ahead of general beat/radio hosts
+  const filmReps = localReps
+    .filter(isLocalFilmOrAnalyt)
+    .sort((a, b) => Number(isExplicitFilmCat(b)) - Number(isExplicitFilmCat(a)) || byScoreDesc(a, b));
+  const clipReps = localReps
+    .filter(r => !isLocalFilmOrAnalyt(r) && isLocalClipOrPod(r))
+    .sort((a, b) => Number(isExplicitClipCat(b)) - Number(isExplicitClipCat(a)) || byScoreDesc(a, b));
   const beatReps = localReps
     .filter(r => !isLocalFilmOrAnalyt(r) && !isLocalClipOrPod(r) && String(r.category || '').toLowerCase() !== 'official')
     .sort((a, b) => (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2) || byScoreDesc(a, b));
 
-  // Balanced high-SNR allocation: official + up to ~40% local film/analytics + ~25% clip/pod + top beat writers
-  const filmCap = Math.max(2, Math.floor(maxHandles * 0.42));
-  const clipCap = Math.max(1, Math.floor(maxHandles * 0.25));
+  // Balanced high-SNR allocation: official + up to ~50% local film/analytics + ~22% video/clip pods + top beat writers
+  const filmCap = Math.max(4, Math.floor(maxHandles * 0.5));
+  const clipCap = Math.max(3, Math.floor(maxHandles * 0.22));
   for (const r of filmReps.slice(0, filmCap)) {
     if (out.length >= maxHandles) break;
     push(extractBestHandle(r));
@@ -1251,4 +1262,500 @@ export async function harvestEmbeddedXForTeamRss(
     isNationalPool: false,
     nowMs
   });
+}
+
+// ============================================================================
+// OPTION B: Free Gemini `google_search` Grounded X-Status Discovery + FxTwitter Hydration
+//
+// Quota Allocation Policy (Daily RPD resets midnight PT; SF goes FIRST with 2x quota
+// on best tokens; even 1x Flash-first quota across the other 31 clubs; plus 2/day
+// shared Stage-1 national film/analytics sweeps benefiting all 32 teams):
+//   - Shared National Film & Analytics (Stage 1, all 32 teams): 2 calls/day (am + pm)
+//   - San Francisco 49ers (Priority #1, runs FIRST):           2 calls/day (am + pm, 2x)
+//   - All Other 31 NFL Clubs (even logic, Flash-first):        1 call/day each (31 total)
+//   Total Option B Discovery Budget: 35 calls/day across ALL 32 clubs (~7% of 500 RPD Search cap)
+// ============================================================================
+
+export const GEMINI_X_DISCOVERY_QUOTA_POLICY = Object.freeze({
+  nationalSharedDailyCalls: 2,
+  sfDailyCalls: 2,
+  otherTeamDailyCalls: 1,
+  sfModelCascade: Object.freeze([
+    'gemini-4-hydrogen',
+    'gemini-3.8-flash',
+    'gemini-3.5-flash',
+    'gemini-3-flash-preview',
+    'gemini-2.5-flash'
+  ]),
+  nationalModelCascade: Object.freeze([
+    'gemini-4-hydrogen',
+    'gemini-3.8-flash',
+    'gemini-3.5-flash',
+    'gemini-3-flash-preview',
+    'gemini-2.5-flash'
+  ]),
+  otherTeamModelCascade: Object.freeze([
+    'gemini-3.8-flash',
+    'gemini-3.5-flash',
+    'gemini-3-flash-preview',
+    'gemini-2.5-flash',
+    'gemini-2.5-flash-lite'
+  ]),
+  nationalVideoHandles: Object.freeze([
+    'BaldyNFL',
+    'BrandonThornNFL',
+    'FB_FilmAnalysis',
+    'QBKlass',
+    'kurt13warner',
+    'danorlovsky7',
+    'Nate_Tice',
+    'BenjaminSolak',
+    'BrettKollmann',
+    'theqbschool'
+  ]),
+  nationalAnalyticsChartHandles: Object.freeze([
+    'CollinsworthPFF',
+    'throwthedamball',
+    'ghatz_28',
+    'tejfbanalytics',
+    'SumerSports',
+    'PFF_Moo',
+    'fball_insights',
+    'benbbaldwin',
+    'SethWalder',
+    'minakimes',
+    'NextGenStats',
+    'PFF'
+  ])
+});
+
+const GEMINI_X_DISCOVERY_429_UNTIL_MS = new Map();
+
+export function resetGeminiXDiscoveryRateLimitsForTest() {
+  GEMINI_X_DISCOVERY_429_UNTIL_MS.clear();
+}
+
+export function resolvePacificDateAndHour(nowMs = Date.now()) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    hour12: false
+  }).formatToParts(new Date(nowMs));
+  const get = type => parts.find(p => p.type === type)?.value || '';
+  const hourNum = Number(get('hour')) % 24;
+  return {
+    datePt: `${get('year')}-${get('month')}-${get('day')}`,
+    hourPt: Number.isFinite(hourNum) ? hourNum : 12
+  };
+}
+
+/**
+ * Pure deterministic scheduler for Option B Gemini Search X-status discovery.
+ * Guarantees:
+ *   - 49ers (SF) gets 2x daily quota (am + pm) on the best model cascade and runs FIRST.
+ *   - Shared National Film & Analytics gets 2 daily sweeps (am = film video/GIFs, pm = PFF/EPA charts) for all 32 clubs.
+ *   - Other 31 clubs get an even 1x daily sweep (`daily`) on a Flash-first cascade so `gemini-4-hydrogen`
+ *     remains protected for SF and Daily Top News Briefs.
+ *   - Already-completed PT slots spend 0 Gemini calls on subsequent 30-min CI ticks.
+ */
+export function resolveGeminiXDiscoveryPlan({
+  scope = 'team',
+  team = null,
+  nowMs = Date.now(),
+  prevMeta = null,
+  hasApiKey = false,
+  force = false
+} = {}) {
+  const { datePt, hourPt } = resolvePacificDateAndHour(nowMs);
+  const active = scope === 'team' ? resolveTeamConfig(team) : null;
+  const isSf = scope === 'team' && active?.abbr === 'SF';
+  const isNational = scope === 'national';
+
+  const dailyQuota = isNational
+    ? GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalSharedDailyCalls
+    : isSf
+      ? GEMINI_X_DISCOVERY_QUOTA_POLICY.sfDailyCalls
+      : GEMINI_X_DISCOVERY_QUOTA_POLICY.otherTeamDailyCalls;
+
+  const slotKey = isNational || isSf ? (hourPt >= 15 ? 'pm' : 'am') : 'daily';
+  const modelCascade = isNational
+    ? [...GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalModelCascade]
+    : isSf
+      ? [...GEMINI_X_DISCOVERY_QUOTA_POLICY.sfModelCascade]
+      : [...GEMINI_X_DISCOVERY_QUOTA_POLICY.otherTeamModelCascade];
+
+  const prevDate = String(prevMeta?.datePt || '').trim();
+  const completedToday =
+    prevDate === datePt && Array.isArray(prevMeta?.completedSlots) ? prevMeta.completedSlots : [];
+  const alreadyDoneSlot = !force && completedToday.includes(slotKey);
+  const dailyBudgetSpent = !force && completedToday.length >= dailyQuota;
+
+  return {
+    shouldRun: Boolean(hasApiKey && !alreadyDoneSlot && !dailyBudgetSpent),
+    reason: !hasApiKey
+      ? 'no_api_key'
+      : alreadyDoneSlot
+        ? 'slot_already_completed_today'
+        : dailyBudgetSpent
+          ? 'daily_quota_completed'
+          : 'ready',
+    scope,
+    teamAbbr: active?.abbr || 'NFL',
+    isSfPriority: isSf,
+    datePt,
+    hourPt,
+    slotKey,
+    dailyQuota,
+    completedSlotsToday: completedToday,
+    modelCascade
+  };
+}
+
+/**
+ * Extracts verified `https://x.com/<handle>/status/<id>` URLs from a Gemini `google_search`
+ * response (both non-thought text parts AND `groundingMetadata.groundingChunks`, including
+ * fast HEAD redirect unwrapping for `vertexaisearch.cloud.google.com/grounding-api-redirect/`).
+ */
+export async function extractXStatusUrlsFromGeminiResponse(
+  geminiJson = null,
+  { fetchImpl = globalThis.fetch, resolveRedirects = true, maxRedirects = 8, timeoutMs = 2500 } = {}
+) {
+  const statusRegex = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
+  const bySid = new Map();
+  const addStatusUrl = (handle, sid) => {
+    if (!handle || !sid || /^(i|intent|share|hashtag|search)$/i.test(handle)) return;
+    if (!bySid.has(sid)) bySid.set(sid, `https://x.com/${handle}/status/${sid}`);
+  };
+  const scanText = txt => {
+    if (!txt || typeof txt !== 'string') return;
+    const cleaned = txt.replace(/\\\//g, '/').replace(/&amp;/gi, '&');
+    for (const m of cleaned.matchAll(statusRegex)) {
+      addStatusUrl(m[1], m[2]);
+    }
+  };
+
+  const cand = geminiJson?.candidates?.[0] || {};
+  const parts = Array.isArray(cand?.content?.parts) ? cand.content.parts : [];
+  for (const p of parts) {
+    if (p && !p.thought && typeof p.text === 'string') {
+      scanText(p.text);
+    }
+  }
+
+  const chunks = Array.isArray(cand?.groundingMetadata?.groundingChunks)
+    ? cand.groundingMetadata.groundingChunks
+    : [];
+  const redirectCandidates = [];
+  for (const ch of chunks) {
+    const uri = String(ch?.web?.uri || '').trim();
+    const title = String(ch?.web?.title || '').trim();
+    if (!uri) continue;
+    scanText(uri);
+    if (
+      resolveRedirects &&
+      /vertexaisearch\.cloud\.google\.com\/grounding-api-redirect\//i.test(uri) &&
+      (/\b(?:x\.com|twitter|on x)\b/i.test(title) || /@[A-Za-z0-9_]{2,25}/.test(title) || redirectCandidates.length < 4)
+    ) {
+      redirectCandidates.push(uri);
+    }
+  }
+
+  if (resolveRedirects && redirectCandidates.length > 0 && typeof fetchImpl === 'function') {
+    const toProbe = redirectCandidates.slice(0, maxRedirects);
+    await Promise.allSettled(
+      toProbe.map(async redirUrl => {
+        try {
+          const res = await fetchImpl(redirUrl, {
+            method: 'HEAD',
+            redirect: 'manual',
+            signal: AbortSignal.timeout(timeoutMs)
+          });
+          const loc = String(res?.headers?.get?.('location') || '').trim();
+          if (loc) scanText(loc);
+        } catch {
+          // Ignore unreachable redirect
+        }
+      })
+    );
+  }
+
+  return [...bySid.values()];
+}
+
+/**
+ * Runs 1 grounded Gemini Google Search call to discover fresh (`<=7d`) `x.com/<handle>/status/<id>`
+ * URLs for All-22 film clips, animated GIFs, PFF grades, and analytics scatter charts.
+ * Every discovered URL is subsequently hydrated & verified against real X/FxTwitter APIs
+ * (so hallucinated IDs are impossible).
+ */
+export async function discoverXStatusesViaGeminiSearch({
+  scope = 'team',
+  team = null,
+  slotKey = 'am',
+  handles = [],
+  rosterPlayers = [],
+  apiKey = '',
+  modelCascade = null,
+  nowMs = Date.now(),
+  timeoutMs = 18000,
+  fetchImpl = globalThis.fetch
+} = {}) {
+  const cleanKey = String(apiKey || '').trim();
+  if (!cleanKey || typeof fetchImpl !== 'function') {
+    return { ok: false, skipped: true, reason: 'no_api_key', modelUsed: null, statusUrls: [] };
+  }
+  const active = scope === 'team' ? resolveTeamConfig(team) : null;
+  const cleanHandles = Array.from(
+    new Set(
+      (Array.isArray(handles) ? handles : [])
+        .map(h => String(h || '').replace(/^@/, '').trim())
+        .filter(h => /^[A-Za-z0-9_]{2,25}$/.test(h))
+    )
+  ).slice(0, 18);
+  if (cleanHandles.length === 0) {
+    return { ok: false, skipped: true, reason: 'no_handles', modelUsed: null, statusUrls: [] };
+  }
+
+  const cascade =
+    Array.isArray(modelCascade) && modelCascade.length > 0
+      ? modelCascade
+      : scope === 'national'
+        ? GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalModelCascade
+        : active?.abbr === 'SF'
+          ? GEMINI_X_DISCOVERY_QUOTA_POLICY.sfModelCascade
+          : GEMINI_X_DISCOVERY_QUOTA_POLICY.otherTeamModelCascade;
+
+  const { datePt } = resolvePacificDateAndHour(nowMs);
+  const handleListText = cleanHandles.map(h => `@${h}`).join(', ');
+  const starNames = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
+    .filter(p => p?.name && (p.rosterBucket === 'active' || p.rosterBucket === 'ir'))
+    .slice(0, 6)
+    .map(p => p.name)
+    .join(', ');
+
+  const prompt =
+    scope === 'national'
+      ? `Today is ${datePt}. Use Google Search to find recent (last 5 days) X/Twitter posts from these NFL film & analytics accounts: ${handleListText}.
+Focus specifically on posts with ${slotKey === 'pm' ? 'PFF grades, EPA/CPOE/coverage/separation scatter charts, or statistical tables' : 'All-22 film breakdowns, play-design video clips, pass-rush/OL trench GIFs, or QB tape clips'}.
+Return ONLY exact, verified https://x.com/<handle>/status/<numeric_id> URLs that actually appeared in your Google Search results (one URL per line, up to 20 URLs). NEVER invent or guess a status ID.`
+      : `Today is ${datePt}. Use Google Search to find recent (last 5 days) X/Twitter posts about the ${active.fullName} (${active.nickname}${starNames ? `, key players: ${starNames}` : ''}) from these beat, film, and highlight accounts: ${handleListText}.
+Focus specifically on posts with All-22 film clips, OL/DL trench GIFs, play-design breakdowns, PFF/EPA stat charts, or player highlight videos${slotKey === 'pm' ? ' (also include recent @BaldyNFL, @CollinsworthPFF, @FB_FilmAnalysis, or @throwthedamball posts mentioning ' + active.nickname + ' players)' : ''}.
+Return ONLY exact, verified https://x.com/<handle>/status/<numeric_id> URLs that actually appeared in your Google Search results (one URL per line, up to 18 URLs). NEVER invent or guess a status ID.`;
+
+  const rateLimitedModels = [];
+  let lastError = 'all_models_failed';
+
+  for (const model of cascade) {
+    const blockedUntil = GEMINI_X_DISCOVERY_429_UNTIL_MS.get(model) || 0;
+    if (nowMs < blockedUntil) {
+      rateLimitedModels.push(model);
+      continue;
+    }
+    const thinkingConfig = buildGeminiThinkingConfig(model, { preferredThinkingLevel: 'LOW' });
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(cleanKey)}`;
+    try {
+      const res = await fetchImpl(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tools: [{ google_search: {} }],
+          generationConfig: {
+            temperature: 0.0,
+            maxOutputTokens: 1024,
+            ...(thinkingConfig ? { thinkingConfig } : {})
+          },
+          contents: [{ role: 'user', parts: [{ text: prompt }] }]
+        }),
+        signal: AbortSignal.timeout(timeoutMs)
+      });
+      if (res.status === 429) {
+        GEMINI_X_DISCOVERY_429_UNTIL_MS.set(model, nowMs + 15 * 60_000);
+        rateLimitedModels.push(model);
+        lastError = `${model}: HTTP 429`;
+        continue;
+      }
+      if (!res.ok) {
+        lastError = `${model}: HTTP ${res.status}`;
+        continue;
+      }
+      const json = await res.json();
+      const statusUrls = await extractXStatusUrlsFromGeminiResponse(json, {
+        fetchImpl,
+        resolveRedirects: true,
+        maxRedirects: 10
+      });
+      return {
+        ok: true,
+        modelUsed: model,
+        slotKey,
+        datePt,
+        statusUrls,
+        rawPayloadText: statusUrls.join('\n'),
+        rateLimitedModels
+      };
+    } catch (err) {
+      lastError = `${model}: ${err?.message || String(err)}`;
+    }
+  }
+
+  return {
+    ok: false,
+    reason: lastError,
+    modelUsed: null,
+    slotKey,
+    datePt,
+    statusUrls: [],
+    rawPayloadText: '',
+    rateLimitedModels
+  };
+}
+
+/**
+ * Hydrates a list of discovered national `x.com/<handle>/status/<id>` URLs ONCE in Stage 1
+ * via `cdn.syndication.twimg.com` -> `api.fxtwitter.com`, returning raw X timeline objects
+ * that Stage 2 filters cleanly to each of the 32 NFL clubs via `filterXTimelineItemsForTeam`.
+ */
+export async function hydrateRawXStatusUrlsBatch(
+  statusUrls = [],
+  { nowMs = Date.now(), maxHydrate = 24, concurrency = 4, fetchImpl = globalThis.fetch } = {}
+) {
+  const statusRegex = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/i;
+  const sevenDaysAgoMs = nowMs - 7 * 86_400_000;
+  const candById = new Map();
+  for (const rawUrl of Array.isArray(statusUrls) ? statusUrls : []) {
+    const m = String(rawUrl || '').match(statusRegex);
+    if (!m) continue;
+    const handle = m[1];
+    const sid = m[2];
+    if (/^(i|intent|share|hashtag|search)$/i.test(handle)) continue;
+    const snowMs = extractXSnowflakeTimestampMs(sid);
+    if (!snowMs || snowMs < sevenDaysAgoMs || snowMs > nowMs + 6 * 3_600_000) continue;
+    if (!candById.has(sid)) candById.set(sid, { handle, statusId: sid, snowMs });
+  }
+
+  const batch = [...candById.values()]
+    .sort((a, b) => b.snowMs - a.snowMs)
+    .slice(0, maxHydrate);
+  if (batch.length === 0) return [];
+
+  const hydratedRaw = [];
+  for (let i = 0; i < batch.length; i += concurrency) {
+    if (i > 0) await new Promise(r => setTimeout(r, 150));
+    const microBatch = batch.slice(i, i + concurrency);
+    await Promise.allSettled(
+      microBatch.map(async cand => {
+        try {
+          let hydrated = null;
+          if (Date.now() >= syndicationRateLimitedUntilMs) {
+            try {
+              const res = await fetchImpl(
+                `https://cdn.syndication.twimg.com/tweet-result?id=${encodeURIComponent(cand.statusId)}&token=x`,
+                { signal: AbortSignal.timeout(3800) }
+              );
+              if (res.status === 429) {
+                syndicationRateLimitedUntilMs = Date.now() + 5 * 60_000;
+              } else if (res.ok) {
+                const syn = await res.json();
+                const txt =
+                  typeof syn?.text === 'string'
+                    ? normalizeMultilineSocialText(
+                        decodeHtmlEntities(syn.text).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+                      )
+                    : '';
+                const media = extractXSyndicationMedia(syn);
+                if (txt && txt.length >= (media.mp4Url || media.imageUrl ? 6 : 16)) {
+                  const screenName = syn.user?.screen_name || cand.handle;
+                  const durFmt =
+                    !media.isAnimatedGif && media.durationMs >= 4000
+                      ? `${Math.floor(media.durationMs / 60000)}:${String(Math.round((media.durationMs % 60000) / 1000)).padStart(2, '0')}`
+                      : '';
+                  const extUrls = Array.isArray(syn?.entities?.urls)
+                    ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
+                    : [];
+                  const nonSocialExt = extUrls.find(u => !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u)) || '';
+                  hydrated = {
+                    statusId: cand.statusId,
+                    handle: screenName,
+                    sourceHandle: screenName,
+                    userName: decodeHtmlEntities(syn.user?.name || `@${screenName}`),
+                    text: txt,
+                    quotedText: syn.quoted_tweet?.text ? decodeHtmlEntities(syn.quoted_tweet.text).replace(/\s+/g, ' ').trim() : '',
+                    url: `https://x.com/${screenName}/status/${cand.statusId}`,
+                    externalUrl: nonSocialExt,
+                    mp4Url: media.mp4Url,
+                    isAnimatedGif: media.isAnimatedGif,
+                    durationMs: media.durationMs,
+                    durationFmt: durFmt,
+                    imageUrl: media.imageUrl,
+                    imageUrls:
+                      Array.isArray(media.imageUrls) && media.imageUrls.length > (media.mp4Url ? 0 : 1)
+                        ? media.imageUrls
+                        : undefined,
+                    isPhoto: media.isPhoto,
+                    publishedAt: new Date(Math.min(nowMs, cand.snowMs)).toISOString()
+                  };
+                }
+              }
+            } catch {}
+          }
+
+          if (!hydrated) {
+            const fxRes = await fetchImpl(
+              `https://api.fxtwitter.com/${encodeURIComponent(cand.handle)}/status/${encodeURIComponent(cand.statusId)}`,
+              { signal: AbortSignal.timeout(4200), headers: { Accept: 'application/json' } }
+            );
+            if (fxRes.ok) {
+              const fxJson = await fxRes.json();
+              const tw = fxJson?.tweet;
+              const txt = normalizeMultilineSocialText(
+                decodeHtmlEntities(String(tw?.text || '')).replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+              );
+              const fxVid = Array.isArray(tw?.media?.videos) ? tw.media.videos[0] : null;
+              const fxPhotoUrls = (Array.isArray(tw?.media?.photos) ? tw.media.photos : [])
+                .map(p => String(p?.url || '').trim())
+                .filter(u => u.startsWith('https://'))
+                .slice(0, 4);
+              const fxPhoto = fxPhotoUrls[0] ? { url: fxPhotoUrls[0] } : null;
+              const mp4Url =
+                fxVid?.url && /^https:\/\/video\.twimg\.com\//i.test(String(fxVid.url)) ? String(fxVid.url) : '';
+              const isAnimatedGif = Boolean(mp4Url && (fxVid?.type === 'gif' || /\/tweet_video\//i.test(mp4Url)));
+              const durationMs = Math.round(Number(fxVid?.duration || 0) * 1000);
+              const durFmt =
+                !isAnimatedGif && durationMs >= 4000
+                  ? `${Math.floor(durationMs / 60000)}:${String(Math.round((durationMs % 60000) / 1000)).padStart(2, '0')}`
+                  : '';
+              const imageUrl = String(fxVid?.thumbnail_url || fxPhoto?.url || '').trim();
+              const distinctFxPhotos = mp4Url ? fxPhotoUrls.filter(u => u !== imageUrl) : fxPhotoUrls;
+              if (txt && txt.length >= (mp4Url || imageUrl ? 6 : 16)) {
+                const screenName = tw?.author?.screen_name || cand.handle;
+                hydrated = {
+                  statusId: cand.statusId,
+                  handle: screenName,
+                  sourceHandle: screenName,
+                  userName: decodeHtmlEntities(tw?.author?.name || `@${screenName}`),
+                  text: txt,
+                  quotedText: tw?.quote?.text ? decodeHtmlEntities(tw.quote.text).replace(/\s+/g, ' ').trim() : '',
+                  url: `https://x.com/${screenName}/status/${cand.statusId}`,
+                  externalUrl: '',
+                  mp4Url,
+                  isAnimatedGif,
+                  durationMs,
+                  durationFmt: durFmt,
+                  imageUrl: imageUrl.startsWith('https://') ? imageUrl : '',
+                  imageUrls: distinctFxPhotos.length > (mp4Url ? 0 : 1) ? distinctFxPhotos : undefined,
+                  isPhoto: Boolean(!mp4Url && fxPhoto?.url),
+                  publishedAt: new Date(Math.min(nowMs, cand.snowMs)).toISOString()
+                };
+              }
+            }
+          }
+          if (hydrated) hydratedRaw.push(hydrated);
+        } catch {}
+      })
+    );
+  }
+  return hydratedRaw;
 }

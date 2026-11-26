@@ -30,7 +30,7 @@ jobs:
           WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
           GROUP_PASSCODE: ${{ secrets.GROUP_PASSCODE }}
           GEMINI_SYNTHESIS_MODEL: auto
-        run: node scripts/refresh-all-nfl-teams.mjs --concurrency=4
+        run: node scripts/refresh-all-nfl-teams.mjs
 
       - name: Build dist-nfl-teams/ Pages bundle (All 32 Teams + nfl.joshal.com)
         run: node scripts/build-nfl-teams-pages.mjs

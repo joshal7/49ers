@@ -24678,6 +24678,198 @@ await testAsync(
 );
 
 await testAsync(
+  'Option B Gemini Search Grounded X-Status Discovery: SF 2x First-Priority Quota, Even 1x Across 31 Clubs, Vertex Redirect Unwrapping & 429 Failover',
+  async () => {
+    const {
+      GEMINI_X_DISCOVERY_QUOTA_POLICY,
+      resolveGeminiXDiscoveryPlan,
+      extractXStatusUrlsFromGeminiResponse,
+      discoverXStatusesViaGeminiSearch,
+      resetGeminiXDiscoveryRateLimitsForTest,
+      selectTeamLocalXHandles
+    } = await import('../scripts/lib/xBeatMediaFetcher.mjs');
+    const { ALL_NFL_TEAMS, getTeamByAbbr } = await import('../src/config/teamRegistry.js');
+
+    // 1. SF MUST be index 0 in ALL_NFL_TEAMS so SF always runs FIRST on best tokens
+    assert.equal(ALL_NFL_TEAMS[0].abbr, 'SF', 'SF must be first in ALL_NFL_TEAMS so 49ers always gets best daily Gemini tokens first');
+
+    // 2. Expanded local handle pool (18) prioritizes explicit film & video_pod creators (never hijacked by beat podcast bios!)
+    const sfReps = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'reporters.json'), 'utf8'));
+    const sfLocal18 = selectTeamLocalXHandles(getTeamByAbbr('SF'), sfReps, 18).map(h => h.toLowerCase());
+    for (const h of ['sulligenthub', 'grustasbrady', 'statsonfire']) {
+      assert.ok(sfLocal18.includes(h), `SF expanded local handle pool (18) must include @${h} (got: ${sfLocal18.join(', ')})`);
+    }
+
+    // 3. SF gets 2x daily quota (am + pm) on best tokens; other 31 clubs get even 1x daily quota on Flash-first cascade
+    const amPtMs = Date.parse('2026-11-25T17:30:00Z'); // 09:30 AM PST
+    const pmPtMs = Date.parse('2026-11-26T00:30:00Z'); // 04:30 PM PST (same PT date 2026-11-25!)
+    const nextDayAmPtMs = Date.parse('2026-11-26T17:30:00Z'); // 09:30 AM PST next day
+
+    const sfAmPlan = resolveGeminiXDiscoveryPlan({ scope: 'team', team: getTeamByAbbr('SF'), nowMs: amPtMs, prevMeta: null, hasApiKey: true });
+    assert.equal(sfAmPlan.shouldRun, true);
+    assert.equal(sfAmPlan.dailyQuota, 2, 'SF must receive 2x daily X-discovery quota');
+    assert.equal(sfAmPlan.slotKey, 'am');
+    assert.equal(sfAmPlan.modelCascade[0], 'gemini-4-hydrogen', 'SF must get best frontier tokens first');
+
+    // Same AM slot on next 30-min tick spends 0 calls
+    const sfAmRepeat = resolveGeminiXDiscoveryPlan({
+      scope: 'team',
+      team: getTeamByAbbr('SF'),
+      nowMs: amPtMs + 30 * 60_000,
+      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am'] },
+      hasApiKey: true
+    });
+    assert.equal(sfAmRepeat.shouldRun, false, 'Completed SF AM slot must spend 0 calls on subsequent 30-min ticks');
+
+    // PM slot unlocks 2nd daily call for SF on same PT date
+    const sfPmPlan = resolveGeminiXDiscoveryPlan({
+      scope: 'team',
+      team: getTeamByAbbr('SF'),
+      nowMs: pmPtMs,
+      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am'] },
+      hasApiKey: true
+    });
+    assert.equal(sfPmPlan.shouldRun, true, 'SF PM slot must unlock 2nd daily call');
+    assert.equal(sfPmPlan.slotKey, 'pm');
+
+    // After both AM and PM complete, SF spends 0 calls until midnight PT reset
+    const sfDoneToday = resolveGeminiXDiscoveryPlan({
+      scope: 'team',
+      team: getTeamByAbbr('SF'),
+      nowMs: pmPtMs + 30 * 60_000,
+      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am', 'pm'] },
+      hasApiKey: true
+    });
+    assert.equal(sfDoneToday.shouldRun, false);
+
+    // Next PT day resets cleanly
+    const sfNextDay = resolveGeminiXDiscoveryPlan({
+      scope: 'team',
+      team: getTeamByAbbr('SF'),
+      nowMs: nextDayAmPtMs,
+      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am', 'pm'] },
+      hasApiKey: true
+    });
+    assert.equal(sfNextDay.shouldRun, true, 'Daily quota must reset cleanly at midnight PT');
+
+    // Verify ALL 31 non-SF clubs get strictly even 1x daily quota and Flash-first cascade (never touching gemini-4-hydrogen)
+    for (const club of ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF')) {
+      const plan = resolveGeminiXDiscoveryPlan({ scope: 'team', team: club, nowMs: amPtMs, prevMeta: null, hasApiKey: true });
+      assert.equal(plan.dailyQuota, 1, `${club.abbr} must have even 1x daily quota (half of SF 2x)`);
+      assert.equal(plan.slotKey, 'daily', `${club.abbr} must use single daily slot`);
+      assert.ok(!plan.modelCascade.includes('gemini-4-hydrogen'), `${club.abbr} Flash-first discovery must preserve gemini-4-hydrogen for SF & briefs`);
+      const done = resolveGeminiXDiscoveryPlan({
+        scope: 'team',
+        team: club,
+        nowMs: pmPtMs,
+        prevMeta: { datePt: plan.datePt, completedSlots: ['daily'] },
+        hasApiKey: true
+      });
+      assert.equal(done.shouldRun, false, `${club.abbr} must spend 0 calls once daily slot is complete`);
+    }
+
+    // Shared national pool gets 2 daily sweeps (AM = film videos, PM = analytics charts)
+    const natAm = resolveGeminiXDiscoveryPlan({ scope: 'national', nowMs: amPtMs, prevMeta: null, hasApiKey: true });
+    assert.equal(natAm.dailyQuota, 2);
+    assert.equal(natAm.slotKey, 'am');
+    assert.ok(GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalVideoHandles.includes('BaldyNFL'));
+    assert.ok(GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalAnalyticsChartHandles.includes('throwthedamball'));
+    assert.ok(GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalAnalyticsChartHandles.includes('ghatz_28'));
+
+    // 4. extractXStatusUrlsFromGeminiResponse ignores thought parts, deduplicates statusIds, and unwraps Vertex redirects
+    const mockGeminiJson = {
+      candidates: [
+        {
+          content: {
+            parts: [
+              { thought: true, text: 'Internal thinking: https://x.com/FakeThought/status/2199000000000000999' },
+              {
+                text: 'https://x.com/BaldyNFL/status/2199000000000000002\nhttps://twitter.com/baldynfl/status/2199000000000000002\nhttps://x.com/SulligentHUB/status/2199000000000000005'
+              }
+            ]
+          },
+          groundingMetadata: {
+            groundingChunks: [
+              {
+                web: {
+                  uri: 'https://vertexaisearch.cloud.google.com/grounding-api-redirect/MOCK_REDIRECT_DIETER',
+                  title: 'Dieter Kurtenbach on X: "Dump truck on the move"'
+                }
+              }
+            ]
+          }
+        }
+      ]
+    };
+    const extracted = await extractXStatusUrlsFromGeminiResponse(mockGeminiJson, {
+      fetchImpl: async () => ({
+        ok: false,
+        status: 302,
+        headers: { get: k => (k.toLowerCase() === 'location' ? 'https://x.com/dieter/status/2199000000000000001' : '') }
+      })
+    });
+    assert.equal(extracted.length, 3, 'Must deduplicate casing variants, skip thought parts, and unwrap Vertex redirect to 3 unique X status URLs');
+    assert.ok(!extracted.some(u => u.includes('FakeThought')), 'Must never extract URLs from Gemini internal thought parts');
+    assert.ok(extracted.includes('https://x.com/dieter/status/2199000000000000001'), 'Must unwrap Vertex grounding redirect to canonical x.com status URL');
+
+    // 5. discoverXStatusesViaGeminiSearch trips per-model 429 circuit-breaker and fails over cleanly to next model
+    resetGeminiXDiscoveryRateLimitsForTest();
+    const calledModels = [];
+    const mockSearchFetch = async url => {
+      const m = String(url).match(/\/models\/([^:]+):generateContent/);
+      if (m) calledModels.push(m[1]);
+      if (String(url).includes('gemini-4-hydrogen')) {
+        return { ok: false, status: 429, text: async () => 'RESOURCE_EXHAUSTED' };
+      }
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          candidates: [{ content: { parts: [{ text: 'https://x.com/GrustasBrady/status/2199000000000000007' }] } }]
+        })
+      };
+    };
+    const res1 = await discoverXStatusesViaGeminiSearch({
+      scope: 'team',
+      team: getTeamByAbbr('SF'),
+      slotKey: 'am',
+      handles: ['GrustasBrady', 'SulligentHUB'],
+      apiKey: 'AIzaSyMockTestKeyForUnitQA000000000',
+      modelCascade: ['gemini-4-hydrogen', 'gemini-3.8-flash'],
+      nowMs: amPtMs,
+      fetchImpl: mockSearchFetch
+    });
+    assert.equal(res1.ok, true, 'Must fail over cleanly from 429 gemini-4-hydrogen to gemini-3.8-flash');
+    assert.equal(res1.modelUsed, 'gemini-3.8-flash');
+    assert.deepEqual(res1.statusUrls, ['https://x.com/GrustasBrady/status/2199000000000000007']);
+    assert.deepEqual(calledModels, ['gemini-4-hydrogen', 'gemini-3.8-flash']);
+
+    // Second call while 429 breaker is active must skip gemini-4-hydrogen immediately (0 wasted 429 hits)
+    calledModels.length = 0;
+    const res2 = await discoverXStatusesViaGeminiSearch({
+      scope: 'team',
+      team: getTeamByAbbr('SF'),
+      slotKey: 'pm',
+      handles: ['GrustasBrady'],
+      apiKey: 'AIzaSyMockTestKeyForUnitQA000000000',
+      modelCascade: ['gemini-4-hydrogen', 'gemini-3.8-flash'],
+      nowMs: amPtMs + 60_000,
+      fetchImpl: mockSearchFetch
+    });
+    assert.equal(res2.ok, true);
+    assert.deepEqual(calledModels, ['gemini-3.8-flash'], 'Active 429 circuit-breaker must skip throttled model immediately');
+    resetGeminiXDiscoveryRateLimitsForTest();
+
+    // 6. Total daily Option B budget across all 32 teams + shared national pool stays strictly <= 35 RPD (~7% of 500 RPD Search cap)
+    const totalDailyOptionBCalls =
+      GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalSharedDailyCalls +
+      GEMINI_X_DISCOVERY_QUOTA_POLICY.sfDailyCalls +
+      31 * GEMINI_X_DISCOVERY_QUOTA_POLICY.otherTeamDailyCalls;
+    assert.equal(totalDailyOptionBCalls, 35, 'Total Option B daily budget must equal exactly 2 (national) + 2 (SF 2x) + 31 (other teams 1x) = 35 RPD');
+  }
+);
+
+await testAsync(
   'Generalized 32-Team YouTube Creator Attribution, True Timestamps, Sorting & Embed-Block Safeguards',
   async () => {
     const { parseRelativePublishedAgoToIso } = await import('../scripts/lib/seasonalContentBuilder.mjs');

@@ -48,6 +48,7 @@ jobs:
       - name: Run Unified All-32-Team Live NFL Data & Playoff Seasonal Sync Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_NFL_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
           GEMINI_NEWS_API_KEY: ${{ secrets.GEMINI_NEWS_API_KEY }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
