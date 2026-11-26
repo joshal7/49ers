@@ -25,18 +25,29 @@ import {
   buildGeminiThinkingConfig,
   resolveGeminiThinkingLevelLabel
 } from '../../src/engine/geminiStudioPrompts.js';
+import {
+  DEFAULT_GEMINI_QUOTA_CONFIG,
+  DEFAULT_LITE_FALLBACK_MODELS,
+  DEFAULT_PREMIER_FALLBACK_MODELS,
+  estimateGeminiCallTokens,
+  isSearchGroundingAllowed,
+  markSearchGroundingUnavailableToday,
+  normalizeGeminiQuotaState,
+  recordGeminiCallOutcome,
+  refreshGeminiModelCatalogIfDue,
+  selectBestAvailableModel
+} from '../../src/engine/geminiQuotaManager.js';
 
 /**
- * Default ordered cascade of best available Free-Tier Gemini models.
- * `gemini-4-hydrogen` runs at `thinkingLevel: "XHIGH"`, cascading to 3.8+ Flash (`"HIGH"`) & 2.5.
+ * Default ordered cascade of best available Free-Tier Gemini models (dynamically overridden
+ * by live `/v1beta/models` polling via `geminiQuotaManager.js` as models launch/deprecate).
  */
 export const DEFAULT_FREE_MODEL_CASCADE = [
   'gemini-4-hydrogen',
   'gemini-3.8-flash',
+  'gemini-3.6-flash',
   'gemini-3.5-flash',
-  'gemini-3-flash-preview',
-  'gemini-2.5-flash',
-  'gemini-2.5-pro'
+  'gemini-3-flash-preview'
 ];
 
 export const HIGH_THINKING_BUDGET = 24576;
@@ -340,45 +351,138 @@ export function parseGroundedJsonSafe(rawText = '', fallback = null) {
   return fallback;
 }
 
-async function callGeminiCascade(apiKey, modelsCascade, payload, timeoutMs) {
+async function callGeminiCascade(
+  apiKey,
+  modelsCascade,
+  payload,
+  timeoutMs,
+  {
+    quotaState = null,
+    pool = 'premier',
+    isPriorityTeam = false,
+    allowSearchGrounding = true,
+    maxOutputTokens = 2048,
+    quotaConfig = DEFAULT_GEMINI_QUOTA_CONFIG
+  } = {}
+) {
   const requestedBudget =
     payload?.generationConfig?.thinkingConfig?.thinkingBudget || HIGH_THINKING_BUDGET;
-  for (const model of modelsCascade) {
+  const estTokens = estimateGeminiCallTokens(
+    payload?.contents?.[0]?.parts?.[0]?.text || '',
+    payload?.systemInstruction?.parts?.[0]?.text || '',
+    maxOutputTokens
+  );
+
+  // Build ordered candidate attempts respecting Two-Pool RPM/TPM/RPD/TPD & SF Early-Degradation Reserve!
+  const attempted = new Set();
+  const maxAttempts = Math.max(modelsCascade.length, 6);
+
+  for (let step = 0; step < maxAttempts; step += 1) {
+    let model = null;
+    if (quotaState) {
+      const remainingPreferred = modelsCascade.filter(m => !attempted.has(m));
+      const picked = selectBestAvailableModel(quotaState, {
+        pool,
+        isPriorityTeam,
+        estimatedTokens: estTokens,
+        nowMs: Date.now(),
+        config: quotaConfig,
+        preferredModels: remainingPreferred.length > 0 ? remainingPreferred : null
+      });
+      if (!picked.ok || !picked.modelId) break;
+      if (picked.waitMs > 0) {
+        // Stagger cleanly so RPM (<=4 RPM premier, <=12 RPM lite) & TPM (<=200K) never redline!
+        await new Promise(r => setTimeout(r, Math.min(picked.waitMs, 22_000)));
+      }
+      model = picked.modelId;
+    } else {
+      model = modelsCascade.find(m => !attempted.has(m)) || null;
+      if (!model) break;
+    }
+    attempted.add(model);
+
     try {
       const modelThinkingConfig = buildGeminiThinkingConfig(model, requestedBudget);
-      const modelPayload = {
-        ...payload,
-        generationConfig: {
-          ...(payload.generationConfig || {}),
-          thinkingConfig: modelThinkingConfig
-        }
-      };
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-      let res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: AbortSignal.timeout(timeoutMs),
-        body: JSON.stringify(modelPayload)
-      });
-      if (res.status === 400 && modelThinkingConfig?.thinkingLevel === 'XHIGH') {
-        const highFallbackPayload = {
-          ...modelPayload,
+      const trySearchFirst = Boolean(
+        allowSearchGrounding &&
+          payload?.tools?.some?.(t => t && 'google_search' in t) &&
+          (!quotaState || isSearchGroundingAllowed(quotaState, Date.now()))
+      );
+      const searchModes = trySearchFirst ? [true, false] : [false];
+
+      for (const useSearch of searchModes) {
+        const { tools: _origTools, ...payloadWithoutTools } = payload || {};
+        const modelPayload = {
+          ...payloadWithoutTools,
+          ...(useSearch ? { tools: [{ google_search: {} }] } : {}),
           generationConfig: {
-            ...(modelPayload.generationConfig || {}),
-            thinkingConfig: { thinkingLevel: 'HIGH' }
+            ...(payload.generationConfig || {}),
+            ...(modelThinkingConfig ? { thinkingConfig: modelThinkingConfig } : {})
           }
         };
-        res = await fetch(endpoint, {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        let res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           signal: AbortSignal.timeout(timeoutMs),
-          body: JSON.stringify(highFallbackPayload)
+          body: JSON.stringify(modelPayload)
         });
+        if (res.status === 400 && modelThinkingConfig?.thinkingLevel === 'XHIGH') {
+          const highFallbackPayload = {
+            ...modelPayload,
+            generationConfig: {
+              ...(modelPayload.generationConfig || {}),
+              thinkingConfig: { thinkingLevel: 'HIGH' }
+            }
+          };
+          res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            signal: AbortSignal.timeout(timeoutMs),
+            body: JSON.stringify(highFallbackPayload)
+          });
+        }
+        if (res.ok) {
+          const json = await res.json();
+          const actualTokens = Number(json?.usageMetadata?.totalTokenCount) || estTokens;
+          if (quotaState) {
+            recordGeminiCallOutcome(quotaState, {
+              modelId: model,
+              status: 200,
+              ok: true,
+              actualTokens,
+              estimatedTokens: estTokens,
+              isPriorityTeam,
+              usedSearch: useSearch,
+              nowMs: Date.now(),
+              config: quotaConfig
+            });
+            // If search=true failed 429 and direct search=false just succeeded 200, disable search for rest of PT day!
+            if (trySearchFirst && !useSearch) {
+              markSearchGroundingUnavailableToday(quotaState, Date.now());
+            }
+          }
+          return { ok: true, modelUsed: model, grounded: useSearch, json, actualTokens };
+        }
+        if (quotaState) {
+          recordGeminiCallOutcome(quotaState, {
+            modelId: model,
+            status: res.status,
+            ok: false,
+            estimatedTokens: estTokens,
+            isPriorityTeam,
+            usedSearch: useSearch,
+            nowMs: Date.now(),
+            config: quotaConfig
+          });
+        }
+        if (useSearch && (res.status === 429 || res.status === 400 || res.status === 403)) {
+          // Immediately retry direct (`search=false`) on this same model before failing over!
+          continue;
+        }
+        if (![400, 403, 404, 429, 503].includes(res.status)) return { ok: false, modelUsed: null, json: null };
+        break;
       }
-      if (res.ok) {
-        return { ok: true, modelUsed: model, json: await res.json() };
-      }
-      if (![400, 403, 404, 429, 503].includes(res.status)) break;
     } catch {}
   }
   return { ok: false, modelUsed: null, json: null };
@@ -502,14 +606,33 @@ export async function runSinglePassDailyGeminiSynthesis({
   appData,
   rosterPlayers = [],
   thinkingBudget = HIGH_THINKING_BUDGET,
-  timeoutMs = 75000
+  timeoutMs = 75000,
+  quotaState = null,
+  pool = 'premier',
+  isPriorityTeam = false,
+  allowSearchGrounding = true,
+  maxOutputTokens = 2048
 } = {}) {
   if (!apiKey || !promptText) return { ok: false, rawText: '', modelUsed: null };
-  const discovery = await discoverBestFreeGeminiModel(apiKey, { probeQuota: false });
-  const cascade = preferredModel
-    ? [preferredModel, ...discovery.candidateCascade.filter(m => m !== preferredModel)]
-    : discovery.candidateCascade;
+  let cascade = [];
+  if (quotaState) {
+    const poolModels =
+      pool === 'lite'
+        ? quotaState.pools?.lite || DEFAULT_LITE_FALLBACK_MODELS
+        : quotaState.pools?.premier || DEFAULT_PREMIER_FALLBACK_MODELS;
+    cascade = preferredModel && poolModels.includes(preferredModel)
+      ? [preferredModel, ...poolModels.filter(m => m !== preferredModel)]
+      : [...poolModels];
+  } else {
+    const discovery = await discoverBestFreeGeminiModel(apiKey, { probeQuota: false });
+    cascade = preferredModel
+      ? [preferredModel, ...discovery.candidateCascade.filter(m => m !== preferredModel)]
+      : discovery.candidateCascade;
+  }
   const systemPrompt = buildLiveGroundingSystemPrompt(appData);
+  const useSearch = Boolean(
+    allowSearchGrounding && (!quotaState || isSearchGroundingAllowed(quotaState, Date.now()))
+  );
 
   try {
     const genCall = await callGeminiCascade(
@@ -517,18 +640,26 @@ export async function runSinglePassDailyGeminiSynthesis({
       cascade,
       {
         systemInstruction: { parts: [{ text: systemPrompt }] },
-        tools: [{ google_search: {} }],
+        ...(useSearch ? { tools: [{ google_search: {} }] } : {}),
         generationConfig: {
           temperature: 0.18,
+          maxOutputTokens,
           thinkingConfig: { thinkingBudget }
         },
         contents: [{ role: 'user', parts: [{ text: promptText }] }]
       },
-      timeoutMs
+      timeoutMs,
+      {
+        quotaState,
+        pool,
+        isPriorityTeam,
+        allowSearchGrounding: useSearch,
+        maxOutputTokens
+      }
     );
     if (!genCall.ok || !genCall.json) return { ok: false, rawText: '', modelUsed: null };
     const rawText = auditAndSanitizeTextBlock(extractGeminiResponseText(genCall.json), rosterPlayers);
-    return { ok: Boolean(rawText), rawText, modelUsed: genCall.modelUsed };
+    return { ok: Boolean(rawText), rawText, modelUsed: genCall.modelUsed, grounded: Boolean(genCall.grounded) };
   } catch {
     return { ok: false, rawText: '', modelUsed: null };
   }

@@ -39,6 +39,17 @@ import {
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
 import {
+  DEFAULT_GEMINI_QUOTA_CONFIG,
+  estimateGeminiCallTokens,
+  getQuotaPacificDateKey,
+  isSearchGroundingAllowed,
+  markSearchGroundingUnavailableToday,
+  normalizeGeminiQuotaState,
+  recordGeminiCallOutcome,
+  refreshGeminiModelCatalogIfDue,
+  selectBestAvailableModel
+} from '../src/engine/geminiQuotaManager.js';
+import {
   TEAM_CANONICAL_HASHTAGS,
   decodeHtmlEntities,
   extractXSyndicationMedia,
@@ -380,87 +391,228 @@ function isCacheableStructuredIntel(rawText = '', team = null, oppAbbr = '') {
   }
 }
 
+async function loadAndRefreshWorkerQuotaState(env, apiKey) {
+  const nowMs = Date.now();
+  const ptDate = getQuotaPacificDateKey(nowMs);
+  const kvKey = `gemini:quota:v2:${ptDate}`;
+  const catalogKvKey = 'gemini:catalog:v2';
+  let stored = null;
+  let storedCatalog = null;
+  if (env?.SHARED_CACHE) {
+    try {
+      [stored, storedCatalog] = await Promise.all([
+        env.SHARED_CACHE.get(kvKey, 'json'),
+        env.SHARED_CACHE.get(catalogKvKey, 'json')
+      ]);
+    } catch {}
+  }
+  const merged = normalizeGeminiQuotaState(
+    {
+      ...(stored || {}),
+      ...(storedCatalog?.pools ? { pools: storedCatalog.pools } : {}),
+      ...(storedCatalog?.catalogUpdatedAtMs ? { catalogUpdatedAtMs: storedCatalog.catalogUpdatedAtMs } : {}),
+      deprecatedModels: {
+        ...(storedCatalog?.deprecatedModels || {}),
+        ...(stored?.deprecatedModels || {})
+      },
+      learnedRpdCaps: {
+        ...(storedCatalog?.learnedRpdCaps || {}),
+        ...(stored?.learnedRpdCaps || {})
+      }
+    },
+    nowMs
+  );
+  const refreshed = await refreshGeminiModelCatalogIfDue(merged, apiKey, {
+    nowMs,
+    timeoutMs: 6000
+  });
+  if (refreshed.refreshed && env?.SHARED_CACHE) {
+    await env.SHARED_CACHE.put(
+      catalogKvKey,
+      JSON.stringify({
+        pools: refreshed.state.pools,
+        catalogUpdatedAtMs: refreshed.state.catalogUpdatedAtMs,
+        deprecatedModels: refreshed.state.deprecatedModels,
+        learnedRpdCaps: refreshed.state.learnedRpdCaps
+      }),
+      { expirationTtl: 60 * 60 * 24 * 8 }
+    ).catch(() => {});
+  }
+  return { state: refreshed.state, kvKey, catalogKvKey };
+}
+
+async function saveWorkerQuotaState(env, kvKey, catalogKvKey, state) {
+  if (!env?.SHARED_CACHE || !state) return;
+  try {
+    await Promise.all([
+      env.SHARED_CACHE.put(kvKey, JSON.stringify(state), { expirationTtl: 60 * 60 * 28 }),
+      env.SHARED_CACHE.put(
+        catalogKvKey,
+        JSON.stringify({
+          pools: state.pools,
+          catalogUpdatedAtMs: state.catalogUpdatedAtMs,
+          deprecatedModels: state.deprecatedModels,
+          learnedRpdCaps: state.learnedRpdCaps
+        }),
+        { expirationTtl: 60 * 60 * 24 * 8 }
+      )
+    ]);
+  } catch {}
+}
+
 async function callGeminiSinglePass(
   env,
-  { systemPrompt, userPrompt, thinkingLevel = 'XHIGH', jsonMode = false, useGoogleSearch = true }
+  {
+    systemPrompt,
+    userPrompt,
+    thinkingLevel = 'XHIGH',
+    jsonMode = false,
+    useGoogleSearch = true,
+    pool = 'premier',
+    team = null,
+    maxOutputTokens = 2048
+  }
 ) {
   const apiKey = String(env.GEMINI_NFL_API_KEY || env.GEMINI_API_KEY || '').trim();
   if (!apiKey) return { ok: false, status: 503, error: 'GEMINI_NFL_API_KEY not configured' };
 
-  const cascade = [
-    PRIMARY_GEMINI_REASONING_MODEL,
-    'gemini-3.8-flash',
-    'gemini-3.5-flash',
-    'gemini-3-flash-preview',
-    'gemini-2.5-flash'
-  ];
-  let lastError = 'All Gemini cascade tiers failed';
+  const isPriorityTeam = team?.abbr === 'SF';
+  const estTokens = estimateGeminiCallTokens(userPrompt, systemPrompt, maxOutputTokens);
+  const { state: quotaState, kvKey, catalogKvKey } = await loadAndRefreshWorkerQuotaState(env, apiKey);
 
-  for (const model of cascade) {
-    const primaryThinking = buildGeminiThinkingConfig(model, { preferredThinkingLevel: thinkingLevel });
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+  const attempted = new Set();
+  let lastError = 'All Gemini cascade tiers exhausted or reserved';
+  let stateDirty = false;
 
-    const attempts = [];
-    if (useGoogleSearch && !jsonMode) {
-      attempts.push({ withSearch: true, thinkingConfig: primaryThinking });
-      attempts.push({ withSearch: false, thinkingConfig: primaryThinking });
-    } else {
-      attempts.push({ withSearch: false, thinkingConfig: primaryThinking });
-    }
-    if (primaryThinking?.thinkingLevel === 'XHIGH') {
-      attempts.push({ withSearch: false, thinkingConfig: { thinkingLevel: 'HIGH' } });
-    }
+  try {
+    for (let step = 0; step < 6; step += 1) {
+      const poolList = (quotaState.pools?.[pool] || [PRIMARY_GEMINI_REASONING_MODEL]).filter(
+        m => !attempted.has(m)
+      );
+      if (poolList.length === 0) break;
 
-    for (let idx = 0; idx < attempts.length; idx++) {
-      const { withSearch, thinkingConfig } = attempts[idx];
-      const attemptTimeoutMs = withSearch
-        ? 18000
-        : thinkingConfig?.thinkingLevel === 'XHIGH'
-          ? 58000
-          : 28000;
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: systemPrompt }] },
-            ...(withSearch ? { tools: [{ google_search: {} }] } : {}),
-            generationConfig: {
-              temperature: 0.18,
-              ...(jsonMode && !withSearch ? { responseMimeType: 'application/json' } : {}),
-              ...(thinkingConfig ? { thinkingConfig } : {})
-            },
-            contents: [{ role: 'user', parts: [{ text: String(userPrompt).slice(0, 24000) }] }]
-          }),
-          signal: AbortSignal.timeout(attemptTimeoutMs)
-        });
-        if (!res.ok) {
-          const errSnippet = (await res.text().catch(() => '')).slice(0, 180);
-          lastError = `${model} (${withSearch ? 'search' : 'direct'}, HTTP ${res.status}): ${errSnippet || res.statusText}`;
-          if (withSearch && (res.status === 400 || res.status === 403 || res.status === 429 || res.status >= 500)) continue;
-          if (!withSearch && res.status === 400 && thinkingConfig?.thinkingLevel === 'XHIGH') continue;
-          break;
-        }
-        const json = await res.json();
-        const parts = json?.candidates?.[0]?.content?.parts || [];
-        const text = parts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
-        if (!text) continue;
-        return {
-          ok: true,
-          modelUsed: model,
-          thinkingLevelUsed:
-            thinkingConfig?.thinkingLevel || resolveGeminiThinkingLevelLabel(model, thinkingLevel),
-          grounded: withSearch,
-          rawText: text
-        };
-      } catch (err) {
-        lastError = `${model} (${withSearch ? 'search' : 'direct'}): ${err?.message || String(err)}`;
-        if (withSearch || thinkingConfig?.thinkingLevel === 'XHIGH') continue;
+      const picked = selectBestAvailableModel(quotaState, {
+        pool,
+        isPriorityTeam,
+        estimatedTokens: estTokens,
+        nowMs: Date.now(),
+        config: DEFAULT_GEMINI_QUOTA_CONFIG,
+        preferredModels: poolList
+      });
+      if (!picked.ok || !picked.modelId) {
+        lastError = picked.reason || lastError;
         break;
       }
+      if (picked.waitMs > 0 && picked.waitMs <= 16_000) {
+        await new Promise(r => setTimeout(r, picked.waitMs));
+      } else if (picked.waitMs > 16_000) {
+        // Worker request timeout safety: skip overly long cooldowns and try next ready model in pool
+        attempted.add(picked.modelId);
+        continue;
+      }
+
+      const model = picked.modelId;
+      attempted.add(model);
+
+      const primaryThinking = buildGeminiThinkingConfig(model, { preferredThinkingLevel: thinkingLevel });
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const trySearchFirst = Boolean(
+        useGoogleSearch && !jsonMode && isSearchGroundingAllowed(quotaState, Date.now())
+      );
+
+      const attempts = [];
+      if (trySearchFirst) {
+        attempts.push({ withSearch: true, thinkingConfig: primaryThinking });
+        attempts.push({ withSearch: false, thinkingConfig: primaryThinking });
+      } else {
+        attempts.push({ withSearch: false, thinkingConfig: primaryThinking });
+      }
+      if (primaryThinking?.thinkingLevel === 'XHIGH') {
+        attempts.push({ withSearch: false, thinkingConfig: { thinkingLevel: 'HIGH' } });
+      }
+
+      for (let idx = 0; idx < attempts.length; idx++) {
+        const { withSearch, thinkingConfig } = attempts[idx];
+        const attemptTimeoutMs = withSearch
+          ? 15000
+          : thinkingConfig?.thinkingLevel === 'XHIGH'
+            ? 55000
+            : 28000;
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+              ...(withSearch ? { tools: [{ google_search: {} }] } : {}),
+              generationConfig: {
+                temperature: 0.18,
+                maxOutputTokens,
+                ...(jsonMode && !withSearch ? { responseMimeType: 'application/json' } : {}),
+                ...(thinkingConfig ? { thinkingConfig } : {})
+              },
+              contents: [{ role: 'user', parts: [{ text: String(userPrompt).slice(0, 24000) }] }]
+            }),
+            signal: AbortSignal.timeout(attemptTimeoutMs)
+          });
+          if (!res.ok) {
+            const errSnippet = (await res.text().catch(() => '')).slice(0, 180);
+            lastError = `${model} (${withSearch ? 'search' : 'direct'}, HTTP ${res.status}): ${errSnippet || res.statusText}`;
+            recordGeminiCallOutcome(quotaState, {
+              modelId: model,
+              status: res.status,
+              ok: false,
+              estimatedTokens: estTokens,
+              isPriorityTeam,
+              usedSearch: withSearch,
+              nowMs: Date.now()
+            });
+            stateDirty = true;
+            if (withSearch && (res.status === 400 || res.status === 403 || res.status === 429 || res.status >= 500)) continue;
+            if (!withSearch && res.status === 400 && thinkingConfig?.thinkingLevel === 'XHIGH') continue;
+            break;
+          }
+          const json = await res.json();
+          const parts = json?.candidates?.[0]?.content?.parts || [];
+          const text = parts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
+          if (!text) continue;
+          const actualTokens = Number(json?.usageMetadata?.totalTokenCount) || estTokens;
+          recordGeminiCallOutcome(quotaState, {
+            modelId: model,
+            status: 200,
+            ok: true,
+            actualTokens,
+            estimatedTokens: estTokens,
+            isPriorityTeam,
+            usedSearch: withSearch,
+            nowMs: Date.now()
+          });
+          if (trySearchFirst && !withSearch) {
+            // Search failed 429 while direct succeeded 200 -> disable search for rest of PT day (zero wasted 2x retries!)
+            markSearchGroundingUnavailableToday(quotaState, Date.now());
+          }
+          stateDirty = true;
+          return {
+            ok: true,
+            modelUsed: model,
+            thinkingLevelUsed:
+              thinkingConfig?.thinkingLevel || resolveGeminiThinkingLevelLabel(model, thinkingLevel),
+            grounded: withSearch,
+            rawText: text
+          };
+        } catch (err) {
+          lastError = `${model} (${withSearch ? 'search' : 'direct'}): ${err?.message || String(err)}`;
+          if (withSearch || thinkingConfig?.thinkingLevel === 'XHIGH') continue;
+          break;
+        }
+      }
+    }
+    return { ok: false, status: 502, error: lastError };
+  } finally {
+    if (stateDirty) {
+      await saveWorkerQuotaState(env, kvKey, catalogKvKey, quotaState);
     }
   }
-  return { ok: false, status: 502, error: lastError };
 }
 
 async function handleCachedEdgeGet(request, teamAbbr, cacheTtlSec, fetcherFn) {
@@ -2343,7 +2495,9 @@ export default {
             systemPrompt: effectiveSystem,
             userPrompt: String(body.prompt).slice(0, 24000),
             thinkingLevel: 'XHIGH',
-            useGoogleSearch: true
+            useGoogleSearch: true,
+            pool: 'premier',
+            team
           });
           if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors, noStoreHeaders);
           const payloadOut = {
@@ -2414,7 +2568,9 @@ export default {
           systemPrompt: effectiveSystem,
           userPrompt: String(body.prompt).slice(0, 24000),
           thinkingLevel: 'XHIGH',
-          useGoogleSearch: true
+          useGoogleSearch: true,
+          pool: 'premier',
+          team
         });
         if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors);
         const out = {

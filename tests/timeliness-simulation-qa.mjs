@@ -996,7 +996,7 @@ await runSim('Scenario 7 [Worker /api/live-wire & Atomic Wire Dedup]: Worker hyd
 // ---------------------------------------------------------------------------
 // Scenario 8: Gemini Token Conservation Audit (Hydrogen Preserved vs 3.8 Flash)
 // ---------------------------------------------------------------------------
-await runSim('Scenario 8 [Gemini Token Tiering]: discoverBestFreeGeminiModel uses 0 generateContent tokens by default; pipeline routes capNote to gemini-3.8-flash while preserving gemini-4-hydrogen for briefs & pods', async () => {
+await runSim('Scenario 8 [Gemini Token Tiering]: discoverBestFreeGeminiModel uses 0 generateContent tokens by default; pipeline routes change-gated capNote to Pool 2 (lite) while preserving Pool 1 (premier / gemini-4-hydrogen) for flagship briefs', async () => {
   const origFetch = globalThis.fetch;
   let generateContentCalls = 0;
   globalThis.fetch = async url => {
@@ -1024,12 +1024,12 @@ await runSim('Scenario 8 [Gemini Token Tiering]: discoverBestFreeGeminiModel use
 
   const pipelineSrc = fs.readFileSync(path.join(rootDir, 'scripts', 'fetch-live-data.mjs'), 'utf8');
   assert.ok(
-    pipelineSrc.includes("preferredModel: 'gemini-3.8-flash'"),
-    'Pipeline must route simpler capPurchasingPowerNote task to gemini-3.8-flash'
+    pipelineSrc.includes("pool: 'lite'") && pipelineSrc.includes('aiCapNoteFingerprint'),
+    'Pipeline must change-gate capPurchasingPowerNote and route it to Pool 2 (lite) so Pool 1 premier tokens stay preserved'
   );
   assert.ok(
-    pipelineSrc.includes("preferredModel: aiModelDiscovery.activeModel || 'gemini-4-hydrogen'"),
-    'Pipeline must preserve gemini-4-hydrogen for flagship Top News Brief'
+    pipelineSrc.includes("pool: 'premier'") && pipelineSrc.includes("quotaState?.pools?.premier?.[0]"),
+    'Pipeline must preserve Pool 1 premier (gemini-4-hydrogen) for flagship Top News Brief'
   );
 });
 

@@ -25429,6 +25429,183 @@ test(
   }
 );
 
+await testAsync(
+  'Adaptive Two-Pool Gemini Quota Manager: Periodic /v1beta/models Auto-Discovery, 404 Deprecation Pruning, SF Early-Degradation Reserve, and Strict RPM/TPM/RPD/TPD + Search-429 Guards',
+  async () => {
+    const {
+      DEFAULT_GEMINI_QUOTA_CONFIG,
+      buildDynamicGeminiPoolsFromCatalog,
+      normalizeGeminiQuotaState,
+      selectBestAvailableModel,
+      recordGeminiCallOutcome,
+      refreshGeminiModelCatalogIfDue,
+      isSearchGroundingAllowed,
+      markSearchGroundingUnavailableToday,
+      summarizeGeminiQuotaHeadroom
+    } = await import('../src/engine/geminiQuotaManager.js');
+
+    const baseMs = Date.parse('2026-11-25T17:00:00Z'); // 9:00 AM PST
+
+    // 1. Live joshalbox catalog auto-classification (adds 3.6-flash, separates Pool 1 Premier vs Pool 2 Lite, excludes 0/0 paid-only & non-text)
+    const mockLiveCatalog = [
+      { name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-4-carbon', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-4-argon', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-4-neon', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3.6-flash', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3-flash-preview', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3.5-flash-lite', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3.1-flash-lite', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-2.5-flash', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-2.5-pro', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3.8-flash-tts', supportedGenerationMethods: ['generateContent'] }
+    ];
+    const poolsToday = buildDynamicGeminiPoolsFromCatalog(mockLiveCatalog, { nowMs: baseMs });
+    assert.deepEqual(
+      poolsToday.premier.slice(0, 4),
+      ['gemini-4-hydrogen', 'gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-3-flash-preview'],
+      'Pool 1 (premier) must dynamically rank Hydrogen -> 3.8 -> 3.6 -> 3 Flash while excluding 0/0 Carbon/Argon/Neon/Pro'
+    );
+    assert.deepEqual(
+      poolsToday.lite,
+      ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite'],
+      'Pool 2 (lite) must dynamically rank 3.5-flash-lite -> 3.1-flash-lite'
+    );
+    assert.ok(!poolsToday.premier.includes('gemini-4-carbon') && !poolsToday.premier.includes('gemini-3.8-flash-tts'));
+
+    // 2. Future model release & deprecation adaptability (zero hardcoded model names!)
+    // Simulate: 2.5-flash deprecated (404), new 4.5-distilled premier model + new 4-hydrogen-flash-lite added!
+    let state = normalizeGeminiQuotaState({ pools: poolsToday }, baseMs);
+    recordGeminiCallOutcome(state, { modelId: 'gemini-2.5-flash', status: 404, ok: false, nowMs: baseMs });
+    assert.ok(!state.pools.premier.includes('gemini-2.5-flash'), 'HTTP 404 deprecated model must be pruned immediately');
+    assert.ok(state.deprecatedModels['gemini-2.5-flash'] > baseMs, 'HTTP 404 model must be quarantined for 7 days');
+
+    let pollCount = 0;
+    const futureCatalogFetch = async () => {
+      pollCount += 1;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          models: [
+            ...mockLiveCatalog,
+            { name: 'models/gemini-4.5-distilled', supportedGenerationMethods: ['generateContent'] },
+            { name: 'models/gemini-4-hydrogen-flash-lite', supportedGenerationMethods: ['generateContent'] }
+          ]
+        })
+      };
+    };
+    const r1 = await refreshGeminiModelCatalogIfDue(state, 'AIzaMockKey', { nowMs: baseMs, fetchImpl: futureCatalogFetch });
+    assert.equal(r1.refreshed, true);
+    assert.equal(r1.state.pools.premier[0], 'gemini-4.5-distilled', 'Newly launched higher-version distilled model must auto-promote to #1 in Pool 1');
+    assert.equal(r1.state.pools.lite[0], 'gemini-4-hydrogen-flash-lite', 'Newly launched hydrogen-flash-lite must auto-promote to #1 in Pool 2');
+    assert.ok(!r1.state.pools.premier.includes('gemini-2.5-flash'), 'Quarantined 404 model must stay excluded even if still listed in /v1beta/models');
+
+    // Second call 1 hour later must NOT re-poll `/v1beta/models` (respects 24h interval)
+    const r2 = await refreshGeminiModelCatalogIfDue(r1.state, 'AIzaMockKey', { nowMs: baseMs + 3_600_000, fetchImpl: futureCatalogFetch });
+    assert.equal(r2.refreshed, false);
+    assert.equal(pollCount, 1);
+
+    // 3. Full 32-team NFL Sunday simulation: SF goes FIRST, non-SF degrades early so SF ALWAYS keeps Hydrogen!
+    const sunState = normalizeGeminiQuotaState(
+      {
+        pools: {
+          premier: ['gemini-4-hydrogen', 'gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-3-flash-preview'],
+          lite: ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite']
+        }
+      },
+      baseMs
+    );
+    let simNow = baseMs;
+    const sfModels = [];
+    const nonSfModels = [];
+
+    // SF Call #1 (morning brief) runs FIRST -> gets gemini-4-hydrogen
+    const sf1 = selectBestAvailableModel(sunState, { pool: 'premier', isPriorityTeam: true, estimatedTokens: 12000, nowMs: simNow });
+    assert.equal(sf1.modelId, 'gemini-4-hydrogen');
+    sfModels.push(sf1.modelId);
+    recordGeminiCallOutcome(sunState, { modelId: sf1.modelId, status: 200, ok: true, actualTokens: 12000, isPriorityTeam: true, nowMs: simNow });
+
+    // Simulate 31 other teams' Daily Briefs + 14 post-game briefs + 6 Matchup Intels = 51 non-SF calls staggered across the day
+    for (let i = 0; i < 51; i += 1) {
+      simNow += 20_000; // staggered across runs
+      const pick = selectBestAvailableModel(sunState, { pool: 'premier', isPriorityTeam: false, estimatedTokens: 12000, nowMs: simNow });
+      assert.equal(pick.ok, true, `Non-SF call #${i + 1} must succeed cleanly across 80-RPD Pool 1`);
+      nonSfModels.push(pick.modelId);
+      recordGeminiCallOutcome(sunState, { modelId: pick.modelId, status: 200, ok: true, actualTokens: 12000, isPriorityTeam: false, nowMs: simNow });
+    }
+
+    // Verify non-SF degraded early off gemini-4-hydrogen at 13/20 (preserving 6 Hydrogen calls for SF!)
+    const nonSfHydrogenCount = nonSfModels.filter(m => m === 'gemini-4-hydrogen').length;
+    assert.equal(
+      nonSfHydrogenCount,
+      12,
+      `After SF took 1 Hydrogen call, non-SF must stop at 13 total (12 non-SF) to preserve 6 Hydrogen calls for SF (got ${nonSfHydrogenCount})`
+    );
+    assert.ok(nonSfModels.includes('gemini-3.8-flash') && nonSfModels.includes('gemini-3.6-flash') && nonSfModels.includes('gemini-3-flash-preview'));
+
+    // Later that same NFL Sunday, SF returns for 5 more calls (post-game brief + Matchup Intel + extra refreshes) -> ALL 5 STILL GET gemini-4-hydrogen!
+    for (let s = 0; s < 5; s += 1) {
+      simNow += 20_000;
+      const sfLate = selectBestAvailableModel(sunState, { pool: 'premier', isPriorityTeam: true, estimatedTokens: 12000, nowMs: simNow });
+      assert.equal(sfLate.ok, true);
+      assert.equal(sfLate.modelId, 'gemini-4-hydrogen', `Late-day SF call #${s + 2} must STILL receive reserved gemini-4-hydrogen tokens`);
+      recordGeminiCallOutcome(sunState, { modelId: sfLate.modelId, status: 200, ok: true, actualTokens: 12000, isPriorityTeam: true, nowMs: simNow });
+    }
+
+    // Verify ZERO Pool 1 models ever exceeded their 20 RPD cap (or 19 safeRpd) or TPD limit!
+    const headroom = summarizeGeminiQuotaHeadroom(sunState, { nowMs: simNow });
+    for (const pm of headroom.premier.perModel) {
+      assert.ok(pm.usedRpd <= pm.safeRpd, `${pm.modelId} usedRpd (${pm.usedRpd}) must stay <= safeRpd (${pm.safeRpd}) < rpdLimit (${pm.rpdLimit})`);
+      assert.ok(pm.usedTpd <= pm.tpdLimit, `${pm.modelId} usedTpd (${pm.usedTpd}) must stay <= tpdLimit (${pm.tpdLimit})`);
+    }
+
+    // 4. Adaptability check: changing rpdLimit (20 -> 50) & sfPremierReservedCalls (6 -> 10) adapts early-degradation dynamically!
+    const customConfig = {
+      ...DEFAULT_GEMINI_QUOTA_CONFIG,
+      sfPremierReservedCalls: 10,
+      tierLimits: {
+        ...DEFAULT_GEMINI_QUOTA_CONFIG.tierLimits,
+        premier: { rpmLimit: 10, tpmLimit: 250_000, rpdLimit: 50, tpdLimit: 1_000_000 }
+      }
+    };
+    const adaptState = normalizeGeminiQuotaState({ pools: { premier: ['gemini-4-hydrogen', 'gemini-3.8-flash'], lite: ['gemini-3.5-flash-lite'] } }, baseMs);
+    adaptState.dailyUsage['gemini-4-hydrogen'] = { requests: 39, tokens: 100_000, exhausted: false, sfRequests: 2 };
+    const adaptNonSf = selectBestAvailableModel(adaptState, { pool: 'premier', isPriorityTeam: false, nowMs: baseMs, config: customConfig });
+    const adaptSf = selectBestAvailableModel(adaptState, { pool: 'premier', isPriorityTeam: true, nowMs: baseMs, config: customConfig });
+    assert.equal(adaptNonSf.modelId, 'gemini-3.8-flash', 'With rpdLimit=50 (safe=49) & sfReserve=10, non-SF must degrade at 39');
+    assert.equal(adaptSf.modelId, 'gemini-4-hydrogen', 'SF must still access reserved 39..49 slots on custom rpdLimit=50');
+
+    // 5. Strict RPM staggering (<=4 RPM on 5-RPM model) & TPM (<=200K / 250K) & TPD protection
+    const rpmState = normalizeGeminiQuotaState({ pools: { premier: ['gemini-4-hydrogen'], lite: ['gemini-3.5-flash-lite'] } }, baseMs);
+    for (let k = 0; k < 4; k += 1) {
+      recordGeminiCallOutcome(rpmState, { modelId: 'gemini-4-hydrogen', status: 200, ok: true, actualTokens: 15_000, nowMs: baseMs + k * 1000 });
+    }
+    const fifthInMinute = selectBestAvailableModel(rpmState, { pool: 'premier', isPriorityTeam: true, estimatedTokens: 15_000, nowMs: baseMs + 5_000 });
+    assert.equal(fifthInMinute.ok, true);
+    assert.ok(fifthInMinute.waitMs >= 50_000, `5th call within 60s on 5-RPM model must stagger (waitMs=${fifthInMinute.waitMs}) so RPM never exceeds 4/5`);
+
+    // TPM gate: 185K tokens already sent in last 60s + 30K estimated > 200K safeTpm -> must stagger!
+    const tpmState = normalizeGeminiQuotaState({ pools: { premier: ['gemini-4-hydrogen'], lite: ['gemini-3.5-flash-lite'] } }, baseMs);
+    recordGeminiCallOutcome(tpmState, { modelId: 'gemini-4-hydrogen', status: 200, ok: true, actualTokens: 185_000, nowMs: baseMs });
+    const tpmCheck = selectBestAvailableModel(tpmState, { pool: 'premier', isPriorityTeam: true, estimatedTokens: 30_000, nowMs: baseMs + 20_000 });
+    assert.ok(tpmCheck.waitMs >= 35_000, `Call exceeding 200K/250K safeTpm must stagger until 60s window clears (waitMs=${tpmCheck.waitMs})`);
+
+    // TPD gate: when model approaches tpdLimit (450K), degrades cleanly to next model!
+    const tpdState = normalizeGeminiQuotaState({ pools: { premier: ['gemini-4-hydrogen', 'gemini-3.8-flash'], lite: ['gemini-3.5-flash-lite'] } }, baseMs);
+    tpdState.dailyUsage['gemini-4-hydrogen'] = { requests: 5, tokens: 445_000, exhausted: false, sfRequests: 5 };
+    const tpdPick = selectBestAvailableModel(tpdState, { pool: 'premier', isPriorityTeam: true, estimatedTokens: 12_000, nowMs: baseMs });
+    assert.equal(tpdPick.modelId, 'gemini-3.8-flash', 'Model hitting daily TPD ceiling must fail over cleanly to next model');
+
+    // 6. Search-Grounding 429 circuit-breaker disables wasted retries for rest of PT day and resets at midnight PT
+    assert.equal(isSearchGroundingAllowed(rpmState, baseMs), true);
+    markSearchGroundingUnavailableToday(rpmState, baseMs);
+    assert.equal(isSearchGroundingAllowed(rpmState, baseMs + 3_600_000), false, 'Disabled search grounding must stay skipped all PT day');
+    assert.equal(isSearchGroundingAllowed(rpmState, baseMs + 24 * 3_600_000), true, 'Search grounding must re-test cleanly next PT day');
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

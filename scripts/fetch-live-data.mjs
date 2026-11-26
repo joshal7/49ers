@@ -195,6 +195,12 @@ import {
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
 import {
+  isSearchGroundingAllowed,
+  normalizeGeminiQuotaState,
+  refreshGeminiModelCatalogIfDue,
+  summarizeGeminiQuotaHeadroom
+} from '../src/engine/geminiQuotaManager.js';
+import {
   buildDailyTopNewsBriefPrompt,
   buildDeterministicDailyTopNewsBrief,
   getPacificDateKey,
@@ -932,9 +938,36 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     }
   }
 
+  // Load & periodically refresh unified Two-Pool Gemini Quota & Model Registry (`data/league/gemini-quota-state.json`)
+  // Polls `/v1beta/models` at most once every 24h to automatically discover newly launched premier/lite models & drop deprecated ones!
+  const quotaStatePath = path.join(leagueDir, 'gemini-quota-state.json');
+  let rawQuotaState = null;
+  try {
+    if (fs.existsSync(quotaStatePath)) {
+      rawQuotaState = JSON.parse(fs.readFileSync(quotaStatePath, 'utf8'));
+    }
+  } catch {}
+  const quotaRefresh = await refreshGeminiModelCatalogIfDue(
+    normalizeGeminiQuotaState(rawQuotaState, Date.now()),
+    geminiApiKey,
+    { nowMs: Date.now(), timeoutMs: 7000 }
+  );
+  const quotaState = quotaRefresh.state;
+  const persistQuotaState = () => {
+    try {
+      fs.writeFileSync(quotaStatePath, JSON.stringify(quotaState, null, 2));
+    } catch {}
+  };
+  if (quotaRefresh.refreshed) {
+    persistQuotaState();
+    console.log(
+      `[stage-1/gemini-catalog] Auto-refreshed AI Studio catalog: premier=[${quotaState.pools.premier.join(', ')}], lite=[${quotaState.pools.lite.join(', ')}]`
+    );
+  }
+
   // Option B (Stage 1 Shared National Film & Analytics Discovery):
-  // Runs up to 2 grounded Gemini Search sweeps/day (AM = All-22 video/GIF creators, PM = PFF/EPA scatter charts)
-  // and hydrates discovered x.com/<handle>/status/<id> URLs ONCE for all 32 teams via FxTwitter/Syndication.
+  // Only runs when explicitly enabled (`ENABLE_GEMINI_X_SEARCH=1`) and Search Grounding quota is available,
+  // preventing wasted HTTP 429 attempts on free-tier keys with 0 Search Grounding quota.
   const natDiscoveryPath = path.join(leagueDir, 'x-film-discovery.json');
   let prevNatDiscovery = null;
   try {
@@ -947,11 +980,12 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
   let sharedDiscoveredRawItems = (Array.isArray(prevNatDiscovery?.rawItems) ? prevNatDiscovery.rawItems : []).filter(
     it => it?.statusId && Number.isFinite(Date.parse(it.publishedAt || '')) && Date.parse(it.publishedAt) >= natCutoffMs
   );
+  const xSearchEnabled = process.env.ENABLE_GEMINI_X_SEARCH === '1' && isSearchGroundingAllowed(quotaState, natNowMs);
   const natPlan = resolveGeminiXDiscoveryPlan({
     scope: 'national',
     nowMs: natNowMs,
     prevMeta: prevNatDiscovery,
-    hasApiKey: Boolean(geminiApiKey),
+    hasApiKey: Boolean(geminiApiKey && xSearchEnabled),
     force: process.argv.includes('--force-x-discovery')
   });
   if (natPlan.shouldRun) {
@@ -1015,6 +1049,8 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
   return {
     seasonYear,
     aiModelDiscovery,
+    quotaState,
+    persistQuotaState,
     standingsByAbbr,
     otcSpaceHtml,
     rotowireXml,
@@ -1568,7 +1604,7 @@ async function generateGroundedDailyBrief(
   team,
   appData,
   apiKey,
-  { existingBrief = null, priorCycleBrief = null, forceBrief = false, aiModelDiscovery = null } = {}
+  { existingBrief = null, priorCycleBrief = null, forceBrief = false, aiModelDiscovery = null, quotaState = null, persistQuotaState = null } = {}
 ) {
   const nowMs = Date.now();
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, 17);
@@ -1655,18 +1691,26 @@ async function generateGroundedDailyBrief(
     }
   }
 
-  // 2. Synthesize canonical Gemini 4 Hydrogen (XHIGH) brief when API key is available (skip during Game-Day Hold)
+  // 2. Synthesize canonical High-Reasoning Pool-1 brief via Two-Pool Quota Manager
+  // (SF runs FIRST with reserved frontier tokens; non-SF degrades early so SF keeps best tokens;
+  // strict <=4 RPM staggering, <=200K TPM & TPD protection, auto-disabling search when free-tier 429s)
   if (!cycleState.isGameDayHold && apiKey && sourceCandidates.length >= 2) {
     try {
       const aiNewsBriefRes = await runSinglePassDailyGeminiSynthesis({
         apiKey,
-        preferredModel: aiModelDiscovery.activeModel || 'gemini-4-hydrogen',
+        preferredModel: quotaState?.pools?.premier?.[0] || aiModelDiscovery?.activeModel || 'gemini-4-hydrogen',
         promptText: buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs, {
           previousBrief: priorCycleBrief
         }),
         appData,
-        rosterPlayers: appData.roster?.players || []
+        rosterPlayers: appData.roster?.players || [],
+        quotaState,
+        pool: 'premier',
+        isPriorityTeam: team.abbr === 'SF',
+        allowSearchGrounding: !quotaState || isSearchGroundingAllowed(quotaState, nowMs),
+        maxOutputTokens: 2048
       });
+      if (typeof persistQuotaState === 'function') persistQuotaState();
       if (aiNewsBriefRes.ok && aiNewsBriefRes.rawText) {
         const synthGenIso = new Date().toISOString();
         const parsedBrief = parseAndSanitizeDailyTopNewsBrief(
@@ -3924,12 +3968,15 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   let teamXSearchDiscoveryMeta = prevNewsSnapshot?.xSearchDiscoveryMeta || null;
   let geminiDiscoveredXPayload = '';
   const teamDiscoveryNowMs = Date.now();
+  const teamXSearchEnabled =
+    process.env.ENABLE_GEMINI_X_SEARCH === '1' &&
+    (!leagueCtx.quotaState || isSearchGroundingAllowed(leagueCtx.quotaState, teamDiscoveryNowMs));
   const teamDiscoveryPlan = resolveGeminiXDiscoveryPlan({
     scope: 'team',
     team,
     nowMs: teamDiscoveryNowMs,
     prevMeta: teamXSearchDiscoveryMeta,
-    hasApiKey: Boolean(geminiApiKey),
+    hasApiKey: Boolean(geminiApiKey && teamXSearchEnabled),
     force: process.argv.includes('--force-x-discovery')
   });
   if (teamDiscoveryPlan.shouldRun) {
@@ -4575,14 +4622,18 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   // Build authentic seasonYear Draft Class & Priority UDFAs (using nflverse draft_picks.csv + roster spiderProfiles!)
   let existingSeasonalDraftClass = null;
   let prevCapNoteCached = null;
+  let prevCapNoteDatePt = '';
+  let prevCapNoteFingerprint = '';
   const todayPt = getPacificDateKey(Date.now());
   try {
     const existingSeasonalPath = path.join(outDir, 'seasonal.json');
     if (fs.existsSync(existingSeasonalPath)) {
       const prevSeas = JSON.parse(fs.readFileSync(existingSeasonalPath, 'utf8'));
       existingSeasonalDraftClass = prevSeas?.draftClass2026 || null;
-      if (prevSeas?.tradeWarRoom?.aiCapNoteDatePt === todayPt && prevSeas?.tradeWarRoom?.capPurchasingPowerNote) {
+      if (prevSeas?.tradeWarRoom?.capPurchasingPowerNote) {
         prevCapNoteCached = prevSeas.tradeWarRoom.capPurchasingPowerNote;
+        prevCapNoteDatePt = String(prevSeas.tradeWarRoom.aiCapNoteDatePt || '');
+        prevCapNoteFingerprint = String(prevSeas.tradeWarRoom.aiCapNoteFingerprint || '');
       }
     }
   } catch {}
@@ -4818,11 +4869,19 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   }
 
-  // Optional 1/Day Cap Purchasing Power Note: route simpler 2-sentence task to `gemini-3.8-flash`
-  // so `gemini-4-hydrogen` RPD tokens stay preserved for Top-News Briefs and Auto Podcasts!
-  if (prevCapNoteCached && tradeIntel?.tradeWarRoom) {
+  // Change-gated 2-sentence Cap Purchasing Power Note:
+  // Reuses existing note whenever cap space (+/-$500K) and draft-pick count are unchanged (0 RPD spent!),
+  // and when cap/picks DO change, routes strictly to Pool 2 (`lite`, e.g. `gemini-3.5-flash-lite` 500 RPD)
+  // so 100% of Pool 1 High-Reasoning tokens stay preserved for Top-News Briefs and Matchup Intel!
+  const capNoteFingerprint = `${Math.round(Number(cap26?.teamCapSpace || 0) / 500_000)}|${Math.round(Number(cap27?.teamCapSpace || 0) / 500_000)}|${tankathonPicks?.length || 0}`;
+  const canReuseCapNote = Boolean(
+    prevCapNoteCached &&
+      (prevCapNoteDatePt === todayPt || (prevCapNoteFingerprint && prevCapNoteFingerprint === capNoteFingerprint))
+  );
+  if (canReuseCapNote && tradeIntel?.tradeWarRoom) {
     tradeIntel.tradeWarRoom.capPurchasingPowerNote = prevCapNoteCached;
-    tradeIntel.tradeWarRoom.aiCapNoteDatePt = todayPt;
+    tradeIntel.tradeWarRoom.aiCapNoteDatePt = prevCapNoteDatePt || todayPt;
+    tradeIntel.tradeWarRoom.aiCapNoteFingerprint = capNoteFingerprint;
   } else if (geminiApiKey && !process.env.SKIP_TRADE_AI && tradeIntel?.tradeWarRoom) {
     try {
       const capPromptFacts = JSON.stringify({
@@ -4836,17 +4895,23 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       });
       const capAiRes = await runSinglePassDailyGeminiSynthesis({
         apiKey: geminiApiKey,
-        preferredModel: 'gemini-3.8-flash',
         promptText: `Facts: ${capPromptFacts}\nReturn strict JSON {"capNote": "..."} with a concise 2-sentence CBA cap-rollover & trade-window synthesis for ${team.fullName} grounded strictly in the provided ${seasonYear}/${seasonYear + 1} cap space, draft pick count, and weekly proration mechanics.`,
         appData: { meta, roster: { players }, cap: capJson },
-        rosterPlayers: players
+        rosterPlayers: players,
+        quotaState: leagueCtx.quotaState,
+        pool: 'lite',
+        isPriorityTeam: team.abbr === 'SF',
+        allowSearchGrounding: false,
+        maxOutputTokens: 320
       });
+      if (typeof leagueCtx.persistQuotaState === 'function') leagueCtx.persistQuotaState();
       if (capAiRes.ok && capAiRes.rawText) {
         const cleanCap = capAiRes.rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
         const parsedCap = JSON.parse(cleanCap);
         if (parsedCap?.capNote && !hasCrossTeam49ersLeak(parsedCap.capNote, team, oppAbbrNext)) {
           tradeIntel.tradeWarRoom.capPurchasingPowerNote = String(parsedCap.capNote).trim();
           tradeIntel.tradeWarRoom.aiCapNoteDatePt = todayPt;
+          tradeIntel.tradeWarRoom.aiCapNoteFingerprint = capNoteFingerprint;
         }
       }
     } catch {
@@ -5089,7 +5154,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     existingBrief,
     priorCycleBrief,
     forceBrief: process.argv.includes('--force-brief'),
-    aiModelDiscovery: leagueCtx.aiModelDiscovery || { activeModel: PRIMARY_GEMINI_REASONING_MODEL }
+    aiModelDiscovery: leagueCtx.aiModelDiscovery || { activeModel: PRIMARY_GEMINI_REASONING_MODEL },
+    quotaState: leagueCtx.quotaState || null,
+    persistQuotaState: leagueCtx.persistQuotaState || null
   });
 
   // Preserve any pre-generated studio `.m4a` episodes / sharedAnalyses in `podcasts/index.json`!
