@@ -9095,6 +9095,7 @@ mark.search-hl {
 .gc-ez-label {
   font-family: 'DIN Condensed', 'Arial Narrow', 'Roboto Condensed', 'Helvetica Neue', system-ui, sans-serif;
   font-stretch: condensed;
+  font-style: normal;
 }
 
 .gc-field-num.side {

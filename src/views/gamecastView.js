@@ -554,11 +554,11 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
   // Exact perspective-aligned endzone label centers & angles computed directly from trapezoid geometry
   const awayEzTop = proj(-5, 0);
   const awayEzBot = proj(-5, 1);
-  const awayEzMid = proj(-5, 0.51);
+  const awayEzMid = proj(-5, 0.5);
   const awayEzAngle = (Math.atan2(awayEzTop.y - awayEzBot.y, awayEzTop.x - awayEzBot.x) * 180) / Math.PI;
   const homeEzTop = proj(105, 0);
   const homeEzBot = proj(105, 1);
-  const homeEzMid = proj(105, 0.51);
+  const homeEzMid = proj(105, 0.5);
   const homeEzAngle = (Math.atan2(homeEzBot.y - homeEzTop.y, homeEzBot.x - homeEzTop.x) * 180) / Math.PI;
   const awayEzLabel = away.abbr === 'SF' ? '49ERS' : (away.shortName || away.abbr || '').toUpperCase().slice(0, 10);
   const homeEzLabel = home.abbr === 'SF' ? '49ERS' : (home.shortName || home.abbr || '').toUpperCase().slice(0, 10);
@@ -703,13 +703,13 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
           <polygon points="${quadPoints(-10, 0)}" fill="${esc(away.color || '#1E293B')}" class="${isTd && sit.possessionSide === 'home' ? 'gc-td-flash' : ''}" />
           <polygon points="${quadPoints(-10, 0)}" fill="url(#gc-field-depth)" />
           <g transform="translate(${awayEzMid.x.toFixed(1)} ${awayEzMid.y.toFixed(1)})">
-            <text x="0" y="0"
+            <text x="0" y="0" dy="0.36em"
                   class="gc-ez-label"
                   fill="${away.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.96"
                   font-size="${awayEzMetrics.fontSize}" font-weight="900"
                   textLength="${awayEzMetrics.textLength}" lengthAdjust="spacingAndGlyphs"
-                  text-anchor="middle" dominant-baseline="central"
-                  transform="rotate(${awayEzAngle.toFixed(2)}) skewX(-14)"
+                  text-anchor="middle" dominant-baseline="alphabetic"
+                  transform="rotate(${awayEzAngle.toFixed(2)})"
                   letter-spacing="${awayEzMetrics.letterSpacing}">${esc(awayEzLabel)}</text>
           </g>
 
@@ -717,13 +717,13 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
           <polygon points="${quadPoints(100, 110)}" fill="${esc(home.color || '#AA0000')}" class="${isTd && sit.possessionSide === 'away' ? 'gc-td-flash' : ''}" />
           <polygon points="${quadPoints(100, 110)}" fill="url(#gc-field-depth)" />
           <g transform="translate(${homeEzMid.x.toFixed(1)} ${homeEzMid.y.toFixed(1)})">
-            <text x="0" y="0"
+            <text x="0" y="0" dy="0.36em"
                   class="gc-ez-label"
                   fill="${home.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.96"
                   font-size="${homeEzMetrics.fontSize}" font-weight="900"
                   textLength="${homeEzMetrics.textLength}" lengthAdjust="spacingAndGlyphs"
-                  text-anchor="middle" dominant-baseline="central"
-                  transform="rotate(${homeEzAngle.toFixed(2)}) skewX(14)"
+                  text-anchor="middle" dominant-baseline="alphabetic"
+                  transform="rotate(${homeEzAngle.toFixed(2)})"
                   letter-spacing="${homeEzMetrics.letterSpacing}">${esc(homeEzLabel)}</text>
           </g>
 
