@@ -21197,6 +21197,7 @@ test('parseEspnSummaryToGamecast parses Box Score, Team Stats, Play-by-Play, Fie
   assert.ok(koRevHtml.includes('gc-ball-leather') && koRevHtml.includes('gc-los-line') && koRevHtml.includes('gc-firstdown-line'), 'Kickoff graphic must maintain app aesthetic (football, blue LOS, yellow 1st-down line)');
   assert.ok(koRevHtml.includes('class="gc-ez-label"') && koRevHtml.includes('font-size="16.4"') && koRevHtml.includes('font-size="18"') && koRevHtml.includes('textLength="61"') && koRevHtml.includes('textLength="45"'), 'Endzone labels must render bold condensed ESPN-proportioned lettering scaled cleanly by team name length');
   assert.ok(koRevHtml.includes('skewX(18.32)') && koRevHtml.includes('skewX(-18.32)') && koRevHtml.includes('dy="0.36em"') && koRevHtml.includes('dominant-baseline="alphabetic"'), 'Endzone labels must use exact sideline-parallel shear (+18.32 left / -18.32 right) and cap-height centering');
+  assert.ok(koRevHtml.includes('class="gc-gp-pad"') && (koRevHtml.match(/class="gc-gp-fork"/g) || []).length === 4, '3D field must render realistic slingshot gooseneck goalposts (padded base + curved neck + angled crossbar & tall uprights)');
   assert.ok(!koRevHtml.includes('gc-run-arrow'), 'Kickoff must not fall back to generic straight run arrow');
 
   // 4b. Forward Kickoff with blank start.possessionText (GB 35 -> LA 6 -> LA 30) & Touchback / Edge Cases

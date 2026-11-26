@@ -576,15 +576,39 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
   const awayEzMetrics = resolveEndzoneTextMetrics(awayEzLabel);
   const homeEzMetrics = resolveEndzoneTextMetrics(homeEzLabel);
 
-  // Goalposts anchored at back of each endzone (u = -10 and u = 110, v = 0.46)
+  // Goalposts anchored behind the center of each endline (u = -10 and u = 110, v = 0.46)
   const gpLeftBase = proj(-10, 0.46);
   const gpRightBase = proj(110, 0.46);
+  const gpL = {
+    padX: gpLeftBase.x - 7.4,
+    padTopY: gpLeftBase.y - 3.0,
+    padH: 9.2,
+    crossX: gpLeftBase.x - 3.5,
+    crossY: gpLeftBase.y - 8.6,
+    nearX: gpLeftBase.x - 5.9,
+    nearY: gpLeftBase.y - 4.3,
+    farX: gpLeftBase.x - 1.1,
+    farY: gpLeftBase.y - 12.9,
+    uprightH: 30.5
+  };
+  const gpR = {
+    padX: gpRightBase.x + 7.4,
+    padTopY: gpRightBase.y - 3.0,
+    padH: 9.2,
+    crossX: gpRightBase.x + 3.5,
+    crossY: gpRightBase.y - 8.6,
+    nearX: gpRightBase.x + 5.9,
+    nearY: gpRightBase.y - 4.3,
+    farX: gpRightBase.x + 1.1,
+    farY: gpRightBase.y - 12.9,
+    uprightH: 30.5
+  };
 
   // Field Goal dotted parabolic trajectory from kick spot through the target goalpost uprights (ESPN-style)
   const fgTargetIsRight = sit.possessionSide === 'away';
   const fgTargetPt = fgTargetIsRight
-    ? { x: gpRightBase.x + 4.5, y: gpRightBase.y - 13 }
-    : { x: gpLeftBase.x - 4.5, y: gpLeftBase.y - 13 };
+    ? { x: gpR.crossX, y: gpR.crossY - 15.5 }
+    : { x: gpL.crossX, y: gpL.crossY - 15.5 };
   const fgEndPt = isFgMissed
     ? { x: fgTargetPt.x + (fgTargetIsRight ? 5 : -5), y: fgTargetPt.y + 8 }
     : fgTargetPt;
@@ -747,14 +771,21 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
           <line x1="${proj(0, 0).x.toFixed(1)}" y1="${proj(0, 0).y.toFixed(1)}" x2="${proj(0, 1).x.toFixed(1)}" y2="${proj(0, 1).y.toFixed(1)}" stroke="#FFFFFF" stroke-width="1.6" />
           <line x1="${proj(100, 0).x.toFixed(1)}" y1="${proj(100, 0).y.toFixed(1)}" x2="${proj(100, 1).x.toFixed(1)}" y2="${proj(100, 1).y.toFixed(1)}" stroke="#FFFFFF" stroke-width="1.6" />
 
-          <!-- 3D Minimalist Yellow Goalposts (Left & Right) -->
+          <!-- Realistic 3D NFL Slingshot Gooseneck Goalposts (Left & Right) -->
           <g class="gc-goalposts" stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <!-- Left Goalpost -->
-            <line x1="${(gpLeftBase.x - 4).toFixed(1)}" y1="${(gpLeftBase.y + 4).toFixed(1)}" x2="${(gpLeftBase.x - 4).toFixed(1)}" y2="${(gpLeftBase.y - 4).toFixed(1)}" class="gc-gp-post" stroke-width="1.5" />
-            <path d="M ${(gpLeftBase.x - 8).toFixed(1)} ${(gpLeftBase.y - 19).toFixed(1)} L ${(gpLeftBase.x - 8).toFixed(1)} ${(gpLeftBase.y - 4).toFixed(1)} L ${(gpLeftBase.x - 1).toFixed(1)} ${(gpLeftBase.y - 7).toFixed(1)} L ${(gpLeftBase.x - 1).toFixed(1)} ${(gpLeftBase.y - 22).toFixed(1)}" class="gc-gp-fork" stroke-width="1.55" />
-            <!-- Right Goalpost -->
-            <line x1="${(gpRightBase.x + 4).toFixed(1)}" y1="${(gpRightBase.y + 4).toFixed(1)}" x2="${(gpRightBase.x + 4).toFixed(1)}" y2="${(gpRightBase.y - 4).toFixed(1)}" class="gc-gp-post" stroke-width="1.5" />
-            <path d="M ${(gpRightBase.x + 1).toFixed(1)} ${(gpRightBase.y - 22).toFixed(1)} L ${(gpRightBase.x + 1).toFixed(1)} ${(gpRightBase.y - 7).toFixed(1)} L ${(gpRightBase.x + 8).toFixed(1)} ${(gpRightBase.y - 4).toFixed(1)} L ${(gpRightBase.x + 8).toFixed(1)} ${(gpRightBase.y - 19).toFixed(1)}" class="gc-gp-fork" stroke-width="1.55" />
+            <!-- Left Goalpost (Padded Base + Curved Gooseneck + Perspective Crossbar + Tall Uprights) -->
+            <rect x="${(gpL.padX - 1.65).toFixed(1)}" y="${gpL.padTopY.toFixed(1)}" width="3.3" height="${gpL.padH.toFixed(1)}" rx="1.1" class="gc-gp-pad" />
+            <ellipse cx="${gpL.padX.toFixed(1)}" cy="${(gpL.padTopY + gpL.padH - 0.6).toFixed(1)}" rx="1.65" ry="0.65" class="gc-gp-pad-cap" />
+            <ellipse cx="${gpL.padX.toFixed(1)}" cy="${(gpL.padTopY + 0.45).toFixed(1)}" rx="1.65" ry="0.55" class="gc-gp-pad-top" />
+            <path d="M ${gpL.padX.toFixed(1)} ${(gpL.padTopY + 0.3).toFixed(1)} Q ${gpL.padX.toFixed(1)} ${gpL.crossY.toFixed(1)} ${gpL.crossX.toFixed(1)} ${gpL.crossY.toFixed(1)}" class="gc-gp-fork" stroke-width="2.1" />
+            <path d="M ${gpL.nearX.toFixed(1)} ${(gpL.nearY - gpL.uprightH).toFixed(1)} L ${gpL.nearX.toFixed(1)} ${gpL.nearY.toFixed(1)} L ${gpL.farX.toFixed(1)} ${gpL.farY.toFixed(1)} L ${gpL.farX.toFixed(1)} ${(gpL.farY - gpL.uprightH).toFixed(1)}" class="gc-gp-fork" stroke-width="1.9" />
+
+            <!-- Right Goalpost (Padded Base + Curved Gooseneck + Perspective Crossbar + Tall Uprights) -->
+            <rect x="${(gpR.padX - 1.65).toFixed(1)}" y="${gpR.padTopY.toFixed(1)}" width="3.3" height="${gpR.padH.toFixed(1)}" rx="1.1" class="gc-gp-pad" />
+            <ellipse cx="${gpR.padX.toFixed(1)}" cy="${(gpR.padTopY + gpR.padH - 0.6).toFixed(1)}" rx="1.65" ry="0.65" class="gc-gp-pad-cap" />
+            <ellipse cx="${gpR.padX.toFixed(1)}" cy="${(gpR.padTopY + 0.45).toFixed(1)}" rx="1.65" ry="0.55" class="gc-gp-pad-top" />
+            <path d="M ${gpR.padX.toFixed(1)} ${(gpR.padTopY + 0.3).toFixed(1)} Q ${gpR.padX.toFixed(1)} ${gpR.crossY.toFixed(1)} ${gpR.crossX.toFixed(1)} ${gpR.crossY.toFixed(1)}" class="gc-gp-fork" stroke-width="2.1" />
+            <path d="M ${gpR.farX.toFixed(1)} ${(gpR.farY - gpR.uprightH).toFixed(1)} L ${gpR.farX.toFixed(1)} ${gpR.farY.toFixed(1)} L ${gpR.nearX.toFixed(1)} ${gpR.nearY.toFixed(1)} L ${gpR.nearX.toFixed(1)} ${(gpR.nearY - gpR.uprightH).toFixed(1)}" class="gc-gp-fork" stroke-width="1.9" />
           </g>
 
           <!-- Highlighted Drive Progress Zone (Kept per Req #1!) -->

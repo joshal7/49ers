@@ -9115,6 +9115,21 @@ mark.search-hl {
   stroke: #94a3b8;
 }
 
+.gc-gp-pad {
+  fill: #788290;
+  stroke: none;
+}
+
+.gc-gp-pad-cap {
+  fill: #555e6b;
+  stroke: none;
+}
+
+.gc-gp-pad-top {
+  fill: #94a3b8;
+  stroke: none;
+}
+
 .gc-gp-fork {
   stroke: #facc15;
 }
@@ -9123,8 +9138,20 @@ mark.search-hl {
   stroke: #64748b;
 }
 
+[data-theme="light"] .gc-gp-pad {
+  fill: #6b7280;
+}
+
+[data-theme="light"] .gc-gp-pad-cap {
+  fill: #4b5563;
+}
+
+[data-theme="light"] .gc-gp-pad-top {
+  fill: #9ca3af;
+}
+
 [data-theme="light"] .gc-gp-fork {
-  stroke: #d97706;
+  stroke: #eab308;
 }
 
 .gc-play-arc-anim {
