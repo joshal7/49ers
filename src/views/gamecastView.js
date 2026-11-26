@@ -551,15 +551,17 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
   const pIncEnd = proj(incEndU, playV);
   const pIncMidX = (pBall.x + pIncEnd.x) / 2;
 
-  // Exact perspective-aligned endzone label centers & angles computed directly from trapezoid geometry
+  // Exact perspective-aligned endzone label centers, angles & sideline-parallel shear computed from trapezoid geometry
   const awayEzTop = proj(-5, 0);
   const awayEzBot = proj(-5, 1);
   const awayEzMid = proj(-5, 0.5);
   const awayEzAngle = (Math.atan2(awayEzTop.y - awayEzBot.y, awayEzTop.x - awayEzBot.x) * 180) / Math.PI;
+  const awayEzSkew = 90 + awayEzAngle; // aligns vertical glyph stems horizontally (parallel to sidelines)
   const homeEzTop = proj(105, 0);
   const homeEzBot = proj(105, 1);
   const homeEzMid = proj(105, 0.5);
   const homeEzAngle = (Math.atan2(homeEzBot.y - homeEzTop.y, homeEzBot.x - homeEzTop.x) * 180) / Math.PI;
+  const homeEzSkew = homeEzAngle - 90; // aligns vertical glyph stems horizontally (parallel to sidelines)
   const awayEzLabel = away.abbr === 'SF' ? '49ERS' : (away.shortName || away.abbr || '').toUpperCase().slice(0, 10);
   const homeEzLabel = home.abbr === 'SF' ? '49ERS' : (home.shortName || home.abbr || '').toUpperCase().slice(0, 10);
   const resolveEndzoneTextMetrics = lbl => {
@@ -709,7 +711,7 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
                   font-size="${awayEzMetrics.fontSize}" font-weight="900"
                   textLength="${awayEzMetrics.textLength}" lengthAdjust="spacingAndGlyphs"
                   text-anchor="middle" dominant-baseline="alphabetic"
-                  transform="rotate(${awayEzAngle.toFixed(2)})"
+                  transform="rotate(${awayEzAngle.toFixed(2)}) skewX(${awayEzSkew.toFixed(2)})"
                   letter-spacing="${awayEzMetrics.letterSpacing}">${esc(awayEzLabel)}</text>
           </g>
 
@@ -723,7 +725,7 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
                   font-size="${homeEzMetrics.fontSize}" font-weight="900"
                   textLength="${homeEzMetrics.textLength}" lengthAdjust="spacingAndGlyphs"
                   text-anchor="middle" dominant-baseline="alphabetic"
-                  transform="rotate(${homeEzAngle.toFixed(2)})"
+                  transform="rotate(${homeEzAngle.toFixed(2)}) skewX(${homeEzSkew.toFixed(2)})"
                   letter-spacing="${homeEzMetrics.letterSpacing}">${esc(homeEzLabel)}</text>
           </g>
 
