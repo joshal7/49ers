@@ -8389,6 +8389,125 @@ async function main() {
       );
     });
 
+    await runStep('Startup & background-update navigation stability: canonical SW URL, zero controllerchange kickback, universal scroll lock & reload snapshot restoration', async () => {
+      // 1. Verify canonical non-versioned SW registration & zero tab/sub-tab/scroll disruption on background updates + controllerchange
+      const navStability = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const diag = window.__49ersDiagnostics;
+        const reg = await navigator.serviceWorker?.getRegistration?.();
+        const swScriptUrl = reg?.active?.scriptURL || reg?.installing?.scriptURL || reg?.waiting?.scriptURL || '';
+        const swHasQueryChurn = /\?v=\d+/.test(swScriptUrl);
+
+        // Navigate to Game & Season -> Playoffs and scroll down
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(80);
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="playoffs"]')?.click();
+        await sleep(80);
+        const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        const targetScrollY = Math.min(280, Math.max(0, maxScroll - 20));
+        window.scrollTo({ top: targetScrollY, behavior: 'instant' });
+        await sleep(60);
+        const scrollBeforeBg = window.scrollY;
+
+        // Trigger multiple background re-renders (simulating startup ESPN overlay + live wire + KV brief hydrations)
+        diag.renderMainBackground();
+        await sleep(50);
+        diag.renderMainBackground();
+        await sleep(50);
+        const afterBgTab = diag.getState().activeNavTab;
+        const afterBgSub = diag.getState().seasonSubTab;
+        const scrollAfterBg = window.scrollY;
+
+        // Dispatch a real ServiceWorkerContainer `controllerchange` event during active session and wait 3.5s
+        // to prove ZERO foreground reload and ZERO kickback to Home!
+        const swBefore = diag.getSwUpdateState();
+        navigator.serviceWorker?.dispatchEvent?.(new Event('controllerchange'));
+        await sleep(250);
+        const afterSwTab = diag.getState().activeNavTab;
+        const afterSwSub = diag.getState().seasonSubTab;
+        const afterSwScrollY = window.scrollY;
+        const swAfter = diag.getSwUpdateState();
+
+        // Save session nav snapshot (exact mechanism used before a deferred background-resume SW reload)
+        const savedSnap = diag.saveSessionNavSnapshot({ reason: 'sw_reload' });
+
+        return {
+          swScriptUrl,
+          swHasQueryChurn,
+          targetScrollY,
+          scrollBeforeBg,
+          scrollAfterBg,
+          scrollDriftBg: Math.abs(scrollAfterBg - scrollBeforeBg),
+          afterBgTab,
+          afterBgSub,
+          afterSwTab,
+          afterSwSub,
+          afterSwScrollY,
+          swRegisterUrl: swBefore.registerUrl,
+          swReloadCountAfterCtrlChange: swAfter.reloadCount,
+          savedSnapTab: savedSnap?.activeNavTab || '',
+          savedSnapSub: savedSnap?.seasonSubTab || '',
+          savedSnapScrollY: Number(savedSnap?.scrollY || 0)
+        };
+      });
+
+      assert(
+        !navStability.swHasQueryChurn && navStability.swRegisterUrl === './sw.js',
+        `Service Worker must register canonical ./sw.js without ?v= query churn: ${JSON.stringify(navStability)}`
+      );
+      assert(
+        navStability.afterBgTab === 'season' &&
+          navStability.afterBgSub === 'playoffs' &&
+          navStability.scrollDriftBg <= 4,
+        `Background data refreshes must NOT move user off Game & Season -> Playoffs or jump scroll: ${JSON.stringify(navStability)}`
+      );
+      assert(
+        navStability.afterSwTab === 'season' &&
+          navStability.afterSwSub === 'playoffs' &&
+          Math.abs(navStability.afterSwScrollY - navStability.scrollBeforeBg) <= 4 &&
+          navStability.swReloadCountAfterCtrlChange === 0,
+        `Service Worker controllerchange must NEVER kick user back to Home during active foreground session: ${JSON.stringify(navStability)}`
+      );
+      assert(
+        navStability.savedSnapTab === 'season' &&
+          navStability.savedSnapSub === 'playoffs' &&
+          navStability.savedSnapScrollY >= Math.max(0, navStability.targetScrollY - 4),
+        `Session nav snapshot must capture exact tab, sub-tab & scrollY: ${JSON.stringify(navStability)}`
+      );
+
+      // 2. Actually reload the page while the one-shot session snapshot is stored -> verify exact tab, sub-tab & scroll restore!
+      await cdp.send('Page.reload', { ignoreCache: false });
+      await cdp.waitFor(() => Boolean(window.__49ersDiagnostics?.getState?.()?.appData), undefined, 15_000);
+      await cdp.eval(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+
+      const afterReloadRestore = await cdp.eval(() => {
+        const st = window.__49ersDiagnostics.getState();
+        const activeNavBtn = document.querySelector('.nav-tab-btn.active')?.getAttribute('data-nav-tab') || '';
+        const remainingSnap = window.__49ersDiagnostics.consumeSessionNavSnapshot();
+        return {
+          activeNavTab: st.activeNavTab,
+          seasonSubTab: st.seasonSubTab,
+          activeNavBtn,
+          scrollY: window.scrollY,
+          remainingSnapConsumed: remainingSnap === null
+        };
+      });
+
+      assert(
+        afterReloadRestore.activeNavTab === 'season' &&
+          afterReloadRestore.seasonSubTab === 'playoffs' &&
+          afterReloadRestore.activeNavBtn === 'season' &&
+          Math.abs(afterReloadRestore.scrollY - navStability.savedSnapScrollY) <= 12 &&
+          afterReloadRestore.remainingSnapConsumed,
+        `Deferred SW reload must restore exact tab, sub-tab & scrollY cleanly (one-shot): ${JSON.stringify(afterReloadRestore)}`
+      );
+
+      // Return to Home cleanly for remaining checks
+      await cdp.eval(() => {
+        document.querySelector('[data-nav-tab="home"]')?.click();
+      });
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,

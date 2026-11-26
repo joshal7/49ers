@@ -27,7 +27,7 @@
   <link rel="dns-prefetch" href="https://static.clubs.nfl.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=99" />
+  <link rel="stylesheet" href="./src/styles.css?v=100" />
 </head>
 <body>
   <script>
@@ -60,7 +60,14 @@
           if (!t) return;
           if (t.id === 'openSearchBtn') window.__earlyBootTapAction = { type: 'search' };
           else if (t.id === 'openSettingsBtn') window.__earlyBootTapAction = { type: 'settings' };
-          else if (t.hasAttribute('data-nav-tab')) window.__earlyBootTapAction = { type: 'nav-tab', tab: t.getAttribute('data-nav-tab') };
+          else if (t.hasAttribute('data-nav-tab')) {
+            var nextTab = t.getAttribute('data-nav-tab');
+            window.__earlyBootTapAction = { type: 'nav-tab', tab: nextTab };
+            var navBtns = document.querySelectorAll('.nav-tab-btn');
+            for (var i = 0; i < navBtns.length; i += 1) {
+              navBtns[i].classList.toggle('active', navBtns[i].getAttribute('data-nav-tab') === nextTab);
+            }
+          }
         }
         window.__detachEarlyTap = function () {
           try {
@@ -298,6 +305,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=187"></script>
+  <script type="module" src="./src/app.js?v=189"></script>
 </body>
 </html>

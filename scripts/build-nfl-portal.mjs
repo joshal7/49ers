@@ -35,11 +35,9 @@ export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
 const ASSET_VER = '7';
 
 function resolveCurrentSwRegisterUrl() {
-  try {
-    const appJs = fs.readFileSync(path.join(ROOT, 'src', 'app.js'), 'utf8');
-    const m = appJs.match(/\.register\(\s*['"](\.\/sw\.js(?:\?v=\d+)?)['"]/);
-    if (m && m[1]) return m[1];
-  } catch {}
+  // Always use the canonical, non-versioned SW script URL alongside `{ updateViaCache: 'none' }`.
+  // Rotating `?v=N` query strings on `sw.js` forces a duplicate second SW install + `controllerchange`
+  // right after the first reload.
   return './sw.js';
 }
 

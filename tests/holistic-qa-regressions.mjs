@@ -3369,10 +3369,10 @@ test(
       'Dead .gameday-above-brief-banner CSS must stay removed'
     );
 
-    // Ensure single-instance canonical ES module imports (zero ?v= module splits) + top-level HTML/SW cache-busters
+    // Ensure single-instance canonical ES module imports (zero ?v= module splits) + canonical non-versioned SW URL
     const indexSrc = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+    const portalBuilderSrc = fs.readFileSync(path.join(rootDir, 'scripts/build-nfl-portal.mjs'), 'utf8');
     const indexAppVerMatch = indexSrc.match(/src="\.\/src\/app\.js\?v=(\d+)"/);
-    const swRegVerMatch = appSrc.match(/\.register\('\.\/sw\.js\?v=(\d+)'/);
     assert.ok(
       appSrc.includes("from './views/homeView.js'") && appSrc.includes("from './views/newsView.js'"),
       'app.js must import canonical homeView.js and newsView.js without ?v= module splits'
@@ -3381,11 +3381,33 @@ test(
       homeSrc.includes("from './newsView.js'") && !/from\s+'\.\/newsView\.js\?v=/.test(homeSrc),
       'homeView.js must import canonical newsView.js matching app.js (single module instance)'
     );
-    assert.ok(indexAppVerMatch && Number(indexAppVerMatch[1]) >= 158, 'index.html must cache-bust ./src/app.js?v>=158');
-    assert.ok(swRegVerMatch && Number(swRegVerMatch[1]) >= 110, 'app.js must register cache-busted sw.js?v>=110');
+    assert.ok(indexAppVerMatch && Number(indexAppVerMatch[1]) >= 188, 'index.html must cache-bust ./src/app.js?v>=188');
     assert.ok(
-      appSrc.includes('pendingSwReload') && appSrc.includes("document.addEventListener('visibilitychange'"),
-      'app.js must defer controllerchange reload cleanly and check SW updates on foreground resume'
+      appSrc.includes(".register('./sw.js', { updateViaCache: 'none' })") &&
+        !/\.register\(['"]\.\/sw\.js\?v=/.test(appSrc),
+      'app.js must register canonical ./sw.js with { updateViaCache: "none" } (never ?v= query churn that causes double controllerchange reloads)'
+    );
+    assert.ok(
+      portalBuilderSrc.includes("return './sw.js';") && !/sw\.js\?v=/.test(portalBuilderSrc),
+      'build-nfl-portal.mjs must also register canonical ./sw.js without ?v= query churn'
+    );
+    const controllerChangeBlock = appSrc.slice(
+      appSrc.indexOf("navigator.serviceWorker.addEventListener('controllerchange'"),
+      appSrc.indexOf('const registerSw = () =>')
+    );
+    assert.ok(
+      controllerChangeBlock.includes('pendingSwReload = true') &&
+        !controllerChangeBlock.includes('location.reload') &&
+        !controllerChangeBlock.includes('setInterval'),
+      'controllerchange handler must NEVER trigger immediate location.reload() or a foreground retry setInterval (prevents kicking users back to Home)'
+    );
+    assert.ok(
+      appSrc.includes('pendingSwReload') &&
+        appSrc.includes('SW_BACKGROUND_RESUME_RELOAD_MIN_HIDDEN_MS') &&
+        appSrc.includes('saveSessionNavSnapshot') &&
+        appSrc.includes('consumeSessionNavSnapshot') &&
+        appSrc.includes("document.addEventListener('visibilitychange'"),
+      'app.js must defer SW reload strictly until background-resume >= 60s and preserve exact tab/sub-tab/scroll snapshot across reload'
     );
 
     // Ensure sw.js activate never carries forward stale .js/.css/.html code from prior caches

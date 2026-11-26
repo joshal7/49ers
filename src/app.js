@@ -701,6 +701,20 @@ function applyFeedDensity(density) {
   document.documentElement.setAttribute('data-feed-density', clean);
 }
 
+const SESSION_NAV_SNAPSHOT_KEY = `nfl_nav_restore_v1:${ACTIVE_TEAM.slug || '49ers'}`;
+const SESSION_NAV_SNAPSHOT_TTL_MS = 30_000;
+const SW_BACKGROUND_RESUME_RELOAD_MIN_HIDDEN_MS = 60_000;
+const VALID_NAV_TABS = new Set(['home', 'news', 'season', 'roster', 'audio']);
+let userNavigatedSinceBoot = false;
+let pendingEarlyBootTap = null;
+let swUpdateControllerState = {
+  registerUrl: './sw.js',
+  hadController: false,
+  pendingSwReload: false,
+  hiddenSinceMs: 0,
+  reloadCount: 0
+};
+
 function getActiveScrollMemoryKey() {
   if (state.activeNavTab === 'season') return `season:${state.seasonSubTab}`;
   if (state.activeNavTab === 'roster') return `roster:${state.rosterSubTab}`;
@@ -720,6 +734,161 @@ function restoreScrollForCurrentTab({ fallbackTop = 0 } = {}) {
   requestAnimationFrame(() => {
     window.scrollTo({ top: targetY, behavior: 'instant' });
   });
+}
+
+function saveSessionNavSnapshot({ reason = 'sw_reload' } = {}) {
+  try {
+    if (typeof window === 'undefined' || !window.sessionStorage) return null;
+    saveCurrentTabScroll();
+    const curY = Math.max(0, Math.round(window.scrollY || 0));
+    const snap = {
+      v: 1,
+      reason,
+      savedAt: Date.now(),
+      activeNavTab: VALID_NAV_TABS.has(state.activeNavTab) ? state.activeNavTab : 'home',
+      seasonSubTab: state.seasonSubTab,
+      draftSubTab: state.draftSubTab,
+      userPickedSeasonSubDuringLive: Boolean(state.userPickedSeasonSubDuringLive),
+      rosterSubTab: state.rosterSubTab,
+      studioSubTab: state.studioSubTab,
+      newsCategoryFilter: state.newsCategoryFilter,
+      newsTopicFilter: state.newsTopicFilter,
+      newsSearchQuery: state.newsSearchQuery,
+      newsSourceFilter: state.newsSourceFilter,
+      matchupStatsUnit: state.matchupStatsUnit,
+      statsSubMode: state.statsSubMode,
+      teamPlayersCat: state.teamPlayersCat,
+      teamPlayersSortKey: state.teamPlayersSortKey,
+      teamPlayersSortDir: state.teamPlayersSortDir,
+      snapMatrixUnit: state.snapMatrixUnit,
+      playoffStandingsView: state.playoffStandingsView,
+      playoffStandingsConf: state.playoffStandingsConf,
+      playoffSeedBarsExpanded: Boolean(state.playoffSeedBarsExpanded),
+      gamecastGameId: state.gamecastGameId,
+      gamecastTab: state.gamecastTab,
+      gamecastBoxTeam: state.gamecastBoxTeam,
+      gamecastBoxUnit: state.gamecastBoxUnit,
+      gamecastPbpFilter: state.gamecastPbpFilter,
+      gamecastPbpQuarter: state.gamecastPbpQuarter,
+      gamecastPbpOrder: state.gamecastPbpOrder,
+      gamecastFromSchedule: Boolean(state.gamecastFromSchedule),
+      rosterSearch: state.rosterSearch,
+      rosterUnitFilter: state.rosterUnitFilter,
+      rosterPosFilter: state.rosterPosFilter,
+      rosterSort: state.rosterSort,
+      rosterSortDir: state.rosterSortDir,
+      depthMode: state.depthMode,
+      rosterMovesFilter: state.rosterMovesFilter,
+      capSelectedYear: state.capSelectedYear,
+      capViewMode: state.capViewMode,
+      capFaFilter: state.capFaFilter,
+      beatPodViewMode: state.beatPodViewMode,
+      beatPodShowFilter: state.beatPodShowFilter,
+      tabScrollPositions: { ...(state.tabScrollPositions || {}) },
+      scrollY: curY
+    };
+    window.sessionStorage.setItem(SESSION_NAV_SNAPSHOT_KEY, JSON.stringify(snap));
+    return snap;
+  } catch {
+    return null;
+  }
+}
+
+function consumeSessionNavSnapshot() {
+  try {
+    if (typeof window === 'undefined' || !window.sessionStorage) return null;
+    const raw = window.sessionStorage.getItem(SESSION_NAV_SNAPSHOT_KEY);
+    if (!raw) return null;
+    window.sessionStorage.removeItem(SESSION_NAV_SNAPSHOT_KEY);
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+    const ageMs = Date.now() - Number(parsed.savedAt || 0);
+    if (!Number.isFinite(ageMs) || ageMs < 0 || ageMs > SESSION_NAV_SNAPSHOT_TTL_MS) {
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function applyRestoredSessionNavSnapshot(snap) {
+  if (!snap || typeof snap !== 'object') return false;
+  if (VALID_NAV_TABS.has(snap.activeNavTab)) state.activeNavTab = snap.activeNavTab;
+  if (typeof snap.seasonSubTab === 'string' && snap.seasonSubTab) state.seasonSubTab = snap.seasonSubTab;
+  if (snap.draftSubTab === 'prep' || snap.draftSubTab === 'class') state.draftSubTab = snap.draftSubTab;
+  if (typeof snap.userPickedSeasonSubDuringLive === 'boolean') {
+    state.userPickedSeasonSubDuringLive = snap.userPickedSeasonSubDuringLive;
+  }
+  if (typeof snap.rosterSubTab === 'string' && snap.rosterSubTab) state.rosterSubTab = snap.rosterSubTab;
+  if (typeof snap.studioSubTab === 'string' && snap.studioSubTab) state.studioSubTab = snap.studioSubTab;
+  if (typeof snap.newsCategoryFilter === 'string' && VALID_NEWS_CATEGORIES.has(snap.newsCategoryFilter)) {
+    state.newsCategoryFilter = snap.newsCategoryFilter;
+  }
+  if (typeof snap.newsTopicFilter === 'string') state.newsTopicFilter = snap.newsTopicFilter;
+  if (typeof snap.newsSearchQuery === 'string') state.newsSearchQuery = snap.newsSearchQuery;
+  if (snap.newsSourceFilter && typeof snap.newsSourceFilter === 'object') {
+    state.newsSourceFilter = snap.newsSourceFilter;
+  }
+  if (typeof snap.matchupStatsUnit === 'string' && snap.matchupStatsUnit) {
+    state.matchupStatsUnit = snap.matchupStatsUnit;
+  }
+  if (typeof snap.statsSubMode === 'string' && snap.statsSubMode) state.statsSubMode = snap.statsSubMode;
+  if (typeof snap.teamPlayersCat === 'string' && snap.teamPlayersCat) state.teamPlayersCat = snap.teamPlayersCat;
+  if (typeof snap.teamPlayersSortKey === 'string') state.teamPlayersSortKey = snap.teamPlayersSortKey;
+  if (snap.teamPlayersSortDir === 'asc' || snap.teamPlayersSortDir === 'desc') {
+    state.teamPlayersSortDir = snap.teamPlayersSortDir;
+  }
+  if (snap.snapMatrixUnit === 'offense' || snap.snapMatrixUnit === 'defense') {
+    state.snapMatrixUnit = snap.snapMatrixUnit;
+  }
+  if (typeof snap.playoffStandingsView === 'string' && snap.playoffStandingsView) {
+    state.playoffStandingsView = snap.playoffStandingsView;
+  }
+  if (snap.playoffStandingsConf === 'NFC' || snap.playoffStandingsConf === 'AFC') {
+    state.playoffStandingsConf = snap.playoffStandingsConf;
+  }
+  if (typeof snap.playoffSeedBarsExpanded === 'boolean') {
+    state.playoffSeedBarsExpanded = snap.playoffSeedBarsExpanded;
+  }
+  if (typeof snap.gamecastGameId === 'string' && snap.gamecastGameId) state.gamecastGameId = snap.gamecastGameId;
+  if (snap.gamecastTab === 'box' || snap.gamecastTab === 'team' || snap.gamecastTab === 'pbp') {
+    state.gamecastTab = snap.gamecastTab;
+  }
+  if (snap.gamecastBoxTeam === 'team' || snap.gamecastBoxTeam === 'opponent') {
+    state.gamecastBoxTeam = snap.gamecastBoxTeam;
+  }
+  if (typeof snap.gamecastBoxUnit === 'string' && snap.gamecastBoxUnit) state.gamecastBoxUnit = snap.gamecastBoxUnit;
+  if (typeof snap.gamecastPbpFilter === 'string' && snap.gamecastPbpFilter) {
+    state.gamecastPbpFilter = snap.gamecastPbpFilter;
+  }
+  if (typeof snap.gamecastPbpQuarter === 'string' && snap.gamecastPbpQuarter) {
+    state.gamecastPbpQuarter = snap.gamecastPbpQuarter;
+  }
+  if (snap.gamecastPbpOrder === 'newest' || snap.gamecastPbpOrder === 'chrono') {
+    state.gamecastPbpOrder = snap.gamecastPbpOrder;
+  }
+  if (typeof snap.gamecastFromSchedule === 'boolean') state.gamecastFromSchedule = snap.gamecastFromSchedule;
+  if (typeof snap.rosterSearch === 'string') state.rosterSearch = snap.rosterSearch;
+  if (typeof snap.rosterUnitFilter === 'string' && snap.rosterUnitFilter) state.rosterUnitFilter = snap.rosterUnitFilter;
+  if (typeof snap.rosterPosFilter === 'string' && snap.rosterPosFilter) state.rosterPosFilter = snap.rosterPosFilter;
+  if (typeof snap.rosterSort === 'string' && snap.rosterSort) state.rosterSort = snap.rosterSort;
+  if (snap.rosterSortDir === 'asc' || snap.rosterSortDir === 'desc') state.rosterSortDir = snap.rosterSortDir;
+  if (typeof snap.depthMode === 'string' && snap.depthMode) state.depthMode = snap.depthMode;
+  if (typeof snap.rosterMovesFilter === 'string' && snap.rosterMovesFilter) {
+    state.rosterMovesFilter = snap.rosterMovesFilter;
+  }
+  if (typeof snap.capSelectedYear === 'string' && snap.capSelectedYear) state.capSelectedYear = snap.capSelectedYear;
+  if (snap.capViewMode === 'sim' || snap.capViewMode === 'fa') state.capViewMode = snap.capViewMode;
+  if (typeof snap.capFaFilter === 'string' && snap.capFaFilter) state.capFaFilter = snap.capFaFilter;
+  if (typeof snap.beatPodViewMode === 'string' && snap.beatPodViewMode) state.beatPodViewMode = snap.beatPodViewMode;
+  if (typeof snap.beatPodShowFilter === 'string' && snap.beatPodShowFilter) {
+    state.beatPodShowFilter = snap.beatPodShowFilter;
+  }
+  if (snap.tabScrollPositions && typeof snap.tabScrollPositions === 'object') {
+    state.tabScrollPositions = { ...snap.tabScrollPositions };
+  }
+  return true;
 }
 
 function markReadKey(key) {
@@ -1488,6 +1657,7 @@ function renderNavTabs() {
 }
 
 let lastRenderedMainTab = '';
+let lastRenderedViewKey = '';
 let lastRenderedMainHtml = '';
 let lastRenderedMainStableHtml = '';
 let lastRenderedNewsSnapshot = null;
@@ -1561,9 +1731,9 @@ function syncPendingNewsUpdatesPillDom() {
 }
 
 const ANCHOR_CANDIDATE_SELECTOR =
-  '.brief-card[data-read-key], [data-daily-news-brief], [data-dashboard-block], [data-gamecast-drive-id], .card[id]';
+  '.brief-card[data-read-key], [data-daily-news-brief], [data-dashboard-block], [data-gamecast-drive-id], [data-episode-id], [data-analysis-id], [data-prospect-id], .card[id], .card';
 
-function getReadingAnchorKey(el) {
+function getReadingAnchorKey(el, cardIndex = -1) {
   if (!el) return '';
   if (el.classList?.contains('brief-card') && el.hasAttribute('data-read-key')) {
     return `brief-card:${el.getAttribute('data-read-key')}`;
@@ -1577,8 +1747,20 @@ function getReadingAnchorKey(el) {
   if (el.hasAttribute('data-gamecast-drive-id')) {
     return `drive:${el.getAttribute('data-gamecast-drive-id')}`;
   }
+  if (el.hasAttribute('data-episode-id') && el.classList?.contains('card')) {
+    return `episode:${el.getAttribute('data-episode-id')}`;
+  }
+  if (el.hasAttribute('data-analysis-id') && el.classList?.contains('card')) {
+    return `analysis:${el.getAttribute('data-analysis-id')}`;
+  }
+  if (el.hasAttribute('data-prospect-id')) {
+    return `prospect:${el.getAttribute('data-prospect-id')}`;
+  }
   if (el.id) {
     return `id:${el.id}`;
+  }
+  if (el.classList?.contains('card') && cardIndex >= 0) {
+    return `card-idx:${cardIndex}`;
   }
   return '';
 }
@@ -1600,9 +1782,27 @@ function findReadingAnchorElement(rootEl, anchorKey) {
     const k = anchorKey.slice('drive:'.length);
     return rootEl.querySelector(`[data-gamecast-drive-id="${CSS.escape(k)}"]`);
   }
+  if (anchorKey.startsWith('episode:')) {
+    const k = anchorKey.slice('episode:'.length);
+    return rootEl.querySelector(`.card[data-episode-id="${CSS.escape(k)}"]`);
+  }
+  if (anchorKey.startsWith('analysis:')) {
+    const k = anchorKey.slice('analysis:'.length);
+    return rootEl.querySelector(`.card[data-analysis-id="${CSS.escape(k)}"]`);
+  }
+  if (anchorKey.startsWith('prospect:')) {
+    const k = anchorKey.slice('prospect:'.length);
+    return rootEl.querySelector(`[data-prospect-id="${CSS.escape(k)}"]`);
+  }
   if (anchorKey.startsWith('id:')) {
     const id = anchorKey.slice('id:'.length);
     return rootEl.querySelector(`#${CSS.escape(id)}`);
+  }
+  if (anchorKey.startsWith('card-idx:')) {
+    const idx = Number(anchorKey.slice('card-idx:'.length));
+    if (Number.isInteger(idx) && idx >= 0) {
+      return rootEl.querySelectorAll('.card')[idx] || null;
+    }
   }
   return null;
 }
@@ -1616,16 +1816,20 @@ function captureViewportReadingAnchors(mainEl) {
     Math.round(document.querySelector('.top-header')?.getBoundingClientRect()?.bottom || 58)
   );
   const vh = window.innerHeight || document.documentElement?.clientHeight || 844;
+  const allCards = Array.from(mainEl.querySelectorAll('.card'));
+  const cardIndexMap = new Map(allCards.map((c, idx) => [c, idx]));
   const candidates = Array.from(mainEl.querySelectorAll(ANCHOR_CANDIDATE_SELECTOR));
   const inView = [];
   const straddling = [];
+  const seenKeys = new Set();
   for (const el of candidates) {
-    const key = getReadingAnchorKey(el);
-    if (!key) continue;
+    const key = getReadingAnchorKey(el, cardIndexMap.has(el) ? cardIndexMap.get(el) : -1);
+    if (!key || seenKeys.has(key)) continue;
     const rect = el.getBoundingClientRect();
     if (rect.height <= 0) continue;
     if (rect.bottom <= headerBottom + 4) continue;
     if (rect.top >= vh) break;
+    seenKeys.add(key);
     if (rect.top >= headerBottom - 12) {
       inView.push({ key, prevTop: rect.top });
     } else {
@@ -1640,7 +1844,7 @@ function captureViewportReadingAnchors(mainEl) {
 
 function restoreViewportReadingAnchors(mainEl, captured) {
   if (!mainEl || !captured || !Array.isArray(captured.anchors) || captured.anchors.length === 0) {
-    return;
+    return false;
   }
   const curY = window.scrollY || 0;
   const maxScrollY = Math.max(
@@ -1661,8 +1865,36 @@ function restoreViewportReadingAnchors(mainEl, captured) {
     if (Math.abs(targetY - curY) >= 1) {
       window.scrollTo({ top: targetY, behavior: 'instant' });
     }
-    return;
+    return true;
   }
+  return false;
+}
+
+const HORIZONTAL_SCROLL_SELECTOR = '.table-scroll, [data-scroll-anchor="right"], .sub-tabs, .filter-strip';
+
+function captureHorizontalScrollPositions(mainEl) {
+  if (!mainEl) return null;
+  const els = Array.from(mainEl.querySelectorAll(HORIZONTAL_SCROLL_SELECTOR));
+  if (els.length === 0) return null;
+  const saved = new Map();
+  els.forEach((el, idx) => {
+    if (el.scrollLeft > 0) {
+      const key = el.id ? `id:${el.id}` : `idx:${idx}`;
+      saved.set(key, el.scrollLeft);
+    }
+  });
+  return saved.size > 0 ? saved : null;
+}
+
+function restoreHorizontalScrollPositions(mainEl, savedMap) {
+  if (!mainEl || !savedMap || savedMap.size === 0) return;
+  const els = Array.from(mainEl.querySelectorAll(HORIZONTAL_SCROLL_SELECTOR));
+  els.forEach((el, idx) => {
+    const key = el.id ? `id:${el.id}` : `idx:${idx}`;
+    if (savedMap.has(key)) {
+      el.scrollLeft = savedMap.get(key);
+    }
+  });
 }
 
 function getDetailsPreservationSignature(el) {
@@ -1907,12 +2139,14 @@ function renderMain({ isBackground = false, forceNewsApply = false, preserveScro
   }
 
   const nextStableHtml = nextMainHtml !== null ? stripVolatileRelativeTimesFromHtml(nextMainHtml) : null;
+  const currentViewKey = getActiveScrollMemoryKey();
+  const isSameViewRerender = currentViewKey === lastRenderedViewKey && tab === lastRenderedMainTab;
 
   // 1. Skip no-op background re-renders (including routine relative-age ticks) to eliminate visual flicker
   if (
     isBackground &&
     nextMainHtml !== null &&
-    tab === lastRenderedMainTab &&
+    isSameViewRerender &&
     (nextMainHtml === lastRenderedMainHtml || nextStableHtml === lastRenderedMainStableHtml)
   ) {
     syncVisibleRelativeAgesInPlace(mainEl);
@@ -1959,16 +2193,24 @@ function renderMain({ isBackground = false, forceNewsApply = false, preserveScro
   }
 
   // 3. Whenever a background or in-place render DOES update the DOM while scrolled, capture the
-  //    current viewport reading anchor so the user's visible card stays locked in place vertically.
+  //    current viewport reading anchor, fallback scrollY, and horizontal table scroll offsets so
+  //    the user's exact visual position stays locked across all 5 tabs and all sub-tabs.
+  const prevScrollYBeforeSwap =
+    shouldPreserveReadingState && isSameViewRerender ? Math.max(0, window.scrollY || 0) : 0;
   const capturedReadingAnchor =
-    shouldPreserveReadingState && tab === lastRenderedMainTab
+    shouldPreserveReadingState && isSameViewRerender
       ? captureViewportReadingAnchors(mainEl)
+      : null;
+  const capturedHorizontalScroll =
+    shouldPreserveReadingState && isSameViewRerender
+      ? captureHorizontalScrollPositions(mainEl)
       : null;
 
   preserveFocusAroundRender(() => {
     if (nextMainHtml !== null) {
       mainEl.innerHTML = nextMainHtml;
       lastRenderedMainTab = tab;
+      lastRenderedViewKey = currentViewKey;
       lastRenderedMainHtml = nextMainHtml;
       lastRenderedMainStableHtml = nextStableHtml || '';
       lastRenderedNewsSnapshot = tab === 'news' ? extractNewsFeedSnapshotFromHtml(nextMainHtml) : null;
@@ -2004,14 +2246,28 @@ function renderMain({ isBackground = false, forceNewsApply = false, preserveScro
 
   reapplyKnownFailedImageWrappers(mainEl);
 
-  if (capturedReadingAnchor) {
-    restoreViewportReadingAnchors(mainEl, capturedReadingAnchor);
+  const anchorRestored = capturedReadingAnchor
+    ? restoreViewportReadingAnchors(mainEl, capturedReadingAnchor)
+    : false;
+  if (!anchorRestored && prevScrollYBeforeSwap > 0) {
+    const maxScrollY = Math.max(
+      0,
+      (document.documentElement?.scrollHeight || 0) - (window.innerHeight || 0)
+    );
+    const targetY = Math.min(prevScrollYBeforeSwap, maxScrollY);
+    if (Math.abs((window.scrollY || 0) - targetY) >= 1) {
+      window.scrollTo({ top: targetY, behavior: 'instant' });
+    }
+  }
+  if (capturedHorizontalScroll) {
+    restoreHorizontalScrollPositions(mainEl, capturedHorizontalScroll);
   }
 
   bindAllMountedInlineVideos();
   // Anchor right-aligned weekly scroll tables (e.g. Weekly Snap Matrix W1..latest) to most recent week
+  // on initial/explicit view renders, without overriding a user's horizontal scroll during background updates
   const rightAnchored = document.querySelectorAll('#mainView [data-scroll-anchor="right"]');
-  if (rightAnchored.length > 0) {
+  if (rightAnchored.length > 0 && !(isBackground && isSameViewRerender)) {
     const scrollToRightEdge = () => {
       rightAnchored.forEach(el => {
         if (el.scrollWidth > el.clientWidth) {
@@ -2909,7 +3165,7 @@ function renderMiniPlayer(audioSnapshot) {
     if (isPointerInteractionActive || isTypingMini) {
       requestBackgroundRender({ main: true });
     } else {
-      renderMain();
+      renderMain({ preserveScrollAnchor: true });
     }
   };
 
@@ -3175,7 +3431,7 @@ async function hydrateGamecastById(meta, { forceRefresh = false, silent = false,
   const prevModel = state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId) || null;
   if (!prevModel && !silent) {
     state.gamecastLoadingId = gameId;
-    renderMain();
+    renderMain({ preserveScrollAnchor: true });
   }
   if (forceRefresh && !silent) {
     state.gamecastSyncing = true;
@@ -3391,6 +3647,8 @@ function bindEvents() {
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const nextTab = btn.getAttribute('data-nav-tab') || 'home';
+      userNavigatedSinceBoot = true;
+      pendingEarlyBootTap = null;
       if (nextTab === state.activeNavTab) {
         if (nextTab === 'news' && state.pendingNewsRefresh) {
           clearPendingNewsRefresh();
@@ -3404,6 +3662,7 @@ function bindEvents() {
       state.activeNavTab = nextTab;
       if (!state.appData) {
         renderNavTabs();
+        renderHeader();
         bootOrRecoverAppData({ manual: true });
         return;
       }
@@ -3440,6 +3699,8 @@ function bindEvents() {
   // Top Header triggers (stopPropagation prevents bubbling into delegated `data-action="go-home"` double-fire!)
   document.getElementById('brandHomeTrigger')?.addEventListener('click', e => {
     e.stopPropagation();
+    userNavigatedSinceBoot = true;
+    pendingEarlyBootTap = null;
     if (state.activeNavTab === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
@@ -3456,6 +3717,7 @@ function bindEvents() {
 
   document.getElementById('openSearchBtn')?.addEventListener('click', e => {
     e.stopPropagation();
+    pendingEarlyBootTap = null;
     openUniversalSearchSheet({ seedFromActiveFeed: true });
   });
 
@@ -3494,6 +3756,7 @@ function bindEvents() {
   });
 
   document.getElementById('openSettingsBtn')?.addEventListener('click', () => {
+    pendingEarlyBootTap = null;
     state.pushStatusNotice = '';
     state.sheetMode = 'settings';
     renderSheet();
@@ -6385,23 +6648,25 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
   }
 }
 
-async function handleIncomingSharedLink(locationLike = window.location) {
+async function handleIncomingSharedLink(locationLike = window.location, { isInitialBoot = false } = {}) {
   try {
     const rawParams = new URLSearchParams(String(locationLike?.search || '').replace(/^\?/, ''));
     const qSub = String(rawParams.get('sub') || '').toLowerCase();
     const qGameId = String(rawParams.get('gameId') || '').trim();
-    if (qSub === 'gamecast' || (rawParams.get('tab') === 'season' && isNumericEspnGameId(qGameId))) {
-      state.activeNavTab = 'season';
-      state.seasonSubTab = 'gamecast';
-      state.userPickedSeasonSubDuringLive = true;
-      if (isNumericEspnGameId(qGameId)) state.gamecastGameId = qGameId;
-      renderMain();
-      ensureGamecastHydratedAndPolling({ forceRefresh: false });
-    } else if (qSub === 'draft_class') {
-      state.activeNavTab = 'season';
-      state.seasonSubTab = 'draft_prep';
-      state.draftSubTab = 'class';
-      renderMain();
+    if (!(isInitialBoot && userNavigatedSinceBoot)) {
+      if (qSub === 'gamecast' || (rawParams.get('tab') === 'season' && isNumericEspnGameId(qGameId))) {
+        state.activeNavTab = 'season';
+        state.seasonSubTab = 'gamecast';
+        state.userPickedSeasonSubDuringLive = true;
+        if (isNumericEspnGameId(qGameId)) state.gamecastGameId = qGameId;
+        renderMain();
+        ensureGamecastHydratedAndPolling({ forceRefresh: false });
+      } else if (qSub === 'draft_class') {
+        state.activeNavTab = 'season';
+        state.seasonSubTab = 'draft_prep';
+        state.draftSubTab = 'class';
+        renderMain();
+      }
     }
   } catch {}
 
@@ -6416,15 +6681,18 @@ async function handleIncomingSharedLink(locationLike = window.location) {
     state.bigBoardAgreement = bbParams.agreement || 'all';
     state.bigBoardRankedOnly = Boolean(bbParams.rankedOnly);
     state.bigBoardSearch = bbParams.search || '';
-    if (bbParams.openDraftTab) {
+    if (bbParams.openDraftTab && !(isInitialBoot && userNavigatedSinceBoot)) {
       state.activeNavTab = 'season';
       state.seasonSubTab = 'draft_prep';
     }
-    renderMain();
+    if (!(isInitialBoot && userNavigatedSinceBoot)) {
+      renderMain();
+    }
   }
 
   const sharedRoute = await extractIncomingSharedRoute(locationLike);
   if (!sharedRoute) return bbParams.hasBigBoardParams;
+  if (isInitialBoot && userNavigatedSinceBoot) return false;
 
   if (sharedRoute.type === 'podcast') {
     state.activeNavTab = 'audio';
@@ -6703,6 +6971,10 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       renderMainBackground: opts => renderMain({ isBackground: true, ...(opts || {}) }),
       getPendingNewsRefresh: () => state.pendingNewsRefresh,
       isPointerInteractionActive: () => isPointerInteractionActive,
+      getScrollMemoryKey: () => getActiveScrollMemoryKey(),
+      getSwUpdateState: () => ({ ...swUpdateControllerState }),
+      saveSessionNavSnapshot: opts => saveSessionNavSnapshot(opts),
+      consumeSessionNavSnapshot: () => consumeSessionNavSnapshot(),
       forceRender: () => {
         renderMain();
         if (state.sheetMode) renderSheet();
@@ -6724,7 +6996,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       hasCompletedBootLifecycle = true;
 
       // Check if colleague arrived via a shared `?pod=...` / `#shared-pod=...` or `?analysis=...` deep link
-      handleIncomingSharedLink(window.location).catch(() => {});
+      handleIncomingSharedLink(window.location, { isInitialBoot: true }).catch(() => {});
       window.addEventListener('hashchange', () => {
         handleIncomingSharedLink(window.location).catch(() => {});
       });
@@ -6922,7 +7194,7 @@ async function init() {
               !isPointerInteractionActive &&
               Date.now() >= postPointerClickGraceUntilMs
             ) {
-              renderMain();
+              renderMain({ preserveScrollAnchor: true });
             }
           },
           state.prefs
@@ -6954,16 +7226,26 @@ async function init() {
   });
   bindEvents();
 
+  // Restore exact navigation tab, sub-tab & scroll memory if a deferred background-resume SW update reload just occurred
+  const restoredSessionNav = consumeSessionNavSnapshot();
+  if (restoredSessionNav) {
+    applyRestoredSessionNavSnapshot(restoredSessionNav);
+    renderNavTabs();
+    renderHeader();
+  }
+
   // Capture any early tap queued by `index.html` while ES modules were still parsing on cold boot.
   // Apply nav-tab selection BEFORE initial data boot so first paint lands directly on the tapped tab,
   // and replay overlay triggers (search/settings) cleanly AFTER `bootOrRecoverAppData()` settles.
-  let pendingEarlyBootTap = null;
+  pendingEarlyBootTap = null;
   if (typeof window !== 'undefined' && window.__earlyBootTapAction) {
     pendingEarlyBootTap = window.__earlyBootTapAction;
     window.__earlyBootTapAction = null;
-    if (pendingEarlyBootTap.type === 'nav-tab' && pendingEarlyBootTap.tab) {
+    if (pendingEarlyBootTap.type === 'nav-tab' && VALID_NAV_TABS.has(pendingEarlyBootTap.tab)) {
+      userNavigatedSinceBoot = true;
       state.activeNavTab = pendingEarlyBootTap.tab;
       renderNavTabs();
+      renderHeader();
     }
   }
 
@@ -7058,31 +7340,74 @@ async function init() {
 
   await bootOrRecoverAppData({ manual: false });
 
+  if (restoredSessionNav && state.appData && !userNavigatedSinceBoot) {
+    if (state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast') {
+      ensureGamecastHydratedAndPolling({ forceRefresh: false });
+    }
+    const targetRestoreY = Number(restoredSessionNav.scrollY || 0);
+    if (Number.isFinite(targetRestoreY) && targetRestoreY > 0 && (window.scrollY || 0) <= 4) {
+      requestAnimationFrame(() => {
+        if (!userNavigatedSinceBoot && (window.scrollY || 0) <= 4) {
+          const maxY = Math.max(0, (document.documentElement?.scrollHeight || 0) - (window.innerHeight || 0));
+          window.scrollTo({ top: Math.min(targetRestoreY, maxY), behavior: 'instant' });
+        }
+      });
+    }
+  }
+
   if (pendingEarlyBootTap && state.appData) {
+    const tapToReplay = pendingEarlyBootTap;
+    pendingEarlyBootTap = null;
     try {
-      if (pendingEarlyBootTap.type === 'search') {
+      if (tapToReplay.type === 'search') {
         document.getElementById('openSearchBtn')?.click();
-      } else if (pendingEarlyBootTap.type === 'settings') {
+      } else if (tapToReplay.type === 'settings') {
         document.getElementById('openSettingsBtn')?.click();
-      } else if (pendingEarlyBootTap.type === 'nav-tab' && pendingEarlyBootTap.tab === 'season') {
+      } else if (
+        tapToReplay.type === 'nav-tab' &&
+        tapToReplay.tab === 'season' &&
+        state.activeNavTab === 'season' &&
+        state.seasonSubTab === 'gamecast'
+      ) {
         ensureGamecastHydratedAndPolling({ forceRefresh: false });
       }
     } catch {}
   }
 
-  // Register Offline-Ready Service Worker AFTER initial boot attempt and NEVER reload mid-boot or mid-job
+  // Register Offline-Ready Service Worker AFTER initial boot attempt.
+  // CRITICAL INVARIANTS:
+  // 1. Always register the canonical, non-versioned `./sw.js` with `{ updateViaCache: 'none' }` — NEVER append `?v=N`
+  //    to the SW script URL (changing the script URL forces a duplicate second SW install + `controllerchange` right
+  //    after the first reload!).
+  // 2. NEVER call `window.location.reload()` during an active foreground session (not immediately on `controllerchange`
+  //    and never via a retry `setInterval`!). The running ES module graph is already self-consistent in memory.
+  // 3. Only apply a deferred SW reload when the user returns to the foreground after being backgrounded for >= 60s,
+  //    and ALWAYS persist the user's exact tab, sub-tab, filters & scroll position to `sessionStorage` beforehand.
   if ('serviceWorker' in navigator) {
     let refreshingSw = false;
     let pendingSwReload = false;
     let activeSwReg = null;
     let lastSwUpdateCheckMs = Date.now();
+    let hiddenSinceMs = 0;
     const hadController = Boolean(navigator.serviceWorker.controller);
-    const tryReloadForUpdatedSw = () => {
+    swUpdateControllerState = {
+      registerUrl: './sw.js',
+      hadController,
+      pendingSwReload: false,
+      hiddenSinceMs: 0,
+      reloadCount: 0
+    };
+    const tryReloadForUpdatedSw = ({ allowOnlyAfterBackgroundResume = true, hiddenDurationMs = 0 } = {}) => {
       if (!pendingSwReload || !hadController || refreshingSw) return false;
+      if (allowOnlyAfterBackgroundResume && hiddenDurationMs < SW_BACKGROUND_RESUME_RELOAD_MIN_HIDDEN_MS) {
+        return false;
+      }
       const activeTag = document.activeElement?.tagName;
       const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+      const now = Date.now();
       const recentlyInteracted =
-        lastUserInteractionMs > 0 && Date.now() - lastUserInteractionMs < 3000;
+        (lastUserInteractionMs > 0 && now - lastUserInteractionMs < 3000) ||
+        (lastScrollEventMs > 0 && now - lastScrollEventMs < 3000);
       if (
         isBootingAppData ||
         !state.appData ||
@@ -7100,24 +7425,21 @@ async function init() {
       }
       refreshingSw = true;
       pendingSwReload = false;
+      swUpdateControllerState.pendingSwReload = false;
+      swUpdateControllerState.reloadCount += 1;
+      saveSessionNavSnapshot({ reason: 'sw_reload' });
       window.location.reload();
       return true;
     };
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!hadController || refreshingSw) return;
+      // Record that a newer SW has taken control, but NEVER interrupt or kick the user out of their active session!
       pendingSwReload = true;
-      if (!tryReloadForUpdatedSw()) {
-        // Retry cleanly once active boot/job/playback settles so updated views never stay trapped behind stale modules
-        const retryTimer = window.setInterval(() => {
-          if (!pendingSwReload || tryReloadForUpdatedSw()) {
-            window.clearInterval(retryTimer);
-          }
-        }, 1500);
-      }
+      swUpdateControllerState.pendingSwReload = true;
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=130', { updateViaCache: 'none' })
+        .register('./sw.js', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});
@@ -7125,8 +7447,21 @@ async function init() {
         .catch(() => {});
     };
     document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        hiddenSinceMs = Date.now();
+        swUpdateControllerState.hiddenSinceMs = hiddenSinceMs;
+        return;
+      }
       if (document.visibilityState !== 'visible') return;
-      if (pendingSwReload && tryReloadForUpdatedSw()) return;
+      const wasHiddenMs = hiddenSinceMs > 0 ? Date.now() - hiddenSinceMs : 0;
+      hiddenSinceMs = 0;
+      swUpdateControllerState.hiddenSinceMs = 0;
+      if (
+        pendingSwReload &&
+        tryReloadForUpdatedSw({ allowOnlyAfterBackgroundResume: true, hiddenDurationMs: wasHiddenMs })
+      ) {
+        return;
+      }
       const now = Date.now();
       if (activeSwReg && now - lastSwUpdateCheckMs >= 60_000) {
         lastSwUpdateCheckMs = now;
