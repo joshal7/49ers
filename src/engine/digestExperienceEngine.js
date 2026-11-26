@@ -854,8 +854,78 @@ export function extractPresserTakeaways(
 }
 
 /* ============================================================================
- * 10. Reading-Time / Effort Cues & Inline Chart/Media Preview Detection
+ * 10. Reading-Time / Effort Cues, Video Durations & Inline Chart/Media Preview Detection
  * ============================================================================ */
+
+/**
+ * Parses an ISO-8601 duration string (e.g. `PT31M31S`, `PT1H02M15S`, `PT54S`) into integer seconds.
+ */
+export function parseIso8601DurationToSeconds(iso = '') {
+  const s = String(iso || '').trim().toUpperCase();
+  const m = s.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?$/);
+  if (!m) return 0;
+  const hrs = Number(m[1] || 0);
+  const mins = Number(m[2] || 0);
+  const secs = Math.round(Number(m[3] || 0));
+  const total = hrs * 3600 + mins * 60 + secs;
+  return Number.isFinite(total) && total > 0 ? total : 0;
+}
+
+/**
+ * Formats a verified video duration (seconds, ISO-8601 `PT...`, or `M:SS`/`H:MM:SS` string)
+ * into a crisp display label (`0:54`, `6:20`, `31:31`, `1:02:15`). Rejects zero/placeholder strings.
+ */
+export function formatVideoDurationDisplay(rawDuration) {
+  if (rawDuration === null || rawDuration === undefined) return '';
+  if (typeof rawDuration === 'number') {
+    if (!Number.isFinite(rawDuration) || rawDuration < 1) return '';
+    const total = Math.round(rawDuration);
+    const hrs = Math.floor(total / 3600);
+    const mins = Math.floor((total % 3600) / 60);
+    const secs = total % 60;
+    return hrs > 0
+      ? `${hrs}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+      : `${mins}:${String(secs).padStart(2, '0')}`;
+  }
+
+  const s = String(rawDuration).trim();
+  if (!s || /^(?:0|0:00|00:00|0:00:00|video|clip|gif|n\/a|tbd|—|-)$/i.test(s)) return '';
+
+  // Pure numeric seconds string (e.g. "1891", "54")
+  if (/^\d+(?:\.\d+)?$/.test(s)) {
+    return formatVideoDurationDisplay(Number(s));
+  }
+
+  // ISO-8601 duration (e.g. "PT31M31S")
+  if (/^PT/i.test(s)) {
+    const secs = parseIso8601DurationToSeconds(s);
+    return secs > 0 ? formatVideoDurationDisplay(secs) : '';
+  }
+
+  // Already formatted H:MM:SS or M:SS
+  const hms = s.match(/^(\d{1,2}):(\d{2}):(\d{2})$/);
+  if (hms) {
+    const h = Number(hms[1]);
+    const m = Number(hms[2]);
+    const sec = Number(hms[3]);
+    if (h === 0 && m === 0 && sec === 0) return '';
+    return h > 0
+      ? `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`
+      : `${m}:${String(sec).padStart(2, '0')}`;
+  }
+  const ms = s.match(/^(\d{1,3}):(\d{2})$/);
+  if (ms) {
+    const m = Number(ms[1]);
+    const sec = Number(ms[2]);
+    if (m === 0 && sec === 0) return '';
+    if (m >= 60) {
+      return formatVideoDurationDisplay(m * 60 + sec);
+    }
+    return `${m}:${String(sec).padStart(2, '0')}`;
+  }
+
+  return '';
+}
 
 export function estimateItemEffortCue(item = {}) {
   if (!item || typeof item !== 'object') return '';

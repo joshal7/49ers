@@ -160,7 +160,9 @@ import {
   stripVolatileRelativeTimesFromHtml,
   extractNewsFeedSnapshotFromHtml,
   evaluateNewsBackgroundUpdate,
-  computeScrollAnchorTargetY
+  computeScrollAnchorTargetY,
+  parseIso8601DurationToSeconds,
+  formatVideoDurationDisplay
 } from '../src/engine/digestExperienceEngine.js';
 import {
   extractBeatAttributionFromText,
@@ -192,6 +194,7 @@ import {
   isPaywalledOrBlockedUrl,
   isPaywalledPublisher,
   sanitizeExternalUrl,
+  sanitizeTweetInlineLinkUrl,
   isIndividualOtcPlayerUrl,
   isValidOtcPlayerId,
   isValidPfrPlayerId,
@@ -247,6 +250,8 @@ import {
   stripRedundantAuthorBoilerplate,
   isRedundantProfileSelfLink,
   extractBlueskyBestExternalLink,
+  extractBlueskyInlineLinks,
+  extractXEntityInlineLinks,
   resolveTweetLinkedArticlePreview,
   isPreGamePlayAvailabilityItem,
   isStaleCompletedGameAvailabilityItem,
@@ -318,7 +323,14 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh
 } from '../src/services/aiWorkerClient.js';
 import { renderSettingsSheetHtml } from '../src/views/settingsArchiveView.js';
-import { esc } from '../src/views/uiHelpers.js';
+import {
+  esc,
+  resolveTweetInlineLinks,
+  renderTweetBodyWithInlineLinksHtml,
+  renderSalientThumbHtml,
+  renderSalientHeroBannerHtml
+} from '../src/views/uiHelpers.js';
+import { resolveLightboxFullImageUrl } from '../src/engine/salientMediaEngine.js';
 import {
   buildNativePodcastAppHref,
   AI_STUDIO_DIRECT_KEY_URL,
@@ -2259,7 +2271,11 @@ test('Exhaustive URL audit across all 11 compiled JSON feeds & all 88 roster pla
       if (!val.startsWith('https://')) {
         violations.push(`${loc}: non-HTTPS URL ${val}`);
       }
-      if (isPaywalledOrBlockedUrl(val)) {
+      if (/\.inlineLinks\[\d+\]\.url$/.test(loc)) {
+        if (!sanitizeTweetInlineLinkUrl(val, null)) {
+          violations.push(`${loc}: invalid tweet inline link URL ${val}`);
+        }
+      } else if (isPaywalledOrBlockedUrl(val)) {
         violations.push(`${loc}: paywalled or broken URL ${val}`);
       }
     } else if (Array.isArray(val)) {
@@ -10503,7 +10519,7 @@ await testAsync(
       recentNews: []
     };
     const nonInjuryOnlyStream = liveBundle.news.rawStream.filter(
-      it => !/\b(injur\w*|ankle|knee|back|hamstring|will not practice|did not practice|dnp|questionable|doubtful|out\b|ir\b)\b/i.test(`${it.title || ''} ${it.summary || ''} ${it.fullText || ''}`)
+      it => !/\b(injur\w*|ankle|knee|back|hamstring|will not practice|did not practice|miss(?:ed|es|ing)?\s+practice|dnp|questionable|doubtful|out\b|ir\b)\b/i.test(`${it.title || ''} ${it.summary || ''} ${it.fullText || ''}`)
     );
     const purdyHealthHtml = renderPlayerDossierSheetHtml({
       player: healthyNoInjuryPlayer,
@@ -25066,6 +25082,158 @@ await testAsync(
     });
     assert.ok(mixedMediaCardHtml.includes('video-embed-box') && mixedMediaCardHtml.includes('DiagramPhoto'), 'Mixed-media tweet must render both video player and separate attached photo');
     assert.equal(renderPreservedTweetTextHtml('Single line tweet'), 'Single line tweet', 'Single-line tweet must emit zero extra wrapper markup');
+  }
+);
+
+test(
+  'Inline tweet links (direct article clicks vs parent tweet text), click-to-maximize image lightbox & video durations',
+  () => {
+    const nowMs = Date.parse('2026-11-25T23:00:00Z');
+
+    // 1. Bluesky facet byte-offset extraction with multi-byte ellipsis/emoji preserves exact full NYTimes Gift Article URL
+    const bskyText = 'After Mexican fans booed Nick Bosa, 49ers DE says he meant no harm …\nwww.nytimes.com/athletic/781...';
+    const utf8Enc = new TextEncoder();
+    const prefixBytes = utf8Enc.encode('After Mexican fans booed Nick Bosa, 49ers DE says he meant no harm …\n').length;
+    const linkBytes = utf8Enc.encode('www.nytimes.com/athletic/781...').length;
+    const fullNytUrl =
+      'https://www.nytimes.com/athletic/7812200/2026/11/25/nick-bosa-mexico-city-fans-49ers/?unlocked_article_code=1.TVE.hnmj.ySEcRr18hNnF&source=emp_shared_article';
+    const bskyLinks = extractBlueskyInlineLinks(
+      {
+        text: bskyText,
+        facets: [
+          {
+            index: { byteStart: prefixBytes, byteEnd: prefixBytes + linkBytes },
+            features: [{ $type: 'app.bsky.richtext.facet#link', uri: fullNytUrl }]
+          }
+        ]
+      },
+      { embed: { external: { uri: fullNytUrl } } }
+    );
+    assert.equal(bskyLinks.length, 1, 'Bluesky facet link must extract cleanly');
+    assert.equal(bskyLinks[0].text, 'www.nytimes.com/athletic/781...', 'UTF-8 byte slice must preserve exact truncated display text after multi-byte ellipsis');
+    assert.equal(bskyLinks[0].url, fullNytUrl, 'Full article URL including unlocked_article_code must be preserved');
+
+    // 2. X entities.urls extraction
+    const xLinks = extractXEntityInlineLinks({
+      urls: [
+        {
+          url: 'https://t.co/abc123',
+          display_url: 'nytimes.com/athletic/781...',
+          expanded_url: `${fullNytUrl}&utm_source=twitter`
+        }
+      ]
+    });
+    assert.equal(xLinks.length, 1);
+    assert.ok(!xLinks[0].url.includes('utm_source'), 'Tracking params must be stripped from inline tweet links');
+    assert.ok(xLinks[0].url.includes('unlocked_article_code='), 'Gift article unlock code must remain intact');
+
+    // 3. Rendering tweet body with inline link splits into sibling <a> tags (zero nested <a>)
+    const barrowsTweet = {
+      id: 'sf_bsky_barrows_bosa',
+      type: 'tweet',
+      author: 'Matt Barrows',
+      authorHandle: '@mattbarrows',
+      outletName: 'Matt Barrows',
+      url: 'https://bsky.app/profile/mattbarrows.bsky.social/post/3n35abc',
+      title: bskyText,
+      fullText: bskyText,
+      inlineLinks: bskyLinks,
+      imageUrl: 'https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:abc/bafkrei123',
+      publishedAt: new Date(nowMs - 3_600_000).toISOString()
+    };
+    const barrowsCardHtml = renderWireItemCardHtml(barrowsTweet, { readKeysSet: new Set() });
+    assert.ok(
+      barrowsCardHtml.includes(`href="${esc(fullNytUrl)}"`) &&
+        barrowsCardHtml.includes('data-tweet-inline-link="true"'),
+      'Inline NYTimes link inside tweet must point directly to the article URL'
+    );
+    assert.ok(
+      barrowsCardHtml.includes(`href="https://bsky.app/profile/mattbarrows.bsky.social/post/3n35abc"`) &&
+        barrowsCardHtml.includes('data-tweet-text-segment="true"'),
+      'Non-linked tweet prose must link to the parent tweet'
+    );
+    // Verify ZERO nested <a> tags
+    let aDepth = 0;
+    let maxADepth = 0;
+    for (const tm of barrowsCardHtml.matchAll(/<(\/?)a(?:\s|>)/gi)) {
+      aDepth += tm[1] === '/' ? -1 : 1;
+      if (aDepth > maxADepth) maxADepth = aDepth;
+    }
+    assert.equal(maxADepth, 1, 'Tweet card with inline links must have ZERO nested <a> tags');
+
+    // Multi-link tweet (Spotify + Apple Podcasts)
+    const multiText = 'New pod!\n-Spotify: open.spotify.com/episode/3xbM...\n-Apple: podcasts.apple.com/us/podcast/4...';
+    const multiResolved = resolveTweetInlineLinks(multiText, {
+      tweetUrl: 'https://bsky.app/profile/timkawakami.bsky.social/post/xyz',
+      item: {
+        inlineLinks: [
+          { text: 'open.spotify.com/episode/3xbM...', url: 'https://open.spotify.com/episode/3xbMzu9dvyiqzCgJuvGY6S' },
+          { text: 'podcasts.apple.com/us/podcast/4...', url: 'https://podcasts.apple.com/us/podcast/49ers-plus-minus/id12345' }
+        ]
+      }
+    });
+    assert.equal(multiResolved.length, 2, 'Both inline links in a multi-link tweet must resolve independently');
+
+    // 4. Click-to-maximize image lightbox trigger & full-resolution URL upgrade
+    const lbBsky = resolveLightboxFullImageUrl(barrowsTweet.imageUrl);
+    assert.equal(
+      lbBsky.fullSrc,
+      'https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:abc/bafkrei123',
+      'Bluesky feed_thumbnail must upgrade to feed_fullsize for lightbox'
+    );
+    const lbTw = resolveLightboxFullImageUrl(
+      'https://pbs.twimg.com/media/Abc123?format=webp&name=360x360',
+      'https://pbs.twimg.com/media/Abc123.jpg'
+    );
+    assert.equal(lbTw.fullSrc, 'https://pbs.twimg.com/media/Abc123?format=jpg&name=large');
+    assert.ok(
+      barrowsCardHtml.includes('data-action="open-image-lightbox"') &&
+        barrowsCardHtml.includes('data-lightbox-src="https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:abc/bafkrei123"'),
+      'Bosa editorial thumbnail on tweet card must open full-res lightbox on click'
+    );
+    const heroLbHtml = renderSalientHeroBannerHtml({
+      src: 'https://media.nbcsportsbayarea.com/2026/11/NickBosa.jpg?w=680',
+      rawUrl: 'https://media.nbcsportsbayarea.com/2026/11/NickBosa.jpg',
+      alt: 'Nick Bosa'
+    });
+    assert.ok(heroLbHtml.includes('data-action="open-image-lightbox"'), 'Hero banner image must open lightbox on click');
+    const teamCrestHtml = renderSalientThumbHtml({
+      kind: 'team',
+      sfLogoSrc: 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+      tagLabel: 'Team'
+    });
+    assert.ok(!teamCrestHtml.includes('open-image-lightbox'), 'Team crest fallback badge must not open image lightbox');
+
+    // 5. Video duration formatting & rendering on club/YouTube/ESPN video cards
+    assert.equal(parseIso8601DurationToSeconds('PT31M31S'), 1891);
+    assert.equal(parseIso8601DurationToSeconds('PT1H02M05S'), 3725);
+    assert.equal(formatVideoDurationDisplay(54), '0:54');
+    assert.equal(formatVideoDurationDisplay(380), '6:20');
+    assert.equal(formatVideoDurationDisplay('PT31M31S'), '31:31');
+    assert.equal(formatVideoDurationDisplay('0:00'), '');
+    assert.equal(formatVideoDurationDisplay('Video'), '');
+
+    const clubVidCardHtml = renderWireItemCardHtml({
+      id: 'sf_vid_los49ers',
+      type: 'video',
+      title: 'Los 49ers: Duelo de rivalidad vs. Seattle Parte 2',
+      url: 'https://www.49ers.com/video/los-49ers-duelo-de-rivalidad-vs-seattle-parte-2',
+      externalVideoUrl: 'https://www.49ers.com/video/los-49ers-duelo-de-rivalidad-vs-seattle-parte-2',
+      embeddable: false,
+      duration: '16:32',
+      imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/abc.jpg',
+      author: '49ers.com Video',
+      outletName: '49ers.com Video',
+      publishedAt: new Date(Date.now() - 3 * 3_600_000).toISOString()
+    });
+    assert.ok(
+      clubVidCardHtml.includes('data-age-prefix="16:32 • "') && clubVidCardHtml.includes('16:32 • 3h ago'),
+      'Club video card must display duration right next to relative age in top-right meta like articles'
+    );
+    assert.ok(
+      clubVidCardHtml.includes('<span class="video-dur-badge mono">16:32</span>'),
+      'Non-embeddable club video card must also display duration badge on thumbnail stage'
+    );
   }
 );
 

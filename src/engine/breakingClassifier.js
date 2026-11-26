@@ -32,6 +32,7 @@ import {
   isPaywalledPublisher,
   normalizeMultilineSocialText,
   sanitizeExternalUrl,
+  sanitizeTweetInlineLinkUrl,
   stripAggregatorBoilerplate
 } from './linkIntegrity.js';
 import { isEditorialPhotoUrl } from './salientMediaEngine.js';
@@ -4986,6 +4987,11 @@ export function deduplicateAndGroupWireItems(
         isHighlightClip: Boolean(item.isHighlightClip || demotedPrev.isHighlightClip) || undefined,
         externalUrl: item.externalUrl || demotedPrev.externalUrl || null,
         externalTitle: item.externalTitle || demotedPrev.externalTitle || null,
+        ...(Array.isArray(item.inlineLinks) && item.inlineLinks.length > 0
+          ? { inlineLinks: item.inlineLinks }
+          : Array.isArray(demotedPrev.inlineLinks) && demotedPrev.inlineLinks.length > 0 && item.url === demotedPrev.url
+            ? { inlineLinks: demotedPrev.inlineLinks }
+            : {}),
         // Keep the newer/higher-stage update's own badge when present, only inheriting from prior lead when non-speculative
         breakingBadge: item.breakingBadge || (inheritPrevBadge ? demotedPrev.breakingBadge : null),
         isBreaking: Boolean(item.isBreaking || (inheritPrevBadge && matchedCluster.lead.isBreaking)),
@@ -5482,6 +5488,106 @@ export function extractBlueskyBestExternalLink(post = null, rec = null) {
     };
   }
   return { uri: fallbackUri, title: '', description: '', thumb: '' };
+}
+
+const BSKY_UTF8_ENCODER = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
+const BSKY_UTF8_DECODER = typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8') : null;
+
+/**
+ * Extracts all clickable inline links `[{ text, url }]` embedded inside a Bluesky post's
+ * `record.facets` (`app.bsky.richtext.facet#link`) and `embed.external` so truncated display
+ * URLs like `www.nytimes.com/athletic/781...` or `open.spotify.com/episode/3xbM...` resolve
+ * directly to their full destination URLs (including Gift Articles with `unlocked_article_code`).
+ */
+export function extractBlueskyInlineLinks(rec = null, post = null) {
+  const out = [];
+  const seen = new Set();
+  const rawText = String(rec?.text || '');
+  const textBytes = rawText && BSKY_UTF8_ENCODER ? BSKY_UTF8_ENCODER.encode(rawText) : null;
+
+  const pushLink = (displayText, rawUri) => {
+    const safeUrl = sanitizeTweetInlineLinkUrl(rawUri, null);
+    if (!safeUrl) return;
+    // Skip raw Tenor GIF media URLs (handled as animated GIF clips)
+    if (/^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(safeUrl)) return;
+    const cleanDisplay = String(displayText || '').trim();
+    const key = `${cleanDisplay.toLowerCase()}::${safeUrl}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push({ text: cleanDisplay, url: safeUrl });
+  };
+
+  const facets = Array.isArray(rec?.facets) ? rec.facets : [];
+  for (const facet of facets) {
+    const feats = Array.isArray(facet?.features) ? facet.features : [];
+    const linkFeat = feats.find(f => f?.$type === 'app.bsky.richtext.facet#link' && f?.uri);
+    if (!linkFeat?.uri) continue;
+    let displaySlice = '';
+    const bStart = Number(facet?.index?.byteStart);
+    const bEnd = Number(facet?.index?.byteEnd);
+    if (
+      textBytes &&
+      BSKY_UTF8_DECODER &&
+      Number.isInteger(bStart) &&
+      Number.isInteger(bEnd) &&
+      bStart >= 0 &&
+      bEnd > bStart &&
+      bEnd <= textBytes.length
+    ) {
+      displaySlice = BSKY_UTF8_DECODER.decode(textBytes.slice(bStart, bEnd)).trim();
+    }
+    pushLink(displaySlice, linkFeat.uri);
+  }
+
+  const extUri = String(
+    post?.embed?.external?.uri ||
+      post?.embed?.media?.external?.uri ||
+      rec?.embed?.external?.uri ||
+      rec?.embed?.media?.external?.uri ||
+      ''
+  ).trim();
+  if (extUri) {
+    const safeExt = sanitizeTweetInlineLinkUrl(extUri, null);
+    if (safeExt && !out.some(l => l.url === safeExt)) {
+      pushLink('', safeExt);
+    }
+  }
+
+  return out.slice(0, 6);
+}
+
+/**
+ * Extracts clickable inline links `[{ text, url }]` from X / Twitter syndication or API v2
+ * `entities.urls` so external URLs referenced inside X tweet text open directly to the article.
+ */
+export function extractXEntityInlineLinks(entities = null, card = null) {
+  const out = [];
+  const seen = new Set();
+  const pushLink = (displayText, rawUri) => {
+    const safeUrl = sanitizeTweetInlineLinkUrl(rawUri, null);
+    if (!safeUrl) return;
+    if (/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/[^/]+\/status\/\d+\/(?:photo|video)\//i.test(safeUrl)) return;
+    const cleanDisplay = String(displayText || '').trim();
+    const key = `${cleanDisplay.toLowerCase()}::${safeUrl}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push({ text: cleanDisplay, url: safeUrl });
+  };
+
+  const urls = Array.isArray(entities?.urls) ? entities.urls : [];
+  for (const u of urls) {
+    const target = u?.unwound_url || u?.expanded_url || '';
+    if (!target) continue;
+    pushLink(u?.display_url || u?.url || '', target);
+  }
+  const cardUrl = card?.binding_values?.card_url?.string_value || '';
+  if (cardUrl) {
+    const safeCard = sanitizeTweetInlineLinkUrl(cardUrl, null);
+    if (safeCard && !out.some(l => l.url === safeCard)) {
+      pushLink('', safeCard);
+    }
+  }
+  return out.slice(0, 6);
 }
 
 /**

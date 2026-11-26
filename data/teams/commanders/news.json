@@ -1483,7 +1483,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.5567
+      "storyRank": 13.5567,
+      "duration": "9:06"
     },
     {
       "id": "was_espn_10dcc73f44a6a",
@@ -1878,7 +1879,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5554
+      "storyRank": 4.5554,
+      "duration": "0:17",
+      "inlineLinks": [
+        {
+          "text": "markbullock.substack.com/p/commanders...",
+          "url": "https://markbullock.substack.com/p/commanders-film-review-defense-vs-7de?r=fd8sn"
+        }
+      ]
     },
     {
       "id": "was_brss_hogs_haven_f06e1f5095e4",
@@ -2205,7 +2213,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.612
+      "storyRank": 1.612,
+      "duration": "1:19"
     },
     {
       "id": "was_brss_hogs_haven_11fa9656024e",
@@ -2343,7 +2352,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8782
+      "storyRank": 0.8782,
+      "duration": "0:46"
     },
     {
       "id": "was_yt_n_3lwzlBo1Q",
@@ -2381,7 +2391,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8554
+      "storyRank": 0.8554,
+      "duration": "24:20"
     },
     {
       "id": "was_bsky_14ce372293c0",
@@ -2430,7 +2441,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2032
+      "storyRank": 1.2032,
+      "duration": "0:22",
+      "inlineLinks": [
+        {
+          "text": "markbullock.substack.com/p/antonio-wi...",
+          "url": "https://markbullock.substack.com/p/antonio-williams-breakout-performance?r=fd8sn"
+        }
+      ]
     },
     {
       "id": "x_tl_commanders_2125371386751500772",
@@ -2553,7 +2571,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7752
+      "storyRank": 0.7752,
+      "duration": "1:04:30"
     },
     {
       "id": "x_tl_adamschefter_2125354508028952690",
@@ -2683,7 +2702,17 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6903
+      "storyRank": 0.6903,
+      "inlineLinks": [
+        {
+          "text": "podcasts.apple.com/us/podcast/t...",
+          "url": "https://podcasts.apple.com/us/podcast/the-mina-kimes-show-featuring-lenny/id1437647915?i=1000803857667"
+        },
+        {
+          "text": "youtu.be/dquR4jBp66E?...",
+          "url": "https://youtu.be/dquR4jBp66E?is=VHF1QmTjUpQWskaU"
+        }
+      ]
     },
     {
       "id": "x_tl_commanders_2125337662315782382",
@@ -2970,7 +2999,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6345
+      "storyRank": 0.6345,
+      "duration": "58:07"
     },
     {
       "id": "x_tl_nickijhabvala_2125308854103629870",
@@ -3045,7 +3075,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6205
+      "storyRank": 0.6205,
+      "duration": "11:52"
     },
     {
       "id": "x_tl_dharrison82_2125299377824563240",
@@ -3229,7 +3260,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5368
+      "storyRank": 0.5368,
+      "duration": "0:54"
     },
     {
       "id": "was_bsky_432785a3fd0b",
@@ -3267,7 +3299,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4136
+      "storyRank": 0.4136,
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants"
+        }
+      ]
     },
     {
       "id": "was_espn_4da498786e2be",
@@ -3312,7 +3350,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4917
+      "storyRank": 0.4917,
+      "duration": "0:41"
     },
     {
       "id": "was_espn_94f5161cf6e62",
@@ -3357,7 +3396,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4713
+      "storyRank": 0.4713,
+      "duration": "0:42"
     },
     {
       "id": "was_espn_9bb1aaa7cefff",
@@ -3402,7 +3442,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4695
+      "storyRank": 0.4695,
+      "duration": "1:39"
     },
     {
       "id": "was_espn_f8ec40f3f36a5",
@@ -3570,7 +3611,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3431
+      "storyRank": 0.3431,
+      "duration": "2:56"
     },
     {
       "id": "was_vid_f8c79359052e",
@@ -3615,7 +3657,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.343
+      "storyRank": 0.343,
+      "duration": "1:10"
     },
     {
       "id": "was_vid_3115fc3e73a9",
@@ -3660,7 +3703,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.343
+      "storyRank": 0.343,
+      "duration": "2:09"
     },
     {
       "id": "was_vid_110066c8c075",
@@ -3705,7 +3749,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3429
+      "storyRank": 0.3429,
+      "duration": "1:30"
     },
     {
       "id": "was_vid_0c234741d147",
@@ -3750,7 +3795,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3429
+      "storyRank": 0.3429,
+      "duration": "1:25"
     },
     {
       "id": "was_vid_6e954af23335",
@@ -3795,7 +3841,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3426
+      "storyRank": 0.3426,
+      "duration": "2:49"
     },
     {
       "id": "was_vid_0c1e5e41d097",
@@ -3840,7 +3887,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3402
+      "storyRank": 0.3402,
+      "duration": "7:50"
     },
     {
       "id": "was_espn_b907d187d76df",
@@ -3990,7 +4038,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3316
+      "storyRank": 0.3316,
+      "duration": "1:14"
     },
     {
       "id": "was_bsky_a21bcabaa54c",
@@ -4314,7 +4363,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0176,
+      "duration": "0:32",
+      "inlineLinks": [
+        {
+          "text": "markbullock.substack.com/p/commanders...",
+          "url": "https://markbullock.substack.com/p/commanders-film-review-ben-sinnott?r=fd8sn"
+        }
+      ]
     },
     {
       "id": "was_bsky_afbc0bd2f83e",
@@ -4354,7 +4410,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0145,
+      "duration": "0:09",
+      "inlineLinks": [
+        {
+          "text": "markbullock.substack.com/p/commanders...",
+          "url": "https://markbullock.substack.com/p/commanders-find-success-switching?r=fd8sn"
+        }
+      ]
     },
     {
       "id": "was_tx_b772d320e6a5",
@@ -4438,7 +4501,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.0124,
+      "duration": "0:32",
+      "inlineLinks": [
+        {
+          "text": "markbullock.substack.com/p/david-blou...",
+          "url": "https://markbullock.substack.com/p/david-blough-shows-development-vs?r=fd8sn"
+        }
+      ]
     },
     {
       "id": "was_tx_07c41b7e7a55",

@@ -4,8 +4,12 @@
 
 import { annotateJargonPlainText, jargonTerm, jargonInfoIcon } from '../engine/jargonGlossary.js';
 import { resolveReporterFromNameOrHandle } from '../engine/beatAttributionEngine.js';
-import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
-import { getItemInlineSocialPhotoUrls, optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
+import { sanitizeExternalUrl, sanitizeTweetInlineLinkUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js';
+import {
+  getItemInlineSocialPhotoUrls,
+  optimizeImageUrlForSlot,
+  resolveLightboxFullImageUrl
+} from '../engine/salientMediaEngine.js';
 import { splitSummaryForExpandableDisplay } from '../engine/breakingClassifier.js';
 import { iconSvg } from './icons.js';
 import { getActiveTeamConfig } from '../config/teamRegistry.js';
@@ -413,6 +417,204 @@ export function renderPreservedTweetTextHtml(text = '') {
   return `<span class="tweet-preserved-text">${esc(str)}</span>`;
 }
 
+const TWEET_INLINE_URL_TOKEN_RE =
+  /(?:https?:\/\/[^\s<>"'()]+|(?:www\.)?[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9-]{2,})+\/[^\s<>"'()]*)/gi;
+
+function stripProtocolAndWww(u = '') {
+  return String(u || '')
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .toLowerCase();
+}
+
+function canonicalTweetUrlCompare(u = '') {
+  return stripProtocolAndWww(u).replace(/\/+$/, '');
+}
+
+/**
+ * Finds all directly clickable inline URL spans `[{ start, end, displayText, url }]` inside
+ * a tweet's display text using (1) saved Bluesky facet / X `entities.urls` metadata (`item.inlineLinks`),
+ * (2) `item.externalUrl` prefix-matching for truncated Bluesky/X display strings (`www.nytimes.com/athletic/781...`),
+ * and (3) complete non-truncated URLs written directly in the tweet text.
+ */
+export function resolveTweetInlineLinks(displayText = '', { item = null, tweetUrl = '' } = {}) {
+  const str = String(displayText ?? '');
+  if (!str) return [];
+
+  const normTweetUrl = canonicalTweetUrlCompare(tweetUrl || item?.url || '');
+  const candidateUrls = [];
+  const rawInlineLinks = Array.isArray(item?.inlineLinks) ? item.inlineLinks : [];
+  for (const entry of rawInlineLinks) {
+    if (!entry || !entry.url) continue;
+    const safe = sanitizeTweetInlineLinkUrl(entry.url, null);
+    if (!safe) continue;
+    if (normTweetUrl && canonicalTweetUrlCompare(safe) === normTweetUrl) continue;
+    candidateUrls.push({ text: String(entry.text || '').trim(), url: safe });
+  }
+  if (item?.externalUrl) {
+    const safeExt = sanitizeTweetInlineLinkUrl(item.externalUrl, null);
+    if (
+      safeExt &&
+      (!normTweetUrl || canonicalTweetUrlCompare(safeExt) !== normTweetUrl) &&
+      !candidateUrls.some(c => c.url === safeExt)
+    ) {
+      candidateUrls.push({ text: '', url: safeExt });
+    }
+  }
+
+  const matches = [];
+  const usedRanges = [];
+  const overlapsExisting = (s, e) => usedRanges.some(([rs, re]) => s < re && e > rs);
+
+  // 1. Exact text matches from `item.inlineLinks` (e.g. Bluesky facet byte slices & X display_url)
+  for (const cand of candidateUrls) {
+    if (!cand.text || cand.text.length < 4) continue;
+    let searchFrom = 0;
+    while (searchFrom < str.length) {
+      const idx = str.indexOf(cand.text, searchFrom);
+      if (idx === -1) break;
+      const end = idx + cand.text.length;
+      if (!overlapsExisting(idx, end)) {
+        usedRanges.push([idx, end]);
+        matches.push({ start: idx, end, displayText: cand.text, url: cand.url });
+        break;
+      }
+      searchFrom = idx + 1;
+    }
+  }
+
+  // 2. Regex scan for URLs / truncated domain-path tokens directly in display text
+  TWEET_INLINE_URL_TOKEN_RE.lastIndex = 0;
+  let m;
+  while ((m = TWEET_INLINE_URL_TOKEN_RE.exec(str)) !== null) {
+    let token = m[0];
+    const start = m.index;
+    // Strip trailing sentence punctuation UNLESS it's a Bluesky/X truncation ellipsis (`...` or `…`)
+    while (token.length > 0 && !/(?:\.{3}|…)$/.test(token) && /[.,;:!?\])"'”’]$/.test(token)) {
+      token = token.slice(0, -1);
+    }
+    const end = start + token.length;
+    if (!token || end <= start || overlapsExisting(start, end)) continue;
+
+    // Ignore social self-handles or bare TLD noise
+    if (/^@[a-z0-9_.-]+$/i.test(token)) continue;
+    const isTruncated = /(?:\.{3}|…)$/.test(token);
+    const strippedPrefix = stripProtocolAndWww(token.replace(/(?:\.{3}|…)+$/, ''));
+
+    let resolvedUrl = null;
+    if (strippedPrefix.length >= 6) {
+      const matchedCand = candidateUrls.find(c => {
+        const candNorm = stripProtocolAndWww(c.url);
+        return candNorm === strippedPrefix || candNorm.startsWith(strippedPrefix);
+      });
+      if (matchedCand) {
+        resolvedUrl = matchedCand.url;
+      }
+    }
+
+    if (!resolvedUrl && !isTruncated) {
+      const withScheme = /^https?:\/\//i.test(token) ? token : `https://${token}`;
+      const safe = sanitizeTweetInlineLinkUrl(withScheme, null);
+      if (safe && (!normTweetUrl || canonicalTweetUrlCompare(safe) !== normTweetUrl)) {
+        // Require a realistic public TLD for schemeless domain/path matches
+        if (/^https?:\/\//i.test(token) || /\.(?:com|org|net|co|io|tv|gov|edu|app|news|fm|football|us|uk|ca|media|sports)\//i.test(token)) {
+          resolvedUrl = safe;
+        }
+      }
+    }
+
+    if (resolvedUrl) {
+      usedRanges.push([start, end]);
+      matches.push({ start, end, displayText: token, url: resolvedUrl });
+    }
+  }
+
+  matches.sort((a, b) => a.start - b.start);
+  return matches;
+}
+
+/**
+ * Renders a tweet's body so that:
+ * - Any inline link inside the tweet (e.g. `www.nytimes.com/athletic/781...`, `open.spotify.com/...`,
+ *   `espn.com/...`) is its own direct `<a>` navigating straight to the linked article/destination.
+ * - Any non-linked part of the tweet text navigates to the parent tweet (`tweetUrl`).
+ * - Guarantees ZERO nested `<a>` tags while preserving original carriage returns (`\n`).
+ */
+export function renderTweetBodyWithInlineLinksHtml(
+  displayText = '',
+  {
+    tweetUrl = '',
+    item = null,
+    linkClass = 'ext-link wire-headline-link',
+    markReadKey = '',
+    showExternalIcon = true,
+    iconSize = 11
+  } = {}
+) {
+  const str = String(displayText ?? '');
+  if (!str) return '';
+  const hasValidTweetUrl = Boolean(tweetUrl && tweetUrl !== '#');
+  const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
+  const inlineMatches = resolveTweetInlineLinks(str, { item, tweetUrl: hasValidTweetUrl ? tweetUrl : '' });
+
+  // Fast path: no inline links -> render identical single anchor or plain text
+  if (inlineMatches.length === 0) {
+    const extIconHtml = showExternalIcon && hasValidTweetUrl ? ` <span class="wire-inline-ext">${iconSvg('externalLink', iconSize)}</span>` : '';
+    return hasValidTweetUrl
+      ? `<a href="${esc(tweetUrl)}" target="_blank" rel="noopener noreferrer" class="${esc(linkClass)}"${readAttr}>${renderPreservedTweetTextHtml(str)}${extIconHtml}</a>`
+      : renderPreservedTweetTextHtml(str);
+  }
+
+  const parts = [];
+  let cursor = 0;
+  let lastTextSegmentIdx = -1;
+
+  for (const m of inlineMatches) {
+    if (m.start > cursor) {
+      parts.push({ kind: 'text', value: str.slice(cursor, m.start) });
+      if (str.slice(cursor, m.start).trim()) lastTextSegmentIdx = parts.length - 1;
+    }
+    parts.push({ kind: 'link', value: m.displayText, url: m.url });
+    cursor = m.end;
+  }
+  if (cursor < str.length) {
+    parts.push({ kind: 'text', value: str.slice(cursor) });
+    if (str.slice(cursor).trim()) lastTextSegmentIdx = parts.length - 1;
+  }
+
+  const innerHtml = parts
+    .map((part, idx) => {
+      if (part.kind === 'link') {
+        const inlineIcon = `<span class="wire-inline-ext">${iconSvg('externalLink', Math.min(10, iconSize))}</span>`;
+        return `<a href="${esc(part.url)}" target="_blank" rel="noopener noreferrer" class="tweet-inline-url-link" data-tweet-inline-link="true"${readAttr} title="${esc(part.url)}">${esc(part.value)}${inlineIcon}</a>`;
+      }
+      if (!part.value.trim()) {
+        return esc(part.value);
+      }
+      if (!hasValidTweetUrl) {
+        return esc(part.value);
+      }
+      const trailingIcon =
+        showExternalIcon && idx === lastTextSegmentIdx && lastTextSegmentIdx === parts.length - 1
+          ? ` <span class="wire-inline-ext">${iconSvg('externalLink', iconSize)}</span>`
+          : '';
+      return `<a href="${esc(tweetUrl)}" target="_blank" rel="noopener noreferrer" class="${esc(linkClass)} tweet-text-segment-link" data-tweet-text-segment="true"${readAttr}>${esc(part.value)}${trailingIcon}</a>`;
+    })
+    .join('');
+
+  return `<span class="tweet-rich-body${str.includes('\n') ? ' tweet-preserved-text' : ''}" data-tweet-has-inline-links="true">${innerHtml}</span>`;
+}
+
+function buildLightboxGalleryAttr(photoUrls = []) {
+  const resolved = (Array.isArray(photoUrls) ? photoUrls : [])
+    .map(u => resolveLightboxFullImageUrl(u).fullSrc)
+    .filter(Boolean)
+    .slice(0, 6);
+  if (resolved.length <= 1) return '';
+  return ` data-lightbox-gallery="${esc(JSON.stringify(resolved))}"`;
+}
+
 /**
  * Renders 1 to 4 inline social photos (All-22 film stills, comparison frames, scatter charts,
  * or multi-image beat posts from Bluesky / X) in a crisp, responsive layout:
@@ -420,7 +622,7 @@ export function renderPreservedTweetTextHtml(text = '') {
  * - 2 images: side-by-side 2-column grid (matching Bluesky/X side-by-side comparisons)
  * - 3 images: 2-column mosaic (left hero spanning 2 rows + 2 stacked right tiles)
  * - 4+ images: 2x2 grid (with `+N` overflow badge if >4)
- * Each tile links directly to its full-resolution image URL for 1-tap inspection.
+ * Each tile opens directly in the full-screen image lightbox with a close `✕` button.
  */
 export function renderInlineSocialPhotoGalleryHtml(
   item = {},
@@ -435,16 +637,15 @@ export function renderInlineSocialPhotoGalleryHtml(
     .trim();
   const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
   const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
+  const galleryAttr = buildLightboxGalleryAttr(photos);
 
   if (photos.length === 1) {
     const rawUrl = photos[0];
     const opt = optimizeImageUrlForSlot(rawUrl, 'chart');
     if (!opt.src) return '';
-    const safeHref = sanitizeExternalUrl(fallbackHref || rawUrl, null);
+    const lb = resolveLightboxFullImageUrl(opt.src, opt.fallbackSrc || rawUrl);
     const imgEl = `<img src="${esc(opt.src)}" ${opt.fallbackSrc ? `data-fallback-src="${esc(opt.fallbackSrc)}"` : ''} alt="${esc(safeAlt)}" class="wire-inline-photo-img" ${loadAttr} decoding="async" />`;
-    return safeHref
-      ? `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="wire-inline-photo-box${compact ? ' is-compact' : ''}" data-inline-chart-media="true" data-inline-media-count="1"${readAttr}>${imgEl}</a>`
-      : `<div class="wire-inline-photo-box${compact ? ' is-compact' : ''}" data-inline-chart-media="true" data-inline-media-count="1">${imgEl}</div>`;
+    return `<button type="button" class="wire-inline-photo-box is-lightbox-trigger${compact ? ' is-compact' : ''}" data-inline-chart-media="true" data-inline-media-count="1" data-action="open-image-lightbox" data-lightbox-src="${esc(lb.fullSrc || opt.src)}" data-lightbox-fallback="${esc(lb.fallbackSrc || opt.src)}" data-lightbox-alt="${esc(safeAlt)}" aria-label="${esc(`Maximize image: ${safeAlt}`)}"${readAttr}>${imgEl}</button>`;
   }
 
   const visiblePhotos = photos.slice(0, 4);
@@ -453,16 +654,14 @@ export function renderInlineSocialPhotoGalleryHtml(
     .map((rawUrl, idx) => {
       const opt = optimizeImageUrlForSlot(rawUrl, 'chart');
       if (!opt.src) return '';
-      const tileHref = sanitizeExternalUrl(rawUrl, null) || sanitizeExternalUrl(fallbackHref, null);
+      const lb = resolveLightboxFullImageUrl(opt.src, opt.fallbackSrc || rawUrl);
       const tileAlt = `${safeAlt} (${idx + 1}/${photos.length})`;
       const extraBadge =
         idx === 3 && photos.length > 4
           ? `<span class="wire-inline-photo-more mono" aria-hidden="true">+${photos.length - 4}</span>`
           : '';
       const imgEl = `<img src="${esc(opt.src)}" ${opt.fallbackSrc ? `data-fallback-src="${esc(opt.fallbackSrc)}"` : ''} alt="${esc(tileAlt)}" class="wire-inline-photo-tile-img" ${loadAttr} decoding="async" />${extraBadge}`;
-      return tileHref
-        ? `<a href="${esc(tileHref)}" target="_blank" rel="noopener noreferrer" class="wire-inline-photo-tile" data-inline-photo-tile="${idx}" aria-label="${esc(`Open image ${idx + 1} of ${photos.length}`)}"${readAttr}>${imgEl}</a>`
-        : `<div class="wire-inline-photo-tile" data-inline-photo-tile="${idx}">${imgEl}</div>`;
+      return `<button type="button" class="wire-inline-photo-tile is-lightbox-trigger" data-inline-photo-tile="${idx}" data-action="open-image-lightbox" data-lightbox-src="${esc(lb.fullSrc || opt.src)}" data-lightbox-fallback="${esc(lb.fallbackSrc || opt.src)}" data-lightbox-alt="${esc(tileAlt)}" data-lightbox-index="${idx}"${galleryAttr} aria-label="${esc(`Maximize image ${idx + 1} of ${photos.length}`)}"${readAttr}>${imgEl}</button>`;
     })
     .filter(Boolean)
     .join('');
@@ -740,7 +939,8 @@ export function renderSalientThumbHtml(
     asStatic = false,
     extraClass = '',
     markReadKey = '',
-    multiPhotoCount = 0
+    multiPhotoCount = 0,
+    galleryUrls = null
   } = {}
 ) {
   if (!visual || !visual.kind) return '';
@@ -749,7 +949,8 @@ export function renderSalientThumbHtml(
   const sizeCls = size === 'sm' ? 'thumb-sm' : size === 'md' ? 'thumb-md' : 'thumb-lg';
   const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" fetchpriority="low"';
   const safeHref = !asStatic && href ? sanitizeExternalUrl(href, null) : null;
-  const cls = `raw-item-thumb salient-thumb ${sizeCls} thumb-kind-${esc(visual.kind)} ${extraClass}`.trim();
+  const isZoomablePhoto = visual.kind === 'editorial' || visual.kind === 'player';
+  const cls = `raw-item-thumb salient-thumb ${sizeCls} thumb-kind-${esc(visual.kind)}${isZoomablePhoto ? ' is-lightbox-trigger' : ''} ${extraClass}`.trim();
 
   let innerHtml = '';
 
@@ -786,6 +987,19 @@ export function renderSalientThumbHtml(
     return '';
   }
 
+  if (isZoomablePhoto) {
+    const lb = resolveLightboxFullImageUrl(visual.src, visual.rawUrl || visual.fallbackSrc || '');
+    const lbAlt = visual.alt || visual.playerName || `${getActiveTeamConfig().nickname} photo`;
+    const galleryAttr = visual.kind === 'editorial' && Array.isArray(galleryUrls) && galleryUrls.length > 1
+      ? buildLightboxGalleryAttr(galleryUrls)
+      : '';
+    const lbAttrs = `data-salient-thumb="${esc(visual.kind)}" data-action="open-image-lightbox" data-lightbox-src="${esc(lb.fullSrc || visual.src)}" data-lightbox-fallback="${esc(lb.fallbackSrc || visual.src)}" data-lightbox-alt="${esc(lbAlt)}" data-lightbox-kind="${esc(visual.kind)}"${galleryAttr} aria-label="${esc(`Maximize image: ${lbAlt}`)}"`;
+    if (asStatic) {
+      return `<span class="${cls}" ${lbAttrs} role="button" tabindex="0">${innerHtml}</span>`;
+    }
+    return `<button type="button" class="${cls}" ${lbAttrs}>${innerHtml}</button>`;
+  }
+
   if (safeHref) {
     const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
     return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="${cls}" data-salient-thumb="${esc(visual.kind)}"${readAttr} aria-hidden="true" tabindex="-1">${innerHtml}</a>`;
@@ -796,6 +1010,7 @@ export function renderSalientThumbHtml(
 /**
  * Renders a sleek, restrained 16:9 / 2.2:1 editorial lead hero photograph for the
  * Daily Top News Brief or #1 Lead Editorial Story in News & Film.
+ * Clicking maximizes the photo in the full-screen lightbox.
  */
 export function renderSalientHeroBannerHtml(
   hero,
@@ -810,13 +1025,14 @@ export function renderSalientHeroBannerHtml(
   } = {}
 ) {
   if (!hero?.src) return '';
-  const safeHref = href ? sanitizeExternalUrl(href, null) : null;
   const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" fetchpriority="low"';
   const credit = creditLabel || hero.creditLabel || '';
-  const wrapCls = `salient-hero-banner ${compact ? 'compact' : ''} ${extraClass}`.trim();
+  const wrapCls = `salient-hero-banner is-lightbox-trigger ${compact ? 'compact' : ''} ${extraClass}`.trim();
+  const lb = resolveLightboxFullImageUrl(hero.src, hero.rawUrl || hero.fallbackSrc || '');
+  const heroAlt = hero.alt || `${getActiveTeamConfig().nickname} editorial photo`;
 
   const imgHtml = `
-    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(hero.alt || `${getActiveTeamConfig().nickname} editorial photo`)}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
+    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(heroAlt)}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
     <span class="salient-hero-scrim" aria-hidden="true"></span>
     ${
       badgeText || credit
@@ -828,11 +1044,7 @@ export function renderSalientHeroBannerHtml(
     }
   `;
 
-  if (safeHref) {
-    const readAttr = markReadKey ? ` data-mark-read-key="${esc(markReadKey)}"` : '';
-    return `<a href="${esc(safeHref)}" target="_blank" rel="noopener noreferrer" class="raw-item-thumb ${wrapCls}" data-salient-hero="true"${readAttr} aria-hidden="true" tabindex="-1">${imgHtml}</a>`;
-  }
-  return `<div class="${wrapCls}" data-salient-hero="true">${imgHtml}</div>`;
+  return `<button type="button" class="raw-item-thumb ${wrapCls}" data-salient-hero="true" data-action="open-image-lightbox" data-lightbox-src="${esc(lb.fullSrc || hero.src)}" data-lightbox-fallback="${esc(lb.fallbackSrc || hero.src)}" data-lightbox-alt="${esc(heroAlt)}" data-lightbox-kind="editorial" aria-label="${esc(`Maximize image: ${heroAlt}`)}">${imgHtml}</button>`;
 }
 
 export function renderPlayerChipsStripHtml(players = [], max = 5) {

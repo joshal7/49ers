@@ -361,7 +361,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.4216
+      "storyRank": 13.4216,
+      "duration": "8:05"
     },
     {
       "id": "cin_brss_cincy_jungle_2c1be1c618db",
@@ -1277,7 +1278,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5203
+      "storyRank": 0.5203,
+      "duration": "1:52"
     },
     {
       "id": "cin_brss_cincy_jungle_9d0699f57c8e",
@@ -1475,7 +1477,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4856
+      "storyRank": 0.4856,
+      "duration": "0:38"
     },
     {
       "id": "x_tl_bengalsbrews_2125226457009901577",
@@ -1914,7 +1917,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3315
+      "storyRank": 0.3315,
+      "duration": "1:14"
     },
     {
       "id": "cin_rss_72f65709c84e",
@@ -2127,7 +2131,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.122
+      "storyRank": 0.122,
+      "duration": "4:09"
     },
     {
       "id": "cin_pfr_3f25ec249d90",
@@ -2885,7 +2890,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0291
+      "storyRank": 0.0291,
+      "duration": "1:30"
     },
     {
       "id": "cin_vid_c6cb8e97b49a",
@@ -2921,7 +2927,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0251
+      "storyRank": 0.0251,
+      "duration": "45:17"
     },
     {
       "id": "cin_pwire_3116164_50531472",
@@ -3421,7 +3428,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0191
+      "storyRank": 0.0191,
+      "duration": "32:38"
     },
     {
       "id": "cin_rss_830bc3c40d1a",
@@ -3698,7 +3706,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0127,
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions"
+        }
+      ]
     },
     {
       "id": "cin_rss_d03b0d3e53d7",
@@ -4238,7 +4252,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0078
+      "storyRank": 0.0078,
+      "duration": "49:34"
     },
     {
       "id": "cin_rss_1b6a3753a052",
@@ -4707,7 +4722,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0042,
+      "duration": "42:27"
     },
     {
       "id": "cin_rss_b544d6f3c885",

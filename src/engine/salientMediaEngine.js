@@ -397,6 +397,54 @@ export function optimizeImageUrlForSlot(rawUrl = '', slot = 'thumb') {
   return { src: clean, fallbackSrc: '' };
 }
 
+/**
+ * Resolves the crispest full-resolution URL for the click-to-maximize image lightbox
+ * while retaining a verified fallback URL if the high-res CDN variant fails.
+ */
+export function resolveLightboxFullImageUrl(rawUrl = '', fallbackUrl = '') {
+  const base = String(fallbackUrl || rawUrl || '').trim();
+  const secondary = String(rawUrl || fallbackUrl || '').trim();
+  if (!isValidHttpsImageUrl(base)) {
+    return isValidHttpsImageUrl(secondary)
+      ? { fullSrc: secondary, fallbackSrc: '' }
+      : { fullSrc: '', fallbackSrc: '' };
+  }
+
+  let fullSrc = base;
+  // 1. Bluesky CDN feed thumbnails -> full-resolution original image
+  if (/cdn\.bsky\.app\/img\/feed_thumbnail\//i.test(fullSrc)) {
+    fullSrc = fullSrc.replace('/img/feed_thumbnail/', '/img/feed_fullsize/');
+  }
+  // 2. Twitter/X Media -> crisp large resolution
+  const twMatch = fullSrc.match(TWIMG_MEDIA_RE);
+  if (twMatch) {
+    const ext = twMatch[2] && twMatch[2].toLowerCase() !== 'jpeg' ? twMatch[2].toLowerCase() : 'jpg';
+    fullSrc = `https://pbs.twimg.com/media/${twMatch[1]}?format=${ext}&name=large`;
+  }
+  // 3. SB Nation / WordPress -> full width up to 1200px
+  if (SBNATION_WP_IMG_RE.test(fullSrc)) {
+    try {
+      const u = new URL(fullSrc);
+      u.searchParams.set('w', '1200');
+      u.searchParams.set('quality', '90');
+      fullSrc = u.toString();
+    } catch {}
+  }
+  // 4. Official NFL Clubs Cloudinary CDN -> high-res 1200px
+  const nflClubMatch = fullSrc.match(NFL_CLUBS_UPLOAD_RE);
+  if (nflClubMatch) {
+    fullSrc = `${nflClubMatch[1]}f_auto,q_auto,w_1200${nflClubMatch[3]}`;
+  }
+
+  const safeFallback =
+    secondary && secondary !== fullSrc && isValidHttpsImageUrl(secondary)
+      ? secondary
+      : base !== fullSrc
+        ? base
+        : '';
+  return { fullSrc, fallbackSrc: safeFallback };
+}
+
 export function buildOptimizedTeamLogo(abbr = '', slot = 'logo') {
   const clean = String(abbr || getActiveTeamConfig()?.abbr || 'SF').toUpperCase().trim();
   const slug = TEAM_LOGO_SLUGS[clean] || clean.toLowerCase();

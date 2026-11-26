@@ -1553,7 +1553,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5507
+      "storyRank": 0.5507,
+      "duration": "2:44"
     },
     {
       "id": "dal_rss_97f778ebb326",
@@ -2356,7 +2357,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1581
+      "storyRank": 0.1581,
+      "duration": "0:41"
     },
     {
       "id": "dal_rss_56bae5368d67",
@@ -5872,7 +5874,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0154,
+      "duration": "38:47"
     },
     {
       "id": "dal_bsky_4ad1dd16a079",
@@ -5921,7 +5924,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0148
+      "storyRank": 0.0148,
+      "duration": "0:11"
     },
     {
       "id": "dal_rss_3caa0b713698",
@@ -7300,7 +7304,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0015,
+      "duration": "32:40"
     }
   ]
 }

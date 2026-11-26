@@ -1166,6 +1166,42 @@ export function sanitizeExternalUrl(rawUrl, fallbackUrl = null) {
 }
 
 /**
+ * Sanitizes a URL explicitly linked inside a beat reporter's tweet text (e.g., an inline
+ * NYTimes/The Athletic gift or beat article link, Spotify/Apple Podcasts episode, or ESPN story).
+ * Enforces HTTPS, strips marketing tracking params (while preserving `unlocked_article_code`),
+ * and blocks malformed, broken-path, or opaque-shortener URLs without blocking publisher URLs
+ * that the journalist already posted in their tweet.
+ */
+export function sanitizeTweetInlineLinkUrl(rawUrl, fallbackUrl = null) {
+  if (typeof rawUrl !== 'string') return fallbackUrl;
+  const trimmed = rawUrl.trim();
+  if (!trimmed) return fallbackUrl;
+  if (/(^|\/)(undefined|null|NaN)(\/|$|\?)/i.test(trimmed)) return fallbackUrl;
+
+  const httpsUrl = trimmed.startsWith('http://') ? `https://${trimmed.slice(7)}` : trimmed;
+  const collapsedSlashes = httpsUrl.replace(/^(https:\/\/[^/?#]+)\/\/+/i, '$1/');
+  const upgraded = stripTrackingParams(collapsedSlashes);
+
+  let parsed;
+  try {
+    parsed = new URL(upgraded);
+  } catch {
+    return fallbackUrl;
+  }
+  if (parsed.protocol !== 'https:') return fallbackUrl;
+  const host = parsed.hostname.toLowerCase();
+  const pathname = parsed.pathname || '/';
+  if (!host || !host.includes('.') || /^(?:localhost|127\.|0\.0\.0\.0)/.test(host)) return fallbackUrl;
+  if (OPAQUE_URL_SHORTENER_HOST_REGEX.test(host)) return fallbackUrl;
+  for (const broken of KNOWN_BROKEN_PATH_RULES) {
+    if (broken.host.test(host) && broken.path.test(pathname)) {
+      return fallbackUrl;
+    }
+  }
+  return upgraded;
+}
+
+/**
  * Balanced-parenthesis URL body pattern for CommonMark / Markdown inline links `[Label](URL)`.
  * Safely captures URLs containing balanced parentheses—such as ESPN W3C Scroll-To-Text fragments
  * (`#:~:text=Greenlaw%20(knee)%20was%20limited...`), X boolean searches (`x.com/search?q=(from:...)`),

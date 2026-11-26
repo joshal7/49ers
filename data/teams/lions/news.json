@@ -469,7 +469,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.7125
+      "storyRank": 18.7125,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks"
+        }
+      ]
     },
     {
       "id": "det_bsky_bc08f8f113a5",
@@ -591,7 +597,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.4209
+      "storyRank": 10.4209,
+      "inlineLinks": [
+        {
+          "text": "www.youtube.com/watch?v=MxkU...",
+          "url": "https://www.youtube.com/watch?v=MxkUZ18RbSk"
+        }
+      ]
     },
     {
       "id": "det_brss_pride_of_detroit_08619fae17e4",
@@ -672,7 +684,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.9689
+      "storyRank": 7.9689,
+      "inlineLinks": [
+        {
+          "text": "www.detroitfootball.net/p/after-taki...",
+          "url": "https://www.detroitfootball.net/p/after-taking-a-minute-to-settle-in"
+        }
+      ]
     },
     {
       "id": "det_brss_pride_of_detroit_15660b5b4bc2",
@@ -817,7 +835,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0151
+      "storyRank": 3.0151,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182377/lions-week-12-preview-breaking-down-bears-offensive-defensive-schemes"
+        }
+      ]
     },
     {
       "id": "det_bsky_fdf162e71e23",
@@ -902,7 +926,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0291
+      "storyRank": 3.0291,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-skyler-gill-howard-injury/92946376007/"
+        }
+      ]
     },
     {
       "id": "det_pfr_c9ff7aa242f3",
@@ -1338,7 +1368,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4218
+      "storyRank": 1.4218,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday"
+        }
+      ]
     },
     {
       "id": "det_rss_698cc6e5922f",
@@ -1477,7 +1513,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9046
+      "storyRank": 0.9046,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-matriarch-martha-ford-dies-at-age-101/753435002/"
+        }
+      ]
     },
     {
       "id": "det_bsky_c87f5993547e",
@@ -1633,7 +1675,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7518
+      "storyRank": 0.7518,
+      "duration": "4:10"
     },
     {
       "id": "det_vid_6e2e5c655a5d",
@@ -1678,7 +1721,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.749
+      "storyRank": 0.749,
+      "duration": "2:52"
     },
     {
       "id": "det_vid_8a6e7909f516",
@@ -1731,7 +1775,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6933
+      "storyRank": 0.6933,
+      "duration": "2:53"
     },
     {
       "id": "det_pwire_4374302_49949224",
@@ -1808,7 +1853,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6247
+      "storyRank": 0.6247,
+      "duration": "10:43"
     },
     {
       "id": "det_bsky_66c9bc0bcd4a",
@@ -1894,7 +1940,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.587
+      "storyRank": 0.587,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-chicago-bears-jeffery-simmons/92943370007/"
+        }
+      ]
     },
     {
       "id": "det_bsky_9d75c2abcf01",
@@ -1932,7 +1984,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5791
+      "storyRank": 0.5791,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-news/182373/nfl-week-12-power-rankings-lions-a-consensus-top-10-team-for-first-time-this-season"
+        }
+      ]
     },
     {
       "id": "det_espn_449171876b717",
@@ -2071,7 +2129,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5163
+      "storyRank": 0.5163,
+      "duration": "2:41"
     },
     {
       "id": "det_brss_pride_of_detroit_586ed38dd66b",
@@ -2184,7 +2243,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5005
+      "storyRank": 0.5005,
+      "duration": "3:25"
     },
     {
       "id": "det_vid_4d53d4bdb819",
@@ -2220,7 +2280,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4732
+      "storyRank": 0.4732,
+      "duration": "1:28"
     },
     {
       "id": "det_bsky_ef1e2d2afcbe",
@@ -2258,7 +2319,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4205
+      "storyRank": 0.4205,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-discussion/182433/survey-will-the-lions-beat-the-bears-on-thanksgiving"
+        }
+      ]
     },
     {
       "id": "det_rss_46c025b4bc09",
@@ -2375,7 +2442,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2932
+      "storyRank": 0.2932,
+      "duration": "4:01"
     },
     {
       "id": "det_vid_d610abd93dfc",
@@ -2420,7 +2488,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2921
+      "storyRank": 0.2921,
+      "duration": "1:24"
     },
     {
       "id": "det_vid_ebc363c2a475",
@@ -2465,7 +2534,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2919
+      "storyRank": 0.2919,
+      "duration": "1:34"
     },
     {
       "id": "det_bsky_07e1ef2c5ada",
@@ -2548,7 +2618,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2917
+      "storyRank": 0.2917,
+      "duration": "2:06"
     },
     {
       "id": "det_bsky_a01ef238f0b7",
@@ -2586,7 +2657,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6103
+      "storyRank": 0.6103,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-injuries/182393/lions-bears-week-12-injury-report-4-defenders-unable-to-practice-dj-reed-upgraded-to-full"
+        }
+      ]
     },
     {
       "id": "det_pwire_4430027_64943928",
@@ -2780,7 +2857,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2685
+      "storyRank": 0.2685,
+      "inlineLinks": [
+        {
+          "text": "www.detroitfootball.net/p/detroit-li...",
+          "url": "https://www.detroitfootball.net/p/detroit-lions-film-review-how-kerby"
+        }
+      ]
     },
     {
       "id": "det_bsky_41f77842df32",
@@ -2827,7 +2910,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0351
+      "storyRank": 0.0351,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/23/detroit-lions-s-kerby-joseph-has-no-red-flags-after-season-debut/92933397007/"
+        }
+      ]
     },
     {
       "id": "det_vid_63fb87adb17f",
@@ -2863,7 +2952,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2712
+      "storyRank": 0.2712,
+      "duration": "9:01"
     },
     {
       "id": "det_yts_PWphJLZ89e4",
@@ -3036,7 +3126,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2422
+      "storyRank": 0.2422,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/23/detroit-lions-jack-campbell-aidan-hutchinson-kelvin-sheppard/92926263007/"
+        }
+      ]
     },
     {
       "id": "det_rss_4e3782d1e0b5",
@@ -3126,7 +3222,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2182
+      "storyRank": 0.2182,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182342/detroit-lions-buccaneers-snap-counts-derrick-moore-kerby-joseph"
+        }
+      ]
     },
     {
       "id": "det_bsky_149ff0524692",
@@ -3173,7 +3275,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2189
+      "storyRank": 0.2189,
+      "inlineLinks": [
+        {
+          "text": "www.detroitfootball.net/p/three-and-...",
+          "url": "https://www.detroitfootball.net/p/three-and-out-brad-holmes-bargain"
+        }
+      ]
     },
     {
       "id": "det_bsky_e8dbf0d2ce5f",
@@ -3211,7 +3319,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2089
+      "storyRank": 0.2089,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-gambling-odds/182114/lions-vs-bears-odds-week-12-opening-lines-point-spread-total"
+        }
+      ]
     },
     {
       "id": "det_rss_d8892147a817",
@@ -3394,7 +3508,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1584
+      "storyRank": 0.1584,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/22/detroit-lions-win-over-buccaneers-sets-table-for-thanksgiving-vs-bears/92911914007/"
+        }
+      ]
     },
     {
       "id": "det_bsky_a8b66c348752",
@@ -3481,7 +3601,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1753
+      "storyRank": 0.1753,
+      "inlineLinks": [
+        {
+          "text": "www.detroitfootball.net/p/locker-roo...",
+          "url": "https://www.detroitfootball.net/p/locker-room-buzz-josephs-joy-clark"
+        }
+      ]
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -3517,7 +3643,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1588
+      "storyRank": 0.1588,
+      "duration": "2:43"
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -3673,7 +3800,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1511
+      "storyRank": 0.1511,
+      "duration": "4:34"
     },
     {
       "id": "det_rss_3ea274280813",
@@ -3752,7 +3880,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1505
+      "storyRank": 0.1505,
+      "duration": "2:02"
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -3797,7 +3926,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1504
+      "storyRank": 0.1504,
+      "duration": "2:31"
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -3835,7 +3965,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.145
+      "storyRank": 0.145,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/22/detroit-lions-game-score-bucs-nfl/92911842007/"
+        }
+      ]
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -3880,7 +4016,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1493
+      "storyRank": 0.1493,
+      "duration": "0:28"
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -3918,7 +4055,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1443
+      "storyRank": 0.1443,
+      "inlineLinks": [
+        {
+          "text": "www.detroitfootball.net/p/rapid-reca...",
+          "url": "https://www.detroitfootball.net/p/rapid-recap-detroit-lions-run-win"
+        }
+      ]
     },
     {
       "id": "det_vid_a79420d76426",
@@ -3954,7 +4097,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1488
+      "storyRank": 0.1488,
+      "duration": "0:20"
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -3999,7 +4143,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1485
+      "storyRank": 0.1485,
+      "duration": "0:22"
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -4128,7 +4273,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.146
+      "storyRank": 0.146,
+      "duration": "0:21"
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -4258,7 +4404,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1441
+      "storyRank": 0.1441,
+      "duration": "0:07"
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -4734,7 +4881,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0645
+      "storyRank": 0.0645,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-depth-chart/182031/detroit-lions-updated-depth-chart-week-11-vs-buccaneers"
+        }
+      ]
     },
     {
       "id": "det_bsky_d870fb1952b8",
@@ -4772,7 +4925,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.062
+      "storyRank": 0.062,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/22/lions-midseason-grades-offense-excels-defense-improving/92875264007/"
+        }
+      ]
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -4942,7 +5101,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.047
+      "storyRank": 0.047,
+      "inlineLinks": [
+        {
+          "text": "www.detroitfootball.net/p/lions-shif...",
+          "url": "https://www.detroitfootball.net/p/lions-shift-mays-to-ir-re-sign-whiteside"
+        }
+      ]
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -4989,7 +5154,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0468
+      "storyRank": 0.0468,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-news/182071/detroit-lions-place-cade-mays-on-ir-re-sign-cb-to-active-roster"
+        }
+      ]
     },
     {
       "id": "det_pfr_6d7323d65d58",
@@ -5254,7 +5425,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0348
+      "storyRank": 0.0348,
+      "inlineLinks": [
+        {
+          "text": "www.freep.com/story/sports...",
+          "url": "https://www.freep.com/story/sports/nfl/lions/2026/11/20/detroit-lions-kerby-joseph-knee-injury-tampa-bay-buccaneers/92881904007/"
+        }
+      ]
     },
     {
       "id": "det_rss_eea329af076f",
@@ -5326,7 +5503,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.032,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/181830/nfl-predictions-4-keys-to-a-lions-victory-over-the-buccaneers-in-week-11"
+        }
+      ]
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -5412,7 +5595,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0271
+      "storyRank": 0.0271,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-news/181891/aidan-hutchinson-shares-thoughts-on-injury-i-always-come-back-stronger"
+        }
+      ]
     },
     {
       "id": "det_espn_dac2aef086042",
@@ -5494,7 +5683,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0645
+      "storyRank": 0.0645,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-injuries/181766/lions-bucs-injury-report-qb-baker-mayfield-returns-to-practice-feels-ready-to-play"
+        }
+      ]
     },
     {
       "id": "det_bsky_3eaa886217a1",
@@ -5532,7 +5727,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0247,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/181666/detroit-lions-super-bowl-run-adversity-aidan-hutchinson-injury-dan-campbell"
+        }
+      ]
     },
     {
       "id": "det_bsky_119561c1c557",
@@ -5570,7 +5771,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0243
+      "storyRank": 0.0243,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/181626/lions-week-11-preview-breaking-down-buccaneers-offensive-defensive-schemes"
+        }
+      ]
     },
     {
       "id": "det_pfr_70041b3c4411",
@@ -5749,7 +5956,17 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
+      "storyRank": 0.0214,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-news/181747/detroit-lions-activate-kerby-joseph-place-aidan-hutchinson-ir"
+        },
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-injuries/181637/lions-bucs-week-11-injury-report-d-j-reed-returns-practice"
+        }
+      ]
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -6573,7 +6790,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": true,
-      "storyRank": -1000
+      "storyRank": -1000,
+      "inlineLinks": [
+        {
+          "text": "www.prideofdetroit.com/detroit-lion...",
+          "url": "https://www.prideofdetroit.com/detroit-lions-injuries/181888/lions-bucs-injury-designations-cade-mays-ruled-out"
+        }
+      ]
     },
     {
       "id": "det_pfr_328df6feb8fd",

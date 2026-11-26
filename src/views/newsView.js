@@ -15,6 +15,8 @@ import {
   renderInlineSocialPhotoGalleryHtml,
   renderPlayerChipsStripHtml,
   renderPreservedTweetTextHtml,
+  renderTweetBodyWithInlineLinksHtml,
+  resolveTweetInlineLinks,
   renderSalientThumbHtml,
   renderSalientHeroBannerHtml,
   renderTweetLinkedArticleCardHtml,
@@ -75,6 +77,7 @@ import {
   sortNewsFeedByMode,
   extractPresserTakeaways,
   estimateItemEffortCue,
+  formatVideoDurationDisplay,
   matchNewsItemSearchQuery
 } from '../engine/digestExperienceEngine.js';
 
@@ -462,9 +465,10 @@ export function renderDailyTopNewsBriefHtml(
                       })
                     : '';
                   const effectiveSrcThumbHtml = srcLinkedPreview?.imageUrl ? '' : srcThumbHtml;
-                  if (srcLinkedCardHtml) {
+                  const srcHasInlineLinks = srcIsTw && resolveTweetInlineLinks(rep.title, { item: matchedItem, tweetUrl: rep.url }).length > 0;
+                  if (srcLinkedCardHtml || srcHasInlineLinks) {
                     return `
-                      <div class="synthesis-source-sheet-row has-linked-article-card ${effectiveSrcThumbHtml ? 'has-source-thumb' : ''} ${srcIsRead ? 'is-read-item' : ''}" data-brief-source-row data-read-key="${esc(srcReadKey)}">
+                      <div class="synthesis-source-sheet-row ${srcLinkedCardHtml ? 'has-linked-article-card' : ''} ${effectiveSrcThumbHtml ? 'has-source-thumb' : ''} ${srcIsRead ? 'is-read-item' : ''}" data-brief-source-row data-read-key="${esc(srcReadKey)}">
                         <div class="similar-story-top-row">
                           <div style="min-width:0;flex:1">
                             <div class="source-row-meta">
@@ -474,9 +478,15 @@ export function renderDailyTopNewsBriefHtml(
                               </div>
                               <span class="mono source-row-age">${rep.publishedAt ? esc(formatRelativeAge(rep.publishedAt)) : ''}</span>
                             </div>
-                            <a href="${esc(rep.url)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(srcReadKey)}">
-                              ${esc(rep.title)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span>
-                            </a>
+                            <div class="source-row-headline is-tweet-body">
+                              ${renderTweetBodyWithInlineLinksHtml(rep.title, {
+                                tweetUrl: rep.url,
+                                item: matchedItem,
+                                linkClass: 'similar-story-tweet-link',
+                                markReadKey: srcReadKey,
+                                iconSize: 11
+                              })}
+                            </div>
                           </div>
                           ${effectiveSrcThumbHtml}
                         </div>
@@ -654,11 +664,12 @@ function renderRelatedStoriesDrawerHtml(
           ? `${crAuthor} • ${crOutlet}`
           : crAuthor || crOutlet || crBeatFallback;
       const crIsInjuryWire = cr?.wireSource === 'espn_player_wire' || String(cr?.id || '').startsWith('espn_pwire_');
+      const crCleanDuration = formatVideoDurationDisplay(cr?.duration);
       const typeLabel = crIsGif
         ? 'GIF'
         : crIsVid
-          ? cr?.duration
-            ? `Clip ${cr.duration}`
+          ? crCleanDuration
+            ? `Clip ${crCleanDuration}`
             : 'Video'
           : crIsTw
             ? 'Tweet'
@@ -701,9 +712,10 @@ function renderRelatedStoriesDrawerHtml(
           })
         : '';
       const effectiveCrThumbHtml = crLinkedPreview?.imageUrl ? '' : crThumbHtml;
+      const crHasInlineLinks = crIsTw && resolveTweetInlineLinks(displayHeadline, { item: cr, tweetUrl: isValidLink ? crHref : '' }).length > 0;
 
-      if (crLinkedCardHtml) {
-        const divCls = `synthesis-source-sheet-row similar-story-row has-linked-article-card ${effectiveCrThumbHtml ? 'has-source-thumb' : ''} ${crIsRead ? 'is-read-item' : ''}`.trim();
+      if (crLinkedCardHtml || crHasInlineLinks) {
+        const divCls = `synthesis-source-sheet-row similar-story-row ${crLinkedCardHtml ? 'has-linked-article-card' : ''} ${effectiveCrThumbHtml ? 'has-source-thumb' : ''} ${crIsRead ? 'is-read-item' : ''}`.trim();
         return `
           <div class="${divCls}" data-similar-story-row data-read-key="${esc(crReadKey)}">
             <div class="similar-story-top-row">
@@ -715,11 +727,15 @@ function renderRelatedStoriesDrawerHtml(
                   </div>
                   <span class="mono source-row-age">${cr?.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
                 </div>
-                ${
-                  isValidLink
-                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline is-tweet-body similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${renderPreservedTweetTextHtml(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
-                    : `<div class="source-row-headline is-tweet-body">${renderPreservedTweetTextHtml(displayHeadline)}</div>`
-                }
+                <div class="source-row-headline is-tweet-body">
+                  ${renderTweetBodyWithInlineLinksHtml(displayHeadline, {
+                    tweetUrl: isValidLink ? crHref : '',
+                    item: cr,
+                    linkClass: 'similar-story-tweet-link',
+                    markReadKey: crReadKey,
+                    iconSize: 11
+                  })}
+                </div>
               </div>
               ${effectiveCrThumbHtml}
             </div>
@@ -745,7 +761,7 @@ function renderRelatedStoriesDrawerHtml(
                 posterUrl: cr.imageUrl || '',
                 externalWatchUrl: isValidLink ? crHref : '',
                 isAnimatedGif: crIsGif,
-                durationLabel: cr.duration || ''
+                durationLabel: crCleanDuration
               }
             )
           : '';
@@ -767,11 +783,21 @@ function renderRelatedStoriesDrawerHtml(
                     <span class="mono source-row-age">${cr?.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
                   </div>
                 </div>
-                ${
-                  isValidLink
-                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''} similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${crIsTw ? renderPreservedTweetTextHtml(displayHeadline) : esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
-                    : `<div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">${crIsTw ? renderPreservedTweetTextHtml(displayHeadline) : esc(displayHeadline)}</div>`
-                }
+                <div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">
+                  ${
+                    crIsTw
+                      ? renderTweetBodyWithInlineLinksHtml(displayHeadline, {
+                          tweetUrl: isValidLink ? crHref : '',
+                          item: cr,
+                          linkClass: 'similar-story-tweet-link',
+                          markReadKey: crReadKey,
+                          iconSize: 11
+                        })
+                      : isValidLink
+                        ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
+                        : esc(displayHeadline)
+                  }
+                </div>
               </div>
               ${crVidOpen ? '' : crThumbHtml}
             </div>
@@ -953,7 +979,9 @@ export function renderWireItemCardHtml(
           href: thumbTargetHref,
           size: 'lg',
           eager: eagerImage,
-          markReadKey: readKey
+          markReadKey: readKey,
+          multiPhotoCount: inlineSocialPhotos.length,
+          galleryUrls: inlineSocialPhotos
         })
       : '';
   const leadHeroHtml = showLeadHero
@@ -1004,11 +1032,12 @@ export function renderWireItemCardHtml(
         })
       : '';
 
+  const cleanVideoDuration = formatVideoDurationDisplay(item.duration);
   const rightMetaPrefix =
     hasPlayableVideo && isAnimatedGif
       ? 'GIF • '
-      : hasPlayableVideo && item.duration
-        ? `${item.duration} • `
+      : (isVideo || hasPlayableVideo) && cleanVideoDuration
+        ? `${cleanVideoDuration} • `
         : effortCue
           ? `${effortCue} • `
           : '';
@@ -1037,10 +1066,16 @@ export function renderWireItemCardHtml(
         <div class="wire-card-body-col">
           <div class="wire-card-headline ${isTweet ? 'is-tweet-body' : ''}">
             ${
-              resolvedItemUrl
-                ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(readKey)}">${isTweet ? renderPreservedTweetTextHtml(displayTitle) : esc(displayTitle)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
-                : isTweet
-                  ? renderPreservedTweetTextHtml(displayTitle)
+              isTweet
+                ? renderTweetBodyWithInlineLinksHtml(displayTitle, {
+                    tweetUrl: resolvedItemUrl || '',
+                    item,
+                    linkClass: 'ext-link wire-headline-link',
+                    markReadKey: readKey,
+                    iconSize: 11
+                  })
+                : resolvedItemUrl
+                  ? `<a href="${esc(resolvedItemUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link wire-headline-link" data-mark-read-key="${esc(readKey)}">${esc(displayTitle)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
                   : esc(displayTitle)
             }
           </div>
@@ -1067,7 +1102,7 @@ export function renderWireItemCardHtml(
               vidKey,
               item.videoId || '',
               0,
-              item.title || `Watch Clip (${isAnimatedGif ? 'GIF' : item.duration || 'Video'})`,
+              item.title || `Watch Clip (${isAnimatedGif ? 'GIF' : cleanVideoDuration || 'Video'})`,
               authorName || item.channel || item.outletName || 'YouTube',
               isVidOpen,
               effectiveEmbeddable,
@@ -1081,7 +1116,7 @@ export function renderWireItemCardHtml(
                   sanitizeExternalUrl(item.url, '') ||
                   '',
                 isAnimatedGif,
-                durationLabel: item.duration || ''
+                durationLabel: cleanVideoDuration
               }
             )
           : ''
@@ -1523,6 +1558,11 @@ export function renderVideoEmbedOrFacade(
               : channel || 'Source';
 
     if (embeddable === false) {
+      const extCornerBadgeHtml = isGif
+        ? '<span class="video-gif-badge mono">GIF</span>'
+        : durationLabel
+          ? `<span class="video-dur-badge mono">${esc(durationLabel)}</span>`
+          : '';
       return `
         <div class="video-embed-box">
           <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="video-external-card" aria-label="Watch ${esc(label)} on ${esc(providerLabel)}">
@@ -1532,6 +1572,7 @@ export function renderVideoEmbedOrFacade(
                   ? `<img src="${esc(safePoster)}" ${posterFallbackAttr} alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
                   : `<div class="video-thumb-img" style="background:linear-gradient(135deg,var(--bg-card-alt),var(--bg-primary));min-height:165px"></div>`
               }
+              ${extCornerBadgeHtml}
               <div class="video-thumb-overlay">
                 <span class="video-play-pill">${iconSvg('externalLink', 13)}<span>Watch on ${esc(providerLabel)}</span></span>
               </div>

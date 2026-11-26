@@ -89,6 +89,7 @@ import {
 import {
   fetchCuratedYouTubeChannelVideos,
   fetchLive2027ConsensusBigBoardAndMocks,
+  fetchYouTubeVideoDuration,
   parseRelativePublishedAgoToIso,
   searchYouTubeChannelVideos,
   verifyYouTubeEmbeddable
@@ -138,6 +139,7 @@ import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   classifyBreakingItem,
   classifyNewsItemCategory,
+  extractBlueskyInlineLinks,
   filterOutCompletedGameAvailabilityItems,
   formatTweetBodyForDisplay,
   isDailyBriefStaleForLiveState,
@@ -175,6 +177,7 @@ import {
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import { selectBestEspnArticleImage } from '../src/engine/salientMediaEngine.js';
+import { formatVideoDurationDisplay } from '../src/engine/digestExperienceEngine.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
   buildAuthoritativeLiveContextSnapshot,
@@ -208,6 +211,143 @@ function sleep(ms) {
 
 function hashShort(str = '') {
   return crypto.createHash('sha1').update(String(str)).digest('hex').slice(0, 12);
+}
+
+const espnClipDurationCache = new Map();
+const bskyPlaylistDurationCache = new Map();
+
+function parseClubVideoSitemapDurations(xml = '') {
+  const map = new Map();
+  for (const m of String(xml || '').matchAll(/<url>([\s\S]*?)<\/url>/gi)) {
+    const loc = (m[1].match(/<loc>([^<]+)<\/loc>/i) || [])[1]?.trim();
+    const sec = Number((m[1].match(/<video:duration>(\d+)<\/video:duration>/i) || [])[1] || 0);
+    const durStr = formatVideoDurationDisplay(sec);
+    if (loc && durStr) {
+      map.set(loc.replace(/\/+$/, '').toLowerCase(), durStr);
+    }
+  }
+  return map;
+}
+
+async function fetchEspnClipDuration(clipId = '') {
+  const clean = String(clipId || '').trim();
+  if (!clean) return '';
+  if (espnClipDurationCache.has(clean)) return espnClipDurationCache.get(clean);
+  let durStr = '';
+  try {
+    const json = await fetchJsonSafe(`https://api-app.espn.com/v1/video/clips/${encodeURIComponent(clean)}`, 4500);
+    const sec = Number(json?.videos?.[0]?.duration || 0);
+    durStr = formatVideoDurationDisplay(sec);
+  } catch {
+    durStr = '';
+  }
+  espnClipDurationCache.set(clean, durStr);
+  return durStr;
+}
+
+async function fetchBlueskyHlsDuration(playlistUrl = '') {
+  const clean = String(playlistUrl || '').trim();
+  if (!clean || !/^https:\/\//i.test(clean)) return '';
+  if (bskyPlaylistDurationCache.has(clean)) return bskyPlaylistDurationCache.get(clean);
+  let durStr = '';
+  try {
+    const master = await fetchTextSafe(clean, 4500);
+    const subLine = String(master || '')
+      .split(/\r?\n/)
+      .map(l => l.trim())
+      .find(l => l && !l.startsWith('#') && /\.m3u8(?:\?|$)/i.test(l));
+    if (subLine) {
+      const subUrl = new URL(subLine, clean).toString();
+      const subText = await fetchTextSafe(subUrl, 4500);
+      let totalSec = 0;
+      for (const em of String(subText || '').matchAll(/#EXTINF:([0-9]+(?:\.[0-9]+)?)/gi)) {
+        totalSec += Number(em[1] || 0);
+      }
+      durStr = formatVideoDurationDisplay(totalSec);
+    }
+  } catch {
+    durStr = '';
+  }
+  bskyPlaylistDurationCache.set(clean, durStr);
+  return durStr;
+}
+
+async function enrichRawStreamVideoDurations(rawStream = []) {
+  if (!Array.isArray(rawStream) || rawStream.length === 0) return;
+
+  const jobs = [];
+  for (const it of rawStream) {
+    if (!it || typeof it !== 'object') continue;
+    const normExisting = formatVideoDurationDisplay(it.duration);
+    if (normExisting) {
+      it.duration = normExisting;
+      continue;
+    }
+    if (it.duration) delete it.duration;
+    if (it.isAnimatedGif) continue;
+    const isVid = it.type === 'video' || Boolean(it.videoId || it.videoStreamUrl || it.externalVideoUrl);
+    if (!isVid) continue;
+
+    if (it.videoId) {
+      jobs.push({ item: it, kind: 'youtube', key: String(it.videoId).trim() });
+      continue;
+    }
+    const espnClipMatch = String(it.url || '').match(/espn\.com\/video\/clip\/_\/id\/(\d+)/i);
+    if (espnClipMatch?.[1]) {
+      jobs.push({ item: it, kind: 'espn', key: espnClipMatch[1] });
+      continue;
+    }
+    const bskyPlaylist =
+      it._bskyPlaylistUrl ||
+      (String(it.imageUrl || '').match(/^(https:\/\/video\.bsky\.app\/watch\/[^/]+\/[^/]+)\/thumbnail\.jpg/i)?.[1]
+        ? `${String(it.imageUrl).match(/^(https:\/\/video\.bsky\.app\/watch\/[^/]+\/[^/]+)\/thumbnail\.jpg/i)[1]}/playlist.m3u8`
+        : '');
+    if (bskyPlaylist) {
+      jobs.push({ item: it, kind: 'bsky', key: bskyPlaylist });
+    }
+  }
+
+  const CONCURRENCY = 10;
+  for (let i = 0; i < jobs.length; i += CONCURRENCY) {
+    await Promise.all(
+      jobs.slice(i, i + CONCURRENCY).map(async job => {
+        try {
+          const dur =
+            job.kind === 'youtube'
+              ? await fetchYouTubeVideoDuration(job.key)
+              : job.kind === 'espn'
+                ? await fetchEspnClipDuration(job.key)
+                : await fetchBlueskyHlsDuration(job.key);
+          if (dur) job.item.duration = dur;
+        } catch {}
+      })
+    );
+  }
+
+  // Final title cross-match pass (copies YouTube exact duration onto matching-title club videos
+  // whose sitemap still had `<video:duration>0</video:duration>` right after upload)
+  const normVidTitle = t =>
+    String(t || '')
+      .toLowerCase()
+      .replace(/\s*\|\s*(?:49ers|nfl|week\s+\d+).*$/i, '')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim()
+      .slice(0, 60);
+  const durByNormTitle = new Map();
+  for (const it of rawStream) {
+    if (!it?.duration) continue;
+    const k = normVidTitle(it.title);
+    if (k.length >= 16 && !durByNormTitle.has(k)) durByNormTitle.set(k, it.duration);
+  }
+  for (const it of rawStream) {
+    if (it && '_bskyPlaylistUrl' in it) delete it._bskyPlaylistUrl;
+    if (!it || it.duration || it.isAnimatedGif) continue;
+    if (it.type !== 'video' && !it.videoId && !it.videoStreamUrl && !it.externalVideoUrl) continue;
+    const k = normVidTitle(it.title);
+    if (k.length >= 16 && durByNormTitle.has(k)) {
+      it.duration = durByNormTitle.get(k);
+    }
+  }
 }
 
 async function fetchTextSafe(url, timeoutMs = 12000) {
@@ -1208,6 +1348,7 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
     const ageDays = (Date.now() - Date.parse(pubIso)) / 86_400_000;
     if (!Number.isFinite(ageDays) || ageDays > 10) continue;
     const tweetDisplay = formatTweetBodyForDisplay(text, SHORT_TWEET_FULL_TEXT_LIMIT);
+    const bskyInlineLinks = extractBlueskyInlineLinks(rec, post);
     const isFilmAnalystRep = rep.category === 'film_analyst' || rep.category === 'film' || rep.category === 'analytics';
     const resolvedCategory = isLeagueWideChart
       ? 'film'
@@ -1251,6 +1392,8 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
       url: bskyUrl,
       externalUrl: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? extUrl : null,
       externalTitle: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title ? decodeHtmlEntities(post.embed.external.title) : null) : null,
+      ...(bskyInlineLinks.length > 0 ? { inlineLinks: bskyInlineLinks } : {}),
+      ...(vidEmbed?.playlist ? { _bskyPlaylistUrl: vidEmbed.playlist } : {}),
       outletId: rep.outletId,
       outletName: rep.name,
       reporterId: rep.id,
@@ -1524,6 +1667,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     tankathonHtml,
     clubNewsRssXml,
     clubVideoRssXml,
+    clubVideoSitemapXml,
     pfrTeamRssXml,
     cbsInjHtml,
     rawBskyEntries,
@@ -1545,6 +1689,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     fetchTextSafe(`https://www.tankathon.com/nfl/${team.slug}`, 14000),
     fetchTextSafe(team.clubRssUrls[0], 10000),
     fetchTextSafe(team.clubRssUrls[1] || `https://www.${team.clubDomain}/rss/videos`, 10000),
+    fetchTextSafe(`https://www.${team.clubDomain}/sitemap-video-fast-changing.xml`, 9000),
     fetchTextSafe(`https://www.profootballrumors.com/${team.otcSlug}/feed`, 8500),
     fetchTextSafe(buildCbsTeamInjuriesUrl(team.abbr, team.fullName), 10000),
     fetchRawBlueskyFeedsForReporters(reportersData),
@@ -3179,7 +3324,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   }
 
-  // 9d. Official Club Video RSS
+  // 9d. Official Club Video RSS (enriched with exact durations from official club video sitemap)
+  const clubVideoDurByUrl = parseClubVideoSitemapDurations(clubVideoSitemapXml);
   for (const m of (clubVideoRssXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
     const b = m[0];
     const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
@@ -3190,6 +3336,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     if (!title || !link) continue;
     const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
     if (!Number.isFinite(pubMs) || Date.now() - pubMs > 21 * 86_400_000) continue;
+    const clubVidDuration = clubVideoDurByUrl.get(link.replace(/\/+$/, '').toLowerCase()) || undefined;
     pushNewsItem({
       id: `${team.abbr.toLowerCase()}_vid_${hashShort(link)}`,
       type: 'video',
@@ -3200,6 +3347,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       publishedAt: new Date(pubMs).toISOString(),
       url: link,
       externalVideoUrl: link,
+      ...(clubVidDuration ? { duration: clubVidDuration } : {}),
       outletId: `${team.slug}_official`,
       outletName: `${team.clubDomain} Video`,
       reporterId: `${team.slug}_official`,
@@ -3874,6 +4022,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       })
     );
   }
+
+  // 9h. Enrich verified exact durations for YouTube, ESPN clip, Bluesky HLS & club-matched videos
+  await enrichRawStreamVideoDurations(rawStream);
 
   // 10. Live Power Rankings (teamStats & teamStatRankings already built in Step 5)
   const outDir = getTeamOutDir(team);

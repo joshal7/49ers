@@ -186,7 +186,8 @@ import {
   stripVolatileRelativeTimesFromHtml,
   extractNewsFeedSnapshotFromHtml,
   evaluateNewsBackgroundUpdate,
-  computeScrollAnchorTargetY
+  computeScrollAnchorTargetY,
+  formatVideoDurationDisplay
 } from './engine/digestExperienceEngine.js';
 
 const RECENT_SEARCHES_KEY = ACTIVE_TEAM.storageKeys?.recentSearches || '49ers_faithful_recent_searches_v1';
@@ -2233,6 +2234,101 @@ function closeStatRankModal() {
   if (body) body.innerHTML = '';
 }
 
+function closeImageLightbox() {
+  state.imageLightbox = null;
+  const backdrop = document.getElementById('imageLightboxBackdrop');
+  const img = document.getElementById('imageLightboxImg');
+  if (backdrop) backdrop.hidden = true;
+  if (img) {
+    img.src = '';
+    img.alt = '';
+    img.classList.remove('is-player-cutout');
+    img.removeAttribute('data-fallback-src');
+  }
+  document.body.style.overflow = '';
+}
+
+function renderImageLightbox() {
+  const backdrop = document.getElementById('imageLightboxBackdrop');
+  const img = document.getElementById('imageLightboxImg');
+  const prevBtn = document.getElementById('imageLightboxPrevBtn');
+  const nextBtn = document.getElementById('imageLightboxNextBtn');
+  const counter = document.getElementById('imageLightboxCounter');
+  if (!backdrop || !img) return;
+
+  const lb = state.imageLightbox;
+  if (!lb || !lb.src) {
+    closeImageLightbox();
+    return;
+  }
+
+  const gallery = Array.isArray(lb.gallery) && lb.gallery.length > 1 ? lb.gallery : null;
+  const activeSrc = gallery ? gallery[lb.index] || lb.src : lb.src;
+  img.alt = lb.alt || 'Maximized image';
+  img.classList.toggle('is-player-cutout', lb.kind === 'player');
+  if (lb.fallbackSrc && lb.fallbackSrc !== activeSrc) {
+    img.setAttribute('data-fallback-src', lb.fallbackSrc);
+  } else {
+    img.removeAttribute('data-fallback-src');
+  }
+  img.onerror = () => {
+    const fb = img.getAttribute('data-fallback-src');
+    if (fb && img.src !== fb) {
+      img.removeAttribute('data-fallback-src');
+      img.src = fb;
+    }
+  };
+  img.src = activeSrc;
+
+  if (prevBtn && nextBtn && counter) {
+    if (gallery) {
+      prevBtn.hidden = false;
+      nextBtn.hidden = false;
+      counter.hidden = false;
+      counter.textContent = `${lb.index + 1} / ${gallery.length}`;
+    } else {
+      prevBtn.hidden = true;
+      nextBtn.hidden = true;
+      counter.hidden = true;
+      counter.textContent = '';
+    }
+  }
+
+  backdrop.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function openImageLightboxFromTrigger(triggerEl) {
+  if (!triggerEl) return;
+  const src = String(triggerEl.getAttribute('data-lightbox-src') || '').trim();
+  const fallbackSrc = String(triggerEl.getAttribute('data-lightbox-fallback') || '').trim();
+  if (!src && !fallbackSrc) return;
+  const alt = String(triggerEl.getAttribute('data-lightbox-alt') || '').trim();
+  const kind = String(triggerEl.getAttribute('data-lightbox-kind') || 'editorial').trim();
+  let gallery = null;
+  const rawGallery = triggerEl.getAttribute('data-lightbox-gallery');
+  if (rawGallery) {
+    try {
+      const parsed = JSON.parse(rawGallery);
+      if (Array.isArray(parsed) && parsed.length > 1) {
+        gallery = parsed.filter(u => typeof u === 'string' && /^https:\/\//i.test(u));
+      }
+    } catch {}
+  }
+  const rawIdx = Number(triggerEl.getAttribute('data-lightbox-index') || 0);
+  const index = gallery ? Math.max(0, Math.min(gallery.length - 1, Number.isFinite(rawIdx) ? rawIdx : 0)) : 0;
+  closeJargonPopover();
+  state.imageLightbox = { src: src || fallbackSrc, fallbackSrc, alt, kind, gallery, index };
+  renderImageLightbox();
+}
+
+function stepImageLightbox(delta = 1) {
+  const lb = state.imageLightbox;
+  if (!lb || !Array.isArray(lb.gallery) || lb.gallery.length <= 1) return;
+  lb.index = (lb.index + delta + lb.gallery.length) % lb.gallery.length;
+  renderImageLightbox();
+}
+
 function renderStatRankModal() {
   const backdrop = document.getElementById('statRankModalBackdrop');
   const eyebrow = document.getElementById('rankModalEyebrow');
@@ -3422,7 +3518,53 @@ function bindEvents() {
     }
   });
 
+  document.getElementById('imageLightboxBackdrop')?.addEventListener('click', e => {
+    if (e.target.id === 'imageLightboxBackdrop' || e.target.id === 'imageLightboxStage') {
+      closeImageLightbox();
+    }
+  });
+
+  // Dynamically backfill video duration in top-right card meta once inline HTML5 <video> metadata loads
+  document.addEventListener(
+    'loadedmetadata',
+    e => {
+      const vid = e.target;
+      if (!vid || vid.tagName !== 'VIDEO' || vid.hasAttribute('data-is-gif')) return;
+      const durLabel = formatVideoDurationDisplay(vid.duration);
+      if (!durLabel) return;
+      const card = vid.closest('.brief-card, .player-mention-card');
+      const ageEl = card?.querySelector?.('[data-wire-age]');
+      if (ageEl) {
+        const curPrefix = ageEl.getAttribute('data-age-prefix') || '';
+        if (!curPrefix) {
+          const nextPrefix = `${durLabel} • `;
+          ageEl.setAttribute('data-age-prefix', nextPrefix);
+          const pubIso = ageEl.getAttribute('data-published-at');
+          ageEl.textContent = pubIso ? `${nextPrefix}${formatRelativeAge(pubIso)}` : `${nextPrefix}${ageEl.textContent}`;
+        }
+      }
+    },
+    true
+  );
+
   document.addEventListener('keydown', e => {
+    if (state.imageLightbox) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeImageLightbox();
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        stepImageLightbox(-1);
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        stepImageLightbox(1);
+        return;
+      }
+    }
     const pop = document.getElementById('jargonPopover');
     if (e.key === 'Escape' && pop && !pop.hidden) {
       closeJargonPopover();
@@ -3536,6 +3678,38 @@ function bindEvents() {
 
   // Delegated Click Handler across Main View, Jargon Bubbles & Bottom Sheet
   document.addEventListener('click', async e => {
+    const closeLbBtn = e.target.closest('[data-action="close-image-lightbox"]');
+    if (closeLbBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeImageLightbox();
+      return;
+    }
+
+    const lbPrevBtn = e.target.closest('[data-action="image-lightbox-prev"]');
+    if (lbPrevBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      stepImageLightbox(-1);
+      return;
+    }
+
+    const lbNextBtn = e.target.closest('[data-action="image-lightbox-next"]');
+    if (lbNextBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      stepImageLightbox(1);
+      return;
+    }
+
+    const lbTrigger = e.target.closest('[data-action="open-image-lightbox"]');
+    if (lbTrigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      openImageLightboxFromTrigger(lbTrigger);
+      return;
+    }
+
     const closePop = e.target.closest('[data-action="close-jargon-popover"]');
     if (closePop) {
       e.preventDefault();

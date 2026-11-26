@@ -417,7 +417,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.2862
+      "storyRank": 23.2862,
+      "duration": "1:49"
     },
     {
       "id": "kc_brss_arrowhead_pride_57e987eec2cf",
@@ -624,7 +625,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.2543
+      "storyRank": 6.2543,
+      "duration": "20:38"
     },
     {
       "id": "kc_rss_9e58ffe1b906",
@@ -1132,7 +1134,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7996
+      "storyRank": 0.7996,
+      "duration": "11:25"
     },
     {
       "id": "kc_brss_arrowhead_pride_755cff9609f0",
@@ -1252,7 +1255,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6884
+      "storyRank": 0.6884,
+      "duration": "8:59"
     },
     {
       "id": "kc_pwire_3139477_49949224",
@@ -1438,7 +1442,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9451
+      "storyRank": 0.9451,
+      "duration": "1:15:59"
     },
     {
       "id": "kc_vid_f44fe3ac0f96",
@@ -1483,7 +1488,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5815
+      "storyRank": 0.5815,
+      "duration": "5:16"
     },
     {
       "id": "kc_vid_357397d09658",
@@ -1528,7 +1534,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5815
+      "storyRank": 0.5815,
+      "duration": "6:37"
     },
     {
       "id": "kc_vid_bf24ef981658",
@@ -1573,7 +1580,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5811
+      "storyRank": 0.5811,
+      "duration": "7:27"
     },
     {
       "id": "kc_pwire_4567048_64958928",
@@ -1641,7 +1649,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.571
+      "storyRank": 0.571,
+      "duration": "9:48"
     },
     {
       "id": "kc_pwire_3139477_50584326",
@@ -1727,7 +1736,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5669
+      "storyRank": 0.5669,
+      "duration": "0:35"
     },
     {
       "id": "kc_espn_449171876b717",
@@ -1848,7 +1858,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.413
+      "storyRank": 0.413,
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants"
+        }
+      ]
     },
     {
       "id": "kc_tx_20a62fe4c723",
@@ -2022,7 +2038,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2755
+      "storyRank": 0.2755,
+      "duration": "13:08"
     },
     {
       "id": "kc_vid_67427fd22d9f",
@@ -2058,7 +2075,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2619
+      "storyRank": 0.2619,
+      "duration": "11:09"
     },
     {
       "id": "kc_yts_WwsNx--B79g",
@@ -2298,7 +2316,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0526
+      "storyRank": 0.0526,
+      "duration": "6:11"
     },
     {
       "id": "kc_vid_8625b66cbdc8",
@@ -2334,7 +2353,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2102
+      "storyRank": 0.2102,
+      "duration": "4:57"
     },
     {
       "id": "kc_tx_958c7a554316",
@@ -2414,7 +2434,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1744
+      "storyRank": 0.1744,
+      "duration": "1:11"
     },
     {
       "id": "kc_yt_ZKtreDbZQBY",
@@ -2452,7 +2473,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.149
+      "storyRank": 0.149,
+      "duration": "49:55"
     },
     {
       "id": "kc_rss_3409cc53d230",
@@ -2718,7 +2740,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1516
+      "storyRank": 0.1516,
+      "duration": "2:30"
     },
     {
       "id": "kc_vid_5b7566e4f779",
@@ -2763,7 +2786,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1515
+      "storyRank": 0.1515,
+      "duration": "3:13"
     },
     {
       "id": "kc_vid_7de733124893",
@@ -2808,7 +2832,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1515
+      "storyRank": 0.1515,
+      "duration": "6:10"
     },
     {
       "id": "kc_vid_4317cf4fda95",
@@ -2844,7 +2869,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1513
+      "storyRank": 0.1513,
+      "duration": "7:11"
     },
     {
       "id": "kc_vid_a7ee55bd30f9",
@@ -2889,7 +2915,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1508
+      "storyRank": 0.1508,
+      "duration": "2:07"
     },
     {
       "id": "kc_vid_f105a04e428b",
@@ -2934,7 +2961,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1505
+      "storyRank": 0.1505,
+      "duration": "3:42"
     },
     {
       "id": "kc_vid_259bc6310e5a",
@@ -2979,7 +3007,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1497
+      "storyRank": 0.1497,
+      "duration": "3:31"
     },
     {
       "id": "kc_espn_41a32a5a6fecd",
@@ -3076,7 +3105,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1471
+      "storyRank": 0.1471,
+      "duration": "0:24"
     },
     {
       "id": "kc_vid_74b3e9d8b431",
@@ -3129,7 +3159,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.147
+      "storyRank": 0.147,
+      "duration": "0:39"
     },
     {
       "id": "kc_vid_029139789878",
@@ -3182,7 +3213,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1468
+      "storyRank": 0.1468,
+      "duration": "0:29"
     },
     {
       "id": "kc_vid_cae601cfcb80",
@@ -3227,7 +3259,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1462
+      "storyRank": 0.1462,
+      "duration": "0:34"
     },
     {
       "id": "kc_vid_1a2bbdf08947",
@@ -3280,7 +3313,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1462
+      "storyRank": 0.1462,
+      "duration": "0:31"
     },
     {
       "id": "kc_vid_2c6900fc219a",
@@ -3316,7 +3350,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1458
+      "storyRank": 0.1458,
+      "duration": "0:33"
     },
     {
       "id": "kc_vid_50d1ecc603c8",
@@ -3361,7 +3396,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1451
+      "storyRank": 0.1451,
+      "duration": "0:12"
     },
     {
       "id": "kc_vid_78bb08a0f179",
@@ -3414,7 +3450,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1445
+      "storyRank": 0.1445,
+      "duration": "0:32"
     },
     {
       "id": "x_tl_nate_tice_2124577984346771813",
@@ -3526,7 +3563,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1441
+      "storyRank": 0.1441,
+      "duration": "0:37"
     },
     {
       "id": "kc_vid_9b6bdc6ffedc",
@@ -3571,7 +3609,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.144
+      "storyRank": 0.144,
+      "duration": "0:17"
     },
     {
       "id": "kc_vid_effaaa6459fb",
@@ -3624,7 +3663,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1436
+      "storyRank": 0.1436,
+      "duration": "0:28"
     },
     {
       "id": "kc_vid_c5349f7f2702",
@@ -3669,7 +3709,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1431
+      "storyRank": 0.1431,
+      "duration": "0:25"
     },
     {
       "id": "kc_pwire_4605841_64901028",

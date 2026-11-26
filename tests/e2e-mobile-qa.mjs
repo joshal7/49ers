@@ -4493,8 +4493,8 @@ async function main() {
         const awayTitle = tmpDiv.querySelector('.card-title')?.textContent || '';
         const sbCols = Array.from(tmpDiv.querySelectorAll('.matchup-scoreboard .sb-team-abbr')).map(n => n.textContent.trim());
 
-        // 3. Outbound links across all primary tabs, sub-tabs, Player Dossier modals & Settings must be https://, non-paywalled, with target="_blank" & rel*="noopener"
-        const { isPaywalledOrBlockedUrl } = await import('/src/engine/linkIntegrity.js');
+        // 3. Outbound links across all primary tabs, sub-tabs, Player Dossier modals & Settings must be https://, non-paywalled (except explicit inline tweet links), with target="_blank" & rel*="noopener"
+        const { isPaywalledOrBlockedUrl, sanitizeTweetInlineLinkUrl } = await import('/src/engine/linkIntegrity.js');
         const badLinks = [];
         let checkedExternalLinks = 0;
         const collectAnchors = scopeLabel => {
@@ -4503,11 +4503,13 @@ async function main() {
             if (href.startsWith('http')) {
               checkedExternalLinks++;
               const rel = a.getAttribute('rel') || '';
+              const isTweetInline = a.getAttribute('data-tweet-inline-link') === 'true';
+              const blockedUrl = isTweetInline ? !sanitizeTweetInlineLinkUrl(href, null) : isPaywalledOrBlockedUrl(href);
               if (
                 !href.startsWith('https://') ||
                 a.getAttribute('target') !== '_blank' ||
                 !rel.includes('noopener') ||
-                isPaywalledOrBlockedUrl(href)
+                blockedUrl
               ) {
                 badLinks.push({ scope: scopeLabel, href, target: a.getAttribute('target'), rel });
               }
@@ -8292,6 +8294,94 @@ async function main() {
       assert(
         stabilityAudit.anchorDriftAfterForce <= 4,
         `Forced background DOM update while scrolled must anchor reading card vertically (<=4px drift): ${JSON.stringify(stabilityAudit)}`
+      );
+    });
+
+    await runStep('Inline tweet links go directly to article, card images maximize in lightbox with X close, and videos show durations', async () => {
+      const featureAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        await sleep(80);
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        await sleep(80);
+
+        // 1. Click a real editorial/player card thumbnail -> verify lightbox opens with visible X close button and closes cleanly
+        const thumbBtn = document.querySelector('#mainView [data-action="open-image-lightbox"][data-lightbox-src]');
+        let lbOpened = false;
+        let lbImgSrc = '';
+        let lbHasCloseBtn = false;
+        let lbNoOverflow = false;
+        let lbClosedAfterX = false;
+        if (thumbBtn) {
+          thumbBtn.click();
+          await sleep(60);
+          const backdrop = document.getElementById('imageLightboxBackdrop');
+          const img = document.getElementById('imageLightboxImg');
+          const closeBtn = document.getElementById('closeImageLightboxBtn');
+          lbOpened = Boolean(backdrop && !backdrop.hidden);
+          lbImgSrc = String(img?.getAttribute('src') || '');
+          lbHasCloseBtn = Boolean(closeBtn && closeBtn.getBoundingClientRect().width >= 30);
+          lbNoOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1;
+          closeBtn?.click();
+          await sleep(50);
+          lbClosedAfterX = Boolean(backdrop && backdrop.hidden);
+        }
+
+        // 2. Check Highlights & Videos tab for video durations in top-right meta & video cards
+        document.querySelector('[data-action="set-news-category"][data-category="videos"]')?.click();
+        await sleep(80);
+        const videoCards = Array.from(document.querySelectorAll('#mainView .brief-card[data-raw-type="video"]'));
+        const videosWithTopDuration = videoCards.filter(c => {
+          const ageTxt = String(c.querySelector('[data-wire-age]')?.textContent || '');
+          return /\b\d{1,2}:\d{2}\b/.test(ageTxt);
+        }).length;
+
+        // 3. Check Tweets tab for inline links (if present in live feed) having zero nested <a> and direct article hrefs
+        document.querySelector('[data-action="set-news-category"][data-category="tweets"]')?.click();
+        await sleep(80);
+        const inlineTweetAnchors = Array.from(document.querySelectorAll('#mainView a[data-tweet-inline-link="true"]'));
+        const nestedAnchorCount = Array.from(document.querySelectorAll('#mainView a a')).length;
+        const inlineLinksSample = inlineTweetAnchors.slice(0, 3).map(a => ({
+          href: a.getAttribute('href'),
+          text: a.textContent.trim(),
+          parentHasTextSeg: Boolean(a.closest('.wire-card-headline')?.querySelector('a[data-tweet-text-segment="true"]'))
+        }));
+
+        // Restore All tab
+        document.querySelector('[data-action="set-news-category"][data-category="all"]')?.click();
+        await sleep(50);
+
+        return {
+          hasThumbBtn: Boolean(thumbBtn),
+          lbOpened,
+          lbImgSrc,
+          lbHasCloseBtn,
+          lbNoOverflow,
+          lbClosedAfterX,
+          totalVideoCards: videoCards.length,
+          videosWithTopDuration,
+          inlineTweetLinksCount: inlineTweetAnchors.length,
+          nestedAnchorCount,
+          inlineLinksSample
+        };
+      });
+
+      assert(featureAudit.hasThumbBtn, `Expected at least one clickable lightbox thumbnail in News feed: ${JSON.stringify(featureAudit)}`);
+      assert(
+        featureAudit.lbOpened &&
+          featureAudit.lbImgSrc.startsWith('https://') &&
+          featureAudit.lbHasCloseBtn &&
+          featureAudit.lbNoOverflow &&
+          featureAudit.lbClosedAfterX,
+        `Image lightbox open/X-close/no-overflow failed: ${JSON.stringify(featureAudit)}`
+      );
+      assert(
+        featureAudit.nestedAnchorCount === 0,
+        `Found nested <a> elements inside tweets: ${JSON.stringify(featureAudit)}`
+      );
+      assert(
+        featureAudit.totalVideoCards === 0 || featureAudit.videosWithTopDuration > 0,
+        `Expected video cards to display durations in top-right meta: ${JSON.stringify(featureAudit)}`
       );
     });
 

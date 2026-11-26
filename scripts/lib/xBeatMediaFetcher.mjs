@@ -30,6 +30,7 @@ import {
 import {
   classifyBreakingItem,
   classifyNewsItemCategory,
+  extractXEntityInlineLinks,
   formatTweetBodyForDisplay
 } from '../../src/engine/breakingClassifier.js';
 import {
@@ -293,6 +294,7 @@ export function parseXTimelineHtml(
     const screenName = String(baseTw.user?.screen_name || tw.user?.screen_name || handle).trim();
     const userName = decodeHtmlEntities(String(baseTw.user?.name || tw.user?.name || `@${screenName}`)).trim();
     const nonSocialExt = expandedUrls.find(u => !/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\//i.test(u)) || '';
+    const inlineLinks = extractXEntityInlineLinks(baseTw?.entities, baseTw?.card);
     const durFmt =
       !media.isAnimatedGif && media.durationMs >= 4000
         ? `${Math.floor(media.durationMs / 60000)}:${String(Math.round((media.durationMs % 60000) / 1000)).padStart(2, '0')}`
@@ -308,6 +310,7 @@ export function parseXTimelineHtml(
       quotedText: quotedText && quotedText !== caption ? quotedText : '',
       url: `https://x.com/${screenName}/status/${idStr}`,
       externalUrl: nonSocialExt,
+      ...(inlineLinks.length > 0 ? { inlineLinks } : {}),
       mp4Url: media.mp4Url,
       isAnimatedGif: media.isAnimatedGif,
       durationMs: media.durationMs,
@@ -1013,6 +1016,7 @@ export function filterXTimelineItemsForTeam(
       publishedAt: raw.publishedAt,
       url: raw.url,
       externalUrl: safeExt,
+      ...(Array.isArray(raw.inlineLinks) && raw.inlineLinks.length > 0 ? { inlineLinks: raw.inlineLinks } : {}),
       externalTitle: null,
       externalDescription: null,
       outletId,

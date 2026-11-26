@@ -16,6 +16,7 @@ import {
   renderAvatarStackHtml,
   renderPlayerChipsStripHtml,
   renderPreservedTweetTextHtml,
+  renderTweetBodyWithInlineLinksHtml,
   renderSalientThumbHtml,
   renderTweetLinkedArticleCardHtml,
   renderMiniMeterHtml,
@@ -351,7 +352,8 @@ function renderSingleDashboardCard({
                             allowTeamFallback: true
                           })
                         : null;
-                    const twMultiPhotoCount = getItemInlineSocialPhotoUrls(tw).length;
+                    const twPhotos = getItemInlineSocialPhotoUrls(tw);
+                    const twMultiPhotoCount = twPhotos.length;
                     const twThumbHtml = twVisual
                       ? renderSalientThumbHtml(twVisual, {
                           href: resolvedTwUrl !== '#' ? resolvedTwUrl : safeTwExt || '',
@@ -359,7 +361,8 @@ function renderSingleDashboardCard({
                           eager: idx === 0,
                           extraClass: 'home-wire-thumb',
                           markReadKey: twReadKey,
-                          multiPhotoCount: twMultiPhotoCount
+                          multiPhotoCount: twMultiPhotoCount,
+                          galleryUrls: twPhotos
                         })
                       : '';
                     return `
@@ -379,7 +382,13 @@ function renderSingleDashboardCard({
                     </div>
                     <div class="home-wire-main-row ${twThumbHtml ? 'media-split-row' : ''}">
                       <div class="wire-card-body-col">
-                        <a href="${esc(resolvedTwUrl)}" target="_blank" rel="noopener noreferrer" class="home-wire-text-link" data-mark-read-key="${esc(twReadKey)}">${renderPreservedTweetTextHtml(fullShortTweet)} <span class="wire-inline-ext">${iconSvg('external', 11)}</span></a>
+                        <div class="home-wire-text-link">${renderTweetBodyWithInlineLinksHtml(fullShortTweet, {
+                          tweetUrl: resolvedTwUrl,
+                          item: tw,
+                          linkClass: 'home-wire-text-link',
+                          markReadKey: twReadKey,
+                          iconSize: 11
+                        })}</div>
                         ${twLinkedCardHtml}
                         ${
                           showExtChip

@@ -416,7 +416,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.6335
+      "storyRank": 23.6335,
+      "duration": "1:49"
     },
     {
       "id": "buf_espn_51515a1efa607",
@@ -687,7 +688,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1065
+      "storyRank": 5.1065,
+      "inlineLinks": [
+        {
+          "text": "www.nytimes.com/athletic/781...",
+          "url": "https://www.nytimes.com/athletic/7810238/2026/11/25/bills-chiefs-thanksgiving-preview-matchups-prediction/?unlocked_article_code=1.TFE.-b1d.HOrNagEfIn8z&source=emp_shared_article&smid=ta-ios-share"
+        }
+      ]
     },
     {
       "id": "buf_brss_buffalo_rumblings_d68ffd05b501",
@@ -1081,7 +1088,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.716
+      "storyRank": 1.716,
+      "duration": "0:25"
     },
     {
       "id": "buf_bsky_61b9ff3a21b6",
@@ -1207,7 +1215,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8996
+      "storyRank": 0.8996,
+      "duration": "5:07"
     },
     {
       "id": "buf_bsky_410cfead4bf1",
@@ -1299,7 +1308,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8759
+      "storyRank": 0.8759,
+      "duration": "3:10"
     },
     {
       "id": "buf_vid_82015d3e892e",
@@ -1344,7 +1354,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8651
+      "storyRank": 0.8651,
+      "duration": "1:39"
     },
     {
       "id": "buf_pfr_7cf8fc189f70",
@@ -1451,7 +1462,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.817
+      "storyRank": 0.817,
+      "duration": "0:44"
     },
     {
       "id": "buf_yt_SvkaWRi6-QQ",
@@ -1489,7 +1501,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8007
+      "storyRank": 0.8007,
+      "duration": "11:25"
     },
     {
       "id": "buf_bsky_2743904eced0",
@@ -1538,7 +1551,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9952
+      "storyRank": 0.9952,
+      "duration": "0:29"
     },
     {
       "id": "buf_bsky_7b7c86e9b39e",
@@ -1621,7 +1635,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7513
+      "storyRank": 0.7513,
+      "duration": "3:49"
     },
     {
       "id": "buf_vid_7ee0aac7bdfa",
@@ -1666,7 +1681,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7465
+      "storyRank": 0.7465,
+      "duration": "5:13"
     },
     {
       "id": "buf_vid_0705815f1c8a",
@@ -1711,7 +1727,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7013
+      "storyRank": 0.7013,
+      "duration": "6:10"
     },
     {
       "id": "buf_vid_497ed2c9d3da",
@@ -1756,7 +1773,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6993
+      "storyRank": 0.6993,
+      "duration": "6:54"
     },
     {
       "id": "buf_vid_f1230362e36e",
@@ -1792,7 +1810,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.646
+      "storyRank": 0.646,
+      "duration": "1:44"
     },
     {
       "id": "buf_brss_buffalo_rumblings_cf0069fa6493",
@@ -1926,7 +1945,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6389
+      "storyRank": 0.6389,
+      "duration": "12:33"
     },
     {
       "id": "buf_vid_7370129dc38c",
@@ -1962,7 +1982,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6388
+      "storyRank": 0.6388,
+      "duration": "14:22"
     },
     {
       "id": "buf_bsky_5156a1a40bd3",
@@ -2054,7 +2075,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6001
+      "storyRank": 0.6001,
+      "duration": "7:13"
     },
     {
       "id": "buf_vid_f4cf287afb7a",
@@ -2099,7 +2121,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5482
+      "storyRank": 0.5482,
+      "duration": "25:30"
     },
     {
       "id": "buf_vid_304d5273dd39",
@@ -2322,7 +2345,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4134
+      "storyRank": 0.4134,
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants"
+        }
+      ]
     },
     {
       "id": "buf_brss_buffalo_rumblings_150527d2f2c1",
@@ -2495,7 +2524,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2916
+      "storyRank": 0.2916,
+      "duration": "8:53"
     },
     {
       "id": "buf_vid_61f6fb692118",
@@ -2531,7 +2561,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2832
+      "storyRank": 0.2832,
+      "duration": "7:24"
     },
     {
       "id": "buf_rss_f7023415afed",
@@ -2640,7 +2671,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2526
+      "storyRank": 0.2526,
+      "duration": "19:42"
     },
     {
       "id": "buf_vid_a172dee672ab",
@@ -2693,7 +2725,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2518
+      "storyRank": 0.2518,
+      "duration": "6:23"
     },
     {
       "id": "buf_vid_360f154ba235",
@@ -2729,7 +2762,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2496
+      "storyRank": 0.2496,
+      "duration": "20:52"
     },
     {
       "id": "buf_rss_9cb2e7af2988",
@@ -2875,7 +2909,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2365
+      "storyRank": 0.2365,
+      "duration": "13:50"
     },
     {
       "id": "buf_rss_f61827b9cd3f",
@@ -3163,7 +3198,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0613
+      "storyRank": 0.0613,
+      "duration": "2:13"
     },
     {
       "id": "buf_pfr_e4b84b9ab405",

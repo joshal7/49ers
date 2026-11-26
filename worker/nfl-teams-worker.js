@@ -48,6 +48,8 @@ import {
   normalizeMultilineSocialText,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
+import { extractXEntityInlineLinks } from '../src/engine/breakingClassifier.js';
+import { formatVideoDurationDisplay } from '../src/engine/digestExperienceEngine.js';
 import {
   NFL_TEAM_OFFICIAL_RSS_URLS,
   ESPN_NFL_TEAM_IDS,
@@ -1368,6 +1370,7 @@ export default {
             ]
           : [];
         const clubVideosUrl = team.clubRssUrls?.[1] || `https://www.${team.clubDomain}/rss/videos`;
+        const clubVideosSitemapUrl = `https://www.${team.clubDomain}/sitemap-video-fast-changing.xml`;
         const xSyndicationHeaders = {
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
           Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -1398,6 +1401,7 @@ export default {
         const [
           rssXml,
           clubVideosXml,
+          clubVideosSitemapXml,
           pfrXml,
           espnNews,
           liveSummaryJson,
@@ -1411,6 +1415,9 @@ export default {
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
           fetch(clubVideosUrl, { signal: AbortSignal.timeout(4000) })
+            .then(r => (r.ok ? r.text() : ''))
+            .catch(() => ''),
+          fetch(clubVideosSitemapUrl, { signal: AbortSignal.timeout(3500) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
           fetch(`https://www.profootballrumors.com/${team.otcSlug}/feed`, { signal: AbortSignal.timeout(4500) })
@@ -1704,6 +1711,15 @@ export default {
           });
         }
 
+        // Build exact club video duration map from official club video sitemap
+        const clubVideoDurMap = new Map();
+        for (const sm of (clubVideosSitemapXml || '').matchAll(/<url>([\s\S]*?)<\/url>/gi)) {
+          const loc = (sm[1].match(/<loc>([^<]+)<\/loc>/i) || [])[1]?.trim();
+          const sec = Number((sm[1].match(/<video:duration>(\d+)<\/video:duration>/i) || [])[1] || 0);
+          const durStr = formatVideoDurationDisplay(sec);
+          if (loc && durStr) clubVideoDurMap.set(loc.replace(/\/+$/, '').toLowerCase(), durStr);
+        }
+
         // Parse Official Club Videos RSS into live wire (instant official TD & locker-room clips)
         for (const m of (clubVideosXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
           if (items.length >= 58) break;
@@ -1717,6 +1733,7 @@ export default {
           const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
           const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<media:thumbnail[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i) || [])[1] || '').replace(/&amp;/g, '&');
           const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+          const clubVidDur = clubVideoDurMap.get(link.replace(/\/+$/, '').toLowerCase()) || undefined;
           items.push({
             id: `${team.abbr.toLowerCase()}_clubvid_${items.length}`,
             type: 'video',
@@ -1724,6 +1741,7 @@ export default {
             summary,
             url: link,
             externalVideoUrl: link,
+            duration: clubVidDur,
             embeddable: false,
             isHighlightClip: true,
             isLiveGameHighlight: liveMode,
@@ -1887,12 +1905,14 @@ export default {
                 const postUrl = `https://x.com/${handle}/status/${sid}`;
                 if (seenUrls.has(postUrl)) return;
                 seenUrls.add(postUrl);
+                const synInlineLinks = extractXEntityInlineLinks(syn?.entities, syn?.card);
                 items.push({
                   id: `x_edge_${sid}`,
                   type: 'tweet',
                   title: txt.slice(0, 320),
                   fullText: txt,
                   url: postUrl,
+                  ...(synInlineLinks.length > 0 ? { inlineLinks: synInlineLinks } : {}),
                   imageUrl: thumb.startsWith('https://') ? thumb : '',
                   ...(Array.isArray(synMedia.imageUrls) && synMedia.imageUrls.length > (bestMp4 ? 0 : 1)
                     ? { imageUrls: synMedia.imageUrls }

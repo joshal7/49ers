@@ -3,6 +3,7 @@
  */
 
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
+import { formatVideoDurationDisplay } from '../engine/digestExperienceEngine.js';
 import { normalizeScheduleGameItem, resolveCompleteScheduleModel } from '../engine/seasonStateMachine.js';
 import {
   extractLiveScoreboardMap,
@@ -47,6 +48,7 @@ import {
   classifyBreakingItem,
   classifyNewsItemCategory,
   extractBlueskyBestExternalLink,
+  extractBlueskyInlineLinks,
   promoteLinkDropTweetToArticle,
   reconcileLinkDropTweetsWithArticles,
   sortNewsWithBreakingPriority,
@@ -721,6 +723,12 @@ function compactWireItemForBootSnapshot(it) {
   if (it.externalUrl) out.externalUrl = it.externalUrl;
   if (it.externalTitle) out.externalTitle = String(it.externalTitle).slice(0, 180);
   if (it.externalDomain) out.externalDomain = it.externalDomain;
+  if (Array.isArray(it.inlineLinks) && it.inlineLinks.length > 0) {
+    out.inlineLinks = it.inlineLinks
+      .filter(l => l && typeof l.url === 'string' && /^https:\/\//i.test(l.url))
+      .slice(0, 4)
+      .map(l => ({ text: String(l.text || '').slice(0, 120), url: l.url }));
+  }
   if (it.imageUrl) out.imageUrl = it.imageUrl;
   if (Array.isArray(it.imageUrls) && it.imageUrls.length > 0) {
     out.imageUrls = it.imageUrls.filter(u => typeof u === 'string' && /^https:\/\//i.test(u)).slice(0, 4);
@@ -736,6 +744,10 @@ function compactWireItemForBootSnapshot(it) {
   if (it.breakingBadge) out.breakingBadge = it.breakingBadge;
   if (it.category) out.category = it.category;
   if (it.videoId) out.videoId = it.videoId;
+  if (it.videoStreamUrl) out.videoStreamUrl = it.videoStreamUrl;
+  if (it.externalVideoUrl) out.externalVideoUrl = it.externalVideoUrl;
+  if (it.isAnimatedGif) out.isAnimatedGif = true;
+  if (it.duration) out.duration = it.duration;
   if (it.inlineVideoUrl) out.inlineVideoUrl = it.inlineVideoUrl;
   if (Array.isArray(it.mentionedPlayers) && it.mentionedPlayers.length > 0) {
     out.mentionedPlayers = it.mentionedPlayers.slice(0, 5);
@@ -2886,7 +2898,7 @@ export async function hydrateLiveBlueskyBeatWire(
   const rosterPlayers = appData.roster?.players || [];
   let upgradedExistingCount = 0;
 
-  const tryUpgradeExistingSocialItem = (existing, { cleanFull, tweetDisplay, bskyPhotos, imgThumb, hasVideo }) => {
+  const tryUpgradeExistingSocialItem = (existing, { cleanFull, tweetDisplay, bskyPhotos, imgThumb, hasVideo, inlineLinks }) => {
     if (!existing || typeof existing !== 'object') return false;
     let changed = false;
     const prevCount = Array.isArray(existing.imageUrls)
@@ -2909,6 +2921,10 @@ export async function hydrateLiveBlueskyBeatWire(
         existing.isFullTweet = tweetDisplay.isFullTweet;
         changed = true;
       }
+    }
+    if (Array.isArray(inlineLinks) && inlineLinks.length > 0 && (!Array.isArray(existing.inlineLinks) || existing.inlineLinks.length === 0)) {
+      existing.inlineLinks = inlineLinks;
+      changed = true;
     }
     if (changed) upgradedExistingCount += 1;
     return changed;
@@ -3093,6 +3109,7 @@ export async function hydrateLiveBlueskyBeatWire(
           const imgThumb = vidEmbed?.thumbnail || bskyPhotoPre || extLink.thumb || '';
           const bskyPostHandlePre = post?.author?.handle || acct.actor;
           const bskyPermalinkPre = `https://bsky.app/profile/${bskyPostHandlePre}/post/${rkey}`;
+          const bskyInlineLinks = extractBlueskyInlineLinks(rec, post);
           const existingMatch =
             existingById.get(postId) ||
             existingByUrl.get(normUrlKey(bskyPermalinkPre)) ||
@@ -3104,7 +3121,8 @@ export async function hydrateLiveBlueskyBeatWire(
               tweetDisplay,
               bskyPhotos,
               imgThumb,
-              hasVideo: Boolean(vidEmbed)
+              hasVideo: Boolean(vidEmbed),
+              inlineLinks: bskyInlineLinks
             });
             continue;
           }
@@ -3175,7 +3193,8 @@ export async function hydrateLiveBlueskyBeatWire(
               tweetDisplay,
               bskyPhotos,
               imgThumb,
-              hasVideo: Boolean(vidEmbed)
+              hasVideo: Boolean(vidEmbed),
+              inlineLinks: bskyInlineLinks
             });
             continue;
           }
@@ -3241,6 +3260,7 @@ export async function hydrateLiveBlueskyBeatWire(
               externalUrl: safeExtUrl,
               externalTitle: safeExtUrl && cleanExtTitle ? cleanExtTitle : null,
               externalDescription: safeExtUrl && cleanExtDesc ? cleanExtDesc : null,
+              ...(bskyInlineLinks.length > 0 ? { inlineLinks: bskyInlineLinks } : {}),
               outletId: parsedAttr.outletId,
               outletName: parsedAttr.outletName,
               reporterId: parsedAttr.reporterId,
@@ -4386,11 +4406,44 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
   const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   const videoRssUrl = activeTeam.clubRssUrls?.[1] || `https://www.${activeTeam.clubDomain}/rss/videos`;
+  const videoSitemapUrl = `https://www.${activeTeam.clubDomain}/sitemap-video-fast-changing.xml`;
   try {
-    const res = await fetchSingleWithTimeout(videoRssUrl, { cache: 'no-store' }, 6500);
-    if (!res.ok) return 0;
+    const [res, smRes] = await Promise.all([
+      fetchSingleWithTimeout(videoRssUrl, { cache: 'no-store' }, 6500),
+      fetchSingleWithTimeout(videoSitemapUrl, { cache: 'no-store' }, 5500).catch(() => null)
+    ]);
+    const durByUrl = new Map();
+    if (smRes?.ok) {
+      try {
+        const smXml = await smRes.text();
+        for (const sm of smXml.matchAll(/<url>([\s\S]*?)<\/url>/gi)) {
+          const loc = (sm[1].match(/<loc>([^<]+)<\/loc>/i) || [])[1]?.trim();
+          const sec = Number((sm[1].match(/<video:duration>(\d+)<\/video:duration>/i) || [])[1] || 0);
+          const durLabel = formatVideoDurationDisplay(sec);
+          if (loc && durLabel) {
+            durByUrl.set(loc.replace(/\/+$/, '').toLowerCase(), durLabel);
+          }
+        }
+      } catch {}
+    }
+
+    // Backfill durations onto any existing club videos already in rawStream
+    let backfilledDurations = 0;
+    if (durByUrl.size > 0) {
+      for (const existing of appData.news.rawStream) {
+        if (!existing || existing.duration) continue;
+        const k = String(existing.url || existing.externalVideoUrl || '').replace(/\/+$/, '').toLowerCase();
+        const foundDur = k ? durByUrl.get(k) : '';
+        if (foundDur) {
+          existing.duration = foundDur;
+          backfilledDurations += 1;
+        }
+      }
+    }
+
+    if (!res.ok) return backfilledDurations;
     const xml = await res.text();
-    if (!xml || !xml.includes('<item')) return 0;
+    if (!xml || !xml.includes('<item')) return backfilledDurations;
 
     const rosterPlayers = appData.roster?.players || [];
     const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
@@ -4461,12 +4514,14 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
       existingUrls.add(link);
       if (titleKey) existingVideoTitleKeys.add(titleKey);
       const vidOutletId = activeTeam.abbr === 'SF' ? '49ers_official' : `${activeTeam.slug}_official`;
+      const vidDuration = durByUrl.get(link.replace(/\/+$/, '').toLowerCase()) || undefined;
       discovered.push({
         id: `${activeTeam.abbr.toLowerCase()}_vid_${hashWireKey(link)}`,
         type: 'video',
         title,
         summary,
         externalVideoUrl: link,
+        duration: vidDuration,
         embeddable: false,
         isHighlightClip: category !== 'film',
         imageUrl: mediaImg,
@@ -4497,7 +4552,7 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
     if (discovered.length > 0) {
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
     }
-    return discovered.length;
+    return discovered.length + backfilledDurations;
   } catch {
     return 0;
   }
@@ -5053,6 +5108,7 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         externalUrl: safeRawExtUrl,
         externalTitle: safeRawExtUrl ? rawExtTitle : null,
         externalDescription: safeRawExtUrl ? rawExtDesc : null,
+        ...(Array.isArray(raw.inlineLinks) && raw.inlineLinks.length > 0 ? { inlineLinks: raw.inlineLinks } : {}),
         outletId: raw.outletId || 'x_beat',
         outletName: decodeHtmlEntities(raw.outletName || `${activeTeam.nickname} Beat`),
         reporterId: raw.reporterId || null,

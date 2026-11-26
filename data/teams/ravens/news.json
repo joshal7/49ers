@@ -491,7 +491,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.4317
+      "storyRank": 13.4317,
+      "duration": "10:16"
     },
     {
       "id": "x_tl_jamisonhensley_2125651163060085119",
@@ -1123,7 +1124,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6561
+      "storyRank": 0.6561,
+      "duration": "0:40"
     },
     {
       "id": "x_tl_jeffzrebiec_2125316383130972208",
@@ -1215,7 +1217,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6146
+      "storyRank": 0.6146,
+      "duration": "1:50"
     },
     {
       "id": "bal_rss_1f4a07eaff45",
@@ -5236,7 +5239,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0054,
+      "duration": "36:34"
     },
     {
       "id": "bal_tx_ece5c1f79bc1",

@@ -363,7 +363,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.5099
+      "storyRank": 13.5099,
+      "duration": "8:05"
     },
     {
       "id": "no_brss_canal_street_chronicles_5b218cebd9b8",
@@ -1270,7 +1271,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2597
+      "storyRank": 0.2597,
+      "duration": "22:57"
     },
     {
       "id": "no_yts_TAvO7hOMR70",
@@ -1354,7 +1356,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2564
+      "storyRank": 0.2564,
+      "duration": "1:16"
     },
     {
       "id": "no_vid_5bb037f8338e",
@@ -1399,7 +1402,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2564
+      "storyRank": 0.2564,
+      "duration": "2:39"
     },
     {
       "id": "no_vid_797ea00d7367",
@@ -1452,7 +1456,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2564
+      "storyRank": 0.2564,
+      "duration": "5:59"
     },
     {
       "id": "no_vid_93d662ada277",
@@ -1488,7 +1493,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2562
+      "storyRank": 0.2562,
+      "duration": "11:56"
     },
     {
       "id": "no_pwire_3929645_64937328",
@@ -1612,7 +1618,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2291
+      "storyRank": 0.2291,
+      "duration": "2:18"
     },
     {
       "id": "no_vid_542049125f54",
@@ -1657,7 +1664,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.229
+      "storyRank": 0.229,
+      "duration": "2:51"
     },
     {
       "id": "no_rss_c43047b7edfa",
@@ -2036,7 +2044,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1515
+      "storyRank": 0.1515,
+      "duration": "8:36"
     },
     {
       "id": "no_vid_5d1bbce9c2b3",
@@ -2072,7 +2081,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0377
+      "storyRank": 0.0377,
+      "duration": "5:12"
     },
     {
       "id": "no_rss_07aed2ae212b",
@@ -3121,7 +3131,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301
+      "storyRank": 0.0301,
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions"
+        }
+      ]
     },
     {
       "id": "no_yts_kpYlWvU7zjY",
@@ -3495,7 +3511,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0076,
+      "duration": "50:13"
     },
     {
       "id": "no_tx_e73ca8862538",

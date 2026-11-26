@@ -27,7 +27,7 @@
   <link rel="dns-prefetch" href="https://static.clubs.nfl.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=94" />
+  <link rel="stylesheet" href="./src/styles.css?v=95" />
 </head>
 <body>
   <script>
@@ -284,9 +284,20 @@
     </div>
   </div>
 
+  <!-- Click-to-Maximize Full-Screen Image Lightbox -->
+  <div id="imageLightboxBackdrop" class="image-lightbox-backdrop" hidden role="dialog" aria-modal="true" aria-label="Maximized image viewer">
+    <button type="button" id="closeImageLightboxBtn" class="image-lightbox-close" data-action="close-image-lightbox" aria-label="Close image">✕</button>
+    <div class="image-lightbox-stage" id="imageLightboxStage">
+      <button type="button" id="imageLightboxPrevBtn" class="image-lightbox-nav prev" data-action="image-lightbox-prev" aria-label="Previous image" hidden>‹</button>
+      <img id="imageLightboxImg" class="image-lightbox-img" src="" alt="" decoding="async" />
+      <button type="button" id="imageLightboxNextBtn" class="image-lightbox-nav next" data-action="image-lightbox-next" aria-label="Next image" hidden>›</button>
+    </div>
+    <div id="imageLightboxCounter" class="image-lightbox-counter mono" hidden></div>
+  </div>
+
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=180"></script>
+  <script type="module" src="./src/app.js?v=181"></script>
 </body>
 </html>

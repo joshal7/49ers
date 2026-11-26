@@ -759,7 +759,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.9984
+      "storyRank": 23.9984,
+      "duration": "2:31"
     },
     {
       "id": "pit_espn_74a56f118fd70",
@@ -795,7 +796,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.902
+      "storyRank": 23.902,
+      "duration": "3:17"
     },
     {
       "id": "x_tl_mikegarafolo_2125670288163836011",
@@ -1230,7 +1232,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.279
+      "storyRank": 4.279,
+      "duration": "2:47"
     },
     {
       "id": "x_tl_bepryor_2125601506879766883",
@@ -1598,7 +1601,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3365
+      "storyRank": 3.3365,
+      "duration": "2:02"
     },
     {
       "id": "pit_espn_b0d7ae647a8a2",
@@ -1634,7 +1638,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3207
+      "storyRank": 3.3207,
+      "duration": "2:06"
     },
     {
       "id": "x_tl_schultz_report_2125452481991725459",
@@ -1884,7 +1889,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1117
+      "storyRank": 1.1117,
+      "duration": "0:52"
     },
     {
       "id": "pit_brss_behind_the_steel_curtain_6779f9ccbc27",
@@ -2736,7 +2742,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6448
+      "storyRank": 0.6448,
+      "duration": "8:24"
     },
     {
       "id": "pit_pwire_4047650_49949224",
@@ -2974,7 +2981,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5403
+      "storyRank": 0.5403,
+      "duration": "1:08"
     },
     {
       "id": "pit_rss_3d8251c45866",
@@ -3122,7 +3130,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2679
+      "storyRank": 0.2679,
+      "duration": "58:02"
     },
     {
       "id": "pit_rss_641e02b68eb0",
@@ -3201,7 +3210,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2625
+      "storyRank": 0.2625,
+      "duration": "17:57"
     },
     {
       "id": "pit_yts_9ORFm2xTKNs",
@@ -3276,7 +3286,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2583
+      "storyRank": 0.2583,
+      "duration": "12:56"
     },
     {
       "id": "pit_pwire_4035687_64937828",
@@ -3437,7 +3448,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2325
+      "storyRank": 0.2325,
+      "duration": "4:30"
     },
     {
       "id": "pit_espn_251a69cf49add",
@@ -3508,7 +3520,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1677
+      "storyRank": 0.1677,
+      "duration": "59:08"
     },
     {
       "id": "pit_pwire_4694237_50563318",
@@ -3621,7 +3634,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0384
+      "storyRank": 0.0384,
+      "duration": "4:58"
     },
     {
       "id": "pit_vid_9e2f37edf7c6",
@@ -3657,7 +3671,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0381
+      "storyRank": 0.0381,
+      "duration": "4:52"
     },
     {
       "id": "pit_vid_f11448477915",
@@ -3693,7 +3708,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1524
+      "storyRank": 0.1524,
+      "duration": "2:45"
     },
     {
       "id": "pit_bsky_0c7107e31794",
@@ -3778,7 +3794,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0638
+      "storyRank": 0.0638,
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/espn/betting...",
+          "url": "https://www.espn.com/espn/betting/story/_/id/50534274/week-11-nfl-odds-touchdown-props-best-bets-sunday-games"
+        }
+      ]
     },
     {
       "id": "pit_pwire_4431492_64897428",
@@ -4279,7 +4301,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0218,
+      "duration": "32:38"
     },
     {
       "id": "pit_pfr_c53c596b985d",

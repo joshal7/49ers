@@ -8,12 +8,14 @@
 import {
   classifyBreakingItem,
   extractBlueskyBestExternalLink,
+  extractXEntityInlineLinks,
   formatTweetBodyForDisplay,
   isDirectArticleUrl,
   promoteLinkDropTweetToArticle,
   resolveTweetLinkedArticlePreview,
   stripRedundantAuthorBoilerplate
 } from '../../src/engine/breakingClassifier.js';
+import { formatVideoDurationDisplay } from '../../src/engine/digestExperienceEngine.js';
 import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
 import { attachDraftClassHighlightVideos } from './draftVideoResolver.mjs';
 import {
@@ -57,6 +59,46 @@ import {
 } from '../../src/engine/beatAttributionEngine.js';
 
 const embedCheckCache = new Map();
+const ytDurationCache = new Map();
+
+/**
+ * Fetches exact `MM:SS` / `H:MM:SS` duration for a YouTube video ID via the watch page's
+ * embedded metadata (`lengthSeconds` / `itemprop="duration"`), cached per video ID across all 32 teams.
+ */
+export async function fetchYouTubeVideoDuration(videoId = '') {
+  const cleanId = String(videoId || '').trim();
+  if (!cleanId) return '';
+  if (ytDurationCache.has(cleanId)) return ytDurationCache.get(cleanId);
+
+  let durStr = '';
+  try {
+    const res = await fetch(`https://www.youtube.com/watch?v=${encodeURIComponent(cleanId)}`, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9'
+      },
+      signal: AbortSignal.timeout(4800)
+    });
+    if (res.ok) {
+      const html = await res.text();
+      const lenMatch = html.match(/"lengthSeconds"\s*:\s*"(\d+)"/);
+      if (lenMatch?.[1]) {
+        durStr = formatVideoDurationDisplay(Number(lenMatch[1]));
+      }
+      if (!durStr) {
+        const isoMatch = html.match(/itemprop="duration"\s+content="(PT[^"]+)"/i);
+        if (isoMatch?.[1]) {
+          durStr = formatVideoDurationDisplay(isoMatch[1]);
+        }
+      }
+    }
+  } catch {
+    durStr = '';
+  }
+
+  ytDurationCache.set(cleanId, durStr);
+  return durStr;
+}
 
 /**
  * Parses YouTube / feed relative age strings (e.g. "7 days ago", "20 hours ago",
@@ -476,14 +518,17 @@ export async function fetchCuratedYouTubeChannelVideos({
 
   const checked = await Promise.all(
     deduped.map(async c => {
-      const check =
+      const [check, dur] = await Promise.all([
         c.defaultEmbeddable === false
-          ? { exists: true, embeddable: false, authorName: c.channel, title: c.title }
-          : await verifyYouTubeEmbeddable(c.videoId);
+          ? Promise.resolve({ exists: true, embeddable: false, authorName: c.channel, title: c.title })
+          : verifyYouTubeEmbeddable(c.videoId),
+        c.duration ? Promise.resolve(c.duration) : fetchYouTubeVideoDuration(c.videoId)
+      ]);
       const creatorName = c.channel || check.authorName || 'YouTube';
       const { defaultEmbeddable: _drop, ...cleanItem } = c;
       return {
         ...cleanItem,
+        duration: dur || cleanItem.duration || '',
         title: c.title || check.title,
         channel: creatorName,
         author: creatorName,
