@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:57.785Z",
+  "updatedAt": "2026-11-26T07:27:03.844Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.neworleanssaints.com/team/injury-report/",
@@ -10,54 +10,30 @@
   "gameDayRoster": null,
   "practiceReport": [
     {
-      "playerId": "4430379",
-      "name": "Asim Richards",
-      "position": "OT",
-      "jersey": 72,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430379.png",
+      "playerId": "3929645",
+      "name": "Juwan Johnson",
+      "position": "TE",
+      "jersey": 83,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929645.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Doubtful",
-      "playProbabilityPct": 11,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "11% • Doubtful",
-      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Official Doubtful tag (NFL historical base ~10–14%)"
-      ],
-      "beatComment": "doubtful"
-    },
-    {
-      "playerId": "4429568",
-      "name": "Martin Emerson Jr.",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429568.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Concussion",
+      "injuryType": "Hamstring, Wrist",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 18,
+      "playProbabilityPct": 31,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "18% • Doubtful",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "playBadgeLabel": "31% • Long Shot",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Remains in early stages of NFL 5-Step Concussion Protocol"
+        "Did Not Participate (DNP) on Wednesday",
+        "Soft-tissue re-aggravation caution (Hamstring, Wrist)"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Johnson was listed as having both hamstring and wrist injuries. He injured the hamstring in Sunday's loss to the Bears, but this is the first report of a wrist issue. Head coach Kellen Moore said that Johnson is \"day-to-day,\" according to Terrell. If Johnson does not progress in time for Sunday's game, Noah Fant and Oscar Delp would be the Saints' primary tight-end options."
     },
     {
       "playerId": "4606711",
@@ -68,19 +44,19 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Knee",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 49,
+      "playProbabilityPct": 67,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "49% • Long Shot",
+      "playBadgeLabel": "67% • GTD",
       "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
+        "Returned to Limited Participation (LP) on Wednesday following 2-game absence"
       ],
       "beatComment": "questionable"
     },
@@ -93,47 +69,46 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Biceps",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 50,
+      "playProbabilityPct": 68,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "50% • GTD",
+      "playBadgeLabel": "68% • GTD",
       "archetypeNote": "Veteran starter profile (8th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
+        "Returned to Limited Participation (LP) on Wednesday following 2-game absence"
       ],
       "beatComment": "questionable"
     },
     {
-      "playerId": "3929645",
-      "name": "Juwan Johnson",
-      "position": "TE",
-      "jersey": 83,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929645.png",
+      "playerId": "4430379",
+      "name": "Asim Richards",
+      "position": "OT",
+      "jersey": 72,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430379.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Hamstring",
+      "injuryType": "Knee",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 73,
+      "playProbabilityPct": 71,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "73% • GTD",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "playBadgeLabel": "71% • GTD",
+      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Questionable tag adjusted by player career prior (78%)",
-        "Soft-tissue re-aggravation caution (Hamstring)"
+        "Returned to Limited Participation (LP) on Wednesday following prior-game absence"
       ],
-      "beatComment": "The Saints expect to have a better feel for Johnson's status Wednesday, when the team holds its first practice of Week 12. Before exiting Sunday in the third quarter, Johnson was targeted just once and failed to record a reception for the second time in 10 appearances on the season. If the hamstring injury prevents Johnson from playing next weekend in Cincinnati, Noah Fant and Oscar Delp would be in line for added snaps at tight end."
+      "beatComment": "questionable"
     },
     {
       "playerId": "4241993",
@@ -144,7 +119,7 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Hamstring",
@@ -156,10 +131,61 @@
       "playBadgeLabel": "77% • GTD",
       "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Questionable tag adjusted by player career prior (82%)",
+        "Wednesday Limited Participation (LP); player toughness prior = 82%",
+        "Soft-tissue re-aggravation caution (Hamstring)"
+      ],
+      "beatComment": "Werner was held out of the Saints' Week 11 loss to the Bears due to a hamstring injury that he sustained against the Panthers in Week 10. Wednesday was his first practice participation since the injury, and he'll have two more opportunities to log a full session and avoid an injury designation ahead of Sunday's game against the Bengals."
+    },
+    {
+      "playerId": "3917660",
+      "name": "David Edwards",
+      "position": "G",
+      "jersey": 76,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917660.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hamstring",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 79,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "79% • GTD",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Wednesday Limited Participation (LP); player toughness prior = 84%",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
       "beatComment": "questionable"
+    },
+    {
+      "playerId": "4429568",
+      "name": "Martin Emerson Jr.",
+      "position": "CB",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429568.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Concussion",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 86,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "86% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Logged mid-week Full Participation in NFL Concussion Protocol progression"
+      ],
+      "beatComment": "Emerson was held out of practice during Week 11 prep and did not play against the Bears this past Sunday. His full practice participation indicates that he's progressing through the league's concussion protocol, but he would need to pass an evaluation by an independent neurologist in order to be available for Week 12 against the Bengals on Nov. 29."
     }
   ],
   "irAndReserveTracker": [

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:46.347Z",
+  "updatedAt": "2026-11-26T07:28:21.018Z",
   "windowDays": 7,
-  "totalEpisodes": 13,
+  "totalEpisodes": 12,
   "shows": [
     {
       "id": "bengals_locked_on_bengals",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/30/98/44/30984476-26de-250d-e8e5-f590b3ced6cc/mza_1075762000797244198.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "bengals_hear_that_podcast_growlin",
@@ -280,26 +280,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4",
       "feedUrl": "https://feed.podbean.com/cboxbengals/feed.xml",
       "audioStreamUrl": "https://mcdn.podbean.com/mf/web/2cy9inide6gxaret/Free_Agents_FINAL_AUDIObfoxc.mp3"
-    },
-    {
-      "id": "pod_bengals_locked_on_bengals_1000802802281",
-      "trackId": 1000802802281,
-      "collectionId": 1159723162,
-      "showId": "bengals_locked_on_bengals",
-      "showName": "Locked On Bengals",
-      "showFullTitle": "Locked On Bengals - Daily Podcast On The Cincinnati Bengals",
-      "hosts": "Locked On Podcast Network, James Rapien, Jake Liscow",
-      "network": "Locked On Podcast Network, James Rapien, Jake Liscow",
-      "title": "SCORCHING: Ja'Marr Chase & Joe Burrow Must Stay HOT as Bengals Meet Commanders' Turnover Defense",
-      "summary": "Join the Locked On Bengals Everydayer Club! The Everydayer Club brings you access to exclusive video content, the Subtext insider club where you can text Jake and Joe and get Bengals updates in your text messages, ad-free audio, and Joe Goodberry's members-only Discord with ",
-      "publishedAt": "2026-11-18T22:56:34.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d3/60/ca/d360ca88-4da4-18db-218a-d3de4431db01/mza_15747823422344018126.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/scorching-jamarr-chase-joe-burrow-must-stay-hot-as/id1159723162?i=1000802802281&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8b4258/lockedon.simplecastaudio.com/cc8b7148-cfe3-4578-a7a0-0bd38215a32f/episodes/b04d2d79-3969-447c-a5b9-3b74676ea880/audio/128/default.mp3?aid=rss_feed&awCollectionId=cc8b7148-cfe3-4578-a7a0-0bd38215a32f&awEpisodeId=b04d2d79-3969-447c-a5b9-3b74676ea880&feed=J1A29rxl"
     }
   ]
 }

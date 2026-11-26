@@ -68,30 +68,32 @@ import {
 import { buildTeamDraftPrep2027 } from './lib/teamDraftIntelBuilder.mjs';
 import { attachDraftClassHighlightVideos } from './lib/draftVideoResolver.mjs';
 import {
-  GEMINI_X_DISCOVERY_QUOTA_POLICY,
   NATIONAL_FILM_ANALYTICS_X_HANDLES,
   OFFICIAL_TEAM_X_HANDLES_BY_ABBR,
-  discoverXStatusesViaGeminiSearch,
   fetchBeatArticleHtmlForXEmbeds,
   fetchXTimelinesBatch,
   filterXTimelineItemsForTeam,
   harvestEmbeddedXForTeamRss,
-  hydrateRawXStatusUrlsBatch,
-  resolveGeminiXDiscoveryPlan,
   selectRotatingXHandleSlice,
   selectTeamLocalXHandles
 } from './lib/xBeatMediaFetcher.mjs';
 import {
+  NATIONAL_FILM_ANALYTICS_RSS_FEEDS,
+  NATIONAL_YOUTUBE_FEEDS,
   TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR,
+  buildYouTubeFeedUrl,
   resolveTeamBeatRssFeeds
 } from './lib/teamMediaFeeds.mjs';
+import {
+  createNodeOverflowBudgetController,
+  resolveOverflowBudgetConfig
+} from './lib/geminiOverflowBudgetGuard.mjs';
 import {
   discoverBestFreeGeminiModel,
   parseTankathonTeamPicksHtml,
   runSinglePassDailyGeminiSynthesis
 } from './lib/aiSynthesisEngine.mjs';
 import {
-  fetchCuratedYouTubeChannelVideos,
   fetchLive2027ConsensusBigBoardAndMocks,
   fetchYouTubeVideoDuration,
   parseRelativePublishedAgoToIso,
@@ -143,6 +145,7 @@ import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   classifyBreakingItem,
   classifyNewsItemCategory,
+  classifyYouTubeShortSignal,
   extractBlueskyInlineLinks,
   filterOutCompletedGameAvailabilityItems,
   formatTweetBodyForDisplay,
@@ -172,9 +175,11 @@ import {
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
+  isCommercialFantasyOrBettingFiller,
   isLeagueWideFilmAnalyticsTweet,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
+  isPaywalledSubstackOrNewsletterEntry,
   normalizeMultilineSocialText,
   normalizePlayerKey,
   sanitizeExternalUrl,
@@ -585,10 +590,8 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     rotowireXml,
     pftRssXml,
     nfltrRssXml,
-    ytNflXml,
-    ytQbSchoolXml,
-    ytKollmannXml,
-    ytChaseDanielXml,
+    nationalYtXmls,
+    nationalAnalyticsRssXmls,
     nflverse,
     statsTeamReg,
     statsTeamWeek,
@@ -605,10 +608,19 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     fetchTextSafe('https://www.rotowire.com/rss/news.php?sport=NFL', 10000),
     fetchTextSafe('https://www.nbcsports.com/nfl/profootballtalk.rss', 10000),
     fetchTextSafe('https://nfltraderumors.co/feed/', 10000),
-    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCDVYQ4Zhbm3S2dlz7P1GBDg', 10000),
-    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCGfxHp2yuimtLsFaq1r7aIQ', 10000),
-    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCYzfVBuCfGz-oF3aOCGgOmw', 10000),
-    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCSnTko7TBHGlGlA7yvzQVpA', 10000),
+    Promise.all(
+      NATIONAL_YOUTUBE_FEEDS.map(async spec => {
+        const primaryUrl = buildYouTubeFeedUrl(spec.channelId, spec.feedMode || 'uulf');
+        let xml = await fetchTextSafe(primaryUrl, 9000).catch(() => '');
+        if ((!xml || !/<entry\b/i.test(xml)) && spec.feedMode === 'uulf') {
+          xml = await fetchTextSafe(buildYouTubeFeedUrl(spec.channelId, 'all'), 8000).catch(() => '');
+        }
+        return xml || '';
+      })
+    ),
+    Promise.all(
+      NATIONAL_FILM_ANALYTICS_RSS_FEEDS.map(spec => fetchTextSafe(spec.url, 9000).catch(() => ''))
+    ),
     loadSharedNflversePlayerContext(seasonYear),
     fetchCsvGzSafe(
       `${NFLVERSE_BASE}/stats_team/stats_team_reg_${seasonYear}.csv.gz`,
@@ -904,12 +916,14 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
       ? liveDraftBigBoardIntel.consensusBigBoard
       : sfSeasonal?.draftPrep2027?.consensusBigBoard || liveDraftBigBoardIntel?.consensusBigBoard || [];
 
-  const youtubeFeeds = [
-    { id: 'nfl_official', name: 'NFL', handle: '@NFL', xml: ytNflXml, category: 'highlights', embeddable: false },
-    { id: 'the_qb_school', name: 'The QB School', handle: '@TheQBSchool', xml: ytQbSchoolXml, category: 'film', embeddable: true },
-    { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', xml: ytKollmannXml, category: 'film', embeddable: true },
-    { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', xml: ytChaseDanielXml, category: 'film', embeddable: true }
-  ];
+  const youtubeFeeds = NATIONAL_YOUTUBE_FEEDS.map((spec, idx) => ({
+    ...spec,
+    xml: nationalYtXmls[idx] || ''
+  }));
+  const nationalFilmAnalyticsFeeds = NATIONAL_FILM_ANALYTICS_RSS_FEEDS.map((spec, idx) => ({
+    ...spec,
+    xml: nationalAnalyticsRssXmls[idx] || ''
+  }));
 
   // Stage-1 deduplicated embeddability verification for all national film YouTube videos (detects NFL Content ID blocks once for all 32 teams!)
   const nationalFilmVidIds = new Set();
@@ -955,7 +969,9 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
   const quotaState = quotaRefresh.state;
   const persistQuotaState = () => {
     try {
-      fs.writeFileSync(quotaStatePath, JSON.stringify(quotaState, null, 2));
+      const tmpPath = `${quotaStatePath}.tmp.${process.pid}.${Date.now()}`;
+      fs.writeFileSync(tmpPath, JSON.stringify(quotaState, null, 2));
+      fs.renameSync(tmpPath, quotaStatePath);
     } catch {}
   };
   if (quotaRefresh.refreshed) {
@@ -965,81 +981,15 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     );
   }
 
-  // Option B (Stage 1 Shared National Film & Analytics Discovery):
-  // Only runs when explicitly enabled (`ENABLE_GEMINI_X_SEARCH=1`) and Search Grounding quota is available,
-  // preventing wasted HTTP 429 attempts on free-tier keys with 0 Search Grounding quota.
-  const natDiscoveryPath = path.join(leagueDir, 'x-film-discovery.json');
-  let prevNatDiscovery = null;
-  try {
-    if (fs.existsSync(natDiscoveryPath)) {
-      prevNatDiscovery = JSON.parse(fs.readFileSync(natDiscoveryPath, 'utf8'));
-    }
-  } catch {}
-  const natNowMs = Date.now();
-  const natCutoffMs = natNowMs - 96 * 3_600_000;
-  let sharedDiscoveredRawItems = (Array.isArray(prevNatDiscovery?.rawItems) ? prevNatDiscovery.rawItems : []).filter(
-    it => it?.statusId && Number.isFinite(Date.parse(it.publishedAt || '')) && Date.parse(it.publishedAt) >= natCutoffMs
-  );
-  const xSearchEnabled = process.env.ENABLE_GEMINI_X_SEARCH === '1' && isSearchGroundingAllowed(quotaState, natNowMs);
-  const natPlan = resolveGeminiXDiscoveryPlan({
-    scope: 'national',
-    nowMs: natNowMs,
-    prevMeta: prevNatDiscovery,
-    hasApiKey: Boolean(geminiApiKey && xSearchEnabled),
-    force: process.argv.includes('--force-x-discovery')
+  // Paid Tier 1 Free-Tier Overflow Budget Guard + Gmail SMTP Alerter (strictly fallback-only when Free Tier exhausts)
+  const overflowBudgetController = createNodeOverflowBudgetController({
+    filePath: path.join(leagueDir, 'gemini-overflow-budget.json'),
+    config: resolveOverflowBudgetConfig()
   });
-  if (natPlan.shouldRun) {
-    const natHandles =
-      natPlan.slotKey === 'pm'
-        ? GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalAnalyticsChartHandles
-        : GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalVideoHandles;
-    const natDisc = await discoverXStatusesViaGeminiSearch({
-      scope: 'national',
-      slotKey: natPlan.slotKey,
-      handles: natHandles,
-      apiKey: geminiApiKey,
-      modelCascade: natPlan.modelCascade,
-      nowMs: natNowMs
-    }).catch(() => ({ ok: false, statusUrls: [] }));
-    if (natDisc.ok) {
-      const freshlyHydrated = await hydrateRawXStatusUrlsBatch(natDisc.statusUrls || [], {
-        nowMs: natNowMs,
-        maxHydrate: 24,
-        concurrency: 4
-      }).catch(() => []);
-      const mergedBySid = new Map();
-      for (const it of [...freshlyHydrated, ...sharedDiscoveredRawItems]) {
-        if (it?.statusId && !mergedBySid.has(String(it.statusId))) {
-          mergedBySid.set(String(it.statusId), it);
-        }
-      }
-      sharedDiscoveredRawItems = [...mergedBySid.values()].slice(0, 60);
-      const nextSlots = Array.from(new Set([...(natPlan.completedSlotsToday || []), natPlan.slotKey]));
-      try {
-        fs.writeFileSync(
-          natDiscoveryPath,
-          JSON.stringify(
-            {
-              updatedAt: new Date(natNowMs).toISOString(),
-              datePt: natPlan.datePt,
-              completedSlots: nextSlots,
-              lastModelUsed: natDisc.modelUsed || null,
-              lastUrlCount: (natDisc.statusUrls || []).length,
-              rawItems: sharedDiscoveredRawItems
-            },
-            null,
-            2
-          )
-        );
-      } catch {}
-      console.log(
-        `[stage-1/x-discovery] National ${natPlan.slotKey.toUpperCase()} sweep (${natDisc.modelUsed}): found=${(natDisc.statusUrls || []).length} URLs, hydrated=${freshlyHydrated.length}, cached96h=${sharedDiscoveredRawItems.length}`
-      );
-    }
-  }
+
   const combinedNationalFilmXItems = [];
   const seenNatSid = new Set();
-  for (const it of [...(Array.isArray(nationalFilmXItems) ? nationalFilmXItems : []), ...sharedDiscoveredRawItems]) {
+  for (const it of Array.isArray(nationalFilmXItems) ? nationalFilmXItems : []) {
     const sid = String(it?.statusId || (String(it?.url || '').match(/\/status\/(\d{15,22})/) || [])[1] || '');
     if (sid && seenNatSid.has(sid)) continue;
     if (sid) seenNatSid.add(sid);
@@ -1051,12 +1001,14 @@ async function loadSharedLeagueContext(seasonYear = 2026, { geminiApiKey = '' } 
     aiModelDiscovery,
     quotaState,
     persistQuotaState,
+    overflowBudgetController,
     standingsByAbbr,
     otcSpaceHtml,
     rotowireXml,
     pftRssXml,
     nfltrRssXml,
     youtubeFeeds,
+    nationalFilmAnalyticsFeeds,
     youtubeEmbeddableById,
     nflverse,
     leagueTradeCtx,
@@ -1446,6 +1398,15 @@ function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = [])
       teamEntityRe.test(text) ||
       (team.abbr === 'SF' && hasExplicit49ersEntity(text)) ||
       Boolean(starFullRe && starFullRe.test(text));
+    // Guard against multi-sport local columnists (e.g. NBA Warriors / MLB SF Giants / NHL Sharks posts)
+    if (
+      !mentionsClubOrPlayer &&
+      /\b(warriors|lakers|celtics|kings|nba\b|steph\s+curry|\bcurry\b|draymond|sabonis|layup|homecourt|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series)\b/i.test(
+        text
+      )
+    ) {
+      continue;
+    }
     let isLeagueWideChart = false;
     let filmOnlyScope = false;
     if (isNational && !mentionsClubOrPlayer) {
@@ -1598,13 +1559,20 @@ async function fetchTeamBeatPodcasts(team) {
   };
 }
 
-const GEMINI_BATCH_TIMEOUT_COUNTS = new Map();
-
 async function generateGroundedDailyBrief(
   team,
   appData,
   apiKey,
-  { existingBrief = null, priorCycleBrief = null, forceBrief = false, aiModelDiscovery = null, quotaState = null, persistQuotaState = null } = {}
+  {
+    existingBrief = null,
+    priorCycleBrief = null,
+    forceBrief = false,
+    aiModelDiscovery = null,
+    quotaState = null,
+    persistQuotaState = null,
+    overflowApiKey = '',
+    overflowBudgetController = null
+  } = {}
 ) {
   const nowMs = Date.now();
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, 17);
@@ -1698,6 +1666,9 @@ async function generateGroundedDailyBrief(
     try {
       const aiNewsBriefRes = await runSinglePassDailyGeminiSynthesis({
         apiKey,
+        overflowApiKey,
+        overflowBudgetController,
+        teamAbbr: team.abbr,
         preferredModel: quotaState?.pools?.premier?.[0] || aiModelDiscovery?.activeModel || 'gemini-4-hydrogen',
         promptText: buildDailyTopNewsBriefPrompt(appData, sourceCandidates, nowMs, {
           previousBrief: priorCycleBrief
@@ -1772,7 +1743,7 @@ async function generateGroundedDailyBrief(
 /**
  * STAGE 2: Build complete 11-file bundle for a single NFL franchise.
  */
-async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
+async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '', overflowApiKey = '' } = {}) {
   setActiveTeamConfig(team);
   console.log(`\n[stage-2] Building live 2026 bundle for ${team.fullName} (${team.abbr} -> ${team.domain})...`);
 
@@ -3224,6 +3195,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     const decTitle = decodeHtmlEntities(String(item.title || '')).trim();
     const decSummary = decodeHtmlEntities(String(item.summary || '')).trim();
     const decFull = item.fullText != null ? decodeHtmlEntities(String(item.fullText)).trim() : undefined;
+    if (isCommercialFantasyOrBettingFiller(decTitle, decSummary || decFull || '', cleanUrl)) return;
+    if (/\b(?:nfl\s+)?week\s+\d+\s+uniforms?\b/i.test(decTitle)) return;
     const sig = scoreContentSignal(decTitle, decSummary || decFull || '', {
       url: cleanUrl,
       externalUrl: item.externalUrl || '',
@@ -3590,8 +3563,76 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   }
 
-  // 9e-3. Stage-1 Shared YouTube Atom Feeds (NFL Highlights, The QB School, Brett Kollmann, Chase Daniel) filtered per team
+  // 9e-3. Stage-1 Shared National Free Scheme, PFF & EPA Analytics RSS Feeds (MatchQuarters, PFF, Unexpected Points, Coach Dan Casey)
+  let leagueWideFilmArticlesAdded = 0;
+  for (const aFeed of leagueCtx.nationalFilmAnalyticsFeeds || []) {
+    if (!aFeed?.xml) continue;
+    for (const m of aFeed.xml.matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+      const b = m[0];
+      const title = decodeXmlEntities((b.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const contentEncoded = (b.match(/<content:encoded[^>]*>([\s\S]*?)<\/content:encoded>/i) || [])[1] || '';
+      const rawDesc = decodeXmlEntities(
+        (b.match(/<description[^>]*>([\s\S]*?)<\/description>/i) || [])[1] || contentEncoded
+      )
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const link = decodeXmlEntities((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '').trim();
+      const pubRaw = decodeXmlEntities((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '').trim();
+      if (!title || !/^https?:\/\//i.test(link)) continue;
+      // 1. Strict betting / parlay / fantasy / SaaS promo strip even when team name appears in headline
+      if (isCommercialFantasyOrBettingFiller(title, rawDesc, link)) continue;
+      // 2. Per-entry Substack paywall gate (rejects paid-only stubs so users never click into paywalls)
+      if (aFeed.checkSubstackPaywall && isPaywalledSubstackOrNewsletterEntry(b, contentEncoded)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
+      const maxAgeDays = Number(aFeed.maxAgeDays) || 14;
+      if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
+
+      const isDirectTeamMatch = teamOrStarRe.test(`${title} ${rawDesc.slice(0, 320)}`);
+      const isOpposingLead = !isDirectTeamMatch && isOpposingTeamSubjectLead(`${title} ${rawDesc.slice(0, 220)}`, {}, team);
+      if (isOpposingLead) continue;
+      let filmOnlyScope = false;
+      if (!isDirectTeamMatch) {
+        if (!aFeed.allowLeagueWideFilmOnly || leagueWideFilmArticlesAdded >= 2) continue;
+        // Skip single-other-team deep dives on league-wide film feeds when active team isn't featured
+        if (isOpposingTeamOnlyInjuryOrRosterStory(title, rawDesc, team)) continue;
+        filmOnlyScope = true;
+        leagueWideFilmArticlesAdded += 1;
+      }
+
+      const img = (
+        (b.match(/<enclosure[^>]*url="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i) ||
+          b.match(/<media:content[^>]*url="([^"]+)"/i) ||
+          b.match(/<media:thumbnail[^>]*url="([^"]+)"/i) ||
+          [])[1] || ''
+      ).replace(/&amp;/g, '&');
+      pushNewsItem({
+        id: `${team.abbr.toLowerCase()}_nfilm_${aFeed.id}_${hashShort(link)}`,
+        type: 'article',
+        category: 'film',
+        ...(filmOnlyScope ? { filmOnlyScope: true, isLeagueWideFilmChart: true } : {}),
+        title,
+        summary: rawDesc.slice(0, 240),
+        imageUrl: img,
+        imageAlt: title,
+        publishedAt: new Date(pubMs).toISOString(),
+        url: link,
+        outletId: aFeed.id,
+        outletName: aFeed.name,
+        reporterId: aFeed.id,
+        reporterName: aFeed.author || aFeed.name,
+        author: aFeed.author || aFeed.name,
+        authorHandle: aFeed.handle || '',
+        authorProfileUrl: aFeed.profileUrl || link,
+        trustTier: aFeed.trustTier || 1,
+        wireSource: 'national_film_rss'
+      });
+    }
+  }
+
+  // 9e-4. Stage-1 Shared National YouTube `UULF` Long-Form Feeds (All_22_Films, Jackson Krueger, Kurt Warner, QB School, PFF, SumerSports, NFL, NFL Films)
   const atomPubByVideoId = new Map();
+  let leagueWideFilmVideosAdded = 0;
   for (const ytFeed of leagueCtx.youtubeFeeds || []) {
     for (const m of (ytFeed.xml || '').matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
       const b = m[0];
@@ -3604,9 +3645,24 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
       if (!videoId || !title) continue;
       if (/#shorts\b/i.test(title) || /youtube\.com\/shorts\//i.test(b)) continue;
+      if (isCommercialFantasyOrBettingFiller(title, desc)) continue;
       const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
       if (Number.isFinite(pubMs)) atomPubByVideoId.set(videoId, new Date(pubMs).toISOString());
-      if (!teamOrStarRe.test(`${title} ${desc.slice(0, 220)}`)) continue;
+      const isDirectTeamMatch = teamOrStarRe.test(`${title} ${desc.slice(0, 260)}`);
+      let filmOnlyScope = false;
+      if (!isDirectTeamMatch) {
+        if (
+          ytFeed.allowLeagueWideFilmOnly &&
+          ytFeed.category === 'film' &&
+          leagueWideFilmVideosAdded < 2 &&
+          !isOpposingTeamSubjectLead(title, {}, team)
+        ) {
+          filmOnlyScope = true;
+          leagueWideFilmVideosAdded += 1;
+        } else {
+          continue;
+        }
+      }
       if (ytFeed.category !== 'film' && isOpposingTeamSubjectLead(title, {}, team)) continue;
       const maxAgeDays = ytFeed.category === 'film' ? 60 : 21;
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
@@ -3624,6 +3680,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         id: `${team.abbr.toLowerCase()}_yt_${videoId}`,
         type: 'video',
         category: ytFeed.category,
+        ...(filmOnlyScope ? { filmOnlyScope: true } : {}),
         videoId,
         embeddable: resolvedEmbeddable,
         title,
@@ -3641,7 +3698,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         author: creatorName,
         authorHandle: ytFeed.handle,
         authorProfileUrl: `https://www.youtube.com/${ytFeed.handle}`,
-        trustTier: 1,
+        trustTier: ytFeed.trustTier || 1,
         wireSource: 'youtube_atom'
       });
     }
@@ -3679,15 +3736,26 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   }
 
-  // 9f. Per-Team Local Beat RSS Feeds (SB Nation + USA Today Wire + Regional Beat), Curated YouTube Film Channels,
+  // 9f. Per-Team Local Beat RSS Feeds (SB Nation + USA Today Wire + Regional Beat), Dual-Stream Curated YouTube (`UULF` + Selective `UUSH`),
   //     Verified Local + National X Timelines, Embedded RSS X Tweets, ESPN 24/7 Player Wire & Bluesky Beat Posts!
   const localBeatRssSpecs = resolveTeamBeatRssFeeds(team, reportersData);
   const teamCuratedYtSpecs = TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR[team.abbr] || [];
-  const [localBeatRssXmls, teamYtXmls, localXRaw, curatedSfYtVideos] = await Promise.all([
+  const [localBeatRssXmls, teamYtLongXmls, teamYtShortsXmls, localXRaw] = await Promise.all([
     Promise.all(localBeatRssSpecs.map(spec => fetchTextSafe(spec.url, 6500).catch(() => ''))),
     Promise.all(
+      teamCuratedYtSpecs.map(async ch => {
+        let xml = await fetchTextSafe(buildYouTubeFeedUrl(ch.id, 'uulf'), 7500).catch(() => '');
+        if (!xml || !/<entry\b/i.test(xml)) {
+          xml = await fetchTextSafe(buildYouTubeFeedUrl(ch.id, 'all'), 7000).catch(() => '');
+        }
+        return xml || '';
+      })
+    ),
+    Promise.all(
       teamCuratedYtSpecs.map(ch =>
-        fetchTextSafe(`https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(ch.id)}`, 7500).catch(() => '')
+        ch.includeSelectiveShorts
+          ? fetchTextSafe(buildYouTubeFeedUrl(ch.id, 'uush'), 6500).catch(() => '')
+          : Promise.resolve('')
       )
     ),
     fetchXTimelinesBatch(
@@ -3705,14 +3773,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         maxAgeHours: 120,
         maxItems: 12
       }
-    ).catch(() => []),
-    team.abbr === 'SF'
-      ? fetchCuratedYouTubeChannelVideos({
-          qbNames: players.filter(p => p.position === 'QB' && p.rosterBucket === 'active').map(p => p.name),
-          rosterPlayers: players,
-          maxAgeDays: 14
-        }).catch(() => [])
-      : Promise.resolve([])
+    ).catch(() => [])
   ]);
 
   // Parse Per-Team Local Beat RSS articles (all 32 teams!)
@@ -3799,11 +3860,15 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   });
 
-  // Parse Per-Team Curated YouTube Channels (official + local All-22 film) with live per-video embeddability verification
+  // Parse Per-Team Curated YouTube Channels (ALL 32 official club `UULF` + local All-22 + selectively gated `UUSH` fun/analyst Shorts)
   const teamYtPending = [];
+  const seenTeamYtVidIds = new Set();
+  const funShortsWindowMs = 48 * 3_600_000;
+  let funShortsAcceptedCount = 0;
+
   teamCuratedYtSpecs.forEach((ytCh, idx) => {
-    const xml = teamYtXmls[idx] || '';
-    for (const m of xml.matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
+    const longXml = teamYtLongXmls[idx] || '';
+    for (const m of longXml.matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
       const b = m[0];
       const videoId = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
       const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
@@ -3812,13 +3877,84 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         .replace(/\s+/g, ' ')
         .trim();
       const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
-      if (!videoId || !title) continue;
+      if (!videoId || !title || seenTeamYtVidIds.has(videoId)) continue;
       if (/#shorts\b/i.test(title) || /youtube\.com\/shorts\//i.test(b)) continue;
+      if (isCommercialFantasyOrBettingFiller(title, desc)) continue;
+      // Strict team & cross-sport bleed guard on multi-sport local channels (e.g. 95.7 The Game Warriors/Giants)
+      if (ytCh.filterByTeam && !teamOrStarRe.test(`${title} ${desc.slice(0, 220)}`)) continue;
+      if (ytCh.filterByTeam && isOpposingTeamSubjectLead(title, {}, team)) continue;
+      // On local sports-talk radio channels (e.g. 95.7 The Game), keep ONLY film/analyst/interview craft segments
+      // (Greg Cosell, Brian Baldinger, beat insiders, Mic'd Up) and drop hot-take debate filler.
+      if (ytCh.filterRadioHotTakes) {
+        if (
+          /\b(no excuses|less than a ring|biggest threat|nobody in the (?:nfc|afc|nfl) can stop|last test|hall of famer|super bowl or bust|we are very lucky|overrated|fraud)\b/i.test(
+            title
+          )
+        ) {
+          continue;
+        }
+        if (
+          !/\b(cosell|baldy|baldinger|maiocco|barrows|kawakami|shanahan|lynch|mic['’]?d up|locker room|injury|practice|pass[- ]?rush|defense|offense|exposed|pieced apart|scheme|film|tape|breakdown|all[- ]?22|impact)\b/i.test(
+            title
+          )
+        ) {
+          continue;
+        }
+      }
       const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
       if (Number.isFinite(pubMs)) atomPubByVideoId.set(videoId, new Date(pubMs).toISOString());
       const maxAgeDays = ytCh.category === 'film' ? 60 : 21;
       if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
-      teamYtPending.push({ ytCh, videoId, title, xmlCreator, desc, pubIso: new Date(pubMs).toISOString() });
+      seenTeamYtVidIds.add(videoId);
+      const isAuthenticFunLong =
+        ytCh.category !== 'film' &&
+        /\b(mic['’]?d up|wired|locker room|victory speech|game ball|sights and sounds|49\s*hours)\b/i.test(title);
+      teamYtPending.push({
+        ytCh,
+        videoId,
+        title,
+        xmlCreator,
+        desc,
+        pubIso: new Date(pubMs).toISOString(),
+        overrideCategory: ytCh.category,
+        isFunHighlightClip: isAuthenticFunLong
+      });
+    }
+
+    // Selectively gated YouTube Shorts (`UUSH`): allows high-SNR analyst craft clips + up to 2 authentic fun/locker-room clips per 48h
+    const shortsXml = teamYtShortsXmls[idx] || '';
+    for (const m of shortsXml.matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
+      const b = m[0];
+      const videoId = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
+      const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const xmlCreator = decodeXmlEntities((b.match(/<author>[\s\S]*?<name>([\s\S]*?)<\/name>/i) || [])[1] || '').trim();
+      const desc = decodeXmlEntities((b.match(/<media:description>([\s\S]*?)<\/media:description>/i) || [])[1] || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
+      if (!videoId || !title || seenTeamYtVidIds.has(videoId)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : NaN;
+      if (!Number.isFinite(pubMs) || Date.now() - pubMs > 7 * 86_400_000) continue;
+      if (ytCh.filterByTeam && !teamOrStarRe.test(`${title} ${desc.slice(0, 220)}`)) continue;
+      const gate = classifyYouTubeShortSignal(title, desc, { requireFootballContext: Boolean(ytCh.filterByTeam) });
+      if (!gate.allowed) continue;
+      if (gate.kind === 'fun') {
+        if (Date.now() - pubMs > funShortsWindowMs) continue;
+        if (funShortsAcceptedCount >= 2) continue;
+        funShortsAcceptedCount += 1;
+      }
+      seenTeamYtVidIds.add(videoId);
+      atomPubByVideoId.set(videoId, new Date(pubMs).toISOString());
+      teamYtPending.push({
+        ytCh,
+        videoId,
+        title: title.replace(/\s*#shorts\b/gi, '').trim(),
+        xmlCreator,
+        desc,
+        pubIso: new Date(pubMs).toISOString(),
+        overrideCategory: gate.kind === 'film' ? 'film' : 'beat',
+        isFunHighlightClip: gate.kind === 'fun'
+      });
     }
   });
   const verifiedTeamYtItems = await Promise.all(
@@ -3832,13 +3968,14 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   );
   for (const entry of verifiedTeamYtItems) {
     if (entry.check?.exists === false) continue;
-    const { ytCh, videoId, title, xmlCreator, desc, pubIso, check } = entry;
+    const { ytCh, videoId, title, xmlCreator, desc, pubIso, check, overrideCategory, isFunHighlightClip } = entry;
     const creatorName = ytCh.name || xmlCreator || check?.authorName || 'YouTube';
     const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
     pushNewsItem({
       id: `${team.abbr.toLowerCase()}_tyt_${videoId}`,
       type: 'video',
-      category: ytCh.category,
+      category: overrideCategory || ytCh.category,
+      ...(isFunHighlightClip ? { isFunHighlightClip: true } : {}),
       videoId,
       embeddable: ytCh.embeddable === false ? false : Boolean(check?.embeddable),
       title,
@@ -3920,39 +4057,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   }
 
-  for (const cv of Array.isArray(curatedSfYtVideos) ? curatedSfYtVideos : []) {
-    if (!cv?.videoId || !cv?.title) continue;
-    const cvPubIso =
-      atomPubByVideoId.get(cv.videoId) ||
-      cv.publishedAt ||
-      cv.publishedAtIso ||
-      parseRelativePublishedAgoToIso(cv.publishedAgo, Date.now());
-    if (!cvPubIso) continue;
-    const creatorName = cv.author || cv.channel || cv.outletName || 'YouTube';
-    const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(cv.videoId)}`;
-    pushNewsItem({
-      ...cv,
-      id: `${team.abbr.toLowerCase()}_cyt_${cv.videoId}`,
-      type: 'video',
-      videoId: cv.videoId,
-      embeddable: cv.embeddable === true,
-      url: watchUrl,
-      externalVideoUrl: watchUrl,
-      imageUrl: cv.imageUrl || cv.thumbnailUrl || `https://i.ytimg.com/vi/${cv.videoId}/hqdefault.jpg`,
-      imageAlt: cv.title,
-      publishedAt: cvPubIso,
-      channel: creatorName,
-      author: creatorName,
-      reporterName: creatorName,
-      outletName: creatorName,
-      authorHandle: cv.authorHandle || '',
-      authorProfileUrl: cv.authorProfileUrl || watchUrl,
-      wireSource: cv.wireSource || 'curated_youtube_atom'
-    });
-  }
-
   const bskyPosts = filterRawBlueskyPostsForTeam(rawBskyEntries || [], team, players);
-  // Load previous news.json once for both Option B daily X-discovery slot tracking & 96h X carry-forward
+  // Load previous news.json once for 96h X carry-forward across rotating 30-min handle slices
   let prevNewsSnapshot = null;
   try {
     const prevNewsPath = path.join(getTeamOutDir(team), 'news.json');
@@ -3961,56 +4067,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   } catch {}
 
-  // Option B (Stage 2 Per-Team Grounded Gemini Search X-Status Discovery):
-  // SF runs FIRST (ALL_NFL_TEAMS[0]) with 2x daily quota (am + pm) on best tokens (`gemini-4-hydrogen` -> Flash);
-  // all other 31 clubs get an even 1x daily sweep (`daily`) on Flash-first tokens (`gemini-3.8-flash` -> `2.5-flash`).
-  // Every discovered URL is verified & hydrated via Syndication/FxTwitter (zero hallucinated IDs).
-  let teamXSearchDiscoveryMeta = prevNewsSnapshot?.xSearchDiscoveryMeta || null;
-  let geminiDiscoveredXPayload = '';
-  const teamDiscoveryNowMs = Date.now();
-  const teamXSearchEnabled =
-    process.env.ENABLE_GEMINI_X_SEARCH === '1' &&
-    (!leagueCtx.quotaState || isSearchGroundingAllowed(leagueCtx.quotaState, teamDiscoveryNowMs));
-  const teamDiscoveryPlan = resolveGeminiXDiscoveryPlan({
-    scope: 'team',
-    team,
-    nowMs: teamDiscoveryNowMs,
-    prevMeta: teamXSearchDiscoveryMeta,
-    hasApiKey: Boolean(geminiApiKey && teamXSearchEnabled),
-    force: process.argv.includes('--force-x-discovery')
-  });
-  if (teamDiscoveryPlan.shouldRun) {
-    const teamSearchHandles = selectTeamLocalXHandles(team, reportersData, 18);
-    const teamDiscRes = await discoverXStatusesViaGeminiSearch({
-      scope: 'team',
-      team,
-      slotKey: teamDiscoveryPlan.slotKey,
-      handles: teamSearchHandles,
-      rosterPlayers: players,
-      apiKey: geminiApiKey,
-      modelCascade: teamDiscoveryPlan.modelCascade,
-      nowMs: teamDiscoveryNowMs
-    }).catch(() => ({ ok: false, statusUrls: [], rawPayloadText: '' }));
-    if (teamDiscRes.ok) {
-      geminiDiscoveredXPayload = teamDiscRes.rawPayloadText || '';
-      const updatedSlots = Array.from(
-        new Set([...(teamDiscoveryPlan.completedSlotsToday || []), teamDiscoveryPlan.slotKey])
-      );
-      teamXSearchDiscoveryMeta = {
-        datePt: teamDiscoveryPlan.datePt,
-        dailyQuota: teamDiscoveryPlan.dailyQuota,
-        completedSlots: updatedSlots,
-        lastModelUsed: teamDiscRes.modelUsed || null,
-        lastUrlCount: (teamDiscRes.statusUrls || []).length,
-        updatedAt: new Date(teamDiscoveryNowMs).toISOString()
-      };
-      console.log(
-        `[stage-2/x-discovery] ${team.abbr} ${teamDiscoveryPlan.slotKey.toUpperCase()} (${teamDiscRes.modelUsed}, quota=${updatedSlots.length}/${teamDiscoveryPlan.dailyQuota}): found=${(teamDiscRes.statusUrls || []).length} X status URLs`
-      );
-    }
-  }
-
-  // Deep Beat-Article HTML Embed Harvesting + Option B Gemini-Discovered Status Hydration (100% free via api.fxtwitter.com across ALL 32 clubs):
+  // Deep Beat-Article HTML Embed Harvesting (100% free via syndication/api.fxtwitter.com across ALL 32 clubs):
   // Fetch public HTML of up to 10 recent film/takeaway/grade local beat articles to extract embedded X clips/GIFs/charts
   const recentLocalBeatArticlesForEmbeds = rawStream.filter(
     it =>
@@ -4026,7 +4083,6 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   }).catch(() => []);
   const embeddedXItems = await harvestEmbeddedXForTeamRss(
     [
-      ...(geminiDiscoveredXPayload ? [geminiDiscoveredXPayload] : []),
       clubNewsRssXml,
       pfrTeamRssXml,
       JSON.stringify(espnNewsRaw || {}),
@@ -4895,6 +4951,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       });
       const capAiRes = await runSinglePassDailyGeminiSynthesis({
         apiKey: geminiApiKey,
+        overflowApiKey,
+        overflowBudgetController: leagueCtx.overflowBudgetController || null,
+        teamAbbr: team.abbr,
         promptText: `Facts: ${capPromptFacts}\nReturn strict JSON {"capNote": "..."} with a concise 2-sentence CBA cap-rollover & trade-window synthesis for ${team.fullName} grounded strictly in the provided ${seasonYear}/${seasonYear + 1} cap space, draft pick count, and weekly proration mechanics.`,
         appData: { meta, roster: { players }, cap: capJson },
         rosterPlayers: players,
@@ -5029,7 +5088,6 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     seasonal: seasonalJson,
     news: {
       updatedAt: nowIso,
-      ...(teamXSearchDiscoveryMeta ? { xSearchDiscoveryMeta: teamXSearchDiscoveryMeta } : {}),
       dailyTopNewsBrief: null,
       clusteredBriefs: [],
       rawStream
@@ -5156,7 +5214,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     forceBrief: process.argv.includes('--force-brief'),
     aiModelDiscovery: leagueCtx.aiModelDiscovery || { activeModel: PRIMARY_GEMINI_REASONING_MODEL },
     quotaState: leagueCtx.quotaState || null,
-    persistQuotaState: leagueCtx.persistQuotaState || null
+    persistQuotaState: leagueCtx.persistQuotaState || null,
+    overflowApiKey,
+    overflowBudgetController: leagueCtx.overflowBudgetController || null
   });
 
   // Preserve any pre-generated studio `.m4a` episodes / sharedAnalyses in `podcasts/index.json`!
@@ -5254,7 +5314,26 @@ async function refreshPowerRankingsOnlyForTeams(teams, seasonYear = 2026) {
   }
 }
 
+function loadLocalDotEnvSilently() {
+  try {
+    const envPath = path.join(ROOT, '.env');
+    if (!fs.existsSync(envPath)) return;
+    const raw = fs.readFileSync(envPath, 'utf8');
+    for (const line of raw.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eq = trimmed.indexOf('=');
+      if (eq <= 0) continue;
+      const k = trimmed.slice(0, eq).trim();
+      if (!k || process.env[k] !== undefined) continue;
+      const v = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, '');
+      if (v) process.env[k] = v;
+    }
+  } catch {}
+}
+
 async function main() {
+  loadLocalDotEnvSilently();
   const args = process.argv.slice(2);
   const runAll = args.includes('--all');
   const missingOnly = args.includes('--missing-only');
@@ -5285,13 +5364,16 @@ async function main() {
   const geminiApiKey = String(
     process.env.GEMINI_NFL_API_KEY || process.env.GEMINI_NEWS_API_KEY || process.env.GEMINI_API_KEY || ''
   ).trim();
+  const overflowApiKey = String(
+    process.env.GEMINI_OVERFLOW_API_KEY || process.env.GEMINI_X_SEARCH_API_KEY || ''
+  ).trim();
   const leagueCtx = await loadSharedLeagueContext(2026, { geminiApiKey });
   const failures = [];
 
   for (let i = 0; i < teams.length; i += 1) {
     const t = teams[i];
     try {
-      await buildTeamBundle(t, leagueCtx, { geminiApiKey });
+      await buildTeamBundle(t, leagueCtx, { geminiApiKey, overflowApiKey });
     } catch (err) {
       console.error(`[stage-2] ERROR building ${t.abbr} (${t.slug}):`, err?.message || err);
       failures.push({ abbr: t.abbr, slug: t.slug, error: err?.message || String(err) });

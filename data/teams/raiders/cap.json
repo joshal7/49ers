@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:51:50.115Z",
+  "updatedAt": "2026-11-26T07:30:12.378Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/las-vegas-raiders",
   "spotracUrl": "https://www.spotrac.com/nfl/las-vegas-raiders/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314432085,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 305136097,
+      "totalCapLiabilities": 304958302,
       "top51": 234789225,
-      "teamCapSpace": 9295988,
-      "otcRawTeamCapSpace": 9295988,
-      "effectiveCapSpace": 9295988,
-      "activeCapSpending": 243648351,
-      "offenseSpend": 104753138,
-      "defenseSpend": 130662713,
+      "teamCapSpace": 9473783,
+      "otcRawTeamCapSpace": 9473783,
+      "effectiveCapSpace": 9473783,
+      "activeCapSpending": 243319306,
+      "offenseSpend": 104630221,
+      "defenseSpend": 130456585,
       "specialSpend": 8232500,
-      "deadMoneyTotal": 61487746,
+      "deadMoneyTotal": 61638996,
       "injuredReserveTotal": 3897409,
-      "practiceSquadTotal": 4003673,
+      "practiceSquadTotal": 3674628,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 7901082,
+      "reserveAndPsTotal": 7572037,
       "topDeadMoneyEntries": [
         {
           "name": "Christian Wilkins",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 75
+      "totalSignedCount": 73
     },
     "2027": {
       "year": 2027,
@@ -259,8 +259,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/las-vegas-raiders",
-    "summary": "Las Vegas Raiders hold $9.30M in 2026 OverTheCap space ($9.30M effective) and +$66.46M projected for 2027.",
-    "executiveSummary": "John Spytek and the Raiders front office hold $9.30M in gross 2026 cap space ($9.30M effective), while 2027 currently projects at +$66.46M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Maxx Crosby, Kolton Miller, Tyler Linderbaum, Malcolm Koonce.",
+    "summary": "Las Vegas Raiders hold $9.47M in 2026 OverTheCap space ($9.47M effective) and +$66.46M projected for 2027.",
+    "executiveSummary": "John Spytek and the Raiders front office hold $9.47M in gross 2026 cap space ($9.47M effective), while 2027 currently projects at +$66.46M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Maxx Crosby, Kolton Miller, Tyler Linderbaum, Malcolm Koonce.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$66.46M 2027 Projection)",

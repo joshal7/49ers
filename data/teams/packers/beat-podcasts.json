@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:49:09.002Z",
+  "updatedAt": "2026-11-26T07:25:38.959Z",
   "windowDays": 7,
-  "totalEpisodes": 30,
+  "totalEpisodes": 29,
   "shows": [
     {
       "id": "packers_locked_on_packers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/5b095f/feeds.simplecast.com/FkBDUQLt",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-packers-daily-podcast-on-the-green-bay-packers/id1144508840?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/1a/71/40/1a7140e3-4b25-6f5a-e268-1bf9d6ddf1dc/mza_17077657665650405822.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "packers_packers_unscripted",
@@ -632,26 +632,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-packers-daily-podcast-on-the-green-bay-packers/id1144508840?uo=4",
       "feedUrl": "https://rss.pdrl.fm/5b095f/feeds.simplecast.com/FkBDUQLt",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/5b095f/lockedon.simplecastaudio.com/fffb8e40-f0de-47f1-97e3-cf2e2fd0ffe9/episodes/b96b366b-7067-4b1b-af33-f5b7aaf42a63/audio/128/default.mp3?aid=rss_feed&awCollectionId=fffb8e40-f0de-47f1-97e3-cf2e2fd0ffe9&awEpisodeId=b96b366b-7067-4b1b-af33-f5b7aaf42a63&feed=FkBDUQLt"
-    },
-    {
-      "id": "pod_packers_locked_on_packers_1000802806020",
-      "trackId": 1000802806020,
-      "collectionId": 1144508840,
-      "showId": "packers_locked_on_packers",
-      "showName": "Locked On Packers",
-      "showFullTitle": "Locked On Packers - Daily Podcast On The Green Bay Packers",
-      "hosts": "Peter Bukowski, Locked On Podcast Network",
-      "network": "Peter Bukowski, Locked On Podcast Network",
-      "title": "PACKERS SQUAD SHOW: Who Must STEP UP After the Bye For The Packers? | Midseason Report",
-      "summary": "The Green Bay Packers enter their bye week at 6-4 after an unpredictable first 10 games that have featured dominant wins, frustrating losses and major questions inside the NFC North. Brandon Sneide, Jason Hirschhorn and Jacob Westendorf assess whether Green Bay’s record matc",
-      "publishedAt": "2026-11-18T23:23:34.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/53/33/63/53336315-0e2c-5cb1-a57c-2372fb6e9ad8/mza_3701508599890271747.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/packers-squad-show-who-must-step-up-after-the-bye-for/id1144508840?i=1000802806020&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-packers-daily-podcast-on-the-green-bay-packers/id1144508840?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/5b095f/feeds.simplecast.com/FkBDUQLt",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/5b095f/lockedon.simplecastaudio.com/fffb8e40-f0de-47f1-97e3-cf2e2fd0ffe9/episodes/a18c0040-a566-47db-9c31-3d757daf6c8b/audio/128/default.mp3?aid=rss_feed&awCollectionId=fffb8e40-f0de-47f1-97e3-cf2e2fd0ffe9&awEpisodeId=a18c0040-a566-47db-9c31-3d757daf6c8b&feed=FkBDUQLt"
     }
   ]
 }

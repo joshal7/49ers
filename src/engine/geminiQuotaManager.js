@@ -520,8 +520,19 @@ export function recordGeminiCallOutcome(
   const tokensUsed = Math.max(0, Number(actualTokens) || Number(estimatedTokens) || 0);
 
   // Record in sliding 60s window for ALL non-404 requests (even 429s count toward Google's RPM meter!)
+  // If this call was pre-reserved via `reserveGeminiQuotaSlot`, replace the optimistic placeholder cleanly (no double-count).
   if (status !== 404) {
-    state.recentWindow.push({ ts: nowMs, model: id, tokens: tokensUsed });
+    const reservationId = arguments[1]?.reservationId || null;
+    if (reservationId) {
+      const idx = state.recentWindow.findIndex(e => e && e.reservationId === reservationId);
+      if (idx >= 0) {
+        state.recentWindow[idx] = { ts: nowMs, model: id, tokens: tokensUsed };
+      } else {
+        state.recentWindow.push({ ts: nowMs, model: id, tokens: tokensUsed });
+      }
+    } else {
+      state.recentWindow.push({ ts: nowMs, model: id, tokens: tokensUsed });
+    }
     const cutoff = nowMs - 65_000;
     state.recentWindow = state.recentWindow.filter(e => Number(e.ts) >= cutoff);
   }
@@ -599,6 +610,35 @@ export async function refreshGeminiModelCatalogIfDue(
   } catch {
     return { state, refreshed: false };
   }
+}
+
+/**
+ * Optimistically reserves a sliding-window RPM/TPM slot BEFORE `await fetch(...)` begins,
+ * preventing concurrent async callers inside the same process from racing past 5 RPM / 250K TPM.
+ * Pass the returned `reservationId` into `recordGeminiCallOutcome` to reconcile exact token usage.
+ */
+export function reserveGeminiQuotaSlot(state, { modelId, estimatedTokens = 10_000, nowMs = Date.now() } = {}) {
+  if (!state || !modelId) return null;
+  const id = String(modelId).replace(/^models\//i, '').trim().toLowerCase();
+  const reservationId = `res_${nowMs}_${Math.random().toString(36).slice(2, 8)}`;
+  if (!Array.isArray(state.recentWindow)) state.recentWindow = [];
+  state.recentWindow.push({ ts: nowMs, model: id, tokens: Math.max(0, Number(estimatedTokens) || 0), reservationId });
+  const cutoff = nowMs - 65_000;
+  state.recentWindow = state.recentWindow.filter(e => Number(e.ts) >= cutoff);
+  return reservationId;
+}
+
+/**
+ * Creates a lightweight promise-chain mutex so concurrent callers serialize quota selection
+ * and state updates with zero race conditions.
+ */
+export function createSerializedQuotaMutex() {
+  let chain = Promise.resolve();
+  return function withQuotaLock(fn) {
+    const next = chain.then(() => fn(), () => fn());
+    chain = next.catch(() => {});
+    return next;
+  };
 }
 
 /**

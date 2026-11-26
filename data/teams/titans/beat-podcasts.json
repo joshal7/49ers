@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:51:26.387Z",
+  "updatedAt": "2026-11-26T07:29:27.653Z",
   "windowDays": 7,
-  "totalEpisodes": 11,
+  "totalEpisodes": 10,
   "shows": [
     {
       "id": "titans_locked_on_titans",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/8c/91/27/8c9127c3-ca5f-fd93-3b72-ac3f73469094/mza_2640564769394756855.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "titans_titans_podcast_network",
@@ -240,26 +240,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4",
       "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/54f99a/lockedon.simplecastaudio.com/7c0057a0-41a8-42ab-830d-af8d7eab8ff5/episodes/9591a4eb-afc9-4043-aa24-1b20e29a01ec/audio/128/default.mp3?aid=rss_feed&awCollectionId=7c0057a0-41a8-42ab-830d-af8d7eab8ff5&awEpisodeId=9591a4eb-afc9-4043-aa24-1b20e29a01ec&feed=ZHgqzawD"
-    },
-    {
-      "id": "pod_titans_locked_on_titans_1000802824872",
-      "trackId": 1000802824872,
-      "collectionId": 1151215065,
-      "showId": "titans_locked_on_titans",
-      "showName": "Locked On Titans",
-      "showFullTitle": "Locked On Titans - Daily Podcast On The Tennessee Titans",
-      "hosts": "Locked On Podcast Network, Tyler Rowland",
-      "network": "Locked On Podcast Network, Tyler Rowland",
-      "title": "Cam Ward BREAKOUT GAME INCOMING as Tennessee Titans take on Dallas Cowboys AWFUL DEFENSE in Week 11",
-      "summary": "The Tennessee Titans have seen much better play from Cam Ward as of late and now he gets to face the worst defense in the NFL in the Dallas Cowboys. If there was ever a time for Ward to have a breakout performance and announce himself to the world, it is now against the high",
-      "publishedAt": "2026-11-18T23:00:00.000Z",
-      "durationMinutes": 29,
-      "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/ea/12/6c/ea126c9d-7d79-c04b-2d31-f0369861216a/mza_11613637513259521409.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/cam-ward-breakout-game-incoming-as-tennessee-titans/id1151215065?i=1000802824872&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/54f99a/lockedon.simplecastaudio.com/7c0057a0-41a8-42ab-830d-af8d7eab8ff5/episodes/2425b494-9429-418b-aa99-b8682b39568f/audio/128/default.mp3?aid=rss_feed&awCollectionId=7c0057a0-41a8-42ab-830d-af8d7eab8ff5&awEpisodeId=2425b494-9429-418b-aa99-b8682b39568f&feed=ZHgqzawD"
     }
   ]
 }

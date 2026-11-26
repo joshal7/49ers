@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:47.387Z",
+  "updatedAt": "2026-11-26T07:28:23.140Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/cincinnati-bengals",
   "spotracUrl": "https://www.spotrac.com/nfl/cincinnati-bengals/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 317364519,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 309840737,
+      "totalCapLiabilities": 309744487,
       "top51": 286831865,
-      "teamCapSpace": 7523782,
-      "otcRawTeamCapSpace": 7523782,
-      "effectiveCapSpace": 7523782,
-      "activeCapSpending": 297004673,
-      "offenseSpend": 161569737,
+      "teamCapSpace": 7620032,
+      "otcRawTeamCapSpace": 7620032,
+      "effectiveCapSpace": 7620032,
+      "activeCapSpending": 296839673,
+      "offenseSpend": 161404737,
       "defenseSpend": 128368270,
       "specialSpend": 7066666,
-      "deadMoneyTotal": 12836064,
-      "injuredReserveTotal": 12617995,
+      "deadMoneyTotal": 12904814,
+      "injuredReserveTotal": 12452995,
       "practiceSquadTotal": 3328633,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 15946628,
+      "reserveAndPsTotal": 15781628,
       "topDeadMoneyEntries": [
         {
           "name": "Trey Hendrickson",
@@ -121,7 +121,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 75
+      "totalSignedCount": 74
     },
     "2027": {
       "year": 2027,
@@ -238,8 +238,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/cincinnati-bengals",
-    "summary": "Cincinnati Bengals hold $7.52M in 2026 OverTheCap space ($7.52M effective) and +$48.85M projected for 2027.",
-    "executiveSummary": "Duke Tobin and the Bengals front office hold $7.52M in gross 2026 cap space ($7.52M effective), while 2027 currently projects at +$48.85M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Joe Burrow, Tee Higgins, Ja'Marr Chase, Orlando Brown Jr..",
+    "summary": "Cincinnati Bengals hold $7.62M in 2026 OverTheCap space ($7.62M effective) and +$48.85M projected for 2027.",
+    "executiveSummary": "Duke Tobin and the Bengals front office hold $7.62M in gross 2026 cap space ($7.62M effective), while 2027 currently projects at +$48.85M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Joe Burrow, Tee Higgins, Ja'Marr Chase, Orlando Brown Jr..",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$48.85M 2027 Projection)",

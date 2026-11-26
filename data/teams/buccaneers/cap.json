@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:51.693Z",
+  "updatedAt": "2026-11-26T07:26:54.963Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/tampa-bay-buccaneers",
   "spotracUrl": "https://www.spotrac.com/nfl/tampa-bay-buccaneers/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 316695507,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 301770699,
+      "totalCapLiabilities": 301646166,
       "top51": 274825685,
-      "teamCapSpace": 14924808,
-      "otcRawTeamCapSpace": 14924808,
-      "effectiveCapSpace": 14924808,
-      "activeCapSpending": 283565700,
-      "offenseSpend": 164868951,
-      "defenseSpend": 110821749,
+      "teamCapSpace": 15049341,
+      "otcRawTeamCapSpace": 15049341,
+      "effectiveCapSpace": 15049341,
+      "activeCapSpending": 283418317,
+      "offenseSpend": 164686151,
+      "defenseSpend": 110857166,
       "specialSpend": 7875000,
-      "deadMoneyTotal": 18204999,
+      "deadMoneyTotal": 18227849,
       "injuredReserveTotal": 4855555,
-      "practiceSquadTotal": 4419183,
+      "practiceSquadTotal": 4271800,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 9274738,
+      "reserveAndPsTotal": 9127355,
       "topDeadMoneyEntries": [
         {
           "name": "Mike Evans",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 75
+      "totalSignedCount": 74
     },
     "2027": {
       "year": 2027,
@@ -252,8 +252,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/tampa-bay-buccaneers",
-    "summary": "Tampa Bay Buccaneers hold $14.92M in 2026 OverTheCap space ($14.92M effective) and -$6.06M projected for 2027.",
-    "executiveSummary": "Jason Licht and the Buccaneers front office hold $14.92M in gross 2026 cap space ($14.92M effective), while 2027 currently projects at -$6.06M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($8M–$12M target) helps manage scheduled cap escalations for Tristan Wirfs, Baker Mayfield, Chris Godwin Jr., Antoine Winfield Jr..",
+    "summary": "Tampa Bay Buccaneers hold $15.05M in 2026 OverTheCap space ($15.05M effective) and -$6.06M projected for 2027.",
+    "executiveSummary": "Jason Licht and the Buccaneers front office hold $15.05M in gross 2026 cap space ($15.05M effective), while 2027 currently projects at -$6.06M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($8M–$12M target) helps manage scheduled cap escalations for Tristan Wirfs, Baker Mayfield, Chris Godwin Jr., Antoine Winfield Jr..",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($8M–$12M Target vs. -$6.06M 2027 Projection)",

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:41.142Z",
+  "updatedAt": "2026-11-26T07:26:40.627Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.commanders.com/team/injury-report/",
@@ -9,6 +9,31 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
+    {
+      "playerId": "4239694",
+      "name": "Amik Robertson",
+      "position": "CB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239694.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 56,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "56% • GTD",
+      "archetypeNote": "Veteran starter profile (7th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Did Not Participate (DNP) on Wednesday (veteran maintenance profile, awaiting Thursday workload)"
+      ],
+      "beatComment": "Robertson was unable to play against the Bengals on Monday due to an ankle injury that he picked up during Friday's practice. He would need to log a limited session over the next two days to have a chance at playing against the Cardinals on Sunday."
+    },
     {
       "playerId": "2976212",
       "name": "Stefon Diggs",
@@ -32,32 +57,58 @@
       "factors": [
         "Wednesday rest/non-participation alongside active medical tag (Personal); awaiting Thursday participation"
       ],
-      "beatComment": "Diggs was away from the team for Wednesday's session due to a personal issue. There's no indication this will be a long-term absence and the team did excuse him for Wednesday. Still, Diggs' return to the team will be worth monitoring over the coming days in advance of Sunday's game at Arizona."
+      "beatComment": "Diggs was away from the team for Wednesday's session due to a personal issue. There's no indication this will be a long-term absence, and the Commanders did excuse him for Wednesday. Still, Diggs' return to the team will be worth monitoring over the coming days in advance of Sunday's game at Arizona."
     },
     {
-      "playerId": "4239694",
-      "name": "Amik Robertson",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239694.png",
+      "playerId": "4567156",
+      "name": "Treylon Burks",
+      "position": "WR",
+      "jersey": 13,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567156.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Foot",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 76,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "76% • GTD",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Wednesday Limited Participation (LP); player toughness prior = 76%"
+      ],
+      "beatComment": "Burks presumably had his reps capped for maintenance purposes, as the wideout was sidelined for the Commanders' Week 9 loss to the Rams due to the same foot issue before suiting up in the ensuing two contests. In both of those games, Burks played north of 60 percent of the offensive snaps while producing a combined 4-57-0 receiving line on six targets. Provided he advances to full practice activity by Friday, Burks should head into this weekend's game in Arizona without a designation."
+    },
+    {
+      "playerId": "3929865",
+      "name": "Charles Omenihu",
+      "position": "DE",
+      "jersey": 90,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929865.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Ankle",
+      "injuryType": "Ribs",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 84,
+      "playProbabilityPct": 82,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "84% • GTD",
-      "archetypeNote": "Veteran starter profile (7th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "playBadgeLabel": "82% • GTD",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Questionable tag adjusted by player career prior (84%)"
+        "Questionable tag adjusted by player career prior (78%)",
+        "Manageable pain-tolerance injury profile (Ribs)"
       ],
-      "beatComment": "Robertson suffered an ankle injury at the team's final practice of the week, so his absence Monday comes as no surprise. In his absence, Mike Sainristil and Quan Martin will both likely operate in more prominent roles at cornerback versus Cincinnati."
+      "beatComment": "questionable"
     },
     {
       "playerId": "4360378",

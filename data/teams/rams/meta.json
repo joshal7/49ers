@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-25T20:48:41.918Z",
+  "updatedAt": "2026-11-26T07:41:01.409Z",
   "teamAbbr": "LAR",
   "teamSlug": "rams",
   "brandName": "Rams House",
   "seasonYear": 2026,
-  "currentWeek": 12,
-  "teamRecord": "6-4",
+  "currentWeek": 13,
+  "teamRecord": "7-4",
   "divisionRecord": "1-2",
-  "conferenceRecord": "4-2",
-  "standingSummary": "2nd in NFC West • #9 Seed in NFC",
-  "pointDifferential": "+61 (248 PF / 187 PA)",
+  "conferenceRecord": "5-2",
+  "standingSummary": "2nd in NFC West • #7 Seed in NFC",
+  "pointDifferential": "+74 (274 PF / 200 PA)",
   "byeWeek": 11,
   "coaches": {
     "hc": "Sean McVay",
@@ -32,9 +32,9 @@
     "prevPostUdfaEnd": "2026-05-17T23:59:59-07:00"
   },
   "teamStatus": {
-    "currentWeek": 12,
+    "currentWeek": 13,
     "inPlayoffHunt": true,
-    "playoffSeed": 9,
+    "playoffSeed": 7,
     "seasonConcluded": false,
     "mathematicallyEliminated": false,
     "eliminatedAt": null
@@ -48,13 +48,12 @@
     "candidateCascade": [
       "gemini-4-hydrogen",
       "gemini-3.8-flash",
+      "gemini-3.6-flash",
       "gemini-3.5-flash",
-      "gemini-3-flash-preview",
-      "gemini-2.5-flash",
-      "gemini-2.5-pro"
+      "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:48:41.918Z",
+    "lastCheckedAt": "2026-11-26T07:41:01.409Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

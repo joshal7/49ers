@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-25T20:49:51.693Z",
+  "updatedAt": "2026-11-26T07:26:54.963Z",
   "dailyTopNewsBrief": {
-    "id": "daily_brief_2026-11-24_17ET",
-    "cycleKey": "2026-11-24@17ET",
+    "id": "daily_brief_2026-11-25_17ET",
+    "cycleKey": "2026-11-25@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-25T20:49:51.693Z",
+    "generatedAt": "2026-11-26T07:26:54.963Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -19,45 +19,44 @@
     "headline": "Buccaneers (3-7) Week 12 Briefing: Injury Updates Ahead of Panthers",
     "summary": "",
     "bullets": [
-      "Roster & Front Office: Tampa Bay signed CB Brandon Johnson to the practice squad [Greg Auman](https://x.com/gregauman/status/2125618175509209491).",
+      "Roster & Front Office: Tampa Bay signed CB Brandon Johnson to the practice squad [Pro Football Rumors](https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26).",
       "Injury & Practice Status: Entering Week 12 preparation, head coach Todd Bowles and the medical staff evaluate DT Elijah Simmons (concussion), S Antoine Winfield Jr. (ankle), CB Benjamin Morrison (hamstring), and CB Jacob Parrish (back) ahead of Wednesday's initial participation report [buccaneers.com Official](https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates) [Brianna Dix](https://www.espn.com/nfl/player/_/id/4912847/jacob-parrish#:~:text=Buccaneers%20head%20coach%20Todd%20Bowles%20said%20that). CB Josh Hayes (knee (surgery)) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Greg Auman](https://x.com/gregauman/status/2125618175509209491).",
-      "Week 12 Panthers Outlook: Todd Bowles and DC Todd Bowles open installation for the Carolina Panthers (5-5, TB -3, HC/DC Todd Bowles vs. HC Dave Canales, OC Brad Idzik & DC Todd Wash (Raymond James Stadium))—a unit ranked #5 in Def. Takeaways / Game (1.60) as Tampa Bay prepares for a pivotal NFC matchup [buccaneers.com Official](https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12) [Gil Arcia](https://www.bucsnation.com/tampa-bay-buccaneers-odds/69895/buccaneers-vs-panthers-odds-week-12-opening-lines-point-spread-total).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (2nd in NFC South • #12 Seed in NFC), Tampa Bay carries a 31.2% postseason projection, 31% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Jeremy Brener](https://www.bucsnation.com/tampa-bay-buccaneers-news/69947/tampa-bay-buccaneers-news-bucs-loss-vs-lions-could-have-major-repercussions)."
+      "Week 12 Panthers Outlook: Todd Bowles and DC Todd Bowles open installation for the Carolina Panthers (5-5, TB -3, HC/DC Todd Bowles vs. HC Dave Canales, OC Brad Idzik & DC Todd Wash (Raymond James Stadium))—a unit ranked #5 in Def. Takeaways / Game (1.60) as Tampa Bay prepares for a pivotal NFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873094) [NFL Trade Rumors](https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (2nd in NFC South • #12 Seed in NFC), Tampa Bay carries a 31.7% postseason projection, 31.6% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Jeremy Brener](https://www.bucsnation.com/tampa-bay-buccaneers-news/69947/tampa-bay-buccaneers-news-bucs-loss-vs-lions-could-have-major-repercussions)."
     ],
     "coveredStoryKeys": [
       "jalenmcmillan::ir_roster_move",
       "team::watch_guide",
-      "jacobparrish::diagnostic_result",
-      "kennygainwell::roster_departure"
+      "jacobparrish::diagnostic_result"
     ],
     "coveredUrls": [
-      "https://x.com/gregauman/status/2125618175509209491",
+      "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
       "https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates",
       "https://www.espn.com/nfl/player/_/id/4912847/jacob-parrish#:~:text=Buccaneers%20head%20coach%20Todd%20Bowles%20said%20that",
-      "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
-      "https://www.bucsnation.com/tampa-bay-buccaneers-odds/69895/buccaneers-vs-panthers-odds-week-12-opening-lines-point-spread-total",
+      "https://x.com/gregauman/status/2125618175509209491",
+      "https://www.espn.com/nfl/preview?gameId=401873094",
+      "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
       "https://www.bucsnation.com/tampa-bay-buccaneers-news/69947/tampa-bay-buccaneers-news-bucs-loss-vs-lions-could-have-major-repercussions",
       "https://www.profootballrumors.com/2026/11/bucs-designate-jalen-mcmillan-for-return",
+      "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
+      "https://www.buccaneers.com/news/josiah-trotter-jalen-mcmillan-status-confidence-boost-for-ted-hurst-iii-bucs-blitz",
       "https://www.espn.com/nfl/player/_/id/5220680/ted-hurst-iii#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "https://www.buccaneers.com/news/how-to-watch-buccaneers-vs-panthers-week-12-2026",
-      "https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame",
-      "https://www.buccaneers.com/news/alex-anzalone-maximizing-role-in-bucs-2026-defense",
-      "https://www.buccaneers.com/news/bucs-release-week-12-depth-chart-kenny-gainwell-picks-up-snaps",
       "https://www.buccaneers.com/news/jalen-mcmillan-christian-rozeboom-return-practice",
       "https://www.espn.com/nfl/player/_/id/4430834/jalen-mcmillan#:~:text=The%20Buccaneers%20designated%20McMillan%20(knee)%20for%20return",
       "https://www.buccaneers.com/team/transactions/#tx-5938cbd301c5",
       "https://www.bucsnation.com/tampa-bay-buccaneers-news/69959/tampa-bay-buccaneers-news-bucs-turn-focus-to-panthers-matchup",
-      "https://www.bucsnation.com/tampa-bay-buccaneers-news/69939/tampa-bay-buccaneers-news-bucs-fall-short-vs-lions",
-      "https://www.buccaneers.com/news/intermediate-third-downs-and-another-backfield-threat-by-the-numbers-week-12"
+      "https://www.bucsnation.com/tampa-bay-buccaneers-odds/69895/buccaneers-vs-panthers-odds-week-12-opening-lines-point-spread-total",
+      "https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame"
     ],
     "sources": [
       {
-        "type": "tweet",
-        "author": "Greg Auman",
-        "outlet": "FOX Sports",
-        "title": "Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB",
-        "url": "https://x.com/gregauman/status/2125618175509209491",
-        "publishedAt": "2026-11-25T15:50:39.774Z"
+        "type": "article",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "title": "NFL Practice Squad Updates: 11/25/26",
+        "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+        "publishedAt": "2026-11-26T03:17:20.000Z"
       },
       {
         "type": "article",
@@ -76,20 +75,28 @@
         "publishedAt": "2026-11-23T20:54:14.000Z"
       },
       {
-        "type": "article",
-        "author": "buccaneers.com Official",
-        "outlet": "buccaneers.com Official",
-        "title": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
-        "url": "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
-        "publishedAt": "2026-11-25T17:57:00.000Z"
+        "type": "tweet",
+        "author": "Greg Auman",
+        "outlet": "FOX Sports",
+        "title": "Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB",
+        "url": "https://x.com/gregauman/status/2125618175509209491",
+        "publishedAt": "2026-11-25T15:50:39.774Z"
       },
       {
         "type": "article",
-        "author": "Gil Arcia",
-        "outlet": "Bucs Nation",
-        "title": "Buccaneers vs. Panthers odds: Opening lines for Week 12 matchup",
-        "url": "https://www.bucsnation.com/tampa-bay-buccaneers-odds/69895/buccaneers-vs-panthers-odds-week-12-opening-lines-point-spread-total",
-        "publishedAt": "2026-11-23T13:00:24.000Z"
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "title": "Buccaneers will need more from Baker Mayfield and struggling passing attack to beat the Panthers",
+        "url": "https://www.espn.com/nfl/preview?gameId=401873094",
+        "publishedAt": "2026-11-26T02:24:54.000Z"
+      },
+      {
+        "type": "article",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "title": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
+        "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
+        "publishedAt": "2026-11-25T23:30:41.000Z"
       },
       {
         "type": "article",
@@ -109,6 +116,22 @@
       },
       {
         "type": "article",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "title": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
+        "url": "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
+        "publishedAt": "2026-11-25T22:00:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "title": "Josiah Trotter and Jalen McMillan Status, Confidence Boost for Ted Hurst III | Bucs Blitz",
+        "url": "https://www.buccaneers.com/news/josiah-trotter-jalen-mcmillan-status-confidence-boost-for-ted-hurst-iii-bucs-blitz",
+        "publishedAt": "2026-11-25T21:17:17.000Z"
+      },
+      {
+        "type": "article",
         "author": "Eric Karabell",
         "outlet": "ESPN / X Beat Wire",
         "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
@@ -122,30 +145,6 @@
         "title": "How to Watch: Buccaneers vs. Panthers | Week 12 2026",
         "url": "https://www.buccaneers.com/news/how-to-watch-buccaneers-vs-panthers-week-12-2026",
         "publishedAt": "2026-11-25T14:46:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "buccaneers.com Official",
-        "outlet": "buccaneers.com Official",
-        "title": "Rob Gronkowski Among 52 Remaining Candidates for Hall of Fame",
-        "url": "https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame",
-        "publishedAt": "2026-11-24T18:37:00.000Z"
-      },
-      {
-        "type": "article",
-        "author": "buccaneers.com Official",
-        "outlet": "buccaneers.com Official",
-        "title": "Alex Anzalone Maximizing Role in Bucs' 2026 Defense",
-        "url": "https://www.buccaneers.com/news/alex-anzalone-maximizing-role-in-bucs-2026-defense",
-        "publishedAt": "2026-11-24T18:33:07.000Z"
-      },
-      {
-        "type": "article",
-        "author": "buccaneers.com Official",
-        "outlet": "buccaneers.com Official",
-        "title": "Bucs' Release Week 12 Depth Chart: Kenny Gainwell Picks Up Snaps",
-        "url": "https://www.buccaneers.com/news/bucs-release-week-12-depth-chart-kenny-gainwell-picks-up-snaps",
-        "publishedAt": "2026-11-24T17:56:00.000Z"
       }
     ]
   },
@@ -154,10 +153,22 @@
       "id": "tb_cl_top",
       "category": "beat",
       "headline": "Tampa Bay Buccaneers Week 12 Top Headlines (3-7)",
-      "summary": "Bucs Designate Jalen McMillan For Return — Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB Brandon Johnson to the practice squad.",
-      "updatedAt": "2026-11-25T17:12:54.000Z",
+      "summary": "NFL Practice Squad Updates: 11/25/26 — Buccaneers will need more from Baker Mayfield and struggling passing attack to beat the Panthers",
+      "updatedAt": "2026-11-26T03:17:20.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Pro Football Rumors",
+          "title": "NFL Practice Squad Updates: 11/25/26",
+          "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+          "publishedAt": "2026-11-26T03:17:20.000Z"
+        },
+        {
+          "label": "ESPN NFL Nation",
+          "title": "Buccaneers will need more from Baker Mayfield and struggling passing attack to beat the Panthers",
+          "url": "https://www.espn.com/nfl/preview?gameId=401873094",
+          "publishedAt": "2026-11-26T02:24:54.000Z"
+        },
         {
           "label": "Pro Football Rumors",
           "title": "Bucs Designate Jalen McMillan For Return",
@@ -171,28 +182,16 @@
           "publishedAt": "2026-11-25T15:50:39.774Z"
         },
         {
-          "label": "buccaneers.com Official",
-          "title": "Jalen McMillan, Christian Rozeboom Return to Practice",
-          "url": "https://www.buccaneers.com/news/jalen-mcmillan-christian-rozeboom-return-practice",
-          "publishedAt": "2026-11-25T16:29:20.000Z"
+          "label": "NFL Trade Rumors",
+          "title": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
+          "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
+          "publishedAt": "2026-11-25T23:30:41.000Z"
         },
         {
           "label": "buccaneers.com Official",
           "title": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
           "url": "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
-          "publishedAt": "2026-11-25T17:57:00.000Z"
-        },
-        {
-          "label": "buccaneers.com Official",
-          "title": "Jacob Parrish Has Encouraging Start to the Week After Back Injury | Updates",
-          "url": "https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates",
-          "publishedAt": "2026-11-25T17:50:00.000Z"
-        },
-        {
-          "label": "Scott Smith",
-          "title": "The Buccaneers designated McMillan (knee) for return from injured reserve Wednesday.",
-          "url": "https://www.espn.com/nfl/player/_/id/4430834/jalen-mcmillan#:~:text=The%20Buccaneers%20designated%20McMillan%20(knee)%20for%20return",
-          "publishedAt": "2026-11-25T15:55:21.000Z"
+          "publishedAt": "2026-11-25T22:00:00.000Z"
         }
       ]
     },
@@ -200,10 +199,16 @@
       "id": "tb_cl_health",
       "category": "injury",
       "headline": "Buccaneers Practice Report, Injury & IR Availability",
-      "summary": "Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB Brandon Johnson to the practice squad. — Jalen McMillan, Christian Rozeboom Return ",
-      "updatedAt": "2026-11-25T15:50:39.774Z",
+      "summary": "NFL Practice Squad Updates: 11/25/26 — Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB Brandon Johnson to the practice squad.",
+      "updatedAt": "2026-11-26T03:17:20.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Pro Football Rumors",
+          "title": "NFL Practice Squad Updates: 11/25/26",
+          "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+          "publishedAt": "2026-11-26T03:17:20.000Z"
+        },
         {
           "label": "Greg Auman",
           "title": "Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB Brandon Johnson to the practice squad.",
@@ -217,6 +222,12 @@
           "publishedAt": "2026-11-25T16:29:20.000Z"
         },
         {
+          "label": "Tampa Bay Buccaneers Official",
+          "title": "Buccaneers roster move: Designated WR Jalen McMillan and LB Christian Rozeboom to return from injured reserve. Signed CB Brandon Johnson to the practice squad.",
+          "url": "https://www.buccaneers.com/team/transactions/#tx-5938cbd301c5",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
           "label": "buccaneers.com Official",
           "title": "Jacob Parrish Has Encouraging Start to the Week After Back Injury | Updates",
           "url": "https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates",
@@ -227,18 +238,6 @@
           "title": "The Buccaneers designated McMillan (knee) for return from injured reserve Wednesday.",
           "url": "https://www.espn.com/nfl/player/_/id/4430834/jalen-mcmillan#:~:text=The%20Buccaneers%20designated%20McMillan%20(knee)%20for%20return",
           "publishedAt": "2026-11-25T15:55:21.000Z"
-        },
-        {
-          "label": "Tampa Bay Buccaneers Official",
-          "title": "Buccaneers roster move: Designated WR Jalen McMillan and LB Christian Rozeboom to return from injured reserve. Signed CB Brandon Johnson to the practice squad.",
-          "url": "https://www.buccaneers.com/team/transactions/#tx-5938cbd301c5",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
-        },
-        {
-          "label": "Tampa Bay Buccaneers Official",
-          "title": "Buccaneers roster move: Released QB Cooper Rush from the practice squad.",
-          "url": "https://www.buccaneers.com/team/transactions/#tx-0449f804d740",
-          "publishedAt": "2026-11-24T08:00:00.000Z"
         }
       ]
     },
@@ -246,10 +245,22 @@
       "id": "tb_cl_film",
       "category": "film",
       "headline": "Buccaneers All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "David Walker Builds Case for Higher Snap Count with Standout Effort in Week 11 — Explosive Runs and Ascending Defenses | Bucs-Lions Tale of the Tape",
-      "updatedAt": "2026-11-23T20:32:33.000Z",
-      "itemCount": 3,
+      "summary": "Panthers vs. Buccaneers Preview + Predictions — Film Study: How Baker Mayfield played for the Tampa Bay Buccaneers Vs the Detroit Lions",
+      "updatedAt": "2026-11-25T19:21:22.000Z",
+      "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Check the Mic",
+          "title": "Panthers vs. Buccaneers Preview + Predictions",
+          "url": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
+          "publishedAt": "2026-11-25T19:21:22.000Z"
+        },
+        {
+          "label": "Jackson Krueger Sports",
+          "title": "Film Study: How Baker Mayfield played for the Tampa Bay Buccaneers Vs the Detroit Lions",
+          "url": "https://www.youtube.com/watch?v=MkDYoL6WMVw",
+          "publishedAt": "2026-11-23T21:00:02.000Z"
+        },
         {
           "label": "buccaneers.com Official",
           "title": "David Walker Builds Case for Higher Snap Count with Standout Effort in Week 11",
@@ -257,16 +268,22 @@
           "publishedAt": "2026-11-23T20:32:33.000Z"
         },
         {
-          "label": "buccaneers.com Official",
-          "title": "Explosive Runs and Ascending Defenses | Bucs-Lions Tale of the Tape",
-          "url": "https://www.buccaneers.com/news/explosive-runs-and-ascending-defenses-bucs-lions-tale-of-the-tape",
-          "publishedAt": "2026-11-20T13:00:00.000Z"
+          "label": "Jackson Krueger Sports",
+          "title": "Film Study: Jared Goff played GREAT for the Detroit Lions Vs the Tampa Bay Buccaneers",
+          "url": "https://www.youtube.com/watch?v=DCAGpYkwJEU",
+          "publishedAt": "2026-11-23T15:00:30.000Z"
         },
         {
-          "label": "The QB School",
-          "title": "Jalon Daniels vs the Cowboys Week 5, 2026 Analysis",
-          "url": "https://www.youtube.com/watch?v=6evN6yrebQk",
-          "publishedAt": "2026-10-09T17:48:15.000Z"
+          "label": "All_22_Films",
+          "title": "LIONS 31, BUCS 21: HOW JARED GOFF AND COMPANY OUT-TAMPA BAY'D TODD BOWLES - WK 11 REACTION VIDEO",
+          "url": "https://www.youtube.com/watch?v=ZlvsAncNH50",
+          "publishedAt": "2026-11-23T01:15:10.000Z"
+        },
+        {
+          "label": "Kevin Cole",
+          "title": "Week 11 Sunday Early Window: Advanced Reviews",
+          "url": "https://www.unexpectedpoints.com/p/week-11-sunday-early-window-advanced",
+          "publishedAt": "2026-11-22T22:33:49.000Z"
         }
       ]
     },
@@ -274,10 +291,16 @@
       "id": "tb_cl_roster",
       "category": "roster",
       "headline": "Buccaneers Roster Moves, Trades & Salary Cap Desk",
-      "summary": "Bucs Designate Jalen McMillan For Return — Bucs are opening the 21-day window for WR Jalen McMillan and LB Christian Rozeboom to return to practice, a first step to getting activated from injured reserve. Also signed CB Brandon Johnson to the practice squad.",
-      "updatedAt": "2026-11-25T17:12:54.000Z",
+      "summary": "NFL Practice Squad Updates: 11/25/26 — Bucs Designate Jalen McMillan For Return",
+      "updatedAt": "2026-11-26T03:17:20.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Pro Football Rumors",
+          "title": "NFL Practice Squad Updates: 11/25/26",
+          "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+          "publishedAt": "2026-11-26T03:17:20.000Z"
+        },
         {
           "label": "Pro Football Rumors",
           "title": "Bucs Designate Jalen McMillan For Return",
@@ -307,160 +330,64 @@
           "title": "Buccaneers roster move: Released QB Cooper Rush from the practice squad.",
           "url": "https://www.buccaneers.com/team/transactions/#tx-0449f804d740",
           "publishedAt": "2026-11-24T08:00:00.000Z"
-        },
-        {
-          "label": "Tampa Bay Buccaneers Official",
-          "title": "Buccaneers roster move: Elevated S J.J. Roberts from the practice squad.",
-          "url": "https://www.buccaneers.com/team/transactions/#tx-3de3f37fe9b8",
-          "publishedAt": "2026-11-21T08:00:00.000Z"
         }
       ]
     }
   ],
   "rawStream": [
     {
-      "id": "tb_vid_4cc667c3b49a",
-      "type": "video",
-      "title": "Todd Bowles: Jalen McMillan Looks 'Fresh' | Press Conference",
-      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media following Wednesday's Week 12 practice. HC Bowles discussed injury updates, OLB David Walker's snaps and the importance of Monday Night Football's result.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/qdo5ckiohpkguqutfcqo.jpg",
-      "imageAlt": "Todd Bowles: Jalen McMillan Looks 'Fresh' | Press Conference",
-      "publishedAt": "2026-11-25T20:16:00.000Z",
-      "url": "https://www.buccaneers.com/video/todd-bowles-jalen-mcmillan-looks-fresh-press-conference",
-      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-jalen-mcmillan-looks-fresh-press-conference",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "5085355",
-          "name": "David Walker",
-          "shortName": "D. Walker",
-          "position": "LB",
-          "jersey": 51,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5085355.png"
-        },
-        {
-          "id": "4430834",
-          "name": "Jalen McMillan",
-          "shortName": "J. McMillan",
-          "position": "WR",
-          "jersey": 11,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
-        }
-      ],
-      "embeddable": false,
+      "id": "tb_pfr_b2d319489831",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/25/26",
+      "summary": "Today’s midweek practice squad transactions: Denver Broncos Signed: DT Khalen Saunders Houston Texans Signed: WR Daniel Sobkowicz, DT Junior Tafuna Released: RB Dare Ogunbowale Miami Dolphins Signed: DE Max Llewellyn Tampa Bay Buccaneers Si",
+      "imageUrl": "",
+      "publishedAt": "2026-11-26T03:17:20.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-25-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.762,
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "minor_roster",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 30.0253
+      "storyRank": 7.6024
     },
     {
-      "id": "tb_vid_05477cccd819",
-      "type": "video",
-      "title": "Baker Mayfield on the Task at Hand: Win | Press Conference",
-      "summary": "Tampa Bay Buccaneers Quarterback Baker Mayfield spoke to the media following Wednesday's Week 12 practice. QB Mayfield discussed facing the Carolina Panthers' defense, his trust in WR Jalen McMillan and WR Ted Hurst III'",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/xrvvmxxhoydmiqy2a7oi.jpg",
-      "imageAlt": "Baker Mayfield on the Task at Hand: Win | Press Conference",
-      "publishedAt": "2026-11-25T20:15:00.000Z",
-      "url": "https://www.buccaneers.com/video/baker-mayfield-on-the-task-at-hand-win-press-conference",
-      "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-on-the-task-at-hand-win-press-conference",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "id": "tb_espn_816b761024efc",
+      "type": "article",
+      "title": "Buccaneers will need more from Baker Mayfield and struggling passing attack to beat the Panthers",
+      "summary": "— The Tampa Bay Buccaneers didn't need much from Baker Mayfield to rout the Carolina Panthers last month.",
+      "imageUrl": "",
+      "imageCaption": "espn.applewatch.awayhome.1",
+      "imageAlt": "Buccaneers will need more from Baker Mayfield and struggling passing attack to beat the Panthers",
+      "publishedAt": "2026-11-26T02:24:54.000Z",
+      "url": "https://www.espn.com/nfl/preview?gameId=401873094",
+      "outletId": "espn_tb",
+      "outletName": "ESPN",
+      "reporterId": "espn_tb",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/tb/tampa-bay-buccaneers",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "espn_team_news",
       "mentionedPlayers": [
-        {
-          "id": "5220680",
-          "name": "Ted Hurst III",
-          "shortName": "T. Hurst III",
-          "position": "WR",
-          "jersey": 17,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
-        },
-        {
-          "id": "3052587",
-          "name": "Baker Mayfield",
-          "shortName": "B. Mayfield",
-          "position": "QB",
-          "jersey": 6,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
-        },
-        {
-          "id": "4430834",
-          "name": "Jalen McMillan",
-          "shortName": "J. McMillan",
-          "position": "WR",
-          "jersey": 11,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 29.6047,
-      "duration": "6:16"
-    },
-    {
-      "id": "tb_vid_0a73dc627f7c",
-      "type": "video",
-      "title": "Ted Hurst III on Two-TD Day in Detroit: Improving Everyday | Press Conference",
-      "summary": "Tampa Bay Buccaneers Wide Receiver Ted Hurst III spoke to the media following Wednesday's Week 12 practice. WR Hurst discussed QB Baker Mayfield giving him opportunities and continuing to grow in his rookie season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/wzrasy0s3yyetjqbwjab.jpg",
-      "imageAlt": "Ted Hurst III on Two-TD Day in Detroit: Improving Everyday | Press Conference",
-      "publishedAt": "2026-11-25T20:14:00.000Z",
-      "url": "https://www.buccaneers.com/video/ted-hurst-iii-on-two-td-day-in-detroit-improving-everyday-press-conference",
-      "externalVideoUrl": "https://www.buccaneers.com/video/ted-hurst-iii-on-two-td-day-in-detroit-improving-everyday-press-conference",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "5220680",
-          "name": "Ted Hurst III",
-          "shortName": "T. Hurst III",
-          "position": "WR",
-          "jersey": 17,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
-        },
         {
           "id": "3052587",
           "name": "Baker Mayfield",
@@ -470,7 +397,6 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
         }
       ],
-      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -484,7 +410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 29.1941
+      "storyRank": 4.7789
     },
     {
       "id": "tb_pfr_c7be2444eb1f",
@@ -521,26 +447,114 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3909013.png"
         }
       ],
-      "isBreaking": true,
+      "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "BREAKING",
-      "breakingPriority": 1.873,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.655,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "corroborationCount": 3,
-      "corroboratedBy": [
-        "Greg Auman",
-        "Scott Smith"
-      ],
-      "firstReportedBy": "Greg Auman",
       "storyTier": "tier2_roster",
-      "isUrgentBreaking": true,
+      "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.8796
+      "storyRank": 3.8106
+    },
+    {
+      "id": "tb_tyt_4V7a_htTTq8",
+      "type": "video",
+      "category": "beat",
+      "isFunHighlightClip": true,
+      "videoId": "4V7a_htTTq8",
+      "embeddable": false,
+      "title": "Alex Anzalone Mic’d Up vs. the Lions | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Linebacker Alex Anzalone was mic’d up for our Week 11 matchup vs. the Detroit Lions. Hear from Anzalone as he returns to Ford Field and brings his veteran leadership to the field. #TampaBayBuccaneers",
+      "imageUrl": "https://i.ytimg.com/vi/4V7a_htTTq8/hqdefault.jpg",
+      "imageAlt": "Alex Anzalone Mic’d Up vs. the Lions | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T21:15:22.000Z",
+      "url": "https://www.youtube.com/watch?v=4V7a_htTTq8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=4V7a_htTTq8",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3043107",
+          "name": "Alex Anzalone",
+          "shortName": "A. Anzalone",
+          "position": "LB",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043107.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.433,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "salient_feature",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.3215
+    },
+    {
+      "id": "tb_vid_ed7d62127a09",
+      "type": "video",
+      "title": "Alex Anzalone Mic'd Up vs. the Lions",
+      "summary": "Tampa Bay Buccaneers Linebacker Alex Anzalone was mic'd up for our Week 11 matchup vs. the Detroit Lions. Hear from Anzalone as he returns to Ford Field and brings his veteran leadership to the field.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/pofxzlqi2rdzzgxzikmo.png",
+      "imageAlt": "Alex Anzalone Mic'd Up vs. the Lions",
+      "publishedAt": "2026-11-25T21:15:00.000Z",
+      "url": "https://www.buccaneers.com/video/alex-anzalone-mic-d-up-vs-the-lions",
+      "externalVideoUrl": "https://www.buccaneers.com/video/alex-anzalone-mic-d-up-vs-the-lions",
+      "duration": "3:10",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3043107",
+          "name": "Alex Anzalone",
+          "shortName": "A. Anzalone",
+          "position": "LB",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043107.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.433,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "salient_feature",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.3192
     },
     {
       "id": "x_tl_gregauman_2125618175509209491",
@@ -594,23 +608,94 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 1.635,
+      "breakingPriority": 0.571,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 3,
-      "corroboratedBy": [
-        "Scott Smith",
-        "Pro Football Rumors"
-      ],
       "storyTier": "tier2_roster",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.0059
+      "storyRank": 3.6054
+    },
+    {
+      "id": "tb_nfltr_34a36164a289",
+      "type": "article",
+      "title": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
+      "summary": "Buccaneers Buccaneers HC Todd Bowles said rookie WR Ted Hurst needs more work and experience, starting with consistency and avoiding dropped passes. “There is an emphasis on getting him [Hurst] more involved in the game,” Bowles said, via B",
+      "imageUrl": "",
+      "imageAlt": "NFC Notes: Tyler Shough, Kellen Moore, Buccaneers, Panthers, Saints",
+      "publishedAt": "2026-11-25T23:30:41.000Z",
+      "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-kellen-moore-buccaneers-panthers-saints/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.728
+    },
+    {
+      "id": "tb_rss_b2563d1c48b1",
+      "type": "article",
+      "title": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
+      "summary": "The Bucs are hoping to finish a season sweep of their division rivals to get back into the thick of the NFC South race on Monday night but must contend with an offense that features big-time playmakers at running back and receiver",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/e464hyk9tdlgcuqgvl8o.jpg",
+      "imageAlt": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
+      "publishedAt": "2026-11-25T22:00:00.000Z",
+      "url": "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.2331
     },
     {
       "id": "tb_rss_af35d3507143",
@@ -650,29 +735,28 @@
       ],
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 0.9,
+      "breakingBadge": null,
+      "breakingPriority": 0,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "practice_injury",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.616,
-      "isSupersededInjuryUpdate": true
+      "storyRank": 2.3941
     },
     {
-      "id": "tb_rss_b2563d1c48b1",
+      "id": "tb_rss_95166450d58e",
       "type": "article",
-      "title": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
-      "summary": "The Bucs are hoping to finish a season sweep of their division rivals to get back into the thick of the NFC South race on Monday night but must contend with an offense that features big-time playmakers at running back and receiver",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/e464hyk9tdlgcuqgvl8o.jpg",
-      "imageAlt": "Panthers-Buccaneers: Top Storylines & Key Matchups in Week 12",
-      "publishedAt": "2026-11-25T17:57:00.000Z",
-      "url": "https://www.buccaneers.com/news/panthers-buccaneers-top-storylines-key-matchups-in-week-12",
+      "title": "Josiah Trotter and Jalen McMillan Status, Confidence Boost for Ted Hurst III | Bucs Blitz",
+      "summary": "A look at the practice status of Josiah Trotter and Jalen McMillan on Wednesday, along with the growth of Ted Hurst III",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/k09xdhnkk5j1f1bkexkd.png",
+      "imageAlt": "Josiah Trotter and Jalen McMillan Status, Confidence Boost for Ted Hurst III | Bucs Blitz",
+      "publishedAt": "2026-11-25T21:17:17.000Z",
+      "url": "https://www.buccaneers.com/news/josiah-trotter-jalen-mcmillan-status-confidence-boost-for-ted-hurst-iii-bucs-blitz",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Official",
       "reporterId": "buccaneers_official",
@@ -682,7 +766,32 @@
       "authorProfileUrl": "https://www.buccaneers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        },
+        {
+          "id": "4870998",
+          "name": "Josiah Trotter",
+          "shortName": "J. Trotter",
+          "position": "LB",
+          "jersey": 45,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870998.png"
+        },
+        {
+          "id": "4430834",
+          "name": "Jalen McMillan",
+          "shortName": "J. McMillan",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -696,7 +805,476 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.7742
+      "storyRank": 2.0376
+    },
+    {
+      "id": "tb_tyt_nr6XzuUMI3g",
+      "type": "video",
+      "category": "beat",
+      "videoId": "nr6XzuUMI3g",
+      "embeddable": false,
+      "title": "Ted Hurst III on Two-TD Day in Detroit: Improving Everyday | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Wide Receiver Ted Hurst III spoke to the media following Wednesday’s Week 12 practice. WR Hurst discussed QB Baker Mayfield giving him opportunities and continuing to grow in his rookie season. #Tamp",
+      "imageUrl": "https://i.ytimg.com/vi/nr6XzuUMI3g/hqdefault.jpg",
+      "imageAlt": "Ted Hurst III on Two-TD Day in Detroit: Improving Everyday | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T20:25:40.000Z",
+      "url": "https://www.youtube.com/watch?v=nr6XzuUMI3g",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=nr6XzuUMI3g",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        },
+        {
+          "id": "3052587",
+          "name": "Baker Mayfield",
+          "shortName": "B. Mayfield",
+          "position": "QB",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.8378
+    },
+    {
+      "id": "tb_vid_4cc667c3b49a",
+      "type": "video",
+      "title": "Todd Bowles: Jalen McMillan Looks 'Fresh' | Press Conference",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media following Wednesday's Week 12 practice. HC Bowles discussed injury updates, OLB David Walker's snaps and the importance of Monday Night Football's result.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/qdo5ckiohpkguqutfcqo.jpg",
+      "imageAlt": "Todd Bowles: Jalen McMillan Looks 'Fresh' | Press Conference",
+      "publishedAt": "2026-11-25T20:16:00.000Z",
+      "url": "https://www.buccaneers.com/video/todd-bowles-jalen-mcmillan-looks-fresh-press-conference",
+      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-jalen-mcmillan-looks-fresh-press-conference",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "5085355",
+          "name": "David Walker",
+          "shortName": "D. Walker",
+          "position": "LB",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5085355.png"
+        },
+        {
+          "id": "4430834",
+          "name": "Jalen McMillan",
+          "shortName": "J. McMillan",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.8041
+    },
+    {
+      "id": "tb_vid_05477cccd819",
+      "type": "video",
+      "title": "Baker Mayfield on the Task at Hand: Win | Press Conference",
+      "summary": "Tampa Bay Buccaneers Quarterback Baker Mayfield spoke to the media following Wednesday's Week 12 practice. QB Mayfield discussed facing the Carolina Panthers' defense, his trust in WR Jalen McMillan and WR Ted Hurst III'",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/xrvvmxxhoydmiqy2a7oi.jpg",
+      "imageAlt": "Baker Mayfield on the Task at Hand: Win | Press Conference",
+      "publishedAt": "2026-11-25T20:15:00.000Z",
+      "url": "https://www.buccaneers.com/video/baker-mayfield-on-the-task-at-hand-win-press-conference",
+      "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-on-the-task-at-hand-win-press-conference",
+      "duration": "6:16",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        },
+        {
+          "id": "3052587",
+          "name": "Baker Mayfield",
+          "shortName": "B. Mayfield",
+          "position": "QB",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
+        },
+        {
+          "id": "4430834",
+          "name": "Jalen McMillan",
+          "shortName": "J. McMillan",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.8006
+    },
+    {
+      "id": "tb_tyt_e8-ntPbedTA",
+      "type": "video",
+      "category": "beat",
+      "videoId": "e8-ntPbedTA",
+      "embeddable": false,
+      "title": "Baker Mayfield on the Task at Hand: Win | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Quarterback Baker Mayfield spoke to the media following Wednesday’s Week 12 practice. QB Mayfield discussed facing the Carolina Panthers’ defense, his trust in WR Jalen McMillan and WR Ted Hurst III’",
+      "imageUrl": "https://i.ytimg.com/vi/e8-ntPbedTA/hqdefault.jpg",
+      "imageAlt": "Baker Mayfield on the Task at Hand: Win | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T20:14:30.000Z",
+      "url": "https://www.youtube.com/watch?v=e8-ntPbedTA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=e8-ntPbedTA",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        },
+        {
+          "id": "3052587",
+          "name": "Baker Mayfield",
+          "shortName": "B. Mayfield",
+          "position": "QB",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
+        },
+        {
+          "id": "4430834",
+          "name": "Jalen McMillan",
+          "shortName": "J. McMillan",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7989
+    },
+    {
+      "id": "tb_tyt_uFwQqGgtuL8",
+      "type": "video",
+      "category": "beat",
+      "videoId": "uFwQqGgtuL8",
+      "embeddable": false,
+      "title": "Todd Bowles: Jalen McMillan Looks ‘Fresh’ | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media following Wednesday’s Week 12 practice. HC Bowles discussed injury updates, OLB David Walker’s snaps and the importance of Monday Night Football’s result. #T",
+      "imageUrl": "https://i.ytimg.com/vi/uFwQqGgtuL8/hqdefault.jpg",
+      "imageAlt": "Todd Bowles: Jalen McMillan Looks ‘Fresh’ | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T20:14:04.000Z",
+      "url": "https://www.youtube.com/watch?v=uFwQqGgtuL8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=uFwQqGgtuL8",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "5085355",
+          "name": "David Walker",
+          "shortName": "D. Walker",
+          "position": "LB",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5085355.png"
+        },
+        {
+          "id": "4430834",
+          "name": "Jalen McMillan",
+          "shortName": "J. McMillan",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7974
+    },
+    {
+      "id": "tb_vid_0a73dc627f7c",
+      "type": "video",
+      "title": "Ted Hurst III on Two-TD Day in Detroit: Improving Everyday | Press Conference",
+      "summary": "Tampa Bay Buccaneers Wide Receiver Ted Hurst III spoke to the media following Wednesday's Week 12 practice. WR Hurst discussed QB Baker Mayfield giving him opportunities and continuing to grow in his rookie season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/wzrasy0s3yyetjqbwjab.jpg",
+      "imageAlt": "Ted Hurst III on Two-TD Day in Detroit: Improving Everyday | Press Conference",
+      "publishedAt": "2026-11-25T20:14:00.000Z",
+      "url": "https://www.buccaneers.com/video/ted-hurst-iii-on-two-td-day-in-detroit-improving-everyday-press-conference",
+      "externalVideoUrl": "https://www.buccaneers.com/video/ted-hurst-iii-on-two-td-day-in-detroit-improving-everyday-press-conference",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        },
+        {
+          "id": "3052587",
+          "name": "Baker Mayfield",
+          "shortName": "B. Mayfield",
+          "position": "QB",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7972
+    },
+    {
+      "id": "tb_tx_5938cbd301c5",
+      "type": "tweet",
+      "title": "Buccaneers roster move: Designated WR Jalen McMillan and LB Christian Rozeboom to return from injured reserve. Signed CB Brandon Johnson to the practice squad.",
+      "fullText": "Buccaneers roster move: Designated WR Jalen McMillan and LB Christian Rozeboom to return from injured reserve. Signed CB Brandon Johnson to the practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T08:00:00.000Z",
+      "url": "https://www.buccaneers.com/team/transactions/#tx-5938cbd301c5",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "Tampa Bay Buccaneers Official",
+      "author": "Tampa Bay Buccaneers Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "mentionedPlayers": [
+        {
+          "id": "4430834",
+          "name": "Jalen McMillan",
+          "shortName": "J. McMillan",
+          "position": "WR",
+          "jersey": 11,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
+        },
+        {
+          "id": "3909013",
+          "name": "Christian Rozeboom",
+          "shortName": "C. Rozeboom",
+          "position": "LB",
+          "jersey": 52,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3909013.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.1018
+    },
+    {
+      "id": "tb_tyt_0IEcj9r0qZ0",
+      "type": "video",
+      "category": "beat",
+      "videoId": "0IEcj9r0qZ0",
+      "embeddable": false,
+      "title": "Bucs Need Pivotal Prime-Time Performance vs. Panthers | Bucs Insider | Tampa Bay Buccaneers",
+      "summary": "Team Reporter Casey Phillips & Senior Writer/Editor Scott Smith talk about all the latest Bucs news in this week's edition of Bucs Insider. The team discussed the storylines coming out of Bucs vs. Lions, injury updates a",
+      "imageUrl": "https://i.ytimg.com/vi/0IEcj9r0qZ0/hqdefault.jpg",
+      "imageAlt": "Bucs Need Pivotal Prime-Time Performance vs. Panthers | Bucs Insider | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T19:44:52.000Z",
+      "url": "https://www.youtube.com/watch?v=0IEcj9r0qZ0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=0IEcj9r0qZ0",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7024
+    },
+    {
+      "id": "tb_yt_yyR5Ru5sS0c",
+      "type": "video",
+      "category": "film",
+      "videoId": "yyR5Ru5sS0c",
+      "embeddable": true,
+      "title": "Panthers vs. Buccaneers Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Carolina Panthers and the Tampa Bay Buccaneers. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and",
+      "imageUrl": "https://i.ytimg.com/vi/yyR5Ru5sS0c/hqdefault.jpg",
+      "imageAlt": "Panthers vs. Buccaneers Preview + Predictions",
+      "publishedAt": "2026-11-25T19:21:22.000Z",
+      "url": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=yyR5Ru5sS0c",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.4283
     },
     {
       "id": "tb_rss_237ca059efce",
@@ -739,7 +1317,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.4248
+      "storyRank": 1.4002
+    },
+    {
+      "id": "tb_vid_6614d5a62c46",
+      "type": "video",
+      "title": "Bucs Need Pivotal Prime-Time Performance vs. Panthers | Bucs Insider",
+      "summary": "Team Reporter Casey Phillips & Senior Writer/Editor Scott Smith talk about all the latest Bucs news in this week's edition of Bucs Insider. The team discussed the storylines coming out of Bucs vs. Lions, injury updates a",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/zwdtmzkzb2kybdiopuud.jpg",
+      "imageAlt": "Bucs Need Pivotal Prime-Time Performance vs. Panthers | Bucs Insider",
+      "publishedAt": "2026-11-25T16:00:00.000Z",
+      "url": "https://www.buccaneers.com/video/bucs-need-pivotal-prime-time-performance-vs-panthers-bucs-insider",
+      "externalVideoUrl": "https://www.buccaneers.com/video/bucs-need-pivotal-prime-time-performance-vs-panthers-bucs-insider",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1877
     },
     {
       "id": "tb_pwire_4430834_64970428",
@@ -776,44 +1390,40 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
-      "corroborationCount": 3,
-      "corroboratedBy": [
-        "Greg Auman",
-        "Pro Football Rumors"
-      ],
-      "firstReportedBy": "Greg Auman",
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6181
+      "storyRank": 1.18
     },
     {
-      "id": "tb_vid_6614d5a62c46",
+      "id": "tb_tyt_7c2z5bvrx1Y",
       "type": "video",
-      "title": "Bucs Need Pivotal Prime-Time Performance vs. Panthers | Bucs Insider",
-      "summary": "Team Reporter Casey Phillips & Senior Writer/Editor Scott Smith talk about all the latest Bucs news in this week's edition of Bucs Insider. The team discussed the storylines coming out of Bucs vs. Lions, injury updates a",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/zwdtmzkzb2kybdiopuud.jpg",
-      "imageAlt": "Bucs Need Pivotal Prime-Time Performance vs. Panthers | Bucs Insider",
-      "publishedAt": "2026-11-25T16:00:00.000Z",
-      "url": "https://www.buccaneers.com/video/bucs-need-pivotal-prime-time-performance-vs-panthers-bucs-insider",
-      "externalVideoUrl": "https://www.buccaneers.com/video/bucs-need-pivotal-prime-time-performance-vs-panthers-bucs-insider",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
+      "category": "beat",
+      "videoId": "7c2z5bvrx1Y",
       "embeddable": false,
+      "title": "Rondé Barber Breaks Down Top Plays From Northern Road Trip | Film Session | Tampa Bay Buccaneers",
+      "summary": "Hall of Fame Buccaneers DB Rondé Barber breaks down some key moments from the Bucs' most recent matchups vs. the Chicago Bears in Week 9 and Detroit Lions in Week 11 of the 2026 NFL Season. #TampaBayBuccaneers #Bucs #NFL",
+      "imageUrl": "https://i.ytimg.com/vi/7c2z5bvrx1Y/hqdefault.jpg",
+      "imageAlt": "Rondé Barber Breaks Down Top Plays From Northern Road Trip | Film Session | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T15:34:54.000Z",
+      "url": "https://www.youtube.com/watch?v=7c2z5bvrx1Y",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=7c2z5bvrx1Y",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -822,7 +1432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0104
+      "storyRank": 1.1469
     },
     {
       "id": "tb_vid_4e603de9bcd2",
@@ -858,59 +1468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.538
-    },
-    {
-      "id": "tb_tx_5938cbd301c5",
-      "type": "tweet",
-      "title": "Buccaneers roster move: Designated WR Jalen McMillan and LB Christian Rozeboom to return from injured reserve. Signed CB Brandon Johnson to the practice squad.",
-      "fullText": "Buccaneers roster move: Designated WR Jalen McMillan and LB Christian Rozeboom to return from injured reserve. Signed CB Brandon Johnson to the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T08:00:00.000Z",
-      "url": "https://www.buccaneers.com/team/transactions/#tx-5938cbd301c5",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "Tampa Bay Buccaneers Official",
-      "author": "Tampa Bay Buccaneers Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "mentionedPlayers": [
-        {
-          "id": "4430834",
-          "name": "Jalen McMillan",
-          "shortName": "J. McMillan",
-          "position": "WR",
-          "jersey": 11,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430834.png"
-        },
-        {
-          "id": "3909013",
-          "name": "Christian Rozeboom",
-          "shortName": "C. Rozeboom",
-          "position": "LB",
-          "jersey": 52,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3909013.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.752,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.3437
+      "storyRank": 1.1455
     },
     {
       "id": "tb_rss_800aa8ef4334",
@@ -944,7 +1502,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.843
+      "storyRank": 1.0739
+    },
+    {
+      "id": "tb_tyt_vOhikT-VLBQ",
+      "type": "video",
+      "category": "beat",
+      "videoId": "vOhikT-VLBQ",
+      "embeddable": false,
+      "title": "Stepping up to the Plate | The Todd Bowles Show | Tampa Bay Buccaneers",
+      "summary": "Team Reporter Casey Phillips sat down with Tampa Bay Buccaneers Head Coach Todd Bowles following the Bucs' game against the Lions. They discussed the success in the run game, WR Ted Hurst III’s impressive two-touchdown g",
+      "imageUrl": "https://i.ytimg.com/vi/vOhikT-VLBQ/hqdefault.jpg",
+      "imageAlt": "Stepping up to the Plate | The Todd Bowles Show | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-25T14:00:01.000Z",
+      "url": "https://www.youtube.com/watch?v=vOhikT-VLBQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=vOhikT-VLBQ",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0123
     },
     {
       "id": "tb_vid_156d7a1d5abc",
@@ -956,6 +1561,7 @@
       "publishedAt": "2026-11-25T14:00:00.000Z",
       "url": "https://www.buccaneers.com/video/stepping-up-to-the-plate-the-todd-bowles-show",
       "externalVideoUrl": "https://www.buccaneers.com/video/stepping-up-to-the-plate-the-todd-bowles-show",
+      "duration": "20:10",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -989,8 +1595,63 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.332,
-      "duration": "20:10"
+      "storyRank": 1.0122
+    },
+    {
+      "id": "tb_tyt_eqiFXRaS2Lg",
+      "type": "video",
+      "category": "beat",
+      "videoId": "eqiFXRaS2Lg",
+      "embeddable": false,
+      "title": "George Edwards on David Walker’s Passion For The Game | The Coaches’ Room | Tampa Bay Buccaneers",
+      "summary": "Team Reporter Casey Phillips sat down with Tampa Bay Buccaneers Pass Game Coordinator George Edwards following the Bucs’ game against the Detroit Lions. They discussed CB Jacob Parrish’s impact on the field, the defensiv",
+      "imageUrl": "https://i.ytimg.com/vi/eqiFXRaS2Lg/hqdefault.jpg",
+      "imageAlt": "George Edwards on David Walker’s Passion For The Game | The Coaches’ Room | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-24T23:00:38.000Z",
+      "url": "https://www.youtube.com/watch?v=eqiFXRaS2Lg",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=eqiFXRaS2Lg",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4912847",
+          "name": "Jacob Parrish",
+          "shortName": "J. Parrish",
+          "position": "CB",
+          "jersey": 25,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4912847.png"
+        },
+        {
+          "id": "5085355",
+          "name": "David Walker",
+          "shortName": "D. Walker",
+          "position": "LB",
+          "jersey": 51,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5085355.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "30:12",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4415
     },
     {
       "id": "tb_vid_7eae14ff1f03",
@@ -1002,6 +1663,7 @@
       "publishedAt": "2026-11-24T23:00:00.000Z",
       "url": "https://www.buccaneers.com/video/george-edwards-on-david-walker-passion-for-the-game-the-coaches-room",
       "externalVideoUrl": "https://www.buccaneers.com/video/george-edwards-on-david-walker-passion-for-the-game-the-coaches-room",
+      "duration": "30:12",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -1043,8 +1705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.752,
-      "duration": "30:12"
+      "storyRank": 0.4413
     },
     {
       "id": "tb_brss_bucs_nation_84f7581df54d",
@@ -1078,7 +1739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6585
+      "storyRank": 0.4004
     },
     {
       "id": "tb_pwire_5220680_49949224",
@@ -1110,7 +1771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6333
+      "storyRank": 0.3896
     },
     {
       "id": "tb_rss_4e335d013fba",
@@ -1144,7 +1805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5886
+      "storyRank": 0.3715
     },
     {
       "id": "tb_rss_b4ea567debe9",
@@ -1187,7 +1848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5866
+      "storyRank": 0.3707
     },
     {
       "id": "tb_rss_d2035fc89ebb",
@@ -1238,7 +1899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5685
+      "storyRank": 0.3624
     },
     {
       "id": "tb_rss_7e005c9cf1ed",
@@ -1272,7 +1933,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5456
+      "storyRank": 0.3517
     },
     {
       "id": "tb_rss_c5eb8a7d66a0",
@@ -1315,7 +1976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4635
+      "storyRank": 0.3116
     },
     {
       "id": "tb_rss_b16eb6d258fa",
@@ -1349,7 +2010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4159
+      "storyRank": 0.287
     },
     {
       "id": "tb_tx_0449f804d740",
@@ -1384,7 +2045,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3716
+      "storyRank": 0.263
+    },
+    {
+      "id": "tb_tyt_giEveA5snZ0",
+      "type": "video",
+      "category": "beat",
+      "videoId": "giEveA5snZ0",
+      "embeddable": false,
+      "title": "Alex Anzalone: Flourishing as a Leader | Bucs Players' Table | Tampa Bay Buccaneers",
+      "summary": "Team Reporter Casey Phillips chats with Tampa Bay Buccaneers LB Alex Anzalone after Week 11 vs. the Detroit Lions. They discussed the success of his role in HC Todd Bowles’ defense, his return to Florida and what it take",
+      "imageUrl": "https://i.ytimg.com/vi/giEveA5snZ0/hqdefault.jpg",
+      "imageAlt": "Alex Anzalone: Flourishing as a Leader | Bucs Players' Table | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-23T23:00:20.000Z",
+      "url": "https://www.youtube.com/watch?v=giEveA5snZ0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=giEveA5snZ0",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3043107",
+          "name": "Alex Anzalone",
+          "shortName": "A. Anzalone",
+          "position": "LB",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043107.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2073
     },
     {
       "id": "tb_vid_6a6cde17a186",
@@ -1396,6 +2104,7 @@
       "publishedAt": "2026-11-23T23:00:00.000Z",
       "url": "https://www.buccaneers.com/video/alex-anzalone-flourishing-as-a-leader-bucs-players-table",
       "externalVideoUrl": "https://www.buccaneers.com/video/alex-anzalone-flourishing-as-a-leader-bucs-players-table",
+      "duration": "50:25",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -1429,8 +2138,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2758,
-      "duration": "50:25"
+      "storyRank": 0.2072
+    },
+    {
+      "id": "tb_yt_MkDYoL6WMVw",
+      "type": "video",
+      "category": "film",
+      "videoId": "MkDYoL6WMVw",
+      "embeddable": true,
+      "title": "Film Study: How Baker Mayfield played for the Tampa Bay Buccaneers Vs the Detroit Lions",
+      "summary": "Follow me on TikTok, https://www.tiktok.com/@jacksonkruegerjks?is_from_webapp=1&sender_device=pc Check out my movie Channel https://www.youtube.com/@jacksonkruegermovies Check out JKS Clips for podcast clips and Twitch S",
+      "imageUrl": "https://i.ytimg.com/vi/MkDYoL6WMVw/hqdefault.jpg",
+      "imageAlt": "Film Study: How Baker Mayfield played for the Tampa Bay Buccaneers Vs the Detroit Lions",
+      "publishedAt": "2026-11-23T21:00:02.000Z",
+      "url": "https://www.youtube.com/watch?v=MkDYoL6WMVw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=MkDYoL6WMVw",
+      "channel": "Jackson Krueger Sports",
+      "outletId": "jackson_krueger",
+      "outletName": "Jackson Krueger Sports",
+      "reporterId": "jackson_krueger",
+      "reporterName": "Jackson Krueger Sports",
+      "author": "Jackson Krueger Sports",
+      "authorHandle": "@JacksonKruegerSports",
+      "authorProfileUrl": "https://www.youtube.com/@JacksonKruegerSports",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3052587",
+          "name": "Baker Mayfield",
+          "shortName": "B. Mayfield",
+          "position": "QB",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1943
     },
     {
       "id": "tb_brss_bucs_nation_eef0de12af4c",
@@ -1464,7 +2219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2553
+      "storyRank": 0.194
     },
     {
       "id": "tb_pwire_4912847_64938128",
@@ -1505,85 +2260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2551
-    },
-    {
-      "id": "tb_yts_PWphJLZ89e4",
-      "type": "video",
-      "videoId": "PWphJLZ89e4",
-      "embeddable": false,
-      "title": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
-      "summary": "",
-      "duration": "12:52",
-      "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
-      "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:49:52.400Z",
-      "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
-    },
-    {
-      "id": "tb_yts_ZVavJVtF4Z8",
-      "type": "video",
-      "videoId": "ZVavJVtF4Z8",
-      "embeddable": false,
-      "title": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "summary": "",
-      "duration": "2:02",
-      "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
-      "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "publishedAt": "2026-11-23T20:49:52.400Z",
-      "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
+      "storyRank": 0.1938
     },
     {
       "id": "tb_rss_c36937bb9f2f",
@@ -1626,7 +2303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2567
+      "storyRank": 0.1954
     },
     {
       "id": "tb_rss_febb7a4d749e",
@@ -1677,7 +2354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.251
+      "storyRank": 0.1918
     },
     {
       "id": "tb_rss_1d1fe153a9d7",
@@ -1728,7 +2405,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2407
+      "storyRank": 0.1853
+    },
+    {
+      "id": "tb_tyt_YjEo9XGU65w",
+      "type": "video",
+      "category": "beat",
+      "videoId": "YjEo9XGU65w",
+      "embeddable": false,
+      "title": "Todd Bowles on Path Forward: ‘It Starts With Us’ | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media the day after the Bucs’ game against the Detroit Lions in Week 11 of the 2026 NFL Season. HC Bowles discussed the state of the CB room, continuing to adjust",
+      "imageUrl": "https://i.ytimg.com/vi/YjEo9XGU65w/hqdefault.jpg",
+      "imageAlt": "Todd Bowles on Path Forward: ‘It Starts With Us’ | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-23T18:06:29.000Z",
+      "url": "https://www.youtube.com/watch?v=YjEo9XGU65w",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=YjEo9XGU65w",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "6:44",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1849
     },
     {
       "id": "tb_vid_68d6fbf4ecac",
@@ -1740,6 +2456,7 @@
       "publishedAt": "2026-11-23T18:01:27.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-path-forward-it-starts-with-us-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-path-forward-it-starts-with-us-press-conference",
+      "duration": "6:44",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -1764,8 +2481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2395,
-      "duration": "6:44"
+      "storyRank": 0.1845
     },
     {
       "id": "tb_rss_d9a1c55852b5",
@@ -1799,7 +2515,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2219
+      "storyRank": 0.1732
+    },
+    {
+      "id": "tb_yt_DCAGpYkwJEU",
+      "type": "video",
+      "category": "film",
+      "videoId": "DCAGpYkwJEU",
+      "embeddable": true,
+      "title": "Film Study: Jared Goff played GREAT for the Detroit Lions Vs the Tampa Bay Buccaneers",
+      "summary": "Follow me on TikTok, https://www.tiktok.com/@jacksonkruegerjks?is_from_webapp=1&sender_device=pc Check out my movie Channel https://www.youtube.com/@jacksonkruegermovies Check out JKS Clips for podcast clips and Twitch S",
+      "imageUrl": "https://i.ytimg.com/vi/DCAGpYkwJEU/hqdefault.jpg",
+      "imageAlt": "Film Study: Jared Goff played GREAT for the Detroit Lions Vs the Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-23T15:00:30.000Z",
+      "url": "https://www.youtube.com/watch?v=DCAGpYkwJEU",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=DCAGpYkwJEU",
+      "channel": "Jackson Krueger Sports",
+      "outletId": "jackson_krueger",
+      "outletName": "Jackson Krueger Sports",
+      "reporterId": "jackson_krueger",
+      "reporterName": "Jackson Krueger Sports",
+      "author": "Jackson Krueger Sports",
+      "authorHandle": "@JacksonKruegerSports",
+      "authorProfileUrl": "https://www.youtube.com/@JacksonKruegerSports",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1699
     },
     {
       "id": "tb_brss_bucs_nation_9b9e316d4ae8",
@@ -1833,7 +2587,163 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2069
+      "storyRank": 0.1629
+    },
+    {
+      "id": "tb_yts_udTEss2qEl8",
+      "type": "video",
+      "videoId": "udTEss2qEl8",
+      "embeddable": true,
+      "title": "Things we love to see for our defensive captain 🫡🔜 #TBvsDET 1 p.m. ET on FOX #alexanzalone #nfl",
+      "summary": "",
+      "duration": "0:17",
+      "imageUrl": "https://i.ytimg.com/vi/udTEss2qEl8/hqdefault.jpg",
+      "imageAlt": "Things we love to see for our defensive captain 🫡🔜 #TBvsDET 1 p.m. ET on FOX #alexanzalone #nfl",
+      "publishedAt": "2026-11-23T07:26:57.115Z",
+      "url": "https://www.youtube.com/watch?v=udTEss2qEl8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=udTEss2qEl8",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "buccaneers_official",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "buccaneers_official",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
+    },
+    {
+      "id": "tb_yts_Hhap6m7vVmo",
+      "type": "video",
+      "videoId": "Hhap6m7vVmo",
+      "embeddable": true,
+      "title": "Former teammates link up pregame in Detroit 🏴‍☠️🦁 #alexanzalone #jahmyrgibbs #buccaneers #nfl",
+      "summary": "",
+      "duration": "0:10",
+      "imageUrl": "https://i.ytimg.com/vi/Hhap6m7vVmo/hqdefault.jpg",
+      "imageAlt": "Former teammates link up pregame in Detroit 🏴‍☠️🦁 #alexanzalone #jahmyrgibbs #buccaneers #nfl",
+      "publishedAt": "2026-11-23T07:26:57.115Z",
+      "url": "https://www.youtube.com/watch?v=Hhap6m7vVmo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Hhap6m7vVmo",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "buccaneers_official",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "buccaneers_official",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
+    },
+    {
+      "id": "tb_yts_PWphJLZ89e4",
+      "type": "video",
+      "videoId": "PWphJLZ89e4",
+      "embeddable": false,
+      "title": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "12:52",
+      "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
+      "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-23T07:26:57.114Z",
+      "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
+    },
+    {
+      "id": "tb_yts_ZVavJVtF4Z8",
+      "type": "video",
+      "videoId": "ZVavJVtF4Z8",
+      "embeddable": false,
+      "title": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
+      "summary": "",
+      "duration": "2:02",
+      "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
+      "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
+      "publishedAt": "2026-11-23T07:26:57.114Z",
+      "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
     },
     {
       "id": "tb_brss_bucs_nation_94626a46c97f",
@@ -1867,7 +2777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1737
+      "storyRank": 0.1403
     },
     {
       "id": "tb_brss_bucs_nation_26cee4585eeb",
@@ -1901,7 +2811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1701
+      "storyRank": 0.1378
     },
     {
       "id": "tb_brss_bucs_nation_51245d2de155",
@@ -1935,7 +2845,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1651
+      "storyRank": 0.1343
+    },
+    {
+      "id": "tb_yt_ZlvsAncNH50",
+      "type": "video",
+      "category": "film",
+      "videoId": "ZlvsAncNH50",
+      "embeddable": true,
+      "title": "LIONS 31, BUCS 21: HOW JARED GOFF AND COMPANY OUT-TAMPA BAY'D TODD BOWLES - WK 11 REACTION VIDEO",
+      "summary": "---------------------------------------------------- ----------JOIN MY CHANNEL---------- https://www.youtube.com/channel/UC7Dbn36zT6XjfBh9YDLmGIg/join ---------------------------------------------------- ________SOCIAL M",
+      "imageUrl": "https://i.ytimg.com/vi/ZlvsAncNH50/hqdefault.jpg",
+      "imageAlt": "LIONS 31, BUCS 21: HOW JARED GOFF AND COMPANY OUT-TAMPA BAY'D TODD BOWLES - WK 11 REACTION VIDEO",
+      "publishedAt": "2026-11-23T01:15:10.000Z",
+      "url": "https://www.youtube.com/watch?v=ZlvsAncNH50",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ZlvsAncNH50",
+      "channel": "All_22_Films",
+      "outletId": "all_22_films",
+      "outletName": "All_22_Films",
+      "reporterId": "all_22_films",
+      "reporterName": "All_22_Films",
+      "author": "All_22_Films",
+      "authorHandle": "@All_22_Films",
+      "authorProfileUrl": "https://www.youtube.com/@All_22_Films",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 25,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1109
     },
     {
       "id": "tb_rss_594fde348b8b",
@@ -1978,7 +2926,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1546
+      "storyRank": 0.1272
+    },
+    {
+      "id": "tb_nfilm_unexpected_points_e96746b51e37",
+      "type": "article",
+      "category": "film",
+      "title": "Week 11 Sunday Early Window: Advanced Reviews",
+      "summary": "All the advanced stats & visualizations for Bills-Dolphins, Panthers-Ravens, Bears-Saints, Cowboys-Titans, Lions-Buccaneers, Chiefs-Cardinals & Eagles-Steelers",
+      "imageUrl": "https://substackcdn.com/image/fetch/$s_!iU8k!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F54d70292-06d0-43ac-9f18-3b36af2ffc26_2560x1706.jpeg",
+      "imageAlt": "Week 11 Sunday Early Window: Advanced Reviews",
+      "publishedAt": "2026-11-22T22:33:49.000Z",
+      "url": "https://www.unexpectedpoints.com/p/week-11-sunday-early-window-advanced",
+      "outletId": "unexpected_points",
+      "outletName": "Unexpected Points",
+      "reporterId": "unexpected_points",
+      "reporterName": "Kevin Cole",
+      "author": "Kevin Cole",
+      "authorHandle": "@KevinCole___",
+      "authorProfileUrl": "https://www.unexpectedpoints.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1262
     },
     {
       "id": "tb_espn_aea129f88ee07",
@@ -2013,7 +2995,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0383
+      "storyRank": 0.0316
     },
     {
       "id": "tb_vid_a64b08f04e11",
@@ -2025,6 +3007,7 @@
       "publishedAt": "2026-11-22T22:30:00.000Z",
       "url": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
       "externalVideoUrl": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
+      "duration": "4:34",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2049,8 +3032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1531,
-      "duration": "4:34"
+      "storyRank": 0.1261
     },
     {
       "id": "tb_vid_c4e37877baf8",
@@ -2062,6 +3044,7 @@
       "publishedAt": "2026-11-22T22:14:00.000Z",
       "url": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
+      "duration": "3:47",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2103,8 +3086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1523,
-      "duration": "3:47"
+      "storyRank": 0.1255
     },
     {
       "id": "tb_vid_f0e3a63f825b",
@@ -2116,6 +3098,7 @@
       "publishedAt": "2026-11-22T22:10:00.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
+      "duration": "3:06",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2149,8 +3132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1521,
-      "duration": "3:06"
+      "storyRank": 0.1254
     },
     {
       "id": "tb_rss_790bc147b13e",
@@ -2184,7 +3166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1521
+      "storyRank": 0.1254
     },
     {
       "id": "tb_rss_de56872ef1bc",
@@ -2218,7 +3200,158 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.152
+      "storyRank": 0.1253
+    },
+    {
+      "id": "tb_tyt_mgNh0VPuKGs",
+      "type": "video",
+      "category": "beat",
+      "videoId": "mgNh0VPuKGs",
+      "embeddable": false,
+      "title": "Alex Anzalone Discusses First Game Back in Detroit | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Linebacker Alex Anzalone spoke to the media following the Bucs’ game against the Detroit Lions in Week 11 of the 2026 NFL Season. LB Anzalone discusses the team’s performance against the Lions and be",
+      "imageUrl": "https://i.ytimg.com/vi/mgNh0VPuKGs/hqdefault.jpg",
+      "imageAlt": "Alex Anzalone Discusses First Game Back in Detroit | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-22T22:00:20.000Z",
+      "url": "https://www.youtube.com/watch?v=mgNh0VPuKGs",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=mgNh0VPuKGs",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3043107",
+          "name": "Alex Anzalone",
+          "shortName": "A. Anzalone",
+          "position": "LB",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043107.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "3:05",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1251
+    },
+    {
+      "id": "tb_tyt_FVxCMmhf84c",
+      "type": "video",
+      "category": "beat",
+      "videoId": "FVxCMmhf84c",
+      "embeddable": false,
+      "title": "Baker Mayfield’s Thoughts Following Bucs vs. Lions | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Quarterback Baker Mayfield spoke to the media after the Bucs’ game against the Detroit Lions in Week 11 of the 2026 NFL Season. QB Mayfield discussed RB Bucky Irving’s heart, continuing to stay motiv",
+      "imageUrl": "https://i.ytimg.com/vi/FVxCMmhf84c/hqdefault.jpg",
+      "imageAlt": "Baker Mayfield’s Thoughts Following Bucs vs. Lions | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-22T21:48:07.000Z",
+      "url": "https://www.youtube.com/watch?v=FVxCMmhf84c",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=FVxCMmhf84c",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4596448",
+          "name": "Bucky Irving",
+          "shortName": "B. Irving",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4596448.png"
+        },
+        {
+          "id": "3052587",
+          "name": "Baker Mayfield",
+          "shortName": "B. Mayfield",
+          "position": "QB",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "3:47",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1246
+    },
+    {
+      "id": "tb_tyt_R98K1lRm4qU",
+      "type": "video",
+      "category": "beat",
+      "videoId": "R98K1lRm4qU",
+      "embeddable": false,
+      "title": "Todd Bowles on Outcome in Detroit | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media after the Bucs’ game against the Detroit Lions in Week 11 of the 2026 NFL Season. HC Bowles discussed injury updates, limiting mistakes and WR Ted Hurst III’",
+      "imageUrl": "https://i.ytimg.com/vi/R98K1lRm4qU/hqdefault.jpg",
+      "imageAlt": "Todd Bowles on Outcome in Detroit | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-22T21:47:42.000Z",
+      "url": "https://www.youtube.com/watch?v=R98K1lRm4qU",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=R98K1lRm4qU",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "5220680",
+          "name": "Ted Hurst III",
+          "shortName": "T. Hurst III",
+          "position": "WR",
+          "jersey": 17,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5220680.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1246
     },
     {
       "id": "tb_brss_bucs_nation_be778e8124b1",
@@ -2269,7 +3402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
+      "storyRank": 0.1223
     },
     {
       "id": "tb_vid_94a7d70ab992",
@@ -2281,6 +3414,7 @@
       "publishedAt": "2026-11-22T21:25:00.000Z",
       "url": "https://www.buccaneers.com/video/alex-anzalone-discusses-first-game-back-in-detroit-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/alex-anzalone-discusses-first-game-back-in-detroit-press-conference",
+      "duration": "3:05",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2314,8 +3448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1499,
-      "duration": "3:05"
+      "storyRank": 0.1238
     },
     {
       "id": "tb_rss_5291c0dcf3cc",
@@ -2349,7 +3482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0372
+      "storyRank": 0.0308
     },
     {
       "id": "tb_vid_973d82765aee",
@@ -2361,6 +3494,7 @@
       "publishedAt": "2026-11-22T20:59:00.000Z",
       "url": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
+      "duration": "0:34",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2402,8 +3536,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1487,
-      "duration": "0:34"
+      "storyRank": 0.1229
     },
     {
       "id": "x_tl_falsefinishhq_2124599256254460337",
@@ -2455,53 +3588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1591
-    },
-    {
-      "id": "tb_vid_0cf27068bbfe",
-      "type": "video",
-      "title": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
-      "summary": "RB Bucky Irving scores a touchdown against the Detroit Lions in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/sdavoxhxf3n2ov8zrqzz.jpg",
-      "imageAlt": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
-      "publishedAt": "2026-11-22T20:13:08.000Z",
-      "url": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
-      "externalVideoUrl": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4596448",
-          "name": "Bucky Irving",
-          "shortName": "B. Irving",
-          "position": "RB",
-          "jersey": 7,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4596448.png"
-        }
-      ],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1465,
-      "duration": "0:42"
+      "storyRank": 0.1317
     },
     {
       "id": "x_tl_nfl_2124595629313691762",
@@ -2553,7 +3640,53 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1584
+      "storyRank": 0.1312
+    },
+    {
+      "id": "tb_vid_0cf27068bbfe",
+      "type": "video",
+      "title": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
+      "summary": "RB Bucky Irving scores a touchdown against the Detroit Lions in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/sdavoxhxf3n2ov8zrqzz.jpg",
+      "imageAlt": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
+      "publishedAt": "2026-11-22T20:13:08.000Z",
+      "url": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
+      "externalVideoUrl": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
+      "duration": "0:42",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4596448",
+          "name": "Bucky Irving",
+          "shortName": "B. Irving",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4596448.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1214
     },
     {
       "id": "x_tl_pick6packfb_2124585109433319689",
@@ -2605,7 +3738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1563
+      "storyRank": 0.1297
     },
     {
       "id": "tb_vid_2244ed4cf550",
@@ -2617,6 +3750,7 @@
       "publishedAt": "2026-11-22T19:22:16.000Z",
       "url": "https://www.buccaneers.com/video/baker-hurst-score-bucs-lions-nfl-season-week-11-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-hurst-score-bucs-lions-nfl-season-week-11-big-play-2026",
+      "duration": "0:28",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2658,8 +3792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1442,
-      "duration": "0:28"
+      "storyRank": 0.1197
     },
     {
       "id": "tb_rss_368f369f4cca",
@@ -2693,7 +3826,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1406
+      "storyRank": 0.117
     },
     {
       "id": "tb_brss_bucs_nation_7a2a04493b3e",
@@ -2727,7 +3860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.066
+      "storyRank": 0.055
     },
     {
       "id": "tb_espn_1e1dd9a4b0dad",
@@ -2771,7 +3904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0658
+      "storyRank": 0.0549
     },
     {
       "id": "tb_rss_554726f4632d",
@@ -2805,7 +3938,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0649
+      "storyRank": 0.0543
+    },
+    {
+      "id": "tb_tyt_gmCUR1E_quI",
+      "type": "video",
+      "category": "beat",
+      "videoId": "gmCUR1E_quI",
+      "embeddable": false,
+      "title": "Bringing the Heat | Bucs vs. Lions Game Trailer | Tampa Bay Buccaneers",
+      "summary": "Fresh energy. Same mindset. Ready to turn up the intensity. #TampaBayBuccaneers #Bucs #NFL Subscribe to the Tampa Bay Buccaneers YT Channel: https://goo.gl/AeDQ135 For more Bucs action: http://www.buccaneers.com/ Get the",
+      "imageUrl": "https://i.ytimg.com/vi/gmCUR1E_quI/hqdefault.jpg",
+      "imageAlt": "Bringing the Heat | Bucs vs. Lions Game Trailer | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-22T14:00:10.000Z",
+      "url": "https://www.youtube.com/watch?v=gmCUR1E_quI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=gmCUR1E_quI",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0527
     },
     {
       "id": "tb_vid_87d7ec130f0a",
@@ -2817,6 +3988,7 @@
       "publishedAt": "2026-11-22T14:00:00.000Z",
       "url": "https://www.buccaneers.com/video/bringing-the-heat-bucs-vs-lions-game-trailer",
       "externalVideoUrl": "https://www.buccaneers.com/video/bringing-the-heat-bucs-vs-lions-game-trailer",
+      "duration": "0:46",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -2841,8 +4013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0628,
-      "duration": "0:46"
+      "storyRank": 0.0527
     },
     {
       "id": "tb_brss_bucs_nation_e5676970f3ed",
@@ -2876,7 +4047,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0614
+      "storyRank": 0.0516
+    },
+    {
+      "id": "tb_yts_mlUTJdEtCU8",
+      "type": "video",
+      "videoId": "mlUTJdEtCU8",
+      "embeddable": false,
+      "title": "Buccaneers at Lions | Condensed replay",
+      "summary": "",
+      "duration": "40:34",
+      "imageUrl": "https://i.ytimg.com/vi/mlUTJdEtCU8/hqdefault.jpg",
+      "imageAlt": "Buccaneers at Lions | Condensed replay",
+      "publishedAt": "2026-11-22T08:00:00.000Z",
+      "url": "https://www.youtube.com/watch?v=mlUTJdEtCU8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=mlUTJdEtCU8",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0482
     },
     {
       "id": "tb_rss_f3683165a33c",
@@ -2919,7 +4129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0479
+      "storyRank": 0.0414
     },
     {
       "id": "tb_rss_44ebfb224a14",
@@ -2962,7 +4172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0479
+      "storyRank": 0.0414
     },
     {
       "id": "tb_tx_3de3f37fe9b8",
@@ -2997,7 +4207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.0353
     },
     {
       "id": "tb_rss_75abb42efff1",
@@ -3031,7 +4241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0306
     },
     {
       "id": "tb_vid_7ae55a4fdc85",
@@ -3043,6 +4253,7 @@
       "publishedAt": "2026-11-20T17:55:00.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-quarterback-availability-against-detroit-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-quarterback-availability-against-detroit-press-conference",
+      "duration": "1:56",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3067,8 +4278,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0339,
-      "duration": "1:56"
+      "storyRank": 0.0303
+    },
+    {
+      "id": "tb_tyt_Ki5FZMy1q08",
+      "type": "video",
+      "category": "beat",
+      "videoId": "Ki5FZMy1q08",
+      "embeddable": false,
+      "title": "Todd Bowles on Quarterback Availability Against Detroit | Press Conference | Tampa Bay Buccaneers",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media following Friday’s Week 11 practice. HC Bowles discussed player updates heading into Sunday’s matchup against the Detroit Lions and his thoughts before Week",
+      "imageUrl": "https://i.ytimg.com/vi/Ki5FZMy1q08/hqdefault.jpg",
+      "imageAlt": "Todd Bowles on Quarterback Availability Against Detroit | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-20T17:54:26.000Z",
+      "url": "https://www.youtube.com/watch?v=Ki5FZMy1q08",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Ki5FZMy1q08",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "UC0Wwu7r1ybaaR09ANhudTzA",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "1:56",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0303
     },
     {
       "id": "x_tl_scottsbucs_2123827057167622544",
@@ -3116,7 +4365,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.037
+      "storyRank": 0.033
     },
     {
       "id": "tb_rss_fc98f2c92677",
@@ -3159,7 +4408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0329
+      "storyRank": 0.0294
     },
     {
       "id": "tb_rss_d7eb90743a83",
@@ -3218,7 +4467,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0293
     },
     {
       "id": "tb_rss_3e0bd2d6ba22",
@@ -3252,7 +4501,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.0288
     },
     {
       "id": "tb_rss_3cb740f68193",
@@ -3286,7 +4535,85 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0282
+    },
+    {
+      "id": "tb_yts_90FyDPEOZ8Q",
+      "type": "video",
+      "videoId": "90FyDPEOZ8Q",
+      "embeddable": true,
+      "title": "Larry Foote on Limiting Detroit’s Offensive Attack | Press Conference | Tampa Bay Buccaneers",
+      "summary": "",
+      "duration": "4:37",
+      "imageUrl": "https://i.ytimg.com/vi/90FyDPEOZ8Q/hqdefault.jpg",
+      "imageAlt": "Larry Foote on Limiting Detroit’s Offensive Attack | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-20T07:26:57.115Z",
+      "url": "https://www.youtube.com/watch?v=90FyDPEOZ8Q",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=90FyDPEOZ8Q",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "buccaneers_official",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "buccaneers_official",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0272
+    },
+    {
+      "id": "tb_yts_m2jcv4nOd3U",
+      "type": "video",
+      "videoId": "m2jcv4nOd3U",
+      "embeddable": true,
+      "title": "A trip down memory lane before facing off against Detroit 😎🦁🔜 #TBvsDET Nov. 22 @ 1 p.m. ET on CBS",
+      "summary": "",
+      "duration": "2:02",
+      "imageUrl": "https://i.ytimg.com/vi/m2jcv4nOd3U/hqdefault.jpg",
+      "imageAlt": "A trip down memory lane before facing off against Detroit 😎🦁🔜 #TBvsDET Nov. 22 @ 1 p.m. ET on CBS",
+      "publishedAt": "2026-11-20T07:26:57.115Z",
+      "url": "https://www.youtube.com/watch?v=m2jcv4nOd3U",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=m2jcv4nOd3U",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "buccaneers_official",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "buccaneers_official",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0068
     },
     {
       "id": "tb_espn_dac2aef086042",
@@ -3321,7 +4648,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
+      "storyRank": 0.0253
+    },
+    {
+      "id": "tb_nfilm_matchquarters_d432699c0cba",
+      "type": "article",
+      "category": "film",
+      "filmOnlyScope": true,
+      "isLeagueWideFilmChart": true,
+      "title": "Split-Field Quarters Foundations",
+      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
+      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
+      "imageAlt": "Split-Field Quarters Foundations",
+      "publishedAt": "2026-11-19T22:01:55.000Z",
+      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
+      "outletId": "matchquarters",
+      "outletName": "MatchQuarters",
+      "reporterId": "matchquarters",
+      "reporterName": "Cody Alexander",
+      "author": "Cody Alexander",
+      "authorHandle": "@The_Coach_A",
+      "authorProfileUrl": "https://www.matchquarters.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0249
     },
     {
       "id": "tb_rss_7ca4ff45ce41",
@@ -3364,7 +4727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0275
+      "storyRank": 0.0249
     },
     {
       "id": "tb_rss_a8c3ceb88e82",
@@ -3407,7 +4770,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0661
+      "storyRank": 0.0603
+    },
+    {
+      "id": "tb_nfilm_matchquarters_a64862556914",
+      "type": "article",
+      "category": "film",
+      "filmOnlyScope": true,
+      "isLeagueWideFilmChart": true,
+      "title": "The Aranda-Roberts Creeper System",
+      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
+      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
+      "imageAlt": "The Aranda-Roberts Creeper System",
+      "publishedAt": "2026-11-19T21:33:52.000Z",
+      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
+      "outletId": "matchquarters",
+      "outletName": "MatchQuarters",
+      "reporterId": "matchquarters",
+      "reporterName": "Cody Alexander",
+      "author": "Cody Alexander",
+      "authorHandle": "@The_Coach_A",
+      "authorProfileUrl": "https://www.matchquarters.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0248
     },
     {
       "id": "tb_vid_a9aa8e043d2b",
@@ -3419,6 +4818,7 @@
       "publishedAt": "2026-11-19T21:16:00.000Z",
       "url": "https://www.buccaneers.com/video/baker-mayfield-i-feel-ready-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-i-feel-ready-press-conference",
+      "duration": "8:29",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3452,8 +4852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0274,
-      "duration": "8:29"
+      "storyRank": 0.0248
     },
     {
       "id": "tb_vid_5bbbfbb66975",
@@ -3465,6 +4864,7 @@
       "publishedAt": "2026-11-19T20:47:13.000Z",
       "url": "https://www.buccaneers.com/video/jalon-daniels-on-always-staying-prepared-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/jalon-daniels-on-always-staying-prepared-press-conference",
+      "duration": "3:16",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3498,8 +4898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272,
-      "duration": "3:16"
+      "storyRank": 0.0247
     },
     {
       "id": "tb_vid_22ae2d5c5c47",
@@ -3511,6 +4910,7 @@
       "publishedAt": "2026-11-19T20:28:00.000Z",
       "url": "https://www.buccaneers.com/video/zac-robinson-ready-to-roll-vs-detroit-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/zac-robinson-ready-to-roll-vs-detroit-press-conference",
+      "duration": "13:22",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3535,8 +4935,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272,
-      "duration": "13:22"
+      "storyRank": 0.0246
     },
     {
       "id": "tb_vid_1af94bfae636",
@@ -3567,12 +4966,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "4:37",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0068
+      "storyRank": 0.0061
     },
     {
       "id": "tb_vid_238b0f22dd5b",
@@ -3584,6 +4984,7 @@
       "publishedAt": "2026-11-19T18:00:00.000Z",
       "url": "https://www.buccaneers.com/video/bucs-move-on-to-the-motor-city-bucs-insider",
       "externalVideoUrl": "https://www.buccaneers.com/video/bucs-move-on-to-the-motor-city-bucs-insider",
+      "duration": "20:10",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3608,8 +5009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0265,
-      "duration": "20:10"
+      "storyRank": 0.0241
     },
     {
       "id": "tb_rss_04dd3b93edfe",
@@ -3643,39 +5043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
-    },
-    {
-      "id": "tb_pwire_4567750_50520521",
-      "type": "article",
-      "title": "A look at wide receivers and tight ends who have become start-worthy, and others you should expect less from.",
-      "summary": "With the fantasy football trade deadline looming (Dec. 2), I'll have a column next week on the top candidates to move. So, to build up to the deadline, this is a good opportunity to write about my current trust levels wi",
-      "publishedAt": "2026-11-19T14:13:16.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4567750/emeka-egbuka#:~:text=A%20look%20at%20wide%20receivers%20and%20tight",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Matt Bowen",
-      "author": "Matt Bowen",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4567750/emeka-egbuka#:~:text=A%20look%20at%20wide%20receivers%20and%20tight",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0236
     },
     {
       "id": "tb_vid_f10da9dc5c0a",
@@ -3687,6 +5055,7 @@
       "publishedAt": "2026-11-19T12:00:00.000Z",
       "url": "https://www.buccaneers.com/video/tampa-bay-buccaneers-50th-anniversary-limited-edition-opus",
       "externalVideoUrl": "https://www.buccaneers.com/video/tampa-bay-buccaneers-50th-anniversary-limited-edition-opus",
+      "duration": "1:03",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3711,8 +5080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0251,
-      "duration": "1:03"
+      "storyRank": 0.0228
     },
     {
       "id": "tb_rss_5e70146bc6fd",
@@ -3746,7 +5114,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0246
+      "storyRank": 0.0225
+    },
+    {
+      "id": "tb_yts_tWyhLVdZCtg",
+      "type": "video",
+      "videoId": "tWyhLVdZCtg",
+      "embeddable": false,
+      "title": "Tampa Bay Buccaneers vs Detroit Lions | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "10:36",
+      "imageUrl": "https://i.ytimg.com/vi/tWyhLVdZCtg/hqdefault.jpg",
+      "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-19T07:26:57.114Z",
+      "url": "https://www.youtube.com/watch?v=tWyhLVdZCtg",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=tWyhLVdZCtg",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
     },
     {
       "id": "tb_rss_d573bace9482",
@@ -3789,7 +5196,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0204
     },
     {
       "id": "tb_vid_7bbfcab98571",
@@ -3801,6 +5208,7 @@
       "publishedAt": "2026-11-18T20:51:00.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-on-baker-mayfield-outlook-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-on-baker-mayfield-outlook-press-conference",
+      "duration": "11:16",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3834,47 +5242,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022,
-      "duration": "11:16"
-    },
-    {
-      "id": "tb_yts_tWyhLVdZCtg",
-      "type": "video",
-      "videoId": "tWyhLVdZCtg",
-      "embeddable": false,
-      "title": "Tampa Bay Buccaneers vs Detroit Lions | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "10:36",
-      "imageUrl": "https://i.ytimg.com/vi/tWyhLVdZCtg/hqdefault.jpg",
-      "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:49:52.400Z",
-      "url": "https://www.youtube.com/watch?v=tWyhLVdZCtg",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=tWyhLVdZCtg",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0202
     },
     {
       "id": "tb_vid_7a3dbfb7489c",
@@ -3886,6 +5254,7 @@
       "publishedAt": "2026-11-18T15:00:00.000Z",
       "url": "https://www.buccaneers.com/video/tykee-smith-cody-mauch-preparing-rest-season-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/tykee-smith-cody-mauch-preparing-rest-season-press-conference",
+      "duration": "5:57",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -3927,8 +5296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021,
-      "duration": "5:57"
+      "storyRank": 0.0193
     },
     {
       "id": "tb_rss_d025ecec36e8",
@@ -3962,7 +5330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.019
     },
     {
       "id": "tb_pfr_570423ef835d",
@@ -4004,7 +5372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0191
+      "storyRank": 0.0177
     },
     {
       "id": "tb_rss_4a89c050d6d3",
@@ -4047,7 +5415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0179
+      "storyRank": 0.0166
     },
     {
       "id": "tb_rss_a510d7c86754",
@@ -4081,7 +5449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0165
     },
     {
       "id": "tb_rss_54441f423df0",
@@ -4115,7 +5483,63 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0163
+    },
+    {
+      "id": "tb_yts_En8Lxg_vMMo",
+      "type": "video",
+      "videoId": "En8Lxg_vMMo",
+      "embeddable": true,
+      "title": "Alex Anzalone & Al-Quadin Muhammad on Return to Detroit | Press Conference | Tampa Bay Buccaneers",
+      "summary": "",
+      "duration": "13:41",
+      "imageUrl": "https://i.ytimg.com/vi/En8Lxg_vMMo/hqdefault.jpg",
+      "imageAlt": "Alex Anzalone & Al-Quadin Muhammad on Return to Detroit | Press Conference | Tampa Bay Buccaneers",
+      "publishedAt": "2026-11-17T07:26:57.115Z",
+      "url": "https://www.youtube.com/watch?v=En8Lxg_vMMo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=En8Lxg_vMMo",
+      "channel": "Tampa Bay Buccaneers",
+      "outletId": "buccaneers_official",
+      "outletName": "Tampa Bay Buccaneers",
+      "reporterId": "buccaneers_official",
+      "reporterName": "Tampa Bay Buccaneers",
+      "author": "Tampa Bay Buccaneers",
+      "authorHandle": "@buccaneers",
+      "authorProfileUrl": "https://www.youtube.com/@buccaneers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "3043107",
+          "name": "Alex Anzalone",
+          "shortName": "A. Anzalone",
+          "position": "LB",
+          "jersey": 34,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043107.png"
+        },
+        {
+          "id": "3051942",
+          "name": "Al-Quadin Muhammad",
+          "shortName": "A. Muhammad",
+          "position": "LB",
+          "jersey": 97,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051942.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0155
     },
     {
       "id": "tb_pfr_7159479bf80f",
@@ -4148,7 +5572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0146
     },
     {
       "id": "tb_vid_8bf95dfc1bd2",
@@ -4160,6 +5584,7 @@
       "publishedAt": "2026-11-16T23:00:00.000Z",
       "url": "https://www.buccaneers.com/video/chase-mclaughlin-perfecting-the-routine-bucs-players-table",
       "externalVideoUrl": "https://www.buccaneers.com/video/chase-mclaughlin-perfecting-the-routine-bucs-players-table",
+      "duration": "50:23",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4193,8 +5618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157,
-      "duration": "50:23"
+      "storyRank": 0.0147
     },
     {
       "id": "tb_rss_126add23431e",
@@ -4237,7 +5661,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0145
     },
     {
       "id": "tb_rss_2db6ff022a09",
@@ -4288,7 +5712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0145
     },
     {
       "id": "tb_rss_e314669a29ae",
@@ -4331,7 +5755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0145
     },
     {
       "id": "tb_vid_fd399165d73a",
@@ -4343,6 +5767,7 @@
       "publishedAt": "2026-11-16T20:13:20.000Z",
       "url": "https://www.buccaneers.com/video/alex-anzalone-al-quadin-muhammad-on-return-to-detroit-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/alex-anzalone-al-quadin-muhammad-on-return-to-detroit-press-conference",
+      "duration": "13:40",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4384,8 +5809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154,
-      "duration": "13:40"
+      "storyRank": 0.0144
     },
     {
       "id": "tb_bsky_8dc5ec764118",
@@ -4424,7 +5848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0135
     },
     {
       "id": "tb_pfr_444e3a165aeb",
@@ -4457,7 +5881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0149
+      "storyRank": 0.0139
     },
     {
       "id": "tb_tx_0a1b5e64a45c",
@@ -4501,7 +5925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0134
     },
     {
       "id": "tb_pfr_2801768185c8",
@@ -4543,7 +5967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0137
+      "storyRank": 0.0129
     },
     {
       "id": "tb_pfr_cccdbcf36e07",
@@ -4585,51 +6009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
-    },
-    {
-      "id": "tb_espn_0094a682d16ef",
-      "type": "article",
-      "title": "Sources: Baker Mayfield's status uncertain for Bucs' Week 11 game vs. Lions",
-      "summary": "Baker Mayfield's status against the Lions in Week 11 is in question because of an injury he suffered to his foot and ankle area, sources told NFL Network.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0921/r1719853_1296x729_16-9.jpg",
-      "imageCaption": "Baker Mayfield [1296x729]",
-      "imageAlt": "Sources: Baker Mayfield's status uncertain for Bucs' Week 11 game vs. Lions",
-      "publishedAt": "2026-11-15T16:43:34.000Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50486637/sources-baker-mayfield-status-uncertain-vs-lions",
-      "outletId": "nfl_network",
-      "outletName": "ESPN",
-      "reporterId": "mike_garafolo",
-      "reporterName": "Mike Garafolo",
-      "author": "Mike Garafolo",
-      "authorHandle": "@MikeGarafolo",
-      "authorProfileUrl": "https://x.com/MikeGarafolo",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [
-        {
-          "id": "3052587",
-          "name": "Baker Mayfield",
-          "shortName": "B. Mayfield",
-          "position": "QB",
-          "jersey": 6,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052587.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 96,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0121
     },
     {
       "id": "tb_vid_1f1b411076a1",
@@ -4641,6 +6021,7 @@
       "publishedAt": "2026-11-14T19:00:00.000Z",
       "url": "https://www.buccaneers.com/video/izzy-hageman-2026-goal-getters",
       "externalVideoUrl": "https://www.buccaneers.com/video/izzy-hageman-2026-goal-getters",
+      "duration": "0:46",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4665,8 +6046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116,
-      "duration": "0:46"
+      "storyRank": 0.011
     },
     {
       "id": "tb_vid_651af7de1f7c",
@@ -4678,6 +6058,7 @@
       "publishedAt": "2026-11-14T15:31:00.000Z",
       "url": "https://www.buccaneers.com/video/tampa-bay-chef-series-spotlight-chef-joseph-palau-of-flan-factory",
       "externalVideoUrl": "https://www.buccaneers.com/video/tampa-bay-chef-series-spotlight-chef-joseph-palau-of-flan-factory",
+      "duration": "1:00",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4702,8 +6083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114,
-      "duration": "1:00"
+      "storyRank": 0.0108
     },
     {
       "id": "tb_vid_6cd03fc26adc",
@@ -4715,6 +6095,7 @@
       "publishedAt": "2026-11-13T15:00:00.000Z",
       "url": "https://www.buccaneers.com/video/tony-castricone-best-calls-2026-highlights",
       "externalVideoUrl": "https://www.buccaneers.com/video/tony-castricone-best-calls-2026-highlights",
+      "duration": "7:00",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4739,8 +6120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101,
-      "duration": "7:00"
+      "storyRank": 0.0096
     },
     {
       "id": "tb_vid_f7df9496a0ad",
@@ -4752,6 +6132,7 @@
       "publishedAt": "2026-11-13T10:00:00.000Z",
       "url": "https://www.buccaneers.com/video/the-defense-identity-dominate-the-todd-bowles-show",
       "externalVideoUrl": "https://www.buccaneers.com/video/the-defense-identity-dominate-the-todd-bowles-show",
+      "duration": "20:31",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4776,8 +6157,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099,
-      "duration": "20:31"
+      "storyRank": 0.0094
     },
     {
       "id": "tb_pfr_8c297f35434f",
@@ -4810,7 +6190,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0087
     },
     {
       "id": "tb_vid_cd55225bfbb9",
@@ -4822,6 +6202,7 @@
       "publishedAt": "2026-11-12T20:00:00.000Z",
       "url": "https://www.buccaneers.com/video/bucky-irving-best-plays-2026-highlights",
       "externalVideoUrl": "https://www.buccaneers.com/video/bucky-irving-best-plays-2026-highlights",
+      "duration": "2:55",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -4855,8 +6236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092,
-      "duration": "2:55"
+      "storyRank": 0.0088
     },
     {
       "id": "tb_rss_60eb4eb76063",
@@ -4907,7 +6287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0087
     },
     {
       "id": "tb_vid_b3ceeeedf07d",
@@ -4952,7 +6332,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.009
+      "storyRank": 0.0086
     },
     {
       "id": "tb_rss_c4594931e27a",
@@ -4986,7 +6366,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0178
     },
     {
       "id": "tb_vid_6b286706aa56",
@@ -4998,6 +6378,7 @@
       "publishedAt": "2026-11-11T21:28:32.000Z",
       "url": "https://www.buccaneers.com/video/every-bucs-takeaways-entering-the-bye-week-2026-highlights",
       "externalVideoUrl": "https://www.buccaneers.com/video/every-bucs-takeaways-entering-the-bye-week-2026-highlights",
+      "duration": "6:38",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5022,8 +6403,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084,
-      "duration": "6:38"
+      "storyRank": 0.008
     },
     {
       "id": "tb_vid_df6c70b256f9",
@@ -5059,7 +6439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0083
+      "storyRank": 0.008
     },
     {
       "id": "tb_vid_1776af545dfe",
@@ -5071,6 +6451,7 @@
       "publishedAt": "2026-11-10T23:00:00.000Z",
       "url": "https://www.buccaneers.com/video/zac-robinson-on-building-offensive-cohesion-the-coaches-room",
       "externalVideoUrl": "https://www.buccaneers.com/video/zac-robinson-on-building-offensive-cohesion-the-coaches-room",
+      "duration": "31:32",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5095,8 +6476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0077,
-      "duration": "31:32"
+      "storyRank": 0.0074
     },
     {
       "id": "tb_vid_09fa02e6b5f2",
@@ -5108,6 +6488,7 @@
       "publishedAt": "2026-11-10T18:42:58.000Z",
       "url": "https://www.buccaneers.com/video/every-bucs-touchdown-entering-the-bye-week-2026-highlights",
       "externalVideoUrl": "https://www.buccaneers.com/video/every-bucs-touchdown-entering-the-bye-week-2026-highlights",
+      "duration": "3:43",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5132,8 +6513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075,
-      "duration": "3:43"
+      "storyRank": 0.0072
     },
     {
       "id": "tb_tx_38386ef4ca33",
@@ -5168,7 +6548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.007
     },
     {
       "id": "tb_vid_00ac70801ea9",
@@ -5180,6 +6560,7 @@
       "publishedAt": "2026-11-09T18:22:21.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-discusses-trade-deadline-strategy-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-discusses-trade-deadline-strategy-press-conference",
+      "duration": "10:08",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5204,8 +6585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0069,
-      "duration": "10:08"
+      "storyRank": 0.0066
     },
     {
       "id": "tb_vid_6bc67d2e2254",
@@ -5217,6 +6597,7 @@
       "publishedAt": "2026-11-09T05:30:00.000Z",
       "url": "https://www.buccaneers.com/video/full-game-highlights-bucs-bears-loss-score-27-24-week-9",
       "externalVideoUrl": "https://www.buccaneers.com/video/full-game-highlights-bucs-bears-loss-score-27-24-week-9",
+      "duration": "4:50",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5241,8 +6622,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "4:50"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_cff02b6f0061",
@@ -5254,6 +6634,7 @@
       "publishedAt": "2026-11-09T05:19:00.000Z",
       "url": "https://www.buccaneers.com/video/baker-mayfield-result-vs-chicago-press-conference-tampa-bay-buccaneers",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-result-vs-chicago-press-conference-tampa-bay-buccaneers",
+      "duration": "3:11",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5287,8 +6668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "3:11"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_8f646fa58b36",
@@ -5300,6 +6680,7 @@
       "publishedAt": "2026-11-09T05:17:10.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-we-have-to-capitalize-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-we-have-to-capitalize-press-conference",
+      "duration": "4:31",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5333,8 +6714,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "4:31"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_96396157410f",
@@ -5346,6 +6726,7 @@
       "publishedAt": "2026-11-09T05:15:06.000Z",
       "url": "https://www.buccaneers.com/video/bucky-irving-zyon-mccollum-more-on-game-vs-chicago-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/bucky-irving-zyon-mccollum-more-on-game-vs-chicago-press-conference",
+      "duration": "6:59",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5403,8 +6784,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "6:59"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_b94eac85f2e3",
@@ -5416,6 +6796,7 @@
       "publishedAt": "2026-11-09T04:37:50.000Z",
       "url": "https://www.buccaneers.com/video/baker-2-pt-conversion-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-2-pt-conversion-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:20",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5449,8 +6830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "0:20"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_c326358ae1e8",
@@ -5462,6 +6842,7 @@
       "publishedAt": "2026-11-09T04:36:44.000Z",
       "url": "https://www.buccaneers.com/video/bucky-4th-qtr-td-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/bucky-4th-qtr-td-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:26",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5495,8 +6876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "0:26"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_430780133621",
@@ -5508,6 +6888,7 @@
       "publishedAt": "2026-11-09T04:33:12.000Z",
       "url": "https://www.buccaneers.com/video/scott-melifonwu-turnover-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/scott-melifonwu-turnover-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:36",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5549,8 +6930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066,
-      "duration": "0:36"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_8e8324fddb94",
@@ -5562,6 +6942,7 @@
       "publishedAt": "2026-11-09T03:48:51.000Z",
       "url": "https://www.buccaneers.com/video/anzalone-int-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/anzalone-int-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:40",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5603,8 +6984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:40"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_4389f8307256",
@@ -5616,6 +6996,7 @@
       "publishedAt": "2026-11-09T03:22:49.000Z",
       "url": "https://www.buccaneers.com/video/bucky-rush-td-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/bucky-rush-td-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:16",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5649,8 +7030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:16"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_467d4c7d30b4",
@@ -5662,6 +7042,7 @@
       "publishedAt": "2026-11-09T03:19:20.000Z",
       "url": "https://www.buccaneers.com/video/baker-tez-58-yds-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-tez-58-yds-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:40",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5703,8 +7084,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:40"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_94d149c10841",
@@ -5716,6 +7096,7 @@
       "publishedAt": "2026-11-09T02:53:55.000Z",
       "url": "https://www.buccaneers.com/video/zyon-int-2-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/zyon-int-2-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:40",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5749,8 +7130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:40"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_4d14dc97df10",
@@ -5762,6 +7142,7 @@
       "publishedAt": "2026-11-09T02:27:21.000Z",
       "url": "https://www.buccaneers.com/video/zyon-mccollum-int-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/zyon-mccollum-int-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:24",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5795,8 +7176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:24"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_80f697649488",
@@ -5808,6 +7188,7 @@
       "publishedAt": "2026-11-09T02:17:33.000Z",
       "url": "https://www.buccaneers.com/video/tykee-smith-int-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/tykee-smith-int-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:21",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5841,8 +7222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:21"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_0b0cdc501d9d",
@@ -5854,6 +7234,7 @@
       "publishedAt": "2026-11-09T01:59:32.000Z",
       "url": "https://www.buccaneers.com/video/baker-scramble-pass-bucs-bears-nfl-season-week-9-big-play-2026",
       "externalVideoUrl": "https://www.buccaneers.com/video/baker-scramble-pass-bucs-bears-nfl-season-week-9-big-play-2026",
+      "duration": "0:27",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5895,8 +7276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065,
-      "duration": "0:27"
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_4b42b8b492d7",
@@ -5908,6 +7288,7 @@
       "publishedAt": "2026-11-08T14:00:00.000Z",
       "url": "https://www.buccaneers.com/video/under-the-sunday-night-lights-bucs-vs-bears-game-trailer",
       "externalVideoUrl": "https://www.buccaneers.com/video/under-the-sunday-night-lights-bucs-vs-bears-game-trailer",
+      "duration": "0:51",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5932,8 +7313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062,
-      "duration": "0:51"
+      "storyRank": 0.006
     },
     {
       "id": "tb_vid_f92810653d09",
@@ -5945,6 +7325,7 @@
       "publishedAt": "2026-11-06T17:33:37.000Z",
       "url": "https://www.buccaneers.com/video/todd-bowles-on-upcoming-snf-game-vs-chicago-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-on-upcoming-snf-game-vs-chicago-press-conference",
+      "duration": "1:52",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -5969,8 +7350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054,
-      "duration": "1:52"
+      "storyRank": 0.0052
     },
     {
       "id": "tb_vid_91c47f98012a",
@@ -5982,6 +7362,7 @@
       "publishedAt": "2026-11-05T21:11:00.000Z",
       "url": "https://www.buccaneers.com/video/bucs-win-the-mud-bowl-bucs-insider",
       "externalVideoUrl": "https://www.buccaneers.com/video/bucs-win-the-mud-bowl-bucs-insider",
+      "duration": "20:13",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -6006,8 +7387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051,
-      "duration": "20:13"
+      "storyRank": 0.0049
     },
     {
       "id": "tb_vid_e762058139bf",
@@ -6019,6 +7399,7 @@
       "publishedAt": "2026-11-05T21:00:00.000Z",
       "url": "https://www.buccaneers.com/video/chase-mclaughlin-jacob-parrish-more-on-locking-in-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/chase-mclaughlin-jacob-parrish-more-on-locking-in-press-conference",
+      "duration": "10:44",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -6068,8 +7449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051,
-      "duration": "10:44"
+      "storyRank": 0.0049
     },
     {
       "id": "tb_vid_1f57cdf4aa76",
@@ -6081,6 +7461,7 @@
       "publishedAt": "2026-11-05T20:14:29.000Z",
       "url": "https://www.buccaneers.com/video/george-edwards-on-performing-on-sunday-night-football-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/george-edwards-on-performing-on-sunday-night-football-press-conference",
+      "duration": "3:22",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -6105,8 +7486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051,
-      "duration": "3:22"
+      "storyRank": 0.0049
     },
     {
       "id": "tb_vid_bcdaba3f3c56",
@@ -6118,6 +7498,7 @@
       "publishedAt": "2026-11-05T16:30:00.000Z",
       "url": "https://www.buccaneers.com/video/zac-robinson-setting-tempo-trenches-press-conference",
       "externalVideoUrl": "https://www.buccaneers.com/video/zac-robinson-setting-tempo-trenches-press-conference",
+      "duration": "9:36",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -6142,8 +7523,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005,
-      "duration": "9:36"
+      "storyRank": 0.0049
     },
     {
       "id": "tb_vid_a2c9b7abf915",
@@ -6155,6 +7535,7 @@
       "publishedAt": "2026-11-05T15:11:02.000Z",
       "url": "https://www.buccaneers.com/video/gelling-at-the-right-time-the-todd-bowles-show",
       "externalVideoUrl": "https://www.buccaneers.com/video/gelling-at-the-right-time-the-todd-bowles-show",
+      "duration": "19:53",
       "outletId": "buccaneers_official",
       "outletName": "buccaneers.com Video",
       "reporterId": "buccaneers_official",
@@ -6179,82 +7560,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005,
-      "duration": "19:53"
+      "storyRank": 0.0049
     },
     {
-      "id": "tb_vid_b084cee964a5",
+      "id": "tb_yt__ztOU6p67Zo",
       "type": "video",
-      "title": "Todd Bowles Mic'd Up vs. the Falcons",
-      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles was mic'd up for our Week 8 matchup vs. the Atlanta Falcons. Hear from Coach Bowles as he orchestrates the game plan in the rain and shuts out a division rival.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/b2pg0y2ee2ht7xgqkpos.png",
-      "imageAlt": "Todd Bowles Mic'd Up vs. the Falcons",
-      "publishedAt": "2026-11-04T23:00:00.000Z",
-      "url": "https://www.buccaneers.com/video/todd-bowles-mic-d-up-vs-the-falcons-2026",
-      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-mic-d-up-vs-the-falcons-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "category": "film",
+      "videoId": "_ztOU6p67Zo",
+      "embeddable": true,
+      "title": "Bears STATEMENT game on Monday night, Bears vs. Buccaneers Preview | PFF NFL Show",
+      "summary": "Jac & Cris talk about the Bears win against the defending Super Bowl Champion Seattle Seahawks in their own stadium. The Buccaneers are coming off a rain-soaked game in which they won without completing a single pass. Th",
+      "imageUrl": "https://i.ytimg.com/vi/_ztOU6p67Zo/hqdefault.jpg",
+      "imageAlt": "Bears STATEMENT game on Monday night, Bears vs. Buccaneers Preview | PFF NFL Show",
+      "publishedAt": "2026-11-03T23:55:55.000Z",
+      "url": "https://www.youtube.com/watch?v=_ztOU6p67Zo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=_ztOU6p67Zo",
+      "channel": "Pro Football Focus",
+      "outletId": "pff_official_yt",
+      "outletName": "Pro Football Focus",
+      "reporterId": "pff_official_yt",
+      "reporterName": "Pro Football Focus",
+      "author": "Pro Football Focus",
+      "authorHandle": "@ProFootballFocus",
+      "authorProfileUrl": "https://x.com/PFF",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "youtube_atom",
       "mentionedPlayers": [],
-      "embeddable": false,
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 90,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048,
-      "duration": "3:46"
-    },
-    {
-      "id": "tb_vid_6034bd5a2e17",
-      "type": "video",
-      "title": "Rondé Barber Breaks Down The Best Run Game in the NFL | Film Session",
-      "summary": "Hall of Fame Buccaneers DB Rondé Barber breaks down some key moments from the Bucs' game vs. the Atlanta Falcons in Week 8 of the 2026 NFL Season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/nqn7zsmq6idtlplruab5.jpg",
-      "imageAlt": "Rondé Barber Breaks Down The Best Run Game in the NFL | Film Session",
-      "publishedAt": "2026-11-04T22:03:29.000Z",
-      "url": "https://www.buccaneers.com/video/ronde-barber-breaks-down-the-best-run-game-in-the-nfl-film-session",
-      "externalVideoUrl": "https://www.buccaneers.com/video/ronde-barber-breaks-down-the-best-run-game-in-the-nfl-film-session",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0048,
-      "duration": "6:42"
+      "storyRank": 0.0011
     },
     {
       "id": "tb_yt_6evN6yrebQk",
@@ -6301,8 +7645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015,
-      "duration": "32:40"
+      "storyRank": 0.0015
     },
     {
       "id": "tb_pwire_4686334_64909028",

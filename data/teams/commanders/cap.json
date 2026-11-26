@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:41.142Z",
+  "updatedAt": "2026-11-26T07:26:40.627Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/washington-commanders",
   "spotracUrl": "https://www.spotrac.com/nfl/washington-commanders/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 328168366,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 305168276,
+      "totalCapLiabilities": 305008326,
       "top51": 263742627,
-      "teamCapSpace": 23000090,
-      "otcRawTeamCapSpace": 23000090,
-      "effectiveCapSpace": 23000090,
-      "activeCapSpending": 276528557,
-      "offenseSpend": 125780914,
+      "teamCapSpace": 23160040,
+      "otcRawTeamCapSpace": 23160040,
+      "effectiveCapSpace": 23160040,
+      "activeCapSpending": 276080385,
+      "offenseSpend": 125332742,
       "defenseSpend": 146865976,
       "specialSpend": 3881667,
-      "deadMoneyTotal": 28639719,
+      "deadMoneyTotal": 28927941,
       "injuredReserveTotal": 83341256,
-      "practiceSquadTotal": 4322944,
+      "practiceSquadTotal": 3874772,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 87664200,
+      "reserveAndPsTotal": 87216028,
       "topDeadMoneyEntries": [
         {
           "name": "Deebo Samuel",
@@ -85,6 +85,13 @@
           "otcUrl": "https://overthecap.com/player/jerome-ford/10201/"
         },
         {
+          "name": "Craig Reynolds",
+          "capCharge": 288222,
+          "slug": "craig-reynolds",
+          "otcId": "8540",
+          "otcUrl": "https://overthecap.com/player/craig-reynolds/8540/"
+        },
+        {
           "name": "Kaytron Allen",
           "capCharge": 272654,
           "slug": "kaytron-allen",
@@ -125,17 +132,10 @@
           "slug": "van-jefferson",
           "otcId": "8797",
           "otcUrl": "https://overthecap.com/player/van-jefferson/8797/"
-        },
-        {
-          "name": "Trenton Scott",
-          "capCharge": 187500,
-          "slug": "trenton-scott",
-          "otcId": "7337",
-          "otcUrl": "https://overthecap.com/player/trenton-scott/7337/"
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 79
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
@@ -252,8 +252,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/washington-commanders",
-    "summary": "Washington Commanders hold $23.00M in 2026 OverTheCap space ($23.00M effective) and +$70.18M projected for 2027.",
-    "executiveSummary": "Adam Peters and the Commanders front office hold $23.00M in gross 2026 cap space ($23.00M effective), while 2027 currently projects at +$70.18M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($16M–$20M target) helps manage scheduled cap escalations for Sam Cosmi, Dorance Armstrong, K'Lavon Chaisson, Frankie Luvu.",
+    "summary": "Washington Commanders hold $23.16M in 2026 OverTheCap space ($23.16M effective) and +$70.18M projected for 2027.",
+    "executiveSummary": "Adam Peters and the Commanders front office hold $23.16M in gross 2026 cap space ($23.16M effective), while 2027 currently projects at +$70.18M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($16M–$20M target) helps manage scheduled cap escalations for Sam Cosmi, Dorance Armstrong, K'Lavon Chaisson, Frankie Luvu.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($16M–$20M Target vs. +$70.18M 2027 Projection)",

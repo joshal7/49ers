@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:48:48.890Z",
+  "updatedAt": "2026-11-26T07:24:55.416Z",
   "windowDays": 7,
-  "totalEpisodes": 28,
+  "totalEpisodes": 25,
   "shows": [
     {
       "id": "cardinals_locked_on_cardinals",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/21b2e1/feeds.simplecast.com/SRxnlfNZ",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cardinals-daily-podcast-on-the-arizona-cardinals/id1161791386?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/bc/53/19/bc5319d3-6e40-d59f-a8d4-4c37ed93cc19/mza_5862787992261331334.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "cardinals_arizona_cardinals_podcasts",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/484044ef-7968-4466-8867-aeac01359d01/ad6ea3ae-0e78-456a-979a-aeac01359d14/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/arizona-cardinals-podcasts/id333230043?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/e8/5c/0a/e85c0a2c-5d84-bb90-d18b-747805bc8270/mza_10406638611627867487.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "cardinals_phnx_arizona_cardinals_podcast",
@@ -37,7 +37,7 @@
       "feedUrl": "https://rss.pdrl.fm/76e100/feeds.simplecast.com/stOiuixb",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/phnx-arizona-cardinals-podcast/id1584495230?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/68/fd/bf/68fdbfad-039f-15d9-f8bc-7ee88020aeb9/mza_8605367096699969998.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "cardinals_seein_red",
@@ -552,66 +552,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/arizona-cardinals-podcasts/id333230043?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/484044ef-7968-4466-8867-aeac01359d01/ad6ea3ae-0e78-456a-979a-aeac01359d14/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/e091e12f-982d-42c6-a368-aeac01359f21/f4d8cd71-46d3-4043-82a0-b507018075a8/audio.mp3?utm_source=Podcast&in_playlist=ad6ea3ae-0e78-456a-979a-aeac01359d14"
-    },
-    {
-      "id": "pod_cardinals_locked_on_cardinals_1000802868833",
-      "trackId": 1000802868833,
-      "collectionId": 1161791386,
-      "showId": "cardinals_locked_on_cardinals",
-      "showName": "Locked On Cardinals",
-      "showFullTitle": "Locked On Cardinals - Daily Podcast On The Arizona Cardinals",
-      "hosts": "Locked On Podcast Network, Alex Clancy",
-      "network": "Locked On Podcast Network, Alex Clancy",
-      "title": "Arizona Cardinals MUST Do THIS Against Kansas City Chiefs",
-      "summary": "The conversation focused on a Week 11 NFL matchup between two teams currently on opposite trajectories. One team is seeking momentum before a brutal stretch of games, while the other desperately needs to regain its footing. A key theme that emerged was the contrasting situat",
-      "publishedAt": "2026-11-19T06:00:00.000Z",
-      "durationMinutes": 30,
-      "durationDisplay": "30 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/28/3c/de/283cdef8-151a-e0a7-5eec-d30b4ce4f6f1/mza_16722413214456425948.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/arizona-cardinals-must-do-this-against-kansas-city-chiefs/id1161791386?i=1000802868833&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cardinals-daily-podcast-on-the-arizona-cardinals/id1161791386?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/21b2e1/feeds.simplecast.com/SRxnlfNZ",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/21b2e1/lockedon.simplecastaudio.com/0831a005-6f5d-4f43-bcfd-48944f8a9575/episodes/dcdcf162-bb0c-4286-a42d-56e50f4cbf10/audio/128/default.mp3?aid=rss_feed&awCollectionId=0831a005-6f5d-4f43-bcfd-48944f8a9575&awEpisodeId=dcdcf162-bb0c-4286-a42d-56e50f4cbf10&feed=SRxnlfNZ"
-    },
-    {
-      "id": "pod_cardinals_phnx_arizona_cardinals_podcast_1000802832667",
-      "trackId": 1000802832667,
-      "collectionId": 1584495230,
-      "showId": "cardinals_phnx_arizona_cardinals_podcast",
-      "showName": "PHNX Arizona Cardinals Podcast",
-      "showFullTitle": "PHNX Arizona Cardinals Podcast",
-      "hosts": "ALLCITY Network, PHNX Sports",
-      "network": "ALLCITY Network, PHNX Sports",
-      "title": "Kurt Warner BREAKS DOWN Carson Beck’s DEBUT And Arizona Cardinals LONG-TERM QB Outlook",
-      "summary": "Kurt Warner BREAKS DOWN Carson Beck’s DEBUT And Arizona Cardinals LONG-TERM QB Outlook. Arizona Cardinals HISTORIC 11-Game Home LOSING STREAK Falls On GM Ossenfort. Rams Fallout: Carson Beck Shows PROMISE While Arizona Cardinals NIGHTMARE Season Continues. Arizona Cardinals ",
-      "publishedAt": "2026-11-19T01:13:12.000Z",
-      "durationMinutes": 82,
-      "durationDisplay": "82 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d3/19/20/d31920ed-279d-b760-3ed4-f1c2f4853800/mza_10989977048367409658.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/kurt-warner-breaks-down-carson-becks-debut-and/id1584495230?i=1000802832667&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/phnx-arizona-cardinals-podcast/id1584495230?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/76e100/feeds.simplecast.com/stOiuixb",
-      "audioStreamUrl": "https://tracking.swap.fm/track/xt6bq09fJCm8CxP7DUGF/pscrb.fm/rss/p/mgln.ai/e/822/claritaspod.com/measure/dts.podtrac.com/redirect.mp3/prfx.byspotify.com/e/injector.simplecastaudio.com/c2150bc9-1fdb-4048-b1a2-9fd6572117e5/episodes/29a2e72f-7cfc-480f-98b3-f9df2dd3f060/audio/128/default.mp3?aid=rss_feed&awCollectionId=c2150bc9-1fdb-4048-b1a2-9fd6572117e5&awEpisodeId=29a2e72f-7cfc-480f-98b3-f9df2dd3f060&feed=stOiuixb"
-    },
-    {
-      "id": "pod_cardinals_arizona_cardinals_podcasts_1000802804873",
-      "trackId": 1000802804873,
-      "collectionId": 333230043,
-      "showId": "cardinals_arizona_cardinals_podcasts",
-      "showName": "Arizona Cardinals Podcasts",
-      "showFullTitle": "Arizona Cardinals Podcasts",
-      "hosts": "Arizona Cardinals",
-      "network": "Arizona Cardinals",
-      "title": "Cardinals Cover 2: What’s The Next Box To Check For Carson Beck?",
-      "summary": "Ep. 1063 - Now that the first start is out of the way, what are some other firsts needed to see from Carson Beck? First touchdown pass? First win? Yes, and yes. Craig Grialou and J.P. Shadrick put the spotlight on Beck ahead of his start this week at Kansas City. Beck looked",
-      "publishedAt": "2026-11-18T23:23:16.000Z",
-      "durationMinutes": 41,
-      "durationDisplay": "41 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/e8/5c/0a/e85c0a2c-5d84-bb90-d18b-747805bc8270/mza_10406638611627867487.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/cardinals-cover-2-whats-the-next-box-to-check-for-carson-beck/id333230043?i=1000802804873&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/arizona-cardinals-podcasts/id333230043?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/484044ef-7968-4466-8867-aeac01359d01/ad6ea3ae-0e78-456a-979a-aeac01359d14/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/e4ea1c59-6de4-49d7-8bf3-aeac01359e2d/9c7f2c14-25c3-4f5f-8cad-b506017e267a/audio.mp3?utm_source=Podcast&in_playlist=ad6ea3ae-0e78-456a-979a-aeac01359d14"
     }
   ]
 }

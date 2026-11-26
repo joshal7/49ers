@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:35.574Z",
+  "updatedAt": "2026-11-26T07:28:04.110Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-york-jets",
   "spotracUrl": "https://www.spotrac.com/nfl/new-york-jets/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 323038428,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 313645620,
+      "totalCapLiabilities": 313167709,
       "top51": 181663358,
-      "teamCapSpace": 9392808,
-      "otcRawTeamCapSpace": 9392808,
-      "effectiveCapSpace": 9392808,
-      "activeCapSpending": 194101337,
-      "offenseSpend": 85798117,
-      "defenseSpend": 104927387,
+      "teamCapSpace": 9870719,
+      "otcRawTeamCapSpace": 9870719,
+      "effectiveCapSpace": 9870719,
+      "activeCapSpending": 193234942,
+      "offenseSpend": 85839489,
+      "defenseSpend": 104019620,
       "specialSpend": 3375833,
-      "deadMoneyTotal": 119544283,
+      "deadMoneyTotal": 119932767,
       "injuredReserveTotal": 13114910,
-      "practiceSquadTotal": 3903265,
+      "practiceSquadTotal": 3651037,
       "pupTotal": 620054,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 17638229,
+      "reserveAndPsTotal": 17386001,
       "topDeadMoneyEntries": [
         {
           "name": "Aaron Rodgers",
@@ -135,21 +135,21 @@
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 81
+      "totalSignedCount": 79
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
       "baseLeagueCap": 327000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 241288991,
-      "top51": 241249986,
-      "teamCapSpace": 85711009,
-      "otcRawTeamCapSpace": 85711009,
-      "effectiveCapSpace": 52908362,
-      "activeCapSpending": 241249986,
+      "totalCapLiabilities": 240168991,
+      "top51": 240129986,
+      "teamCapSpace": 86831009,
+      "otcRawTeamCapSpace": 86831009,
+      "effectiveCapSpace": 53098362,
+      "activeCapSpending": 240129986,
       "offenseSpend": 110058431,
-      "defenseSpend": 129671555,
+      "defenseSpend": 128551555,
       "specialSpend": 1520000,
       "deadMoneyTotal": 39005,
       "injuredReserveTotal": 0,
@@ -161,7 +161,7 @@
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
       "contractedCount": 42,
-      "totalSignedCount": 44
+      "totalSignedCount": 43
     },
     "2028": {
       "year": 2028,
@@ -244,11 +244,11 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/new-york-jets",
-    "summary": "New York Jets hold $9.39M in 2026 OverTheCap space ($9.39M effective) and +$85.71M projected for 2027.",
-    "executiveSummary": "Darren Mougey and the Jets front office hold $9.39M in gross 2026 cap space ($9.39M effective), while 2027 currently projects at +$85.71M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Brandon Stephens, Jamien Sherwood, Breece Hall, Garrett Wilson.",
+    "summary": "New York Jets hold $9.87M in 2026 OverTheCap space ($9.87M effective) and +$86.83M projected for 2027.",
+    "executiveSummary": "Darren Mougey and the Jets front office hold $9.87M in gross 2026 cap space ($9.87M effective), while 2027 currently projects at +$86.83M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$7M target) helps manage scheduled cap escalations for Brandon Stephens, Jamien Sherwood, Breece Hall, Garrett Wilson.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$85.71M 2027 Projection)",
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$7M Target vs. +$86.83M 2027 Projection)",
         "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering New York's projected 2027 ledger without forcing premature void-year restructures."
       },
       {

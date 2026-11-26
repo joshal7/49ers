@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:05.363Z",
+  "updatedAt": "2026-11-26T07:27:13.966Z",
   "week": 12,
   "units": [
     {
@@ -26,9 +26,9 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 2,
-              "playProbabilityPct": 42,
-              "statusBadge": "42% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -48,9 +48,10 @@
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 2,
-              "playProbabilityPct": 42,
-              "statusBadge": "42% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -65,9 +66,9 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 32,
+              "statusBadge": "32% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "4431210",
@@ -82,16 +83,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4361409",
-              "name": "Jahan Dotson",
-              "jersey": 4,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4431210",
               "name": "Beaux Collins",
               "jersey": 88,
@@ -100,9 +91,20 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4361409",
+              "name": "Jahan Dotson",
+              "jersey": 4,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 32,
+              "statusBadge": "32% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "wr3",
@@ -233,9 +235,9 @@
               "jersey": 65,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 37,
+              "statusBadge": "37% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "4682831",
@@ -250,16 +252,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4568510",
-              "name": "Matthew Bergeron",
-              "jersey": 65,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4682831",
               "name": "Kyle Hinton",
               "jersey": 68,
@@ -268,9 +260,20 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4568510",
+              "name": "Matthew Bergeron",
+              "jersey": 65,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 37,
+              "statusBadge": "37% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "c",
@@ -1035,8 +1038,8 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
               "baselineRank": 1,
-              "playProbabilityPct": 45,
-              "statusBadge": "45% • Long Shot",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             },
             {
@@ -1067,8 +1070,8 @@
               "jersey": 0,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
               "baselineRank": 1,
-              "playProbabilityPct": 45,
-              "statusBadge": "45% • Long Shot",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             },
             {
@@ -1105,8 +1108,8 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
               "isAvailable": true
             },
             {
@@ -1147,8 +1150,8 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
               "isAvailable": true
             },
             {
@@ -1264,9 +1267,9 @@
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
+              "playProbabilityPct": 36,
+              "statusBadge": "36% • Long Shot",
+              "isAvailable": false
             },
             {
               "playerId": "4430411",
@@ -1281,16 +1284,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4567111",
-              "name": "DeMarcco Hellams",
-              "jersey": 23,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4430411",
               "name": "Jammie Robinson",
               "jersey": 34,
@@ -1299,9 +1292,20 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4567111",
+              "name": "DeMarcco Hellams",
+              "jersey": 23,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 36,
+              "statusBadge": "36% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "fs",
@@ -1421,8 +1425,8 @@
               "jersey": 33,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431194.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 71,
+              "statusBadge": "71% • GTD",
               "isAvailable": true
             }
           ],
@@ -1443,8 +1447,8 @@
               "jersey": 33,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431194.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 71,
+              "statusBadge": "71% • GTD",
               "isAvailable": true
             }
           ],
@@ -1548,11 +1552,21 @@
           "slotLabel": "PR",
           "baselineChain": [
             {
+              "playerId": "4870612",
+              "name": "Zachariah Branch",
+              "jersey": 17,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false
+            },
+            {
               "playerId": "3917914",
               "name": "Olamide Zaccheaus",
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917914.png",
-              "baselineRank": 1,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1562,20 +1576,10 @@
               "name": "Jahan Dotson",
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4870612",
-              "name": "Zachariah Branch",
-              "jersey": 17,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
               "baselineRank": 3,
-              "playProbabilityPct": 42,
-              "statusBadge": "42% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 32,
+              "statusBadge": "32% • Long Shot",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1584,16 +1588,6 @@
               "name": "Olamide Zaccheaus",
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917914.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4361409",
-              "name": "Jahan Dotson",
-              "jersey": 4,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1604,13 +1598,25 @@
               "name": "Zachariah Branch",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4361409",
+              "name": "Jahan Dotson",
+              "jersey": 4,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png",
               "baselineRank": 3,
-              "playProbabilityPct": 42,
-              "statusBadge": "42% • Long Shot",
-              "isAvailable": true
+              "playProbabilityPct": 32,
+              "statusBadge": "32% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "kr",
@@ -1627,23 +1633,23 @@
               "isAvailable": true
             },
             {
-              "playerId": "3917914",
-              "name": "Olamide Zaccheaus",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917914.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
               "playerId": "4870612",
               "name": "Zachariah Branch",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false
+            },
+            {
+              "playerId": "3917914",
+              "name": "Olamide Zaccheaus",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917914.png",
               "baselineRank": 3,
-              "playProbabilityPct": 42,
-              "statusBadge": "42% • Long Shot",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1673,7 +1679,7 @@
               "name": "Olamide Zaccheaus",
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917914.png",
-              "baselineRank": 2,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1683,10 +1689,11 @@
               "name": "Zachariah Branch",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 42,
-              "statusBadge": "42% • Long Shot",
-              "isAvailable": true
+              "baselineRank": 2,
+              "playProbabilityPct": 23,
+              "statusBadge": "23% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             },
             {
               "playerId": "4241474",

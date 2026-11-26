@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:48:49.807Z",
+  "updatedAt": "2026-11-26T07:24:58.258Z",
   "week": 12,
   "units": [
     {
@@ -579,11 +579,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4428512",
+              "name": "Kedon Slovis",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
+            },
+            {
               "playerId": "4038524",
               "name": "Gardner Minshew II",
               "jersey": 15,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038524.png",
-              "baselineRank": 4,
+              "baselineRank": 5,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false
@@ -622,11 +632,22 @@
               "demotedDueToInjury": true
             },
             {
+              "playerId": "4428512",
+              "name": "Kedon Slovis",
+              "jersey": null,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
               "playerId": "4038524",
               "name": "Gardner Minshew II",
               "jersey": 15,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038524.png",
-              "baselineRank": 4,
+              "baselineRank": 5,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false,

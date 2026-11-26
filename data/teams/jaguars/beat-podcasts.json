@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:51:17.916Z",
+  "updatedAt": "2026-11-26T07:29:12.913Z",
   "windowDays": 7,
-  "totalEpisodes": 30,
+  "totalEpisodes": 29,
   "shows": [
     {
       "id": "jaguars_locked_on_jaguars",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/5b6f8d/feeds.simplecast.com/BgZ7Brxt",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jaguars-daily-podcast-on-the-jacksonville/id1149175431?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/97/d5/52/97d5520e-dd87-b790-97d5-ba8cb332beda/mza_2880168282870913865.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "jaguars_1010_xl_jax_sports_radio",
@@ -632,26 +632,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jaguars-daily-podcast-on-the-jacksonville/id1149175431?uo=4",
       "feedUrl": "https://rss.pdrl.fm/5b6f8d/feeds.simplecast.com/BgZ7Brxt",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/5b6f8d/lockedon.simplecastaudio.com/6c6e20f2-f5ae-4dd8-bada-2a4e1d881963/episodes/68f04882-4b57-41ee-ad6f-27141cef41d1/audio/128/default.mp3?aid=rss_feed&awCollectionId=6c6e20f2-f5ae-4dd8-bada-2a4e1d881963&awEpisodeId=68f04882-4b57-41ee-ad6f-27141cef41d1&feed=BgZ7Brxt"
-    },
-    {
-      "id": "pod_jaguars_locked_on_jaguars_1000802834037",
-      "trackId": 1000802834037,
-      "collectionId": 1149175431,
-      "showId": "jaguars_locked_on_jaguars",
-      "showName": "Locked On Jaguars",
-      "showFullTitle": "Locked On Jaguars - Daily Podcast On The Jacksonville Jaguars",
-      "hosts": "Locked On Podcast Network, Tony Wiggins",
-      "network": "Locked On Podcast Network, Tony Wiggins",
-      "title": "JAGUARS SQUAD SHOW: A Tougher Test Awaits The Jacksonville Jaguars In The New York Giants",
-      "summary": "Join Rachel Phillips, Kyle Nash and former Jaguars OL Marques Ogden for this week's \"Jaguars Squad Show!\" The Squad preview the Jaguars upcoming game against the Giants and why they provide more challenges than recent opponents. They also discuss if the defense can rebound t",
-      "publishedAt": "2026-11-19T01:22:19.000Z",
-      "durationMinutes": 57,
-      "durationDisplay": "57 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/46/05/d6/4605d62b-b8fd-f003-a83a-596f1f1aacdd/mza_17137907247440512283.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/jaguars-squad-show-a-tougher-test-awaits/id1149175431?i=1000802834037&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jaguars-daily-podcast-on-the-jacksonville/id1149175431?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/5b6f8d/feeds.simplecast.com/BgZ7Brxt",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/5b6f8d/lockedon.simplecastaudio.com/6c6e20f2-f5ae-4dd8-bada-2a4e1d881963/episodes/45a2207b-3a20-4f53-aa5a-4352cbef694b/audio/128/default.mp3?aid=rss_feed&awCollectionId=6c6e20f2-f5ae-4dd8-bada-2a4e1d881963&awEpisodeId=45a2207b-3a20-4f53-aa5a-4352cbef694b&feed=BgZ7Brxt"
     }
   ]
 }

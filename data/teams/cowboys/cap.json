@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:26.043Z",
+  "updatedAt": "2026-11-26T07:40:46.136Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/dallas-cowboys",
   "spotracUrl": "https://www.spotrac.com/nfl/dallas-cowboys/cap/",
@@ -7,26 +7,26 @@
   "years": {
     "2026": {
       "year": 2026,
-      "capCeiling": 331353087,
+      "capCeiling": 331022787,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 314361925,
+      "totalCapLiabilities": 314320819,
       "top51": 253626648,
-      "teamCapSpace": 16991162,
-      "otcRawTeamCapSpace": 16991162,
-      "effectiveCapSpace": 16991162,
-      "activeCapSpending": 264210497,
-      "offenseSpend": 161387416,
-      "defenseSpend": 93839748,
+      "teamCapSpace": 16701968,
+      "otcRawTeamCapSpace": 16701968,
+      "effectiveCapSpace": 16701968,
+      "activeCapSpending": 264297841,
+      "offenseSpend": 161099199,
+      "defenseSpend": 93885009,
       "specialSpend": 8983333,
-      "deadMoneyTotal": 50151428,
-      "injuredReserveTotal": 20439959,
-      "practiceSquadTotal": 3830633,
+      "deadMoneyTotal": 50353278,
+      "injuredReserveTotal": 15817606,
+      "practiceSquadTotal": 3587677,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 24270592,
+      "reserveAndPsTotal": 19405283,
       "topDeadMoneyEntries": [
         {
           "name": "Osa Odighizuwa",
@@ -266,8 +266,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/dallas-cowboys",
-    "summary": "Dallas Cowboys hold $16.99M in 2026 OverTheCap space ($16.99M effective) and +$0.30M projected for 2027.",
-    "executiveSummary": "Jerry Jones and the Cowboys front office hold $16.99M in gross 2026 cap space ($16.99M effective), while 2027 currently projects at +$0.30M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($10M–$14M target) helps manage scheduled cap escalations for Dak Prescott, George Pickens, CeeDee Lamb, Tyler Smith.",
+    "summary": "Dallas Cowboys hold $16.70M in 2026 OverTheCap space ($16.70M effective) and +$0.30M projected for 2027.",
+    "executiveSummary": "Jerry Jones and the Cowboys front office hold $16.70M in gross 2026 cap space ($16.70M effective), while 2027 currently projects at +$0.30M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($10M–$14M target) helps manage scheduled cap escalations for Dak Prescott, George Pickens, CeeDee Lamb, Tyler Smith.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($10M–$14M Target vs. +$0.30M 2027 Projection)",
@@ -2784,15 +2784,46 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 4622353,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1800000,
+          "proratedSigning": 1940000,
+          "proratedOption": 0,
+          "proratedBonus": 1940000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 1000000,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 1000000,
+          "guaranteedSalary": 2800000,
           "capNumber": 4622353,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 4622353,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 4622353,
-          "guaranteedSalary": 0
+          "transactions": {
+            "cut": {
+              "deadMoney": 22000000,
+              "capSavings": -17377647
+            },
+            "june_1_cut": {
+              "deadMoney": 14240000,
+              "capSavings": -9617647
+            },
+            "trade": {
+              "deadMoney": 9700000,
+              "capSavings": -5077647
+            },
+            "june_1_trade": {
+              "deadMoney": 1940000,
+              "capSavings": 2682353
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 400000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 400000
+            }
+          }
         },
         "2027": {
           "year": 2027,
@@ -7073,14 +7104,14 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 137500,
+          "baseSalary": 179583,
           "proratedBonus": 0,
           "rosterBonus": 0,
-          "capNumber": 137500,
+          "capNumber": 179583,
           "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 137500,
+          "capSavingsPreJune1": 179583,
           "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 137500,
+          "capSavingsPostJune1": 179583,
           "guaranteedSalary": 0
         }
       }

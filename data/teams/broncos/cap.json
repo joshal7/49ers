@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:51:38.391Z",
+  "updatedAt": "2026-11-26T07:29:50.834Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/denver-broncos",
   "spotracUrl": "https://www.spotrac.com/nfl/denver-broncos/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 303517528,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 295635149,
-      "top51": 275323204,
-      "teamCapSpace": 7882379,
-      "otcRawTeamCapSpace": 7882379,
-      "effectiveCapSpace": 7882379,
-      "activeCapSpending": 287248483,
-      "offenseSpend": 156635474,
+      "totalCapLiabilities": 295494316,
+      "top51": 275100982,
+      "teamCapSpace": 8023212,
+      "otcRawTeamCapSpace": 8023212,
+      "effectiveCapSpace": 8023212,
+      "activeCapSpending": 287107650,
+      "offenseSpend": 156494641,
       "defenseSpend": 126110217,
       "specialSpend": 4502792,
       "deadMoneyTotal": 8386666,
       "injuredReserveTotal": 7962091,
-      "practiceSquadTotal": 3732545,
+      "practiceSquadTotal": 3813934,
       "pupTotal": 569000,
       "nfiTotal": 0,
       "exemptTotal": 0,
-      "suspendedTotal": 0,
-      "reserveAndPsTotal": 12263636,
+      "suspendedTotal": 5777778,
+      "reserveAndPsTotal": 18122803,
       "topDeadMoneyEntries": [
         {
           "name": "Dre Greenlaw",
@@ -134,7 +134,7 @@
           "otcUrl": "https://overthecap.com/player/liljordan-humphrey/8357/"
         }
       ],
-      "contractedCount": 53,
+      "contractedCount": 52,
       "totalSignedCount": 79
     },
     "2027": {
@@ -266,8 +266,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/denver-broncos",
-    "summary": "Denver Broncos hold $7.88M in 2026 OverTheCap space ($7.88M effective) and +$23.25M projected for 2027.",
-    "executiveSummary": "George Paton and the Broncos front office hold $7.88M in gross 2026 cap space ($7.88M effective), while 2027 currently projects at +$23.25M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Mike McGlinchey, Courtland Sutton, Zach Allen, D.J. Jones.",
+    "summary": "Denver Broncos hold $8.02M in 2026 OverTheCap space ($8.02M effective) and +$23.25M projected for 2027.",
+    "executiveSummary": "George Paton and the Broncos front office hold $8.02M in gross 2026 cap space ($8.02M effective), while 2027 currently projects at +$23.25M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Mike McGlinchey, Courtland Sutton, Zach Allen, D.J. Jones.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$23.25M 2027 Projection)",
@@ -2753,106 +2753,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 3697600
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "4241985",
-      "otcId": "8795",
-      "otcSlug": "j-k-dobbins",
-      "otcUrl": "https://overthecap.com/player/j-k-dobbins/8795/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241985/jk-dobbins",
-      "pfrUrl": "https://www.pro-football-reference.com/players/D/DobbJK00.htm",
-      "name": "J.K. Dobbins",
-      "position": "RB",
-      "jersey": 27,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241985.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 4000000,
-          "proratedSigning": 2000000,
-          "proratedOption": 0,
-          "proratedBonus": 2000000,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 4000000,
-          "capNumber": 6000000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 8000000,
-              "capSavings": -2000000
-            },
-            "june_1_cut": {
-              "deadMoney": 6000000,
-              "capSavings": 0
-            },
-            "trade": {
-              "deadMoney": 4000000,
-              "capSavings": 2000000
-            },
-            "june_1_trade": {
-              "deadMoney": 2000000,
-              "capSavings": 4000000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 1392500
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 2228000
-            }
-          }
-        },
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 7000000,
-          "proratedSigning": 2000000,
-          "proratedOption": 0,
-          "proratedBonus": 2000000,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 1000000,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 1000000,
-          "guaranteedSalary": 0,
-          "capNumber": 10000000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 2000000,
-              "capSavings": 8000000
-            },
-            "june_1_cut": {
-              "deadMoney": 2000000,
-              "capSavings": 8000000
-            },
-            "trade": {
-              "deadMoney": 2000000,
-              "capSavings": 8000000
-            },
-            "june_1_trade": {
-              "deadMoney": 2000000,
-              "capSavings": 8000000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 4592000
             }
           }
         }
@@ -7451,6 +7351,64 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4241985",
+      "otcId": "8795",
+      "otcSlug": "j-k-dobbins",
+      "otcUrl": "https://overthecap.com/player/j-k-dobbins/8795/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241985/jk-dobbins",
+      "pfrUrl": "https://www.pro-football-reference.com/players/D/DobbJK00.htm",
+      "name": "J.K. Dobbins",
+      "position": "RB",
+      "jersey": 27,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241985.png",
+      "unit": "Offense",
+      "rosterBucket": "ir",
+      "contractsByYear": {
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 7000000,
+          "proratedSigning": 2000000,
+          "proratedOption": 0,
+          "proratedBonus": 2000000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 1000000,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 1000000,
+          "guaranteedSalary": 0,
+          "capNumber": 10000000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 2000000,
+              "capSavings": 8000000
+            },
+            "june_1_cut": {
+              "deadMoney": 2000000,
+              "capSavings": 8000000
+            },
+            "trade": {
+              "deadMoney": 2000000,
+              "capSavings": 8000000
+            },
+            "june_1_trade": {
+              "deadMoney": 2000000,
+              "capSavings": 8000000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 4592000
             }
           }
         }

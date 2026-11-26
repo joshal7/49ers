@@ -276,13 +276,68 @@ const SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX =
   /\b(salary cap|cap space|cap hit|cap charge|cap number|cap savings|cap relief|cap room|cap table|cap ledger|dead cap|dead money|void years?|option bonus|signing bonus|roster bonus|workout bonus|per-game roster bonus|base salary|prorat(?:ed|ion)|restructure[sd]?|pay cut|contract extension|contract details|contract breakdown|contract terms|multi-year deal|new deal|agreed to terms|franchise tag|transition tag|fifth-year option|5th-year option|bonus forfeiture|bonus repayment|cba (?:article|rollover)|cap rollover|overthecap|over the cap|spotrac)\b/i;
 
 const DEDICATED_PURE_FILM_CHANNEL_REGEX =
-  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|sulligenthub|football academy|alex rollins|qb confidential|kurt warner|baldy|baldynfl|trench warfare|brandon thorn|brandonthornnfl|ted nguyen|fb_filmanalysis|brett kollmann|film room|qbklass|derrik klassen|dan orlovsky|danorlovsky7|throwthedamball|judah fortgang|jrfortgang|ghatz_28|george hatzadony|collinsworthpff|nate_tice|nate tice|benjaminsolak|ben solak|fball_insights|football insights|benbbaldwin|ben baldwin|sethwalder|seth walder|sumersports|tejfbanalytics|pff_moo)\b/i;
+  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|sulligenthub|football academy|alex rollins|qb confidential|kurt warner|study\s*ball|baldy|baldynfl|trench warfare|brandon thorn|brandonthornnfl|ted nguyen|fb_filmanalysis|brett kollmann|bootleg football|film room|qbklass|derrik klassen|dan orlovsky|danorlovsky7|throwthedamball|judah fortgang|jrfortgang|ghatz_28|george hatzadony|collinsworthpff|nate_tice|nate tice|benjaminsolak|ben solak|fball_insights|football insights|benbbaldwin|ben baldwin|sethwalder|seth walder|sumersports|tejfbanalytics|pff_moo|all[_ -]?22[_ -]?films|jackson krueger|matchquarters|cody alexander|unexpected points|kevin cole|coach dan casey|dan casey|check the mic|pro football focus|pff nfl show)\b/i;
 
 const TRUE_FILM_VIDEO_CHANNEL_REGEX =
-  /\b(jonnydel|sulligenthub|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|baldynfl|trench warfare|brandon thorn|ted nguyen|fb_filmanalysis|kurt warner|qb confidential|qbklass|dan orlovsky|all[ _-]?22|nate_tice|nate tice|benjaminsolak|ben solak|throwthedamball|ghatz_28|collinsworthpff|fball_insights|benbbaldwin|sethwalder|sumersports|tejfbanalytics|pff_moo)\b/i;
+  /\b(jonnydel|sulligenthub|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|bootleg football|baldy|baldynfl|trench warfare|brandon thorn|ted nguyen|fb_filmanalysis|kurt warner|qb confidential|study\s*ball|qbklass|dan orlovsky|all[ _-]?22|all[_ -]?22[_ -]?films|jackson krueger|matchquarters|unexpected points|coach dan casey|check the mic|pro football focus|pff nfl show|nate_tice|nate tice|benjaminsolak|ben solak|throwthedamball|ghatz_28|collinsworthpff|fball_insights|benbbaldwin|sethwalder|sumersports|tejfbanalytics|pff_moo)\b/i;
 
 const TRUE_FILM_VIDEO_TITLE_REGEX =
-  /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush(?:er|ing)? breakdown|coverage breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|endzone angle|end[- ]zone angle|coverage efficiency|separation prevented|on[- ]ball grade)\b/i;
+  /\b(all-22|all 22|quick cut|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|playbook|qb film|qb school|study\s*ball|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush(?:er|ing)? breakdown|coverage breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|endzone angle|end[- ]zone angle|coverage efficiency|separation prevented|on[- ]ball grade|sim pressure|creeper|bayesian)\b/i;
+
+const YT_SHORT_LOW_SIGNAL_FLUFF_RE =
+  /\b(getting into the spirit|eating good after|happy thanksgiving|happy halloween|merry christmas|happy holidays|dub city worldwide|faithful showed out|need his hair products|imagine you['’]?re the mike|their smiles right when|good morning|protect homecourt|will [a-z .'-]+ be a hall of famer|hall of famer\?|goat debate|hot take|fantasy football|same[- ]game parlay|best bets?|prop bets?|merch|giveaway|subscribe now)\b/i;
+
+const YT_SHORT_OTHER_SPORT_RE =
+  /\b(warriors|lakers|celtics|kings|nba\b|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series|premier league|champions league|pga tour|ufc\b|wwe\b|homecourt|tip-?off|walk-?off|home run|inning)\b/i;
+
+const YT_SHORT_FILM_CRAFT_RE =
+  /\b(all[- ]?22|quick cut|film study|film breakdown|tape breakdown|pass[- ]?rush|pass protection|coverage|blitz|stunt|creeper|cosell|baldy|scheme|route concept|blocking|trench|epa\b|pff grade|progression|check\s*down|play[- ]?design|dissect)\b/i;
+
+const YT_SHORT_FUN_AUTHENTIC_RE =
+  /\b(mic['’]?d up|wired|locker room|game ball|victory speech|postgame speech|hype speech|sideline|tunnel|jersey|sights and sounds|49\s*hours|behind the scenes|funny|hilarious|laugh(?:s|ing)?|banter|trash talk|celebrat(?:ion|ing)|celly|handshake|teammate|reaction|wholesome|checking .* jersey|prank|joke[sd]?)\b/i;
+
+/**
+ * Selectively gates YouTube Shorts (`UUSH`) so low-signal emoji/holiday/hot-take filler is dropped,
+ * while genuine quick-hitting film clips (`kind: 'film'`) AND authentic on-field / locker-room /
+ * Mic'd Up / player-interaction fun moments (`kind: 'fun'`) pass cleanly.
+ */
+export function classifyYouTubeShortSignal(title = '', description = '', { requireFootballContext = false } = {}) {
+  const cleanTitle = String(title || '').replace(/#shorts\b/gi, '').replace(/\s+/g, ' ').trim();
+  const combined = `${cleanTitle} ${String(description || '').slice(0, 260)}`.trim();
+  if (!cleanTitle || cleanTitle.length < 8) {
+    return { allowed: false, kind: null, reason: 'too_short' };
+  }
+  // Reject emoji/hashtag-only titles with < 3 real words
+  const alphaWords = cleanTitle
+    .replace(/#[a-z0-9_]+/gi, ' ')
+    .replace(/[^a-z0-9\s'-]/gi, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 2);
+  if (alphaWords.length < 3) {
+    return { allowed: false, kind: null, reason: 'emoji_or_hashtag_only' };
+  }
+  if (YT_SHORT_OTHER_SPORT_RE.test(combined)) {
+    return { allowed: false, kind: null, reason: 'other_sport' };
+  }
+  if (YT_SHORT_LOW_SIGNAL_FLUFF_RE.test(cleanTitle)) {
+    return { allowed: false, kind: null, reason: 'low_signal_fluff' };
+  }
+  if (YT_SHORT_FILM_CRAFT_RE.test(combined)) {
+    return { allowed: true, kind: 'film', reason: 'film_craft_short' };
+  }
+  if (YT_SHORT_FUN_AUTHENTIC_RE.test(combined)) {
+    if (
+      requireFootballContext &&
+      !/\b(nfl|49ers|niners|qb|wr|rb|te|lb|cb|ol|dl|coach|shanahan|purdy|kittle|bosa|warner|evans|mccaffrey|touchdown|game|win|practice|field|stadium|football)\b/i.test(
+        combined
+      )
+    ) {
+      return { allowed: false, kind: null, reason: 'missing_football_context' };
+    }
+    return { allowed: true, kind: 'fun', reason: 'authentic_fun_moment' };
+  }
+  return { allowed: false, kind: null, reason: 'unclassified_short' };
+}
 
 const HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX =
   /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|every completed pass|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|top plays|condensed game|end of game|final drive|game-winning|\btd\b|end zone|outlast|thriller|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes|tim ryan|knbr)\b/i;
@@ -384,6 +439,7 @@ export function classifyNewsItemCategory(item = {}) {
     repCategory === 'film' || repCategory === 'film_analyst' || repCategory === 'analytics';
 
   if (item.type === 'video' || Boolean(item.videoId) || Boolean(item.videoStreamUrl)) {
+    if (item.isFunHighlightClip) return 'beat';
     const isTweetStreamClip = Boolean(item.videoStreamUrl) && (item.type === 'tweet' || item.type === 'social');
     const isDedicatedPureFilmChannel =
       (isRegisteredFilmOrAnalyticsCreator || DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor)) &&
@@ -438,6 +494,13 @@ export function classifyNewsItemCategory(item = {}) {
   }
 
   // Genuine X's & O's, All-22 tape, snap-count, EPA/CPOE, PFF grading, and trench breakdowns -> 'film'
+  const isDedicatedFilmAnalyticsArticle =
+    item.type === 'article' &&
+    (DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) ||
+      ['matchquarters', 'unexpected_points', 'coach_dan_casey', 'pff_news'].includes(String(item.outletId || '')));
+  if (isDedicatedFilmAnalyticsArticle && !/\b(power rankings)\b/i.test(title)) {
+    return 'film';
+  }
   const isMockOrOffseasonDraft = /\b(mock draft|draft simulator|7-round|3-round|draft profile|combine)\b/i.test(
     combined
   );

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:49:14.333Z",
+  "updatedAt": "2026-11-26T07:25:50.209Z",
   "windowDays": 7,
-  "totalEpisodes": 25,
+  "totalEpisodes": 24,
   "shows": [
     {
       "id": "bears_locked_on_bears",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/16e145/feeds.simplecast.com/yvyasWU5",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bears-daily-podcast-on-the-chicago-bears/id1141591437?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e9/58/f1/e958f1ce-be6b-c29a-d3ea-8feda1038f15/mza_11238209768261625952.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "bears_chicago_bears_podcasts",
@@ -532,26 +532,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bears-daily-podcast-on-the-chicago-bears/id1141591437?uo=4",
       "feedUrl": "https://rss.pdrl.fm/16e145/feeds.simplecast.com/yvyasWU5",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/16e145/lockedon.simplecastaudio.com/b6f00b5e-4060-4b88-8daf-e623f8204bda/episodes/9a625094-dc38-4276-a917-f297d265f0dd/audio/128/default.mp3?aid=rss_feed&awCollectionId=b6f00b5e-4060-4b88-8daf-e623f8204bda&awEpisodeId=9a625094-dc38-4276-a917-f297d265f0dd&feed=yvyasWU5"
-    },
-    {
-      "id": "pod_bears_locked_on_bears_1000802850519",
-      "trackId": 1000802850519,
-      "collectionId": 1141591437,
-      "showId": "bears_locked_on_bears",
-      "showName": "Locked On Bears",
-      "showFullTitle": "Locked On Bears - Daily Podcast On The Chicago Bears",
-      "hosts": "Locked On Podcast Network, Lorin Cox",
-      "network": "Locked On Podcast Network, Lorin Cox",
-      "title": "BEARS SQUAD SHOW: How many WINS will the Chicago Bears need to win the NFC North??",
-      "summary": "How many wins will Ben Johnson, Caleb Williams the Chicago Bears need to win the NFC North this year? State of the division after key Lions injury and Kirk Cousins return with Vikings. The impact of Kyle Monangai's return, the one game you are looking forward to and more! Su",
-      "publishedAt": "2026-11-19T03:29:52.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/6d/a9/d6/6da9d6e4-11a2-4c18-3b72-ce351f775bd4/mza_2626958918202308246.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bears-squad-show-how-many-wins-will-the-chicago-bears/id1141591437?i=1000802850519&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bears-daily-podcast-on-the-chicago-bears/id1141591437?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/16e145/feeds.simplecast.com/yvyasWU5",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/16e145/lockedon.simplecastaudio.com/b6f00b5e-4060-4b88-8daf-e623f8204bda/episodes/2c452f93-8300-441c-838a-a13c2405c776/audio/128/default.mp3?aid=rss_feed&awCollectionId=b6f00b5e-4060-4b88-8daf-e623f8204bda&awEpisodeId=2c452f93-8300-441c-838a-a13c2405c776&feed=yvyasWU5"
     }
   ]
 }

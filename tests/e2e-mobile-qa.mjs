@@ -6700,6 +6700,10 @@ async function main() {
             targetIrRec.status = 'IR — 21-Day Window Open';
             targetIrRec.designatedDateIso = '2026-11-11T16:00:00Z';
           }
+        } else {
+          // Align real live player's designatedDateIso to precede the simulated Nov 18/21 test window
+          target.health.designatedDateIso = '2026-11-11T16:00:00Z';
+          if (targetIrRec) targetIrRec.designatedDateIso = '2026-11-11T16:00:00Z';
         }
 
         const savedKickoff = state.appData.scheduleMatchup.upcomingMatchup.kickoffIso;

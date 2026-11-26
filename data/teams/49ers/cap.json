@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:48:27.526Z",
+  "updatedAt": "2026-11-26T07:24:16.625Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
   "spotracUrl": "https://www.spotrac.com/nfl/san-francisco-49ers/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 340563099,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 300788780,
+      "totalCapLiabilities": 300660330,
       "top51": 222231773,
-      "teamCapSpace": 39774319,
-      "otcRawTeamCapSpace": 39774319,
-      "effectiveCapSpace": 39774319,
-      "activeCapSpending": 241383835,
+      "teamCapSpace": 39902769,
+      "otcRawTeamCapSpace": 39902769,
+      "effectiveCapSpace": 39902769,
+      "activeCapSpending": 241200335,
       "offenseSpend": 131068787,
-      "defenseSpend": 106214048,
+      "defenseSpend": 106030548,
       "specialSpend": 4101000,
-      "deadMoneyTotal": 59404945,
-      "injuredReserveTotal": 24633669,
-      "practiceSquadTotal": 4013566,
+      "deadMoneyTotal": 59459995,
+      "injuredReserveTotal": 27077224,
+      "practiceSquadTotal": 3830066,
       "pupTotal": 1251132,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 29898367,
+      "reserveAndPsTotal": 32158422,
       "topDeadMoneyEntries": [
         {
           "name": "Javon Hargrave",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 85
+      "totalSignedCount": 84
     },
     "2027": {
       "year": 2027,
@@ -252,8 +252,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
-    "summary": "San Francisco 49ers hold $39.77M in 2026 OverTheCap space ($39.77M effective) and -$15.56M projected for 2027.",
-    "executiveSummary": "John Lynch and the 49ers front office hold $39.77M in gross 2026 cap space ($39.77M effective), while 2027 currently projects at -$15.56M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($33M–$37M target) helps manage scheduled cap escalations for Brock Purdy, Nick Bosa, Trent Williams, Fred Warner.",
+    "summary": "San Francisco 49ers hold $39.90M in 2026 OverTheCap space ($39.90M effective) and -$15.56M projected for 2027.",
+    "executiveSummary": "John Lynch and the 49ers front office hold $39.90M in gross 2026 cap space ($39.90M effective), while 2027 currently projects at -$15.56M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($33M–$37M target) helps manage scheduled cap escalations for Brock Purdy, Nick Bosa, Trent Williams, Fred Warner.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($33M–$37M Target vs. -$15.56M 2027 Projection)",
@@ -3131,15 +3131,46 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 3380000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1860000,
+          "proratedSigning": 1250000,
+          "proratedOption": 0,
+          "proratedBonus": 1250000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 340000,
+          "workoutBonus": 50000,
+          "otherBonus": 0,
+          "currentYearBonuses": 390000,
+          "guaranteedSalary": 1860000,
           "capNumber": 3380000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 3380000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 3380000,
-          "guaranteedSalary": 0
+          "transactions": {
+            "cut": {
+              "deadMoney": 3110000,
+              "capSavings": 270000
+            },
+            "june_1_cut": {
+              "deadMoney": 3110000,
+              "capSavings": 270000
+            },
+            "trade": {
+              "deadMoney": 1250000,
+              "capSavings": 2130000
+            },
+            "june_1_trade": {
+              "deadMoney": 1250000,
+              "capSavings": 2130000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 556000
+            }
+          }
         }
       }
     },

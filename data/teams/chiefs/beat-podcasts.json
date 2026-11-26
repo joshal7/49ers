@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:51:31.392Z",
+  "updatedAt": "2026-11-26T07:29:35.823Z",
   "windowDays": 7,
-  "totalEpisodes": 23,
+  "totalEpisodes": 19,
   "shows": [
     {
       "id": "chiefs_locked_on_chiefs",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/194e78/feeds.simplecast.com/9czLVzrJ",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chiefs-daily-podcast-on-the-kansas-city-chiefs/id1141081555?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/a7/ed/b1/a7edb17b-43f5-bc95-e1b0-0ef00b328dd3/mza_13257794304381185548.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 6
     },
     {
       "id": "chiefs_kc_sports_network",
@@ -25,7 +25,7 @@
       "feedUrl": "https://rss.pdrl.fm/8d7cde/feeds.simplecast.com/BJf5DYgc",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/kc-sports-network-kansas-city-chiefs-podcasts/id1530866619?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/ac/db/ad/acdbad7a-bede-9c0d-754d-ba6d74349d46/mza_12452696401279253600.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "chiefs_arrowhead_addict",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/96/e9/20/96e920f5-1fd5-0a0f-2847-b25f1fa0ed90/mza_254877229758211130.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -420,86 +420,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4",
       "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
       "audioStreamUrl": "https://pscrb.fm/rss/p/clrtpod.com/m/mgln.ai/e/274/audio2.redcircle.com/episodes/f5159c3d-712d-4def-9222-a79a7cd82bdc/stream.mp3"
-    },
-    {
-      "id": "pod_chiefs_kc_sports_network_1000802858556",
-      "trackId": 1000802858556,
-      "collectionId": 1530866619,
-      "showId": "chiefs_kc_sports_network",
-      "showName": "KC Sports Network",
-      "showFullTitle": "KC Sports Network: Kansas City Chiefs Podcasts",
-      "hosts": "KC Sports Network",
-      "network": "KC Sports Network",
-      "title": "KC Laboratory 11/18: Why Chiefs vs. Cardinals Might Be the Biggest Mismatch of 2026",
-      "summary": "Kent Swanson, Matt Lane, and Craig Stout preview the Kansas City Chiefs' Week 11 matchup against the 3-7 Arizona Cardinals. — The Soul of KC Holiday Raffle & Toy Drive is BACK to spread joy and make a difference! Purchase tickets and be entered for a chance to win some aweso",
-      "publishedAt": "2026-11-19T04:56:15.000Z",
-      "durationMinutes": 59,
-      "durationDisplay": "59 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/68/01/d1/6801d1c7-f709-e535-c0b3-4be8ce49565d/mza_1873110326032052590.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/kc-laboratory-11-18-why-chiefs-vs-cardinals-might-be/id1530866619?i=1000802858556&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/kc-sports-network-kansas-city-chiefs-podcasts/id1530866619?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/8d7cde/feeds.simplecast.com/BJf5DYgc",
-      "audioStreamUrl": "https://pdrl.fm/8d7cde/mgln.ai/e/256/pscrb.fm/rss/p/clrtpod.com/m/bluewire.simplecastaudio.com/8bf45406-115f-47da-8dc8-dcc5713f4a83/episodes/269cb78d-60ba-4fcf-b735-ce0756733349/audio/128/default.mp3?aid=rss_feed&awCollectionId=8bf45406-115f-47da-8dc8-dcc5713f4a83&awEpisodeId=269cb78d-60ba-4fcf-b735-ce0756733349&feed=BJf5DYgc"
-    },
-    {
-      "id": "pod_chiefs_locked_on_chiefs_1000802841932",
-      "trackId": 1000802841932,
-      "collectionId": 1141081555,
-      "showId": "chiefs_locked_on_chiefs",
-      "showName": "Locked On Chiefs",
-      "showFullTitle": "Locked On Chiefs - Daily Podcast On The Kansas City Chiefs",
-      "hosts": "Chris Clark, Locked On Podcast Network, Ryan Tracy",
-      "network": "Chris Clark, Locked On Podcast Network, Ryan Tracy",
-      "title": "CHIEFS SQUAD SHOW: Is RESTING Kenneth Walker Against Arizona a NO-BRAINER?! Week 11 PREVIEW Show",
-      "summary": "A key theme that emerged was the Chiefs’ reliance on their offensive line and backfield, led by Kenneth Walker and Emmitt Johnson, as they chase another Super Bowl run. The discussion explored the inconsistent output from Kansas City’s wide receivers, special teams struggles",
-      "publishedAt": "2026-11-19T02:20:01.000Z",
-      "durationMinutes": 60,
-      "durationDisplay": "60 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/16/b6/cd/16b6cdfd-69e0-f9bf-6271-16969c6f9c5c/mza_4523160077925607407.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/chiefs-squad-show-is-resting-kenneth-walker-against/id1141081555?i=1000802841932&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chiefs-daily-podcast-on-the-kansas-city-chiefs/id1141081555?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/194e78/feeds.simplecast.com/9czLVzrJ",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/194e78/lockedon.simplecastaudio.com/991e4a1b-5d12-4619-83ff-6448c2e3e44f/episodes/daf9e57b-465e-4f3b-95f6-f081227eeb8c/audio/128/default.mp3?aid=rss_feed&awCollectionId=991e4a1b-5d12-4619-83ff-6448c2e3e44f&awEpisodeId=daf9e57b-465e-4f3b-95f6-f081227eeb8c&feed=9czLVzrJ"
-    },
-    {
-      "id": "pod_chiefs_locked_on_chiefs_1000802832671",
-      "trackId": 1000802832671,
-      "collectionId": 1141081555,
-      "showId": "chiefs_locked_on_chiefs",
-      "showName": "Locked On Chiefs",
-      "showFullTitle": "Locked On Chiefs - Daily Podcast On The Kansas City Chiefs",
-      "hosts": "Chris Clark, Locked On Podcast Network, Ryan Tracy",
-      "network": "Chris Clark, Locked On Podcast Network, Ryan Tracy",
-      "title": "Patrick Mahomes No Longer CARRIES the Team Alone as Chiefs’ Offense TRANSFORMS!",
-      "summary": "Kansas City Chiefs roll into Week 11 looking to maintain their dominance as Patrick Mahomes adapts to a revitalized offense featuring breakout performances from Emmett Johnson and Kenneth Walker. With Mahomes proving he no longer has to carry the team alone, questions arise ",
-      "publishedAt": "2026-11-19T01:21:00.000Z",
-      "durationMinutes": 30,
-      "durationDisplay": "30 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/f3/9f/5a/f39f5aa6-4563-e5cd-6ed6-66cae0797883/mza_12149609245248745668.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patrick-mahomes-no-longer-carries-the-team-alone-as/id1141081555?i=1000802832671&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chiefs-daily-podcast-on-the-kansas-city-chiefs/id1141081555?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/194e78/feeds.simplecast.com/9czLVzrJ",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/194e78/lockedon.simplecastaudio.com/991e4a1b-5d12-4619-83ff-6448c2e3e44f/episodes/bf26f546-94e8-4f19-a42c-f79fccb5b887/audio/128/default.mp3?aid=rss_feed&awCollectionId=991e4a1b-5d12-4619-83ff-6448c2e3e44f&awEpisodeId=bf26f546-94e8-4f19-a42c-f79fccb5b887&feed=9czLVzrJ"
-    },
-    {
-      "id": "pod_chiefs_arrowhead_addict_1000802802511",
-      "trackId": 1000802802511,
-      "collectionId": 1454555052,
-      "showId": "chiefs_arrowhead_addict",
-      "showName": "Arrowhead Addict",
-      "showFullTitle": "Arrowhead Addict: A Kansas City Chiefs Podcast",
-      "hosts": "FanSided Podcasts",
-      "network": "FanSided Podcasts",
-      "title": "Should Xavier Worthy Still Be Playing This Many Snaps? Chiefs Receiver Debate After Josh Downs Trade",
-      "summary": "On The Intangibles, Price Carter and Christian Ainsworth break down the Kansas City Chiefs after the Josh Downs trade, whether Patrick Mahomes is back in the MVP conversation, and what’s next against the Cardinals before the Bills on Thanksgiving. Price and Christian react t",
-      "publishedAt": "2026-11-18T23:00:39.000Z",
-      "durationMinutes": 45,
-      "durationDisplay": "45 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/96/e9/20/96e920f5-1fd5-0a0f-2847-b25f1fa0ed90/mza_254877229758211130.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/should-xavier-worthy-still-be-playing-this-many-snaps/id1454555052?i=1000802802511&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4",
-      "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/clrtpod.com/m/mgln.ai/e/274/audio2.redcircle.com/episodes/d1ad394c-de0b-4a9b-899a-5dcd25d91552/stream.mp3"
     }
   ]
 }

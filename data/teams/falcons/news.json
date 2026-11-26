@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-25T20:50:05.363Z",
+  "updatedAt": "2026-11-26T07:27:13.966Z",
   "dailyTopNewsBrief": {
-    "id": "daily_brief_2026-11-24_17ET",
-    "cycleKey": "2026-11-24@17ET",
+    "id": "daily_brief_2026-11-25_17ET",
+    "cycleKey": "2026-11-25@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-25T20:50:05.363Z",
+    "generatedAt": "2026-11-26T07:27:13.966Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,53 +15,53 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 206,
-    "headline": "Falcons (3-7) Week 12 Briefing: Injury Updates Ahead of Vikings",
+    "wordCount": 223,
+    "headline": "Falcons (3-7) Week 12 Briefing: Wednesday Injury Report Ahead of Vikings",
     "summary": "",
     "bullets": [
-      "Roster & Front Office: Atlanta signed CB Terell Smith to the practice squad [Dave Choate](https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter).",
-      "Injury & Practice Status: Entering Week 12 preparation, head coach Kevin Stefanski and the medical staff evaluate WR Zachariah Branch (hamstring), LB Divine Deablo (forearm), and LB Kendal Daniels (Achilles) ahead of Wednesday's initial participation report [Daniel Flick](https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20%28hamstring%29%20went%20through%20warmups%20during%20the).",
-      "Week 12 Vikings Outlook: Kevin Stefanski and DC Jeff Ulbrich open installation for the Minnesota Vikings (7-3, MIN -7, HC Kevin O'Connell, OC Wes Phillips & DC Brian Flores (Road Test))—a unit ranked #1 in Points Allowed / Game (16.1) as Atlanta prepares for a pivotal NFC matchup [atlantafalcons.com Official](https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix) [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total).",
-      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC South • #13 Seed in NFC), Atlanta carries a 9.1% postseason projection, 9% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Aaron Freeman](https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons).",
-      "Statistical Profile & Matchup Edge: Through Week 11, Atlanta ranks #23 in Points / Game (20.1), #24 in Points Allowed / Game (25.8), #30 in Turnover Differential (-10), giving Kevin Stefanski and Jeff Ulbrich a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Minnesota Vikings [atlantafalcons.com Official](https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars)."
+      "Injury & Practice Status: LB James Pearce Jr. (back) logged limited practice reps Wednesday [atlantafalcons.com Official](https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings). WR Zachariah Branch (hamstring), WR Jahan Dotson (hamstring), S DeMarcco Hellams (foot), and G Matthew Bergeron (back) did not practice Wednesday [atlantafalcons.com Official](https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings).",
+      "Week 12 Vikings Outlook: Kevin Stefanski and DC Jeff Ulbrich open installation for the Minnesota Vikings (7-3, MIN -7, HC Kevin O'Connell, OC Wes Phillips & DC Brian Flores (Road Test))—a unit ranked #1 in Points Allowed / Game (16.1) as Atlanta prepares for a pivotal NFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873084) [atlantafalcons.com Official](https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix).",
+      "NFC Playoff Trajectory: Entering Week 12 at 3-7 (4th in NFC South • #13 Seed in NFC), Atlanta carries a 9.2% postseason projection, 9.1% NFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [Aaron Freeman](https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons).",
+      "Around the Beat: Kevin Stefanski said he and the team are aware of assertions made by Rickea Jackson that insinuated James Pearce Jr. is still trying to contact her [Marc Raimondi](https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Atlanta ranks #23 in Points / Game (20.1), #24 in Points Allowed / Game (25.8), #30 in Turnover Differential (-10), giving Kevin Stefanski and Jeff Ulbrich a clear benchmark ahead of Sun, Nov 29, 1:00 PM EST • NFL TV at [object Object] against the Minnesota Vikings [Kevin Knight](https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total)."
     ],
     "coveredStoryKeys": [
-      "team::power_rankings",
+      "team::weekly_injury_report",
       "falconswaive::roster_departure"
     ],
     "coveredUrls": [
-      "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
-      "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+      "https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings",
+      "https://www.espn.com/nfl/preview?gameId=401873084",
       "https://www.atlantafalcons.com/news/blueprint-brian-flores-vikings-49ers-brock-purdy-michael-penix",
-      "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
       "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
-      "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
       "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+      "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
+      "https://www.thefalcoholic.com/atlanta-falcons-discussion/98667/the-falcoholic-reacts-survey-any-chance-for-a-stunning-win",
       "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
+      "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
       "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
+      "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
       "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
-      "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
       "https://www.atlantafalcons.com/news/atlanta-falcons-week-12-depth-chart-vs-minnesota-vikings",
-      "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026",
-      "https://www.thefalcoholic.com/atlanta-falcons-history/98627/where-is-2026-tracking-compared-to-previous-years-in-atlantas-miserable-run"
+      "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+      "https://www.thefalcoholic.com/atlanta-falcons-analysis/98697/what-do-we-need-to-see-from-the-falcons-over-the-final-games-of-2026"
     ],
     "sources": [
       {
         "type": "article",
-        "author": "Dave Choate",
-        "outlet": "The Falcoholic",
-        "title": "Breaking down Falcons 2026 acquisitions through the bye",
-        "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
-        "publishedAt": "2026-11-24T21:37:32.000Z"
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "title": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game",
+        "url": "https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings",
+        "publishedAt": "2026-11-25T21:20:56.000Z"
       },
       {
         "type": "article",
-        "author": "Daniel Flick",
-        "outlet": "Atlanta Journal-Constitution",
-        "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
-        "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
-        "publishedAt": "2026-11-24T23:21:51.000Z"
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "title": "Kirk Cousins makes his home debut in his second act with the Vikings, fittingly against the Falcons",
+        "url": "https://www.espn.com/nfl/preview?gameId=401873084",
+        "publishedAt": "2026-11-26T01:47:32.000Z"
       },
       {
         "type": "article",
@@ -73,14 +73,6 @@
       },
       {
         "type": "article",
-        "author": "Kevin Knight",
-        "outlet": "The Falcoholic",
-        "title": "Falcons vs. Vikings odds: Opening lines for Week 12 matchup",
-        "url": "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
-        "publishedAt": "2026-11-24T20:47:03.000Z"
-      },
-      {
-        "type": "article",
         "author": "Aaron Freeman",
         "outlet": "The Falcoholic",
         "title": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
@@ -89,19 +81,27 @@
       },
       {
         "type": "article",
-        "author": "atlantafalcons.com Official",
-        "outlet": "atlantafalcons.com Official",
-        "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
-        "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
-        "publishedAt": "2026-11-24T15:56:24.000Z"
-      },
-      {
-        "type": "article",
         "author": "Marc Raimondi",
         "outlet": "ESPN",
         "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
         "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
-        "publishedAt": "2026-11-25T20:08:06.000Z"
+        "publishedAt": "2026-11-25T21:03:33.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Kevin Knight",
+        "outlet": "The Falcoholic",
+        "title": "Falcons vs. Vikings odds: Opening lines for Week 12 matchup",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-odds/98620/falcons-vs-vikings-odds-week-12-opening-lines-point-spread-total",
+        "publishedAt": "2026-11-24T20:47:03.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Allen Strk",
+        "outlet": "The Falcoholic",
+        "title": "The Falcoholic Reacts Survey: Any chance for a stunning win?",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-discussion/98667/the-falcoholic-reacts-survey-any-chance-for-a-stunning-win",
+        "publishedAt": "2026-11-26T00:32:46.000Z"
       },
       {
         "type": "article",
@@ -113,6 +113,14 @@
       },
       {
         "type": "article",
+        "author": "Daniel Flick",
+        "outlet": "Atlanta Journal-Constitution",
+        "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
+        "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
+        "publishedAt": "2026-11-24T23:21:51.000Z"
+      },
+      {
+        "type": "article",
         "author": "Evan Birchfield",
         "outlet": "The Falcoholic",
         "title": "Three former Falcons advance in Pro Football Hall of Fame voting",
@@ -121,27 +129,19 @@
       },
       {
         "type": "article",
+        "author": "Dave Choate",
+        "outlet": "The Falcoholic",
+        "title": "Breaking down Falcons 2026 acquisitions through the bye",
+        "url": "https://www.thefalcoholic.com/atlanta-falcons-roster/98684/breaking-down-falcons-2026-acquisitions-through-the-bye-ian-cunningham-gervon-dexter",
+        "publishedAt": "2026-11-24T21:37:32.000Z"
+      },
+      {
+        "type": "article",
         "author": "Eric Karabell",
         "outlet": "ESPN / X Beat Wire",
         "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
         "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=Need%20to%20know%20how%20to%20value%20players",
         "publishedAt": "2026-11-24T20:18:57.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Tristan H. Cockcroft",
-        "outlet": "ESPN / X Beat Wire",
-        "title": "As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
-        "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
-        "publishedAt": "2026-11-24T18:17:33.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "Falcons Waive LB Christian Harris",
-        "url": "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
-        "publishedAt": "2026-11-24T14:58:42.000Z"
       }
     ]
   },
@@ -150,10 +150,34 @@
       "id": "atl_cl_top",
       "category": "beat",
       "headline": "Atlanta Falcons Week 12 Top Headlines (3-7)",
-      "summary": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense — Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
-      "updatedAt": "2026-11-25T20:44:11.000Z",
+      "summary": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game — Kirk Cousins makes his home debut in his second act with the Vikings, fittingly against the Falcons",
+      "updatedAt": "2026-11-25T21:20:56.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "atlantafalcons.com Official",
+          "title": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game",
+          "url": "https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings",
+          "publishedAt": "2026-11-25T21:20:56.000Z"
+        },
+        {
+          "label": "ESPN NFL Nation",
+          "title": "Kirk Cousins makes his home debut in his second act with the Vikings, fittingly against the Falcons",
+          "url": "https://www.espn.com/nfl/preview?gameId=401873084",
+          "publishedAt": "2026-11-26T01:47:32.000Z"
+        },
+        {
+          "label": "Allen Strk",
+          "title": "The Falcoholic Reacts Survey: Any chance for a stunning win?",
+          "url": "https://www.thefalcoholic.com/atlanta-falcons-discussion/98667/the-falcoholic-reacts-survey-any-chance-for-a-stunning-win",
+          "publishedAt": "2026-11-26T00:32:46.000Z"
+        },
+        {
+          "label": "Marc Raimondi",
+          "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+          "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+          "publishedAt": "2026-11-25T21:03:33.000Z"
+        },
         {
           "label": "atlantafalcons.com Official",
           "title": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense",
@@ -161,34 +185,10 @@
           "publishedAt": "2026-11-25T20:44:11.000Z"
         },
         {
-          "label": "Marc Raimondi",
-          "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
-          "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
-          "publishedAt": "2026-11-25T20:08:06.000Z"
-        },
-        {
           "label": "atlantafalcons.com Official",
           "title": "Where to watch Atlanta Falcons vs. Minnesota Vikings",
           "url": "https://www.atlantafalcons.com/news/where-watch-atlanta-falcons-minnesota-vikings-stream-tv-radio",
           "publishedAt": "2026-11-25T17:27:38.000Z"
-        },
-        {
-          "label": "Aaron Freeman",
-          "title": "Michael Penix’s fifth-year option is now a coin flip for the Falcons",
-          "url": "https://www.thefalcoholic.com/atlanta-falcons-analysis/98720/michael-penixs-fifth-year-option-is-now-a-coin-flip-for-the-falcons",
-          "publishedAt": "2026-11-25T15:22:52.000Z"
-        },
-        {
-          "label": "Daniel Flick",
-          "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
-          "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
-          "publishedAt": "2026-11-24T23:21:51.000Z"
-        },
-        {
-          "label": "Evan Birchfield",
-          "title": "Three former Falcons advance in Pro Football Hall of Fame voting",
-          "url": "https://www.thefalcoholic.com/atlanta-falcons-news/98702/three-former-falcons-advance-in-pro-football-hall-of-fame-voting-john-abraham-tommy-nobis",
-          "publishedAt": "2026-11-24T21:39:12.000Z"
         }
       ]
     },
@@ -196,21 +196,21 @@
       "id": "atl_cl_health",
       "category": "injury",
       "headline": "Falcons Practice Report, Injury & IR Availability",
-      "summary": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session. — As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
-      "updatedAt": "2026-11-24T23:21:51.000Z",
+      "summary": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game — Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
+      "updatedAt": "2026-11-25T21:20:56.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "atlantafalcons.com Official",
+          "title": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game",
+          "url": "https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings",
+          "publishedAt": "2026-11-25T21:20:56.000Z"
+        },
         {
           "label": "Daniel Flick",
           "title": "Branch (hamstring) went through warmups during the media-viewing portion of Monday's unofficial practice session.",
           "url": "https://www.espn.com/nfl/player/_/id/4870612/zachariah-branch#:~:text=Branch%20(hamstring)%20went%20through%20warmups%20during%20the",
           "publishedAt": "2026-11-24T23:21:51.000Z"
-        },
-        {
-          "label": "Tristan H. Cockcroft",
-          "title": "As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
-          "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
-          "publishedAt": "2026-11-24T18:17:33.000Z"
         },
         {
           "label": "Atlanta Falcons Official",
@@ -242,15 +242,33 @@
       "id": "atl_cl_film",
       "category": "film",
       "headline": "Falcons All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things. — SEVEN THINGS I THINK\n\n🔸Joe Burrow was right about the Bengals' pass rate\n🔸Tyler Shough and Michael Penix ... clock is ticking",
-      "updatedAt": "2026-11-21T23:39:03.339Z",
-      "itemCount": 3,
+      "summary": "Falcons vs. Vikings Preview + Predictions — The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things.",
+      "updatedAt": "2026-11-25T19:20:29.000Z",
+      "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Check the Mic",
+          "title": "Falcons vs. Vikings Preview + Predictions",
+          "url": "https://www.youtube.com/watch?v=XhEBQCJ_smg",
+          "publishedAt": "2026-11-25T19:20:29.000Z"
+        },
         {
           "label": "Doug Farrar ✍",
           "title": "The Bengals had a coverage-first plan against Michael Penix Jr., so Penix did the smart thing: He used his legs to advance things.",
           "url": "https://x.com/NFL_DougFarrar/status/2124286498942116210",
           "publishedAt": "2026-11-21T23:39:03.339Z"
+        },
+        {
+          "label": "Cody Alexander",
+          "title": "Split-Field Quarters Foundations",
+          "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
+          "publishedAt": "2026-11-19T22:01:55.000Z"
+        },
+        {
+          "label": "Cody Alexander",
+          "title": "The Aranda-Roberts Creeper System",
+          "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
+          "publishedAt": "2026-11-19T21:33:52.000Z"
         },
         {
           "label": "Ben Solak",
@@ -315,6 +333,399 @@
   ],
   "rawStream": [
     {
+      "id": "atl_tyt_LX_6SMcwoj8",
+      "type": "video",
+      "category": "beat",
+      "videoId": "LX_6SMcwoj8",
+      "embeddable": false,
+      "title": "FALCONS TRAVEL TO MINNESOTA FOR WEEK 12 | RISE UP TONIGHT",
+      "summary": "Atlanta FOX 5 Rise Up Tonight gives you the latest Falcons team news, updates, and in-depth breakdowns with host Kelly Price and Atlanta Falcons analyst Tori McElhaney. Tune in ahead of the Falcons Week 12 matchup agains",
+      "imageUrl": "https://i.ytimg.com/vi/LX_6SMcwoj8/hqdefault.jpg",
+      "imageAlt": "FALCONS TRAVEL TO MINNESOTA FOR WEEK 12 | RISE UP TONIGHT",
+      "publishedAt": "2026-11-26T05:01:31.000Z",
+      "url": "https://www.youtube.com/watch?v=LX_6SMcwoj8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=LX_6SMcwoj8",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 25,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.8883
+    },
+    {
+      "id": "atl_rss_a7a3374a1d51",
+      "type": "article",
+      "title": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game",
+      "summary": "Atlanta had a handful of notable players held out of practice coming off its bye week.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/r0qznwolhui79nnq6tsi.png",
+      "imageAlt": "Falcons injury report: Matthew Bergeron, DeMarcco Hellams miss first practice ahead of Vikings game",
+      "publishedAt": "2026-11-25T21:20:56.000Z",
+      "url": "https://www.atlantafalcons.com/news/falcons-injury-report-matthew-bergeron-demarcco-hellams-vikings",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4568510",
+          "name": "Matthew Bergeron",
+          "shortName": "M. Bergeron",
+          "position": "G",
+          "jersey": 65,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png"
+        },
+        {
+          "id": "4567111",
+          "name": "DeMarcco Hellams",
+          "shortName": "D. Hellams",
+          "position": "S",
+          "jersey": 23,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567111.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.8253
+    },
+    {
+      "id": "atl_espn_cd9feb93617f6",
+      "type": "article",
+      "title": "Kirk Cousins makes his home debut in his second act with the Vikings, fittingly against the Falcons",
+      "summary": "— When the Minnesota Vikings last played at home, a foundering offense heard it from the frustrated fans after each futile possession.",
+      "imageUrl": "",
+      "imageCaption": "espn.applewatch.awayhome.1",
+      "imageAlt": "Kirk Cousins makes his home debut in his second act with the Vikings, fittingly against the Falcons",
+      "publishedAt": "2026-11-26T01:47:32.000Z",
+      "url": "https://www.espn.com/nfl/preview?gameId=401873084",
+      "outletId": "espn_atl",
+      "outletName": "ESPN",
+      "reporterId": "espn_atl",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.001
+    },
+    {
+      "id": "atl_brss_the_falcoholic_9fb60ee82df5",
+      "type": "article",
+      "title": "The Falcoholic Reacts Survey: Any chance for a stunning win?",
+      "summary": "Welcome to SB Nation Reacts, a survey of fans across the NFL. Throughout the year we ask questions of the most plugged-in Falcons fans and fans across the country. After facing two of the AFC’s top teams, the road doesn’t get any easier for",
+      "imageUrl": "",
+      "imageAlt": "The Falcoholic Reacts Survey: Any chance for a stunning win?",
+      "publishedAt": "2026-11-26T00:32:46.000Z",
+      "url": "https://www.thefalcoholic.com/atlanta-falcons-discussion/98667/the-falcoholic-reacts-survey-any-chance-for-a-stunning-win",
+      "outletId": "the_falcoholic",
+      "outletName": "The Falcoholic",
+      "reporterId": "the_falcoholic",
+      "reporterName": "Allen Strk",
+      "author": "Allen Strk",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-discussion/98667/the-falcoholic-reacts-survey-any-chance-for-a-stunning-win",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.2327
+    },
+    {
+      "id": "atl_yt_XhEBQCJ_smg",
+      "type": "video",
+      "category": "film",
+      "videoId": "XhEBQCJ_smg",
+      "embeddable": true,
+      "title": "Falcons vs. Vikings Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Atlanta Falcons and the Minnesota Vikings. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and Thur",
+      "imageUrl": "https://i.ytimg.com/vi/XhEBQCJ_smg/hqdefault.jpg",
+      "imageAlt": "Falcons vs. Vikings Preview + Predictions",
+      "publishedAt": "2026-11-25T19:20:29.000Z",
+      "url": "https://www.youtube.com/watch?v=XhEBQCJ_smg",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=XhEBQCJ_smg",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.41,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.1915
+    },
+    {
+      "id": "atl_vid_37417e9f7910",
+      "type": "video",
+      "title": "Atlanta Falcons players speak to the media ahead of matchup vs. Minnesota Vikings | Press Conference",
+      "summary": "Atlanta Falcons players Bijan Robinson and Kyle Pitts Sr. speak to the media ahead of week 12 matchup against the Minnesota Vikings.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/xgqmkbkrmzhpqrphugzv.png",
+      "imageAlt": "Atlanta Falcons players speak to the media ahead of matchup vs. Minnesota Vikings | Press Conference",
+      "publishedAt": "2026-11-25T23:00:00.000Z",
+      "url": "https://www.atlantafalcons.com/video/atlanta-falcons-players-speak-to-the-media-ahead-of-matchup-vs-minnesota-vikings-press-conference",
+      "externalVideoUrl": "https://www.atlantafalcons.com/video/atlanta-falcons-players-speak-to-the-media-ahead-of-matchup-vs-minnesota-vikings-press-conference",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Video",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Video",
+      "author": "atlantafalcons.com Video",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360248",
+          "name": "Kyle Pitts Sr.",
+          "shortName": "K. Pitts Sr.",
+          "position": "TE",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360248.png"
+        },
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.566
+    },
+    {
+      "id": "atl_tyt_BdqJU2iEq3M",
+      "type": "video",
+      "category": "beat",
+      "videoId": "BdqJU2iEq3M",
+      "embeddable": false,
+      "title": "Atlanta Falcons players speak to the media ahead of matchup vs Minnesota Vikings | Press Conference",
+      "summary": "Atlanta Falcons players Bijan Robinson and Kyle Pitts Sr. speak to the media ahead of week 12 matchup vs Minnesota Vikings. 0:00 - Bijan Robinson 12:52 - Kyle Pitts Sr. Subscribe: https://www.youtube.com/@AtlantaFalcons",
+      "imageUrl": "https://i.ytimg.com/vi/BdqJU2iEq3M/hqdefault.jpg",
+      "imageAlt": "Atlanta Falcons players speak to the media ahead of matchup vs Minnesota Vikings | Press Conference",
+      "publishedAt": "2026-11-25T21:58:34.000Z",
+      "url": "https://www.youtube.com/watch?v=BdqJU2iEq3M",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=BdqJU2iEq3M",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4360248",
+          "name": "Kyle Pitts Sr.",
+          "shortName": "K. Pitts Sr.",
+          "position": "TE",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360248.png"
+        },
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.2246
+    },
+    {
+      "id": "atl_vid_dbb6967c59c4",
+      "type": "video",
+      "title": "QB Michael Penix Jr. Week 12 Media Availability | Wednesday, November 25th | Press Conference",
+      "summary": "Atlanta Falcons Quarterback Michael Penix Jr. speaks with the media as the Falcons continue their preparations to take on the Vikings this Sunday at 1pm ET.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/ots1s7jt2bwmd57jdlei.jpg",
+      "imageAlt": "QB Michael Penix Jr. Week 12 Media Availability | Wednesday, November 25th | Press Conference",
+      "publishedAt": "2026-11-25T21:25:00.000Z",
+      "url": "https://www.atlantafalcons.com/video/qb-michael-penix-jr-week-12-media-availability-wednesday-november-25th-press-conference",
+      "externalVideoUrl": "https://www.atlantafalcons.com/video/qb-michael-penix-jr-week-12-media-availability-wednesday-november-25th-press-conference",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Video",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Video",
+      "author": "atlantafalcons.com Video",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4360423",
+          "name": "Michael Penix Jr.",
+          "shortName": "M. Penix Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360423.png"
+        }
+      ],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.0694
+    },
+    {
+      "id": "atl_espn_e136351fbccec",
+      "type": "article",
+      "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+      "summary": "Kevin Stefanski said he and the team are aware of assertions made by Rickea Jackson that insinuated James Pearce Jr. is still trying to contact her.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1125/r1751172_1296x729_16-9.jpg",
+      "imageCaption": "Falcons edge rusher James Pearce Jr. returned to the field with the Falcons in Week 9 after serving an eight-game NFL suspension for violating the league's personal conduct policy.",
+      "imageAlt": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
+      "publishedAt": "2026-11-25T21:03:33.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
+      "outletId": "espn_atl",
+      "outletName": "ESPN",
+      "reporterId": "marc_raimondi",
+      "reporterName": "Marc Raimondi",
+      "author": "Marc Raimondi",
+      "authorHandle": "@marcraimondi",
+      "authorProfileUrl": "https://x.com/marcraimondi",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "5081394",
+          "name": "James Pearce Jr.",
+          "shortName": "J. Pearce Jr.",
+          "position": "LB",
+          "jersey": 27,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 89,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.9798
+    },
+    {
       "id": "atl_rss_1de9f485d796",
       "type": "article",
       "title": "The blueprint is there: What the Falcons can learn from the 49ers' dismantling of the Vikings top defense",
@@ -355,51 +766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 47.857
-    },
-    {
-      "id": "atl_espn_e136351fbccec",
-      "type": "article",
-      "title": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
-      "summary": "Kevin Stefanski said he and the team are aware of assertions made by Rickea Jackson that insinuated James Pearce Jr. is still trying to contact her.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1125/r1751172_1296x729_16-9.jpg",
-      "imageCaption": "Falcons edge rusher James Pearce Jr. returned to the field with the Falcons in Week 9 after serving an eight-game NFL suspension for violating the league's personal conduct policy.",
-      "imageAlt": "Falcons 'aware' of insinuations Pearce still trying to contact ex Jackson",
-      "publishedAt": "2026-11-25T20:08:06.000Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50595254/falcons-aware-insinuations-pearce-trying-call-ex-gf",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "marc_raimondi",
-      "reporterName": "Marc Raimondi",
-      "author": "Marc Raimondi",
-      "authorHandle": "@marcraimondi",
-      "authorProfileUrl": "https://x.com/marcraimondi",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [
-        {
-          "id": "5081394",
-          "name": "James Pearce Jr.",
-          "shortName": "J. Pearce Jr.",
-          "position": "LB",
-          "jersey": 27,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 89,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 26.88
+      "storyRank": 1.9043
     },
     {
       "id": "atl_vid_282070c32113",
@@ -435,31 +802,31 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.862
+      "storyRank": 1.7334
     },
     {
-      "id": "atl_yt_YfqLn_nqbWs",
+      "id": "atl_tyt_oXiB0GVOxJY",
       "type": "video",
       "category": "beat",
-      "videoId": "YfqLn_nqbWs",
+      "videoId": "oXiB0GVOxJY",
       "embeddable": false,
-      "title": "Atlanta Falcons vs Minnesota Vikings | 2026 Week 12 Game Preview",
-      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
-      "imageUrl": "https://i.ytimg.com/vi/YfqLn_nqbWs/hqdefault.jpg",
-      "imageAlt": "Atlanta Falcons vs Minnesota Vikings | 2026 Week 12 Game Preview",
-      "publishedAt": "2026-11-25T19:00:39.000Z",
-      "url": "https://www.youtube.com/watch?v=YfqLn_nqbWs",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=YfqLn_nqbWs",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "title": "Week 12: Atlanta Falcons at Minnesota Vikings | Atlanta Falcons Pregame Show",
+      "summary": "The Atlanta Falcons are on the road to take on the Minnesota Vikings! Join Taylor Vismor, Will McFadden, and Derek Rackley in Ticketmaster Studios as they get you ready for all the storylines and matchups ahead of this N",
+      "imageUrl": "https://i.ytimg.com/vi/oXiB0GVOxJY/hqdefault.jpg",
+      "imageAlt": "Week 12: Atlanta Falcons at Minnesota Vikings | Atlanta Falcons Pregame Show",
+      "publishedAt": "2026-11-25T17:30:07.000Z",
+      "url": "https://www.youtube.com/watch?v=oXiB0GVOxJY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=oXiB0GVOxJY",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
       "trustTier": 1,
-      "wireSource": "youtube_atom",
+      "wireSource": "team_youtube_atom",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
@@ -473,8 +840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.5489,
-      "duration": "8:21"
+      "storyRank": 1.3566
     },
     {
       "id": "atl_rss_b83c64598135",
@@ -508,7 +874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.4454
+      "storyRank": 1.3514
     },
     {
       "id": "atl_brss_the_falcoholic_87d9c63cbd0b",
@@ -551,7 +917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3551
+      "storyRank": 1.1277
     },
     {
       "id": "atl_pwire_4870612_64962528",
@@ -592,7 +958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7561
+      "storyRank": 0.4405
     },
     {
       "id": "atl_brss_the_falcoholic_937c57dddcc0",
@@ -626,7 +992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6826
+      "storyRank": 0.4106
     },
     {
       "id": "atl_brss_the_falcoholic_252516bd4ec3",
@@ -660,7 +1026,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6815
+      "storyRank": 0.4101
+    },
+    {
+      "id": "atl_tyt_4NvV1BYAgG4",
+      "type": "video",
+      "category": "beat",
+      "videoId": "4NvV1BYAgG4",
+      "embeddable": false,
+      "title": "Falcons vs Vikings Preview: How Atlanta can combat Minnesota's defensive pressure | Audible Podcast",
+      "summary": "Derek, Dave, and DJ are BACK after the Atlanta Falcons' week 11 bye, just in time for Thanksgiving! They break down what a bye week means to players, set the stage for the final 7 weeks of the season, and preview Sunday'",
+      "imageUrl": "https://i.ytimg.com/vi/4NvV1BYAgG4/hqdefault.jpg",
+      "imageAlt": "Falcons vs Vikings Preview: How Atlanta can combat Minnesota's defensive pressure | Audible Podcast",
+      "publishedAt": "2026-11-24T21:00:37.000Z",
+      "url": "https://www.youtube.com/watch?v=4NvV1BYAgG4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=4NvV1BYAgG4",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.407
     },
     {
       "id": "atl_rss_a4a133dec5d5",
@@ -694,7 +1098,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6684
+      "storyRank": 0.4067
     },
     {
       "id": "atl_brss_the_falcoholic_dd7e6953567d",
@@ -728,7 +1132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6497
+      "storyRank": 0.3967
     },
     {
       "id": "atl_pwire_4430807_49949224",
@@ -760,7 +1164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6332
+      "storyRank": 0.3895
     },
     {
       "id": "atl_brss_the_falcoholic_095aaa3aa4c6",
@@ -794,39 +1198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6022
-    },
-    {
-      "id": "atl_pwire_4430807_50583834",
-      "type": "article",
-      "title": "As the number of teams shrink, the number of stars available in Knockout leagues grows. Here are the ones to get.",
-      "summary": "A huge name is out there in 16.7% of Knockout leagues this week: Josh Allen , fantasy football's No. 1 overall scorer since the beginning of the 2023 season. And yet, Allen isn't -- and shouldn't be -- the all-in player",
-      "publishedAt": "2026-11-24T18:17:33.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Tristan H. Cockcroft",
-      "author": "Tristan H. Cockcroft",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4430807/bijan-robinson#:~:text=As%20the%20number%20of%20teams%20shrink%2C%20the",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5692
+      "storyRank": 0.3759
     },
     {
       "id": "atl_rss_ef487570b9ea",
@@ -860,7 +1232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5162
+      "storyRank": 0.3376
     },
     {
       "id": "atl_brss_the_falcoholic_c25bc21b7ba8",
@@ -894,7 +1266,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4995
+      "storyRank": 0.3281
     },
     {
       "id": "atl_pfr_6022e65677ca",
@@ -927,7 +1299,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4857
+      "storyRank": 0.3213
     },
     {
       "id": "atl_rss_755f7c5a75e4",
@@ -961,7 +1333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1197
+      "storyRank": 0.0798
     },
     {
       "id": "atl_brss_the_falcoholic_2ba9fe6aeb27",
@@ -1004,7 +1376,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2442
+      "storyRank": 0.187
     },
     {
       "id": "atl_brss_the_falcoholic_dfe6932f982c",
@@ -1038,7 +1410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2408
+      "storyRank": 0.1848
     },
     {
       "id": "atl_vid_f571667ef4c7",
@@ -1050,6 +1422,7 @@
       "publishedAt": "2026-11-23T18:35:00.000Z",
       "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
+      "duration": "13:46",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1074,8 +1447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2431,
-      "duration": "13:46"
+      "storyRank": 0.1868
     },
     {
       "id": "atl_rss_efd5b2e015e7",
@@ -1118,7 +1490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2328
+      "storyRank": 0.1802
     },
     {
       "id": "atl_tx_504fed1c7c04",
@@ -1162,41 +1534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.187
-    },
-    {
-      "id": "atl_brss_the_falcoholic_9026f8f6bea9",
-      "type": "article",
-      "title": "NFC South standings: Falcons move ahead of the Saints on Atlanta’s bye week",
-      "summary": "The Falcons are on their bye this week, but play continued in Week 11 for the rest of the NFC South — and it did shake up the standings a bit in a good way for the Falcons. The Panthers were the only NFC South team to win on Sunday, escapin",
-      "imageUrl": "",
-      "imageAlt": "NFC South standings: Falcons move ahead of the Saints on Atlanta’s bye week",
-      "publishedAt": "2026-11-23T04:28:53.000Z",
-      "url": "https://www.thefalcoholic.com/atlanta-falcons-nfl-playoffs/98606/nfc-south-standings-nfl-playoff-picture-falcons-buccaneers-saints-panthers",
-      "outletId": "the_falcoholic",
-      "outletName": "The Falcoholic",
-      "reporterId": "the_falcoholic",
-      "reporterName": "Jeanna Kelley",
-      "author": "Jeanna Kelley",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.thefalcoholic.com/atlanta-falcons-nfl-playoffs/98606/nfc-south-standings-nfl-playoff-picture-falcons-buccaneers-saints-panthers",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1702
+      "storyRank": 0.1498
     },
     {
       "id": "atl_brss_the_falcoholic_6eeaa128a7d3",
@@ -1239,7 +1577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1405
+      "storyRank": 0.1167
     },
     {
       "id": "x_tl_nfl_dougfarrar_2124286498942116210",
@@ -1290,7 +1628,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1124
+      "storyRank": 0.0968
     },
     {
       "id": "x_tl_nfl_dougfarrar_2124186319316529519",
@@ -1342,7 +1680,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1022
+      "storyRank": 0.0888
     },
     {
       "id": "atl_espn_faaa82c8f2010",
@@ -1377,7 +1715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0882
+      "storyRank": 0.0771
     },
     {
       "id": "atl_pfr_c0947bbebf2d",
@@ -1419,7 +1757,79 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0679
+      "storyRank": 0.0607
+    },
+    {
+      "id": "atl_nfilm_matchquarters_d432699c0cba",
+      "type": "article",
+      "category": "film",
+      "filmOnlyScope": true,
+      "isLeagueWideFilmChart": true,
+      "title": "Split-Field Quarters Foundations",
+      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
+      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
+      "imageAlt": "Split-Field Quarters Foundations",
+      "publishedAt": "2026-11-19T22:01:55.000Z",
+      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
+      "outletId": "matchquarters",
+      "outletName": "MatchQuarters",
+      "reporterId": "matchquarters",
+      "reporterName": "Cody Alexander",
+      "author": "Cody Alexander",
+      "authorHandle": "@The_Coach_A",
+      "authorProfileUrl": "https://www.matchquarters.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.052
+    },
+    {
+      "id": "atl_nfilm_matchquarters_a64862556914",
+      "type": "article",
+      "category": "film",
+      "filmOnlyScope": true,
+      "isLeagueWideFilmChart": true,
+      "title": "The Aranda-Roberts Creeper System",
+      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
+      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
+      "imageAlt": "The Aranda-Roberts Creeper System",
+      "publishedAt": "2026-11-19T21:33:52.000Z",
+      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
+      "outletId": "matchquarters",
+      "outletName": "MatchQuarters",
+      "reporterId": "matchquarters",
+      "reporterName": "Cody Alexander",
+      "author": "Cody Alexander",
+      "authorHandle": "@The_Coach_A",
+      "authorProfileUrl": "https://www.matchquarters.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0518
     },
     {
       "id": "atl_espn_7cc8fe35ab6f7",
@@ -1454,7 +1864,133 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0521
+      "storyRank": 0.0475
+    },
+    {
+      "id": "atl_tyt_Lge4ecvlwkg",
+      "type": "video",
+      "category": "beat",
+      "videoId": "Lge4ecvlwkg",
+      "embeddable": false,
+      "title": "EVERY Atlanta Falcons offensive touchdown through the first half of the 2026 season | Highlights",
+      "summary": "Watch every offensive touchdown scored by the Atlanta Falcons through the first half of the 2026 season. Subscribe: https://www.youtube.com/@AtlantaFalcons #AtlantaFalcons #RiseUp #NFL #Falcons",
+      "imageUrl": "https://i.ytimg.com/vi/Lge4ecvlwkg/hqdefault.jpg",
+      "imageAlt": "EVERY Atlanta Falcons offensive touchdown through the first half of the 2026 season | Highlights",
+      "publishedAt": "2026-11-18T22:00:19.000Z",
+      "url": "https://www.youtube.com/watch?v=Lge4ecvlwkg",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Lge4ecvlwkg",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "9:16",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0425
+    },
+    {
+      "id": "atl_tyt_IcjL3MAA9uk",
+      "type": "video",
+      "category": "beat",
+      "videoId": "IcjL3MAA9uk",
+      "embeddable": false,
+      "title": "EVERY Atlanta Falcons sack through the first half of the 2026 season | Highlights",
+      "summary": "Watch every Atlanta Falcons sack through the first half of the 2026 season. Subscribe: https://www.youtube.com/@AtlantaFalcons #AtlantaFalcons #RiseUp #NFL #Falcons",
+      "imageUrl": "https://i.ytimg.com/vi/IcjL3MAA9uk/hqdefault.jpg",
+      "imageAlt": "EVERY Atlanta Falcons sack through the first half of the 2026 season | Highlights",
+      "publishedAt": "2026-11-18T17:00:21.000Z",
+      "url": "https://www.youtube.com/watch?v=IcjL3MAA9uk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=IcjL3MAA9uk",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "8:44",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0408
+    },
+    {
+      "id": "atl_tyt_AuWf-zUAYrc",
+      "type": "video",
+      "category": "beat",
+      "videoId": "AuWf-zUAYrc",
+      "embeddable": false,
+      "title": "EVERY Drake London reception from the first half of the 2026 season | Highlights | Atlanta Falcons",
+      "summary": "Watch every Drake London reception from the first half of the Atlanta Falcons 2026 season. Subscribe: https://www.youtube.com/@AtlantaFalcons #AtlantaFalcons #RiseUp #NFL #Falcons",
+      "imageUrl": "https://i.ytimg.com/vi/AuWf-zUAYrc/hqdefault.jpg",
+      "imageAlt": "EVERY Drake London reception from the first half of the 2026 season | Highlights | Atlanta Falcons",
+      "publishedAt": "2026-11-17T22:00:18.000Z",
+      "url": "https://www.youtube.com/watch?v=AuWf-zUAYrc",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=AuWf-zUAYrc",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4426502",
+          "name": "Drake London",
+          "shortName": "D. London",
+          "position": "WR",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426502.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "9:58",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0356
     },
     {
       "id": "atl_vid_db08ba1e6bae",
@@ -1466,6 +2002,7 @@
       "publishedAt": "2026-11-17T20:37:29.000Z",
       "url": "https://www.atlantafalcons.com/video/every-atlanta-falcons-offensive-touchdown-through-the-first-half-of-the-2026-season-highlights",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/every-atlanta-falcons-offensive-touchdown-through-the-first-half-of-the-2026-season-highlights",
+      "duration": "9:16",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1490,8 +2027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.038,
-      "duration": "9:16"
+      "storyRank": 0.0352
     },
     {
       "id": "atl_pfr_3573f91ee6d8",
@@ -1533,7 +2069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0373
+      "storyRank": 0.0346
     },
     {
       "id": "atl_vid_e30bc25c2aa0",
@@ -1545,6 +2081,7 @@
       "publishedAt": "2026-11-17T20:15:00.000Z",
       "url": "https://www.atlantafalcons.com/video/every-drake-london-reception-from-the-first-half-of-the-2026-season-highlights",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/every-drake-london-reception-from-the-first-half-of-the-2026-season-highlights",
+      "duration": "9:58",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1578,8 +2115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0379,
-      "duration": "9:58"
+      "storyRank": 0.0352
     },
     {
       "id": "atl_vid_a26fb306bec3",
@@ -1591,6 +2127,7 @@
       "publishedAt": "2026-11-17T20:11:00.000Z",
       "url": "https://www.atlantafalcons.com/video/top-bijan-robinson-highlights-from-the-first-half-of-the-2026-season-atlanta-falcons",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/top-bijan-robinson-highlights-from-the-first-half-of-the-2026-season-atlanta-falcons",
+      "duration": "8:04",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1624,8 +2161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0379,
-      "duration": "8:04"
+      "storyRank": 0.0351
     },
     {
       "id": "atl_vid_afcbfd238320",
@@ -1637,6 +2173,7 @@
       "publishedAt": "2026-11-17T20:11:00.000Z",
       "url": "https://www.atlantafalcons.com/video/every-atlanta-falcons-sack-through-the-first-half-of-the-2026-season-highlights",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/every-atlanta-falcons-sack-through-the-first-half-of-the-2026-season-highlights",
+      "duration": "8:44",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1661,8 +2198,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0379,
-      "duration": "8:44"
+      "storyRank": 0.0351
+    },
+    {
+      "id": "atl_tyt_Ywr35JtkpOQ",
+      "type": "video",
+      "category": "beat",
+      "videoId": "Ywr35JtkpOQ",
+      "embeddable": false,
+      "title": "TOP Bijan Robinson highlights from the first half of the 2026 season | Atlanta Falcons",
+      "summary": "Watch top Bijan Robinson highlights through Week 10 of the Atlanta Falcons 2026 season. Subscribe: https://www.youtube.com/@AtlantaFalcons #AtlantaFalcons #RiseUp #NFL #Falcons",
+      "imageUrl": "https://i.ytimg.com/vi/Ywr35JtkpOQ/hqdefault.jpg",
+      "imageAlt": "TOP Bijan Robinson highlights from the first half of the 2026 season | Atlanta Falcons",
+      "publishedAt": "2026-11-17T19:24:26.000Z",
+      "url": "https://www.youtube.com/watch?v=Ywr35JtkpOQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Ywr35JtkpOQ",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "8:04",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.035
     },
     {
       "id": "atl_rss_e8b1b614b76a",
@@ -1696,7 +2280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0086
     },
     {
       "id": "atl_bsky_02920291fa4f",
@@ -1711,6 +2295,12 @@
       "url": "https://bsky.app/profile/benjaminsolak.bsky.social/post/3n2jeul5n2s23",
       "externalUrl": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions",
       "externalTitle": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions"
+        }
+      ],
       "outletId": "espn_national",
       "outletName": "Ben Solak",
       "reporterId": "ben_solak",
@@ -1743,13 +2333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301,
-      "inlineLinks": [
-        {
-          "text": "www.espn.com/nfl/story/_/...",
-          "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions"
-        }
-      ]
+      "storyRank": 0.028
     },
     {
       "id": "atl_rss_3d8d94980edb",
@@ -1783,7 +2367,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0364
+      "storyRank": 0.0338
+    },
+    {
+      "id": "atl_tyt_sfQmfpfwDm4",
+      "type": "video",
+      "category": "beat",
+      "isFunHighlightClip": true,
+      "videoId": "sfQmfpfwDm4",
+      "embeddable": false,
+      "title": "Bijan Robinson mic'd up | Atlanta Falcons | NFL",
+      "summary": "Running back Bijan Robinson is mic'd up for week 10 against the Kansas City Chiefs. Subscribe: https://www.youtube.com/@AtlantaFalcons #AtlantaFalcons #RiseUp #NFL #Falcons",
+      "imageUrl": "https://i.ytimg.com/vi/sfQmfpfwDm4/hqdefault.jpg",
+      "imageAlt": "Bijan Robinson mic'd up | Atlanta Falcons | NFL",
+      "publishedAt": "2026-11-17T00:00:26.000Z",
+      "url": "https://www.youtube.com/watch?v=sfQmfpfwDm4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=sfQmfpfwDm4",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0308
     },
     {
       "id": "atl_vid_d2e49f1f9ee6",
@@ -1795,6 +2427,7 @@
       "publishedAt": "2026-11-17T00:00:00.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-mic-d-up",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-mic-d-up",
+      "duration": "3:38",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1828,8 +2461,63 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.033,
-      "duration": "3:38"
+      "storyRank": 0.0308
+    },
+    {
+      "id": "atl_tyt_2hTovLw_S7g",
+      "type": "video",
+      "category": "beat",
+      "videoId": "2hTovLw_S7g",
+      "embeddable": false,
+      "title": "Jahan Dotson & Xavier Watts Week 11 Media Availability | Atlanta Falcons Press Conferences",
+      "summary": "Atlanta Falcons Jahan Dotson and Xavier Watts speak to the media about the team's performance and how they can improve over the bye week. 0:00 - WR Jahan Dotson 13:41 - S Xavier Watts Subscribe: https://www.youtube.com/@",
+      "imageUrl": "https://i.ytimg.com/vi/2hTovLw_S7g/hqdefault.jpg",
+      "imageAlt": "Jahan Dotson & Xavier Watts Week 11 Media Availability | Atlanta Falcons Press Conferences",
+      "publishedAt": "2026-11-16T22:00:05.000Z",
+      "url": "https://www.youtube.com/watch?v=2hTovLw_S7g",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=2hTovLw_S7g",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4361409",
+          "name": "Jahan Dotson",
+          "shortName": "J. Dotson",
+          "position": "WR",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361409.png"
+        },
+        {
+          "id": "4431005",
+          "name": "Xavier Watts",
+          "shortName": "X. Watts",
+          "position": "S",
+          "jersey": 31,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431005.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "17:39",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0304
     },
     {
       "id": "atl_vid_9038f9cf61b8",
@@ -1841,6 +2529,7 @@
       "publishedAt": "2026-11-16T22:00:00.000Z",
       "url": "https://www.atlantafalcons.com/video/jahan-dotson-xavier-watts-week-11-media-availability-atlanta-falcons-press-conferences",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/jahan-dotson-xavier-watts-week-11-media-availability-atlanta-falcons-press-conferences",
+      "duration": "17:39",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -1882,47 +2571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325,
-      "duration": "17:39"
-    },
-    {
-      "id": "atl_yts_IeXG9UkMiI0",
-      "type": "video",
-      "videoId": "IeXG9UkMiI0",
-      "embeddable": false,
-      "title": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "16:50",
-      "imageUrl": "https://i.ytimg.com/vi/IeXG9UkMiI0/hqdefault.jpg",
-      "imageAlt": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:50:05.972Z",
-      "url": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0304
     },
     {
       "id": "atl_espn_3ed26fa45e367",
@@ -1966,7 +2615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0319
+      "storyRank": 0.0299
     },
     {
       "id": "atl_vid_b1a09eb2ea39",
@@ -1978,6 +2627,7 @@
       "publishedAt": "2026-11-16T18:45:00.000Z",
       "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-reflects-on-falcons-week-10-matchup-vs-chiefs-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-reflects-on-falcons-week-10-matchup-vs-chiefs-press-conference",
+      "duration": "9:17",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2002,8 +2652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0319,
-      "duration": "9:17"
+      "storyRank": 0.0298
     },
     {
       "id": "atl_rss_f66fa5406769",
@@ -2037,7 +2686,133 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0314
+      "storyRank": 0.0294
+    },
+    {
+      "id": "atl_yts__D8pEh_CN7A",
+      "type": "video",
+      "videoId": "_D8pEh_CN7A",
+      "embeddable": true,
+      "title": "Falcons take the field vs Kansas City 🔥CBS | NFL+  #nfl #atlantafalcons",
+      "summary": "",
+      "duration": "0:27",
+      "imageUrl": "https://i.ytimg.com/vi/_D8pEh_CN7A/hqdefault.jpg",
+      "imageAlt": "Falcons take the field vs Kansas City 🔥CBS | NFL+  #nfl #atlantafalcons",
+      "publishedAt": "2026-11-16T07:27:15.261Z",
+      "url": "https://www.youtube.com/watch?v=_D8pEh_CN7A",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=_D8pEh_CN7A",
+      "channel": "Atlanta Falcons",
+      "outletId": "falcons_official",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "falcons_official",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
+    },
+    {
+      "id": "atl_yts_KGGHgIMzfC8",
+      "type": "video",
+      "videoId": "KGGHgIMzfC8",
+      "embeddable": true,
+      "title": "Bijan Robinson with the TD CBS | NFL+ #nfl #atlantafalcons",
+      "summary": "",
+      "duration": "0:13",
+      "imageUrl": "https://i.ytimg.com/vi/KGGHgIMzfC8/hqdefault.jpg",
+      "imageAlt": "Bijan Robinson with the TD CBS | NFL+ #nfl #atlantafalcons",
+      "publishedAt": "2026-11-16T07:27:15.261Z",
+      "url": "https://www.youtube.com/watch?v=KGGHgIMzfC8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=KGGHgIMzfC8",
+      "channel": "Atlanta Falcons",
+      "outletId": "falcons_official",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "falcons_official",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
+    },
+    {
+      "id": "atl_yts_IeXG9UkMiI0",
+      "type": "video",
+      "videoId": "IeXG9UkMiI0",
+      "embeddable": false,
+      "title": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "16:50",
+      "imageUrl": "https://i.ytimg.com/vi/IeXG9UkMiI0/hqdefault.jpg",
+      "imageAlt": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T07:27:15.261Z",
+      "url": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0279
     },
     {
       "id": "atl_espn_9f020e3e0ae5a",
@@ -2081,33 +2856,77 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0283
+      "storyRank": 0.0267
     },
     {
-      "id": "atl_espn_848ebddeec81d",
-      "type": "article",
-      "title": "Mahomes throws 5 TD passes and rookie Johnson runs for 101 yards as Chiefs overwhelm Falcons 35-13",
-      "summary": "— Some new names had the Kansas City Chiefs looking very young — and very strong.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1115/538055ea-4b87-43d8-9be8-828316a9a8e6/538055ea-4b87-43d8-9be8-828316a9a8e6.jpg",
-      "imageCaption": "Kansas City Chiefs vs. Atlanta Falcons: Game Highlights",
-      "imageAlt": "Mahomes throws 5 TD passes and rookie Johnson runs for 101 yards as Chiefs overwhelm Falcons 35-13",
-      "publishedAt": "2026-11-15T23:11:35.000Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873058",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
+      "id": "atl_tyt_oZ_G3kcnHtc",
+      "type": "video",
+      "category": "beat",
+      "videoId": "oZ_G3kcnHtc",
+      "embeddable": false,
+      "title": "Bijan Robinson, A.J. Terrell Jr., & more Falcons speak to the media after Week 10 | Press Conference",
+      "summary": "Atlanta Falcons players speak to the media following their matchup with the Kansas City Chiefs. 0:00 - Bijan Robinson 7:55 - A.J. Terrell Jr. 11:37 - Matthew Bergeron 17:09 - Gervon Dexter Jr. 19:12 - Corey Levin 22:00 -",
+      "imageUrl": "https://i.ytimg.com/vi/oZ_G3kcnHtc/hqdefault.jpg",
+      "imageAlt": "Bijan Robinson, A.J. Terrell Jr., & more Falcons speak to the media after Week 10 | Press Conference",
+      "publishedAt": "2026-11-15T22:50:29.000Z",
+      "url": "https://www.youtube.com/watch?v=oZ_G3kcnHtc",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=oZ_G3kcnHtc",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4568510",
+          "name": "Matthew Bergeron",
+          "shortName": "M. Bergeron",
+          "position": "G",
+          "jersey": 65,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568510.png"
+        },
+        {
+          "id": "2973637",
+          "name": "Corey Levin",
+          "shortName": "C. Levin",
+          "position": "G",
+          "jersey": 62,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2973637.png"
+        },
+        {
+          "id": "4430807",
+          "name": "Bijan Robinson",
+          "shortName": "B. Robinson",
+          "position": "RB",
+          "jersey": 7,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
+        },
+        {
+          "id": "4429014",
+          "name": "Gervon Dexter Sr.",
+          "shortName": "G. Dexter Sr.",
+          "position": "DT",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429014.png"
+        },
+        {
+          "id": "4239995",
+          "name": "A.J. Terrell Jr.",
+          "shortName": "A.J. Terrell Jr.",
+          "position": "CB",
+          "jersey": 24,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239995.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2116,7 +2935,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0283
+      "storyRank": 0.0265
     },
     {
       "id": "atl_vid_d5056d939b60",
@@ -2128,6 +2947,7 @@
       "publishedAt": "2026-11-15T22:36:00.000Z",
       "url": "https://www.atlantafalcons.com/video/quarterback-michael-penix-jr-speaks-with-the-media-following-the-falcons-week-10-matchup-against-kansas-city",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/quarterback-michael-penix-jr-speaks-with-the-media-following-the-falcons-week-10-matchup-against-kansas-city",
+      "duration": "7:44",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2161,8 +2981,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282,
-      "duration": "7:44"
+      "storyRank": 0.0265
     },
     {
       "id": "atl_vid_1f2b2f4bb4b4",
@@ -2174,6 +2993,7 @@
       "publishedAt": "2026-11-15T22:33:00.000Z",
       "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-reflects-on-falcons-matchup-versus-kansas-city-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-reflects-on-falcons-matchup-versus-kansas-city-press-conference",
+      "duration": "8:16",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2198,8 +3018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282,
-      "duration": "8:16"
+      "storyRank": 0.0265
     },
     {
       "id": "atl_vid_9710be269fe8",
@@ -2211,6 +3030,7 @@
       "publishedAt": "2026-11-15T21:37:21.000Z",
       "url": "https://www.atlantafalcons.com/video/chiefs-at-falcons-nfl-highlights",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/chiefs-at-falcons-nfl-highlights",
+      "duration": "3:01",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2235,8 +3055,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.028,
-      "duration": "3:01"
+      "storyRank": 0.0264
     },
     {
       "id": "atl_rss_630fa9ab4ad4",
@@ -2270,7 +3089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
+      "storyRank": 0.0263
     },
     {
       "id": "atl_vid_1de5cb6af681",
@@ -2282,6 +3101,7 @@
       "publishedAt": "2026-11-15T20:57:00.000Z",
       "url": "https://www.atlantafalcons.com/video/can-t-miss-play-best-onside-kick-in-nfl-history-jake-moody-might-have-it-as-he-sets-up-blair-for-toe-tap-catch",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/can-t-miss-play-best-onside-kick-in-nfl-history-jake-moody-might-have-it-as-he-sets-up-blair-for-toe-tap-catch",
+      "duration": "0:20",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2323,8 +3143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279,
-      "duration": "0:20"
+      "storyRank": 0.0263
     },
     {
       "id": "atl_vid_0b127ce6a8c5",
@@ -2336,6 +3155,7 @@
       "publishedAt": "2026-11-15T20:48:48.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-s-seventh-td-of-2026-reduces-chiefs-lead-to-28-9",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-s-seventh-td-of-2026-reduces-chiefs-lead-to-28-9",
+      "duration": "0:24",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2369,8 +3189,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279,
-      "duration": "0:24"
+      "storyRank": 0.0262
     },
     {
       "id": "atl_vid_e4c4e1c496c5",
@@ -2382,6 +3201,7 @@
       "publishedAt": "2026-11-15T20:45:30.000Z",
       "url": "https://www.atlantafalcons.com/video/penix-jr-dials-launch-codes-to-jahan-dotson-for-37-yard-gain-in-tight-coverage",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/penix-jr-dials-launch-codes-to-jahan-dotson-for-37-yard-gain-in-tight-coverage",
+      "duration": "0:18",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2423,8 +3243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279,
-      "duration": "0:18"
+      "storyRank": 0.0262
     },
     {
       "id": "atl_vid_71a21c3f0953",
@@ -2436,6 +3255,7 @@
       "publishedAt": "2026-11-15T20:42:54.000Z",
       "url": "https://www.atlantafalcons.com/video/drake-london-shows-the-moves-on-24-yard-catch-vs-chiefs",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/drake-london-shows-the-moves-on-24-yard-catch-vs-chiefs",
+      "duration": "0:20",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2477,8 +3297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279,
-      "duration": "0:20"
+      "storyRank": 0.0262
     },
     {
       "id": "atl_vid_71e11d547e1a",
@@ -2490,6 +3309,7 @@
       "publishedAt": "2026-11-15T20:28:42.000Z",
       "url": "https://www.atlantafalcons.com/video/penix-jr-s-20-yard-completion-to-london-moves-chains-on-third-and-8",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/penix-jr-s-20-yard-completion-to-london-moves-chains-on-third-and-8",
+      "duration": "0:18",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2531,8 +3351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278,
-      "duration": "0:18"
+      "storyRank": 0.0262
     },
     {
       "id": "atl_vid_6849242723fa",
@@ -2544,6 +3363,7 @@
       "publishedAt": "2026-11-15T20:25:48.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-with-a-slippery-14-yard-scamper-vs-chiefs",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-with-a-slippery-14-yard-scamper-vs-chiefs",
+      "duration": "0:22",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2577,8 +3397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278,
-      "duration": "0:22"
+      "storyRank": 0.0262
     },
     {
       "id": "atl_vid_6cc4c7aa99fd",
@@ -2590,6 +3409,7 @@
       "publishedAt": "2026-11-15T20:07:53.000Z",
       "url": "https://www.atlantafalcons.com/video/michael-penix-with-a-pass-completion-to-drake-london-for-a-38-yard-gain-vs-kansas-city-chiefs",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/michael-penix-with-a-pass-completion-to-drake-london-for-a-38-yard-gain-vs-kansas-city-chiefs",
+      "duration": "0:21",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2631,8 +3451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278,
-      "duration": "0:21"
+      "storyRank": 0.0261
     },
     {
       "id": "atl_vid_0c9f955ba5a3",
@@ -2644,6 +3463,7 @@
       "publishedAt": "2026-11-15T19:58:51.000Z",
       "url": "https://www.atlantafalcons.com/video/brandon-dorlus-and-gervon-dexter-sr-have-a-team-meeting-at-the-qb-with-sack-of-mahomes",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/brandon-dorlus-and-gervon-dexter-sr-have-a-team-meeting-at-the-qb-with-sack-of-mahomes",
+      "duration": "0:20",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2685,8 +3505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0277,
-      "duration": "0:20"
+      "storyRank": 0.0261
     },
     {
       "id": "atl_vid_5946fb31e919",
@@ -2698,6 +3517,7 @@
       "publishedAt": "2026-11-15T19:10:53.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-breaks-a-17-yard-gain-vs-chiefs",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-breaks-a-17-yard-gain-vs-chiefs",
+      "duration": "0:19",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2731,8 +3551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0276,
-      "duration": "0:19"
+      "storyRank": 0.026
     },
     {
       "id": "atl_vid_498940465f1e",
@@ -2744,6 +3563,7 @@
       "publishedAt": "2026-11-15T19:08:52.000Z",
       "url": "https://www.atlantafalcons.com/video/penix-jr-s-dot-to-jahan-dotson-results-in-a-18-yard-gain",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/penix-jr-s-dot-to-jahan-dotson-results-in-a-18-yard-gain",
+      "duration": "0:17",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -2785,8 +3605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0276,
-      "duration": "0:17"
+      "storyRank": 0.026
     },
     {
       "id": "atl_pfr_61a6dbaa1f39",
@@ -2828,7 +3647,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0243
+      "storyRank": 0.023
     },
     {
       "id": "atl_rss_e4947d5197cf",
@@ -2871,7 +3690,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0244
+      "storyRank": 0.0231
     },
     {
       "id": "atl_pfr_7cb59f18ee05",
@@ -2904,7 +3723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0057
     },
     {
       "id": "atl_tx_5b421c082348",
@@ -2948,7 +3767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0217
     },
     {
       "id": "atl_rss_7d49c666a330",
@@ -2982,7 +3801,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0215
+      "storyRank": 0.0205
     },
     {
       "id": "atl_vid_b5e7e908e1df",
@@ -2994,6 +3813,7 @@
       "publishedAt": "2026-11-13T18:59:59.000Z",
       "url": "https://www.atlantafalcons.com/video/kevin-stefanski-on-atlanta-falcons-preparation-for-kansas-city-chiefs-matchup-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/kevin-stefanski-on-atlanta-falcons-preparation-for-kansas-city-chiefs-matchup-press-conference",
+      "duration": "10:47",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -3018,8 +3838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0214,
-      "duration": "10:47"
+      "storyRank": 0.0204
     },
     {
       "id": "atl_rss_c83616257292",
@@ -3070,7 +3889,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0551
+      "storyRank": 0.0526
+    },
+    {
+      "id": "atl_tyt_Zi1YJP0lae4",
+      "type": "video",
+      "category": "roster",
+      "videoId": "Zi1YJP0lae4",
+      "embeddable": false,
+      "title": "Falcons make roster moves ahead of big time bounce back opportunity vs Chiefs | Friday Five Podcast",
+      "summary": "On this week’s Friday Five, Tori and Will react to the Falcons’ trading away Jessie Bates III and Ryan Neuzil and what those mean for the rest of the season as well as the future of the franchise. They then take a look a",
+      "imageUrl": "https://i.ytimg.com/vi/Zi1YJP0lae4/hqdefault.jpg",
+      "imageAlt": "Falcons make roster moves ahead of big time bounce back opportunity vs Chiefs | Friday Five Podcast",
+      "publishedAt": "2026-11-13T15:00:25.000Z",
+      "url": "https://www.youtube.com/watch?v=Zi1YJP0lae4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Zi1YJP0lae4",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.02
     },
     {
       "id": "atl_rss_1413d95dc2ce",
@@ -3113,7 +3970,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0209
+      "storyRank": 0.0199
     },
     {
       "id": "atl_rss_4ea0b1f46176",
@@ -3156,7 +4013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0209
+      "storyRank": 0.0199
     },
     {
       "id": "atl_tx_01180c486c8b",
@@ -3208,7 +4065,93 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0194
+    },
+    {
+      "id": "atl_yts_NK8u3se_i5Q",
+      "type": "video",
+      "videoId": "NK8u3se_i5Q",
+      "embeddable": true,
+      "title": "What makes Kyle Pitts and Travis Kelce a quarterback's favorite type of tight end 🙌 #kylepitts #nfl",
+      "summary": "",
+      "duration": "1:18",
+      "imageUrl": "https://i.ytimg.com/vi/NK8u3se_i5Q/hqdefault.jpg",
+      "imageAlt": "What makes Kyle Pitts and Travis Kelce a quarterback's favorite type of tight end 🙌 #kylepitts #nfl",
+      "publishedAt": "2026-11-13T07:27:15.261Z",
+      "url": "https://www.youtube.com/watch?v=NK8u3se_i5Q",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=NK8u3se_i5Q",
+      "channel": "Atlanta Falcons",
+      "outletId": "falcons_official",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "falcons_official",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "4360248",
+          "name": "Kyle Pitts Sr.",
+          "shortName": "K. Pitts Sr.",
+          "position": "TE",
+          "jersey": 8,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360248.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0193
+    },
+    {
+      "id": "atl_tyt_orI0zNFRIIc",
+      "type": "video",
+      "category": "beat",
+      "videoId": "orI0zNFRIIc",
+      "embeddable": false,
+      "title": "The Falcons take on the Kansas City Chiefs back at home in Mercedes-Benz Stadium | RISE UP TONIGHT",
+      "summary": "Atlanta FOX 5 Rise Up Tonight gives you the latest Falcons team news, updates, and in-depth breakdowns with host Kelly Price and Atlanta Falcons analyst Tori McElhaney. Tune in ahead of the Falcons Week 10 matchup agains",
+      "imageUrl": "https://i.ytimg.com/vi/orI0zNFRIIc/hqdefault.jpg",
+      "imageAlt": "The Falcons take on the Kansas City Chiefs back at home in Mercedes-Benz Stadium | RISE UP TONIGHT",
+      "publishedAt": "2026-11-13T05:01:13.000Z",
+      "url": "https://www.youtube.com/watch?v=orI0zNFRIIc",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=orI0zNFRIIc",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0191
     },
     {
       "id": "atl_rss_ef1def40a3e1",
@@ -3242,7 +4185,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0197
+      "storyRank": 0.0188
+    },
+    {
+      "id": "atl_tyt_7g_J0pQQgP0",
+      "type": "video",
+      "category": "beat",
+      "videoId": "7g_J0pQQgP0",
+      "embeddable": false,
+      "title": "Week 10: Atlanta Falcons vs. Kansas City Chiefs | Atlanta Falcons Pregame Show",
+      "summary": "The Atlanta Falcons are back home in Mercedes-Benz Stadium to take on the Kansas City Chiefs! Join Taylor Vismor, Will McFadden, and Derek Rackley in Ticketmaster Studios as they get you ready for all the storylines and",
+      "imageUrl": "https://i.ytimg.com/vi/7g_J0pQQgP0/hqdefault.jpg",
+      "imageAlt": "Week 10: Atlanta Falcons vs. Kansas City Chiefs | Atlanta Falcons Pregame Show",
+      "publishedAt": "2026-11-12T22:00:18.000Z",
+      "url": "https://www.youtube.com/watch?v=7g_J0pQQgP0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=7g_J0pQQgP0",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0185
     },
     {
       "id": "atl_rss_7ff7091046f3",
@@ -3293,7 +4274,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0481
+    },
+    {
+      "id": "atl_tyt_8b7D15shRQQ",
+      "type": "video",
+      "category": "beat",
+      "videoId": "8b7D15shRQQ",
+      "embeddable": false,
+      "title": "Tommy Rees, Jeff Ulbrich, & Craig Aukerman on Falcons preparation for Chiefs | Press Conference",
+      "summary": "Atlanta Falcons coordinators Tommy Rees, Jeff Ulbrich, & Craig Aukerman speak to the media and discuss the Atlanta Falcons preparation to take on the Kansas City Chiefs at Mercedes-Benz Stadium. Subscribe: https://www.yo",
+      "imageUrl": "https://i.ytimg.com/vi/8b7D15shRQQ/hqdefault.jpg",
+      "imageAlt": "Tommy Rees, Jeff Ulbrich, & Craig Aukerman on Falcons preparation for Chiefs | Press Conference",
+      "publishedAt": "2026-11-12T18:56:42.000Z",
+      "url": "https://www.youtube.com/watch?v=8b7D15shRQQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=8b7D15shRQQ",
+      "channel": "Atlanta Falcons",
+      "outletId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "outletName": "Atlanta Falcons",
+      "reporterId": "UCzjCfV3LHyarKbdb-2ScGZg",
+      "reporterName": "Atlanta Falcons",
+      "author": "Atlanta Falcons",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.youtube.com/@AtlantaFalcons",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "duration": "34:03",
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0183
     },
     {
       "id": "atl_vid_7b464d4d545d",
@@ -3305,6 +4325,7 @@
       "publishedAt": "2026-11-12T18:41:23.000Z",
       "url": "https://www.atlantafalcons.com/video/tommy-rees-jeff-ulbrich-craig-aukerman-on-falcons-preparation-for-chiefs-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/tommy-rees-jeff-ulbrich-craig-aukerman-on-falcons-preparation-for-chiefs-press-conference",
+      "duration": "34:03",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -3329,8 +4350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192,
-      "duration": "34:03"
+      "storyRank": 0.0183
     },
     {
       "id": "atl_rss_43c5cdd7d26f",
@@ -3364,49 +4384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
-    },
-    {
-      "id": "atl_pfr_b3d410e28479",
-      "type": "article",
-      "title": "Giants Inquired About Bijan Robinson",
-      "summary": "Tuesday’s trade deadline passed without the Giants acquiring a running back, but it wasn’t for lack of effort on their part. It was already known the Giants had interest in the Colts’ Jonathan Taylor and the Titans’ Tony Pollard, and Jordan",
-      "imageUrl": "",
-      "publishedAt": "2026-11-12T04:40:49.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/giants-inquired-about-bijan-robinson",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4430807",
-          "name": "Bijan Robinson",
-          "shortName": "B. Robinson",
-          "position": "RB",
-          "jersey": 7,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430807.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "side_note",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0178
     },
     {
       "id": "atl_vid_ed78d5a4dce9",
@@ -3475,49 +4453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
-    },
-    {
-      "id": "atl_pfr_276dcb2e0086",
-      "type": "article",
-      "title": "Minor NFL Transactions: 11/11/26",
-      "summary": "Today’s midweek minor NFL transactions: Arizona Cardinals Designated for return from IR: TE Hunter Long Practice window opened: DT Zachary Carter Atlanta Falcons Activated from IR: T Cameron Williams Dallas Cowboys Practice window opened: C",
-      "imageUrl": "",
-      "publishedAt": "2026-11-12T01:03:11.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-11-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4685590",
-          "name": "Cameron Williams",
-          "shortName": "C. Williams",
-          "position": "OL",
-          "jersey": 73,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685590.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0171
     },
     {
       "id": "atl_vid_158cc9299cd7",
@@ -3562,143 +4498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
-    },
-    {
-      "id": "atl_rss_6cef9df7b9fc",
-      "type": "article",
-      "title": "Atlanta Falcons Week 10 depth chart vs. Kansas City Chiefs",
-      "summary": "The Falcons host the Kansas City Chiefs inside Mercedes-Benz Stadium this Sunday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/mjwkriefij69viy3l1yj.jpg",
-      "imageAlt": "Atlanta Falcons Week 10 depth chart vs. Kansas City Chiefs",
-      "publishedAt": "2026-11-11T22:11:19.000Z",
-      "url": "https://www.atlantafalcons.com/news/atlanta-falcons-week-10-depth-chart-vs-kansas-city-chiefs",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
-    },
-    {
-      "id": "atl_rss_726dcffeda07",
-      "type": "article",
-      "title": "Falcons injury report: Zachariah Branch, Josh Woods, James Pearce Jr. held out of practice",
-      "summary": "Atlanta had only three players miss practice due to injury as it began its week of preparation for the Kansas City Chiefs.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/ymrkyuozamtye6hrqtz3.png",
-      "imageAlt": "Falcons injury report: Zachariah Branch, Josh Woods, James Pearce Jr. held out of practice",
-      "publishedAt": "2026-11-11T22:03:26.000Z",
-      "url": "https://www.atlantafalcons.com/news/falcons-injury-report-zachariah-branch-josh-woods-james-pearce-jr",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4870612",
-          "name": "Zachariah Branch",
-          "shortName": "Z. Branch",
-          "position": "WR",
-          "jersey": 17,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png"
-        },
-        {
-          "id": "5081394",
-          "name": "James Pearce Jr.",
-          "shortName": "J. Pearce Jr.",
-          "position": "LB",
-          "jersey": 27,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081394.png"
-        },
-        {
-          "id": "3128303",
-          "name": "Josh Woods",
-          "shortName": "J. Woods",
-          "position": "LB",
-          "jersey": 46,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3128303.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0459
-    },
-    {
-      "id": "atl_rss_12604ad7fac4",
-      "type": "article",
-      "title": "Kevin Stefanski on state of Falcons' kicking situation",
-      "summary": "The Falcons released long-time veteran kicker Nick Folk, signing Jake Moody in his place.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/qy9wwhf1rzazxwmpqppa.jpg",
-      "imageAlt": "Kevin Stefanski on state of Falcons' kicking situation",
-      "publishedAt": "2026-11-11T21:45:38.000Z",
-      "url": "https://www.atlantafalcons.com/news/kevin-stefanski-state-of-falcons-kicking-situation-jake-moody-nick-folk",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4372066",
-          "name": "Jake Moody",
-          "shortName": "J. Moody",
-          "position": "PK",
-          "jersey": 45,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372066.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0169
     },
     {
       "id": "atl_vid_14e310a16f42",
@@ -3734,7 +4534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0173
+      "storyRank": 0.0165
     },
     {
       "id": "atl_tx_74e210c1510b",
@@ -3786,7 +4586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0159
     },
     {
       "id": "atl_vid_dd655223124f",
@@ -3798,6 +4598,7 @@
       "publishedAt": "2026-11-10T19:17:28.000Z",
       "url": "https://www.atlantafalcons.com/video/breaking-down-what-makes-kyle-pitts-sr-travis-kelce-a-nightmare-for-defenses-film-review",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/breaking-down-what-makes-kyle-pitts-sr-travis-kelce-a-nightmare-for-defenses-film-review",
+      "duration": "5:23",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -3831,8 +4632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157,
-      "duration": "5:23"
+      "storyRank": 0.0151
     },
     {
       "id": "atl_tx_f528c4fe1b37",
@@ -3867,7 +4667,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
+      "storyRank": 0.0145
     },
     {
       "id": "atl_vid_d60ab025a824",
@@ -3879,6 +4679,7 @@
       "publishedAt": "2026-11-09T19:32:02.000Z",
       "url": "https://www.atlantafalcons.com/video/kevin-stefanski-on-jessie-bates-iii-trade-atlanta-falcons-preparation-for-kansas-city-chiefs-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/kevin-stefanski-on-jessie-bates-iii-trade-atlanta-falcons-preparation-for-kansas-city-chiefs-press-conference",
+      "duration": "11:10",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -3903,8 +4704,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144,
-      "duration": "11:10"
+      "storyRank": 0.0139
     },
     {
       "id": "atl_vid_2dd4f631a635",
@@ -3916,6 +4716,7 @@
       "publishedAt": "2026-11-09T19:09:14.000Z",
       "url": "https://www.atlantafalcons.com/video/thank-you-jessie-bates-iii",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/thank-you-jessie-bates-iii",
+      "duration": "1:30",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -3940,8 +4741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144,
-      "duration": "1:30"
+      "storyRank": 0.0138
     },
     {
       "id": "atl_tx_fc5a0725e987",
@@ -3976,7 +4776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0138
+      "storyRank": 0.0133
     },
     {
       "id": "atl_vid_64a8458d4d33",
@@ -3988,6 +4788,7 @@
       "publishedAt": "2026-11-08T22:30:00.000Z",
       "url": "https://www.atlantafalcons.com/video/atlanta-falcons-players-reflect-on-playing-in-madrid-against-the-bengals-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/atlanta-falcons-players-reflect-on-playing-in-madrid-against-the-bengals-press-conference",
+      "duration": "7:14",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4029,8 +4830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134,
-      "duration": "7:14"
+      "storyRank": 0.0129
     },
     {
       "id": "atl_vid_b85f1a807407",
@@ -4042,6 +4842,7 @@
       "publishedAt": "2026-11-08T20:40:00.000Z",
       "url": "https://www.atlantafalcons.com/video/quarterback-michael-penix-jr-reflects-on-international-matchup-vs-bengals-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/quarterback-michael-penix-jr-reflects-on-international-matchup-vs-bengals-press-conference",
+      "duration": "5:00",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4075,8 +4876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133,
-      "duration": "5:00"
+      "storyRank": 0.0128
     },
     {
       "id": "atl_vid_3046ec4d8817",
@@ -4088,6 +4888,7 @@
       "publishedAt": "2026-11-08T20:40:00.000Z",
       "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-madrid-atmosphere-and-matchup-against-bengals-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-madrid-atmosphere-and-matchup-against-bengals-press-conference",
+      "duration": "6:56",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4112,8 +4913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133,
-      "duration": "6:56"
+      "storyRank": 0.0128
     },
     {
       "id": "atl_vid_12fcf6f1a764",
@@ -4125,6 +4925,7 @@
       "publishedAt": "2026-11-08T18:02:42.000Z",
       "url": "https://www.atlantafalcons.com/video/falcons-vs-bengals-highlights-week-9",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/falcons-vs-bengals-highlights-week-9",
+      "duration": "5:59",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4149,8 +4950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132,
-      "duration": "5:59"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_581f35a285b7",
@@ -4162,6 +4962,7 @@
       "publishedAt": "2026-11-08T17:55:12.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-s-best-plays-from-147-yard-game-vs-bengals-in-madrid-week-9",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-s-best-plays-from-147-yard-game-vs-bengals-in-madrid-week-9",
+      "duration": "2:34",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4195,8 +4996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132,
-      "duration": "2:34"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_3f230acb5302",
@@ -4208,6 +5008,7 @@
       "publishedAt": "2026-11-08T17:26:00.000Z",
       "url": "https://www.atlantafalcons.com/video/lacale-london-bags-the-falcons-first-sack-of-joe-burrow",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/lacale-london-bags-the-falcons-first-sack-of-joe-burrow",
+      "duration": "0:33",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4241,8 +5042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:33"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_facbf2e4b5d6",
@@ -4254,6 +5054,7 @@
       "publishedAt": "2026-11-08T16:59:30.000Z",
       "url": "https://www.atlantafalcons.com/video/drake-london-puts-a-physical-finish-on-a-22-yard-catch-and-run",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/drake-london-puts-a-physical-finish-on-a-22-yard-catch-and-run",
+      "duration": "0:14",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4287,8 +5088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:14"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_b5a12ab9561d",
@@ -4300,6 +5100,7 @@
       "publishedAt": "2026-11-08T16:57:13.000Z",
       "url": "https://www.atlantafalcons.com/video/penix-jr-s-lofted-28-yard-pass-locates-bijan-robinson-accurately-on-wheel-route",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/penix-jr-s-lofted-28-yard-pass-locates-bijan-robinson-accurately-on-wheel-route",
+      "duration": "0:33",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4341,8 +5142,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:33"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_cd650e6ba285",
@@ -4354,6 +5154,7 @@
       "publishedAt": "2026-11-08T16:44:52.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-veers-to-the-outside-to-score-his-fifth-rushing-td-of-2026",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-veers-to-the-outside-to-score-his-fifth-rushing-td-of-2026",
+      "duration": "0:35",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4387,8 +5188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:35"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_25734f1e86df",
@@ -4400,6 +5200,7 @@
       "publishedAt": "2026-11-08T16:42:13.000Z",
       "url": "https://www.atlantafalcons.com/video/kendal-daniels-lowers-the-boom-on-chase-brown-with-strong-hit-stick-tackle",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/kendal-daniels-lowers-the-boom-on-chase-brown-with-strong-hit-stick-tackle",
+      "duration": "0:13",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4433,8 +5234,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:13"
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_532f3a87fc73",
@@ -4446,6 +5246,7 @@
       "publishedAt": "2026-11-08T15:58:11.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-motions-out-wide-before-snagging-15-yard-reception-via-screen-pass-concept",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-motions-out-wide-before-snagging-15-yard-reception-via-screen-pass-concept",
+      "duration": "0:10",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4479,8 +5280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:10"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_305223f824da",
@@ -4492,6 +5292,7 @@
       "publishedAt": "2026-11-08T15:29:58.000Z",
       "url": "https://www.atlantafalcons.com/video/brother-vs-brother-chase-and-sydney-brown-collide-in-madrid",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/brother-vs-brother-chase-and-sydney-brown-collide-in-madrid",
+      "duration": "0:49",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4525,8 +5326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:49"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_8e3114def61f",
@@ -4538,6 +5338,7 @@
       "publishedAt": "2026-11-08T15:19:08.000Z",
       "url": "https://www.atlantafalcons.com/video/penix-jr-s-15-yard-laser-to-london-fits-into-an-airtight-window-across-middle-of-pitch-in-madrid",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/penix-jr-s-15-yard-laser-to-london-fits-into-an-airtight-window-across-middle-of-pitch-in-madrid",
+      "duration": "0:26",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4579,8 +5380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131,
-      "duration": "0:26"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_993aede9b36b",
@@ -4592,6 +5392,7 @@
       "publishedAt": "2026-11-08T15:16:01.000Z",
       "url": "https://www.atlantafalcons.com/video/nick-folk-s-31-yard-fg-gives-falcons-a-10-7-lead-over-cincinnati-in-madrid",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/nick-folk-s-31-yard-fg-gives-falcons-a-10-7-lead-over-cincinnati-in-madrid",
+      "duration": "0:08",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4616,8 +5417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013,
-      "duration": "0:08"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_72d70aaf36b0",
@@ -4629,6 +5429,7 @@
       "publishedAt": "2026-11-08T15:09:40.000Z",
       "url": "https://www.atlantafalcons.com/video/michael-penix-jr-s-23-yard-run-vs-bengals-marks-qb-s-longest-carry-of-his-nfl-career-so-far",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/michael-penix-jr-s-23-yard-run-vs-bengals-marks-qb-s-longest-carry-of-his-nfl-career-so-far",
+      "duration": "0:34",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4662,8 +5463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013,
-      "duration": "0:34"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_a598e1c89a04",
@@ -4675,6 +5475,7 @@
       "publishedAt": "2026-11-08T15:09:13.000Z",
       "url": "https://www.atlantafalcons.com/video/charlie-woerner-s-first-career-td-comes-in-madrid-during-te-s-seventh-nfl-season",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/charlie-woerner-s-first-career-td-comes-in-madrid-during-te-s-seventh-nfl-season",
+      "duration": "0:31",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4708,8 +5509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013,
-      "duration": "0:31"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_6f5cdf3017db",
@@ -4721,6 +5521,7 @@
       "publishedAt": "2026-11-08T14:54:57.000Z",
       "url": "https://www.atlantafalcons.com/video/bijan-robinson-starts-in-a-three-point-stance-before-picking-up-21-yards-on-toss-sweep-play-to-the-left",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/bijan-robinson-starts-in-a-three-point-stance-before-picking-up-21-yards-on-toss-sweep-play-to-the-left",
+      "duration": "0:32",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4754,8 +5555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013,
-      "duration": "0:32"
+      "storyRank": 0.0126
     },
     {
       "id": "atl_vid_45f6f7e2d239",
@@ -4767,6 +5567,7 @@
       "publishedAt": "2026-11-07T16:58:49.000Z",
       "url": "https://www.atlantafalcons.com/video/falcons-in-madrid-hype",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/falcons-in-madrid-hype",
+      "duration": "0:49",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4791,8 +5592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121,
-      "duration": "0:49"
+      "storyRank": 0.0117
     },
     {
       "id": "atl_tx_a874b8a93a5c",
@@ -4868,7 +5668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.012
     },
     {
       "id": "atl_vid_9393787fe4f4",
@@ -4880,6 +5680,7 @@
       "publishedAt": "2026-11-06T15:36:40.000Z",
       "url": "https://www.atlantafalcons.com/video/brandon-dorlus-avieon-terrell-olamide-zaccheaus-kendal-daniels-on-bengals-matchup-in-madrid-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/brandon-dorlus-avieon-terrell-olamide-zaccheaus-kendal-daniels-on-bengals-matchup-in-madrid-press-conference",
+      "duration": "14:49",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4937,8 +5738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0112,
-      "duration": "14:49"
+      "storyRank": 0.0109
     },
     {
       "id": "atl_vid_8f23f97c2b87",
@@ -4950,6 +5750,7 @@
       "publishedAt": "2026-11-06T15:35:59.000Z",
       "url": "https://www.atlantafalcons.com/video/kevin-stefanski-on-atlanta-falcons-preparation-for-cincinnati-bengals-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/kevin-stefanski-on-atlanta-falcons-preparation-for-cincinnati-bengals-press-conference",
+      "duration": "11:04",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -4974,8 +5775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0112,
-      "duration": "11:04"
+      "storyRank": 0.0109
     },
     {
       "id": "atl_vid_16e3c14ecc40",
@@ -4987,6 +5787,7 @@
       "publishedAt": "2026-11-05T16:06:55.000Z",
       "url": "https://www.atlantafalcons.com/video/michael-penix-drake-london-bijan-robinson-on-falcons-preparation-in-madrid-press-conference",
       "externalVideoUrl": "https://www.atlantafalcons.com/video/michael-penix-drake-london-bijan-robinson-on-falcons-preparation-in-madrid-press-conference",
+      "duration": "25:16",
       "outletId": "falcons_official",
       "outletName": "atlantafalcons.com Video",
       "reporterId": "falcons_official",
@@ -5036,8 +5837,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105,
-      "duration": "25:16"
+      "storyRank": 0.0101
     },
     {
       "id": "atl_rss_f8489ea8b6c2",

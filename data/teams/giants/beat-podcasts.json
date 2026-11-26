@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:49:33.118Z",
+  "updatedAt": "2026-11-26T07:26:28.746Z",
   "windowDays": 7,
-  "totalEpisodes": 17,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "giants_locked_on_giants",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/da64a7/feeds.simplecast.com/Iu3ZtP7n",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-giants-daily-podcast-on-the-new-york-giants/id1144941431?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/2e/97/87/2e97877c-66c4-c41b-5f57-edbfb57d4a77/mza_8472364093903252910.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "giants_big_blue_banter",
@@ -37,7 +37,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/f0/fc/96/f0fc96e9-6b51-1003-fe74-b18d0e4a0776/mza_3277246942374449183.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -340,46 +340,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/768ae05a-71de-4be1-8ebb-b50701489051/audio.mp3?utm_source=Podcast&in_playlist=e0103b25-98cc-437f-9cfc-aea90025666b"
-    },
-    {
-      "id": "pod_giants_locked_on_giants_1000802839140",
-      "trackId": 1000802839140,
-      "collectionId": 1144941431,
-      "showId": "giants_locked_on_giants",
-      "showName": "Locked On Giants",
-      "showFullTitle": "Locked On Giants - Daily Podcast On The New York Giants",
-      "hosts": "Locked On Podcast Network",
-      "network": "Locked On Podcast Network",
-      "title": "PHYSICALITY: New York Giants and Jaguars PREPARE for Line-of-Scrimmage SLUGFEST",
-      "summary": "The New York Giants prepare for a national-TV brawl against the 7-2 Jacksonville Jaguars, with the battle at the line of scrimmage likely to decide everything. On this edition of Crossover Thursday, Patricia Traina of Locked On Giants and Tony Wiggins ofCan John Harbaugh’s t",
-      "publishedAt": "2026-11-19T02:00:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/51/4d/7d/514d7dd7-3f67-4f90-e105-2b88fafaca2f/mza_3705104273399740255.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/physicality-new-york-giants-and-jaguars-prepare-for/id1144941431?i=1000802839140&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-giants-daily-podcast-on-the-new-york-giants/id1144941431?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/da64a7/feeds.simplecast.com/Iu3ZtP7n",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/da64a7/lockedon.simplecastaudio.com/a0c4a01b-f272-405f-be6b-073a8233e67a/episodes/1d0171a1-7710-462d-b843-7c787d2bacdc/audio/128/default.mp3?aid=rss_feed&awCollectionId=a0c4a01b-f272-405f-be6b-073a8233e67a&awEpisodeId=1d0171a1-7710-462d-b843-7c787d2bacdc&feed=Iu3ZtP7n"
-    },
-    {
-      "id": "pod_giants_big_blue_kickoff_live_1000802797119",
-      "trackId": 1000802797119,
-      "collectionId": 1486876072,
-      "showId": "giants_big_blue_kickoff_live",
-      "showName": "Big Blue Kickoff Live",
-      "showFullTitle": "Big Blue Kickoff Live | New York Giants",
-      "hosts": "New York Giants",
-      "network": "New York Giants",
-      "title": "Blue Kickoff Live 11/18 I Locked in on the Jaguars",
-      "summary": "Marc Malusis and Shaun O’Hara discuss the matchup with the Jaguars, talk about the offense, and take calls from fans. 0:00 - Commanders wrap up 15:00 Locked in on the Jaguars 35:05 - More on the Jaguars 40:45 - The running back room 46:30 - The offense See omnystudio.com/lis",
-      "publishedAt": "2026-11-18T22:03:22.000Z",
-      "durationMinutes": 64,
-      "durationDisplay": "64 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/53/08/33/5308338e-8ef4-6171-644e-ba276d7979bc/mza_2810746697291492217.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/blue-kickoff-live-11-18-i-locked-in-on-the-jaguars/id1486876072?i=1000802797119&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/cf9b91d3-da34-4ea7-b651-b5060165d614/audio.mp3?utm_source=Podcast&in_playlist=e0103b25-98cc-437f-9cfc-aea90025666b"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:29.413Z",
+  "updatedAt": "2026-11-26T07:27:55.019Z",
   "teamAbbr": "MIA",
   "teamSlug": "dolphins",
   "brandName": "Fins Up",
@@ -48,13 +48,12 @@
     "candidateCascade": [
       "gemini-4-hydrogen",
       "gemini-3.8-flash",
+      "gemini-3.6-flash",
       "gemini-3.5-flash",
-      "gemini-3-flash-preview",
-      "gemini-2.5-flash",
-      "gemini-2.5-pro"
+      "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:50:29.413Z",
+    "lastCheckedAt": "2026-11-26T07:27:55.019Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:51:05.987Z",
+  "updatedAt": "2026-11-26T07:41:24.515Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.houstontexans.com/team/injury-report/",
@@ -10,56 +10,29 @@
   "gameDayRoster": null,
   "practiceReport": [
     {
-      "playerId": "4429059",
-      "name": "Woody Marks",
-      "position": "RB",
-      "jersey": 4,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png",
+      "playerId": "4360189",
+      "name": "Logan Hall",
+      "position": "DE",
+      "jersey": 96,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360189.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Concussion",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 26,
+      "injuryType": "Hip",
+      "gameStatus": "Doubtful",
+      "playProbabilityPct": 10,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "26% • Long Shot",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "playBadgeLabel": "10% • Doubtful",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Remains in early stages of NFL 5-Step Concussion Protocol",
-        "Coaching/beat trend (beat report): trending upward / optimistic to suit up"
+        "Official Doubtful tag (NFL historical base ~10–14%)"
       ],
-      "beatComment": "Marks, who was inactive for last Thursday's game against the Colts, was, as of Monday, \"trending in the right direction,\" according to coach DeMeco Ryans, per Aaron Wilson of KPRC 2 Houston. The running back's presence for Wednesday's session supports that notion, with Marks' official participation level in line to provide key context ahead of this Sunday's matchup against the Ravens."
-    },
-    {
-      "playerId": "4432708",
-      "name": "Marvin Harrison Jr.",
-      "position": "WR",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 42,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "42% • Long Shot",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
-        "Soft-tissue re-aggravation caution (Hamstring)"
-      ],
-      "beatComment": "Harrison has missed two straight games, but his looming practice participation, in any capacity, is a good sign regarding his availability as Sunday's game against the Ravens approaches. The Texans' upcoming injury report will reveal the wideout's official participation level in Wednesday's session."
+      "beatComment": "doubtful"
     },
     {
       "playerId": "2976560",
@@ -70,22 +43,72 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Hamstring",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 45,
+      "playProbabilityPct": 25,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "45% • Long Shot",
+      "playBadgeLabel": "25% • Long Shot",
       "archetypeNote": "Veteran starter profile (12th NFL season, 76% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Hunter did not play in Thursday's win over the Colts due to his hamstring injury. The defensive end has still not returned to practice since sustaining the injury during Week 10 prep. If Hunter continues to miss practice, he will be in line to miss his third consecutive game due to the injury."
+    },
+    {
+      "playerId": "4429022",
+      "name": "Kayshon Boutte",
+      "position": "WR",
+      "jersey": 14,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hip",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 35,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "35% • Long Shot",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Did Not Participate (DNP) on Wednesday"
+      ],
+      "beatComment": "This past Friday, Aaron Wilson of KPRC 2 Houston indicated that the hip injury Boutte suffered in last Thursday's win over the Colts didn't appear to be serious. However, with a DNP to start the practice week, the wideout's status will need to be monitored as Sunday's game against the Ravens approaches. Apart from a 4-125-2 receiving line in a 44-22 win over the Chargers in Week 9, Boutte has produced modest fantasy outputs more often than not, maxing out at five targets (three times) in 10 contests."
+    },
+    {
+      "playerId": "2970204",
+      "name": "Sheldon Rankins",
+      "position": "DT",
+      "jersey": 98,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2970204.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "DNP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 37,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "37% • Long Shot",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Did Not Participate (DNP) on Wednesday"
+      ],
+      "beatComment": "Rankins sustained an ankle injury during Thursday's win over the Colts and did not return to the contest. The defensive tackle's absence from Wednesday's session suggests the injury was significant. Rankins will have Thursday and Friday's sessions to return to practice in time to avoid an injury designation, or at least have a chance to suit up for Sunday's game against the Ravens by earning a questionable tag."
     },
     {
       "playerId": "4362504",
@@ -113,29 +136,30 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "4429022",
-      "name": "Kayshon Boutte",
+      "playerId": "4432708",
+      "name": "Marvin Harrison Jr.",
       "position": "WR",
-      "jersey": 14,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png",
+      "jersey": 18,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Hip",
+      "injuryType": "Hamstring",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 76,
+      "playProbabilityPct": 60,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "76% • GTD",
+      "playBadgeLabel": "60% • GTD",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Questionable tag adjusted by player career prior (76%)"
+        "Returned to Limited Participation (LP) on Wednesday following 2-game absence",
+        "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "The wideout had one of his more productive games of the season before being injured, as he caught both of his targets for 40 yards and a touchdown. His 40 yards were the second-most he's produced in a game this season. Boutte is up to 21 grabs for 359 yards and three touchdowns on 31 targets across 10 games in 2026."
+      "beatComment": "Harrison has been sidelined for the Texans' last two contests, but the WR's ability to practice Wednesday, albeit in a limited fashion, bodes well for his chances of being available for Sunday's game against the Ravens. Harrison's fantasy impact in three outings with Houston since coming over in a trade with Arizona has been modest, so we'd like to see the No. 4 overall pick in the 2024 NFL draft get a full and productive game in before endorsing him as a fantasy lineup option."
     },
     {
       "playerId": "3045474",
@@ -163,29 +187,29 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "2970204",
-      "name": "Sheldon Rankins",
-      "position": "DT",
-      "jersey": 98,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2970204.png",
+      "playerId": "4241250",
+      "name": "Jake Hummel",
+      "position": "LB",
+      "jersey": 33,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241250.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Ankle",
+      "injuryType": "Abdomen",
       "gameStatus": "Questionable",
       "playProbabilityPct": 81,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "81% • GTD",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Questionable tag adjusted by player career prior (81%)"
       ],
-      "beatComment": "Rankins sustained an apparent ankle injury during the second quarter of Thursday's contest, and he was able to walk gingerly to the sideline under his own power. In his absence, rookie second-rounder Kayden McDonald figures to see an increase in snaps on the defensive line."
+      "beatComment": "questionable"
     },
     {
       "playerId": "4839498",
@@ -214,54 +238,30 @@
       "beatComment": "The Texans announced Rutledge's injury in the waning moments of the contest, but he had been in the medical tent well before that time. Febechi Nwaiwu took over at left guard following Rutledge's departure. With Houston not set to play again until Sunday, Nov. 29, against Baltimore, Rutledge will look to recover from the stinger in time to suit up."
     },
     {
-      "playerId": "3043109",
-      "name": "Trent Brown",
-      "position": "OT",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043109.png",
+      "playerId": "4429059",
+      "name": "Woody Marks",
+      "position": "RB",
+      "jersey": 4,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "FP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
+      "injuryType": "Concussion",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 86,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (12th NFL season, 91% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "playBadgeLabel": "86% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Cleared without restrictive game-day designation"
+        "Logged mid-week Full Participation in NFL Concussion Protocol progression",
+        "Coaching/beat trend (beat report): trending upward / optimistic to suit up"
       ],
-      "beatComment": "Brown left Thursday's contest after suffering a back injury, but he was able to check back in with the Texans' field goal team in the second quarter. With that said, veteran Braden Smith was still working as Houston's right tackle when the first half of Thursday's game ended."
-    },
-    {
-      "playerId": "4241250",
-      "name": "Jake Hummel",
-      "position": "LB",
-      "jersey": 33,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241250.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Groin",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "The linebacker suffered the injury in Week 1, returned for Week 10 and then carried a questionable tag into this contest, but he appears ready to play through the injury for the second consecutive game. Hummel logged two tackles (one solo) across 21 special-teams snaps against the Browns last week."
+      "beatComment": "Marks didn't practice last week before being ruled out for this past Thursday's 26-3 win over the Colts, but with some extra recovery time since then, the running back is trending toward a return to the lineup Sunday against the Ravens. To get there, however, he'll need to fully progress through the NFL's concussion protocol in the days leading up to the Texans' Week 12 contest."
     }
   ],
   "irAndReserveTracker": [

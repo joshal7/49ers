@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:18.054Z",
+  "updatedAt": "2026-11-26T07:27:32.341Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.buffalobills.com/team/injury-report/",
@@ -9,6 +9,33 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
+    {
+      "playerId": "4684527",
+      "name": "T.J. Sanders",
+      "position": "DT",
+      "jersey": 98,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4684527.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "LP",
+      "fri": "LP",
+      "injuryType": "Shoulder",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 64,
+      "priorDayPlayProbabilityPct": 85,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "64% • GTD",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Friday Limited (LP) — anchored to player Questionable play prior (81%)",
+        "Manageable pain-tolerance injury profile (Shoulder)",
+        "Coaching/beat note: true pre-game warmup decision"
+      ],
+      "beatComment": "Sanders logged three consecutive limited sessions during Week 12 prep. The defensive tackle missed the Bills' Week 11 win over the Dolphins due to his shoulder injury and appears to be a game-time decision for Thursday's primetime showdown with the Chiefs. If Sanders must miss consecutive games, DeWayne Carter will likely start at defensive end alongside Deone Walker and Ed Oliver in the Bills' 3-4 defensive front."
+    },
     {
       "playerId": "4379778",
       "name": "Christian Benford",
@@ -20,20 +47,20 @@
       "sustainedInLastGame": false,
       "wed": "DNP",
       "thu": "LP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Groin",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 58,
-      "priorDayPlayProbabilityPct": 24,
+      "playProbabilityPct": 68,
+      "priorDayPlayProbabilityPct": 58,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "58% • GTD",
+      "playBadgeLabel": "68% • GTD",
       "archetypeNote": "Every-down starter workload (86% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "First Limited session (Wed DNP -> Thu LP) following prior-game absence without prior practice — awaiting Friday load response",
+        "Consecutive Thu/Fri Limited (Wed DNP -> Thu LP -> Fri LP) following prior-game absence without prior practice",
         "Soft-tissue re-aggravation caution (Groin)"
       ],
-      "beatComment": "Benford is working through a groin injury that caused him to be sidelined for Sunday's win against the Dolphins. His return to practice is encouraging, even if it was in a limited capacity, and a full session Wednesday would put the fifth-year pro on track to return for Thanksgiving Day against the Chiefs. If Benford cannot play Thursday, then the Bills would likely elevate Tre'Davious White from the practice squad and rotate him with Maxwell Hairston at outside cornerback opposite Davison Igbinosun."
+      "beatComment": "After being listed as DNP on Monday, Benford was estimated to be a limited participant at Tuesday and Wednesday's walkthroughs. He's looking to return from a one-game absence that forced him to miss last Sunday's win over the Dolphins."
     },
     {
       "playerId": "4568624",
@@ -46,20 +73,20 @@
       "sustainedInLastGame": false,
       "wed": "LP",
       "thu": "LP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Calf",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 68,
-      "priorDayPlayProbabilityPct": 66,
+      "playProbabilityPct": 72,
+      "priorDayPlayProbabilityPct": 68,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "68% • GTD",
+      "playBadgeLabel": "72% • GTD",
       "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Consecutive Wed/Thu Limited (LP -> LP) following prior-game absence",
+        "Friday Limited (LP) following prior-game absence without prior practice (base prior 81%)",
         "Soft-tissue re-aggravation caution (Calf)"
       ],
-      "beatComment": "Williams did not play in Sunday's win over the Dolphins due to a calf injury that kept him out of all Week 11 prep. The inside linebacker's estimated presence Monday is promising, but he will likely need to suit up for on-field work Tuesday and Wednesday to get the green light ahead of Thursday night's Thanksgiving showdown with the Chiefs."
+      "beatComment": "The linebacker was injured in Week 10 against the Jets and missed last Sunday's victory over Miami. He was able to log a trio of limited practices this week, giving Williams a chance to return from a one-game absence. Williams has piled up 61 tackles (27 solo), including 1.0 sacks, four pass breakups, including a pair of interceptions, and one fumble recovery across nine games this season."
     },
     {
       "playerId": "4385690",
@@ -72,20 +99,20 @@
       "sustainedInLastGame": false,
       "wed": "LP",
       "thu": "LP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Thumb / Ankle",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 76,
-      "priorDayPlayProbabilityPct": 74,
+      "playProbabilityPct": 80,
+      "priorDayPlayProbabilityPct": 76,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "76% • GTD",
+      "playBadgeLabel": "80% • GTD",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Consecutive Wed/Thu Limited (LP -> LP) following prior-game absence",
+        "Friday Limited (LP) following prior-game absence without prior practice (base prior 78%)",
         "Manageable pain-tolerance injury profile (Thumb / Ankle)"
       ],
-      "beatComment": "Kincaid, who was inactive for this past Sunday's win over the Dolphins, logged a 'limited' listing on the Bills' Monday through Wednesday practice/injury reports before being deemed 'questionable' to face Kansas City. Per Matt Parrino of The Syracuse Post-Standard, following Tuesday's practice Kincaid said that he's \"most likely playing\" Thursday, with the tight end's Week 12 status, either way, set to be confirmed once Buffalo's scratches are posted ahead of the team's 8:20 pm kickoff."
+      "beatComment": "Kincaid, who was inactive for this past Sunday's win over the Dolphins, logged a limited listing on the Bills' Monday through Wednesday practice/injury reports before being deemed questionable to face Kansas City. Per Matt Parrino of The Syracuse Post-Standard, following Tuesday's practice Kincaid said that he's \"most likely playing\" Thursday, with the tight end's Week 12 status set to be confirmed once Buffalo's inactives are posted ahead of the team's 8:20 pm kickoff."
     },
     {
       "playerId": "4428696",
@@ -98,7 +125,7 @@
       "sustainedInLastGame": false,
       "wed": "LP",
       "thu": "LP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Ankle",
       "gameStatus": "Questionable",
       "playProbabilityPct": 82,
@@ -108,85 +135,9 @@
       "playBadgeLabel": "82% • GTD",
       "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Thursday Limited Participation (LP); player toughness prior = 82%"
+        "Friday Limited (LP) — anchored to player Questionable play prior (82%)"
       ],
       "beatComment": "questionable"
-    },
-    {
-      "playerId": "4684527",
-      "name": "T.J. Sanders",
-      "position": "DT",
-      "jersey": 98,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4684527.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "LP",
-      "fri": "-",
-      "injuryType": "Shoulder",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 85,
-      "priorDayPlayProbabilityPct": 85,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "85% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Thursday Limited Participation (LP); player toughness prior = 81%",
-        "Manageable pain-tolerance injury profile (Shoulder)"
-      ],
-      "beatComment": "questionable"
-    },
-    {
-      "playerId": "4039303",
-      "name": "Ed Oliver",
-      "position": "DT",
-      "jersey": 91,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039303.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Oblique",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 86,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": "Oliver popped up on the injury report after informing the team's medical staff of oblique pain and was listed as questionable. However, the veteran is cleared to play for Sunday's divisional meeting with Miami, potentially resulting in fewer snaps for DeWayne Carter, Greg Gaines and Landon Jackson."
-    },
-    {
-      "playerId": "4362506",
-      "name": "Greg Rousseau",
-      "position": "LB",
-      "jersey": 15,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362506.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 82,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Every-down starter workload (72% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": "Rousseau was limited in Monday's session while managing a back injury, but his full participation Tuesday indicates that the sixth-year edge rusher will be available against the Chiefs on Thanksgiving Day. Rousseau logged two sacks against the Dolphins on Sunday, and his 10.0 sacks through 10 regular-season games are second-most in the NFL behind Will Anderson (11.5)."
     },
     {
       "playerId": "4030899",
@@ -214,6 +165,56 @@
       "beatComment": ""
     },
     {
+      "playerId": "4039303",
+      "name": "Ed Oliver",
+      "position": "DT",
+      "jersey": 91,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039303.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Oblique",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Oliver popped up on the injury report after informing the team's medical staff of oblique pain and was listed as questionable. However, the veteran is cleared to play for Sunday's divisional meeting with Miami, potentially resulting in fewer snaps for DeWayne Carter, Greg Gaines and Landon Jackson."
+    },
+    {
+      "playerId": "4362506",
+      "name": "Greg Rousseau",
+      "position": "LB",
+      "jersey": 15,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362506.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Back",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 92,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Every-down starter workload (72% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Rousseau was limited in Monday's session while managing a back injury, but his full participation Tuesday indicates that the sixth-year edge rusher will be available against the Chiefs on Thanksgiving Day. Rousseau logged two sacks against the Dolphins on Sunday, and his 10.0 sacks through 10 regular-season games are second-most in the NFL behind Will Anderson (11.5)."
+    },
+    {
       "playerId": "4033748",
       "name": "Connor McGovern",
       "position": "C",
@@ -224,17 +225,17 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Neck",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Veteran starter profile (8th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Logged Full Participation (FP) on Thursday"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": ""
     },
@@ -249,17 +250,17 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Knee",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Veteran starter profile (8th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Logged Full Participation (FP) on Thursday"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Hooker has now played in two games for the Bills, logging 100 percent of the team's defensive reps in Week 11 and 98 percent in Week 12. The strong safety has made for a good pairing with Cole Bishop, and the duo has helped the Bills' defense extend its streak of not allowing a touchdown to 15 straight quarters of play."
     },
@@ -274,44 +275,19 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Knee",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Logged Full Participation (FP) on Thursday"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Johnson did not carry the rock much at all in the contest. The running back did, however, rank third in receiving yards for Buffalo behind Khalil Shakir (101) and DJ Moore (91). Johnson should continue to see receiving opportunities in Week 12 against the Chiefs as the Bills' preferred third-down back."
-    },
-    {
-      "playerId": "4036060",
-      "name": "Damar Hamlin",
-      "position": "S",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036060.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "LP",
-      "thu": "FP",
-      "fri": "-",
-      "injuryType": "Toe / Neck",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 78,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Logged Full Participation (FP) on Thursday"
-      ],
-      "beatComment": ""
     },
     {
       "playerId": "4676004",
@@ -324,18 +300,42 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Shoulder",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 96,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
       "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "96% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Every-down starter workload (96% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Logged Full Participation (FP) on Thursday",
-        "Manageable pain-tolerance injury profile (Shoulder)"
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4036060",
+      "name": "Damar Hamlin",
+      "position": "S",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036060.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Toe / Neck",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 92,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": ""
     },
@@ -350,18 +350,17 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Shoulder",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 96,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
       "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "96% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Logged Full Participation (FP) on Thursday",
-        "Manageable pain-tolerance injury profile (Shoulder)"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Hawes was in danger of missing this contest due to a shoulder issue, though he will avoid his first absence of the 2026 campaign Sunday versus Miami. With Dalton Kincaid (thumb) sidelined in Week 11, Hawes will have an opportunity to get more involved than usual behind Dawson Knox."
     }

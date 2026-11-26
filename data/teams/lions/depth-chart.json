@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:48:55.923Z",
+  "updatedAt": "2026-11-26T07:25:15.860Z",
   "week": 12,
   "units": [
     {
@@ -542,8 +542,8 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430027.png",
               "baselineRank": 1,
-              "playProbabilityPct": 92,
-              "statusBadge": "92% • Cleared",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             },
             {
@@ -574,8 +574,8 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430027.png",
               "baselineRank": 1,
-              "playProbabilityPct": 92,
-              "statusBadge": "92% • Cleared",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             },
             {
@@ -916,8 +916,8 @@
               "jersey": 98,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038849.png",
               "baselineRank": 1,
-              "playProbabilityPct": 52,
-              "statusBadge": "52% • GTD",
+              "playProbabilityPct": 56,
+              "statusBadge": "56% • GTD",
               "isAvailable": true
             },
             {
@@ -941,11 +941,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4685442",
+              "name": "Anthony Lucas",
+              "jersey": 61,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685442.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
+            },
+            {
               "playerId": "4240269",
               "name": "Payton Turner",
               "jersey": 92,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240269.png",
-              "baselineRank": 4,
+              "baselineRank": 5,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false
@@ -958,8 +968,8 @@
               "jersey": 98,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038849.png",
               "baselineRank": 1,
-              "playProbabilityPct": 52,
-              "statusBadge": "52% • GTD",
+              "playProbabilityPct": 56,
+              "statusBadge": "56% • GTD",
               "isAvailable": true
             },
             {
@@ -983,11 +993,22 @@
               "isAvailable": true
             },
             {
+              "playerId": "4685442",
+              "name": "Anthony Lucas",
+              "jersey": 61,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685442.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
               "playerId": "4240269",
               "name": "Payton Turner",
               "jersey": 92,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240269.png",
-              "baselineRank": 4,
+              "baselineRank": 5,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false,
@@ -1237,8 +1258,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139387.png",
               "baselineRank": 1,
-              "playProbabilityPct": 92,
-              "statusBadge": "92% • Cleared",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             },
             {
@@ -1247,8 +1268,8 @@
               "jersey": 30,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4027919.png",
               "baselineRank": 2,
-              "playProbabilityPct": 96,
-              "statusBadge": "96% • Cleared",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             }
           ],
@@ -1259,8 +1280,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139387.png",
               "baselineRank": 1,
-              "playProbabilityPct": 92,
-              "statusBadge": "92% • Cleared",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             },
             {
@@ -1269,8 +1290,8 @@
               "jersey": 30,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4027919.png",
               "baselineRank": 2,
-              "playProbabilityPct": 96,
-              "statusBadge": "96% • Cleared",
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
               "isAvailable": true
             }
           ],
@@ -1355,8 +1376,8 @@
               "jersey": 36,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045463.png",
               "baselineRank": 1,
-              "playProbabilityPct": 80,
-              "statusBadge": "80% • GTD",
+              "playProbabilityPct": 82,
+              "statusBadge": "82% • GTD",
               "isAvailable": true
             },
             {
@@ -1397,8 +1418,8 @@
               "jersey": 36,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045463.png",
               "baselineRank": 1,
-              "playProbabilityPct": 80,
-              "statusBadge": "80% • GTD",
+              "playProbabilityPct": 82,
+              "statusBadge": "82% • GTD",
               "isAvailable": true
             },
             {
@@ -1455,8 +1476,8 @@
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566092.png",
               "baselineRank": 2,
-              "playProbabilityPct": 28,
-              "statusBadge": "28% • Long Shot",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false
             },
             {
@@ -1497,8 +1518,8 @@
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566092.png",
               "baselineRank": 2,
-              "playProbabilityPct": 28,
-              "statusBadge": "28% • Long Shot",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

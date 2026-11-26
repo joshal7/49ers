@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:52.936Z",
+  "updatedAt": "2026-11-26T07:28:31.891Z",
   "windowDays": 7,
-  "totalEpisodes": 11,
+  "totalEpisodes": 10,
   "shows": [
     {
       "id": "browns_locked_on_browns",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -240,26 +240,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
       "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/26e816f3-8ea2-47b9-91ba-5aac1650ad02/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=26e816f3-8ea2-47b9-91ba-5aac1650ad02&feed=KHgFdYZS"
-    },
-    {
-      "id": "pod_browns_orange_and_brown_talk_1000802861260",
-      "trackId": 1000802861260,
-      "collectionId": 1334701895,
-      "showId": "browns_orange_and_brown_talk",
-      "showName": "Orange and Brown Talk",
-      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
-      "hosts": "Cleveland.com - Advance Local",
-      "network": "Cleveland.com - Advance Local",
-      "title": "Revisiting 3 big offseason decisions the Browns made",
-      "summary": "The Browns are 6-4 and there are plenty of reasons to point to for this hot start. Mary Kay Cabot, Ashley Bastock and Dan Labbe picked out three important offseason decisions to look back on from the offseason that have allowed the Browns to hit their bye week in the playoff",
-      "publishedAt": "2026-11-19T05:01:00.000Z",
-      "durationMinutes": 40,
-      "durationDisplay": "40 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/revisiting-3-big-offseason-decisions-the-browns-made/id1334701895?i=1000802861260&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
-      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM5984669451.mp3"
     }
   ]
 }

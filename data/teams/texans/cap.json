@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:51:05.987Z",
+  "updatedAt": "2026-11-26T07:41:24.515Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/houston-texans",
   "spotracUrl": "https://www.spotrac.com/nfl/houston-texans/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 310062068,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 302297100,
+      "totalCapLiabilities": 302329650,
       "top51": 211509272,
-      "teamCapSpace": 7764968,
-      "otcRawTeamCapSpace": 7764968,
-      "effectiveCapSpace": 7764968,
-      "activeCapSpending": 226821988,
-      "offenseSpend": 105525284,
-      "defenseSpend": 113495261,
+      "teamCapSpace": 7732418,
+      "otcRawTeamCapSpace": 7732418,
+      "effectiveCapSpace": 7732418,
+      "activeCapSpending": 226771966,
+      "offenseSpend": 105379012,
+      "defenseSpend": 113591511,
       "specialSpend": 7801443,
-      "deadMoneyTotal": 75475112,
+      "deadMoneyTotal": 75557684,
       "injuredReserveTotal": 20222431,
-      "practiceSquadTotal": 4105278,
+      "practiceSquadTotal": 4055256,
       "pupTotal": 3985294,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 28313003,
+      "reserveAndPsTotal": 28262981,
       "topDeadMoneyEntries": [
         {
           "name": "Tytus Howard",
@@ -92,18 +92,18 @@
           "otcUrl": "https://overthecap.com/player/dominique-robinson/10219/"
         },
         {
-          "name": "Justin Watson",
-          "capCharge": 1000000,
-          "slug": "justin-watson",
-          "otcId": "7029",
-          "otcUrl": "https://overthecap.com/player/justin-watson/7029/"
-        },
-        {
           "name": "Mario Edwards Jr.",
           "capCharge": 1000000,
           "slug": "mario-edwards-jr",
           "otcId": "3883",
           "otcUrl": "https://overthecap.com/player/mario-edwards-jr/3883/"
+        },
+        {
+          "name": "Justin Watson",
+          "capCharge": 1000000,
+          "slug": "justin-watson",
+          "otcId": "7029",
+          "otcUrl": "https://overthecap.com/player/justin-watson/7029/"
         },
         {
           "name": "Nick Niemann",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 84
+      "totalSignedCount": 85
     },
     "2027": {
       "year": 2027,
@@ -259,8 +259,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/houston-texans",
-    "summary": "Houston Texans hold $7.76M in 2026 OverTheCap space ($7.76M effective) and -$40.47M projected for 2027.",
-    "executiveSummary": "Nick Caserio and the Texans front office hold $7.76M in gross 2026 cap space ($7.76M effective), while 2027 currently projects at -$40.47M over an estimated $326M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Danielle Hunter, Nico Collins, Will Anderson Jr., C.J. Stroud.",
+    "summary": "Houston Texans hold $7.73M in 2026 OverTheCap space ($7.73M effective) and -$40.47M projected for 2027.",
+    "executiveSummary": "Nick Caserio and the Texans front office hold $7.73M in gross 2026 cap space ($7.73M effective), while 2027 currently projects at -$40.47M over an estimated $326M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Danielle Hunter, Nico Collins, Will Anderson Jr., C.J. Stroud.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$40.47M 2027 Projection)",

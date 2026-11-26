@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:34.054Z",
+  "updatedAt": "2026-11-26T07:26:30.118Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-york-giants",
   "spotracUrl": "https://www.spotrac.com/nfl/new-york-giants/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 300195334,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 293880541,
+      "totalCapLiabilities": 294211519,
       "top51": 232132108,
-      "teamCapSpace": 6314793,
-      "otcRawTeamCapSpace": 6314793,
-      "effectiveCapSpace": 6314793,
-      "activeCapSpending": 245857460,
+      "teamCapSpace": 5983815,
+      "otcRawTeamCapSpace": 5983815,
+      "effectiveCapSpace": 5983815,
+      "activeCapSpending": 245954222,
       "offenseSpend": 86055072,
-      "defenseSpend": 155365722,
+      "defenseSpend": 155462484,
       "specialSpend": 4436666,
-      "deadMoneyTotal": 48023081,
-      "injuredReserveTotal": 48893763,
-      "practiceSquadTotal": 3713688,
+      "deadMoneyTotal": 48257297,
+      "injuredReserveTotal": 56849645,
+      "practiceSquadTotal": 3392394,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 52607451,
+      "reserveAndPsTotal": 60242039,
       "topDeadMoneyEntries": [
         {
           "name": "Dexter Lawrence",
@@ -226,8 +226,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/new-york-giants",
-    "summary": "New York Giants hold $6.31M in 2026 OverTheCap space ($6.31M effective) and +$18.97M projected for 2027.",
-    "executiveSummary": "Joe Schoen and the Giants front office hold $6.31M in gross 2026 cap space ($6.31M effective), while 2027 currently projects at +$18.97M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Paulson Adebo, Kayvon Thibodeaux, Andrew Thomas, Jevon Holland.",
+    "summary": "New York Giants hold $5.98M in 2026 OverTheCap space ($5.98M effective) and +$18.97M projected for 2027.",
+    "executiveSummary": "Joe Schoen and the Giants front office hold $5.98M in gross 2026 cap space ($5.98M effective), while 2027 currently projects at +$18.97M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Paulson Adebo, Kayvon Thibodeaux, Andrew Thomas, Jevon Holland.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$18.97M 2027 Projection)",
@@ -5683,15 +5683,46 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 321294,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1300000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
           "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 321294,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 321294,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 321294,
-          "guaranteedSalary": 0
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 418056,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
         }
       }
     },

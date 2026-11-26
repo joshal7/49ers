@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-25T20:49:09.445Z",
+  "updatedAt": "2026-11-26T07:25:42.572Z",
   "teamAbbr": "GB",
   "teamSlug": "packers",
   "brandName": "Go Pack Go",
   "seasonYear": 2026,
-  "currentWeek": 12,
-  "teamRecord": "6-4",
+  "currentWeek": 13,
+  "teamRecord": "6-5",
   "divisionRecord": "1-3",
-  "conferenceRecord": "4-4",
-  "standingSummary": "4th in NFC North • #7 Seed in NFC",
-  "pointDifferential": "+5 (226 PF / 221 PA)",
+  "conferenceRecord": "4-5",
+  "standingSummary": "4th in NFC North • #9 Seed in NFC",
+  "pointDifferential": "-8 (239 PF / 247 PA)",
   "byeWeek": 11,
   "coaches": {
     "hc": "Matt LaFleur",
@@ -32,9 +32,9 @@
     "prevPostUdfaEnd": "2026-05-17T23:59:59-07:00"
   },
   "teamStatus": {
-    "currentWeek": 12,
+    "currentWeek": 13,
     "inPlayoffHunt": true,
-    "playoffSeed": 7,
+    "playoffSeed": 9,
     "seasonConcluded": false,
     "mathematicallyEliminated": false,
     "eliminatedAt": null
@@ -48,13 +48,12 @@
     "candidateCascade": [
       "gemini-4-hydrogen",
       "gemini-3.8-flash",
+      "gemini-3.6-flash",
       "gemini-3.5-flash",
-      "gemini-3-flash-preview",
-      "gemini-2.5-flash",
-      "gemini-2.5-pro"
+      "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:49:09.445Z",
+    "lastCheckedAt": "2026-11-26T07:25:42.572Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

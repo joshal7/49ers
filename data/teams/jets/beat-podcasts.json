@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:34.196Z",
+  "updatedAt": "2026-11-26T07:28:00.725Z",
   "windowDays": 7,
-  "totalEpisodes": 17,
+  "totalEpisodes": 16,
   "shows": [
     {
       "id": "jets_locked_on_jets",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.megaphone.fm/otjetspod",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c6/f8/d6/c6f8d643-6c34-8ab0-9a51-c8a71dc00b4a/mza_6308063978955440002.jpeg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "jets_turn_on_the_jets",
@@ -372,26 +372,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
       "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/118578/lockedon.simplecastaudio.com/b4965cc8-c978-4924-980c-6904ce8a533a/episodes/a972fe2e-33f9-4574-837f-9403eea461ae/audio/128/default.mp3?aid=rss_feed&awCollectionId=b4965cc8-c978-4924-980c-6904ce8a533a&awEpisodeId=a972fe2e-33f9-4574-837f-9403eea461ae&feed=x5WGS9vX"
-    },
-    {
-      "id": "pod_jets_play_like_a_jet_1000802860356",
-      "trackId": 1000802860356,
-      "collectionId": 1236901698,
-      "showId": "jets_play_like_a_jet",
-      "showName": "Play Like A Jet",
-      "showFullTitle": "Play Like A Jet: New York Jets",
-      "hosts": "Play Like a Jet",
-      "network": "Play Like a Jet",
-      "title": "Episode 2,908 - Midweek News & Notes: Injury Update & More w/Nick Faria",
-      "summary": "Scott Mason talks with Nick Faria of SI.com about the midweek news & notes surrounding the New York Jets! Chris discusses: -Injury updates -Presser highlights -Roster shuffling -Returns for key players And much more! Check out the Play Like A Jet store and get your \"Play Lik",
-      "publishedAt": "2026-11-19T05:00:00.000Z",
-      "durationMinutes": 27,
-      "durationDisplay": "27 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c6/f8/d6/c6f8d643-6c34-8ab0-9a51-c8a71dc00b4a/mza_6308063978955440002.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/episode-2-908-midweek-news-notes-injury-update-more/id1236901698?i=1000802860356&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/otjetspod",
-      "audioStreamUrl": "https://pdst.fm/e/tracking.swap.fm/track/t7yC0rGPUqahTF4et8YD/traffic.megaphone.fm/AMPP7060993830.mp3"
     }
   ]
 }

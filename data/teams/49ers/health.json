@@ -1,14 +1,64 @@
 {
-  "updatedAt": "2026-11-25T20:48:27.526Z",
+  "updatedAt": "2026-11-26T07:24:16.625Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/team/injuries/_/name/sf/san-francisco-49ers",
-  "usedIrDesignations": 3,
-  "remainingIrDesignations": 5,
+  "usedIrDesignations": 4,
+  "remainingIrDesignations": 4,
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
+    {
+      "playerId": "13241",
+      "name": "Trent Williams",
+      "position": "OT",
+      "jersey": 71,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/13241.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out for Season",
+      "archetypeNote": "Habitual Wed/Thu veteran rest; suits up at ~98% when NIR-Rest, but historically cautious with acute high/low ankle sprains.",
+      "factors": [
+        "Season-ending Injured Reserve — ineligible to return this season"
+      ],
+      "beatComment": "49ers 49ers RT Colton McKivitz was bent backward on a running play and suffered a season-ending ankle injury, prompting emotional reactions from teammates such as LT Trent Williams and RB Christian McCaffrey."
+    },
+    {
+      "playerId": "3117251",
+      "name": "Christian McCaffrey",
+      "position": "RB",
+      "jersey": 23,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117251.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": true,
+      "wed": "Vet Rest",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "Active",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out for Season",
+      "archetypeNote": "Scheduled Wednesday maintenance workload; high vigilance on calf/Achilles tightness.",
+      "factors": [
+        "Season-ending Injured Reserve — ineligible to return this season"
+      ],
+      "beatComment": "49ers 49ers RT Colton McKivitz was bent backward on a running play and suffered a season-ending ankle injury, prompting emotional reactions from teammates such as LT Trent Williams and RB Christian McCaffrey. “It’s brutal,” McCaffrey said o."
+    },
     {
       "playerId": "4431466",
       "name": "Jordan Watkins",
@@ -33,7 +83,7 @@
         "Did Not Participate (DNP) on Wednesday",
         "Soft-tissue re-aggravation caution (Groin)"
       ],
-      "beatComment": "49ers practice report: No practice QB Brock Purdy (ankle) WR Mike Evans (Achilles) WR Jordan Watkins (groin) LB Dre Greenlaw (neck) S Siran Neal (knee, foot) Limited CB Deommodore Lenoir (foot) CB Upton Stout (shoulder, neck) OL Carver Willis (illness) OL Austen Pleasants (knee)"
+      "beatComment": "Watkins may have injured his groin during the 49ers' 35-10 win over the Vikings in Week 11, when he hauled in his lone target for 19 yards while playing 28 snaps on offense. His practice participation over the next two days will shed light on his status heading into Sunday's NFC West tilt against the Seahawks. If Watkins cannot play in Week 12, then Keenan Allen, Jacob Cowing and Demarcus Robinson would all be in line for larger roles on offense."
     },
     {
       "playerId": "3057524",
@@ -47,7 +97,7 @@
       "wed": "DNP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Knee, foot",
+      "injuryType": "Knee, Foot",
       "gameStatus": "Questionable",
       "playProbabilityPct": 36,
       "priorDayPlayProbabilityPct": null,
@@ -83,7 +133,7 @@
       "factors": [
         "Did Not Participate (DNP) on Wednesday"
       ],
-      "beatComment": "Purdy put on a master class during this past Sunday's 35-10 win against the Vikings in Mexico City, completing 21 of 26 passes for 255 yards, three touchdowns and no interceptions. Now with a health concern in tow, his status will be monitored closely to get a sense of his odds to suit up Sunday against the Seahawks. Mac Jones is waiting in the wings in the even Purdy isn't able to play in Week 12."
+      "beatComment": "Purdy put on a master class during this past Sunday's 35-10 win against the Vikings in Mexico City, completing 21 of 26 passes for 255 yards, three touchdowns and no interceptions. Now with a health concern in tow, his status will be monitored closely to get a sense of his odds to suit up Sunday against the Seahawks. Mac Jones is waiting in the wings in the event Purdy isn't able to play in Week 12."
     },
     {
       "playerId": "16737",
@@ -110,7 +160,33 @@
         "Matches player's documented chronic history (Achilles)",
         "Soft-tissue re-aggravation caution (Achilles)"
       ],
-      "beatComment": "After a three-game (and four-week) absence due to right Achilles tendinitis, Evans returned to action during Sunday's win against the Vikings in Mexico City, recording a 43-percent snap share and gathering in six of seven targets for 109 yards and one touchdown. The 49ers likely are managing Evans' workload to begin Week 12 prep, but his status nonetheless will be monitored in advance of Sunday's contest against the Seahawks."
+      "beatComment": "After a three-game (and four-week) absence due to right Achilles tendinitis, Evans returned to action during Sunday's win against the Vikings in Mexico City, recording a 43 percent offensive snap share and gathering in six of seven targets for 109 yards and one touchdown. The 49ers likely are managing Evans' workload to begin Week 12 prep, but his status nonetheless will be monitored in advance of Sunday's contest against the Seahawks."
+    },
+    {
+      "playerId": "3920814",
+      "name": "Austen Pleasants",
+      "position": "OT",
+      "jersey": 62,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3920814.png",
+      "rosterBucket": "ir",
+      "isIrReturnWindow": true,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "IR — 21-Day Window Open",
+      "playProbabilityPct": 52,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "52% • GTD",
+      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "21-day IR window open (Week 1 ramp); returned to Limited Participation (LP) Wednesday",
+        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
+      ],
+      "beatComment": "Pleasants opened the regular season on injured reserve due to a knee injury that he sustained in a preseason game against the Chargers in late August. He was a limited participant in Wednesday's practice, and he would need to be activated from injured reserve in order to be available for Sunday's game against the Seahawks. With Colton McKivitz (ankle) out for the rest of the season, Pleasants would be a candidate to start at right tackle once he's removed from IR."
     },
     {
       "playerId": "3916903",
@@ -135,32 +211,7 @@
       "factors": [
         "Did Not Participate (DNP) on Wednesday (veteran maintenance profile, awaiting Thursday workload)"
       ],
-      "beatComment": "49ers practice report: No practice QB Brock Purdy (ankle) WR Mike Evans (Achilles) WR Jordan Watkins (groin) LB Dre Greenlaw (neck) S Siran Neal (knee, foot) Limited CB Deommodore Lenoir (foot) CB Upton Stout (shoulder, neck) OL Carver Willis (illness) OL Austen Pleasants (knee)"
-    },
-    {
-      "playerId": "4039029",
-      "name": "Khalid Kareem",
-      "position": "DE",
-      "jersey": 47,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039029.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 78,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "78% • GTD",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Questionable tag adjusted by player career prior (78%)"
-      ],
-      "beatComment": "questionable"
+      "beatComment": "Greenlaw was not cleared by medical staff to play against the Vikings in Week 11 due to a neck issue. He's opened Week 12 prep with a limited practice, and a full session over the next two days would likely be enough for him to avoid an injury designation ahead of Sunday's game against the Seahawks."
     },
     {
       "playerId": "4565200",
@@ -174,7 +225,7 @@
       "wed": "LP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Shoulder, neck",
+      "injuryType": "Shoulder, Neck",
       "gameStatus": "Questionable",
       "playProbabilityPct": 80,
       "priorDayPlayProbabilityPct": null,
@@ -184,7 +235,7 @@
       "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Wednesday Limited Participation (LP); player toughness prior = 76%",
-        "Manageable pain-tolerance injury profile (Shoulder, neck)"
+        "Manageable pain-tolerance injury profile (Shoulder, Neck)"
       ],
       "beatComment": "49ers practice report: No practice QB Brock Purdy (ankle) WR Mike Evans (Achilles) WR Jordan Watkins (groin) LB Dre Greenlaw (neck) S Siran Neal (knee, foot) Limited CB Deommodore Lenoir (foot) CB Upton Stout (shoulder, neck) OL Carver Willis (illness) OL Austen Pleasants (knee)"
     },
@@ -214,19 +265,70 @@
       "beatComment": "49ers practice report: No practice QB Brock Purdy (ankle) WR Mike Evans (Achilles) WR Jordan Watkins (groin) LB Dre Greenlaw (neck) S Siran Neal (knee, foot) Limited CB Deommodore Lenoir (foot) CB Upton Stout (shoulder, neck) OL Carver Willis (illness) OL Austen Pleasants (knee)"
     },
     {
-      "playerId": "4241464",
-      "name": "Mac Jones",
-      "position": "QB",
-      "jersey": 10,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241464.png",
+      "playerId": "4039029",
+      "name": "Khalid Kareem",
+      "position": "DE",
+      "jersey": 47,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039029.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "FP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Illness",
-      "gameStatus": "Active",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 91,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "91% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Full Participation (FP) logged on Wednesday"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4685623",
+      "name": "Mykel Williams",
+      "position": "DE",
+      "jersey": 98,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685623.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hand",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Power edge defender; steady active conversion when logging Thursday/Friday individual pass-rush periods.",
+      "factors": [
+        "Full Participation (FP) logged on Wednesday",
+        "Manageable pain-tolerance injury profile (Hand)"
+      ],
+      "beatComment": ""
+    },
+    {
+      "playerId": "4432244",
+      "name": "Romello Height",
+      "position": "DE",
+      "jersey": 94,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432244.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hand",
+      "gameStatus": "Questionable",
       "playProbabilityPct": 95,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
@@ -234,35 +336,10 @@
       "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Cleared without restrictive game-day designation",
-        "Beat/podium consensus: on track to suit up"
+        "Full Participation (FP) logged on Wednesday",
+        "Manageable pain-tolerance injury profile (Hand)"
       ],
-      "beatComment": "Jones is good to go for Sunday Night Football after dealing with an illness at practice throughout the week. The quarterback will operate in his primary reserve role behind starter Brock Purdy versus the Vikings in Mexico City."
-    },
-    {
-      "playerId": "15818",
-      "name": "Keenan Allen",
-      "position": "WR",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "On four targets",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Sunday marked Allen's first time working with Mike Evans, the 49ers' top wide receiver, and the latter dominated the attention of QB Brock Purdy, posting a 6-109-1 line on seven targets in his first game action since Week 6. If Evans' Achilles issue flares up at any point, Allen may be thrust into WR1 duties, which could yield more consistent results as he becomes more acclimated to head coach Kyle Shanahan's offense. For now, though, Allen will play a distant second to Evans for as long as the latter is healthy and available."
+      "beatComment": ""
     },
     {
       "playerId": "4242488",
@@ -288,7 +365,32 @@
         "Wednesday Limited Participation (LP); player toughness prior = 92%",
         "High pain-tolerance / toughness prior (+4% boost)"
       ],
-      "beatComment": "Lenoir played in Week 11 despite working through a foot injury that was sustained in Week 9 against Las Vegas. The issue didn't seem to slow the 27-year-old against the Vikings, as he played 81.0 percent of defensive snaps, which was within his usual range."
+      "beatComment": "Lenoir has been playing through a foot injury since Week 9 against the Raiders, so it's not surprising to see his practice reps limited Wednesday. Unless he suffers a setback, Lenoir should be available for Sunday's NFC West tilt against the Seahawks."
+    },
+    {
+      "playerId": "15818",
+      "name": "Keenan Allen",
+      "position": "WR",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "NIR - Rest",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 98,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "98% • Vet Rest (Full Go)",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Habitual Veteran Rest prior (Keenan Allen maintenance schedule)"
+      ],
+      "beatComment": "Sunday marked Allen's first time working with Mike Evans, the 49ers' top wide receiver, and the latter dominated the attention of QB Brock Purdy, posting a 6-109-1 line on seven targets in his first game action since Week 6. If Evans' Achilles issue flares up at any point, Allen may be thrust into WR1 duties, which could yield more consistent results as he becomes more acclimated to head coach Kyle Shanahan's offense. For now, though, Allen will play a distant second to Evans for as long as the latter is healthy and available."
     }
   ],
   "irAndReserveTracker": [
@@ -299,20 +401,20 @@
       "jersey": 62,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3920814.png",
       "injuryType": "Knee",
-      "status": "Injured Reserve (Designated)",
+      "status": "IR — 21-Day Window Open",
       "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": true,
+      "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
       "wed": "LP",
       "thu": "-",
       "fri": "-",
       "placedBeforeWeek": 1,
       "earliestEligibleWeek": 5,
-      "projectedReturnWeek": "Est. Week 12–13 (Window Expected)",
+      "projectedReturnWeek": "Week 12 Activation Window (Nov 29)",
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 52,
       "playBadgeLabel": "52% • GTD",
-      "beatNote": "OL Austen Pleasants has been healthy for a few weeks, 49ers coach Kyle Shanahan said. It sounds as if the team plans to open the practice window for him. Pleasants sustained a knee injury during the 49ers' preseason game against the Chargers on Aug. 20. The injury is severe enough for 29-year-old offensive tackle to open the year on IR, meaning he'll be forced to miss at least the first four games of the regular season."
+      "beatNote": "Pleasants opened the regular season on injured reserve due to a knee injury that he sustained in a preseason game against the Chargers in late August. He was a limited participant in Wednesday's practice, and he would need to be activated from injured reserve in order to be available for Sunday's game against the Seahawks. With Colton McKivitz (ankle) out for the rest of the season, Pleasants would be a candidate to start at right tackle once he's removed from IR."
     },
     {
       "playerId": "3895856",
@@ -352,11 +454,11 @@
       "fri": "-",
       "placedBeforeWeek": 5,
       "earliestEligibleWeek": 10,
-      "projectedReturnWeek": "Est. Week 13 (Dec 6)",
+      "projectedReturnWeek": "Est. Week 14 (Dec 13)",
       "byeWeekNote": "Week 8 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "This is the first time Stribling has participated in on-field work since suffering a significant ankle injury in the Week 1 win over the Rams. The expectation has been that the rookie could be back by December, so Stribling is progressing toward hitting that goal. Once Stribling progresses to full-team drills, his timeline will get more dialed in. The 49ers have two more games in November, leaving the Week 13 matchup against the Giants as his earliest potential return date."
+      "beatNote": "Stribling was diagnosed with a deltoid sprain of his left ankle after getting injured in the 49ers' Week 1 win over the Rams in Australia and underwent surgery Sept. 16. The 23-year-old was handed an estimated recovery timeline of about 10 weeks, leaving the 49ers optimistic that he would be ready to play at some point in December. While Shanahan indicated that Stribling's timeline doesn't appear to have changed, the young wideout will need to get back on the practice field before the 49ers can hone in on a more precise target date for him to resume playing. Given the haziness of his return date along with the fact that he could face limitations with his snaps once activated, Stribling likely isn't worth holding in redraft leagues at this point in the season."
     },
     {
       "playerId": "4569497",
@@ -378,7 +480,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Head coach Kyle Shanahan said Monday he hopes Okuayinonu can return near the end of the regular season, but it is unclear quite how long the recovery process will take. Okuayinonu previously had a plate in his foot, and the break occurred when it was stepped on during practice."
+      "beatNote": "Okuayinonu suffered a broken foot in practice ahead of Week 1 and required surgery. He appears to be making progress and could return at some point before the end of the regular season. The 28-year-old appeared in 15 regular-season games last season, and made 12 starts and recorded 23 tackles (16 solo), including 3.0 sacks, and a forced fumble."
     },
     {
       "playerId": "4372561",
@@ -488,7 +590,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "ir"
+      "beatNote": "McKivitz was diagnosed with a fractured and dislocated ankle that he sustained in the 49ers' Week 11 win over the Vikings. He's expected to miss the rest of the 2026 season, and Vederian Lowe is expected to take over as the starter at right tackle in McKivitz's absence."
     },
     {
       "playerId": "4239088",

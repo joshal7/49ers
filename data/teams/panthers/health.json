@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:11.320Z",
+  "updatedAt": "2026-11-26T07:27:22.361Z",
   "week": 12,
   "byeWeek": 5,
   "sourceUrl": "https://www.panthers.com/team/injury-report/",
@@ -60,7 +60,7 @@
         "Soft-tissue / recurrence ramp-up caution (Calf)",
         "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
       ],
-      "beatComment": "Incoom's calf injury is severe enough for him to warrant a stint on injured reserve. As such, the Central Michigan product will be required to miss at least four games, so the next time he can suit up is Week 11 against the Ravens on Sunday, Nov. 22. Bam Martin-Scott was activated from IR in a corresponding move."
+      "beatComment": "Incoom was placed on injured reserve in late October due to a calf injury that he sustained in Week 6 against the Eagles. Regardless of his practice participation over the next three days, the Panthers would have to activate Incoom from injured reserve in order for him to be available for Monday's NFC South tilt against the Buccaneers."
     },
     {
       "playerId": "3117253",
@@ -88,33 +88,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "4678008",
-      "name": "Jonathon Brooks",
-      "position": "RB",
-      "jersey": 25,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4678008.png",
-      "rosterBucket": "ir",
-      "isIrReturnWindow": true,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Groin (Surgery)",
-      "gameStatus": "IR — 21-Day Window Open",
-      "playProbabilityPct": 66,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "66% • GTD",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "21-day IR window open (Week 3); logged Full Participation in prior week's ramp",
-        "Soft-tissue / recurrence ramp-up caution (Groin (Surgery))",
-        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
-      ],
-      "beatComment": "Brooks was a full practice participant in all three sessions during Week 11 prep. However, the third-year running back is not quite ready to be activated from injured reserve, and he's slated to miss his eighth consecutive game while recovering from a groin injury. Trevor Etienne, Anthony Tyus and AJ Dillon will continue to operate as the Panthers' backfield depth options behind Chuba Hubbard in the absence of Brooks, whose next opportunity to play is Week 12 against the Buccaneers on Monday, Nov. 30."
-    },
-    {
       "playerId": "4685472",
       "name": "Tetairoa McMillan",
       "position": "WR",
@@ -128,17 +101,17 @@
       "fri": "-",
       "injuryType": "Foot",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 87,
+      "playProbabilityPct": 86,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "87% • Cleared",
+      "playBadgeLabel": "86% • Cleared",
       "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Questionable tag adjusted by player career prior (82%)",
-        "Beat/podium consensus (2 corroborated reports): on track to suit up"
+        "Beat/podium consensus (coaching staff report): on track to suit up"
       ],
-      "beatComment": "McMillan didn't partake in Wednesday's unofficial practice, after which Canales revealed that the wide receiver dealt with soreness in his foot after Sunday's win against the Ravens in which he hauled in six of nine targets for 71 yards and one touchdown. Considering the Panthers likely are practicing Wednesday in lieu of a session on Thanksgiving, McMillan appears likely to be listed as a DNP on the team's first Week 12 injury report Thursday."
+      "beatComment": "McMillan didn't partake in Wednesday's unofficial practice, after which Canales revealed that the wide receiver dealt with soreness in his foot after Sunday's win against the Ravens in which he hauled in six of nine targets for 71 yards and one touchdown. Considering the Panthers likely are practicing Wednesday in lieu of a session on Thanksgiving, McMillan appears set to be listed as a DNP on the team's first Week 12 injury report Thursday."
     },
     {
       "playerId": "3917853",
@@ -190,28 +163,6 @@
       "beatNote": "Christensen has been rehabbing from a hamstring injury all year, but he was not activated from IR within 21 days of returning to practice, so he'll now miss the rest of the season. The veteran guard will now have to look forward to hopefully returning at some point in 2027."
     },
     {
-      "playerId": "4678008",
-      "name": "Jonathon Brooks",
-      "position": "RB",
-      "jersey": 25,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4678008.png",
-      "injuryType": "Groin (Surgery)",
-      "status": "IR — 21-Day Window Open",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": true,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 6,
-      "earliestEligibleWeek": 10,
-      "projectedReturnWeek": "Week 12 Activation Window (Nov 30)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 66,
-      "playBadgeLabel": "66% • GTD",
-      "beatNote": "Brooks was a full practice participant in all three sessions during Week 11 prep. However, the third-year running back is not quite ready to be activated from injured reserve, and he's slated to miss his eighth consecutive game while recovering from a groin injury. Trevor Etienne, Anthony Tyus and AJ Dillon will continue to operate as the Panthers' backfield depth options behind Chuba Hubbard in the absence of Brooks, whose next opportunity to play is Week 12 against the Buccaneers on Monday, Nov. 30."
-    },
-    {
       "playerId": "4714157",
       "name": "Thomas Incoom",
       "position": "LB",
@@ -231,7 +182,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 40,
       "playBadgeLabel": "40% • Long Shot",
-      "beatNote": "Incoom's calf injury is severe enough for him to warrant a stint on injured reserve. As such, the Central Michigan product will be required to miss at least four games, so the next time he can suit up is Week 11 against the Ravens on Sunday, Nov. 22. Bam Martin-Scott was activated from IR in a corresponding move."
+      "beatNote": "Incoom was placed on injured reserve in late October due to a calf injury that he sustained in Week 6 against the Eagles. Regardless of his practice participation over the next three days, the Panthers would have to activate Incoom from injured reserve in order for him to be available for Monday's NFC South tilt against the Buccaneers."
     },
     {
       "playerId": "4362847",

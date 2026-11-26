@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:51:50.115Z",
+  "updatedAt": "2026-11-26T07:30:12.378Z",
   "week": 12,
   "units": [
     {
@@ -26,8 +26,8 @@
               "jersey": 81,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4401805.png",
               "baselineRank": 2,
-              "playProbabilityPct": 76,
-              "statusBadge": "76% • GTD",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             },
             {
@@ -58,8 +58,8 @@
               "jersey": 81,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4401805.png",
               "baselineRank": 2,
-              "playProbabilityPct": 76,
-              "statusBadge": "76% • GTD",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             },
             {
@@ -558,8 +558,8 @@
               "jersey": 89,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
               "baselineRank": 1,
-              "playProbabilityPct": 94,
-              "statusBadge": "94% • Cleared",
+              "playProbabilityPct": 88,
+              "statusBadge": "88% • Cleared",
               "isAvailable": true
             },
             {
@@ -568,8 +568,8 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429086.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             },
             {
@@ -590,8 +590,8 @@
               "jersey": 89,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
               "baselineRank": 1,
-              "playProbabilityPct": 94,
-              "statusBadge": "94% • Cleared",
+              "playProbabilityPct": 88,
+              "statusBadge": "88% • Cleared",
               "isAvailable": true
             },
             {
@@ -600,8 +600,8 @@
               "jersey": 87,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429086.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             },
             {
@@ -731,8 +731,8 @@
               "jersey": 94,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045172.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -743,8 +743,8 @@
               "jersey": 94,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045172.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -760,8 +760,8 @@
               "jersey": 69,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2972342.png",
               "baselineRank": 1,
-              "playProbabilityPct": 18,
-              "statusBadge": "18% • Doubtful",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false
             },
             {
@@ -770,9 +770,9 @@
               "jersey": 91,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431414.png",
               "baselineRank": 2,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
             },
             {
               "playerId": "4430896",
@@ -780,30 +780,20 @@
               "jersey": 92,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430896.png",
               "baselineRank": 3,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             }
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4431414",
-              "name": "Tim Keenan III",
-              "jersey": 91,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431414.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4430896",
               "name": "JJ Pegues",
               "jersey": 92,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430896.png",
               "baselineRank": 3,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             },
             {
@@ -812,8 +802,19 @@
               "jersey": 69,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2972342.png",
               "baselineRank": 1,
-              "playProbabilityPct": 18,
-              "statusBadge": "18% • Doubtful",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4431414",
+              "name": "Tim Keenan III",
+              "jersey": 91,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431414.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -830,8 +831,8 @@
               "jersey": 97,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429109.png",
               "baselineRank": 1,
-              "playProbabilityPct": 45,
-              "statusBadge": "45% • Long Shot",
+              "playProbabilityPct": 71,
+              "statusBadge": "71% • GTD",
               "isAvailable": true
             },
             {
@@ -852,8 +853,8 @@
               "jersey": 97,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429109.png",
               "baselineRank": 1,
-              "playProbabilityPct": 45,
-              "statusBadge": "45% • Long Shot",
+              "playProbabilityPct": 71,
+              "statusBadge": "71% • GTD",
               "isAvailable": true
             },
             {
@@ -1576,8 +1577,8 @@
               "jersey": 81,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4401805.png",
               "baselineRank": 2,
-              "playProbabilityPct": 76,
-              "statusBadge": "76% • GTD",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             }
           ],
@@ -1598,8 +1599,8 @@
               "jersey": 81,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4401805.png",
               "baselineRank": 2,
-              "playProbabilityPct": 76,
-              "statusBadge": "76% • GTD",
+              "playProbabilityPct": 91,
+              "statusBadge": "91% • Cleared",
               "isAvailable": true
             }
           ],

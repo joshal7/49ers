@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:51:44.003Z",
+  "updatedAt": "2026-11-26T07:41:12.230Z",
   "windowDays": 7,
-  "totalEpisodes": 14,
+  "totalEpisodes": 13,
   "shows": [
     {
       "id": "chargers_locked_on_chargers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/4e/af/f6/4eaff656-8e7d-e737-b547-6a5ac414d552/mza_12149479948034064833.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "chargers_guilty_as_charged",
@@ -312,26 +312,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/chargers-podcast-network/id1268765985?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/01891723-b9f7-459c-a03c-aeac01364986/46e9a45b-cb89-4c6d-a54a-aeac01364994/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/01891723-b9f7-459c-a03c-aeac01364986/01926272-2ced-43ef-84a6-b50800128031/audio.mp3?utm_source=Podcast&in_playlist=46e9a45b-cb89-4c6d-a54a-aeac01364994"
-    },
-    {
-      "id": "pod_chargers_locked_on_chargers_1000802818303",
-      "trackId": 1000802818303,
-      "collectionId": 1151558476,
-      "showId": "chargers_locked_on_chargers",
-      "showName": "Locked On Chargers",
-      "showFullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
-      "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
-      "title": "CROSSROADS: Could Mike McDaniel be BACK in 2027 after the Chargers Pulled of their First Win?",
-      "summary": "Los Angeles Chargers notch a much-needed Monday Night Football win, but is it enough to save Mike McDaniel’s job heading into 2027? Justin Herbert’s struggles in the passing game and the team’s reliance on a revitalized running attack, led by Omarion Hampton and a reshuffled",
-      "publishedAt": "2026-11-19T00:00:00.000Z",
-      "durationMinutes": 25,
-      "durationDisplay": "25 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/76/25/e7/7625e752-6f0b-500a-0f7a-f62d7cb1d70e/mza_12391072200558658801.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/crossroads-could-mike-mcdaniel-be-back-in-2027-after/id1151558476?i=1000802818303&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d1cedf/lockedon.simplecastaudio.com/709e5c37-556a-46ea-9cab-c0d0267c4589/episodes/3b72f231-746f-468c-bcc4-5c03230c5f8b/audio/128/default.mp3?aid=rss_feed&awCollectionId=709e5c37-556a-46ea-9cab-c0d0267c4589&awEpisodeId=3b72f231-746f-468c-bcc4-5c03230c5f8b&feed=A8M6ytRb"
     }
   ]
 }

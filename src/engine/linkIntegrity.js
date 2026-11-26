@@ -287,7 +287,7 @@ const OFF_TOPIC_LEAGUE_FILLER_URL_REGEX =
   /^https?:\/\/(?:(?:www\.|m\.)?espn\.com\/(?:fantasy\/|espn\/betting\/)|[^/]+\/(?:mlb|nba|nhl|wnba|mls|golf|tennis|soccer)\/)/i;
 
 const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
-  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates)\b/i;
+  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates|nfl week \d+ uniforms?|week \d+ uniforms?)\b/i;
 
 const NON_NFL_OTHER_SPORT_HEADLINE_REGEX =
   /\b(warriors|lakers|celtics|nba\b|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series|premier league|champions league|pga tour|ufc\b|wwe\b)\b/i;
@@ -1059,6 +1059,54 @@ export function formatWireSourceDisplayName(authorName = '', item = null) {
   return raw || defaultBeat;
 }
 
+const COMMERCIAL_FANTASY_BETTING_URL_RE =
+  /\/(?:news\/(?:bet-|fantasy-|free-pff-mock-draft-simulator)|fantasy\/|betting\/|sportsbook\/|odds\/|picks-and-predictions\/)/i;
+
+const COMMERCIAL_FANTASY_BETTING_TEXT_RE =
+  /\b(same[- ]game\s+parlay|best\s+bets?|prop\s+bets?|player\s+props?|against\s+the\s+spread|ats\s+picks?|moneyline\s+picks?|betting\s+odds|betting\s+picks?|parlay\s+picks?|fantasy\s+football|fantasy\s+worksheet|fantasy\s+rankings?|fantasy\s+sleepers?|fantasy\s+spin|fantasy\s+tips|fantasy\s+start|start\/sit|start-worthy|waiver\s+wire|lineup\s+help|survivor\s+pool|mock\s+draft\s+simulator|unlock\s+the\s+full\s+pff|draftsgiving|promo\s+code|sign[- ]?up\s+bonus)\b/i;
+
+/**
+ * Unconditionally identifies commercial betting/parlay, fantasy football, and SaaS tool-promo
+ * filler even when an active team's name appears in the headline (e.g. PFF same-game parlays
+ * or fantasy worksheets). Single source of truth across pipeline & client filters.
+ */
+export function isCommercialFantasyOrBettingFiller(title = '', summary = '', url = '') {
+  const u = String(url || '').trim();
+  if (u && COMMERCIAL_FANTASY_BETTING_URL_RE.test(u)) return true;
+  const combined = `${String(title || '').trim()} ${String(summary || '').trim()}`.trim();
+  if (!combined) return false;
+  return COMMERCIAL_FANTASY_BETTING_TEXT_RE.test(combined);
+}
+
+const SUBSTACK_PAYWALL_MARKER_RE =
+  /\b(this\s+post\s+is\s+for\s+paid\s+subscribers|for\s+paid\s+subscribers\s+only|subscribe\s+to\s+(?:continue\s+reading|read\s+the\s+full)|upgrade\s+to\s+paid|become\s+a\s+paid\s+subscriber|paid\s+subscribers\s+get\s+access)\b/i;
+
+/**
+ * Per-entry paywall gate for mixed free/paid Substack and newsletter RSS feeds
+ * (e.g. Unexpected Points, Coach Dan Casey). Rejects paid-subscriber stubs so users
+ * never click into a paywall, while admitting genuinely free full-length analytical posts.
+ */
+export function isPaywalledSubstackOrNewsletterEntry(rssItemXml = '', contentEncoded = '', { minFreeChars = 1800 } = {}) {
+  const rawXml = String(rssItemXml || '');
+  const rawContent = String(contentEncoded || '');
+  if (SUBSTACK_PAYWALL_MARKER_RE.test(rawXml) || SUBSTACK_PAYWALL_MARKER_RE.test(rawContent)) {
+    return true;
+  }
+  const stripped = rawContent
+    .replace(/<!\[CDATA\[|\]\]>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (rawContent && stripped.length < minFreeChars) {
+    // Short Substack RSS excerpts without full body are almost always paywalled previews or stub pod notes
+    if (/substack\.com|unexpectedpoints\.com|matchquarters\.com/i.test(rawXml) && /\b(subscribe|read more|paid|pod|episode)\b/i.test(stripped)) {
+      return true;
+    }
+    if (stripped.length < 700) return true;
+  }
+  return false;
+}
+
 /**
  * Identifies generic league-wide filler (fantasy D/ST, survivor pools, betting lines roundups,
  * uniform/arrival slideshows, non-team transactions) that should not pollute the team news stream.
@@ -1076,6 +1124,7 @@ export function isOffTopicLeagueFiller({
   const s = matchers.isSf ? stripHistoricalSfBioSentences(String(summary || '').trim()) : String(summary || '').trim();
   if (u && OFF_TOPIC_LEAGUE_FILLER_URL_REGEX.test(u)) return true;
   if (isPromotionalAdvertisement({ url: u, title: t, summary: s })) return true;
+  if (isCommercialFantasyOrBettingFiller(t, s, u)) return true;
   if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(t)) return true;
   if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !matchers.teamShortRe.test(t)) {
     return true;
@@ -1124,7 +1173,7 @@ export function isStaleSeasonHeadline(headline = '', currentWeek = null) {
 }
 
 const DIRECT_FREE_PUBLIC_HOST_REGEX =
-  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|azcardinals\.com|atlantafalcons\.com|baltimoreravens\.com|buffalobills\.com|panthers\.com|chicagobears\.com|bengals\.com|clevelandbrowns\.com|dallascowboys\.com|denverbroncos\.com|detroitlions\.com|packers\.com|houstontexans\.com|colts\.com|jaguars\.com|chiefs\.com|chargers\.com|therams\.com|raiders\.com|miamidolphins\.com|vikings\.com|patriots\.com|neworleanssaints\.com|giants\.com|newyorkjets\.com|philadelphiaeagles\.com|steelers\.com|seahawks\.com|buccaneers\.com|tennesseetitans\.com|commanders\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com|tankathon\.com|drafttek\.com|walterfootball\.com|bleacherreport\.com|si\.com|yahoo\.com|thegamehaus\.com|wideleft\.football|nflmockdraftdatabase\.com)$/i;
+  /(^|\.)(x\.com|twitter\.com|bsky\.app|espn\.com|rotowire\.com|49ers\.com|nfl\.com|azcardinals\.com|atlantafalcons\.com|baltimoreravens\.com|buffalobills\.com|panthers\.com|chicagobears\.com|bengals\.com|clevelandbrowns\.com|dallascowboys\.com|denverbroncos\.com|detroitlions\.com|packers\.com|houstontexans\.com|colts\.com|jaguars\.com|chiefs\.com|chargers\.com|therams\.com|raiders\.com|miamidolphins\.com|vikings\.com|patriots\.com|neworleanssaints\.com|giants\.com|newyorkjets\.com|philadelphiaeagles\.com|steelers\.com|seahawks\.com|buccaneers\.com|tennesseetitans\.com|commanders\.com|youtube\.com|youtu\.be|nbcsportsbayarea\.com|sfstandard\.com|ninersnation\.com|49erswebzone\.com|profootballrumors\.com|nfltraderumors\.co|cbssports\.com|overthecap\.com|pro-football-reference\.com|tankathon\.com|drafttek\.com|walterfootball\.com|bleacherreport\.com|si\.com|yahoo\.com|thegamehaus\.com|wideleft\.football|nflmockdraftdatabase\.com|matchquarters\.com|unexpectedpoints\.com|coachdancasey\.substack\.com|pff\.com)$/i;
 
 /**
  * Detects whether an RSS or syndication publisher is paywalled (even when wrapped in a redirect URL).
@@ -1656,7 +1705,7 @@ export function isLeagueWideFilmAnalyticsTweet(item = {}, teamInput = null) {
   if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(text) || NON_NFL_OTHER_SPORT_HEADLINE_REGEX.test(text)) {
     return false;
   }
-  if (/\b(fantasy|lineup help|sleepers|waiver wire|start\/sit|betting|parlay|prop bet|sportsbook|draftkings|fanduel)\b/i.test(text)) {
+  if (isCommercialFantasyOrBettingFiller(text, '', item.url || '')) {
     return false;
   }
 

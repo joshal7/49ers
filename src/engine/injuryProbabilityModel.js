@@ -1181,6 +1181,31 @@ export function sanitizeIrBeatNoteForCurrentWeek(
  *      `week >= earliestEligibleWeek` within trailing 3 weeks) or explicit multi-session 21-day window practice prose.
  * Never opens a window from `IR-R` alone (which NFL clubs also assign to preseason cutdown IR-DTR players).
  */
+const SEASON_ENDING_PHRASE_RE =
+  /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|spend the entire (?:\d{4} )?season|stay on (?:the (?:team's )?)?(?:ir|injured reserve) (?:list )?for the (?:year|season))\b/i;
+
+/**
+ * Strips subordinate context clauses describing a DIFFERENT teammate's season-ending injury
+ * (e.g. "With Colton McKivitz (ankle) out for the rest of the season, Pleasants would be a candidate to start...")
+ * so an IR-returner's blurb referencing the injured starter they're replacing never falsely marks them Out for Season.
+ */
+export function stripForeignTeammateSeasonEndingClauses(noteText = '', playerName = '') {
+  const raw = String(noteText || '');
+  if (!raw || !SEASON_ENDING_PHRASE_RE.test(raw)) return raw;
+  const selfTokens = String(playerName || '')
+    .toLowerCase()
+    .replace(/\b(?:jr\.?|sr\.?|ii|iii|iv|v)\b/g, '')
+    .split(/[^a-z]+/)
+    .filter(t => t.length >= 3);
+  const clauseRe =
+    /\b(?:[Ww]ith|[Bb]ecause|[Ss]ince|[Aa]fter|[Ff]ollowing|[Ww]hile|[Rr]eplacing)\s+([A-Z][a-zA-Z'.-]+(?:\s+[A-Z][a-zA-Z'.-]+){0,2})(?:\s*\([^)]{1,40}\))?[^,.;!?]{0,95}\b(?:out for (?:the )?(?:rest of (?:the )?)?(?:\d{4} )?(?:year|season)|for the rest of the (?:year|season)|done for the (?:year|season)|season-ending[^,.;!?]{0,35})[,;]?\s*/g;
+  return raw.replace(clauseRe, (match, namedPlayer) => {
+    const namedLower = String(namedPlayer || '').toLowerCase();
+    if (selfTokens.some(tok => namedLower.includes(tok))) return match;
+    return '';
+  });
+}
+
 export function detectOpen21DayIrWindowFromHistory({
   playerName = '',
   rosterBucket = 'ir',
@@ -1199,7 +1224,7 @@ export function detectOpen21DayIrWindowFromHistory({
     return { isOpen: false, designatedDateIso: null, leadNote: '' };
   }
 
-  const noteStr = String(beatNote || '').trim();
+  const noteStr = stripForeignTeammateSeasonEndingClauses(String(beatNote || '').trim(), playerName);
   if (
     /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|21-day (?:practice )?window expired|reverted to season-ending)\b/i.test(
       noteStr
@@ -3468,13 +3493,15 @@ export function computePlayerPlayProbability(input = {}) {
   const factors = [];
 
   // 1. Hard Roster / Official Ruling Flags & IR Return Window Activation
+  const scopedSeasonEndNote = stripForeignTeammateSeasonEndingClauses(
+    String(input.beatNote || input.shortComment || input.longComment || ''),
+    name
+  );
   const isSeasonEndingFlag =
     Boolean(input.isSeasonEnding) ||
     statusRaw.includes('season-ending') ||
     statusRaw.includes('out for season') ||
-    /\b(out for (?:the )?(?:\d{4} )?season|miss the entire|done for the (?:year|season)|for the rest of the (?:year|season)|season-ending|without a designation to return|spend the entire (?:\d{4} )?season|stay on (?:the (?:team's )?)?(?:ir|injured reserve) (?:list )?for the (?:year|season))\b/i.test(
-      beatNote || fullBeatLower
-    );
+    SEASON_ENDING_PHRASE_RE.test(scopedSeasonEndNote);
   const isRosterExemptionFlag =
     String(input.fantasyStatusAbbr || '').toUpperCase() === 'RESERVE-EX' ||
     statusRaw.includes('roster exemption') ||
@@ -4936,6 +4963,7 @@ const SEASON_ENDING_PROSE_REGEX =
  *     without an active return designation (`IR-R` / `PUP-R` / 21-day window) or CBS expected return week.
  */
 export function isSeasonEndingIrRecord({
+  playerName = '',
   statusRaw = '',
   fantasyStatusAbbr = '',
   returnDateIso = null,
@@ -4948,7 +4976,7 @@ export function isSeasonEndingIrRecord({
 } = {}) {
   if (isDesignatedToReturnOpen) return false;
   const stLower = String(statusRaw || '').toLowerCase();
-  const combinedProse = `${beatNote || ''} ${txNote || ''}`;
+  const combinedProse = stripForeignTeammateSeasonEndingClauses(`${beatNote || ''} ${txNote || ''}`, playerName);
   if (
     stLower.includes('left squad') ||
     stLower.includes('roster exemption') ||

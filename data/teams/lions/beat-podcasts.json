@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:48:55.039Z",
+  "updatedAt": "2026-11-26T07:25:12.533Z",
   "windowDays": 7,
-  "totalEpisodes": 19,
+  "totalEpisodes": 18,
   "shows": [
     {
       "id": "locked_on_lions",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/6e/cf/76/6ecf76dc-5c50-d1f5-6522-c0beee7beb93/mza_10179336279226318045.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "pride_of_detroit",
@@ -424,26 +424,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
       "audioStreamUrl": "https://www.podtrac.com/pts/redirect.mp3/pdst.fm/e/pscrb.fm/rss/p/traffic.megaphone.fm/PMC5842923083.mp3"
-    },
-    {
-      "id": "pod_locked_on_lions_1000802788984",
-      "trackId": 1000802788984,
-      "collectionId": 1140514879,
-      "showId": "locked_on_lions",
-      "showName": "Locked On Lions",
-      "showFullTitle": "Locked On Lions - Daily Podcast On The Detroit Lions",
-      "hosts": "Matt Dery",
-      "network": "Locked On Podcast Network",
-      "title": "LEADERSHIP: Why Dan Campbell GALVANIZES Detroit Lions Amid Aidan Hutchinson, Jack Campbell Absences",
-      "summary": "Detroit Lions rally behind head coach Dan Campbell’s unwavering leadership after devastating injuries to Aidan Hutchinson and Jack Campbell. Can Campbell’s refusal to dwell on “what-ifs” keep the Lions’ Super Bowl hopes alive despite losing defensive cornerstones? Host Matt ",
-      "publishedAt": "2026-11-18T21:12:03.000Z",
-      "durationMinutes": 28,
-      "durationDisplay": "28 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3e/e3/d3/3ee3d394-4d58-b8bc-ee2f-88d1deaf68b4/mza_12358991261269220942.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/leadership-why-dan-campbell-galvanizes-detroit-lions/id1140514879?i=1000802788984&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/a0cc13/lockedon.simplecastaudio.com/05bcf1ce-c643-45f9-b7f9-bd4cf110ab06/episodes/da15fbaf-838c-4414-bd12-fdadcb7b75aa/audio/128/default.mp3?aid=rss_feed&awCollectionId=05bcf1ce-c643-45f9-b7f9-bd4cf110ab06&awEpisodeId=da15fbaf-838c-4414-bd12-fdadcb7b75aa&feed=ASw0G4io"
     }
   ]
 }

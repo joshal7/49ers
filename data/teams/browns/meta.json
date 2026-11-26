@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:53.832Z",
+  "updatedAt": "2026-11-26T07:28:33.886Z",
   "teamAbbr": "CLE",
   "teamSlug": "browns",
   "brandName": "Browns Dawg Pound",
@@ -48,13 +48,12 @@
     "candidateCascade": [
       "gemini-4-hydrogen",
       "gemini-3.8-flash",
+      "gemini-3.6-flash",
       "gemini-3.5-flash",
-      "gemini-3-flash-preview",
-      "gemini-2.5-flash",
-      "gemini-2.5-pro"
+      "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:50:53.832Z",
+    "lastCheckedAt": "2026-11-26T07:28:33.886Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

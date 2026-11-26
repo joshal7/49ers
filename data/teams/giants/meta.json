@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:34.054Z",
+  "updatedAt": "2026-11-26T07:26:30.118Z",
   "teamAbbr": "NYG",
   "teamSlug": "giants",
   "brandName": "Giants Big Blue",
@@ -48,13 +48,12 @@
     "candidateCascade": [
       "gemini-4-hydrogen",
       "gemini-3.8-flash",
+      "gemini-3.6-flash",
       "gemini-3.5-flash",
-      "gemini-3-flash-preview",
-      "gemini-2.5-flash",
-      "gemini-2.5-pro"
+      "gemini-3-flash-preview"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:49:34.054Z",
+    "lastCheckedAt": "2026-11-26T07:26:30.118Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

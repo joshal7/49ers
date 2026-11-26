@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:48:49.807Z",
+  "updatedAt": "2026-11-26T07:24:58.258Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/arizona-cardinals",
   "spotracUrl": "https://www.spotrac.com/nfl/arizona-cardinals/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 327509324,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 319435990,
+      "totalCapLiabilities": 319868195,
       "top51": 200396083,
-      "teamCapSpace": 8073334,
-      "otcRawTeamCapSpace": 8073334,
-      "effectiveCapSpace": 8073334,
-      "activeCapSpending": 215406238,
-      "offenseSpend": 102409982,
+      "teamCapSpace": 7641129,
+      "otcRawTeamCapSpace": 7641129,
+      "effectiveCapSpace": 7641129,
+      "activeCapSpending": 215838443,
+      "offenseSpend": 102842187,
       "defenseSpend": 108158756,
       "specialSpend": 4837500,
       "deadMoneyTotal": 104029752,
       "injuredReserveTotal": 55064156,
-      "practiceSquadTotal": 3243150,
+      "practiceSquadTotal": 3284522,
       "pupTotal": 1579067,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 59886373,
+      "reserveAndPsTotal": 59927745,
       "topDeadMoneyEntries": [
         {
           "name": "Kyler Murray",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 85
+      "totalSignedCount": 86
     },
     "2027": {
       "year": 2027,
@@ -247,8 +247,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/arizona-cardinals",
-    "summary": "Arizona Cardinals hold $8.07M in 2026 OverTheCap space ($8.07M effective) and +$95.17M projected for 2027.",
-    "executiveSummary": "Monti Ossenfort and the Cardinals front office hold $8.07M in gross 2026 cap space ($8.07M effective), while 2027 currently projects at +$95.17M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Budda Baker, Josh Sweat, Baron Browning, Trey McBride.",
+    "summary": "Arizona Cardinals hold $7.64M in 2026 OverTheCap space ($7.64M effective) and +$95.17M projected for 2027.",
+    "executiveSummary": "Monti Ossenfort and the Cardinals front office hold $7.64M in gross 2026 cap space ($7.64M effective), while 2027 currently projects at +$95.17M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Budda Baker, Josh Sweat, Baron Browning, Trey McBride.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$95.17M 2027 Projection)",

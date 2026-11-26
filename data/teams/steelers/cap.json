@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:58.811Z",
+  "updatedAt": "2026-11-26T07:28:42.333Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/pittsburgh-steelers",
   "spotracUrl": "https://www.spotrac.com/nfl/pittsburgh-steelers/cap/",
@@ -10,24 +10,31 @@
       "capCeiling": 321091559,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 311205485,
-      "top51": 274283224,
-      "teamCapSpace": 9886074,
-      "otcRawTeamCapSpace": 9886074,
-      "effectiveCapSpace": 9886074,
-      "activeCapSpending": 286380383,
-      "offenseSpend": 106786823,
-      "defenseSpend": 172295226,
+      "totalCapLiabilities": 311276319,
+      "top51": 252729949,
+      "teamCapSpace": 9815240,
+      "otcRawTeamCapSpace": 9815240,
+      "effectiveCapSpace": 9815240,
+      "activeCapSpending": 263951217,
+      "offenseSpend": 84322240,
+      "defenseSpend": 172330643,
       "specialSpend": 7298334,
-      "deadMoneyTotal": 24825102,
+      "deadMoneyTotal": 47325102,
       "injuredReserveTotal": 18099490,
-      "practiceSquadTotal": 4127733,
+      "practiceSquadTotal": 4198567,
       "pupTotal": 548363,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 22775586,
+      "reserveAndPsTotal": 22846420,
       "topDeadMoneyEntries": [
+        {
+          "name": "Aaron Rodgers",
+          "capCharge": 22500000,
+          "slug": "aaron-rodgers",
+          "otcId": "1085",
+          "otcUrl": "https://overthecap.com/player/aaron-rodgers/1085/"
+        },
         {
           "name": "Minkah Fitzpatrick",
           "capCharge": 6855000,
@@ -125,17 +132,10 @@
           "slug": "brandon-smith",
           "otcId": "9854",
           "otcUrl": "https://overthecap.com/player/brandon-smith/9854/"
-        },
-        {
-          "name": "Brandon Smith",
-          "capCharge": 196666,
-          "slug": "brandon-smith",
-          "otcId": "9854",
-          "otcUrl": "https://overthecap.com/player/brandon-smith/9854/"
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 79
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
@@ -252,8 +252,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/pittsburgh-steelers",
-    "summary": "Pittsburgh Steelers hold $9.89M in 2026 OverTheCap space ($9.89M effective) and -$11.29M projected for 2027.",
-    "executiveSummary": "Omar Khan and the Steelers front office hold $9.89M in gross 2026 cap space ($9.89M effective), while 2027 currently projects at -$11.29M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$7M target) helps manage scheduled cap escalations for T.J. Watt, Alex Highsmith, Jalen Ramsey, Patrick Queen.",
+    "summary": "Pittsburgh Steelers hold $9.82M in 2026 OverTheCap space ($9.82M effective) and -$11.29M projected for 2027.",
+    "executiveSummary": "Omar Khan and the Steelers front office hold $9.82M in gross 2026 cap space ($9.82M effective), while 2027 currently projects at -$11.29M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$7M target) helps manage scheduled cap escalations for T.J. Watt, Alex Highsmith, Jalen Ramsey, Patrick Queen.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$7M Target vs. -$11.29M 2027 Projection)",

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:49:40.231Z",
+  "updatedAt": "2026-11-26T07:26:38.849Z",
   "windowDays": 7,
-  "totalEpisodes": 28,
+  "totalEpisodes": 25,
   "shows": [
     {
       "id": "commanders_locked_on_commanders",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/kSOAGvW5",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/john-keim-report/id1455645619?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/61/96/15/619615b2-4075-236a-7c0a-153b3b7c2d99/mza_16549190295976948871.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "commanders_the_al_galdi_podcast",
@@ -37,7 +37,7 @@
       "feedUrl": "https://rss.pdrl.fm/411d5a/feeds.simplecast.com/Xn4Ik036",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-al-galdi-podcast/id1553345193?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/50/2a/c4/502ac423-97df-f88e-4dc8-3d2ef63023af/mza_2815674733414360846.jpeg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "commanders_beltway_football",
@@ -61,7 +61,7 @@
       "feedUrl": "https://feeds.simplecast.com/WN4LInTx",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-kevin-sheehan-show/id1435515037?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/4c/7c/2e/4c7c2e6f-04e0-0379-c7ea-bb7d9b60abc7/mza_6608765637697471956.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     }
   ],
   "episodes": [
@@ -564,66 +564,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-commanders-daily-podcast-on-the-washington/id1144183096?uo=4",
       "feedUrl": "https://rss.pdrl.fm/7c3048/feeds.simplecast.com/psq7p3Ar",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/7c3048/lockedon.simplecastaudio.com/dd4ec57b-d2e1-4378-a057-7e7fe1d38252/episodes/8e80fd07-3a07-41b3-a805-0aeaa0cfaf67/audio/128/default.mp3?aid=rss_feed&awCollectionId=dd4ec57b-d2e1-4378-a057-7e7fe1d38252&awEpisodeId=8e80fd07-3a07-41b3-a805-0aeaa0cfaf67&feed=psq7p3Ar"
-    },
-    {
-      "id": "pod_commanders_the_al_galdi_podcast_1000802862424",
-      "trackId": 1000802862424,
-      "collectionId": 1553345193,
-      "showId": "commanders_the_al_galdi_podcast",
-      "showName": "The Al Galdi Podcast",
-      "showFullTitle": "The Al Galdi Podcast",
-      "hosts": "Al Galdi, Blue Wire",
-      "network": "Blue Wire",
-      "title": "Episode 1,457: breakdown with LaMont Jordan on how Washington Commanders can fix their run game and more",
-      "summary": "Segment 1 - Show open and listener feedback, including reaction to a report that Washington Commanders quarterback Jayden Daniels and San Francisco 49ers receiver Brandon Aiyuk have reconciled and discussion of conflicting reports regarding former Ohio State and former Flori",
-      "publishedAt": "2026-11-19T05:16:57.000Z",
-      "durationMinutes": 54,
-      "durationDisplay": "54 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/9c/d5/61/9cd561e3-6384-4084-830a-77d19368d346/mza_15002727100755794429.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/episode-1-457-breakdown-with-lamont-jordan-on-how/id1553345193?i=1000802862424&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-al-galdi-podcast/id1553345193?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/411d5a/feeds.simplecast.com/Xn4Ik036",
-      "audioStreamUrl": "https://mgln.ai/e/256/pscrb.fm/rss/p/clrtpod.com/m/bluewire.simplecastaudio.com/caf3f891-17e6-4db3-a434-2b41a9fc3d4e/episodes/301e19b1-6ee8-49b5-8f74-b01c068671ce/audio/128/default.mp3?aid=rss_feed&awCollectionId=caf3f891-17e6-4db3-a434-2b41a9fc3d4e&awEpisodeId=301e19b1-6ee8-49b5-8f74-b01c068671ce&feed=Xn4Ik036"
-    },
-    {
-      "id": "pod_commanders_the_kevin_sheehan_show_1000802837713",
-      "trackId": 1000802837713,
-      "collectionId": 1435515037,
-      "showId": "commanders_the_kevin_sheehan_show",
-      "showName": "The Kevin Sheehan Show",
-      "showFullTitle": "The Kevin Sheehan Show",
-      "hosts": "Kevin Sheehan, Blue Wire",
-      "network": "Kevin Sheehan, Blue Wire",
-      "title": "Suter Film + Urban Meyer To Maryland?",
-      "summary": "Kevin opened with reports that Maryland and Urban Meyer have talked about the Terps head coaching opening. Kevin reacted a bit more to ESPN's Jeremy Fowler shedding more light on the Jayden Daniels/Brandon Aiyuk reconciliation. Steve Suter jumped on with his \"film breakdown\"",
-      "publishedAt": "2026-11-19T01:39:26.000Z",
-      "durationMinutes": 107,
-      "durationDisplay": "107 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/4c/7c/2e/4c7c2e6f-04e0-0379-c7ea-bb7d9b60abc7/mza_6608765637697471956.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/suter-film-urban-meyer-to-maryland/id1435515037?i=1000802837713&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-kevin-sheehan-show/id1435515037?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/WN4LInTx",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/256/clrtpod.com/m/bluewire.simplecastaudio.com/cb5c76dc-f08e-4542-82d3-d811e61cabd5/episodes/6ccc17d7-84bc-40d5-be45-0f1166209d36/audio/128/default.mp3?aid=rss_feed&awCollectionId=cb5c76dc-f08e-4542-82d3-d811e61cabd5&awEpisodeId=6ccc17d7-84bc-40d5-be45-0f1166209d36&feed=WN4LInTx"
-    },
-    {
-      "id": "pod_commanders_john_keim_report_1000802818663",
-      "trackId": 1000802818663,
-      "collectionId": 1455645619,
-      "showId": "commanders_john_keim_report",
-      "showName": "John Keim Report",
-      "showFullTitle": "John Keim Report",
-      "hosts": "Ampire Media, Bleav",
-      "network": "Ampire Media, Bleav",
-      "title": "Signs of progress.... but will it be enough? With Nicki Jhabvala of the Athletic",
-      "summary": "John is joined by Nicki Jhabvala of the Athletic following the win against the Giants. They talk about injuries, players on the way back, where the season can go, Bengals preview, and more! Hosted by Simplecast, an AdsWizz company. See https://pcm.adswizz.com for information",
-      "publishedAt": "2026-11-18T23:53:00.000Z",
-      "durationMinutes": 28,
-      "durationDisplay": "28 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/8f/b0/32/8fb03216-1416-e25b-f563-d02c78af23a0/mza_8295130990833416481.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/signs-of-progress-but-will-it-be-enough-with/id1455645619?i=1000802818663&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/john-keim-report/id1455645619?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/kSOAGvW5",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/d788403c-c0da-44b6-9954-0a065c6a54da/episodes/837b3d0d-d26c-4b4c-b253-cdab1b94c5af/audio/128/default.mp3?aid=rss_feed&awCollectionId=d788403c-c0da-44b6-9954-0a065c6a54da&awEpisodeId=837b3d0d-d26c-4b4c-b253-cdab1b94c5af&feed=kSOAGvW5"
     }
   ]
 }

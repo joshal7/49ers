@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:57.785Z",
+  "updatedAt": "2026-11-26T07:27:03.844Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-orleans-saints",
   "spotracUrl": "https://www.spotrac.com/nfl/new-orleans-saints/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 316722549,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 309300526,
+      "totalCapLiabilities": 309335943,
       "top51": 170045165,
-      "teamCapSpace": 7422023,
-      "otcRawTeamCapSpace": 7422023,
-      "effectiveCapSpace": 7422023,
-      "activeCapSpending": 180862664,
+      "teamCapSpace": 7386606,
+      "otcRawTeamCapSpace": 7386606,
+      "effectiveCapSpace": 7386606,
+      "activeCapSpending": 180898081,
       "offenseSpend": 101867639,
-      "defenseSpend": 74790441,
+      "defenseSpend": 74825858,
       "specialSpend": 3921667,
       "deadMoneyTotal": 128720779,
       "injuredReserveTotal": 10501697,
-      "practiceSquadTotal": 3660971,
+      "practiceSquadTotal": 3696388,
       "pupTotal": 2433904,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 16596572,
+      "reserveAndPsTotal": 16631989,
       "topDeadMoneyEntries": [
         {
           "name": "Derek Carr",
@@ -142,15 +142,15 @@
       "capCeiling": 327000000,
       "baseLeagueCap": 327000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 297266754,
-      "top51": 276791303,
-      "teamCapSpace": 29733246,
-      "otcRawTeamCapSpace": 29733246,
-      "effectiveCapSpace": 12569002,
-      "activeCapSpending": 276791303,
+      "totalCapLiabilities": 298386754,
+      "top51": 277911303,
+      "teamCapSpace": 28613246,
+      "otcRawTeamCapSpace": 28613246,
+      "effectiveCapSpace": 12379002,
+      "activeCapSpending": 277911303,
       "offenseSpend": 153651637,
       "defenseSpend": 117619666,
-      "specialSpend": 5520000,
+      "specialSpend": 6640000,
       "deadMoneyTotal": 20475451,
       "injuredReserveTotal": 0,
       "practiceSquadTotal": 0,
@@ -196,8 +196,8 @@
           "otcUrl": "https://overthecap.com/player/devin-neal/12544/"
         }
       ],
-      "contractedCount": 42,
-      "totalSignedCount": 42
+      "contractedCount": 43,
+      "totalSignedCount": 43
     },
     "2028": {
       "year": 2028,
@@ -280,11 +280,11 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/new-orleans-saints",
-    "summary": "New Orleans Saints hold $7.42M in 2026 OverTheCap space ($7.42M effective) and +$29.73M projected for 2027.",
-    "executiveSummary": "Mickey Loomis and the Saints front office hold $7.42M in gross 2026 cap space ($7.42M effective), while 2027 currently projects at +$29.73M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Alvin Kamara, Erik McCoy, Chase Young, Chris Olave.",
+    "summary": "New Orleans Saints hold $7.39M in 2026 OverTheCap space ($7.39M effective) and +$28.61M projected for 2027.",
+    "executiveSummary": "Mickey Loomis and the Saints front office hold $7.39M in gross 2026 cap space ($7.39M effective), while 2027 currently projects at +$28.61M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Alvin Kamara, Erik McCoy, Chase Young, Chris Olave.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$29.73M 2027 Projection)",
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$28.61M 2027 Projection)",
         "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering New Orleans's projected 2027 ledger without forcing premature void-year restructures."
       },
       {
@@ -7305,6 +7305,48 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1120000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1120000,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 1120000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
             }
           }
         }

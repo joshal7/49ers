@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:40.903Z",
+  "updatedAt": "2026-11-26T07:28:13.469Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/baltimore-ravens",
   "spotracUrl": "https://www.spotrac.com/nfl/baltimore-ravens/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314063975,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 307580365,
-      "top51": 273096534,
-      "teamCapSpace": 6483610,
-      "otcRawTeamCapSpace": 6483610,
-      "effectiveCapSpace": 6483610,
-      "activeCapSpending": 285608554,
-      "offenseSpend": 119268601,
-      "defenseSpend": 162335548,
+      "totalCapLiabilities": 306870988,
+      "top51": 272983529,
+      "teamCapSpace": 7192987,
+      "otcRawTeamCapSpace": 7192987,
+      "effectiveCapSpace": 7192987,
+      "activeCapSpending": 284063793,
+      "offenseSpend": 117688423,
+      "defenseSpend": 162370965,
       "specialSpend": 4004405,
-      "deadMoneyTotal": 21971811,
+      "deadMoneyTotal": 22807195,
       "injuredReserveTotal": 54068713,
-      "practiceSquadTotal": 3568960,
+      "practiceSquadTotal": 3641249,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 57637673,
+      "reserveAndPsTotal": 57709962,
       "topDeadMoneyEntries": [
         {
           "name": "Marcus Williams",
@@ -78,6 +78,13 @@
           "otcUrl": "https://overthecap.com/player/tylan-wallace/9595/"
         },
         {
+          "name": "LaJohntay Wester",
+          "capCharge": 667884,
+          "slug": "lajohntay-wester",
+          "otcId": "12563",
+          "otcUrl": "https://overthecap.com/player/lajohntay-wester/12563/"
+        },
+        {
           "name": "Nick Vannett",
           "capCharge": 298611,
           "slug": "nick-vannett",
@@ -120,38 +127,31 @@
           "otcUrl": "https://overthecap.com/player/kyle-hergel/12095/"
         },
         {
-          "name": "Jonathan Ward",
-          "capCharge": 159950,
-          "slug": "jonathan-ward",
-          "otcId": "9400",
-          "otcUrl": "https://overthecap.com/player/jonathan-ward/9400/"
-        },
-        {
-          "name": "Carl Jones Jr.",
-          "capCharge": 111667,
-          "slug": "carl-jones-jr",
-          "otcId": "11918",
-          "otcUrl": "https://overthecap.com/player/carl-jones-jr/11918/"
+          "name": "Kedon Slovis",
+          "capCharge": 167500,
+          "slug": "kedon-slovis",
+          "otcId": "12086",
+          "otcUrl": "https://overthecap.com/player/kedon-slovis/12086/"
         }
       ],
       "contractedCount": 51,
-      "totalSignedCount": 80
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
       "capCeiling": 327000000,
       "baseLeagueCap": 327000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 375827770,
-      "top51": 375204646,
-      "teamCapSpace": -48827770,
-      "otcRawTeamCapSpace": -48827770,
-      "effectiveCapSpace": -61101399,
-      "activeCapSpending": 375204646,
-      "offenseSpend": 202494611,
+      "totalCapLiabilities": 374761487,
+      "top51": 374030929,
+      "teamCapSpace": -47761487,
+      "otcRawTeamCapSpace": -47761487,
+      "effectiveCapSpace": -60965116,
+      "activeCapSpending": 374030929,
+      "offenseSpend": 201320894,
       "defenseSpend": 168918130,
       "specialSpend": 3791905,
-      "deadMoneyTotal": 623124,
+      "deadMoneyTotal": 730558,
       "injuredReserveTotal": 0,
       "practiceSquadTotal": 0,
       "pupTotal": 0,
@@ -166,23 +166,30 @@
           "slug": "adisa-isaac",
           "otcId": "11701",
           "otcUrl": "https://overthecap.com/player/adisa-isaac/11701/"
+        },
+        {
+          "name": "LaJohntay Wester",
+          "capCharge": 107434,
+          "slug": "lajohntay-wester",
+          "otcId": "12563",
+          "otcUrl": "https://overthecap.com/player/lajohntay-wester/12563/"
         }
       ],
       "contractedCount": 45,
-      "totalSignedCount": 46
+      "totalSignedCount": 45
     },
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
       "baseLeagueCap": 352000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 297788176,
-      "top51": 297788176,
-      "teamCapSpace": 54211824,
-      "otcRawTeamCapSpace": 54211824,
-      "effectiveCapSpace": 39586824,
-      "activeCapSpending": 297788176,
-      "offenseSpend": 180317577,
+      "totalCapLiabilities": 296499459,
+      "top51": 296499459,
+      "teamCapSpace": 55500541,
+      "otcRawTeamCapSpace": 55500541,
+      "effectiveCapSpace": 39900541,
+      "activeCapSpending": 296499459,
+      "offenseSpend": 179028860,
       "defenseSpend": 113403694,
       "specialSpend": 4066905,
       "deadMoneyTotal": 0,
@@ -195,7 +202,7 @@
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
       "contractedCount": 35,
-      "totalSignedCount": 36
+      "totalSignedCount": 35
     },
     "2029": {
       "year": 2029,
@@ -252,11 +259,11 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/baltimore-ravens",
-    "summary": "Baltimore Ravens hold $6.48M in 2026 OverTheCap space ($6.48M effective) and -$48.83M projected for 2027.",
-    "executiveSummary": "Eric DeCosta and the Ravens front office hold $6.48M in gross 2026 cap space ($6.48M effective), while 2027 currently projects at -$48.83M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Roquan Smith, Marlon Humphrey, Nnamdi Madubuike, Trey Hendrickson.",
+    "summary": "Baltimore Ravens hold $7.19M in 2026 OverTheCap space ($7.19M effective) and -$47.76M projected for 2027.",
+    "executiveSummary": "Eric DeCosta and the Ravens front office hold $7.19M in gross 2026 cap space ($7.19M effective), while 2027 currently projects at -$47.76M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Roquan Smith, Marlon Humphrey, Nnamdi Madubuike, Trey Hendrickson.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$48.83M 2027 Projection)",
+        "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$47.76M 2027 Projection)",
         "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Baltimore's projected 2027 ledger without forcing premature void-year restructures."
       },
       {

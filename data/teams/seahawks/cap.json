@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:48:36.161Z",
+  "updatedAt": "2026-11-26T07:24:34.887Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/seattle-seahawks",
   "spotracUrl": "https://www.spotrac.com/nfl/seattle-seahawks/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314413773,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 300640201,
+      "totalCapLiabilities": 301271829,
       "top51": 282422640,
-      "teamCapSpace": 13773572,
-      "otcRawTeamCapSpace": 13773572,
-      "effectiveCapSpace": 13773572,
-      "activeCapSpending": 293162148,
-      "offenseSpend": 143142063,
-      "defenseSpend": 137600085,
+      "teamCapSpace": 13141944,
+      "otcRawTeamCapSpace": 13141944,
+      "effectiveCapSpace": 13141944,
+      "activeCapSpending": 292693955,
+      "offenseSpend": 143429036,
+      "defenseSpend": 136844919,
       "specialSpend": 12420000,
-      "deadMoneyTotal": 7478053,
-      "injuredReserveTotal": 7872445,
-      "practiceSquadTotal": 3986456,
+      "deadMoneyTotal": 8577874,
+      "injuredReserveTotal": 8947445,
+      "practiceSquadTotal": 3176318,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 1075000,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 12933901,
+      "reserveAndPsTotal": 13198763,
       "topDeadMoneyEntries": [
         {
           "name": "Christian Haynes",
@@ -43,6 +43,13 @@
           "otcUrl": "https://overthecap.com/player/noah-igbinoghene/8770/"
         },
         {
+          "name": "Avery Smith",
+          "capCharge": 540833,
+          "slug": "avery-smith",
+          "otcId": "13599",
+          "otcUrl": "https://overthecap.com/player/avery-smith/13599/"
+        },
+        {
           "name": "Kenny McIntosh",
           "capCharge": 458000,
           "slug": "kenny-mcintosh",
@@ -55,6 +62,13 @@
           "slug": "irvin-charles",
           "otcId": "10714",
           "otcUrl": "https://overthecap.com/player/irvin-charles/10714/"
+        },
+        {
+          "name": "Bobby Hart",
+          "capCharge": 361966,
+          "slug": "bobby-hart",
+          "otcId": "4074",
+          "otcUrl": "https://overthecap.com/player/bobby-hart/4074/"
         },
         {
           "name": "Montorie Foster",
@@ -71,18 +85,18 @@
           "otcUrl": "https://overthecap.com/player/aidan-hubbard/13814/"
         },
         {
-          "name": "Velus Jones Jr.",
-          "capCharge": 238889,
-          "slug": "velus-jones-jr",
-          "otcId": "10116",
-          "otcUrl": "https://overthecap.com/player/velus-jones-jr/10116/"
-        },
-        {
           "name": "A.J. Finley",
           "capCharge": 238889,
           "slug": "a-j-finley",
           "otcId": "11099",
           "otcUrl": "https://overthecap.com/player/a-j-finley/11099/"
+        },
+        {
+          "name": "Velus Jones Jr.",
+          "capCharge": 238889,
+          "slug": "velus-jones-jr",
+          "otcId": "10116",
+          "otcUrl": "https://overthecap.com/player/velus-jones-jr/10116/"
         },
         {
           "name": "D'Anthony Bell",
@@ -118,20 +132,6 @@
           "slug": "trevon-diggs",
           "otcId": "8791",
           "otcUrl": "https://overthecap.com/player/trevon-diggs/8791/"
-        },
-        {
-          "name": "Jimmy Ciarlo",
-          "capCharge": 153334,
-          "slug": "jimmy-ciarlo",
-          "otcId": "12057",
-          "otcUrl": "https://overthecap.com/player/jimmy-ciarlo/12057/"
-        },
-        {
-          "name": "Velus Jones Jr.",
-          "capCharge": 142294,
-          "slug": "velus-jones-jr",
-          "otcId": "10116",
-          "otcUrl": "https://overthecap.com/player/velus-jones-jr/10116/"
         }
       ],
       "contractedCount": 53,
@@ -142,14 +142,14 @@
       "capCeiling": 327000000,
       "baseLeagueCap": 327000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 295212063,
-      "top51": 294283606,
-      "teamCapSpace": 31787937,
-      "otcRawTeamCapSpace": 31787937,
-      "effectiveCapSpace": 13855806,
-      "activeCapSpending": 294283606,
+      "totalCapLiabilities": 294162063,
+      "top51": 293233606,
+      "teamCapSpace": 32837937,
+      "otcRawTeamCapSpace": 32837937,
+      "effectiveCapSpace": 13975806,
+      "activeCapSpending": 293233606,
       "offenseSpend": 161818188,
-      "defenseSpend": 127455418,
+      "defenseSpend": 126405418,
       "specialSpend": 5010000,
       "deadMoneyTotal": 928457,
       "injuredReserveTotal": 0,
@@ -190,21 +190,21 @@
         }
       ],
       "contractedCount": 37,
-      "totalSignedCount": 38
+      "totalSignedCount": 37
     },
     "2028": {
       "year": 2028,
       "capCeiling": 352000000,
       "baseLeagueCap": 352000000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 225858408,
-      "top51": 225858408,
-      "teamCapSpace": 126141592,
-      "otcRawTeamCapSpace": 126141592,
-      "effectiveCapSpace": 100791592,
-      "activeCapSpending": 225858408,
+      "totalCapLiabilities": 224693408,
+      "top51": 224693408,
+      "teamCapSpace": 127306592,
+      "otcRawTeamCapSpace": 127306592,
+      "effectiveCapSpace": 100981592,
+      "activeCapSpending": 224693408,
       "offenseSpend": 128894930,
-      "defenseSpend": 92963478,
+      "defenseSpend": 91798478,
       "specialSpend": 4000000,
       "deadMoneyTotal": 0,
       "injuredReserveTotal": 0,
@@ -216,7 +216,7 @@
       "reserveAndPsTotal": 0,
       "topDeadMoneyEntries": [],
       "contractedCount": 24,
-      "totalSignedCount": 25
+      "totalSignedCount": 24
     },
     "2029": {
       "year": 2029,
@@ -273,11 +273,11 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/seattle-seahawks",
-    "summary": "Seattle Seahawks hold $13.77M in 2026 OverTheCap space ($13.77M effective) and +$31.79M projected for 2027.",
-    "executiveSummary": "John Schneider and the Seahawks front office hold $13.77M in gross 2026 cap space ($13.77M effective), while 2027 currently projects at +$31.79M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($7M–$11M target) helps manage scheduled cap escalations for Sam Darnold, Leonard Williams, Uchenna Nwosu, Cooper Kupp.",
+    "summary": "Seattle Seahawks hold $13.14M in 2026 OverTheCap space ($13.14M effective) and +$32.84M projected for 2027.",
+    "executiveSummary": "John Schneider and the Seahawks front office hold $13.14M in gross 2026 cap space ($13.14M effective), while 2027 currently projects at +$32.84M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($6M–$10M target) helps manage scheduled cap escalations for Sam Darnold, Leonard Williams, Uchenna Nwosu, Cooper Kupp.",
     "strategicPillars": [
       {
-        "title": "1. CBA Article 13 Rollover Bridge ($7M–$11M Target vs. +$31.79M 2027 Projection)",
+        "title": "1. CBA Article 13 Rollover Bridge ($6M–$10M Target vs. +$32.84M 2027 Projection)",
         "detail": "Unused 2026 cap space carries over dollar-for-dollar into 2027, buffering Seattle's projected 2027 ledger without forcing premature void-year restructures."
       },
       {
@@ -6251,33 +6251,6 @@
       }
     },
     {
-      "id": "4427843",
-      "otcId": "12566",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/chase-lundt/12566/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427843/chase-lundt",
-      "pfrUrl": "https://www.pro-football-reference.com/players/L/LundCh00.htm",
-      "name": "Chase Lundt",
-      "position": "OT",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427843.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
       "id": "2576789",
       "otcId": "4074",
       "otcSlug": "bobby-hart",
@@ -6292,15 +6265,46 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 521916,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1300000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
           "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 521916,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 521916,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 521916,
-          "guaranteedSalary": 0
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 418056,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
         }
       }
     },
@@ -6319,15 +6323,104 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 288222,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1215000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
           "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 288222,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 288222,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 288222,
-          "guaranteedSalary": 0
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 418056,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 418056
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -68000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4427843",
+      "otcId": "12566",
+      "otcSlug": "chase-lundt",
+      "otcUrl": "https://overthecap.com/player/chase-lundt/12566/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4427843/chase-lundt",
+      "pfrUrl": "https://www.pro-football-reference.com/players/L/LundCh00.htm",
+      "name": "Chase Lundt",
+      "position": "OT",
+      "jersey": 77,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427843.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1005000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 390833,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
         }
       }
     },

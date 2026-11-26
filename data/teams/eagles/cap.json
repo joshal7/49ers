@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:21.166Z",
+  "updatedAt": "2026-11-26T07:26:03.290Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/philadelphia-eagles",
   "spotracUrl": "https://www.spotrac.com/nfl/philadelphia-eagles/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 316096635,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 305999428,
+      "totalCapLiabilities": 306275261,
       "top51": 205963470,
-      "teamCapSpace": 10097207,
-      "otcRawTeamCapSpace": 10097207,
-      "effectiveCapSpace": 10097207,
-      "activeCapSpending": 213663207,
-      "offenseSpend": 140535394,
-      "defenseSpend": 65911147,
+      "teamCapSpace": 9821374,
+      "otcRawTeamCapSpace": 9821374,
+      "effectiveCapSpace": 9821374,
+      "activeCapSpending": 213435707,
+      "offenseSpend": 139847061,
+      "defenseSpend": 66371980,
       "specialSpend": 7216666,
-      "deadMoneyTotal": 92336221,
+      "deadMoneyTotal": 92839554,
       "injuredReserveTotal": 44540451,
-      "practiceSquadTotal": 3487151,
+      "practiceSquadTotal": 3212984,
       "pupTotal": 0,
       "nfiTotal": 515000,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 48542602,
+      "reserveAndPsTotal": 48268435,
       "topDeadMoneyEntries": [
         {
           "name": "A.J. Brown",
@@ -134,8 +134,8 @@
           "otcUrl": "https://overthecap.com/player/reed-blankenship/10500/"
         }
       ],
-      "contractedCount": 51,
-      "totalSignedCount": 77
+      "contractedCount": 52,
+      "totalSignedCount": 76
     },
     "2027": {
       "year": 2027,
@@ -301,8 +301,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/philadelphia-eagles",
-    "summary": "Philadelphia Eagles hold $10.10M in 2026 OverTheCap space ($10.10M effective) and +$29.26M projected for 2027.",
-    "executiveSummary": "Howie Roseman and the Eagles front office hold $10.10M in gross 2026 cap space ($10.10M effective), while 2027 currently projects at +$29.26M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$7M target) helps manage scheduled cap escalations for Jordan Mailata, DeVonta Smith, Dallas Goedert, Saquon Barkley.",
+    "summary": "Philadelphia Eagles hold $9.82M in 2026 OverTheCap space ($9.82M effective) and +$29.26M projected for 2027.",
+    "executiveSummary": "Howie Roseman and the Eagles front office hold $9.82M in gross 2026 cap space ($9.82M effective), while 2027 currently projects at +$29.26M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$7M target) helps manage scheduled cap escalations for Jordan Mailata, DeVonta Smith, Dallas Goedert, Saquon Barkley.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$7M Target vs. +$29.26M 2027 Projection)",
@@ -7623,15 +7623,104 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 110000,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1005000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
           "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 110000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 110000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 110000,
-          "guaranteedSalary": 0
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 390833,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 390833
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": -112000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4429731",
+      "otcId": "11995",
+      "otcSlug": "gabe-hall",
+      "otcUrl": "https://overthecap.com/player/gabe-hall/11995/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4429731/gabe-hall",
+      "pfrUrl": "https://www.pro-football-reference.com/search/search.fcgi?search=Gabe%20Hall",
+      "name": "Gabe Hall",
+      "position": "DT",
+      "jersey": 96,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429731.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 885000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 344167,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 344167
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 344167
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 344167
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 344167
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
         }
       }
     },

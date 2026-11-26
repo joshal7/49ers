@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:51:32.424Z",
+  "updatedAt": "2026-11-26T07:29:37.620Z",
   "week": 12,
   "units": [
     {
@@ -500,21 +500,11 @@
           "slotLabel": "RT",
           "baselineChain": [
             {
-              "playerId": "4043041",
-              "name": "Jaylon Moore",
-              "jersey": 77,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043041.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
-            },
-            {
               "playerId": "4373280",
               "name": "Joshua Ezeudu",
               "jersey": 73,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4373280.png",
-              "baselineRank": 2,
+              "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -524,10 +514,20 @@
               "name": "Fred Johnson",
               "jersey": 74,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915106.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4043041",
+              "name": "Jaylon Moore",
+              "jersey": 77,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043041.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -536,7 +536,7 @@
               "name": "Joshua Ezeudu",
               "jersey": 73,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4373280.png",
-              "baselineRank": 2,
+              "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -546,7 +546,7 @@
               "name": "Fred Johnson",
               "jersey": 74,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915106.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -556,14 +556,14 @@
               "name": "Jaylon Moore",
               "jersey": 77,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4043041.png",
-              "baselineRank": 1,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "qb",

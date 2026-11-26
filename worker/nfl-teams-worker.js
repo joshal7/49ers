@@ -40,6 +40,7 @@ import {
 } from '../src/engine/geminiStudioPrompts.js';
 import {
   DEFAULT_GEMINI_QUOTA_CONFIG,
+  createSerializedQuotaMutex,
   estimateGeminiCallTokens,
   getQuotaPacificDateKey,
   isSearchGroundingAllowed,
@@ -47,8 +48,11 @@ import {
   normalizeGeminiQuotaState,
   recordGeminiCallOutcome,
   refreshGeminiModelCatalogIfDue,
+  reserveGeminiQuotaSlot,
   selectBestAvailableModel
 } from '../src/engine/geminiQuotaManager.js';
+
+const withWorkerQuotaLock = createSerializedQuotaMutex();
 import {
   TEAM_CANONICAL_HASHTAGS,
   decodeHtmlEntities,
@@ -491,27 +495,36 @@ async function callGeminiSinglePass(
       );
       if (poolList.length === 0) break;
 
-      const picked = selectBestAvailableModel(quotaState, {
-        pool,
-        isPriorityTeam,
-        estimatedTokens: estTokens,
-        nowMs: Date.now(),
-        config: DEFAULT_GEMINI_QUOTA_CONFIG,
-        preferredModels: poolList
+      const slotRes = await withWorkerQuotaLock(async () => {
+        const picked = selectBestAvailableModel(quotaState, {
+          pool,
+          isPriorityTeam,
+          estimatedTokens: estTokens,
+          nowMs: Date.now(),
+          config: DEFAULT_GEMINI_QUOTA_CONFIG,
+          preferredModels: poolList
+        });
+        if (!picked.ok || !picked.modelId) return { ok: false, reason: picked.reason };
+        if (picked.waitMs > 16_000) return { ok: false, skipModel: picked.modelId };
+        if (picked.waitMs > 0) await new Promise(r => setTimeout(r, picked.waitMs));
+        const reservationId = reserveGeminiQuotaSlot(quotaState, {
+          modelId: picked.modelId,
+          estimatedTokens: estTokens,
+          nowMs: Date.now()
+        });
+        return { ok: true, modelId: picked.modelId, reservationId };
       });
-      if (!picked.ok || !picked.modelId) {
-        lastError = picked.reason || lastError;
+      if (!slotRes.ok) {
+        if (slotRes.skipModel) {
+          attempted.add(slotRes.skipModel);
+          continue;
+        }
+        lastError = slotRes.reason || lastError;
         break;
       }
-      if (picked.waitMs > 0 && picked.waitMs <= 16_000) {
-        await new Promise(r => setTimeout(r, picked.waitMs));
-      } else if (picked.waitMs > 16_000) {
-        // Worker request timeout safety: skip overly long cooldowns and try next ready model in pool
-        attempted.add(picked.modelId);
-        continue;
-      }
 
-      const model = picked.modelId;
+      const model = slotRes.modelId;
+      let activeReservationId = slotRes.reservationId;
       attempted.add(model);
 
       const primaryThinking = buildGeminiThinkingConfig(model, { preferredThinkingLevel: thinkingLevel });
@@ -565,8 +578,10 @@ async function callGeminiSinglePass(
               estimatedTokens: estTokens,
               isPriorityTeam,
               usedSearch: withSearch,
+              reservationId: activeReservationId,
               nowMs: Date.now()
             });
+            activeReservationId = null;
             stateDirty = true;
             if (withSearch && (res.status === 400 || res.status === 403 || res.status === 429 || res.status >= 500)) continue;
             if (!withSearch && res.status === 400 && thinkingConfig?.thinkingLevel === 'XHIGH') continue;
@@ -585,8 +600,10 @@ async function callGeminiSinglePass(
             estimatedTokens: estTokens,
             isPriorityTeam,
             usedSearch: withSearch,
+            reservationId: activeReservationId,
             nowMs: Date.now()
           });
+          activeReservationId = null;
           if (trySearchFirst && !withSearch) {
             // Search failed 429 while direct succeeded 200 -> disable search for rest of PT day (zero wasted 2x retries!)
             markSearchGroundingUnavailableToday(quotaState, Date.now());
@@ -607,6 +624,93 @@ async function callGeminiSinglePass(
         }
       }
     }
+    // Paid Tier 1 Free-Tier Overflow ONLY: triggered strictly if ALL Free Tier models were exhausted/failed,
+    // protected by KV-persisted hard spend cap ($0.50/mo default), 25 calls/day fuse, allowlisted Flash/Hydrogen models,
+    // and HTTP 402 auto-pause so Paid Tier 1 can NEVER accidentally rack up tens of dollars.
+    const overflowKey = String(env.GEMINI_OVERFLOW_API_KEY || '').trim();
+    if (overflowKey && overflowKey !== apiKey) {
+      const monthKey = getQuotaPacificDateKey(Date.now()).slice(0, 7);
+      const dayKey = getQuotaPacificDateKey(Date.now());
+      const overflowKvKey = `gemini:overflow:v1:${monthKey}`;
+      const capUsd = Math.min(2.0, Math.max(0.05, Number(env.GEMINI_OVERFLOW_MONTHLY_CAP_USD) || 0.5));
+      const dailyCap = Math.min(50, Math.max(1, Number(env.GEMINI_OVERFLOW_DAILY_CALLS_CAP) || 25));
+      let ovState = { monthKey, dayKey, monthlySpendUsd: 0, monthlyCalls: 0, dailyCalls: 0, autoPaused: false };
+      if (env?.SHARED_CACHE) {
+        try {
+          const storedOv = await env.SHARED_CACHE.get(overflowKvKey, 'json');
+          if (storedOv && storedOv.monthKey === monthKey) {
+            ovState = {
+              ...ovState,
+              ...storedOv,
+              dailyCalls: storedOv.dayKey === dayKey ? Number(storedOv.dailyCalls) || 0 : 0,
+              dayKey
+            };
+          }
+        } catch {}
+      }
+      const allowedOverflowModel =
+        (quotaState.pools?.[pool] || [PRIMARY_GEMINI_REASONING_MODEL]).find(m =>
+          /^gemini-(?:\d+(?:\.\d+)?)-(?:hydrogen|flash|flash-lite|distill)/i.test(m) &&
+          !/\b(pro|carbon|argon|neon)\b/i.test(m)
+        ) || (pool === 'lite' ? 'gemini-3.5-flash-lite' : 'gemini-3.8-flash');
+
+      if (!ovState.autoPaused && ovState.monthlySpendUsd < capUsd && ovState.dailyCalls < dailyCap) {
+        try {
+          const ovThinking = buildGeminiThinkingConfig(allowedOverflowModel, {
+            preferredThinkingLevel: thinkingLevel === 'XHIGH' ? 'HIGH' : thinkingLevel
+          });
+          const ovEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${allowedOverflowModel}:generateContent?key=${encodeURIComponent(overflowKey)}`;
+          const ovRes = await fetch(ovEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+              generationConfig: {
+                temperature: 0.18,
+                maxOutputTokens,
+                ...(jsonMode ? { responseMimeType: 'application/json' } : {}),
+                ...(ovThinking ? { thinkingConfig: ovThinking } : {})
+              },
+              contents: [{ role: 'user', parts: [{ text: String(userPrompt).slice(0, 24000) }] }]
+            }),
+            signal: AbortSignal.timeout(28000)
+          });
+          if (ovRes.status === 402) {
+            ovState.autoPaused = true;
+            if (env?.SHARED_CACHE) {
+              await env.SHARED_CACHE.put(overflowKvKey, JSON.stringify(ovState), { expirationTtl: 60 * 60 * 24 * 35 }).catch(() => {});
+            }
+          } else if (ovRes.ok) {
+            const ovJson = await ovRes.json();
+            const ovParts = ovJson?.candidates?.[0]?.content?.parts || [];
+            const ovText = ovParts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
+            const usage = ovJson?.usageMetadata || {};
+            const inTok = Number(usage.promptTokenCount) || estTokens;
+            const outTok = (Number(usage.candidatesTokenCount) || 0) + (Number(usage.thoughtsTokenCount) || 0) || Math.max(128, Math.ceil(ovText.length / 4));
+            const isLiteOv = /\blite\b/i.test(allowedOverflowModel);
+            const callUsd = (inTok / 1_000_000) * (isLiteOv ? 0.12 : 0.35) + (outTok / 1_000_000) * (isLiteOv ? 0.48 : 1.5);
+            ovState.monthlyCalls += 1;
+            ovState.dailyCalls += 1;
+            ovState.monthlySpendUsd = Number((ovState.monthlySpendUsd + callUsd).toFixed(6));
+            if (ovState.monthlySpendUsd >= capUsd) ovState.autoPaused = true;
+            if (env?.SHARED_CACHE) {
+              await env.SHARED_CACHE.put(overflowKvKey, JSON.stringify(ovState), { expirationTtl: 60 * 60 * 24 * 35 }).catch(() => {});
+            }
+            if (ovText) {
+              return {
+                ok: true,
+                modelUsed: allowedOverflowModel,
+                thinkingLevelUsed: ovThinking?.thinkingLevel || resolveGeminiThinkingLevelLabel(allowedOverflowModel, 'HIGH'),
+                grounded: false,
+                usedOverflow: true,
+                rawText: ovText
+              };
+            }
+          }
+        } catch {}
+      }
+    }
+
     return { ok: false, status: 502, error: lastError };
   } finally {
     if (stateDirty) {

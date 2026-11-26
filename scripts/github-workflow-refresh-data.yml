@@ -50,6 +50,10 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_NFL_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
           GEMINI_NEWS_API_KEY: ${{ secrets.GEMINI_NEWS_API_KEY }}
+          GEMINI_OVERFLOW_API_KEY: ${{ secrets.GEMINI_OVERFLOW_API_KEY }}
+          ALERT_SMTP_USER: ${{ secrets.ALERT_SMTP_USER }}
+          ALERT_SMTP_PASS: ${{ secrets.ALERT_SMTP_PASS }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
           GROUP_PASSCODE: ${{ secrets.GROUP_PASSCODE }}

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:49:50.929Z",
+  "updatedAt": "2026-11-26T07:26:52.931Z",
   "windowDays": 7,
-  "totalEpisodes": 12,
+  "totalEpisodes": 10,
   "shows": [
     {
       "id": "buccaneers_locked_on_bucs",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/f1/72/35/f17235e3-fa66-7d24-0928-a06495efadde/mza_2805909275589411514.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "buccaneers_salty_dogs",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/39bb7413-22e5-4a67-a26e-aea90029f1f9/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/salty-dogs/id1420665229?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/01/ba/93/01ba9330-7422-310c-662e-6898288f6097/mza_160950890383233691.jpg/600x600bb.jpg",
-      "episodeCount7d": 2
+      "episodeCount7d": 1
     },
     {
       "id": "buccaneers_pewter_report_podcast",
@@ -252,46 +252,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
       "audioStreamUrl": "https://traffic.megaphone.fm/RTERE5244247003.mp3"
-    },
-    {
-      "id": "pod_buccaneers_locked_on_bucs_1000802848457",
-      "trackId": 1000802848457,
-      "collectionId": 1139752021,
-      "showId": "buccaneers_locked_on_bucs",
-      "showName": "Locked On Bucs",
-      "showFullTitle": "Locked On Bucs – Daily Podcast On The Tampa Bay Buccaneers",
-      "hosts": "Locked On Podcast Network, James Yarcho",
-      "network": "Locked On Podcast Network, James Yarcho",
-      "title": "BUCS SQUAD SHOW: Baker Mayfield INJURY SCARE?! Buccaneers Face HUGE Test Against Lions!",
-      "summary": "The Tampa Bay Buccaneers are back from their bye week, but they could be facing the Detroit Lions without Baker Mayfield. The Bucs are heading into one of their toughest road games of the season, and the quarterback situation could completely change the matchup. Jaron Spor a",
-      "publishedAt": "2026-11-19T03:12:56.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/65/24/45/65244514-fcae-d98b-4432-815bfc9f11f2/mza_3244856837878013040.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bucs-squad-show-baker-mayfield-injury-scare-buccaneers/id1139752021?i=1000802848457&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/ca31e9/lockedon.simplecastaudio.com/8bf5e17f-ef5a-4b2a-b3a5-27a00de50027/episodes/b2ba256f-015f-416b-9e5b-f95e651f1def/audio/128/default.mp3?aid=rss_feed&awCollectionId=8bf5e17f-ef5a-4b2a-b3a5-27a00de50027&awEpisodeId=b2ba256f-015f-416b-9e5b-f95e651f1def&feed=mOWpQkH2"
-    },
-    {
-      "id": "pod_buccaneers_salty_dogs_1000802524680",
-      "trackId": 1000802524680,
-      "collectionId": 1420665229,
-      "showId": "buccaneers_salty_dogs",
-      "showName": "Salty Dogs",
-      "showFullTitle": "Salty Dogs",
-      "hosts": "Tampa Bay Buccaneers",
-      "network": "Tampa Bay Buccaneers",
-      "title": "Midseason Review: First Half MVP | Salty Dogs",
-      "summary": "Jeff and Scott recruit an all-star cast of Tony Castricone, Brianna Dix and Casey Phillips for a Mega Midseason Recap episode (and there’s Thanksgiving food talk too)See omnystudio.com/listener for privacy information.",
-      "publishedAt": "2026-11-18T21:45:00.000Z",
-      "durationMinutes": 87,
-      "durationDisplay": "87 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/01/ba/93/01ba9330-7422-310c-662e-6898288f6097/mza_160950890383233691.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/midseason-review-first-half-mvp-salty-dogs/id1420665229?i=1000802524680&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/salty-dogs/id1420665229?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/39bb7413-22e5-4a67-a26e-aea90029f1f9/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/d717b74b-3da0-4efd-b902-b505012057d7/audio.mp3?utm_source=Podcast&in_playlist=39bb7413-22e5-4a67-a26e-aea90029f1f9"
     }
   ]
 }

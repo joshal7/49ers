@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:15.120Z",
+  "updatedAt": "2026-11-26T07:25:51.929Z",
   "week": 12,
   "units": [
     {
@@ -625,11 +625,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4243315",
+              "name": "Salvon Ahmed",
+              "jersey": 36,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243315.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
+            },
+            {
               "playerId": "4426386",
               "name": "Roschon Johnson",
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426386.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false
@@ -639,7 +649,7 @@
               "name": "Zavier Scott",
               "jersey": 30,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4257364.png",
-              "baselineRank": 4,
+              "baselineRank": 5,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false
@@ -649,7 +659,7 @@
               "name": "Brittain Brown",
               "jersey": 38,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036032.png",
-              "baselineRank": 5,
+              "baselineRank": 6,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false
@@ -677,11 +687,22 @@
               "isAvailable": true
             },
             {
+              "playerId": "4243315",
+              "name": "Salvon Ahmed",
+              "jersey": 36,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4243315.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
               "playerId": "4426386",
               "name": "Roschon Johnson",
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426386.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false,
@@ -692,7 +713,7 @@
               "name": "Zavier Scott",
               "jersey": 30,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4257364.png",
-              "baselineRank": 4,
+              "baselineRank": 5,
               "playProbabilityPct": 0,
               "statusBadge": "0% • IR",
               "isAvailable": false,
@@ -703,7 +724,7 @@
               "name": "Brittain Brown",
               "jersey": 38,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036032.png",
-              "baselineRank": 5,
+              "baselineRank": 6,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false,
@@ -1239,6 +1260,16 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4360203",
+              "name": "Elijah Jones",
+              "jersey": 37,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360203.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1271,6 +1302,17 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4360203",
+              "name": "Elijah Jones",
+              "jersey": 37,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360203.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false

@@ -29,14 +29,19 @@ import {
   DEFAULT_GEMINI_QUOTA_CONFIG,
   DEFAULT_LITE_FALLBACK_MODELS,
   DEFAULT_PREMIER_FALLBACK_MODELS,
+  createSerializedQuotaMutex,
   estimateGeminiCallTokens,
   isSearchGroundingAllowed,
   markSearchGroundingUnavailableToday,
   normalizeGeminiQuotaState,
   recordGeminiCallOutcome,
   refreshGeminiModelCatalogIfDue,
+  reserveGeminiQuotaSlot,
   selectBestAvailableModel
 } from '../../src/engine/geminiQuotaManager.js';
+import { isModelAllowedForOverflow } from './geminiOverflowBudgetGuard.mjs';
+
+const withPipelineQuotaLock = createSerializedQuotaMutex();
 
 /**
  * Default ordered cascade of best available Free-Tier Gemini models (dynamically overridden
@@ -379,22 +384,33 @@ async function callGeminiCascade(
 
   for (let step = 0; step < maxAttempts; step += 1) {
     let model = null;
+    let reservationId = null;
     if (quotaState) {
-      const remainingPreferred = modelsCascade.filter(m => !attempted.has(m));
-      const picked = selectBestAvailableModel(quotaState, {
-        pool,
-        isPriorityTeam,
-        estimatedTokens: estTokens,
-        nowMs: Date.now(),
-        config: quotaConfig,
-        preferredModels: remainingPreferred.length > 0 ? remainingPreferred : null
+      const slotDecision = await withPipelineQuotaLock(async () => {
+        const remainingPreferred = modelsCascade.filter(m => !attempted.has(m));
+        const picked = selectBestAvailableModel(quotaState, {
+          pool,
+          isPriorityTeam,
+          estimatedTokens: estTokens,
+          nowMs: Date.now(),
+          config: quotaConfig,
+          preferredModels: remainingPreferred.length > 0 ? remainingPreferred : null
+        });
+        if (!picked.ok || !picked.modelId) return { ok: false };
+        if (picked.waitMs > 0) {
+          // Stagger cleanly inside lock so concurrent callers never burst past 5 RPM / 15 RPM!
+          await new Promise(r => setTimeout(r, Math.min(picked.waitMs, 22_000)));
+        }
+        const resId = reserveGeminiQuotaSlot(quotaState, {
+          modelId: picked.modelId,
+          estimatedTokens: estTokens,
+          nowMs: Date.now()
+        });
+        return { ok: true, modelId: picked.modelId, reservationId: resId };
       });
-      if (!picked.ok || !picked.modelId) break;
-      if (picked.waitMs > 0) {
-        // Stagger cleanly so RPM (<=4 RPM premier, <=12 RPM lite) & TPM (<=200K) never redline!
-        await new Promise(r => setTimeout(r, Math.min(picked.waitMs, 22_000)));
-      }
-      model = picked.modelId;
+      if (!slotDecision.ok || !slotDecision.modelId) break;
+      model = slotDecision.modelId;
+      reservationId = slotDecision.reservationId;
     } else {
       model = modelsCascade.find(m => !attempted.has(m)) || null;
       if (!model) break;
@@ -446,36 +462,43 @@ async function callGeminiCascade(
           const json = await res.json();
           const actualTokens = Number(json?.usageMetadata?.totalTokenCount) || estTokens;
           if (quotaState) {
-            recordGeminiCallOutcome(quotaState, {
-              modelId: model,
-              status: 200,
-              ok: true,
-              actualTokens,
-              estimatedTokens: estTokens,
-              isPriorityTeam,
-              usedSearch: useSearch,
-              nowMs: Date.now(),
-              config: quotaConfig
+            await withPipelineQuotaLock(() => {
+              recordGeminiCallOutcome(quotaState, {
+                modelId: model,
+                status: 200,
+                ok: true,
+                actualTokens,
+                estimatedTokens: estTokens,
+                isPriorityTeam,
+                usedSearch: useSearch,
+                reservationId,
+                nowMs: Date.now(),
+                config: quotaConfig
+              });
+              // If search=true failed 429 and direct search=false just succeeded 200, disable search for rest of PT day!
+              if (trySearchFirst && !useSearch) {
+                markSearchGroundingUnavailableToday(quotaState, Date.now());
+              }
             });
-            // If search=true failed 429 and direct search=false just succeeded 200, disable search for rest of PT day!
-            if (trySearchFirst && !useSearch) {
-              markSearchGroundingUnavailableToday(quotaState, Date.now());
-            }
           }
           return { ok: true, modelUsed: model, grounded: useSearch, json, actualTokens };
         }
         if (quotaState) {
-          recordGeminiCallOutcome(quotaState, {
-            modelId: model,
-            status: res.status,
-            ok: false,
-            estimatedTokens: estTokens,
-            isPriorityTeam,
-            usedSearch: useSearch,
-            nowMs: Date.now(),
-            config: quotaConfig
+          await withPipelineQuotaLock(() => {
+            recordGeminiCallOutcome(quotaState, {
+              modelId: model,
+              status: res.status,
+              ok: false,
+              estimatedTokens: estTokens,
+              isPriorityTeam,
+              usedSearch: useSearch,
+              reservationId,
+              nowMs: Date.now(),
+              config: quotaConfig
+            });
           });
         }
+        reservationId = null;
         if (useSearch && (res.status === 429 || res.status === 400 || res.status === 403)) {
           // Immediately retry direct (`search=false`) on this same model before failing over!
           continue;
@@ -601,6 +624,9 @@ export async function runVerifiedDeepGeminiSynthesis({
  */
 export async function runSinglePassDailyGeminiSynthesis({
   apiKey = process.env.GEMINI_API_KEY,
+  overflowApiKey = '',
+  overflowBudgetController = null,
+  teamAbbr = 'NFL',
   preferredModel = null,
   promptText,
   appData,
@@ -613,7 +639,9 @@ export async function runSinglePassDailyGeminiSynthesis({
   allowSearchGrounding = true,
   maxOutputTokens = 2048
 } = {}) {
-  if (!apiKey || !promptText) return { ok: false, rawText: '', modelUsed: null };
+  const cleanFreeKey = String(apiKey || '').trim();
+  const cleanOverflowKey = String(overflowApiKey || '').trim();
+  if ((!cleanFreeKey && !cleanOverflowKey) || !promptText) return { ok: false, rawText: '', modelUsed: null };
   let cascade = [];
   if (quotaState) {
     const poolModels =
@@ -623,11 +651,13 @@ export async function runSinglePassDailyGeminiSynthesis({
     cascade = preferredModel && poolModels.includes(preferredModel)
       ? [preferredModel, ...poolModels.filter(m => m !== preferredModel)]
       : [...poolModels];
-  } else {
-    const discovery = await discoverBestFreeGeminiModel(apiKey, { probeQuota: false });
+  } else if (cleanFreeKey) {
+    const discovery = await discoverBestFreeGeminiModel(cleanFreeKey, { probeQuota: false });
     cascade = preferredModel
       ? [preferredModel, ...discovery.candidateCascade.filter(m => m !== preferredModel)]
       : discovery.candidateCascade;
+  } else {
+    cascade = pool === 'lite' ? [...DEFAULT_LITE_FALLBACK_MODELS] : [...DEFAULT_PREMIER_FALLBACK_MODELS];
   }
   const systemPrompt = buildLiveGroundingSystemPrompt(appData);
   const useSearch = Boolean(
@@ -635,31 +665,94 @@ export async function runSinglePassDailyGeminiSynthesis({
   );
 
   try {
-    const genCall = await callGeminiCascade(
-      apiKey,
-      cascade,
-      {
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        ...(useSearch ? { tools: [{ google_search: {} }] } : {}),
-        generationConfig: {
-          temperature: 0.18,
-          maxOutputTokens,
-          thinkingConfig: { thinkingBudget }
+    // 1. Primary: Strictly Free Tier (`GEMINI_NFL_API_KEY`) first
+    if (cleanFreeKey) {
+      const genCall = await callGeminiCascade(
+        cleanFreeKey,
+        cascade,
+        {
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          ...(useSearch ? { tools: [{ google_search: {} }] } : {}),
+          generationConfig: {
+            temperature: 0.18,
+            maxOutputTokens,
+            thinkingConfig: { thinkingBudget }
+          },
+          contents: [{ role: 'user', parts: [{ text: promptText }] }]
         },
-        contents: [{ role: 'user', parts: [{ text: promptText }] }]
-      },
-      timeoutMs,
-      {
-        quotaState,
-        pool,
-        isPriorityTeam,
-        allowSearchGrounding: useSearch,
-        maxOutputTokens
+        timeoutMs,
+        {
+          quotaState,
+          pool,
+          isPriorityTeam,
+          allowSearchGrounding: useSearch,
+          maxOutputTokens
+        }
+      );
+      if (genCall.ok && genCall.json) {
+        const rawText = auditAndSanitizeTextBlock(extractGeminiResponseText(genCall.json), rosterPlayers);
+        if (rawText) {
+          return { ok: true, rawText, modelUsed: genCall.modelUsed, grounded: Boolean(genCall.grounded), usedOverflow: false };
+        }
       }
-    );
-    if (!genCall.ok || !genCall.json) return { ok: false, rawText: '', modelUsed: null };
-    const rawText = auditAndSanitizeTextBlock(extractGeminiResponseText(genCall.json), rosterPlayers);
-    return { ok: Boolean(rawText), rawText, modelUsed: genCall.modelUsed, grounded: Boolean(genCall.grounded) };
+    }
+
+    // 2. Paid Tier 1 Overflow ONLY when Free Tier is genuinely exhausted & hard budget guard approves
+    if (cleanOverflowKey && cleanOverflowKey !== cleanFreeKey && overflowBudgetController) {
+      const overflowModel =
+        cascade.find(m => isModelAllowedForOverflow(m)) ||
+        (pool === 'lite' ? 'gemini-3.5-flash-lite' : 'gemini-3.8-flash');
+      const gate = await overflowBudgetController.checkAllowed({ modelId: overflowModel, useSearch: false });
+      if (gate.allowed) {
+        if (gate.waitMs > 0) await new Promise(r => setTimeout(r, Math.min(gate.waitMs, 15_000)));
+        const modelThinkingConfig = buildGeminiThinkingConfig(overflowModel, Math.min(thinkingBudget, 16384));
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(overflowModel)}:generateContent?key=${encodeURIComponent(cleanOverflowKey)}`;
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: AbortSignal.timeout(timeoutMs),
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            // Batch briefs already inject live scraped Stage-1 dossiers -> search=false guarantees $0 search surcharge
+            generationConfig: {
+              temperature: 0.18,
+              maxOutputTokens,
+              ...(modelThinkingConfig ? { thinkingConfig: modelThinkingConfig } : {})
+            },
+            contents: [{ role: 'user', parts: [{ text: promptText }] }]
+          })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          const usage = json?.usageMetadata || {};
+          const inputTokens = Number(usage.promptTokenCount) || estimateGeminiCallTokens(promptText, systemPrompt, 0);
+          const outputTokens =
+            (Number(usage.candidatesTokenCount) || 0) + (Number(usage.thoughtsTokenCount) || 0) ||
+            Math.max(128, Math.ceil(extractGeminiResponseText(json).length / 4));
+          await overflowBudgetController.recordAndNotify({
+            modelId: overflowModel,
+            status: 200,
+            inputTokens,
+            outputTokens,
+            searchQueries: 0,
+            teamAbbr,
+            reason: 'free_tier_exhausted'
+          });
+          const rawText = auditAndSanitizeTextBlock(extractGeminiResponseText(json), rosterPlayers);
+          if (rawText) {
+            return { ok: true, rawText, modelUsed: overflowModel, grounded: false, usedOverflow: true };
+          }
+        } else if (res.status === 402) {
+          await overflowBudgetController.recordAndNotify({
+            modelId: overflowModel,
+            status: 402,
+            teamAbbr,
+            reason: 'http_402_prepaid_depleted'
+          });
+        }
+      }
+    }
+    return { ok: false, rawText: '', modelUsed: null };
   } catch {
     return { ok: false, rawText: '', modelUsed: null };
   }

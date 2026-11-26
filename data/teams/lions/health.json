@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:48:55.923Z",
+  "updatedAt": "2026-11-26T07:25:15.860Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.detroitlions.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "5103940",
-      "name": "Skyler Gill-Howard",
-      "position": "DT",
-      "jersey": 50,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5103940.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "DNP",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": 37,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out for Season",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Season-ending Injured Reserve — ineligible to return this season"
-      ],
-      "beatComment": "Gill-Howard suffered a season-ending knee injury and will miss the rest of the year. The 24-year-old rookie recorded 11 tackles (two solo), including 2.0 sacks in 10 games."
-    },
     {
       "playerId": "4566092",
       "name": "Ennis Rakestraw Jr.",
@@ -45,19 +20,19 @@
       "sustainedInLastGame": false,
       "wed": "DNP",
       "thu": "DNP",
-      "fri": "-",
+      "fri": "DNP",
       "injuryType": "Shoulder",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 28,
-      "priorDayPlayProbabilityPct": 35,
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 28,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "28% • Long Shot",
+      "playBadgeLabel": "0% • Out",
       "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Consecutive Wed/Thu DNPs"
+        "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "questionable"
+      "beatComment": "Rakestraw did not participate in any Week 12 prep sessions due to the shoulder injury that kept him out of Sunday's game against the Buccaneers. The cornerback will now miss consecutive games, leaving Khalil Dorsey as the backup behind D.J. Reed and Rock Ya-Sin."
     },
     {
       "playerId": "4038849",
@@ -70,19 +45,19 @@
       "sustainedInLastGame": false,
       "wed": "DNP",
       "thu": "DNP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Back",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 52,
-      "priorDayPlayProbabilityPct": 56,
+      "playProbabilityPct": 56,
+      "priorDayPlayProbabilityPct": 52,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "52% • GTD",
+      "playBadgeLabel": "56% • GTD",
       "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Consecutive Wed/Thu DNPs"
+        "Late-week salvage (DNP/DNP/LP); requires pre-game warmup clearance"
       ],
-      "beatComment": "Wonnum registered five solo tackles, including 1.0 sacks, while also adding a pass defensed and a forced fumble during Sunday's 31-21 win over the Buccaneers. The defensive lineman may have picked up a back injury during the contest, and he will have two more chances to return to practice prior to Thursday's matchup with the Bears."
+      "beatComment": "Wonnum missed two Week 12 prep sessions before participating in the Lions' practice session Wednesday as a limited participant. The defensive end likely picked up his back injury in the team's Week 11 win over the Buccaneers. If Wonnum cannot suit up for Thursday's game, Eric O'Neill and Tyler Lacy will likely see more snaps at defensive end opposite Derrick Moore in the game."
     },
     {
       "playerId": "3045463",
@@ -95,20 +70,20 @@
       "sustainedInLastGame": false,
       "wed": "DNP",
       "thu": "LP",
-      "fri": "-",
+      "fri": "LP",
       "injuryType": "Hamstring",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 80,
-      "priorDayPlayProbabilityPct": 51,
+      "playProbabilityPct": 82,
+      "priorDayPlayProbabilityPct": 80,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "80% • GTD",
+      "playBadgeLabel": "82% • GTD",
       "archetypeNote": "Veteran starter profile (10th NFL season, 91% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Expected veteran ramp-up (Wed maintenance -> Thu LP)",
+        "Positive upward rehab ramp (Wed DNP -> Thu LP -> Fri LP; base prior 84%)",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "Clark was held out of Monday's walkthrough session while tending to a hamstring injury, but he was back on the field Tuesday in a limited fashion. His participation in Wednesday's practice will shed light on his chances of playing against the Bears on Thanksgiving Day. Rookie fifth-rounder Keith Abney, as well as Kerby Joseph and Christian Izien, would all be in line for more defensive snaps if Clark cannot play Thursday."
+      "beatComment": "Clark ended Week 12 prep with a limited practice after starting the week's walkthrough as a DNP. The free safety played 100 percent of the Lions' defensive snaps in Week 11 despite Kerby Joseph's return to the field, meaning an inactive status for Thursday's contest against the Bears would harm the Lions' starting secondary in a significant way."
     },
     {
       "playerId": "3139387",
@@ -121,17 +96,17 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Hip",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 91,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Veteran starter profile (9th NFL season, 94% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Logged Full Participation (FP) on Thursday"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Reed appears to be on track to return to action Thursday against the Bears after missing three straight games with a hip injury. The cornerback will have two more chances to officially practice ahead of Week 12."
     },
@@ -146,17 +121,17 @@
       "sustainedInLastGame": false,
       "wed": "LP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 92,
-      "priorDayPlayProbabilityPct": 82,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 92,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "92% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Every-down starter workload (89% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Logged Full Participation (FP) on Thursday"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Now that he's gotten a full practice under his belt this week, LaPorta should be in the clear for Thursday's game against the Bears. The fourth-year tight end is coming off a three-catch, 62-yard performance on six targets in a 31-21 win over the Buccaneers this past Sunday, with the yardage and target totals both representing his highest marks since the Lions' Week 6 bye."
     },
@@ -171,23 +146,44 @@
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
-      "fri": "-",
+      "fri": "FP",
       "injuryType": "Wrist",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 96,
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
       "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "96% • Cleared",
+      "playBadgeLabel": "95% • Cleared",
       "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Logged Full Participation (FP) on Thursday",
-        "Manageable pain-tolerance injury profile (Wrist)"
+        "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Dorsey hurt his wrist early in Sunday's game and was initially deemed questionable to return. The veteran cornerback has since been able to re-enter the game, albeit with a club over the hand that he injured. Dorsey has been working in a rotational role at cornerback, logging a defensive snap share between 32 and 38 percent three straight weeks."
     }
   ],
   "irAndReserveTracker": [
+    {
+      "playerId": "5103940",
+      "name": "Skyler Gill-Howard",
+      "position": "DT",
+      "jersey": 50,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5103940.png",
+      "injuryType": "Knee (Surgery)",
+      "status": "IR — 21-Day Window Open",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
+      "wed": "DNP",
+      "thu": "DNP",
+      "fri": "DNP",
+      "placedBeforeWeek": 12,
+      "earliestEligibleWeek": 16,
+      "projectedReturnWeek": "Est. Week 16 (Dec 28)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Gill-Howard suffered a season-ending knee injury during the Lions' Week 11 win over the Buccaneers. The rookie sixth-rounder will finish his first NFL campaign with 11 tackles (two solo), including 2.0 sacks, across 10 regular-season games."
+    },
     {
       "playerId": "4611506",
       "name": "Ben Bartch",

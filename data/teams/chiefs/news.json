@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-25T20:51:32.424Z",
+  "updatedAt": "2026-11-26T07:29:37.620Z",
   "dailyTopNewsBrief": {
-    "id": "daily_brief_2026-11-24_17CT",
-    "cycleKey": "2026-11-24@17CT",
+    "id": "daily_brief_2026-11-25_17CT",
+    "cycleKey": "2026-11-25@17CT",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-25T20:51:32.424Z",
+    "generatedAt": "2026-11-26T07:29:37.620Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,14 +15,15 @@
       "hasThu": true,
       "hasFri": true
     },
-    "wordCount": 173,
+    "wordCount": 217,
     "headline": "Chiefs (8-2) Week 12 Briefing: Friday Injury Report Ahead of Bills",
     "summary": "",
     "bullets": [
       "Injury & Practice Status: DT Omarr Norman-Lott (knee) logged limited practice reps Friday [Ron Kopp Jr.](https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out). OT Jaylon Moore (ankle) and RB Kenneth Walker III (groin) did not practice Friday, while DT Peter Woods (neck) and QB Patrick Mahomes (knee / right elbow) practiced in full [chiefs.com Official](https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026).",
-      "Week 12 Bills Outlook: Andy Reid and DC Steve Spagnuolo open installation for the Buffalo Bills (9-1, BUF -3, HC Joe Brady, OC Pete Carmichael Jr. & DC Jim Leonhard (Road Test))—a unit ranked #1 in Rushing EPA / Game (+3.02) as Kansas City prepares for a pivotal AFC matchup [ProFootballTalk](https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-kansas-city-chiefs-vs-buffalo-bills) [Jared Sapp](https://www.arrowheadpride.com/kansas-city-chiefs-odds/217427/chiefs-vs-bills-predictions-week-12-picks).",
-      "AFC Playoff Trajectory: Entering Week 12 at 8-2 (1st in AFC West • #5 Seed in AFC), Kansas City carries a 98.4% postseason projection, 46.9% AFC West division title mark, and 13.5% #1 Seed Bye equity into the conference stretch [Ben Solak](https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants).",
-      "Around the Beat: On Thursday, the (8-2) Kansas City Chiefs are on the road to New York to take on the (9-1) Buffalo Bills [Kramer Sansone](https://www.arrowheadpride.com/kansas-city-chiefs-roster/217562/chiefs-bills-madden-simulation-week-12-happy-thanksgiving)."
+      "Week 12 Bills Outlook: Andy Reid and DC Steve Spagnuolo open installation for the Buffalo Bills (9-1, BUF -3, HC Joe Brady, OC Pete Carmichael Jr. & DC Jim Leonhard (Road Test))—a unit ranked #1 in Rushing EPA / Game (+3.02) as Kansas City prepares for a pivotal AFC matchup [ESPN](https://www.espn.com/nfl/preview?gameId=401873082) [chiefs.com Official](https://www.chiefs.com/news/five-things-to-watch-on-thursday-chiefs-vs-bills).",
+      "AFC Playoff Trajectory: Entering Week 12 at 8-2 (1st in AFC West • #5 Seed in AFC), Kansas City carries a 98.4% postseason projection, 45.3% AFC West division title mark, and 13.4% #1 Seed Bye equity into the conference stretch [Ben Solak](https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants).",
+      "Around the Beat: NFL rookie rankings: Highest-graded players after Week 10 [Pro Football Focus](https://www.pff.com/news/nfl-rookie-rankings/).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Kansas City ranks #7 in Points / Game (27.1), #2 in Points Allowed / Game (16.3), #4 in Turnover Differential (+6), giving Andy Reid and Steve Spagnuolo a clear benchmark ahead of Thu, Nov 26, 7:20 PM CST • NFL TV at [object Object] against the Buffalo Bills [Pro Football Focus](https://www.pff.com/news/nfl-quarterback-rankings/)."
     ],
     "coveredStoryKeys": [
       "kennethwalker::in_game_injury_status",
@@ -32,24 +33,25 @@
     "coveredUrls": [
       "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
       "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
-      "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-kansas-city-chiefs-vs-buffalo-bills",
-      "https://www.arrowheadpride.com/kansas-city-chiefs-odds/217427/chiefs-vs-bills-predictions-week-12-picks",
+      "https://www.espn.com/nfl/preview?gameId=401873082",
+      "https://www.chiefs.com/news/five-things-to-watch-on-thursday-chiefs-vs-bills",
       "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
+      "https://www.pff.com/news/nfl-rookie-rankings/",
+      "https://www.pff.com/news/nfl-quarterback-rankings/",
+      "https://www.arrowheadpride.com/kansas-city-chiefs-odds/217427/chiefs-vs-bills-predictions-week-12-picks",
       "https://www.arrowheadpride.com/kansas-city-chiefs-roster/217562/chiefs-bills-madden-simulation-week-12-happy-thanksgiving",
       "https://www.chiefs.com/news/how-to-watch-and-listen-week-12-chiefs-vs-bills",
-      "https://www.chiefs.com/news/uk-ireland-kansas-city-chiefs-vs-buffalo-bills-how-when-and-where-to-watch-nfl-week-12-2026",
+      "https://x.com/caleb_carr/status/2125433850193166556",
       "https://www.espn.com/nfl/player/_/id/4242459/trey-smith#:~:text=Smith%20(concussion)%20was%20a%20full%20participant%20in",
+      "https://www.espn.com/nfl/story/_/id/50594656/chiefs-rb-kenneth-walker-iii-groin-thursday-vs-bills",
+      "https://www.arrowheadpride.com/kansas-city-chiefs-analysis/217426/chiefs-bills-5-things-watch-week-12-matchup",
+      "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217504/chiefs-bills-week-12-tuesday-injury-report-kenneth-walker-returns-limited",
+      "https://www.arrowheadpride.com/kansas-city-chiefs-game-information/217547/chiefs-vs-bills-week-12-live-stream-tv-channel-schedule-odds-how-to-watch",
       "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-24-26",
       "https://www.espn.com/nfl/player/_/id/4567048/kenneth-walker-iii#:~:text=The%20Chiefs%20listed%20Walker%20(groin)%20as%20a",
       "https://www.espn.com/nfl/player/_/id/3139477/patrick-mahomes#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "https://www.espn.com/nfl/story/_/id/50594656/chiefs-rb-kenneth-walker-iii-groin-thursday-vs-bills",
-      "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217504/chiefs-bills-week-12-tuesday-injury-report-kenneth-walker-returns-limited",
-      "https://www.arrowheadpride.com/kansas-city-chiefs-game-information/217547/chiefs-vs-bills-week-12-live-stream-tv-channel-schedule-odds-how-to-watch",
-      "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "https://www.espn.com/nfl/player/_/id/4832955/emmett-johnson#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "https://www.espn.com/nfl/player/_/id/4567048/kenneth-walker-iii#:~:text=Chiefs%20head%20coach%20Andy%20Reid%20said%20that",
-      "https://www.espn.com/nfl/player/_/id/3139477/patrick-mahomes#:~:text=The%20reasons%20Dopp%20is%20picking%20Dak%20Prescott",
-      "https://bsky.app/profile/benjaminsolak.bsky.social/post/3n32x75xkf22f"
+      "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players"
     ],
     "sources": [
       {
@@ -58,7 +60,7 @@
         "outlet": "Arrowhead Pride",
         "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
         "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
-        "publishedAt": "2026-11-25T18:03:52.000Z"
+        "publishedAt": "2026-11-25T22:47:23.000Z"
       },
       {
         "type": "article",
@@ -66,23 +68,23 @@
         "outlet": "chiefs.com Official",
         "title": "Week 12 Injury Report | Chiefs vs Bills",
         "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
-        "publishedAt": "2026-11-25T16:46:00.000Z"
+        "publishedAt": "2026-11-25T22:22:00.000Z"
       },
       {
         "type": "article",
-        "author": "ProFootballTalk",
-        "outlet": "ProFootballTalk",
-        "title": "PFT Week 12 Preview 2026: Kansas City Chiefs vs. Buffalo Bills",
-        "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-kansas-city-chiefs-vs-buffalo-bills",
-        "publishedAt": "2026-11-25T20:00:23.000Z"
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "title": "Allen and Mahomes renew their thrilling rivalry as the Bills host the Chiefs on Thanksgiving night",
+        "url": "https://www.espn.com/nfl/preview?gameId=401873082",
+        "publishedAt": "2026-11-25T23:03:41.000Z"
       },
       {
         "type": "article",
-        "author": "Jared Sapp",
-        "outlet": "Arrowhead Pride",
-        "title": "Chiefs-Bills Week 12 game and score predictions from Arrowhead Pride",
-        "url": "https://www.arrowheadpride.com/kansas-city-chiefs-odds/217427/chiefs-vs-bills-predictions-week-12-picks",
-        "publishedAt": "2026-11-25T19:32:39.000Z"
+        "author": "chiefs.com Official",
+        "outlet": "chiefs.com Official",
+        "title": "Five Things to Watch on Thursday | Chiefs vs. Bills",
+        "url": "https://www.chiefs.com/news/five-things-to-watch-on-thursday-chiefs-vs-bills",
+        "publishedAt": "2026-11-25T21:21:11.000Z"
       },
       {
         "type": "article",
@@ -91,6 +93,30 @@
         "title": "Seven things Solak thinks for NFL Week 12: Takes on Chiefs-Bills, Giants, Lions",
         "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
         "publishedAt": "2026-11-24T17:03:20.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Pro Football Focus",
+        "outlet": "PFF",
+        "title": "NFL rookie rankings: Highest-graded players after Week 10",
+        "url": "https://www.pff.com/news/nfl-rookie-rankings/",
+        "publishedAt": "2026-11-26T04:10:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Pro Football Focus",
+        "outlet": "PFF",
+        "title": "NFL Quarterback Rankings: Joe Burrow leads the way, Patrick Mahomes rises",
+        "url": "https://www.pff.com/news/nfl-quarterback-rankings/",
+        "publishedAt": "2026-11-25T12:15:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Jared Sapp",
+        "outlet": "Arrowhead Pride",
+        "title": "Chiefs-Bills Week 12 game and score predictions from Arrowhead Pride",
+        "url": "https://www.arrowheadpride.com/kansas-city-chiefs-odds/217427/chiefs-vs-bills-predictions-week-12-picks",
+        "publishedAt": "2026-11-25T19:32:39.000Z"
       },
       {
         "type": "article",
@@ -109,12 +135,12 @@
         "publishedAt": "2026-11-25T16:04:57.000Z"
       },
       {
-        "type": "article",
-        "author": "chiefs.com Official",
-        "outlet": "chiefs.com Official",
-        "title": "UK & Ireland Kansas City Chiefs vs Buffalo Bills: How, When, and Where to Watch NFL Week 12 (2026)?",
-        "url": "https://www.chiefs.com/news/uk-ireland-kansas-city-chiefs-vs-buffalo-bills-how-when-and-where-to-watch-nfl-week-12-2026",
-        "publishedAt": "2026-11-25T15:55:45.000Z"
+        "type": "tweet",
+        "author": "Caleb Carr",
+        "outlet": "X Beat",
+        "title": "“I don’t want you to play anymore, I want you to retire” - Chiefs DC Steve Spagnuolo to Josh Allen following the Bills 28-21 win last year Josh Allen currently holds a 5-1",
+        "url": "https://x.com/caleb_carr/status/2125433850193166556",
+        "publishedAt": "2026-11-25T03:38:13.194Z"
       },
       {
         "type": "article",
@@ -123,30 +149,6 @@
         "title": "Smith (concussion) was a full participant in Tuesday's practice.",
         "url": "https://www.espn.com/nfl/player/_/id/4242459/trey-smith#:~:text=Smith%20(concussion)%20was%20a%20full%20participant%20in",
         "publishedAt": "2026-11-25T02:10:55.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "title": "Minor NFL Transactions: 11/24/26",
-        "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-24-26",
-        "publishedAt": "2026-11-25T01:27:27.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Nate Taylor",
-        "outlet": "ESPN Kansas City Chiefs Beat",
-        "title": "The Chiefs listed Walker (groin) as a limited participant in Tuesday's practice.",
-        "url": "https://www.espn.com/nfl/player/_/id/4567048/kenneth-walker-iii#:~:text=The%20Chiefs%20listed%20Walker%20(groin)%20as%20a",
-        "publishedAt": "2026-11-24T21:49:40.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Eric Karabell",
-        "outlet": "ESPN / X Beat Wire",
-        "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-        "url": "https://www.espn.com/nfl/player/_/id/3139477/patrick-mahomes#:~:text=Need%20to%20know%20how%20to%20value%20players",
-        "publishedAt": "2026-11-24T20:18:57.000Z"
       }
     ]
   },
@@ -155,45 +157,45 @@
       "id": "kc_cl_top",
       "category": "beat",
       "headline": "Kansas City Chiefs Week 12 Top Headlines (8-2)",
-      "summary": "PFT Week 12 Preview 2026: Kansas City Chiefs vs. Buffalo Bills — Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
-      "updatedAt": "2026-11-25T20:00:23.000Z",
+      "summary": "NFL rookie rankings: Highest-graded players after Week 10 — Week 12 Injury Report | Chiefs vs Bills",
+      "updatedAt": "2026-11-26T04:10:00.000Z",
       "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "ProFootballTalk",
-          "title": "PFT Week 12 Preview 2026: Kansas City Chiefs vs. Buffalo Bills",
-          "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-kansas-city-chiefs-vs-buffalo-bills",
-          "publishedAt": "2026-11-25T20:00:23.000Z"
-        },
-        {
-          "label": "Ron Kopp Jr.",
-          "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
-          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
-          "publishedAt": "2026-11-25T18:03:52.000Z"
-        },
-        {
-          "label": "Jared Sapp",
-          "title": "Chiefs-Bills Week 12 game and score predictions from Arrowhead Pride",
-          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-odds/217427/chiefs-vs-bills-predictions-week-12-picks",
-          "publishedAt": "2026-11-25T19:32:39.000Z"
+          "label": "Pro Football Focus",
+          "title": "NFL rookie rankings: Highest-graded players after Week 10",
+          "url": "https://www.pff.com/news/nfl-rookie-rankings/",
+          "publishedAt": "2026-11-26T04:10:00.000Z"
         },
         {
           "label": "chiefs.com Official",
           "title": "Week 12 Injury Report | Chiefs vs Bills",
           "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
-          "publishedAt": "2026-11-25T16:46:00.000Z"
+          "publishedAt": "2026-11-25T22:22:00.000Z"
         },
         {
-          "label": "Kramer Sansone",
-          "title": "Chiefs-Bills Madden Simulation Week 12: Happy Thanksgiving",
-          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-roster/217562/chiefs-bills-madden-simulation-week-12-happy-thanksgiving",
-          "publishedAt": "2026-11-25T17:16:48.000Z"
+          "label": "Ron Kopp Jr.",
+          "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
+          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
+          "publishedAt": "2026-11-25T22:47:23.000Z"
+        },
+        {
+          "label": "ESPN NFL Nation",
+          "title": "Allen and Mahomes renew their thrilling rivalry as the Bills host the Chiefs on Thanksgiving night",
+          "url": "https://www.espn.com/nfl/preview?gameId=401873082",
+          "publishedAt": "2026-11-25T23:03:41.000Z"
+        },
+        {
+          "label": "Caleb James",
+          "title": "Chiefs-Bills: 5 Things to Watch in Week 12 matchup",
+          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-analysis/217426/chiefs-bills-5-things-watch-week-12-matchup",
+          "publishedAt": "2026-11-25T21:40:02.000Z"
         },
         {
           "label": "chiefs.com Official",
-          "title": "How to Watch and Listen | Week 12: Chiefs vs. Bills",
-          "url": "https://www.chiefs.com/news/how-to-watch-and-listen-week-12-chiefs-vs-bills",
-          "publishedAt": "2026-11-25T16:04:57.000Z"
+          "title": "Five Things to Watch on Thursday | Chiefs vs. Bills",
+          "url": "https://www.chiefs.com/news/five-things-to-watch-on-thursday-chiefs-vs-bills",
+          "publishedAt": "2026-11-25T21:21:11.000Z"
         }
       ]
     },
@@ -201,24 +203,30 @@
       "id": "kc_cl_health",
       "category": "injury",
       "headline": "Chiefs Practice Report, Injury & IR Availability",
-      "summary": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out — Week 12 Injury Report | Chiefs vs Bills",
-      "updatedAt": "2026-11-25T18:03:52.000Z",
+      "summary": "Week 12 Injury Report | Chiefs vs Bills — Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
+      "updatedAt": "2026-11-25T22:22:00.000Z",
       "itemCount": 6,
       "sourceLinks": [
-        {
-          "label": "Ron Kopp Jr.",
-          "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
-          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
-          "publishedAt": "2026-11-25T18:03:52.000Z"
-        },
         {
           "label": "chiefs.com Official",
           "title": "Week 12 Injury Report | Chiefs vs Bills",
           "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
-          "publishedAt": "2026-11-25T16:46:00.000Z"
+          "publishedAt": "2026-11-25T22:22:00.000Z"
         },
         {
-          "label": "Chase Daniel",
+          "label": "Ron Kopp Jr.",
+          "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
+          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
+          "publishedAt": "2026-11-25T22:47:23.000Z"
+        },
+        {
+          "label": "ESPN NFL Nation",
+          "title": "Allen and Mahomes renew their thrilling rivalry as the Bills host the Chiefs on Thanksgiving night",
+          "url": "https://www.espn.com/nfl/preview?gameId=401873082",
+          "publishedAt": "2026-11-25T23:03:41.000Z"
+        },
+        {
+          "label": "Alex Rollins",
           "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
           "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
           "publishedAt": "2026-11-25T14:00:38.000Z"
@@ -234,12 +242,6 @@
           "title": "Chiefs-Bills Week 12 Tuesday injury report: Kenneth Walker returns limited",
           "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217504/chiefs-bills-week-12-tuesday-injury-report-kenneth-walker-returns-limited",
           "publishedAt": "2026-11-24T22:30:37.000Z"
-        },
-        {
-          "label": "Sam McDowell",
-          "title": "Smith (concussion) was a full participant in Tuesday's practice.",
-          "url": "https://www.espn.com/nfl/player/_/id/4242459/trey-smith#:~:text=Smith%20(concussion)%20was%20a%20full%20participant%20in",
-          "publishedAt": "2026-11-25T02:10:55.000Z"
         }
       ]
     },
@@ -247,39 +249,45 @@
       "id": "kc_cl_film",
       "category": "film",
       "headline": "Chiefs All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown — Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
-      "updatedAt": "2026-11-25T14:00:38.000Z",
-      "itemCount": 5,
+      "summary": "NFL rookie rankings: Highest-graded players after Week 10 — Chiefs vs. Bills Preview + Predictions",
+      "updatedAt": "2026-11-26T04:10:00.000Z",
+      "itemCount": 6,
       "sourceLinks": [
         {
-          "label": "Chase Daniel",
+          "label": "Pro Football Focus",
+          "title": "NFL rookie rankings: Highest-graded players after Week 10",
+          "url": "https://www.pff.com/news/nfl-rookie-rankings/",
+          "publishedAt": "2026-11-26T04:10:00.000Z"
+        },
+        {
+          "label": "Check the Mic",
+          "title": "Chiefs vs. Bills Preview + Predictions",
+          "url": "https://www.youtube.com/watch?v=WHKqm-6Ikuc",
+          "publishedAt": "2026-11-25T19:20:30.000Z"
+        },
+        {
+          "label": "Alex Rollins",
           "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
           "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
           "publishedAt": "2026-11-25T14:00:38.000Z"
         },
         {
-          "label": "Chase Daniel",
+          "label": "Pro Football Focus",
+          "title": "NFL Quarterback Rankings: Joe Burrow leads the way, Patrick Mahomes rises",
+          "url": "https://www.pff.com/news/nfl-quarterback-rankings/",
+          "publishedAt": "2026-11-25T12:15:00.000Z"
+        },
+        {
+          "label": "Ben Solak",
+          "title": "Seven things Solak thinks for NFL Week 12: Takes on Chiefs-Bills, Giants, Lions",
+          "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
+          "publishedAt": "2026-11-24T17:03:20.000Z"
+        },
+        {
+          "label": "Alex Rollins",
           "title": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
           "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
           "publishedAt": "2026-11-24T14:00:34.000Z"
-        },
-        {
-          "label": "Chase Daniel",
-          "title": "NFL Week 11 REACTION: 49ers & Purdy TERRIFYING, Chiefs ERUPT, Broncos CRUSH Raiders & Giants EXPLODE",
-          "url": "https://www.youtube.com/watch?v=ZKtreDbZQBY",
-          "publishedAt": "2026-11-23T04:50:27.000Z"
-        },
-        {
-          "label": "PFF",
-          "title": "Most yards from scrimmage among rookies this season\n\nEmmett Johnson 662\nDenzel Boston 523\nKC Concepcion 501\nCarnell Tate 471\nCaleb Douglas 397",
-          "url": "https://x.com/PFF/status/2124626366914244745",
-          "publishedAt": "2026-11-22T22:09:34.178Z"
-        },
-        {
-          "label": "Nate Tice",
-          "title": "Patrick Mahomes hitting an RPO Slant to an outside aligned Josh Downs",
-          "url": "https://x.com/Nate_Tice/status/2124577984346771813",
-          "publishedAt": "2026-11-22T18:57:18.875Z"
         }
       ]
     },
@@ -300,55 +308,183 @@
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/4832955/emmett-johnson#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4832955/emmett-johnson#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
-        },
-        {
-          "label": "Jared Sapp",
-          "title": "Chiefs sign tackle Fred Johnson to active roster",
-          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-news/217493/chiefs-sign-tackle-fred-johnson-to-active-roster",
-          "publishedAt": "2026-11-24T19:58:19.000Z"
-        },
-        {
-          "label": "Ian Rapoport",
-          "title": "The #Chiefs are moving Fred Johnson to their 53-man roster, source says.",
-          "url": "https://x.com/RapSheet/status/2125241606760509694",
-          "publishedAt": "2026-11-24T14:54:18.788Z"
         },
         {
           "label": "Kansas City Chiefs Official",
           "title": "Chiefs roster move: Placed FB Ben VanSumeren on injured reserve. Signed OT Fred Johnson from the practice squad to the active roster.",
           "url": "https://www.chiefs.com/team/transactions/#tx-20a62fe4c723",
           "publishedAt": "2026-11-24T08:00:00.000Z"
+        },
+        {
+          "label": "Kansas City Chiefs Official",
+          "title": "Chiefs roster move: Signed LB Cole Christiansen to the practice squad. Released RB EJ Smith from the practice squad.",
+          "url": "https://www.chiefs.com/team/transactions/#tx-958c7a554316",
+          "publishedAt": "2026-11-23T08:00:00.000Z"
+        },
+        {
+          "label": "Matt Derrick",
+          "title": "The Chiefs elevated Carter from the practice squad to the active roster Saturday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4605841/nate-carter#:~:text=The%20Chiefs%20elevated%20Carter%20from%20the%20practice",
+          "publishedAt": "2026-11-22T00:33:11.000Z"
         }
       ]
     }
   ],
   "rawStream": [
     {
-      "id": "kc_pft_725743e91842",
+      "id": "kc_nfilm_pff_news_e178a9cb47bb",
       "type": "article",
-      "title": "PFT Week 12 Preview 2026: Kansas City Chiefs vs. Buffalo Bills",
-      "summary": "Mike Florio previews the Thanksgiving nightcap with Patrick Mahomes and Josh Allen meeting again in the regular season with weather expected in Buffalo.",
-      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/OwWLqFqZpq_o?auto=true",
-      "imageAlt": "PFT Week 12 Preview 2026: Kansas City Chiefs vs. Buffalo Bills",
-      "publishedAt": "2026-11-25T20:00:23.000Z",
-      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/pft-week-12-preview-2026-kansas-city-chiefs-vs-buffalo-bills",
-      "outletId": "profootballtalk",
-      "outletName": "ProFootballTalk",
-      "reporterId": "profootballtalk",
-      "reporterName": "ProFootballTalk",
-      "author": "ProFootballTalk",
-      "authorHandle": "@ProFootballTalk",
-      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "category": "film",
+      "title": "NFL rookie rankings: Highest-graded players after Week 10",
+      "summary": "The 2026 NFL rookie rankings through Week 11 feature Cleveland Browns safety Emmanuel McNeil-Warren at No. 1 with an 86.7 overall PFF grade. Kansas City Chiefs cornerback Mansoor Delane and New York Giants linebacker Arvell Reese round out",
+      "imageUrl": "",
+      "imageAlt": "NFL rookie rankings: Highest-graded players after Week 10",
+      "publishedAt": "2026-11-26T04:10:00.000Z",
+      "url": "https://www.pff.com/news/nfl-rookie-rankings/",
+      "outletId": "pff_news",
+      "outletName": "PFF",
+      "reporterId": "pff_news",
+      "reporterName": "Pro Football Focus",
+      "author": "Pro Football Focus",
+      "authorHandle": "@PFF",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4880124",
+          "name": "Mansoor Delane",
+          "shortName": "M. Delane",
+          "position": "CB",
+          "jersey": 5,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4880124.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.713,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.5055
+    },
+    {
+      "id": "kc_rss_e4304185e1ba",
+      "type": "article",
+      "title": "Week 12 Injury Report | Chiefs vs Bills",
+      "summary": "Injuries for the Chiefs Week 12 matchup against the Buffalo Bills",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/xqyrcoqs2ie7ylbss0ji.png",
+      "imageAlt": "Week 12 Injury Report | Chiefs vs Bills",
+      "publishedAt": "2026-11-25T22:22:00.000Z",
+      "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
+      "outletId": "chiefs_official",
+      "outletName": "chiefs.com Official",
+      "reporterId": "chiefs_official",
+      "reporterName": "chiefs.com Official",
+      "author": "chiefs.com Official",
+      "authorHandle": "@Chiefs",
+      "authorProfileUrl": "https://www.chiefs.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.3077
+    },
+    {
+      "id": "kc_brss_arrowhead_pride_57e987eec2cf",
+      "type": "article",
+      "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
+      "summary": "Each practice day this season, the Kansas City Chiefs release an official injury report ahead of the next game. In Week 12, the Chiefs play the Buffalo Bills on Thanksgiving night. Here is the Chiefs’ final official injury report of the wee",
+      "imageUrl": "",
+      "imageAlt": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
+      "publishedAt": "2026-11-25T22:47:23.000Z",
+      "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
+      "outletId": "arrowhead_pride",
+      "outletName": "Arrowhead Pride",
+      "reporterId": "arrowhead_pride",
+      "reporterName": "Ron Kopp Jr.",
+      "author": "Ron Kopp Jr.",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
       "trustTier": 2,
-      "wireSource": "pft_rss",
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4567048",
+          "name": "Kenneth Walker III",
+          "shortName": "K. Walker III",
+          "position": "RB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567048.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 1.215,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "in_game_injury",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "injurySeverityScore": 0.82,
+      "injurySeverityTier": "serious",
+      "playerValueScore": 0.68,
+      "playerValueTier": "core_starter",
+      "injuryImpactScore": 0.764,
+      "storyRank": 3.1897
+    },
+    {
+      "id": "kc_espn_ff273caff5c6f",
+      "type": "article",
+      "title": "Allen and Mahomes renew their thrilling rivalry as the Bills host the Chiefs on Thanksgiving night",
+      "summary": "— Sorry, Steve Spagnuolo. Josh Allen has no plans of going anywhere, any time soon.",
+      "imageUrl": "",
+      "imageCaption": "espn.applewatch.awayhome.1",
+      "imageAlt": "Allen and Mahomes renew their thrilling rivalry as the Bills host the Chiefs on Thanksgiving night",
+      "publishedAt": "2026-11-25T23:03:41.000Z",
+      "url": "https://www.espn.com/nfl/preview?gameId=401873082",
+      "outletId": "espn_kc",
+      "outletName": "ESPN",
+      "reporterId": "espn_kc",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
       "mentionedPlayers": [
         {
           "id": "3139477",
@@ -367,12 +503,118 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 88,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.5566
+      "storyRank": 2.5737
+    },
+    {
+      "id": "kc_yt_WHKqm-6Ikuc",
+      "type": "video",
+      "category": "film",
+      "videoId": "WHKqm-6Ikuc",
+      "embeddable": true,
+      "title": "Chiefs vs. Bills Preview + Predictions",
+      "summary": "Steve Palazzolo Sam Monson break down the upcoming matchup between the Kansas City Chiefs and the Buffalo Bills. Check The Mic is your exclusive home for all things Steve & Sam with broadcasts live every Monday and Thurs",
+      "imageUrl": "https://i.ytimg.com/vi/WHKqm-6Ikuc/hqdefault.jpg",
+      "imageAlt": "Chiefs vs. Bills Preview + Predictions",
+      "publishedAt": "2026-11-25T19:20:30.000Z",
+      "url": "https://www.youtube.com/watch?v=WHKqm-6Ikuc",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=WHKqm-6Ikuc",
+      "channel": "Check the Mic",
+      "outletId": "check_the_mic",
+      "outletName": "Check the Mic",
+      "reporterId": "check_the_mic",
+      "reporterName": "Check the Mic",
+      "author": "Check the Mic",
+      "authorHandle": "@CheckTheMic",
+      "authorProfileUrl": "https://www.youtube.com/@CheckTheMic",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.409,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.6913
+    },
+    {
+      "id": "kc_brss_arrowhead_pride_14e6be8ec685",
+      "type": "article",
+      "title": "Chiefs-Bills: 5 Things to Watch in Week 12 matchup",
+      "summary": "The (8-2) Kansas City Chiefs will clash with the (9-1) Buffalo Bills in the highly anticipated Thanksgiving night matchup. The game kicks off at 7:30 Arrowhead time from New Highmark Stadium in Buffalo and will be broadcast on NBC. This gam",
+      "imageUrl": "",
+      "imageAlt": "Chiefs-Bills: 5 Things to Watch in Week 12 matchup",
+      "publishedAt": "2026-11-25T21:40:02.000Z",
+      "url": "https://www.arrowheadpride.com/kansas-city-chiefs-analysis/217426/chiefs-bills-5-things-watch-week-12-matchup",
+      "outletId": "arrowhead_pride",
+      "outletName": "Arrowhead Pride",
+      "reporterId": "arrowhead_pride",
+      "reporterName": "Caleb James",
+      "author": "Caleb James",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.arrowheadpride.com/kansas-city-chiefs-analysis/217426/chiefs-bills-5-things-watch-week-12-matchup",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.09
+    },
+    {
+      "id": "kc_rss_f09ee4dbb5db",
+      "type": "article",
+      "title": "Five Things to Watch on Thursday | Chiefs vs. Bills",
+      "summary": "Here’s a quick game preview heading into Thursday night",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/v130c6wxdcj1bxwnd76s.jpg",
+      "imageAlt": "Five Things to Watch on Thursday | Chiefs vs. Bills",
+      "publishedAt": "2026-11-25T21:21:11.000Z",
+      "url": "https://www.chiefs.com/news/five-things-to-watch-on-thursday-chiefs-vs-bills",
+      "outletId": "chiefs_official",
+      "outletName": "chiefs.com Official",
+      "reporterId": "chiefs_official",
+      "reporterName": "chiefs.com Official",
+      "author": "chiefs.com Official",
+      "authorHandle": "@Chiefs",
+      "authorProfileUrl": "https://www.chiefs.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.0425
     },
     {
       "id": "kc_espn_4bf0ce0b12dda",
@@ -412,63 +654,13 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
+      "duration": "1:49",
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.2862,
-      "duration": "1:49"
-    },
-    {
-      "id": "kc_brss_arrowhead_pride_57e987eec2cf",
-      "type": "article",
-      "title": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
-      "summary": "Each practice day this season, the Kansas City Chiefs release an official injury report ahead of the next game. In Week 12, the Chiefs play the Buffalo Bills on Thanksgiving night. Here is the Chiefs’ final official injury report of the wee",
-      "imageUrl": "",
-      "imageAlt": "Chiefs-Bills Week 12 Final injury report: Kenneth Walker ruled out",
-      "publishedAt": "2026-11-25T18:03:52.000Z",
-      "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
-      "outletId": "arrowhead_pride",
-      "outletName": "Arrowhead Pride",
-      "reporterId": "arrowhead_pride",
-      "reporterName": "Ron Kopp Jr.",
-      "author": "Ron Kopp Jr.",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217609/chiefs-bills-week-12-final-injury-report-kenneth-walker-ruled-out",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4567048",
-          "name": "Kenneth Walker III",
-          "shortName": "K. Walker III",
-          "position": "RB",
-          "jersey": 9,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567048.png"
-        }
-      ],
-      "isBreaking": true,
-      "isInGameInjury": true,
-      "breakingBadge": "LIVE INJURY UPDATE",
-      "breakingPriority": 3.364,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
-      "storyTier": "in_game_injury",
-      "isUrgentBreaking": true,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "injurySeverityScore": 0.82,
-      "injurySeverityTier": "serious",
-      "playerValueScore": 0.68,
-      "playerValueTier": "core_starter",
-      "injuryImpactScore": 0.764,
-      "storyRank": 23.2327
+      "storyRank": 1.7352
     },
     {
       "id": "kc_brss_arrowhead_pride_acc5b87c5752",
@@ -502,32 +694,91 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 17.45
+      "storyRank": 1.6294
     },
     {
-      "id": "kc_rss_e4304185e1ba",
-      "type": "article",
-      "title": "Week 12 Injury Report | Chiefs vs Bills",
-      "summary": "Injuries for the Chiefs Week 12 matchup against the Buffalo Bills",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/xqyrcoqs2ie7ylbss0ji.png",
-      "imageAlt": "Week 12 Injury Report | Chiefs vs Bills",
-      "publishedAt": "2026-11-25T16:46:00.000Z",
-      "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
-      "outletId": "chiefs_official",
-      "outletName": "chiefs.com Official",
-      "reporterId": "chiefs_official",
-      "reporterName": "chiefs.com Official",
-      "author": "chiefs.com Official",
-      "authorHandle": "@Chiefs",
-      "authorProfileUrl": "https://www.chiefs.com/news/",
+      "id": "kc_yt_7XcG-6CAKAo",
+      "type": "video",
+      "category": "film",
+      "videoId": "7XcG-6CAKAo",
+      "embeddable": false,
+      "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
+      "summary": "Patrick Mahomes and Travis Kelce are reminding everyone just how dangerous the Kansas City Chiefs can be! Former NFL quarterback Chase Daniel dives into the All-22 film of Mahomes' Week 11 performance against the Arizona",
+      "imageUrl": "https://i.ytimg.com/vi/7XcG-6CAKAo/hqdefault.jpg",
+      "imageAlt": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
+      "publishedAt": "2026-11-25T14:00:38.000Z",
+      "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
+      "channel": "Alex Rollins",
+      "outletId": "alex_rollins",
+      "outletName": "Alex Rollins",
+      "reporterId": "alex_rollins",
+      "reporterName": "Alex Rollins",
+      "author": "Alex Rollins",
+      "authorHandle": "@AlexRollinsNFL",
+      "authorProfileUrl": "https://x.com/AlexRollinsNFL",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "15847",
+          "name": "Travis Kelce",
+          "shortName": "T. Kelce",
+          "position": "TE",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15847.png"
+        },
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.292,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 91,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7332
+    },
+    {
+      "id": "kc_tyt_niDHP6VjZ7k",
+      "type": "video",
+      "category": "beat",
+      "videoId": "niDHP6VjZ7k",
+      "embeddable": false,
+      "title": "These Stats Will Determine the Outcome of Chiefs vs. Bills",
+      "summary": "Chiefs Sr. Team Reporter Matt McMullen breaks down six key stats about the Kansas City Chiefs and the Buffalo Bills as we head into a Week 12 matchup at Highmark Stadium. 📺: Kansas City Chiefs vs. Buffalo Bills at 7:20",
+      "imageUrl": "https://i.ytimg.com/vi/niDHP6VjZ7k/hqdefault.jpg",
+      "imageAlt": "These Stats Will Determine the Outcome of Chiefs vs. Bills",
+      "publishedAt": "2026-11-25T17:30:33.000Z",
+      "url": "https://www.youtube.com/watch?v=niDHP6VjZ7k",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=niDHP6VjZ7k",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
       "trustTier": 1,
-      "wireSource": "club_official_rss",
+      "wireSource": "team_youtube_atom",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -536,7 +787,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.4244
+      "storyRank": 1.3523
     },
     {
       "id": "kc_brss_arrowhead_pride_3537eb274688",
@@ -570,63 +821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.8755
-    },
-    {
-      "id": "kc_yt_7XcG-6CAKAo",
-      "type": "video",
-      "category": "film",
-      "videoId": "7XcG-6CAKAo",
-      "embeddable": true,
-      "title": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
-      "summary": "Patrick Mahomes and Travis Kelce are reminding everyone just how dangerous the Kansas City Chiefs can be! Former NFL quarterback Chase Daniel dives into the All-22 film of Mahomes' Week 11 performance against the Arizona",
-      "imageUrl": "https://i.ytimg.com/vi/7XcG-6CAKAo/hqdefault.jpg",
-      "imageAlt": "The BRUTALLY Honest Truth About Patrick Mahomes You Don’t Want To Know - Chiefs QB Film Breakdown",
-      "publishedAt": "2026-11-25T14:00:38.000Z",
-      "url": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=7XcG-6CAKAo",
-      "channel": "Chase Daniel",
-      "outletId": "chase_daniel",
-      "outletName": "Chase Daniel",
-      "reporterId": "chase_daniel",
-      "reporterName": "Chase Daniel",
-      "author": "Chase Daniel",
-      "authorHandle": "@ChaseDaniel",
-      "authorProfileUrl": "https://x.com/ChaseDaniel",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "15847",
-          "name": "Travis Kelce",
-          "shortName": "T. Kelce",
-          "position": "TE",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15847.png"
-        },
-        {
-          "id": "3139477",
-          "name": "Patrick Mahomes",
-          "shortName": "P. Mahomes",
-          "position": "QB",
-          "jersey": 15,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.572,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.2543,
-      "duration": "20:38"
+      "storyRank": 1.3021
     },
     {
       "id": "kc_rss_9e58ffe1b906",
@@ -660,7 +855,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0759
+      "storyRank": 1.1914
     },
     {
       "id": "kc_rss_d3744f5c5a6e",
@@ -694,51 +889,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8955
-    },
-    {
-      "id": "kc_espn_59acba699f7b8",
-      "type": "article",
-      "title": "Chiefs rule RB Kenneth Walker III (groin) out for showdown vs. Bills",
-      "summary": "Chiefs running back Kenneth Walker III (groin) has been ruled out for Thursday's showdown against the Bills, the team announced Wednesday",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_576x324_16-9.jpg",
-      "imageCaption": "Kenneth Walker III has 872 rushing yards (fourth-most in the NFL) and seven touchdowns this season.",
-      "imageAlt": "Chiefs rule RB Kenneth Walker III (groin) out for showdown vs. Bills",
-      "publishedAt": "2026-11-25T17:22:59.000Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50594656/chiefs-rb-kenneth-walker-iii-groin-thursday-vs-bills",
-      "outletId": "espn_kc",
-      "outletName": "ESPN",
-      "reporterId": "nate_taylor",
-      "reporterName": "Nate Taylor",
-      "author": "Nate Taylor",
-      "authorHandle": "@ByNateTaylor",
-      "authorProfileUrl": "https://x.com/ByNateTaylor",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [
-        {
-          "id": "4567048",
-          "name": "Kenneth Walker III",
-          "shortName": "K. Walker III",
-          "position": "RB",
-          "jersey": 9,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567048.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.44
+      "storyRank": 1.1761
     },
     {
       "id": "kc_brss_arrowhead_pride_115654e9388f",
@@ -772,7 +923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5463
+      "storyRank": 1.1326
     },
     {
       "id": "kc_vid_85ddcefeac49",
@@ -817,7 +968,50 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2302
+      "storyRank": 1.1137
+    },
+    {
+      "id": "kc_nfilm_pff_news_3e4235002a30",
+      "type": "article",
+      "category": "film",
+      "title": "NFL Quarterback Rankings: Joe Burrow leads the way, Patrick Mahomes rises",
+      "summary": "Bengals quarterback Joe Burrow remains PFF's top quarterback despite struggling in Week 11. Chiefs star Patrick Mahomes re-enters the top five after dazzling in recent weeks, while Bills gunslinger Josh Allen slides.",
+      "imageUrl": "",
+      "imageAlt": "NFL Quarterback Rankings: Joe Burrow leads the way, Patrick Mahomes rises",
+      "publishedAt": "2026-11-25T12:15:00.000Z",
+      "url": "https://www.pff.com/news/nfl-quarterback-rankings/",
+      "outletId": "pff_news",
+      "outletName": "PFF",
+      "reporterId": "pff_news",
+      "reporterName": "Pro Football Focus",
+      "author": "Pro Football Focus",
+      "authorHandle": "@PFF",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.441
     },
     {
       "id": "kc_brss_arrowhead_pride_b5db2b70b138",
@@ -860,7 +1054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8549
+      "storyRank": 1.063
     },
     {
       "id": "kc_brss_arrowhead_pride_0b43579fc7be",
@@ -911,7 +1105,51 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6856
+      "storyRank": 1.044
+    },
+    {
+      "id": "kc_espn_59acba699f7b8",
+      "type": "article",
+      "title": "Chiefs rule RB Kenneth Walker III (groin) out for showdown vs. Bills",
+      "summary": "Chiefs running back Kenneth Walker III (groin) has been ruled out for Thursday's showdown against the Bills, the team announced Wednesday",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_576x324_16-9.jpg",
+      "imageCaption": "Kenneth Walker III has 872 rushing yards (fourth-most in the NFL) and seven touchdowns this season.",
+      "imageAlt": "Chiefs rule RB Kenneth Walker III (groin) out for showdown vs. Bills",
+      "publishedAt": "2026-11-25T17:22:59.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50594656/chiefs-rb-kenneth-walker-iii-groin-thursday-vs-bills",
+      "outletId": "espn_kc",
+      "outletName": "ESPN",
+      "reporterId": "nate_taylor",
+      "reporterName": "Nate Taylor",
+      "author": "Nate Taylor",
+      "authorHandle": "@ByNateTaylor",
+      "authorProfileUrl": "https://x.com/ByNateTaylor",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [
+        {
+          "id": "4567048",
+          "name": "Kenneth Walker III",
+          "shortName": "K. Walker III",
+          "position": "RB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567048.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5596
     },
     {
       "id": "kc_brss_arrowhead_pride_e44bc544c0ab",
@@ -954,7 +1192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4577
+      "storyRank": 0.6639
     },
     {
       "id": "kc_rss_b5da25c6c620",
@@ -988,7 +1226,50 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2022
+      "storyRank": 0.5968
+    },
+    {
+      "id": "x_tl_caleb_carr_2125433850193166556",
+      "type": "tweet",
+      "title": "“I don’t want you to play anymore, I want you to retire” - Chiefs DC Steve Spagnuolo to Josh Allen following the Bills 28-21 win last year\n\nJosh Allen currently holds a 5-1 regular season record over the Chiefs heading into Thanksgiving night\n\n#buffalobills #billsmafia #JoshAllen",
+      "fullText": "“I don’t want you to play anymore, I want you to retire” - Chiefs DC Steve Spagnuolo to Josh Allen following the Bills 28-21 win last year\n\nJosh Allen currently holds a 5-1 regular season record over the Chiefs heading into Thanksgiving night\n\n#buffalobills #billsmafia #JoshAllen",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125433768345219072/img/MHA5xQkHONVVBesT.jpg",
+      "imageAlt": "Caleb Carr post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125433768345219072/vid/avc1/720x1280/tJHyTfhIyFHZnl7r.mp4?tag=29",
+      "isHighlightClip": true,
+      "duration": "0:47",
+      "embeddable": true,
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-25T03:38:13.194Z",
+      "url": "https://x.com/caleb_carr/status/2125433850193166556",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "Caleb Carr",
+      "author": "Caleb Carr",
+      "authorHandle": "@caleb_carr",
+      "authorProfileUrl": "https://x.com/caleb_carr",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 72,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5912
     },
     {
       "id": "kc_brss_arrowhead_pride_cdc405d954cf",
@@ -1031,7 +1312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4465
+      "storyRank": 0.8892
     },
     {
       "id": "kc_pwire_4242459_64967228",
@@ -1063,7 +1344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9253
+      "storyRank": 0.5063
     },
     {
       "id": "kc_pfr_34688f1b6eb7",
@@ -1096,32 +1377,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8652
+      "storyRank": 0.4818
     },
     {
-      "id": "kc_yt_SvkaWRi6-QQ",
+      "id": "kc_tyt_BQ10rRDmwm8",
       "type": "video",
       "category": "beat",
-      "videoId": "SvkaWRi6-QQ",
+      "videoId": "BQ10rRDmwm8",
       "embeddable": false,
-      "title": "Kansas City Chiefs vs Buffalo Bills | 2026 Week 12 Game Preview",
-      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
-      "imageUrl": "https://i.ytimg.com/vi/SvkaWRi6-QQ/hqdefault.jpg",
-      "imageAlt": "Kansas City Chiefs vs Buffalo Bills | 2026 Week 12 Game Preview",
-      "publishedAt": "2026-11-25T00:00:39.000Z",
-      "url": "https://www.youtube.com/watch?v=SvkaWRi6-QQ",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=SvkaWRi6-QQ",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "title": "Chris Jones is the FUNNIEST player on the sidelines for Chiefs vs. Cardinals",
+      "summary": "The best and biggest moments from Chris Jones' strong defensive performance as the Kansas City Chiefs earned a 35-7 victory over the Arizona Cardinals at Arrowhead Stadium. Subscribe for more videos! https://bit.ly/2OuOU",
+      "imageUrl": "https://i.ytimg.com/vi/BQ10rRDmwm8/hqdefault.jpg",
+      "imageAlt": "Chris Jones is the FUNNIEST player on the sidelines for Chiefs vs. Cardinals",
+      "publishedAt": "2026-11-25T00:00:22.000Z",
+      "url": "https://www.youtube.com/watch?v=BQ10rRDmwm8",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=BQ10rRDmwm8",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
       "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [],
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3044859",
+          "name": "Chris Jones",
+          "shortName": "C. Jones",
+          "position": "DT",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3044859.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1134,8 +1424,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7996,
-      "duration": "11:25"
+      "storyRank": 0.4596
     },
     {
       "id": "kc_brss_arrowhead_pride_755cff9609f0",
@@ -1178,7 +1467,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7036
+      "storyRank": 0.419
+    },
+    {
+      "id": "kc_tyt_iGNBD4iwolw",
+      "type": "video",
+      "category": "beat",
+      "videoId": "iGNBD4iwolw",
+      "embeddable": false,
+      "title": "'Thanksgiving Football!' - Chiefs vs. Bills Preview w/ Nick Wright | Defending The Kingdom",
+      "summary": "Breaking down the Chiefs’ three-game winning streak, plus Nick Wright from FOX Sports joins to talk about his Kansas City roots, his Chiefs fandom and his thoughts on this week’s matchup against the Bills with Voice of t",
+      "imageUrl": "https://i.ytimg.com/vi/iGNBD4iwolw/hqdefault.jpg",
+      "imageAlt": "'Thanksgiving Football!' - Chiefs vs. Bills Preview w/ Nick Wright | Defending The Kingdom",
+      "publishedAt": "2026-11-24T22:00:26.000Z",
+      "url": "https://www.youtube.com/watch?v=iGNBD4iwolw",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=iGNBD4iwolw",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4228
     },
     {
       "id": "kc_pwire_4567048_64960728",
@@ -1210,7 +1537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7001
+      "storyRank": 0.4198
     },
     {
       "id": "kc_vid_acc9fa43e23e",
@@ -1222,6 +1549,7 @@
       "publishedAt": "2026-11-24T21:32:03.000Z",
       "url": "https://www.chiefs.com/video/chris-jones-mic-d-up-for-chiefs-vs-cardinals-2026-nfl-season-week-11",
       "externalVideoUrl": "https://www.chiefs.com/video/chris-jones-mic-d-up-for-chiefs-vs-cardinals-2026-nfl-season-week-11",
+      "duration": "8:59",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -1255,8 +1583,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6884,
-      "duration": "8:59"
+      "storyRank": 0.4148
     },
     {
       "id": "kc_pwire_3139477_49949224",
@@ -1288,39 +1615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6323
-    },
-    {
-      "id": "kc_pwire_15847_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6323
+      "storyRank": 0.3889
     },
     {
       "id": "kc_pwire_4832955_49949224",
@@ -1352,36 +1647,25 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6323
+      "storyRank": 0.3889
     },
     {
-      "id": "kc_brss_arrowhead_pride_14dec3c17c60",
+      "id": "kc_pwire_15847_49949224",
       "type": "article",
-      "title": "Chiefs sign tackle Fred Johnson to active roster",
-      "summary": "Early on Tuesday, NFL Network’s Ian Rapoport reported that the Kansas City Chiefs would be signing tackle Fred Johnson — who joined their practice squad last week — to the active roster. Johnson had previously been with the Philadelphia Eag",
-      "imageUrl": "",
-      "imageAlt": "Chiefs sign tackle Fred Johnson to active roster",
-      "publishedAt": "2026-11-24T19:58:19.000Z",
-      "url": "https://www.arrowheadpride.com/kansas-city-chiefs-news/217493/chiefs-sign-tackle-fred-johnson-to-active-roster",
-      "outletId": "arrowhead_pride",
-      "outletName": "Arrowhead Pride",
-      "reporterId": "arrowhead_pride",
-      "reporterName": "Jared Sapp",
-      "author": "Jared Sapp",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
       "authorHandle": "",
-      "authorProfileUrl": "https://www.arrowheadpride.com/kansas-city-chiefs-news/217493/chiefs-sign-tackle-fred-johnson-to-active-roster",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/15847/travis-kelce#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "3915106",
-          "name": "Fred Johnson",
-          "shortName": "F. Johnson",
-          "position": "OT",
-          "jersey": 74,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915106.png"
-        }
-      ],
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1395,55 +1679,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6206
-    },
-    {
-      "id": "kc_yt_0V20MYj2jRA",
-      "type": "video",
-      "category": "film",
-      "videoId": "0V20MYj2jRA",
-      "embeddable": true,
-      "title": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
-      "summary": "NFL Week 11 is in the books, and Brock Purdy is playing at an MVP level, Patrick Mahomes continues to remind everyone how dangerous he is, and Caleb Williams is giving us plenty to talk about! In this week's episode of *",
-      "imageUrl": "https://i.ytimg.com/vi/0V20MYj2jRA/hqdefault.jpg",
-      "imageAlt": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
-      "publishedAt": "2026-11-24T14:00:34.000Z",
-      "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=0V20MYj2jRA",
-      "channel": "Chase Daniel",
-      "outletId": "chase_daniel",
-      "outletName": "Chase Daniel",
-      "reporterId": "chase_daniel",
-      "reporterName": "Chase Daniel",
-      "author": "Chase Daniel",
-      "authorHandle": "@ChaseDaniel",
-      "authorProfileUrl": "https://x.com/ChaseDaniel",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "3139477",
-          "name": "Patrick Mahomes",
-          "shortName": "P. Mahomes",
-          "position": "QB",
-          "jersey": 15,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 20,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9451,
-      "duration": "1:15:59"
+      "storyRank": 0.3889
     },
     {
       "id": "kc_vid_f44fe3ac0f96",
@@ -1455,6 +1691,7 @@
       "publishedAt": "2026-11-24T18:24:34.000Z",
       "url": "https://www.chiefs.com/video/rashee-rice-on-bills-they-re-a-great-challenge-for-us-press-conference-11-24",
       "externalVideoUrl": "https://www.chiefs.com/video/rashee-rice-on-bills-they-re-a-great-challenge-for-us-press-conference-11-24",
+      "duration": "5:16",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -1488,8 +1725,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5815,
-      "duration": "5:16"
+      "storyRank": 0.3681
     },
     {
       "id": "kc_vid_357397d09658",
@@ -1501,6 +1737,7 @@
       "publishedAt": "2026-11-24T18:24:26.000Z",
       "url": "https://www.chiefs.com/video/chris-jones-looking-forward-to-the-opportunity-and-the-challenge-of-playing-buffalo-press-conference-11-24",
       "externalVideoUrl": "https://www.chiefs.com/video/chris-jones-looking-forward-to-the-opportunity-and-the-challenge-of-playing-buffalo-press-conference-11-24",
+      "duration": "6:37",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -1534,8 +1771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5815,
-      "duration": "6:37"
+      "storyRank": 0.3681
     },
     {
       "id": "kc_vid_bf24ef981658",
@@ -1547,6 +1783,7 @@
       "publishedAt": "2026-11-24T18:23:40.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-on-week-12-matchup-it-s-about-who-makes-the-big-plays-in-the-big-moments-press-conference-11-24",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-on-week-12-matchup-it-s-about-who-makes-the-big-plays-in-the-big-moments-press-conference-11-24",
+      "duration": "7:27",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -1580,8 +1817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5811,
-      "duration": "7:27"
+      "storyRank": 0.3679
     },
     {
       "id": "kc_pwire_4567048_64958928",
@@ -1613,7 +1849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5715
+      "storyRank": 0.3635
     },
     {
       "id": "kc_vid_f9f6d9a83882",
@@ -1625,6 +1861,7 @@
       "publishedAt": "2026-11-24T18:02:54.000Z",
       "url": "https://www.chiefs.com/video/andy-reid-on-buffalo-matchup-heck-of-an-enviornment-for-a-football-game-press-conference-11-24",
       "externalVideoUrl": "https://www.chiefs.com/video/andy-reid-on-buffalo-matchup-heck-of-an-enviornment-for-a-football-game-press-conference-11-24",
+      "duration": "9:48",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -1649,8 +1886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.571,
-      "duration": "9:48"
+      "storyRank": 0.3633
     },
     {
       "id": "kc_pwire_3139477_50584326",
@@ -1691,7 +1927,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5595
+      "storyRank": 0.3563
     },
     {
       "id": "kc_vid_cf4968aeb4b5",
@@ -1703,6 +1939,7 @@
       "publishedAt": "2026-11-24T17:54:09.000Z",
       "url": "https://www.chiefs.com/video/inside-scoop-george-karlaftis-leads-the-nfl-with-7-sacks-over-the-last-4-games-cardinals-vs-chiefs-nfl-week-11",
       "externalVideoUrl": "https://www.chiefs.com/video/inside-scoop-george-karlaftis-leads-the-nfl-with-7-sacks-over-the-last-4-games-cardinals-vs-chiefs-nfl-week-11",
+      "duration": "0:35",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -1736,8 +1973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5669,
-      "duration": "0:35"
+      "storyRank": 0.3614
     },
     {
       "id": "kc_espn_449171876b717",
@@ -1763,7 +1999,7 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1772,55 +2008,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5437
-    },
-    {
-      "id": "x_tl_rapsheet_2125241606760509694",
-      "type": "tweet",
-      "title": "The #Chiefs are moving Fred Johnson to their 53-man roster, source says.",
-      "fullText": "The #Chiefs are moving Fred Johnson to their 53-man roster, source says.",
-      "isFullTweet": true,
-      "summary": "The #Chiefs are signing former #Eagles OT Fred Johnson to their practice squad and he’ll likely be elevated to the 53-man roster.",
-      "imageUrl": "",
-      "imageAlt": "Ian Rapoport post",
-      "mentionedPlayers": [
-        {
-          "id": "3915106",
-          "name": "Fred Johnson",
-          "shortName": "F. Johnson",
-          "position": "OT",
-          "jersey": 74,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915106.png"
-        }
-      ],
-      "publishedAt": "2026-11-24T14:54:18.788Z",
-      "url": "https://x.com/RapSheet/status/2125241606760509694",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "nfl_network",
-      "outletName": "NFL Network",
-      "reporterId": "ian_rapoport",
-      "reporterName": "Ian Rapoport",
-      "author": "Ian Rapoport",
-      "authorHandle": "@RapSheet",
-      "authorProfileUrl": "https://x.com/RapSheet",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5407
+      "storyRank": 0.3506
     },
     {
       "id": "kc_bsky_432785a3fd0b",
@@ -1835,6 +2023,12 @@
       "url": "https://bsky.app/profile/benjaminsolak.bsky.social/post/3n32x75xkf22f",
       "externalUrl": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants",
       "externalTitle": "Seven things Solak thinks for NFL Week 12: Takes on Chiefs-Bills, Giants, Lions",
+      "inlineLinks": [
+        {
+          "text": "www.espn.com/nfl/story/_/...",
+          "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants"
+        }
+      ],
       "outletId": "espn_national",
       "outletName": "Ben Solak",
       "reporterId": "ben_solak",
@@ -1858,13 +2052,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.413,
-      "inlineLinks": [
+      "storyRank": 0.2719
+    },
+    {
+      "id": "kc_yt_0V20MYj2jRA",
+      "type": "video",
+      "category": "film",
+      "videoId": "0V20MYj2jRA",
+      "embeddable": true,
+      "title": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
+      "summary": "NFL Week 11 is in the books, and Brock Purdy is playing at an MVP level, Patrick Mahomes continues to remind everyone how dangerous he is, and Caleb Williams is giving us plenty to talk about! In this week's episode of *",
+      "imageUrl": "https://i.ytimg.com/vi/0V20MYj2jRA/hqdefault.jpg",
+      "imageAlt": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
+      "publishedAt": "2026-11-24T14:00:34.000Z",
+      "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=0V20MYj2jRA",
+      "channel": "Alex Rollins",
+      "outletId": "alex_rollins",
+      "outletName": "Alex Rollins",
+      "reporterId": "alex_rollins",
+      "reporterName": "Alex Rollins",
+      "author": "Alex Rollins",
+      "authorHandle": "@AlexRollinsNFL",
+      "authorProfileUrl": "https://x.com/AlexRollinsNFL",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
         {
-          "text": "www.espn.com/nfl/story/_/...",
-          "url": "https://www.espn.com/nfl/story/_/id/50563522/week-12-seven-things-solak-thinks-chiefs-bills-giants"
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
         }
-      ]
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 20,
+      "isClickbait": false,
+      "credibilityScore": 91,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.274
     },
     {
       "id": "kc_tx_20a62fe4c723",
@@ -1916,7 +2151,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3712
+      "storyRank": 0.2626
+    },
+    {
+      "id": "kc_tyt_uWwCnc3IZhs",
+      "type": "video",
+      "category": "beat",
+      "videoId": "uWwCnc3IZhs",
+      "embeddable": false,
+      "title": "Eric Bieniemy and Steve Spagnuolo Speak to the Media | NOVEMBER 23, 2026",
+      "summary": "Offensive Coordinator Eric Bieniemy and Defensive Coordinator Steve Spagnuolo speak to the media via Zoom on Monday, November 23. Subscribe for more videos! https://bit.ly/2OuOUnB More Chiefs NFL action! https://bit.ly/2",
+      "imageUrl": "https://i.ytimg.com/vi/uWwCnc3IZhs/hqdefault.jpg",
+      "imageAlt": "Eric Bieniemy and Steve Spagnuolo Speak to the Media | NOVEMBER 23, 2026",
+      "publishedAt": "2026-11-24T06:51:20.000Z",
+      "url": "https://www.youtube.com/watch?v=uWwCnc3IZhs",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=uWwCnc3IZhs",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2542
     },
     {
       "id": "kc_rss_4d14250687ae",
@@ -1950,7 +2223,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3494
+      "storyRank": 0.2504
     },
     {
       "id": "x_tl_chiefs_2125000362876678495",
@@ -2002,7 +2275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3023
+      "storyRank": 0.2272
     },
     {
       "id": "kc_vid_29960e43ddb9",
@@ -2014,6 +2287,7 @@
       "publishedAt": "2026-11-23T23:00:00.000Z",
       "url": "https://www.chiefs.com/video/eric-bieniemy-on-week-11-matchup-our-o-line-did-a-great-job-of-setting-the-tone-early-press-conference-11-23",
       "externalVideoUrl": "https://www.chiefs.com/video/eric-bieniemy-on-week-11-matchup-our-o-line-did-a-great-job-of-setting-the-tone-early-press-conference-11-23",
+      "duration": "13:08",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2038,8 +2312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2755,
-      "duration": "13:08"
+      "storyRank": 0.207
     },
     {
       "id": "kc_vid_67427fd22d9f",
@@ -2051,6 +2324,7 @@
       "publishedAt": "2026-11-23T21:15:56.000Z",
       "url": "https://www.chiefs.com/video/steve-spagnuolo-on-josh-allen-i-ve-got-a-lot-of-respect-for-him-press-conference-11-23",
       "externalVideoUrl": "https://www.chiefs.com/video/steve-spagnuolo-on-josh-allen-i-ve-got-a-lot-of-respect-for-him-press-conference-11-23",
+      "duration": "11:09",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2075,95 +2349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2619,
-      "duration": "11:09"
-    },
-    {
-      "id": "kc_yts_WwsNx--B79g",
-      "type": "video",
-      "videoId": "WwsNx--B79g",
-      "embeddable": false,
-      "title": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
-      "summary": "",
-      "duration": "12:46",
-      "imageUrl": "https://i.ytimg.com/vi/WwsNx--B79g/hqdefault.jpg",
-      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:51:33.063Z",
-      "url": "https://www.youtube.com/watch?v=WwsNx--B79g",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=WwsNx--B79g",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
-    },
-    {
-      "id": "kc_yts_xxaAoiSUwds",
-      "type": "video",
-      "videoId": "xxaAoiSUwds",
-      "embeddable": false,
-      "title": "Patrick Mahomes Every Throw & Run | Week 11",
-      "summary": "",
-      "duration": "8:37",
-      "imageUrl": "https://i.ytimg.com/vi/xxaAoiSUwds/hqdefault.jpg",
-      "imageAlt": "Patrick Mahomes Every Throw & Run | Week 11",
-      "publishedAt": "2026-11-23T20:51:33.063Z",
-      "url": "https://www.youtube.com/watch?v=xxaAoiSUwds",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=xxaAoiSUwds",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "3139477",
-          "name": "Patrick Mahomes",
-          "shortName": "P. Mahomes",
-          "position": "QB",
-          "jersey": 15,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2588
+      "storyRank": 0.1986
     },
     {
       "id": "kc_rss_e3fd4756bb39",
@@ -2197,7 +2383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2397
+      "storyRank": 0.1846
     },
     {
       "id": "kc_pwire_4832955_50566755",
@@ -2246,7 +2432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2256
+      "storyRank": 0.175
     },
     {
       "id": "kc_rss_16dbd35c0791",
@@ -2280,7 +2466,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2225
+      "storyRank": 0.1735
     },
     {
       "id": "kc_vid_34020f3b2b85",
@@ -2292,6 +2478,7 @@
       "publishedAt": "2026-11-23T13:00:00.000Z",
       "url": "https://www.chiefs.com/video/full-game-highlights-from-week-11-cardinals-vs-chiefs",
       "externalVideoUrl": "https://www.chiefs.com/video/full-game-highlights-from-week-11-cardinals-vs-chiefs",
+      "duration": "6:11",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2316,8 +2503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0526,
-      "duration": "6:11"
+      "storyRank": 0.0414
     },
     {
       "id": "kc_vid_8625b66cbdc8",
@@ -2329,6 +2515,7 @@
       "publishedAt": "2026-11-23T12:59:00.000Z",
       "url": "https://www.chiefs.com/video/chiefs-top-plays-from-week-11-cardinals-vs-chiefs",
       "externalVideoUrl": "https://www.chiefs.com/video/chiefs-top-plays-from-week-11-cardinals-vs-chiefs",
+      "duration": "4:57",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2353,8 +2540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2102,
-      "duration": "4:57"
+      "storyRank": 0.1654
     },
     {
       "id": "kc_tx_958c7a554316",
@@ -2389,38 +2575,32 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1869
+      "storyRank": 0.1497
     },
     {
-      "id": "kc_espn_e5687dd229cce",
+      "id": "kc_yts_WwsNx--B79g",
       "type": "video",
-      "title": "How Travis Kelce made Chiefs and NFL history in win",
-      "summary": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_Chiefs_beat_Cardinals_IA/dm_261122_Chiefs_beat_Cardinals_IA.jpg",
-      "imageCaption": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
-      "imageAlt": "How Travis Kelce made Chiefs and NFL history in win",
-      "publishedAt": "2026-11-23T04:52:08.000Z",
-      "url": "https://www.espn.com/video/clip/_/id/50570086/how-travis-kelce-made-chiefs-nfl-history-win",
-      "outletId": "espn_kc",
-      "outletName": "ESPN",
-      "reporterId": "espn_kc",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [
-        {
-          "id": "15847",
-          "name": "Travis Kelce",
-          "shortName": "T. Kelce",
-          "position": "TE",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15847.png"
-        }
-      ],
+      "videoId": "WwsNx--B79g",
       "embeddable": false,
+      "title": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
+      "summary": "",
+      "duration": "12:46",
+      "imageUrl": "https://i.ytimg.com/vi/WwsNx--B79g/hqdefault.jpg",
+      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs Game Highlights | 2026 NFL Season Week 11",
+      "publishedAt": "2026-11-23T07:29:38.382Z",
+      "url": "https://www.youtube.com/watch?v=WwsNx--B79g",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=WwsNx--B79g",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -2434,8 +2614,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1744,
-      "duration": "1:11"
+      "storyRank": 0.1482
+    },
+    {
+      "id": "kc_yts_xxaAoiSUwds",
+      "type": "video",
+      "videoId": "xxaAoiSUwds",
+      "embeddable": false,
+      "title": "Patrick Mahomes Every Throw & Run | Week 11",
+      "summary": "",
+      "duration": "8:37",
+      "imageUrl": "https://i.ytimg.com/vi/xxaAoiSUwds/hqdefault.jpg",
+      "imageAlt": "Patrick Mahomes Every Throw & Run | Week 11",
+      "publishedAt": "2026-11-23T07:29:38.382Z",
+      "url": "https://www.youtube.com/watch?v=xxaAoiSUwds",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=xxaAoiSUwds",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1482
     },
     {
       "id": "kc_yt_ZKtreDbZQBY",
@@ -2450,15 +2677,15 @@
       "publishedAt": "2026-11-23T04:50:27.000Z",
       "url": "https://www.youtube.com/watch?v=ZKtreDbZQBY",
       "externalVideoUrl": "https://www.youtube.com/watch?v=ZKtreDbZQBY",
-      "channel": "Chase Daniel",
-      "outletId": "chase_daniel",
-      "outletName": "Chase Daniel",
-      "reporterId": "chase_daniel",
-      "reporterName": "Chase Daniel",
-      "author": "Chase Daniel",
-      "authorHandle": "@ChaseDaniel",
-      "authorProfileUrl": "https://x.com/ChaseDaniel",
-      "trustTier": 1,
+      "channel": "Alex Rollins",
+      "outletId": "alex_rollins",
+      "outletName": "Alex Rollins",
+      "reporterId": "alex_rollins",
+      "reporterName": "Alex Rollins",
+      "author": "Alex Rollins",
+      "authorHandle": "@AlexRollinsNFL",
+      "authorProfileUrl": "https://x.com/AlexRollinsNFL",
+      "trustTier": 2,
       "wireSource": "youtube_atom",
       "mentionedPlayers": [],
       "isBreaking": false,
@@ -2468,13 +2695,12 @@
       "signalScore": 70,
       "fluffScore": 25,
       "isClickbait": false,
-      "credibilityScore": 90,
+      "credibilityScore": 91,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.149,
-      "duration": "49:55"
+      "storyRank": 0.1182
     },
     {
       "id": "kc_rss_3409cc53d230",
@@ -2508,7 +2734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1741
+      "storyRank": 0.1409
     },
     {
       "id": "kc_pfr_d043eec79d10",
@@ -2550,7 +2776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1609
+      "storyRank": 0.1313
     },
     {
       "id": "kc_espn_248304034486e",
@@ -2594,7 +2820,70 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1609
+      "storyRank": 0.1316
+    },
+    {
+      "id": "kc_tyt_lYa-1Qb_CGo",
+      "type": "video",
+      "category": "beat",
+      "videoId": "lYa-1Qb_CGo",
+      "embeddable": false,
+      "title": "Andy Reid, Patrick Mahomes, George Karlaftis & Emmett Johnson Postgame Press Conferences-NFL Week 11",
+      "summary": "Hear from the Kansas City Chiefs following their win against the Arizona Cardinals at Arrowhead Stadium on Sunday, November 22. Subscribe for more videos! https://bit.ly/2OuOUnB More Chiefs NFL action! https://bit.ly/2Mo",
+      "imageUrl": "https://i.ytimg.com/vi/lYa-1Qb_CGo/hqdefault.jpg",
+      "imageAlt": "Andy Reid, Patrick Mahomes, George Karlaftis & Emmett Johnson Postgame Press Conferences-NFL Week 11",
+      "publishedAt": "2026-11-22T23:19:10.000Z",
+      "url": "https://www.youtube.com/watch?v=lYa-1Qb_CGo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=lYa-1Qb_CGo",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4832955",
+          "name": "Emmett Johnson",
+          "shortName": "E. Johnson",
+          "position": "RB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832955.png"
+        },
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        },
+        {
+          "id": "4426659",
+          "name": "George Karlaftis",
+          "shortName": "G. Karlaftis",
+          "position": "DE",
+          "jersey": 56,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426659.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1278
     },
     {
       "id": "x_tl_pff_2124626366914244745",
@@ -2643,7 +2932,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1646
+      "storyRank": 0.1357
+    },
+    {
+      "id": "kc_nfilm_unexpected_points_e96746b51e37",
+      "type": "article",
+      "category": "film",
+      "title": "Week 11 Sunday Early Window: Advanced Reviews",
+      "summary": "All the advanced stats & visualizations for Bills-Dolphins, Panthers-Ravens, Bears-Saints, Cowboys-Titans, Lions-Buccaneers, Chiefs-Cardinals & Eagles-Steelers",
+      "imageUrl": "https://substackcdn.com/image/fetch/$s_!iU8k!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F54d70292-06d0-43ac-9f18-3b36af2ffc26_2560x1706.jpeg",
+      "imageAlt": "Week 11 Sunday Early Window: Advanced Reviews",
+      "publishedAt": "2026-11-22T22:33:49.000Z",
+      "url": "https://www.unexpectedpoints.com/p/week-11-sunday-early-window-advanced",
+      "outletId": "unexpected_points",
+      "outletName": "Unexpected Points",
+      "reporterId": "unexpected_points",
+      "reporterName": "Kevin Cole",
+      "author": "Kevin Cole",
+      "authorHandle": "@KevinCole___",
+      "authorProfileUrl": "https://www.unexpectedpoints.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1261
     },
     {
       "id": "kc_espn_fc09dce5056e7",
@@ -2695,7 +3018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1521
+      "storyRank": 0.1253
     },
     {
       "id": "kc_vid_95fb0acb6433",
@@ -2707,6 +3030,7 @@
       "publishedAt": "2026-11-22T22:00:50.000Z",
       "url": "https://www.chiefs.com/video/emmett-johnson-we-ve-been-having-great-drives-and-putting-up-points-postgame-press-conference-nfl-week-11",
       "externalVideoUrl": "https://www.chiefs.com/video/emmett-johnson-we-ve-been-having-great-drives-and-putting-up-points-postgame-press-conference-nfl-week-11",
+      "duration": "2:30",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2740,8 +3064,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1516,
-      "duration": "2:30"
+      "storyRank": 0.125
     },
     {
       "id": "kc_vid_5b7566e4f779",
@@ -2753,6 +3076,7 @@
       "publishedAt": "2026-11-22T21:59:47.000Z",
       "url": "https://www.chiefs.com/video/george-karlaftis-on-future-matchups-one-practice-at-a-time-one-game-at-a-time-postgame-press-conference-nfl-week-11",
       "externalVideoUrl": "https://www.chiefs.com/video/george-karlaftis-on-future-matchups-one-practice-at-a-time-one-game-at-a-time-postgame-press-conference-nfl-week-11",
+      "duration": "3:13",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2786,8 +3110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1515,
-      "duration": "3:13"
+      "storyRank": 0.1249
     },
     {
       "id": "kc_vid_7de733124893",
@@ -2799,6 +3122,7 @@
       "publishedAt": "2026-11-22T21:58:41.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-on-the-offense-you-can-see-the-offense-getting-better-and-better-postgame-press-conference-nfl-week-11",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-on-the-offense-you-can-see-the-offense-getting-better-and-better-postgame-press-conference-nfl-week-11",
+      "duration": "6:10",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2832,8 +3156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1515,
-      "duration": "6:10"
+      "storyRank": 0.1249
     },
     {
       "id": "kc_vid_4317cf4fda95",
@@ -2845,6 +3168,7 @@
       "publishedAt": "2026-11-22T21:53:59.000Z",
       "url": "https://www.chiefs.com/video/andy-reid-love-seeing-these-young-guys-stepping-up-and-making-plays-postgame-press-conference-nfl-week-11",
       "externalVideoUrl": "https://www.chiefs.com/video/andy-reid-love-seeing-these-young-guys-stepping-up-and-making-plays-postgame-press-conference-nfl-week-11",
+      "duration": "7:11",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2869,8 +3193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1513,
-      "duration": "7:11"
+      "storyRank": 0.1247
     },
     {
       "id": "kc_vid_a7ee55bd30f9",
@@ -2882,6 +3205,7 @@
       "publishedAt": "2026-11-22T21:45:38.000Z",
       "url": "https://www.chiefs.com/video/every-travis-kelce-catch-from-2-touchdown-game-cardinals-vs-chiefs",
       "externalVideoUrl": "https://www.chiefs.com/video/every-travis-kelce-catch-from-2-touchdown-game-cardinals-vs-chiefs",
+      "duration": "2:07",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2915,8 +3239,101 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1508,
-      "duration": "2:07"
+      "storyRank": 0.1244
+    },
+    {
+      "id": "kc_tyt_uVabryD17_c",
+      "type": "video",
+      "category": "beat",
+      "videoId": "uVabryD17_c",
+      "embeddable": false,
+      "title": "EVERY Catch from Travis Kelce's 2-TD Game vs. Arizona Cardinals",
+      "summary": "All the action from Travis Kelce's incredible performance against the Arizona Cardinals where he gained 74 yards and caught a pair of touchdowns. Subscribe for more videos! https://bit.ly/2OuOUnB More Chiefs NFL action!",
+      "imageUrl": "https://i.ytimg.com/vi/uVabryD17_c/hqdefault.jpg",
+      "imageAlt": "EVERY Catch from Travis Kelce's 2-TD Game vs. Arizona Cardinals",
+      "publishedAt": "2026-11-22T21:43:08.000Z",
+      "url": "https://www.youtube.com/watch?v=uVabryD17_c",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=uVabryD17_c",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "15847",
+          "name": "Travis Kelce",
+          "shortName": "T. Kelce",
+          "position": "TE",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15847.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1244
+    },
+    {
+      "id": "kc_tyt_8vhrZWvo_A0",
+      "type": "video",
+      "category": "beat",
+      "videoId": "8vhrZWvo_A0",
+      "embeddable": false,
+      "title": "MUST-WATCH Emmett Johnson Highlights from 143-Yard Game vs. Arizona Cardinals",
+      "summary": "Watch the top plays from Chiefs running back Emmett Johnson (@emmettj_) as he rushes for 105 yards and 38 more in the air against the Arizona Cardinals at Arrowhead Stadium in Week 11 of the 2026 NFL season. Subscribe fo",
+      "imageUrl": "https://i.ytimg.com/vi/8vhrZWvo_A0/hqdefault.jpg",
+      "imageAlt": "MUST-WATCH Emmett Johnson Highlights from 143-Yard Game vs. Arizona Cardinals",
+      "publishedAt": "2026-11-22T21:39:26.000Z",
+      "url": "https://www.youtube.com/watch?v=8vhrZWvo_A0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=8vhrZWvo_A0",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4832955",
+          "name": "Emmett Johnson",
+          "shortName": "E. Johnson",
+          "position": "RB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832955.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1242
     },
     {
       "id": "kc_vid_f105a04e428b",
@@ -2928,6 +3345,7 @@
       "publishedAt": "2026-11-22T21:38:15.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-best-plays-from-3-touchdown-game-cardinals-vs-chiefs",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-best-plays-from-3-touchdown-game-cardinals-vs-chiefs",
+      "duration": "3:42",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -2961,8 +3379,54 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1505,
-      "duration": "3:42"
+      "storyRank": 0.1242
+    },
+    {
+      "id": "kc_tyt_0jVuXuTCoOU",
+      "type": "video",
+      "category": "beat",
+      "videoId": "0jVuXuTCoOU",
+      "embeddable": false,
+      "title": "Arizona Cardinals vs. Kansas City Chiefs Game Highlights | NFL 2026 Season - Week 11",
+      "summary": "All the action from the Chiefs 34 - 7 victory over the Arizona Cardinals at Arrowhead Stadium in Week 11 of the 2026 NFL season, including a 4-TD performance from Patrick Mahomes. Subscribe for more videos! https://bit.l",
+      "imageUrl": "https://i.ytimg.com/vi/0jVuXuTCoOU/hqdefault.jpg",
+      "imageAlt": "Arizona Cardinals vs. Kansas City Chiefs Game Highlights | NFL 2026 Season - Week 11",
+      "publishedAt": "2026-11-22T21:33:15.000Z",
+      "url": "https://www.youtube.com/watch?v=0jVuXuTCoOU",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=0jVuXuTCoOU",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.124
     },
     {
       "id": "kc_vid_259bc6310e5a",
@@ -2974,6 +3438,7 @@
       "publishedAt": "2026-11-22T21:22:36.000Z",
       "url": "https://www.chiefs.com/video/emmett-johnson-s-best-plays-from-143-yard-game-cardinals-vs-chiefs",
       "externalVideoUrl": "https://www.chiefs.com/video/emmett-johnson-s-best-plays-from-143-yard-game-cardinals-vs-chiefs",
+      "duration": "3:31",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3007,8 +3472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1497,
-      "duration": "3:31"
+      "storyRank": 0.1236
     },
     {
       "id": "kc_espn_41a32a5a6fecd",
@@ -3052,7 +3516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1474
+      "storyRank": 0.1219
     },
     {
       "id": "kc_vid_80437d11f679",
@@ -3064,6 +3528,7 @@
       "publishedAt": "2026-11-22T20:28:03.000Z",
       "url": "https://www.chiefs.com/video/cyrus-allen-has-a-successful-26-yard-sideline-grab-to-end-third-quarter",
       "externalVideoUrl": "https://www.chiefs.com/video/cyrus-allen-has-a-successful-26-yard-sideline-grab-to-end-third-quarter",
+      "duration": "0:24",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3105,8 +3570,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1471,
-      "duration": "0:24"
+      "storyRank": 0.1218
     },
     {
       "id": "kc_vid_74b3e9d8b431",
@@ -3118,6 +3582,7 @@
       "publishedAt": "2026-11-22T20:24:33.000Z",
       "url": "https://www.chiefs.com/video/xavier-worthy-extends-the-kansas-city-chiefs-lead-with-an-18-yard-touchdown",
       "externalVideoUrl": "https://www.chiefs.com/video/xavier-worthy-extends-the-kansas-city-chiefs-lead-with-an-18-yard-touchdown",
+      "duration": "0:39",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3159,8 +3624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.147,
-      "duration": "0:39"
+      "storyRank": 0.1217
     },
     {
       "id": "kc_vid_029139789878",
@@ -3172,6 +3636,7 @@
       "publishedAt": "2026-11-22T20:20:35.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-pass-hits-xavier-worthy-for-20-yard-gain",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-pass-hits-xavier-worthy-for-20-yard-gain",
+      "duration": "0:29",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3213,8 +3678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1468,
-      "duration": "0:29"
+      "storyRank": 0.1215
     },
     {
       "id": "kc_vid_cae601cfcb80",
@@ -3226,6 +3690,7 @@
       "publishedAt": "2026-11-22T20:08:32.000Z",
       "url": "https://www.chiefs.com/video/back-to-back-sacks-george-karlaftis-brings-down-josh-johnson-for-second-sack-in-two-plays",
       "externalVideoUrl": "https://www.chiefs.com/video/back-to-back-sacks-george-karlaftis-brings-down-josh-johnson-for-second-sack-in-two-plays",
+      "duration": "0:34",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3259,8 +3724,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1462,
-      "duration": "0:34"
+      "storyRank": 0.1211
     },
     {
       "id": "kc_vid_1a2bbdf08947",
@@ -3272,6 +3736,7 @@
       "publishedAt": "2026-11-22T20:07:15.000Z",
       "url": "https://www.chiefs.com/video/nick-bolton-and-george-karlaftis-combine-for-a-12-yard-sack-of-josh-johnson",
       "externalVideoUrl": "https://www.chiefs.com/video/nick-bolton-and-george-karlaftis-combine-for-a-12-yard-sack-of-josh-johnson",
+      "duration": "0:31",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3313,8 +3778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1462,
-      "duration": "0:31"
+      "storyRank": 0.1211
     },
     {
       "id": "kc_vid_2c6900fc219a",
@@ -3326,6 +3790,7 @@
       "publishedAt": "2026-11-22T20:00:00.000Z",
       "url": "https://www.chiefs.com/video/kansas-city-chiefs-defense-denies-arizona-cardinals-fourth-down-attempt",
       "externalVideoUrl": "https://www.chiefs.com/video/kansas-city-chiefs-defense-denies-arizona-cardinals-fourth-down-attempt",
+      "duration": "0:33",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3350,8 +3815,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1458,
-      "duration": "0:33"
+      "storyRank": 0.1208
     },
     {
       "id": "kc_vid_50d1ecc603c8",
@@ -3363,6 +3827,7 @@
       "publishedAt": "2026-11-22T19:44:06.000Z",
       "url": "https://www.chiefs.com/video/harrison-butker-s-46-yard-field-goal-ends-first-half-vs-arizona-cardinals",
       "externalVideoUrl": "https://www.chiefs.com/video/harrison-butker-s-46-yard-field-goal-ends-first-half-vs-arizona-cardinals",
+      "duration": "0:12",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3396,8 +3861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1451,
-      "duration": "0:12"
+      "storyRank": 0.1203
     },
     {
       "id": "kc_vid_78bb08a0f179",
@@ -3409,6 +3873,7 @@
       "publishedAt": "2026-11-22T19:30:01.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-delivers-a-15-yard-sideline-strike-to-cyrus-allen",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-delivers-a-15-yard-sideline-strike-to-cyrus-allen",
+      "duration": "0:32",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3450,8 +3915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1445,
-      "duration": "0:32"
+      "storyRank": 0.1198
     },
     {
       "id": "x_tl_nate_tice_2124577984346771813",
@@ -3510,7 +3974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1572
+      "storyRank": 0.1306
     },
     {
       "id": "kc_vid_576b9a38a41e",
@@ -3522,6 +3986,7 @@
       "publishedAt": "2026-11-22T19:21:15.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-and-travis-kelce-connect-on-their-second-touchdown-of-day",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-and-travis-kelce-connect-on-their-second-touchdown-of-day",
+      "duration": "0:37",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3563,8 +4028,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1441,
-      "duration": "0:37"
+      "storyRank": 0.1195
     },
     {
       "id": "kc_vid_9b6bdc6ffedc",
@@ -3576,6 +4040,7 @@
       "publishedAt": "2026-11-22T19:18:29.000Z",
       "url": "https://www.chiefs.com/video/harrison-butker-makes-a-40-yard-field-goal-to-extend-lead-to-17-7",
       "externalVideoUrl": "https://www.chiefs.com/video/harrison-butker-makes-a-40-yard-field-goal-to-extend-lead-to-17-7",
+      "duration": "0:17",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3609,8 +4074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.144,
-      "duration": "0:17"
+      "storyRank": 0.1195
     },
     {
       "id": "kc_vid_effaaa6459fb",
@@ -3622,6 +4086,7 @@
       "publishedAt": "2026-11-22T19:10:10.000Z",
       "url": "https://www.chiefs.com/video/patrick-mahomes-26-yard-connection-with-josh-downs-gets-kansas-city-chiefs-into-red-zone",
       "externalVideoUrl": "https://www.chiefs.com/video/patrick-mahomes-26-yard-connection-with-josh-downs-gets-kansas-city-chiefs-into-red-zone",
+      "duration": "0:28",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3663,8 +4128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1436,
-      "duration": "0:28"
+      "storyRank": 0.1192
     },
     {
       "id": "kc_vid_c5349f7f2702",
@@ -3676,6 +4140,7 @@
       "publishedAt": "2026-11-22T19:00:30.000Z",
       "url": "https://www.chiefs.com/video/emmett-johnson-scores-fifth-touchdown-of-the-season-on-3-yard-run",
       "externalVideoUrl": "https://www.chiefs.com/video/emmett-johnson-scores-fifth-touchdown-of-the-season-on-3-yard-run",
+      "duration": "0:25",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Video",
       "reporterId": "chiefs_official",
@@ -3709,8 +4174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1431,
-      "duration": "0:25"
+      "storyRank": 0.1189
     },
     {
       "id": "kc_pwire_4605841_64901028",
@@ -3751,7 +4215,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0496
+      "storyRank": 0.0427
+    },
+    {
+      "id": "kc_tyt_plPMfp1e2Mo",
+      "type": "video",
+      "category": "beat",
+      "videoId": "plPMfp1e2Mo",
+      "embeddable": false,
+      "title": "NFL Week 11: Arizona Cardinals vs. Kansas City Chiefs - Game Preview + Predictions",
+      "summary": "Voice of the Chiefs Mitch Holthus and senior team reporter Matt McMullen preview the upcoming Week 11 NFL matchup between the Kansas City Chiefs and the Arizona Cardinals on Sunday at Arrowhead Stadium. 📺: Arizona Cardi",
+      "imageUrl": "https://i.ytimg.com/vi/plPMfp1e2Mo/hqdefault.jpg",
+      "imageAlt": "NFL Week 11: Arizona Cardinals vs. Kansas City Chiefs - Game Preview + Predictions",
+      "publishedAt": "2026-11-21T17:00:32.000Z",
+      "url": "https://www.youtube.com/watch?v=plPMfp1e2Mo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=plPMfp1e2Mo",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0394
     },
     {
       "id": "kc_rss_01bb067e190b",
@@ -3785,7 +4287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0097
     },
     {
       "id": "kc_tx_d011a4519bbd",
@@ -3820,7 +4322,62 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.0353
+    },
+    {
+      "id": "kc_tyt_Zg7y6Q6Svs0",
+      "type": "video",
+      "category": "beat",
+      "videoId": "Zg7y6Q6Svs0",
+      "embeddable": false,
+      "title": "The Chiefs Are BACK ON TRACK Featuring Emmett Johnson, Chris Jones, Salute to Service and More",
+      "summary": "The Kansas City Chiefs reach the halfway point of the 2026 regular season in Season 7, Episode 6 of The Franchise presented by G.E.H.A. Ken Walker (@KenWalkerIII) and the Chiefs visit Seattle for a Sunday Night Football",
+      "imageUrl": "https://i.ytimg.com/vi/Zg7y6Q6Svs0/hqdefault.jpg",
+      "imageAlt": "The Chiefs Are BACK ON TRACK Featuring Emmett Johnson, Chris Jones, Salute to Service and More",
+      "publishedAt": "2026-11-21T01:30:08.000Z",
+      "url": "https://www.youtube.com/watch?v=Zg7y6Q6Svs0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Zg7y6Q6Svs0",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4832955",
+          "name": "Emmett Johnson",
+          "shortName": "E. Johnson",
+          "position": "RB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832955.png"
+        },
+        {
+          "id": "3044859",
+          "name": "Chris Jones",
+          "shortName": "C. Jones",
+          "position": "DT",
+          "jersey": 95,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3044859.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0328
     },
     {
       "id": "kc_rss_193b998d5208",
@@ -3854,7 +4411,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0078
     },
     {
       "id": "kc_rss_febe33cc867c",
@@ -3888,7 +4445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0185
     },
     {
       "id": "kc_rss_1714a58c70b7",
@@ -3922,7 +4479,45 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0347
+      "storyRank": 0.0309
+    },
+    {
+      "id": "kc_tyt_pehkdPcHdEQ",
+      "type": "video",
+      "category": "beat",
+      "videoId": "pehkdPcHdEQ",
+      "embeddable": false,
+      "title": "The Stats That Will Determine the Outcome of Cardinals vs. Chiefs",
+      "summary": "Chiefs Sr. Team Reporter Matt McMullen breaks down six key stats about the Kansas City Chiefs and the Arizona Cardinals as we head into a Week 11 matchup at Arrowhead Stadium. 📺: Arizona Cardinals vs. Kansas City Chiefs",
+      "imageUrl": "https://i.ytimg.com/vi/pehkdPcHdEQ/hqdefault.jpg",
+      "imageAlt": "The Stats That Will Determine the Outcome of Cardinals vs. Chiefs",
+      "publishedAt": "2026-11-20T16:00:32.000Z",
+      "url": "https://www.youtube.com/watch?v=pehkdPcHdEQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=pehkdPcHdEQ",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0074
     },
     {
       "id": "kc_rss_d688f992df14",
@@ -3956,7 +4551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0296
     },
     {
       "id": "kc_rss_08e8237c84ec",
@@ -3990,7 +4585,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0296
+    },
+    {
+      "id": "kc_tyt_1kIyuX6a36A",
+      "type": "video",
+      "category": "beat",
+      "isFunHighlightClip": true,
+      "videoId": "1kIyuX6a36A",
+      "embeddable": false,
+      "title": "Nick Bolton was MIC'D UP for a FORCED TURNOVER and CHIEFS WIN in Atlanta",
+      "summary": "Subscribe for more videos! https://bit.ly/2OuOUnB More Chiefs NFL action! https://bit.ly/2Moa1VR Follow Our Social Media! 🔴 Website: https://www.chiefs.com/ 🟡 Facebook: https://www.facebook.com/KansasCityChiefs 🔴 Twit",
+      "imageUrl": "https://i.ytimg.com/vi/1kIyuX6a36A/hqdefault.jpg",
+      "imageAlt": "Nick Bolton was MIC'D UP for a FORCED TURNOVER and CHIEFS WIN in Atlanta",
+      "publishedAt": "2026-11-20T01:30:06.000Z",
+      "url": "https://www.youtube.com/watch?v=1kIyuX6a36A",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=1kIyuX6a36A",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4362759",
+          "name": "Nick Bolton",
+          "shortName": "N. Bolton",
+          "position": "LB",
+          "jersey": 32,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362759.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 25,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.022
     },
     {
       "id": "kc_rss_1e185a8016b2",
@@ -4024,34 +4667,236 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0064
     },
     {
-      "id": "kc_pwire_4688813_50520521",
+      "id": "kc_nfilm_matchquarters_d432699c0cba",
       "type": "article",
-      "title": "A look at wide receivers and tight ends who have become start-worthy, and others you should expect less from.",
-      "summary": "With the fantasy football trade deadline looming (Dec. 2), I'll have a column next week on the top candidates to move. So, to build up to the deadline, this is a good opportunity to write about my current trust levels wi",
-      "publishedAt": "2026-11-19T14:13:16.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4688813/josh-downs#:~:text=A%20look%20at%20wide%20receivers%20and%20tight",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Matt Bowen",
-      "author": "Matt Bowen",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4688813/josh-downs#:~:text=A%20look%20at%20wide%20receivers%20and%20tight",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
+      "category": "film",
+      "filmOnlyScope": true,
+      "isLeagueWideFilmChart": true,
+      "title": "Split-Field Quarters Foundations",
+      "summary": "The foundational push rules, cross-key mechanics, and spacing adjustments required to defend heavy personnel and modern play-action.",
+      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/6c396326-7cb9-4af0-a601-05e4a1a3e75e_2190x1234.jpeg",
+      "imageAlt": "Split-Field Quarters Foundations",
+      "publishedAt": "2026-11-19T22:01:55.000Z",
+      "url": "https://www.matchquarters.com/p/split-field-quarters-coverage-mechanics",
+      "outletId": "matchquarters",
+      "outletName": "MatchQuarters",
+      "reporterId": "matchquarters",
+      "reporterName": "Cody Alexander",
+      "author": "Cody Alexander",
+      "authorHandle": "@The_Coach_A",
+      "authorProfileUrl": "https://www.matchquarters.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0249
+    },
+    {
+      "id": "kc_tyt_fVQk_DPHQVE",
+      "type": "video",
+      "category": "beat",
+      "videoId": "fVQk_DPHQVE",
+      "embeddable": false,
+      "title": "'Take Nothing for Granted' - Chiefs vs. Cardinals Preview w/ Josh Downs | Defending The Kingdom",
+      "summary": "Voice of the Chiefs Mitch Holthus and Senior Team Reporter Matt McMullen recap the Chiefs' win over Atlanta, plus Josh Downs joins the show to break down his first week with the team in this episode of Defending The King",
+      "imageUrl": "https://i.ytimg.com/vi/fVQk_DPHQVE/hqdefault.jpg",
+      "imageAlt": "'Take Nothing for Granted' - Chiefs vs. Cardinals Preview w/ Josh Downs | Defending The Kingdom",
+      "publishedAt": "2026-11-19T22:00:15.000Z",
+      "url": "https://www.youtube.com/watch?v=fVQk_DPHQVE",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=fVQk_DPHQVE",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
       "mentionedPlayers": [
         {
-          "id": "4683062",
-          "name": "Xavier Worthy",
-          "shortName": "X. Worthy",
+          "id": "4688813",
+          "name": "Josh Downs",
+          "shortName": "J. Downs",
           "position": "WR",
-          "jersey": 1,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683062.png"
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688813.png"
         }
       ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0249
+    },
+    {
+      "id": "kc_nfilm_matchquarters_a64862556914",
+      "type": "article",
+      "category": "film",
+      "filmOnlyScope": true,
+      "isLeagueWideFilmChart": true,
+      "title": "The Aranda-Roberts Creeper System",
+      "summary": "A structural blueprint for installing Tite front mechanics, foundational replacement pressures, and bracket coverage adjustments.",
+      "imageUrl": "https://substack-post-media.s3.amazonaws.com/public/images/0f0fa081-6dc6-4862-b1e5-624292ac89d7_2304x1300.jpeg",
+      "imageAlt": "The Aranda-Roberts Creeper System",
+      "publishedAt": "2026-11-19T21:33:52.000Z",
+      "url": "https://www.matchquarters.com/p/aranda-roberts-creeper-system-tite-front",
+      "outletId": "matchquarters",
+      "outletName": "MatchQuarters",
+      "reporterId": "matchquarters",
+      "reporterName": "Cody Alexander",
+      "author": "Cody Alexander",
+      "authorHandle": "@The_Coach_A",
+      "authorProfileUrl": "https://www.matchquarters.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0248
+    },
+    {
+      "id": "kc_tyt_mQAYgCYnOAk",
+      "type": "video",
+      "category": "beat",
+      "videoId": "mQAYgCYnOAk",
+      "embeddable": false,
+      "title": "Chairman and CEO, Clark Hunt Speaks on New Stadium Updates and the 2026 NFL Season",
+      "summary": "Kansas City Chiefs Chairman and CEO speaks to the media on Thursday, November 19. Subscribe for more videos! https://bit.ly/2OuOUnB More Chiefs NFL action! https://bit.ly/2Moa1VR Follow Our Social Media! 🔴 Website: http",
+      "imageUrl": "https://i.ytimg.com/vi/mQAYgCYnOAk/hqdefault.jpg",
+      "imageAlt": "Chairman and CEO, Clark Hunt Speaks on New Stadium Updates and the 2026 NFL Season",
+      "publishedAt": "2026-11-19T19:02:57.000Z",
+      "url": "https://www.youtube.com/watch?v=mQAYgCYnOAk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=mQAYgCYnOAk",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0243
+    },
+    {
+      "id": "kc_yt_Pm-Xc0mpDvI",
+      "type": "video",
+      "category": "film",
+      "videoId": "Pm-Xc0mpDvI",
+      "embeddable": true,
+      "title": "The Film Doesn't Lie: Brutally Honest NFL QB Power Rankings Week 10",
+      "summary": "Who are the TOP 6 quarterbacks in the NFL right now? After a crazy Week 10, Chase Daniel is back with his latest QB rankings! From Brock Purdy's MVP-level season to the impressive play of Joe Burrow, Patrick Mahomes, Tre",
+      "imageUrl": "https://i.ytimg.com/vi/Pm-Xc0mpDvI/hqdefault.jpg",
+      "imageAlt": "The Film Doesn't Lie: Brutally Honest NFL QB Power Rankings Week 10",
+      "publishedAt": "2026-11-19T15:00:09.000Z",
+      "url": "https://www.youtube.com/watch?v=Pm-Xc0mpDvI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Pm-Xc0mpDvI",
+      "channel": "Alex Rollins",
+      "outletId": "alex_rollins",
+      "outletName": "Alex Rollins",
+      "reporterId": "alex_rollins",
+      "reporterName": "Alex Rollins",
+      "author": "Alex Rollins",
+      "authorHandle": "@AlexRollinsNFL",
+      "authorProfileUrl": "https://x.com/AlexRollinsNFL",
+      "trustTier": 2,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 91,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.023
+    },
+    {
+      "id": "kc_yts_RgtJyKfaWc0",
+      "type": "video",
+      "videoId": "RgtJyKfaWc0",
+      "embeddable": false,
+      "title": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
+      "summary": "",
+      "duration": "8:01",
+      "imageUrl": "https://i.ytimg.com/vi/RgtJyKfaWc0/hqdefault.jpg",
+      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
+      "publishedAt": "2026-11-19T07:29:38.382Z",
+      "url": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4065,71 +4910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
-    },
-    {
-      "id": "kc_pwire_4242459_64860728",
-      "type": "article",
-      "title": "Smith (concussion) did not practice Wednesday.",
-      "summary": "Smith entered the league's concussion protocol during the Chiefs' Week 10 win over the Falcons. Even if he practices over the coming days, he would need to clear protocol in order to be available for Sunday's game agains",
-      "publishedAt": "2026-11-19T01:53:07.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4242459/trey-smith#:~:text=Smith%20(concussion)%20did%20not%20practice%20Wednesday%2C%20Matt",
-      "outletId": "chiefs_official",
-      "outletName": "Chiefs.com / Official Team",
-      "reporterId": "matt_mcmullen",
-      "reporterName": "Matt McMullen",
-      "author": "Matt McMullen",
-      "authorHandle": "@KCChiefs_Matt",
-      "authorProfileUrl": "https://x.com/KCChiefs_Matt",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
-    },
-    {
-      "id": "kc_pwire_4043041_64860528",
-      "type": "article",
-      "title": "Moore (ankle) did not participate in Wednesday's practice.",
-      "summary": "Moore did not play against the Falcons in Week 10 due to an ankle injury he sustained against the Jets in Week 9. He'll have two more chances to practice in at least a limited capacity, but if he cannot play against the",
-      "publishedAt": "2026-11-19T01:51:42.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4043041/jaylon-moore#:~:text=Moore%20(ankle)%20did%20not%20participate%20in%20Wednesday's",
-      "outletId": "chiefs_official",
-      "outletName": "Chiefs.com / Official Team",
-      "reporterId": "matt_mcmullen",
-      "reporterName": "Matt McMullen",
-      "author": "Matt McMullen",
-      "authorHandle": "@KCChiefs_Matt",
-      "authorProfileUrl": "https://x.com/KCChiefs_Matt",
-      "trustTier": 1,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.022
     },
     {
       "id": "kc_pfr_70041b3c4411",
@@ -4162,48 +4943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
-    },
-    {
-      "id": "kc_pwire_4430723_64857928",
-      "type": "article",
-      "title": "The Chiefs placed Wiley (ankle) on injured reserve Wednesday.",
-      "summary": "Wiley was carted to the locker room in the first quarter of the Chiefs' Week 10 win over the Falcons with an ankle injury. The tight end will now be on IR as he nurses his fractured ankle until at least the latter part o",
-      "publishedAt": "2026-11-19T01:06:48.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4430723/jared-wiley#:~:text=The%20Chiefs%20placed%20Wiley%20(ankle)%20on%20injured",
-      "outletId": "espn",
-      "outletName": "ChiefsDigest.com",
-      "reporterId": "ext_matt_derrick",
-      "reporterName": "Matt Derrick",
-      "author": "Matt Derrick",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4430723/jared-wiley#:~:text=The%20Chiefs%20placed%20Wiley%20(ankle)%20on%20injured",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [
-        {
-          "id": "4430723",
-          "name": "Jared Wiley",
-          "shortName": "J. Wiley",
-          "position": "TE",
-          "jersey": 12,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430723.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0206
     },
     {
       "id": "kc_pfr_d6e9815eec79",
@@ -4236,7 +4976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0205
     },
     {
       "id": "kc_pfr_54906770e9be",
@@ -4278,37 +5018,36 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0204
     },
     {
-      "id": "kc_yts_RgtJyKfaWc0",
+      "id": "kc_tyt_tlAfDmBHDGk",
       "type": "video",
-      "videoId": "RgtJyKfaWc0",
+      "category": "beat",
+      "videoId": "tlAfDmBHDGk",
       "embeddable": false,
-      "title": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
-      "summary": "",
-      "duration": "8:01",
-      "imageUrl": "https://i.ytimg.com/vi/RgtJyKfaWc0/hqdefault.jpg",
-      "imageAlt": "Arizona Cardinals vs Kansas City Chiefs | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:51:33.063Z",
-      "url": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=RgtJyKfaWc0",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "title": "Kids Ask NFL REPORTERS Hard Questions",
+      "summary": "Chiefs Jr. Reporter is back with another episode as the crew sits down with Voice of the Chiefs Mitch Holthus and Sr. Team Reporter Matt McMullen to learn more about what it takes to be a broadcaster and of course, ask i",
+      "imageUrl": "https://i.ytimg.com/vi/tlAfDmBHDGk/hqdefault.jpg",
+      "imageAlt": "Kids Ask NFL REPORTERS Hard Questions",
+      "publishedAt": "2026-11-18T21:00:10.000Z",
+      "url": "https://www.youtube.com/watch?v=tlAfDmBHDGk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=tlAfDmBHDGk",
+      "channel": "Kansas City Chiefs",
+      "outletId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "outletName": "Kansas City Chiefs",
+      "reporterId": "UC-hXefb6XBFSubWz6Ezf_lA",
+      "reporterName": "Kansas City Chiefs",
+      "author": "Kansas City Chiefs",
+      "authorHandle": "@KansasCityChiefs",
+      "authorProfileUrl": "https://www.youtube.com/@KansasCityChiefs",
       "trustTier": 1,
-      "wireSource": "youtube_search",
+      "wireSource": "team_youtube_atom",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4317,7 +5056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0202
     },
     {
       "id": "kc_pfr_b919e2b84697",
@@ -4359,7 +5098,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0193
     },
     {
       "id": "kc_rss_d149c5c8774f",
@@ -4393,7 +5132,50 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0194
+    },
+    {
+      "id": "kc_nfilm_unexpected_points_f6ad066398dc",
+      "type": "article",
+      "category": "film",
+      "title": "Adjusted Quarterback Efficiency: Post-Week 10",
+      "summary": "Joe Burrow stays on top, the return of Patrick Mahomes, and Josh Allen loses some touchdown juice",
+      "imageUrl": "https://substackcdn.com/image/fetch/$s_!PdQL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb782bb48-b322-45f7-a23a-3f0cb3b72328_2000x1333.jpeg",
+      "imageAlt": "Adjusted Quarterback Efficiency: Post-Week 10",
+      "publishedAt": "2026-11-18T14:17:02.000Z",
+      "url": "https://www.unexpectedpoints.com/p/adjusted-quarterback-efficiency-post-9df",
+      "outletId": "unexpected_points",
+      "outletName": "Unexpected Points",
+      "reporterId": "unexpected_points",
+      "reporterName": "Kevin Cole",
+      "author": "Kevin Cole",
+      "authorHandle": "@KevinCole___",
+      "authorProfileUrl": "https://www.unexpectedpoints.com",
+      "trustTier": 1,
+      "wireSource": "national_film_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0192
     },
     {
       "id": "kc_tx_97e3cdda20d3",
@@ -4453,7 +5235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0183
     },
     {
       "id": "kc_rss_ee0f68c241cd",
@@ -4487,7 +5269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0174
+      "storyRank": 0.0162
     },
     {
       "id": "kc_tx_6fa51d73531b",
@@ -4514,45 +5296,6 @@
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
-    },
-    {
-      "id": "kc_yts_IeXG9UkMiI0",
-      "type": "video",
-      "videoId": "IeXG9UkMiI0",
-      "embeddable": false,
-      "title": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
-      "summary": "",
-      "duration": "16:50",
-      "imageUrl": "https://i.ytimg.com/vi/IeXG9UkMiI0/hqdefault.jpg",
-      "imageAlt": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:51:33.063Z",
-      "url": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
-      "channel": "NFL",
-      "outletId": "nfl_official",
-      "outletName": "NFL",
-      "reporterId": "nfl_official",
-      "reporterName": "NFL",
-      "author": "NFL",
-      "authorHandle": "@NFL",
-      "authorProfileUrl": "https://www.youtube.com/@NFL",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4604,36 +5347,32 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0144
     },
     {
-      "id": "kc_rss_3efaf57d9781",
-      "type": "article",
-      "title": "Chiefs besiegen Falcons mit 35:13 – Patrick Mahomes wirft fünf Touchdowns",
-      "summary": "Mahomes verbuchte am Sonntag zum siebten Mal in seiner Karriere ein Spiel mit fünf Touchdown-Pässen",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/gxhbnlmcnl6t6fw8q8sx.jpg",
-      "imageAlt": "Chiefs besiegen Falcons mit 35:13 – Patrick Mahomes wirft fünf Touchdowns",
-      "publishedAt": "2026-11-16T19:18:59.000Z",
-      "url": "https://www.chiefs.com/news/chiefs-besiegen-falcons-mit-35-13-patrick-mahomes-wirft-fuenf-touchdowns",
-      "outletId": "chiefs_official",
-      "outletName": "chiefs.com Official",
-      "reporterId": "chiefs_official",
-      "reporterName": "chiefs.com Official",
-      "author": "chiefs.com Official",
-      "authorHandle": "@Chiefs",
-      "authorProfileUrl": "https://www.chiefs.com/news/",
+      "id": "kc_yts_IeXG9UkMiI0",
+      "type": "video",
+      "videoId": "IeXG9UkMiI0",
+      "embeddable": false,
+      "title": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "duration": "16:50",
+      "imageUrl": "https://i.ytimg.com/vi/IeXG9UkMiI0/hqdefault.jpg",
+      "imageAlt": "Kansas City Chiefs vs Atlanta Falcons Game Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-16T07:29:38.382Z",
+      "url": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=IeXG9UkMiI0",
+      "channel": "NFL",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
       "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "3139477",
-          "name": "Patrick Mahomes",
-          "shortName": "P. Mahomes",
-          "position": "QB",
-          "jersey": 15,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
-        }
-      ],
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -4647,7 +5386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0134
     },
     {
       "id": "kc_pfr_ba4355b2aff2",
@@ -4689,7 +5428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0107
     },
     {
       "id": "kc_tx_97818074884c",
@@ -4724,7 +5463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0104
     },
     {
       "id": "kc_pfr_28d3063a158b",
@@ -4766,7 +5505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0098
     },
     {
       "id": "kc_pfr_2c02575a2356",
@@ -4799,7 +5538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.009
     },
     {
       "id": "kc_tx_21a721bd802f",
@@ -4843,49 +5582,92 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0084
     },
     {
-      "id": "kc_pfr_ffbd53acab5b",
-      "type": "article",
-      "title": "NFL Practice Squad Updates: 11/11/26",
-      "summary": "Wednesday’s practice squad transactions: Arizona Cardinals Signed: OL Jamaree Salyer Baltimore Ravens Signed: TE Nick Vannett Buffalo Bills Signed: G Nick Broeker Released: CB AJ Woods Detroit Lions Signed: TE Jackson Meeks Kansas City Chie",
-      "imageUrl": "",
-      "publishedAt": "2026-11-12T01:54:57.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-11-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
+      "id": "kc_yt_dW9eTFzVS_U",
+      "type": "video",
+      "category": "film",
+      "videoId": "dW9eTFzVS_U",
+      "embeddable": true,
+      "title": "NFL Trade Deadline Winners: Jags GOING FOR IT, Week 10 Preview, & More | PFF NFL Show FULL EPISODE",
+      "summary": "Jac & Cris talk through the NFL Trade Deadline winners, including the Jaguars who seem to have their eyes set on a Super Bowl run after making multiple moves. Kirk Cousins also returns to the Vikings, and Chiefs trade fo",
+      "imageUrl": "https://i.ytimg.com/vi/dW9eTFzVS_U/hqdefault.jpg",
+      "imageAlt": "NFL Trade Deadline Winners: Jags GOING FOR IT, Week 10 Preview, & More | PFF NFL Show FULL EPISODE",
+      "publishedAt": "2026-11-11T23:55:12.000Z",
+      "url": "https://www.youtube.com/watch?v=dW9eTFzVS_U",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=dW9eTFzVS_U",
+      "channel": "Pro Football Focus",
+      "outletId": "pff_official_yt",
+      "outletName": "Pro Football Focus",
+      "reporterId": "pff_official_yt",
+      "reporterName": "Pro Football Focus",
+      "author": "Pro Football Focus",
+      "authorHandle": "@ProFootballFocus",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 20,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0018
+    },
+    {
+      "id": "kc_yt_dihTkfOOlU4",
+      "type": "video",
+      "category": "film",
+      "videoId": "dihTkfOOlU4",
+      "embeddable": true,
+      "title": "Chiefs BEEF UP WR room & Vikings get MUCH NEEDED QB - NFL Trade Deadline | PFF NFL Show",
+      "summary": "Jac & Cris wrap up their trade deadline talk discussing the Kirk Cousins trade back to Minnesota, and Josh Downs to Kansas City. Kirk Cousins is that missing piece the Vikings offense needed to compliment their scary def",
+      "imageUrl": "https://i.ytimg.com/vi/dihTkfOOlU4/hqdefault.jpg",
+      "imageAlt": "Chiefs BEEF UP WR room & Vikings get MUCH NEEDED QB - NFL Trade Deadline | PFF NFL Show",
+      "publishedAt": "2026-11-11T16:00:21.000Z",
+      "url": "https://www.youtube.com/watch?v=dihTkfOOlU4",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=dihTkfOOlU4",
+      "channel": "Pro Football Focus",
+      "outletId": "pff_official_yt",
+      "outletName": "Pro Football Focus",
+      "reporterId": "pff_official_yt",
+      "reporterName": "Pro Football Focus",
+      "author": "Pro Football Focus",
+      "authorHandle": "@ProFootballFocus",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
       "mentionedPlayers": [
         {
-          "id": "4871063",
-          "name": "Peter Woods",
-          "shortName": "P. Woods",
-          "position": "DT",
-          "jersey": 99,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4871063.png"
+          "id": "4688813",
+          "name": "Josh Downs",
+          "shortName": "J. Downs",
+          "position": "WR",
+          "jersey": 12,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4688813.png"
         }
       ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 90,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0079
     },
     {
       "id": "kc_tx_75b684dcc425",
@@ -4929,7 +5711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0076
     },
     {
       "id": "kc_tx_3b74b4cf59f2",
@@ -4964,7 +5746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.007
     },
     {
       "id": "kc_tx_39e7074ecdf8",
@@ -5008,7 +5790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0055
     },
     {
       "id": "kc_tx_787871f97810",
@@ -5043,7 +5825,62 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0048
+    },
+    {
+      "id": "kc_yt_jHbRQmuR274",
+      "type": "video",
+      "category": "film",
+      "videoId": "jHbRQmuR274",
+      "embeddable": true,
+      "title": "Seahawks DOMINATE the Chiefs. Here’s how they did it.",
+      "summary": "The Seattle Seahawks ruined the Kansas City Chiefs' undefeated record on Sunday Night Football in Week 7. Kenneth Walker had just 36 rushing yards, and Patrick Mahomes failed to reach the red zone. Shawn Syed takes a loo",
+      "imageUrl": "https://i.ytimg.com/vi/jHbRQmuR274/hqdefault.jpg",
+      "imageAlt": "Seahawks DOMINATE the Chiefs. Here’s how they did it.",
+      "publishedAt": "2026-10-26T21:03:22.000Z",
+      "url": "https://www.youtube.com/watch?v=jHbRQmuR274",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=jHbRQmuR274",
+      "channel": "SumerSports",
+      "outletId": "sumersports_yt",
+      "outletName": "SumerSports",
+      "reporterId": "sumersports_yt",
+      "reporterName": "SumerSports",
+      "author": "SumerSports",
+      "authorHandle": "@SumerSports",
+      "authorProfileUrl": "https://x.com/SumerSports",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "3139477",
+          "name": "Patrick Mahomes",
+          "shortName": "P. Mahomes",
+          "position": "QB",
+          "jersey": 15,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png"
+        },
+        {
+          "id": "4567048",
+          "name": "Kenneth Walker III",
+          "shortName": "K. Walker III",
+          "position": "RB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567048.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 91,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0028
     },
     {
       "id": "kc_rss_2060c522dd71",

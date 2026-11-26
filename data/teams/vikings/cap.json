@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:02.124Z",
+  "updatedAt": "2026-11-26T07:25:28.876Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/minnesota-vikings",
   "spotracUrl": "https://www.spotrac.com/nfl/minnesota-vikings/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314384729,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 309480304,
+      "totalCapLiabilities": 309384054,
       "top51": 242676194,
-      "teamCapSpace": 4904425,
-      "otcRawTeamCapSpace": 4904425,
-      "effectiveCapSpace": 4904425,
-      "activeCapSpending": 252182927,
+      "teamCapSpace": 5000675,
+      "otcRawTeamCapSpace": 5000675,
+      "effectiveCapSpace": 5000675,
+      "activeCapSpending": 252059177,
       "offenseSpend": 153128467,
-      "defenseSpend": 95559305,
+      "defenseSpend": 95435555,
       "specialSpend": 3495155,
-      "deadMoneyTotal": 57297377,
+      "deadMoneyTotal": 57324877,
       "injuredReserveTotal": 17753215,
-      "practiceSquadTotal": 3303339,
+      "practiceSquadTotal": 3179589,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 21056554,
+      "reserveAndPsTotal": 20932804,
       "topDeadMoneyEntries": [
         {
           "name": "Jonathan Allen",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 54,
-      "totalSignedCount": 78
+      "totalSignedCount": 77
     },
     "2027": {
       "year": 2027,
@@ -280,8 +280,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/minnesota-vikings",
-    "summary": "Minnesota Vikings hold $4.90M in 2026 OverTheCap space ($4.90M effective) and +$24.87M projected for 2027.",
-    "executiveSummary": "Nolan Teasley and the Vikings front office hold $4.90M in gross 2026 cap space ($4.90M effective), while 2027 currently projects at +$24.87M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Justin Jefferson, Andrew Van Ginkel, Will Fries, T.J. Hockenson.",
+    "summary": "Minnesota Vikings hold $5.00M in 2026 OverTheCap space ($5.00M effective) and +$24.87M projected for 2027.",
+    "executiveSummary": "Nolan Teasley and the Vikings front office hold $5.00M in gross 2026 cap space ($5.00M effective), while 2027 currently projects at +$24.87M under an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Justin Jefferson, Andrew Van Ginkel, Will Fries, T.J. Hockenson.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. +$24.87M 2027 Projection)",

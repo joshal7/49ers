@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:39.998Z",
+  "updatedAt": "2026-11-26T07:28:11.214Z",
   "windowDays": 7,
-  "totalEpisodes": 21,
+  "totalEpisodes": 19,
   "shows": [
     {
       "id": "ravens_locked_on_ravens",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/ab04e7fc-0340-470c-8ca2-aea70183e095/636a6b83-f979-4aeb-9f44-aea70183e0a3/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-ravens-lounge/id1142013759?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/e8/b1/39/e8b13935-87d5-880f-dc69-94bc622a4675/mza_6175310643002630837.jpg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "ravens_the_vault",
@@ -37,7 +37,7 @@
       "feedUrl": "https://rss.pdrl.fm/0d589c/feeds.simplecast.com/FLv6o1WR",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-vault-a-podcast-covering-the-baltimore-ravens/id1635836036?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/6d/b3/9c/6db39c3f-b8f3-cade-f035-efbc82eb9f01/mza_1658566081298659149.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "ravens_exit_52_podcast",
@@ -432,46 +432,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-vault-a-podcast-covering-the-baltimore-ravens/id1635836036?uo=4",
       "feedUrl": "https://rss.pdrl.fm/0d589c/feeds.simplecast.com/FLv6o1WR",
       "audioStreamUrl": "https://pdrl.fm/0d589c/pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/47ef9062-c4e6-4d03-93c4-6a93c9e51d54/episodes/afc3fde3-bc35-40d4-8054-573eb553393a/audio/128/default.mp3?aid=rss_feed&awCollectionId=47ef9062-c4e6-4d03-93c4-6a93c9e51d54&awEpisodeId=afc3fde3-bc35-40d4-8054-573eb553393a&feed=FLv6o1WR"
-    },
-    {
-      "id": "pod_ravens_the_ravens_lounge_1000802796227",
-      "trackId": 1000802796227,
-      "collectionId": 1142013759,
-      "showId": "ravens_the_ravens_lounge",
-      "showName": "The Ravens Lounge",
-      "showFullTitle": "The Ravens Lounge",
-      "hosts": "Baltimore Ravens",
-      "network": "Baltimore Ravens",
-      "title": "Talking Run Game Issues, Defensive Fixes, Zay Flowers & More",
-      "summary": "Ravens insiders Ryan Mink and Garrett Downing discuss why the run game has slowed, what the defense is doing to try to break through, how Zay Flowers is handling a frustrating turn of the season, the latest injury updates, and more as the Ravens prepare to take on the Caroli",
-      "publishedAt": "2026-11-18T22:04:22.000Z",
-      "durationMinutes": 34,
-      "durationDisplay": "34 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/44/b3/fe/44b3fe84-5bcd-4fc6-7c61-437d414be9ba/mza_7510458525417543066.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/talking-run-game-issues-defensive-fixes-zay-flowers-more/id1142013759?i=1000802796227&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-ravens-lounge/id1142013759?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/ab04e7fc-0340-470c-8ca2-aea70183e095/636a6b83-f979-4aeb-9f44-aea70183e0a3/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/ab04e7fc-0340-470c-8ca2-aea70183e095/7a41b305-0394-412a-98cc-b5060163056e/audio.mp3?utm_source=Podcast&in_playlist=636a6b83-f979-4aeb-9f44-aea70183e0a3"
-    },
-    {
-      "id": "pod_ravens_the_vault_1000802788658",
-      "trackId": 1000802788658,
-      "collectionId": 1635836036,
-      "showId": "ravens_the_vault",
-      "showName": "The Vault",
-      "showFullTitle": "The Vault: A Podcast Covering the Baltimore Ravens",
-      "hosts": "Bleav",
-      "network": "Bleav",
-      "title": "Ravens’ Jesse Minter & Declan Doyle RIPPED For Coaching FAILURES | 1298",
-      "summary": "Try Kalshi (the prediction market for sports, news & more) today! Trade $25, get $25 when you sign up with code BLEAV: https://kalshi.com/r/BLEAV The Vault's first-ever apparel line is now available to the public! Enjoy: https://www.thevaultpod.com/ How to become an official",
-      "publishedAt": "2026-11-18T21:07:00.000Z",
-      "durationMinutes": 120,
-      "durationDisplay": "120 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/6d/b3/9c/6db39c3f-b8f3-cade-f035-efbc82eb9f01/mza_1658566081298659149.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/ravens-jesse-minter-declan-doyle-ripped-for-coaching/id1635836036?i=1000802788658&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-vault-a-podcast-covering-the-baltimore-ravens/id1635836036?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/0d589c/feeds.simplecast.com/FLv6o1WR",
-      "audioStreamUrl": "https://pdrl.fm/0d589c/pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/47ef9062-c4e6-4d03-93c4-6a93c9e51d54/episodes/1bce2eaf-8fcd-4bbd-b9bc-10dde6838cdd/audio/128/default.mp3?aid=rss_feed&awCollectionId=47ef9062-c4e6-4d03-93c4-6a93c9e51d54&awEpisodeId=1bce2eaf-8fcd-4bbd-b9bc-10dde6838cdd&feed=FLv6o1WR"
     }
   ]
 }

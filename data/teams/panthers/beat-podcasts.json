@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:10.539Z",
+  "updatedAt": "2026-11-26T07:27:19.612Z",
   "windowDays": 7,
-  "totalEpisodes": 11,
+  "totalEpisodes": 10,
   "shows": [
     {
       "id": "panthers_locked_on_panthers",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feed.cdnstream1.com/zjb/feed/download/99/c9/e8/99c9e89a-3322-4455-8c08-b882e03ba2af.xml",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/panthers-playbook/id1697162650?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/0c/37/09/0c37094d-1056-f0cd-c7f0-2d7e2756f82a/mza_7731964394525295609.png/600x600bb.jpg",
-      "episodeCount7d": 2
+      "episodeCount7d": 1
     },
     {
       "id": "panthers_bleav_in_carolina_panthers",
@@ -240,26 +240,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/e1272457-449e-4a9f-8fca-79a6ad91290b/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=e1272457-449e-4a9f-8fca-79a6ad91290b&feed=3JTeh8Y2"
-    },
-    {
-      "id": "pod_panthers_panthers_playbook_1000802870903",
-      "trackId": 1000802870903,
-      "collectionId": 1697162650,
-      "showId": "panthers_panthers_playbook",
-      "showName": "Panthers Playbook",
-      "showFullTitle": "Panthers Playbook",
-      "hosts": "99.9 The Fan | Raleigh, North Carolina",
-      "network": "99.9 The Fan | Raleigh, North Carolina",
-      "title": "Carolina Panthers need to show improvement against the Baltimore Ravens",
-      "summary": "Dennis Cox and Chris Lea share their thoughts on the Carolina Panthers facing the Baltimore Ravens, the improvements on defense with interim defensive coordinator Todd Wash, and where Bryce Young and offensive coordinator Brad Idzik need to get better. Panthers Playbook is s",
-      "publishedAt": "2026-11-19T06:22:26.000Z",
-      "durationMinutes": 25,
-      "durationDisplay": "25 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/0c/37/09/0c37094d-1056-f0cd-c7f0-2d7e2756f82a/mza_7731964394525295609.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/carolina-panthers-need-to-show-improvement-against/id1697162650?i=1000802870903&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/panthers-playbook/id1697162650?uo=4",
-      "feedUrl": "https://feed.cdnstream1.com/zjb/feed/download/99/c9/e8/99c9e89a-3322-4455-8c08-b882e03ba2af.xml",
-      "audioStreamUrl": "https://pds.cdnstream1.com/p/capitolbroadcasting/panthers-playbook/carolina-panthers-need-t-e26720/audio.mp3"
     }
   ]
 }

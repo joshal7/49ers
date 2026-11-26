@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:58.051Z",
+  "updatedAt": "2026-11-26T07:28:40.726Z",
   "windowDays": 7,
-  "totalEpisodes": 28,
+  "totalEpisodes": 27,
   "shows": [
     {
       "id": "steelers_locked_on_steelers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/cc/b2/4c/ccb24c5f-7d57-d782-12b3-b4de95266b7d/mza_4050704953803715613.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "steelers_steel_curtain_network",
@@ -592,26 +592,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
       "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/cd1f3b/lockedon.simplecastaudio.com/d3024f78-38ca-429c-bc85-4ba27de4a8a7/episodes/a4156c7e-23eb-4cea-b3a2-3d19697d3586/audio/128/default.mp3?aid=rss_feed&awCollectionId=d3024f78-38ca-429c-bc85-4ba27de4a8a7&awEpisodeId=a4156c7e-23eb-4cea-b3a2-3d19697d3586&feed=y_l5uReM"
-    },
-    {
-      "id": "pod_steelers_locked_on_steelers_1000802848954",
-      "trackId": 1000802848954,
-      "collectionId": 1140522532,
-      "showId": "steelers_locked_on_steelers",
-      "showName": "Locked On Steelers",
-      "showFullTitle": "Locked On Steelers – Daily Podcast On The Pittsburgh Steelers",
-      "hosts": "Locked On Podcast Network, Christopher Carter",
-      "network": "Locked On Podcast Network, Christopher Carter",
-      "title": "STEELERS SQUAD SHOW: 61-Year Philadelphia CURSE Looms Over Pittsburgh—Can History BREAK?",
-      "summary": "The Steelers haven’t beaten the Eagles in Philadelphia since 1965. After a humbling 38–18 loss to Cincinnati, can Pittsburgh end that drought, or will Sunday deepen the doubts? Host Tyler Feldman is joined by former Steelers offensive lineman Wayne Gandy and sports journalis",
-      "publishedAt": "2026-11-19T03:20:42.000Z",
-      "durationMinutes": 61,
-      "durationDisplay": "61 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/91/13/b4/9113b44b-8ce5-d4a7-5415-191f63b66e6f/mza_11299923407401214194.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/steelers-squad-show-61-year-philadelphia-curse-looms/id1140522532?i=1000802848954&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/cd1f3b/lockedon.simplecastaudio.com/d3024f78-38ca-429c-bc85-4ba27de4a8a7/episodes/c447aba2-05f8-4064-9aec-e3dc6b5f90ce/audio/128/default.mp3?aid=rss_feed&awCollectionId=d3024f78-38ca-429c-bc85-4ba27de4a8a7&awEpisodeId=c447aba2-05f8-4064-9aec-e3dc6b5f90ce&feed=y_l5uReM"
     }
   ]
 }

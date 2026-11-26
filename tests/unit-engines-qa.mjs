@@ -24678,194 +24678,366 @@ await testAsync(
 );
 
 await testAsync(
-  'Option B Gemini Search Grounded X-Status Discovery: SF 2x First-Priority Quota, Even 1x Across 31 Clubs, Vertex Redirect Unwrapping & 429 Failover',
+  'All-32-Team Free Film/Analytics/Fun Sources & 5 New Filtering Rules (UULF/UUSH, Commercial Strip, Substack Paywall Gate, Fun Short Scarcity & Cross-Sport Guard)',
   async () => {
+    const { selectTeamLocalXHandles } = await import('../scripts/lib/xBeatMediaFetcher.mjs');
     const {
-      GEMINI_X_DISCOVERY_QUOTA_POLICY,
-      resolveGeminiXDiscoveryPlan,
-      extractXStatusUrlsFromGeminiResponse,
-      discoverXStatusesViaGeminiSearch,
-      resetGeminiXDiscoveryRateLimitsForTest,
-      selectTeamLocalXHandles
-    } = await import('../scripts/lib/xBeatMediaFetcher.mjs');
+      NATIONAL_YOUTUBE_FEEDS,
+      NATIONAL_FILM_ANALYTICS_RSS_FEEDS,
+      TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR,
+      buildYouTubeFeedUrl
+    } = await import('../scripts/lib/teamMediaFeeds.mjs');
+    const {
+      isCommercialFantasyOrBettingFiller,
+      isPaywalledSubstackOrNewsletterEntry
+    } = await import('../src/engine/linkIntegrity.js');
+    const {
+      classifyNewsItemCategory,
+      classifyYouTubeShortSignal
+    } = await import('../src/engine/breakingClassifier.js');
     const { ALL_NFL_TEAMS, getTeamByAbbr } = await import('../src/config/teamRegistry.js');
 
-    // 1. SF MUST be index 0 in ALL_NFL_TEAMS so SF always runs FIRST on best tokens
-    assert.equal(ALL_NFL_TEAMS[0].abbr, 'SF', 'SF must be first in ALL_NFL_TEAMS so 49ers always gets best daily Gemini tokens first');
+    // 1. SF MUST be index 0 in ALL_NFL_TEAMS so SF always runs FIRST on best daily Gemini tokens
+    assert.equal(ALL_NFL_TEAMS[0].abbr, 'SF', 'SF must be first in ALL_NFL_TEAMS');
 
-    // 2. Expanded local handle pool (18) prioritizes explicit film & video_pod creators (never hijacked by beat podcast bios!)
+    // 2. Expanded local X handle pool (18) prioritizes explicit film & video_pod creators
     const sfReps = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'teams', '49ers', 'reporters.json'), 'utf8'));
     const sfLocal18 = selectTeamLocalXHandles(getTeamByAbbr('SF'), sfReps, 18).map(h => h.toLowerCase());
     for (const h of ['sulligenthub', 'grustasbrady', 'statsonfire']) {
-      assert.ok(sfLocal18.includes(h), `SF expanded local handle pool (18) must include @${h} (got: ${sfLocal18.join(', ')})`);
+      assert.ok(sfLocal18.includes(h), `SF expanded local handle pool (18) must include @${h}`);
     }
 
-    // 3. SF gets 2x daily quota (am + pm) on best tokens; other 31 clubs get even 1x daily quota on Flash-first cascade
-    const amPtMs = Date.parse('2026-11-25T17:30:00Z'); // 09:30 AM PST
-    const pmPtMs = Date.parse('2026-11-26T00:30:00Z'); // 04:30 PM PST (same PT date 2026-11-25!)
-    const nextDayAmPtMs = Date.parse('2026-11-26T17:30:00Z'); // 09:30 AM PST next day
-
-    const sfAmPlan = resolveGeminiXDiscoveryPlan({ scope: 'team', team: getTeamByAbbr('SF'), nowMs: amPtMs, prevMeta: null, hasApiKey: true });
-    assert.equal(sfAmPlan.shouldRun, true);
-    assert.equal(sfAmPlan.dailyQuota, 2, 'SF must receive 2x daily X-discovery quota');
-    assert.equal(sfAmPlan.slotKey, 'am');
-    assert.equal(sfAmPlan.modelCascade[0], 'gemini-4-hydrogen', 'SF must get best frontier tokens first');
-
-    // Same AM slot on next 30-min tick spends 0 calls
-    const sfAmRepeat = resolveGeminiXDiscoveryPlan({
-      scope: 'team',
-      team: getTeamByAbbr('SF'),
-      nowMs: amPtMs + 30 * 60_000,
-      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am'] },
-      hasApiKey: true
-    });
-    assert.equal(sfAmRepeat.shouldRun, false, 'Completed SF AM slot must spend 0 calls on subsequent 30-min ticks');
-
-    // PM slot unlocks 2nd daily call for SF on same PT date
-    const sfPmPlan = resolveGeminiXDiscoveryPlan({
-      scope: 'team',
-      team: getTeamByAbbr('SF'),
-      nowMs: pmPtMs,
-      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am'] },
-      hasApiKey: true
-    });
-    assert.equal(sfPmPlan.shouldRun, true, 'SF PM slot must unlock 2nd daily call');
-    assert.equal(sfPmPlan.slotKey, 'pm');
-
-    // After both AM and PM complete, SF spends 0 calls until midnight PT reset
-    const sfDoneToday = resolveGeminiXDiscoveryPlan({
-      scope: 'team',
-      team: getTeamByAbbr('SF'),
-      nowMs: pmPtMs + 30 * 60_000,
-      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am', 'pm'] },
-      hasApiKey: true
-    });
-    assert.equal(sfDoneToday.shouldRun, false);
-
-    // Next PT day resets cleanly
-    const sfNextDay = resolveGeminiXDiscoveryPlan({
-      scope: 'team',
-      team: getTeamByAbbr('SF'),
-      nowMs: nextDayAmPtMs,
-      prevMeta: { datePt: sfAmPlan.datePt, completedSlots: ['am', 'pm'] },
-      hasApiKey: true
-    });
-    assert.equal(sfNextDay.shouldRun, true, 'Daily quota must reset cleanly at midnight PT');
-
-    // Verify ALL 31 non-SF clubs get strictly even 1x daily quota and Flash-first cascade (never touching gemini-4-hydrogen)
-    for (const club of ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF')) {
-      const plan = resolveGeminiXDiscoveryPlan({ scope: 'team', team: club, nowMs: amPtMs, prevMeta: null, hasApiKey: true });
-      assert.equal(plan.dailyQuota, 1, `${club.abbr} must have even 1x daily quota (half of SF 2x)`);
-      assert.equal(plan.slotKey, 'daily', `${club.abbr} must use single daily slot`);
-      assert.ok(!plan.modelCascade.includes('gemini-4-hydrogen'), `${club.abbr} Flash-first discovery must preserve gemini-4-hydrogen for SF & briefs`);
-      const done = resolveGeminiXDiscoveryPlan({
-        scope: 'team',
-        team: club,
-        nowMs: pmPtMs,
-        prevMeta: { datePt: plan.datePt, completedSlots: ['daily'] },
-        hasApiKey: true
-      });
-      assert.equal(done.shouldRun, false, `${club.abbr} must spend 0 calls once daily slot is complete`);
+    // 3. ALL 32 NFL clubs must have a verified official YouTube channel with UULF/UUSH support
+    assert.equal(Object.keys(TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR).length, 32, 'All 32 clubs must have curated YouTube feeds');
+    for (const club of ALL_NFL_TEAMS) {
+      const list = TEAM_CURATED_YOUTUBE_CHANNELS_BY_ABBR[club.abbr] || [];
+      assert.ok(list.length >= 1, `${club.abbr} must have at least its official YouTube channel`);
+      assert.ok(/^UC[A-Za-z0-9_-]{20,}$/.test(list[0].id), `${club.abbr} official YouTube ID must be a valid UC... channel ID`);
+      assert.ok(buildYouTubeFeedUrl(list[0].id, 'uulf').includes('playlist_id=UULF'), 'UULF helper must build long-form playlist URL');
+      assert.ok(buildYouTubeFeedUrl(list[0].id, 'uush').includes('playlist_id=UUSH'), 'UUSH helper must build Shorts playlist URL');
     }
 
-    // Shared national pool gets 2 daily sweeps (AM = film videos, PM = analytics charts)
-    const natAm = resolveGeminiXDiscoveryPlan({ scope: 'national', nowMs: amPtMs, prevMeta: null, hasApiKey: true });
-    assert.equal(natAm.dailyQuota, 2);
-    assert.equal(natAm.slotKey, 'am');
-    assert.ok(GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalVideoHandles.includes('BaldyNFL'));
-    assert.ok(GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalAnalyticsChartHandles.includes('throwthedamball'));
-    assert.ok(GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalAnalyticsChartHandles.includes('ghatz_28'));
+    // 4. National YouTube (`UULF` for @NFL + All_22_Films, Jackson Krueger, Kurt Warner, PFF, SumerSports, NFL Films) & Analytics RSS
+    const nflYt = NATIONAL_YOUTUBE_FEEDS.find(f => f.id === 'nfl_official');
+    assert.equal(nflYt?.feedMode, 'uulf', '@NFL feed must use UULF long-form playlist so meme Shorts cannot crowd out highlights');
+    for (const reqYt of ['all_22_films', 'jackson_krueger', 'kurt_warner_studyball', 'pff_official_yt', 'nfl_films']) {
+      assert.ok(NATIONAL_YOUTUBE_FEEDS.some(f => f.id === reqYt), `NATIONAL_YOUTUBE_FEEDS must include ${reqYt}`);
+    }
+    for (const reqRss of ['matchquarters', 'pff_news', 'unexpected_points', 'coach_dan_casey']) {
+      assert.ok(NATIONAL_FILM_ANALYTICS_RSS_FEEDS.some(f => f.id === reqRss), `NATIONAL_FILM_ANALYTICS_RSS_FEEDS must include ${reqRss}`);
+    }
+    assert.ok(!NATIONAL_FILM_ANALYTICS_RSS_FEEDS.some(f => /trenchwarfare/i.test(f.url)), 'Hard-paywalled Trench Warfare Substack must stay excluded');
 
-    // 4. extractXStatusUrlsFromGeminiResponse ignores thought parts, deduplicates statusIds, and unwraps Vertex redirects
-    const mockGeminiJson = {
-      candidates: [
-        {
-          content: {
-            parts: [
-              { thought: true, text: 'Internal thinking: https://x.com/FakeThought/status/2199000000000000999' },
-              {
-                text: 'https://x.com/BaldyNFL/status/2199000000000000002\nhttps://twitter.com/baldynfl/status/2199000000000000002\nhttps://x.com/SulligentHUB/status/2199000000000000005'
-              }
-            ]
-          },
-          groundingMetadata: {
-            groundingChunks: [
-              {
-                web: {
-                  uri: 'https://vertexaisearch.cloud.google.com/grounding-api-redirect/MOCK_REDIRECT_DIETER',
-                  title: 'Dieter Kurtenbach on X: "Dump truck on the move"'
-                }
-              }
-            ]
-          }
+    // 5. Filter 1: Strict commercial betting/parlay/fantasy/tool-promo strip EVEN when team name is present
+    assert.equal(
+      isCommercialFantasyOrBettingFiller(
+        'Thanksgiving Same-Game Parlay: San Francisco 49ers vs. Seattle Seahawks best bets',
+        '',
+        'https://www.pff.com/news/bet-49ers-seahawks-thanksgiving'
+      ),
+      true,
+      'Must strip PFF Same-Game Parlay even when 49ers is named'
+    );
+    assert.equal(
+      isCommercialFantasyOrBettingFiller(
+        'Seahawks vs. 49ers Fantasy Football Worksheet, Week 12',
+        '',
+        'https://www.sharpfootballanalysis.com/fantasy/seahawks-49ers'
+      ),
+      true,
+      'Must strip Fantasy Football Worksheet even when 49ers is named'
+    );
+    assert.equal(
+      isCommercialFantasyOrBettingFiller(
+        'Happy Draftsgiving: Unlock the full PFF Mock Draft Simulator for free',
+        '',
+        'https://www.pff.com/news/free-pff-mock-draft-simulator/'
+      ),
+      true,
+      'Must strip SaaS mock draft simulator tool promos'
+    );
+    assert.equal(
+      isCommercialFantasyOrBettingFiller(
+        'NFL Week 12 Recap: 49ers offensive line dominates Vikings with 84.2 PFF pass-block grade',
+        'Brock Purdy posted +0.44 EPA/play against Brian Flores blitzes.',
+        'https://www.pff.com/news/nfl-week-12-recap-49ers-vikings'
+      ),
+      false,
+      'Must preserve real PFF game recaps and grades'
+    );
+
+    // 6. Filter 2: Per-entry Substack paywall gate
+    assert.equal(
+      isPaywalledSubstackOrNewsletterEntry(
+        '<item><link>https://trenchwarfare.substack.com/p/test</link></item>',
+        '<p>This post is for paid subscribers only. Upgrade to paid to read the full breakdown.</p>'
+      ),
+      true,
+      'Must reject explicit paid-subscriber Substack entries'
+    );
+    assert.equal(
+      isPaywalledSubstackOrNewsletterEntry(
+        '<item><link>https://unexpectedpoints.substack.com/p/stub</link></item>',
+        '<p>Short preview stub. Subscribe to read more.</p>'
+      ),
+      true,
+      'Must reject short Substack preview stubs'
+    );
+    assert.equal(
+      isPaywalledSubstackOrNewsletterEntry(
+        '<item><link>https://www.matchquarters.com/p/diner-sim</link></item>',
+        `<p>${'Full free defensive scheme breakdown with All-22 coverage diagrams and blitz paths. '.repeat(40)}</p>`
+      ),
+      false,
+      'Must allow full-length free analytical posts'
+    );
+
+    // 7. Filter 3: Selective YouTube Shorts gate (rejects fluff/hot-takes/other-sport, admits film craft & fun locker-room/Micd Up)
+    assert.equal(classifyYouTubeShortSignal('Getting into the spirit 🦃 #shorts').allowed, false, 'Must reject holiday/vibe Short');
+    assert.equal(classifyYouTubeShortSignal('Eating good after the W 😭 #shorts').allowed, false, 'Must reject meme eating Short');
+    assert.equal(classifyYouTubeShortSignal('Will Brock Purdy Be a Hall of Famer? #shorts').allowed, false, 'Must reject hot-take debate Short');
+    assert.equal(
+      classifyYouTubeShortSignal('The Warriors protect homecourt against the Kings! #shorts').allowed,
+      false,
+      'Must reject NBA/other-sport Short'
+    );
+    const cosellShort = classifyYouTubeShortSignal('Cosell: 49ers, Nick Bosa Improved Pass Rush vs Vikings #shorts');
+    assert.equal(cosellShort.allowed, true);
+    assert.equal(cosellShort.kind, 'film', 'Analyst pass-rush craft Short must classify as film');
+
+    const funJerseyShort = classifyYouTubeShortSignal('Mike Evans checking Stefon Diggs jersey on the sideline #shorts');
+    assert.equal(funJerseyShort.allowed, true);
+    assert.equal(funJerseyShort.kind, 'fun', 'Authentic sideline jersey-check interaction must classify as fun');
+
+    const micdUpShort = classifyYouTubeShortSignal("Mic'd Up: Fred Warner and George Kittle locker room game ball speech");
+    assert.equal(micdUpShort.allowed, true);
+    assert.equal(micdUpShort.kind, 'fun');
+
+    // 8. Filter 4: New film creators route to `film`; fun Micd Up / locker-room clips stay out of `film`
+    assert.equal(
+      classifyNewsItemCategory({
+        type: 'video',
+        videoId: 'abc12345678',
+        title: 'WHEN JARED GOFF CLEARED VITA VEA - WK 11 QUICK CUT',
+        outletName: 'All_22_Films',
+        author: 'All_22_Films'
+      }),
+      'film',
+      'All_22_Films quick cuts must route to Film & Trench'
+    );
+    assert.equal(
+      classifyNewsItemCategory({
+        type: 'article',
+        title: 'Week 11 Sunday Night 49ers-Vikings: Advanced Review',
+        outletId: 'unexpected_points',
+        outletName: 'Unexpected Points',
+        author: 'Kevin Cole'
+      }),
+      'film',
+      'Unexpected Points analytical review articles must route to Film & Trench'
+    );
+    assert.equal(
+      classifyNewsItemCategory({
+        type: 'video',
+        videoId: 'fun12345678',
+        isFunHighlightClip: true,
+        title: "Mic'd Up: Warner and Kittle Take Over Mexico City",
+        outletName: 'San Francisco 49ers',
+        author: 'San Francisco 49ers'
+      }),
+      'beat',
+      'Fun Micd Up / locker-room video clips must stay in Highlights & Videos / All, never polluting Film & Trench'
+    );
+
+    // 9. Foreign-teammate season-ending clause regression (Austen Pleasants IR return blurb citing Colton McKivitz)
+    const { stripForeignTeammateSeasonEndingClauses } = await import('../src/engine/injuryProbabilityModel.js');
+    const pleasantsBlurb =
+      "With Colton McKivitz (ankle) out for the rest of the season, Pleasants would be a candidate to start at right tackle once he's removed from IR.";
+    assert.ok(
+      !/out for the rest of the season/i.test(stripForeignTeammateSeasonEndingClauses(pleasantsBlurb, 'Austen Pleasants')),
+      'Must strip foreign teammate season-ending context clause for Austen Pleasants'
+    );
+    assert.ok(
+      /out for the rest of the season/i.test(stripForeignTeammateSeasonEndingClauses(pleasantsBlurb, 'Colton McKivitz')),
+      'Must preserve season-ending clause when evaluated for Colton McKivitz himself'
+    );
+  }
+);
+
+await testAsync(
+  'Paid Tier 1 Gemini Free-Tier Overflow Budget Guard, Gmail SMTP Alert Milestones & Concurrency-Safe Quota Mutex',
+  async () => {
+    const {
+      isModelAllowedForOverflow,
+      resolveOverflowBudgetConfig,
+      normalizeOverflowBudgetState,
+      canUseOverflowGemini,
+      recordOverflowGeminiCall,
+      createNodeOverflowBudgetController
+    } = await import('../scripts/lib/geminiOverflowBudgetGuard.mjs');
+    const {
+      normalizeGeminiQuotaState,
+      selectBestAvailableModel,
+      reserveGeminiQuotaSlot,
+      recordGeminiCallOutcome,
+      createSerializedQuotaMutex
+    } = await import('../src/engine/geminiQuotaManager.js');
+
+    // 1. Model allowlist strictly blocks expensive Pro / Carbon / Argon / Neon / Veo models
+    assert.equal(isModelAllowedForOverflow('gemini-4-hydrogen'), true);
+    assert.equal(isModelAllowedForOverflow('gemini-3.8-flash'), true);
+    assert.equal(isModelAllowedForOverflow('gemini-3.5-flash-lite'), true);
+    assert.equal(isModelAllowedForOverflow('gemini-3-pro'), false, 'Must block Pro models on Paid Tier 1 overflow');
+    assert.equal(isModelAllowedForOverflow('gemini-4-carbon'), false, 'Must block Carbon models on Paid Tier 1 overflow');
+    assert.equal(isModelAllowedForOverflow('gemini-4-argon'), false, 'Must block Argon models on Paid Tier 1 overflow');
+    assert.equal(isModelAllowedForOverflow('veo-3'), false);
+
+    // 2. Hard cap clamping prevents accidental $50/mo misconfiguration
+    const clampedCfg = resolveOverflowBudgetConfig({ monthlySpendCapUsd: 50 }, {});
+    assert.equal(clampedCfg.monthlySpendCapUsd, 2.0, 'Without explicit override, monthly cap must hard-clamp to <= $2.00');
+    const defaultCfg = resolveOverflowBudgetConfig({}, {});
+    assert.equal(defaultCfg.monthlySpendCapUsd, 0.5, 'Default monthly overflow cap must be $0.50');
+    assert.equal(defaultCfg.dailyCallsCap, 25, 'Default daily overflow fuse must be 25 calls/day');
+    assert.equal(defaultCfg.monthlySearchQueriesCap, 4000, 'Search query cap must sit 1,000 below Google 5,000 free cap');
+
+    // 3. Alert lifecycle: first overflow -> 67% cap -> projected overrun -> urgent cap exceeded -> dedup on repeat!
+    const day5Ms = Date.parse('2026-11-05T19:00:00Z'); // Nov 5 PT (Day 5/30)
+    let st = normalizeOverflowBudgetState(null, day5Ms, defaultCfg);
+    assert.equal(st.prepaidBalanceUsd, 5.0);
+
+    // First small overflow call -> triggers `first_overflow_month` ONLY
+    let r = recordOverflowGeminiCall(st, {
+      modelId: 'gemini-3.8-flash',
+      inputTokens: 10_000,
+      outputTokens: 2_000,
+      teamAbbr: 'SF',
+      nowMs: day5Ms,
+      config: defaultCfg
+    });
+    st = r.state;
+    assert.ok(r.alerts.some(a => a.key === 'first_overflow_month'), 'First overflow call of month must notify user');
+    assert.equal(r.alerts.some(a => a.key === 'two_thirds_cap'), false);
+
+    // Cross 67% of $0.50 cap ($0.34+) on Day 5 -> triggers `two_thirds_cap` + `projected_overrun` (not first_overflow again!)
+    r = recordOverflowGeminiCall(st, {
+      modelId: 'gemini-3.8-flash',
+      inputTokens: 200_000,
+      outputTokens: 200_000,
+      teamAbbr: 'DET',
+      nowMs: day5Ms + 1000,
+      config: defaultCfg
+    });
+    st = r.state;
+    assert.ok(st.monthlySpendUsd >= 0.34);
+    assert.ok(r.alerts.some(a => a.key === 'two_thirds_cap'), 'Crossing 67% of cap must fire 2/3 cap alert');
+    assert.ok(r.alerts.some(a => a.key === 'projected_overrun'), 'Exceeding monthly pace on Day 5 must fire projected overrun alert');
+    assert.equal(r.alerts.some(a => a.key === 'first_overflow_month'), false, 'first_overflow_month must deduplicate');
+
+    // Cross $0.50 monthly cap -> triggers `[URGENT]` alert with kill-switch instructions AND auto-pauses!
+    r = recordOverflowGeminiCall(st, {
+      modelId: 'gemini-3.8-flash',
+      inputTokens: 150_000,
+      outputTokens: 150_000,
+      teamAbbr: 'KC',
+      nowMs: day5Ms + 2000,
+      config: defaultCfg
+    });
+    st = r.state;
+    const urgentAlert = r.alerts.find(a => a.key === 'urgent_cap_exceeded');
+    assert.ok(urgentAlert, 'Reaching monthly cap must trigger urgent_cap_exceeded');
+    assert.ok(urgentAlert.subject.startsWith('[URGENT]'), 'Urgent alert must have [URGENT] subject prefix');
+    assert.ok(urgentAlert.body.includes('GEMINI_OVERFLOW_API_KEY'), 'Urgent alert must include exact kill-switch steps');
+    assert.equal(st.autoPaused, true, 'Reaching monthly cap must auto-pause overflow');
+    assert.equal(canUseOverflowGemini(st, { modelId: 'gemini-3.8-flash', nowMs: day5Ms + 3000, config: defaultCfg }).allowed, false);
+
+    // 4. Prepaid balance reload reminders: $1.00, $0.50, $0.25, and $0.00 (via HTTP 402) — each deduplicated!
+    let balState = normalizeOverflowBudgetState({ prepaidBalanceUsd: 1.05, monthKeyPt: '2026-11', dateKeyPt: '2026-11-05' }, day5Ms, defaultCfg);
+    const highCapCfg = resolveOverflowBudgetConfig({ monthlySpendCapUsd: 2.0 }, {});
+    const b1 = recordOverflowGeminiCall(balState, { modelId: 'gemini-3.8-flash', inputTokens: 100_000, outputTokens: 50_000, nowMs: day5Ms, config: highCapCfg });
+    balState = b1.state;
+    assert.ok(balState.prepaidBalanceUsd < 1.0 && balState.prepaidBalanceUsd > 0.5);
+    assert.ok(b1.alerts.some(a => a.key === 'prepaid_below_1.00'), 'Must alert when Cloud Prepay drops below $1.00');
+
+    balState.prepaidBalanceUsd = 0.45;
+    const b2 = recordOverflowGeminiCall(balState, { modelId: 'gemini-3.5-flash-lite', inputTokens: 1000, outputTokens: 500, nowMs: day5Ms + 1000, config: highCapCfg });
+    balState = b2.state;
+    assert.ok(b2.alerts.some(a => a.key === 'prepaid_below_0.50'), 'Must alert when Cloud Prepay drops below $0.50');
+    assert.equal(b2.alerts.some(a => a.key === 'prepaid_below_1.00'), false, 'prepaid_below_1.00 must never duplicate');
+
+    balState.prepaidBalanceUsd = 0.20;
+    const b3 = recordOverflowGeminiCall(balState, { modelId: 'gemini-3.5-flash-lite', inputTokens: 1000, outputTokens: 500, nowMs: day5Ms + 2000, config: highCapCfg });
+    balState = b3.state;
+    assert.ok(b3.alerts.some(a => a.key === 'prepaid_below_0.25'), 'Must alert when Cloud Prepay drops below $0.25');
+
+    const b4 = recordOverflowGeminiCall(balState, { modelId: 'gemini-3.5-flash-lite', status: 402, nowMs: day5Ms + 3000, config: highCapCfg });
+    assert.equal(b4.state.prepaidBalanceUsd, 0);
+    assert.equal(b4.state.autoPaused, true);
+    assert.ok(b4.alerts.some(a => a.key === 'prepaid_below_0.00'), 'HTTP 402 / $0 balance must fire $0.00 reload urgent alert');
+
+    // 5. Mock Gmail SMTP controller serializes concurrent calls cleanly and sends alerts to joshal7@gmail.com
+    const sentEmails = [];
+    const tmpBudgetFile = path.join(rootDir, 'data', 'league', `.qa-overflow-budget-${process.pid}.json`);
+    try {
+      const ctrl = createNodeOverflowBudgetController({
+        filePath: tmpBudgetFile,
+        config: defaultCfg,
+        smtpPass: 'mock-app-password-for-unit-test',
+        transportImpl: async msg => {
+          sentEmails.push(msg);
+          return { sent: true };
         }
-      ]
-    };
-    const extracted = await extractXStatusUrlsFromGeminiResponse(mockGeminiJson, {
-      fetchImpl: async () => ({
-        ok: false,
-        status: 302,
-        headers: { get: k => (k.toLowerCase() === 'location' ? 'https://x.com/dieter/status/2199000000000000001' : '') }
-      })
-    });
-    assert.equal(extracted.length, 3, 'Must deduplicate casing variants, skip thought parts, and unwrap Vertex redirect to 3 unique X status URLs');
-    assert.ok(!extracted.some(u => u.includes('FakeThought')), 'Must never extract URLs from Gemini internal thought parts');
-    assert.ok(extracted.includes('https://x.com/dieter/status/2199000000000000001'), 'Must unwrap Vertex grounding redirect to canonical x.com status URL');
+      });
+      await Promise.all([
+        ctrl.recordAndNotify({ modelId: 'gemini-3.5-flash-lite', inputTokens: 4000, outputTokens: 800, teamAbbr: 'SF' }),
+        ctrl.recordAndNotify({ modelId: 'gemini-3.5-flash-lite', inputTokens: 4000, outputTokens: 800, teamAbbr: 'DET' })
+      ]);
+      assert.equal(ctrl.getState().monthlyCalls, 2, 'Serialized budget controller must record both concurrent calls without lost updates');
+      assert.equal(
+        sentEmails.filter(e => e.subject.includes('Free Tier Overflowed')).length,
+        1,
+        'Concurrent calls must emit first_overflow_month strictly ONCE (zero duplicate email race!)'
+      );
+      assert.equal(sentEmails[0]?.to, 'joshal7@gmail.com');
+    } finally {
+      try { fs.unlinkSync(tmpBudgetFile); } catch {}
+    }
 
-    // 5. discoverXStatusesViaGeminiSearch trips per-model 429 circuit-breaker and fails over cleanly to next model
-    resetGeminiXDiscoveryRateLimitsForTest();
-    const calledModels = [];
-    const mockSearchFetch = async url => {
-      const m = String(url).match(/\/models\/([^:]+):generateContent/);
-      if (m) calledModels.push(m[1]);
-      if (String(url).includes('gemini-4-hydrogen')) {
-        return { ok: false, status: 429, text: async () => 'RESOURCE_EXHAUSTED' };
-      }
-      return {
-        ok: true,
-        status: 200,
-        json: async () => ({
-          candidates: [{ content: { parts: [{ text: 'https://x.com/GrustasBrady/status/2199000000000000007' }] } }]
+    // 6. Concurrency-safe quota reservation (`reserveGeminiQuotaSlot` + `createSerializedQuotaMutex`)
+    const qNow = Date.parse('2026-11-25T20:00:00Z');
+    const qState = normalizeGeminiQuotaState(null, qNow);
+    const mutex = createSerializedQuotaMutex();
+    const resIds = [];
+    await Promise.all(
+      [0, 1, 2, 3].map(i =>
+        mutex(async () => {
+          const rid = reserveGeminiQuotaSlot(qState, {
+            modelId: 'gemini-4-hydrogen',
+            estimatedTokens: 8000,
+            nowMs: qNow + i * 100
+          });
+          resIds.push(rid);
         })
-      };
-    };
-    const res1 = await discoverXStatusesViaGeminiSearch({
-      scope: 'team',
-      team: getTeamByAbbr('SF'),
-      slotKey: 'am',
-      handles: ['GrustasBrady', 'SulligentHUB'],
-      apiKey: 'AIzaSyMockTestKeyForUnitQA000000000',
-      modelCascade: ['gemini-4-hydrogen', 'gemini-3.8-flash'],
-      nowMs: amPtMs,
-      fetchImpl: mockSearchFetch
+      )
+    );
+    assert.equal(qState.recentWindow.length, 4, '4 concurrent in-flight slots must be tracked immediately');
+    const fifth = selectBestAvailableModel(qState, {
+      pool: 'premier',
+      isPriorityTeam: true,
+      estimatedTokens: 8000,
+      nowMs: qNow + 500,
+      preferredModels: ['gemini-4-hydrogen']
     });
-    assert.equal(res1.ok, true, 'Must fail over cleanly from 429 gemini-4-hydrogen to gemini-3.8-flash');
-    assert.equal(res1.modelUsed, 'gemini-3.8-flash');
-    assert.deepEqual(res1.statusUrls, ['https://x.com/GrustasBrady/status/2199000000000000007']);
-    assert.deepEqual(calledModels, ['gemini-4-hydrogen', 'gemini-3.8-flash']);
-
-    // Second call while 429 breaker is active must skip gemini-4-hydrogen immediately (0 wasted 429 hits)
-    calledModels.length = 0;
-    const res2 = await discoverXStatusesViaGeminiSearch({
-      scope: 'team',
-      team: getTeamByAbbr('SF'),
-      slotKey: 'pm',
-      handles: ['GrustasBrady'],
-      apiKey: 'AIzaSyMockTestKeyForUnitQA000000000',
-      modelCascade: ['gemini-4-hydrogen', 'gemini-3.8-flash'],
-      nowMs: amPtMs + 60_000,
-      fetchImpl: mockSearchFetch
+    assert.ok(fifth.waitMs >= 50_000, `5th concurrent call must stagger to stay <=4/5 RPM (got waitMs=${fifth.waitMs})`);
+    // Reconciling reservationId must replace placeholder cleanly (no double-counting in recentWindow)
+    recordGeminiCallOutcome(qState, {
+      modelId: 'gemini-4-hydrogen',
+      status: 200,
+      ok: true,
+      actualTokens: 7500,
+      reservationId: resIds[0],
+      nowMs: qNow + 1000
     });
-    assert.equal(res2.ok, true);
-    assert.deepEqual(calledModels, ['gemini-3.8-flash'], 'Active 429 circuit-breaker must skip throttled model immediately');
-    resetGeminiXDiscoveryRateLimitsForTest();
-
-    // 6. Total daily Option B budget across all 32 teams + shared national pool stays strictly <= 35 RPD (~7% of 500 RPD Search cap)
-    const totalDailyOptionBCalls =
-      GEMINI_X_DISCOVERY_QUOTA_POLICY.nationalSharedDailyCalls +
-      GEMINI_X_DISCOVERY_QUOTA_POLICY.sfDailyCalls +
-      31 * GEMINI_X_DISCOVERY_QUOTA_POLICY.otherTeamDailyCalls;
-    assert.equal(totalDailyOptionBCalls, 35, 'Total Option B daily budget must equal exactly 2 (national) + 2 (SF 2x) + 31 (other teams 1x) = 35 RPD');
+    assert.equal(qState.recentWindow.length, 4, 'Reconciling reservationId must replace slot in-place without double counting');
   }
 );
 

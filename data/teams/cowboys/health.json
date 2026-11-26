@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:26.043Z",
+  "updatedAt": "2026-11-26T07:40:46.136Z",
   "week": 12,
   "byeWeek": 14,
   "sourceUrl": "https://www.dallascowboys.com/team/injury-report/",
@@ -82,7 +82,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "out"
+      "beatComment": "Locke entered the league's concussion protocol following the Cowboys' Week 9 win over the Colts. He hasn't progressed enough in his recovery to return for Thanksgiving Day and will thus miss a third consecutive game. Locke's next opportunity to play is Week 13 against the Seahawks on Monday, Dec. 7."
     },
     {
       "playerId": "4426485",
@@ -107,33 +107,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "Mingo downgraded from his limited participation in Monday's practice to full DNP Tuesday. The 25-year-old missed the last two games due to an ankle injury and could be in danger of missing Thursday's divisional game against the Eagles if he doesn't upgrade his practice status Wednesday. KaVontae Turpin and Camden Brown have been rotational options at wide receiver in Mingo's absence."
-    },
-    {
-      "playerId": "4702577",
-      "name": "Devin Moore",
-      "position": "CB",
-      "jersey": 29,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702577.png",
-      "rosterBucket": "ir",
-      "isIrReturnWindow": true,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "FP",
-      "injuryType": "Hip",
-      "gameStatus": "Questionable (IR Return Window)",
-      "playProbabilityPct": 68,
-      "priorDayPlayProbabilityPct": 68,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "68% • GTD",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "21-day IR window open (Week 1 ramp); logged Full Participation (FP) on Friday",
-        "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
-      ],
-      "beatComment": "Moore has logged five-straight full practices since being designated to return from injured reserve Nov. 11. He would need to be activated from IR in order to be available against the Eagles on Thanksgiving Day. The rookie fourth-rounder has yet to appear in a regular-season game due to a hip injury that he sustained in training camp."
+      "beatComment": "Mingo's absence for Thanksgiving Day will be his third missed game in a row due to an ankle injury that he sustained in Week 9 against the Colts. His absence means KaVontae Turpin and Camden Brown will continue to operate in rotational roles on offense behind CeeDee Lamb, George Pickens and Ryan Flournoy. Mingo's next opportunity to play is Week 13 against the Seahawks on Monday, Dec. 7."
     },
     {
       "playerId": "4428914",
@@ -158,7 +132,7 @@
       "factors": [
         "Positive upward rehab ramp (Wed DNP -> Thu LP; player prior 81%)"
       ],
-      "beatComment": "Winters upgraded to limited participation in Tuesday's practice after beginning the week as a nonparticipant. The 26-year-old has one more practice to improve his status for Thursday's game against the Eagles. DeMarvion Overshown will likely start if Winters can't play."
+      "beatComment": "Winters suffered a knee injury against the Titans on Sunday, but his full practice Wednesday was enough for him to avoid a designation ahead of Thanksgiving Day. The fourth-year linebacker has accumulated 45 tackles (30 solo), one interception and one fumble recovery across nine regular-season games."
     },
     {
       "playerId": "4043089",
@@ -183,7 +157,7 @@
       "factors": [
         "Logged Full Participation (FP) on Friday"
       ],
-      "beatComment": "questionable"
+      "beatComment": "While he's listed as questionable for Thursday's game against the Eagles, Thompson looks likely to play after logging a trio of full practices this week. Thompson has been sidelined since being injured in Week 3. He should reclaim his starting safety job alongside Malik Hooker."
     },
     {
       "playerId": "2577417",
@@ -333,7 +307,7 @@
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
-      "beatComment": ""
+      "beatComment": "Hip and groin injuries prevented Barham from playing in Week 11 against the Titans, but his full session Wednesday was enough for him to avoid a designation for Thanksgiving Day. The rookie third-rounder has accumulated 37 tackles (21 solo) and one forced fumble through 10 regular-season games."
     }
   ],
   "irAndReserveTracker": [
@@ -344,7 +318,7 @@
       "jersey": 29,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702577.png",
       "injuryType": "Hip",
-      "status": "IR — 21-Day Window Open (Questionable)",
+      "status": "IR — 21-Day Window Open",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
       "isPracticeWindowExpected": false,
@@ -355,9 +329,9 @@
       "earliestEligibleWeek": 12,
       "projectedReturnWeek": "Week 12 Activation Window (Nov 26)",
       "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 68,
-      "playBadgeLabel": "68% • GTD",
-      "beatNote": "Moore has logged five-straight full practices since being designated to return from injured reserve Nov. 11. He would need to be activated from IR in order to be available against the Eagles on Thanksgiving Day. The rookie fourth-rounder has yet to appear in a regular-season game due to a hip injury that he sustained in training camp."
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "Moore strung together three consecutive full practices during Week 12 prep, but he would need to be activated from injured reserve in order to be available for Thanksgiving Day. The rookie fourth-rounder has yet to make his 2026 regular-season debut due to a hip injury that he picked up in training camp."
     },
     {
       "playerId": "4710067",

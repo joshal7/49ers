@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:09.445Z",
+  "updatedAt": "2026-11-26T07:25:42.572Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/green-bay-packers",
   "spotracUrl": "https://www.spotrac.com/nfl/green-bay-packers/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314259464,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 307673090,
+      "totalCapLiabilities": 307704590,
       "top51": 242953368,
-      "teamCapSpace": 6586374,
-      "otcRawTeamCapSpace": 6586374,
-      "effectiveCapSpace": 6586374,
-      "activeCapSpending": 257988045,
-      "offenseSpend": 146631207,
+      "teamCapSpace": 6554874,
+      "otcRawTeamCapSpace": 6554874,
+      "effectiveCapSpace": 6554874,
+      "activeCapSpending": 258019545,
+      "offenseSpend": 146662707,
       "defenseSpend": 106567705,
       "specialSpend": 4789133,
       "deadMoneyTotal": 49685045,
       "injuredReserveTotal": 35411286,
-      "practiceSquadTotal": 3661817,
-      "pupTotal": 21898533,
+      "practiceSquadTotal": 3693317,
+      "pupTotal": 2696827,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 60971636,
+      "reserveAndPsTotal": 41801430,
       "topDeadMoneyEntries": [
         {
           "name": "Rashan Gary",
@@ -266,8 +266,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/green-bay-packers",
-    "summary": "Green Bay Packers hold $6.59M in 2026 OverTheCap space ($6.59M effective) and -$5.90M projected for 2027.",
-    "executiveSummary": "Brian Gutekunst and the Packers front office hold $6.59M in gross 2026 cap space ($6.59M effective), while 2027 currently projects at -$5.90M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Jordan Love, Micah Parsons, Josh Jacobs, Aaron Banks.",
+    "summary": "Green Bay Packers hold $6.55M in 2026 OverTheCap space ($6.55M effective) and -$5.90M projected for 2027.",
+    "executiveSummary": "Brian Gutekunst and the Packers front office hold $6.55M in gross 2026 cap space ($6.55M effective), while 2027 currently projects at -$5.90M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Jordan Love, Micah Parsons, Josh Jacobs, Aaron Banks.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$5.90M 2027 Projection)",
@@ -289,6 +289,18 @@
         "capHit2026": 36122437,
         "baseSalary2026": 10400000,
         "maxRestructureSavings": 7748000,
+        "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
+      },
+      {
+        "id": "4361423",
+        "name": "Micah Parsons",
+        "position": "DE",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361423.png",
+        "otcUrl": "https://overthecap.com/player/micah-parsons/9476/",
+        "capHit2026": 19201706,
+        "baseSalary2026": 2387000,
+        "maxRestructureSavings": 1137600,
         "rationale": "High base/option conversion capacity over remaining contract + void years; preserves immediate rollover cap."
       },
       {
@@ -343,6 +355,19 @@
         "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
       },
       {
+        "id": "4361423",
+        "name": "Micah Parsons",
+        "position": "DE",
+        "jersey": 1,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361423.png",
+        "otcUrl": "https://overthecap.com/player/micah-parsons/9476/",
+        "capHit2026": 19201706,
+        "postJune1CutSavings": -37135294,
+        "postJune1TradeSavings": 2801706,
+        "preJune1DeadMoney": 113137000,
+        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
+      },
+      {
         "id": "4047365",
         "name": "Josh Jacobs",
         "position": "RB",
@@ -392,19 +417,6 @@
         "postJune1CutSavings": 3438000,
         "postJune1TradeSavings": 3438000,
         "preJune1DeadMoney": 20000000,
-        "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
-      },
-      {
-        "id": "4259493",
-        "name": "Keisean Nixon",
-        "position": "CB",
-        "jersey": 25,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259493.png",
-        "otcUrl": "https://overthecap.com/player/keisean-nixon/8152/",
-        "capHit2026": 7166668,
-        "postJune1CutSavings": 5000000,
-        "postJune1TradeSavings": 5000000,
-        "preJune1DeadMoney": 2166668,
         "rationale": "Significant 2026/2027 cash and cap relief via Post-June 1 trade or release designation."
       }
     ]
@@ -651,15 +663,46 @@
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {
-          "baseSalary": 19201706,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 2387000,
+          "proratedSigning": 8800000,
+          "proratedOption": 7600000,
+          "proratedBonus": 16400000,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 200000,
+          "workoutBonus": 250000,
+          "otherBonus": 0,
+          "currentYearBonuses": 450000,
+          "guaranteedSalary": 2387000,
           "capNumber": 19201706,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 19201706,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 19201706,
-          "guaranteedSalary": 0
+          "transactions": {
+            "cut": {
+              "deadMoney": 113137000,
+              "capSavings": -93935294
+            },
+            "june_1_cut": {
+              "deadMoney": 56337000,
+              "capSavings": -37135294
+            },
+            "trade": {
+              "deadMoney": 73200000,
+              "capSavings": -53998294
+            },
+            "june_1_trade": {
+              "deadMoney": 16400000,
+              "capSavings": 2801706
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 1137600
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 1137600
+            }
+          }
         },
         "2027": {
           "year": 2027,

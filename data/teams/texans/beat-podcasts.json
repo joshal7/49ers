@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:51:05.154Z",
+  "updatedAt": "2026-11-26T07:41:23.012Z",
   "windowDays": 7,
-  "totalEpisodes": 15,
+  "totalEpisodes": 14,
   "shows": [
     {
       "id": "texans_locked_on_texans",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "texans_texans_on_tap",
@@ -320,26 +320,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
       "audioStreamUrl": "https://traffic.megaphone.fm/BVLLC3144921684.mp3"
-    },
-    {
-      "id": "pod_texans_locked_on_texans_1000802843299",
-      "trackId": 1000802843299,
-      "collectionId": 1156158142,
-      "showId": "texans_locked_on_texans",
-      "showName": "Locked On Texans",
-      "showFullTitle": "Locked On Texans - Daily Podcast On The Houston Texans",
-      "hosts": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "network": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "title": "FED UP: Houston Texans Fanbase DEMANDS Changes as C.J. Stroud & DeMeco Ryans Struggle, FANS React",
-      "summary": "Houston Texans face mounting frustration as fans demand changes after another underwhelming season. Is firing GM Nick Caserio the key to unlocking the team’s potential, or does the responsibility fall on head coach DeMeco Ryans? The conversation spotlights the Texans’ glarin",
-      "publishedAt": "2026-11-19T00:00:00.000Z",
-      "durationMinutes": 27,
-      "durationDisplay": "27 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/fed-up-houston-texans-fanbase-demands-changes-as-c/id1156158142?i=1000802843299&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/de6246/lockedon.simplecastaudio.com/6f716782-2a27-4145-9fbb-3de5b45b2aa7/episodes/36c31b91-ac10-4a0e-8f76-b4b585c2241b/audio/128/default.mp3?aid=rss_feed&awCollectionId=6f716782-2a27-4145-9fbb-3de5b45b2aa7&awEpisodeId=36c31b91-ac10-4a0e-8f76-b4b585c2241b&feed=eO87ZWbO"
     }
   ]
 }

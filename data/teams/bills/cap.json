@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:50:18.054Z",
+  "updatedAt": "2026-11-26T07:27:32.341Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
   "spotracUrl": "https://www.spotrac.com/nfl/buffalo-bills/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 301071601,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 297090411,
+      "totalCapLiabilities": 296971655,
       "top51": 236049761,
-      "teamCapSpace": 3981190,
-      "otcRawTeamCapSpace": 3981190,
-      "effectiveCapSpace": 3981190,
-      "activeCapSpending": 245278173,
-      "offenseSpend": 150446778,
-      "defenseSpend": 89260852,
+      "teamCapSpace": 4099946,
+      "otcRawTeamCapSpace": 4099946,
+      "effectiveCapSpace": 4099946,
+      "activeCapSpending": 244810945,
+      "offenseSpend": 149905806,
+      "defenseSpend": 89334596,
       "specialSpend": 5570543,
-      "deadMoneyTotal": 51812238,
+      "deadMoneyTotal": 52160710,
       "injuredReserveTotal": 13112863,
-      "practiceSquadTotal": 4332322,
+      "practiceSquadTotal": 3865094,
       "pupTotal": 0,
       "nfiTotal": 221339,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 17666524,
+      "reserveAndPsTotal": 17199296,
       "topDeadMoneyEntries": [
         {
           "name": "Matt Milano",
@@ -120,22 +120,22 @@
           "otcUrl": "https://overthecap.com/player/d-j-miller/11971/"
         },
         {
+          "name": "Shane Buechele",
+          "capCharge": 197222,
+          "slug": "shane-buechele",
+          "otcId": "9819",
+          "otcUrl": "https://overthecap.com/player/shane-buechele/9819/"
+        },
+        {
           "name": "Geno Stone",
           "capCharge": 187500,
           "slug": "geno-stone",
           "otcId": "8959",
           "otcUrl": "https://overthecap.com/player/geno-stone/8959/"
-        },
-        {
-          "name": "Mitch Wishnowsky",
-          "capCharge": 175000,
-          "slug": "mitch-wishnowsky",
-          "otcId": "7901",
-          "otcUrl": "https://overthecap.com/player/mitch-wishnowsky/7901/"
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 75
+      "totalSignedCount": 73
     },
     "2027": {
       "year": 2027,
@@ -259,8 +259,8 @@
   },
   "blueprint": {
     "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
-    "summary": "Buffalo Bills hold $3.98M in 2026 OverTheCap space ($3.98M effective) and -$48.86M projected for 2027.",
-    "executiveSummary": "Brandon Beane and the Bills front office hold $3.98M in gross 2026 cap space ($3.98M effective), while 2027 currently projects at -$48.86M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Josh Allen, Dion Dawkins, Ed Oliver, Greg Rousseau.",
+    "summary": "Buffalo Bills hold $4.10M in 2026 OverTheCap space ($4.10M effective) and -$48.86M projected for 2027.",
+    "executiveSummary": "Brandon Beane and the Bills front office hold $4.10M in gross 2026 cap space ($4.10M effective), while 2027 currently projects at -$48.86M over an estimated $327M cap ceiling. Rolling unused 2026 cap space 1-for-1 under CBA Article 13 ($4M–$6M target) helps manage scheduled cap escalations for Josh Allen, Dion Dawkins, Ed Oliver, Greg Rousseau.",
     "strategicPillars": [
       {
         "title": "1. CBA Article 13 Rollover Bridge ($4M–$6M Target vs. -$48.86M 2027 Projection)",

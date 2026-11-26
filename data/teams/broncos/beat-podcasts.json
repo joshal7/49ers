@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:51:37.332Z",
+  "updatedAt": "2026-11-26T07:29:47.698Z",
   "windowDays": 7,
-  "totalEpisodes": 29,
+  "totalEpisodes": 28,
   "shows": [
     {
       "id": "broncos_locked_on_broncos",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/w3d46li7",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/dnvr-denver-broncos-podcast/id1067992218?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/3c/7c/81/3c7c81c9-e5c3-a590-e740-1c661f314f05/mza_14949508474331448678.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "broncos_broncos_country_tonight",
@@ -600,26 +600,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-broncos-daily-podcast-on-the-denver-broncos/id1146588641?uo=4",
       "feedUrl": "https://rss.pdrl.fm/ed7d56/feeds.simplecast.com/f6CBcmwn",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/ed7d56/lockedon.simplecastaudio.com/596acaf7-a268-4ea6-94a9-efedb9c15d14/episodes/4ee99ab7-16e3-408a-97c0-d62ede0c3f1b/audio/128/default.mp3?aid=rss_feed&awCollectionId=596acaf7-a268-4ea6-94a9-efedb9c15d14&awEpisodeId=4ee99ab7-16e3-408a-97c0-d62ede0c3f1b&feed=f6CBcmwn"
-    },
-    {
-      "id": "pod_broncos_dnvr_denver_broncos_podcast_1000802850737",
-      "trackId": 1000802850737,
-      "collectionId": 1067992218,
-      "showId": "broncos_dnvr_denver_broncos_podcast",
-      "showName": "DNVR Denver Broncos Podcast",
-      "showFullTitle": "DNVR Denver Broncos Podcast",
-      "hosts": "ALLCITY Network, DNVR Sports",
-      "network": "ALLCITY Network, DNVR Sports",
-      "title": "Why Bo Nix and the Denver Broncos Defense Will EXPOSE Fernando Mendoza",
-      "summary": "The Denver Broncos are coming off their NFL bye week and get to play rookie QB Fernando Mendoza in his second ever NFL start. How will Bo Nix duel the Indiana National Champion and Hesiman winner? Will Jaylen Waddle figure it out? What tricks do Vance Joseph and Sean Payton ",
-      "publishedAt": "2026-11-19T03:32:27.000Z",
-      "durationMinutes": 80,
-      "durationDisplay": "80 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/0e/d6/d0/0ed6d04a-8576-5533-ebf1-308065db01c2/mza_10648458462510171721.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/why-bo-nix-and-the-denver-broncos-defense-will/id1067992218?i=1000802850737&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/dnvr-denver-broncos-podcast/id1067992218?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/w3d46li7",
-      "audioStreamUrl": "https://tracking.swap.fm/track/xt6bq09fJCm8CxP7DUGF/pscrb.fm/rss/p/mgln.ai/e/822/claritaspod.com/measure/dts.podtrac.com/redirect.mp3/prfx.byspotify.com/e/injector.simplecastaudio.com/1a57412b-476a-4788-b0be-4878a6153509/episodes/5dbbd3c5-6b3f-4c5f-bd90-9a71df30f007/audio/128/default.mp3?aid=rss_feed&awCollectionId=1a57412b-476a-4788-b0be-4878a6153509&awEpisodeId=5dbbd3c5-6b3f-4c5f-bd90-9a71df30f007&awSourceEpisodeId=dfbbf0f1-767f-4147-a73b-abd69bd6a4de&feed=w3d46li7"
     }
   ]
 }

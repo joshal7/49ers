@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:49:21.166Z",
+  "updatedAt": "2026-11-26T07:26:03.290Z",
   "week": 12,
   "units": [
     {
@@ -708,6 +708,16 @@
               "playProbabilityPct": 95,
               "statusBadge": "95% • Cleared",
               "isAvailable": true
+            },
+            {
+              "playerId": "4429731",
+              "name": "Gabe Hall",
+              "jersey": 96,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429731.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -719,6 +729,16 @@
               "baselineRank": 1,
               "playProbabilityPct": 95,
               "statusBadge": "95% • Cleared",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4429731",
+              "name": "Gabe Hall",
+              "jersey": 96,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429731.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -1014,6 +1034,16 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4691903",
+              "name": "Mason Reiger",
+              "jersey": 90,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4691903.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1036,6 +1066,17 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4691903",
+              "name": "Mason Reiger",
+              "jersey": 90,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4691903.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -1115,11 +1156,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4693345",
+              "name": "Cole Wisniewski",
+              "jersey": 21,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4693345.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false
+            },
+            {
               "playerId": "4878896",
               "name": "Tucker Large",
               "jersey": 37,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4878896.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false
@@ -1147,11 +1198,22 @@
               "isAvailable": true
             },
             {
+              "playerId": "4693345",
+              "name": "Cole Wisniewski",
+              "jersey": 21,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4693345.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
               "playerId": "4878896",
               "name": "Tucker Large",
               "jersey": 37,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4878896.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out for Season",
               "isAvailable": false,

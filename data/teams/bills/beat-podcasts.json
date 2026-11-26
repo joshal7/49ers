@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:50:17.207Z",
+  "updatedAt": "2026-11-26T07:27:30.623Z",
   "windowDays": 7,
-  "totalEpisodes": 27,
+  "totalEpisodes": 24,
   "shows": [
     {
       "id": "locked_on_bills",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.spreaker.com/show/2885244/episodes/feed",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/cover-1-buffalo/id1370118411?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/6f/bc/42/6fbc4226-c514-4ff4-d5bc-f3e2233218a2/mza_17600526120269137796.jpg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 2
     },
     {
       "id": "buffalo_rumblings",
@@ -49,7 +49,7 @@
       "feedUrl": "https://feeds.megaphone.fm/shoutabuffalobillspodcast",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/shout-a-football-podcast-on-the-buffalo-bills/id1507446314?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d4/0f/13/d40f1331-2fb1-38d0-1ce9-c751b4e77d95/mza_10564209290691182061.jpeg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "buffalo_plus",
@@ -61,7 +61,7 @@
       "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/57/11/ed57113a-56a2-4cd5-7459-ef8fde70753c/mza_81407331130477925.png/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "one_bills_live",
@@ -556,66 +556,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/one-bills-live/id1649776359?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/74d454ef-6fc1-4a35-be92-b507011ee2ef/audio.mp3?utm_source=Podcast&in_playlist=6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a"
-    },
-    {
-      "id": "pod_cover_1_buffalo_1000802851011",
-      "trackId": 1000802851011,
-      "collectionId": 1370118411,
-      "showId": "cover_1_buffalo",
-      "showName": "Cover 1 Buffalo",
-      "showFullTitle": "Cover 1 Buffalo",
-      "hosts": "Greg Tompsett & Aaron Quinn",
-      "network": "Cover 1 Sports",
-      "title": "Bills vs Dolphins Week 11 Matchup Preview | Cover 1 Buffalo Podcast | C1 BUF",
-      "summary": "Cover 1 Buffalo analyzing the latest Buffalo Bills news and film.",
-      "publishedAt": "2026-11-19T03:31:21.000Z",
-      "durationMinutes": 60,
-      "durationDisplay": "60 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/6f/bc/42/6fbc4226-c514-4ff4-d5bc-f3e2233218a2/mza_17600526120269137796.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/bills-vs-dolphins-week-11-matchup-preview-cover-1-buffalo/id1370118411?i=1000802851011&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/cover-1-buffalo/id1370118411?uo=4",
-      "feedUrl": "https://www.spreaker.com/show/2885244/episodes/feed",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/api.spreaker.com/download/episode/76458424/bills_vs_dolphins_week_11_matchup_preview_cover_1_buffalo_podcast_c1_buf.mp3"
-    },
-    {
-      "id": "pod_shout_bills_podcast_1000802842145",
-      "trackId": 1000802842145,
-      "collectionId": 1507446314,
-      "showId": "shout_bills_podcast",
-      "showName": "Shout! Bills Podcast",
-      "showFullTitle": "Shout! A football podcast on the Buffalo Bills with Matt Parrino and Ryan Talbot",
-      "hosts": "Matt Parrino & Ryan Talbot",
-      "network": "Syracuse.com / NYup.com",
-      "title": "Josh Allen’s Perfect Path: The Playoff Scenario Bills Fans Should Hope For",
-      "summary": "Is this finally the Buffalo Bills’ year? At 8-1 and holding the AFC’s No. 1 seed, Josh Allen and the Bills have a real path to the Super Bowl, and Matt Parrino and Ryan Talbot map out the perfect version of it. First, the dream scenario: Jacksonville and Cincinnati land the ",
-      "publishedAt": "2026-11-19T02:11:00.000Z",
-      "durationMinutes": 36,
-      "durationDisplay": "36 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/93/e5/c4/93e5c4df-3248-b25f-2fb9-e84695c4f9c5/mza_16731116742171320170.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/josh-allens-perfect-path-the-playoff-scenario-bills/id1507446314?i=1000802842145&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/shout-a-football-podcast-on-the-buffalo-bills/id1507446314?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/shoutabuffalobillspodcast",
-      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM7406861377.mp3"
-    },
-    {
-      "id": "pod_buffalo_plus_1000802803856",
-      "trackId": 1000802803856,
-      "collectionId": 1516732193,
-      "showId": "buffalo_plus",
-      "showName": "Buffalo Plus",
-      "showFullTitle": "Buffalo Plus: A Buffalo Bills podcast",
-      "hosts": "Mike Catalana, Jenna Cottrell & Dan Fetes",
-      "network": "Buffalo Plus",
-      "title": "What They're Saying in Miami: The BILLS set to face REBUILDING Dolphins with WILL MANSO",
-      "summary": "The Bills are 16.5-point favorites this Sunday when they host the Dolphins, but what are they talking about in Miami? To answer that question, we brought in a longtime friend of the podcast, Will Manso, to give us some more insight on this one win Dolphins team. Will Manso j",
-      "publishedAt": "2026-11-18T23:03:00.000Z",
-      "durationMinutes": 20,
-      "durationDisplay": "20 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/57/11/ed57113a-56a2-4cd5-7459-ef8fde70753c/mza_81407331130477925.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/what-theyre-saying-in-miami-the-bills-set-to-face/id1516732193?i=1000802803856&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
-      "audioStreamUrl": "https://traffic.megaphone.fm/SINCL1618869299.mp3"
     }
   ]
 }

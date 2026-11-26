@@ -3712,8 +3712,11 @@ export function selectTopNewsBriefSourceCandidates(
     const ttl = String(it.title || '');
     const sum = String(it.summary || '');
     const full = String(it.fullText || ttl);
-    // Skip generic sponsor-shell link roundups with zero standalone reporting
+    // Skip generic sponsor-shell link roundups and non-football uniform/novelty slideshows
     if (/^morning report:/i.test(ttl) && /catch up on the latest|powered by cisco/i.test(sum)) {
+      return false;
+    }
+    if (/\b(?:nfl\s+)?week\s+\d+\s+uniforms?\b|luchador mask|all-time sack list/i.test(ttl)) {
       return false;
     }
     // Skip continuation tweets (2/2, 2/3, 3/3) of raw snap-count lists that carry no standalone context
