@@ -8530,10 +8530,17 @@ mark.search-hl {
 }
 
 .gc-poss-dot {
-  color: var(--gold-bright);
-  font-size: 9.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   flex-shrink: 0;
+}
+
+.gc-poss-football-svg {
+  display: block;
+  width: 15px;
+  height: 10px;
 }
 
 .gc-sb-sub {
@@ -8578,26 +8585,31 @@ mark.search-hl {
 }
 
 .gc-sb-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
   text-align: center;
   flex-shrink: 0;
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .gc-sb-score {
   display: inline-flex;
   align-items: baseline;
   justify-content: center;
-  gap: 4px;
-  font-size: 22px;
+  gap: 5px;
+  font-size: 28px;
   font-weight: 900;
   letter-spacing: -0.03em;
-  line-height: 1.05;
+  line-height: 0.98;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .gc-sb-score .gc-sb-dash {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--text-muted);
   font-weight: 700;
 }
@@ -8607,10 +8619,10 @@ mark.search-hl {
 }
 
 .gc-sb-clock {
-  font-size: 11px;
+  font-size: 10.6px;
   font-weight: 700;
   color: var(--text-muted);
-  margin-top: 3px;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
@@ -8627,41 +8639,6 @@ mark.search-hl {
   background: transparent;
   padding: 0;
   cursor: pointer;
-}
-
-.gc-live-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 6px 11px;
-  border-top: 1px solid var(--border-subtle);
-  background: var(--bg-card-alt);
-  font-size: 11.2px;
-}
-
-.gc-live-foot-sit {
-  font-weight: 700;
-  color: var(--text-primary);
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.gc-inactives-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--gold-bright);
-  font-size: 11.2px;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
-  flex-shrink: 0;
 }
 
 /* 2. Sticky Row: Compact `WK N ▾` Picker + 3-Tab Switcher (Box Score | Team Stats | Play-by-Play) */
@@ -10027,7 +10004,14 @@ mark.search-hl {
     letter-spacing: -0.025em;
   }
   .gc-sb-score {
-    font-size: 19.5px;
+    font-size: 25px;
+    gap: 4px;
+  }
+  .gc-sb-score .gc-sb-dash {
+    font-size: 16px;
+  }
+  .gc-sb-clock {
+    font-size: 10.2px;
   }
   .gc-sticky-tabs-row {
     gap: 6px;
@@ -10089,7 +10073,18 @@ mark.search-hl {
     height: 30px !important;
   }
   .gc-sb-score {
-    font-size: 18.5px;
+    font-size: 21.5px;
+    gap: 3px;
+  }
+  .gc-sb-score .gc-sb-dash {
+    font-size: 14px;
+  }
+  .gc-sb-clock {
+    font-size: 9.8px;
+  }
+  .gc-poss-football-svg {
+    width: 13px;
+    height: 9px;
   }
   .gc-sb-name {
     font-size: 11.5px;

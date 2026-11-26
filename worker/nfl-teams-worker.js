@@ -1265,7 +1265,10 @@ export default {
         } catch {}
         const comp = parsed?.header?.competitions?.[0] || {};
         const st = String(comp?.status?.type?.state || '').toLowerCase();
-        const summaryTtlSec = st === 'post' ? 3600 : st === 'pre' ? 30 : 3;
+        const kickoffMs = Date.parse(comp?.date || '');
+        const isImminentPreKickoff =
+          st === 'pre' && Number.isFinite(kickoffMs) && Date.now() >= kickoffMs - 15 * 60_000;
+        const summaryTtlSec = st === 'post' ? 3600 : st === 'pre' ? (isImminentPreKickoff ? 3 : 30) : 3;
 
         // Populate shared `summary` edge cache when fetched on behalf of `mode=situation`
         if (mode === 'situation' && !summaryCacheReused && edgeCache && rawText) {
@@ -1294,19 +1297,34 @@ export default {
           const prevDrvs = Array.isArray(parsed?.drives?.previous) ? parsed.drives.previous : [];
           const lastDrv = curDrv?.plays?.length ? curDrv : prevDrvs[prevDrvs.length - 1];
           const lastPl = lastDrv?.plays?.[lastDrv.plays.length - 1] || null;
+          const totalPlays =
+            prevDrvs.reduce((acc, d) => acc + (Array.isArray(d?.plays) ? d.plays.length : 0), 0) +
+            (Array.isArray(curDrv?.plays) ? curDrv.plays.length : 0);
+          const sitPlayId = String(sit?.lastPlay?.id || '');
+          const lastPlId = String(lastPl?.id || '');
+          const useLastPlEnd = Boolean(lastPl && (!sitPlayId || (lastPlId && sitPlayId !== lastPlId)));
           const compactSit = {
             state: st || 'pre',
             clock: comp?.status?.displayClock || '',
             period: comp?.status?.period || 0,
-            lastPlay: { id: String(sit?.lastPlay?.id || lastPl?.id || '') },
-            down: sit?.down ?? lastPl?.start?.down ?? -1,
-            distance: sit?.distance ?? lastPl?.start?.distance ?? -1,
-            yardLine: sit?.yardLine ?? lastPl?.end?.yardLine ?? -1,
-            possession: sit?.possession || '',
+            totalPlays,
+            lastPlay: { id: lastPlId || sitPlayId },
+            down: useLastPlEnd ? (lastPl?.end?.down ?? sit?.down ?? -1) : (sit?.down ?? lastPl?.end?.down ?? -1),
+            distance: useLastPlEnd
+              ? (lastPl?.end?.distance ?? sit?.distance ?? -1)
+              : (sit?.distance ?? lastPl?.end?.distance ?? -1),
+            yardLine: useLastPlEnd
+              ? (lastPl?.end?.yardLine ?? sit?.yardLine ?? -1)
+              : (sit?.yardLine ?? lastPl?.end?.yardLine ?? -1),
+            possession: sit?.possession || lastPl?.end?.team?.id || '',
             homeTimeouts: sit?.homeTimeouts ?? -1,
             awayTimeouts: sit?.awayTimeouts ?? -1,
             isRedZone: Boolean(sit?.isRedZone),
-            downDistanceText: String(sit?.downDistanceText || sit?.shortDownDistanceText || '').trim()
+            downDistanceText: String(
+              useLastPlEnd
+                ? lastPl?.end?.shortDownDistanceText || lastPl?.end?.downDistanceText || sit?.downDistanceText || ''
+                : sit?.downDistanceText || sit?.shortDownDistanceText || lastPl?.end?.shortDownDistanceText || ''
+            ).trim()
           };
           bodyOut = JSON.stringify(compactSit);
         }

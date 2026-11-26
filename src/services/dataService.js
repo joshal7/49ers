@@ -9810,12 +9810,26 @@ export async function fetchGamecastForGame(
     );
 
     let summaryJson = null;
-    for (const url of urlsToTry) {
+    const expectLiveNow =
+      Boolean(gameMeta?.isLive) ||
+      (() => {
+        const koMs = Date.parse(gameMeta?.dateIso || '');
+        return !gameMeta?.completed && Number.isFinite(koMs) && Date.now() >= koMs - 2 * 60_000 && Date.now() <= koMs + 4.5 * 3_600_000;
+      })();
+    for (let idx = 0; idx < urlsToTry.length; idx += 1) {
+      const url = urlsToTry[idx];
       try {
         const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, 5200);
         if (!res.ok) continue;
         const json = await parseJsonSafeResponse(res);
         if (json && typeof json === 'object' && (json.header || json.boxscore || json.drives)) {
+          const st = String(json?.header?.competitions?.[0]?.status?.type?.state || '').toLowerCase();
+          // If the game is already live/past kickoff but the Edge Worker returned a stale cached `pre` snapshot,
+          // immediately try direct ESPN JSON before settling on `pre`!
+          if (expectLiveNow && st === 'pre' && idx < urlsToTry.length - 1) {
+            if (!summaryJson) summaryJson = json;
+            continue;
+          }
           summaryJson = json;
           break;
         }

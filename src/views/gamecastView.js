@@ -43,6 +43,22 @@ function renderTimeoutDotsHtml(count) {
   ).join('')}</span>`;
 }
 
+function renderPossessionFootballIconHtml() {
+  return `
+    <span class="gc-poss-dot gc-poss-ball" title="Possession" aria-label="Has possession" data-possession-icon="football">
+      <svg class="gc-poss-football-svg" width="15" height="10" viewBox="0 0 18 12" aria-hidden="true">
+        <path d="M1.2 6 C4.4 1.3, 13.6 1.3, 16.8 6 C13.6 10.7, 4.4 10.7, 1.2 6 Z" fill="#8B4513" stroke="#5A2808" stroke-width="0.9"/>
+        <path d="M4.6 3.5 Q5.3 6 4.6 8.5" fill="none" stroke="rgba(255,255,255,0.72)" stroke-width="0.85" stroke-linecap="round"/>
+        <path d="M13.4 3.5 Q12.7 6 13.4 8.5" fill="none" stroke="rgba(255,255,255,0.72)" stroke-width="0.85" stroke-linecap="round"/>
+        <line x1="6.8" y1="6" x2="11.2" y2="6" stroke="#FFFFFF" stroke-width="0.95" stroke-linecap="round"/>
+        <line x1="7.8" y1="4.7" x2="7.8" y2="7.3" stroke="#FFFFFF" stroke-width="0.85" stroke-linecap="round"/>
+        <line x1="9" y1="4.6" x2="9" y2="7.4" stroke="#FFFFFF" stroke-width="0.85" stroke-linecap="round"/>
+        <line x1="10.2" y1="4.7" x2="10.2" y2="7.3" stroke="#FFFFFF" stroke-width="0.85" stroke-linecap="round"/>
+      </svg>
+    </span>
+  `;
+}
+
 function getInitials(name = '') {
   const parts = String(name || '')
     .trim()
@@ -905,7 +921,7 @@ function renderQuarterScoreboardCard(model) {
 
 function renderBoxScoreTabHtml(
   model,
-  { boxTeam = 'team', rosterPlayers = [], isLoading = false } = {}
+  { boxTeam = 'team', rosterPlayers = [], isLoading = false, isMetaLive = false } = {}
 ) {
   const activeSide = model.activeSide || {};
   const oppSide = model.oppSide || {};
@@ -929,10 +945,15 @@ function renderBoxScoreTabHtml(
     </div>
   `;
 
-  if (isLoading && groups.length === 0) {
+  if ((isLoading || (model.isPre && isMetaLive)) && groups.length === 0) {
     return `
       ${controlsHtml}
-      <section class="card gc-empty-card">
+      <section class="card gc-empty-card" data-gamecast-kickoff-syncing>
+        ${
+          model.isPre && isMetaLive
+            ? `<div class="gc-empty-title">Kickoff underway — syncing live Box Score…</div>`
+            : ''
+        }
         <div class="gc-skeleton-line wide"></div>
         <div class="gc-skeleton-line"></div>
         <div class="gc-skeleton-line"></div>
@@ -957,9 +978,9 @@ function renderBoxScoreTabHtml(
     return `
       ${controlsHtml}
       <section class="card gc-empty-card">
-        <div class="gc-empty-title">Player box score unavailable offline</div>
+        <div class="gc-empty-title">${model.isLive ? 'Game underway — player stats populate after the opening snap' : 'Player box score unavailable offline'}</div>
         <div class="gc-empty-actions">
-          <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>Retry Load</span></button>
+          <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>${model.isLive ? 'Sync Now' : 'Retry Load'}</span></button>
           ${
             model.gameUrl
               ? `<a href="${esc(model.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Box Score</span>${iconSvg('externalLink', 10)}</a>`
@@ -1031,14 +1052,19 @@ function renderBoxScoreTabHtml(
   return `${controlsHtml}<div class="gc-stack">${tablesHtml}</div>`;
 }
 
-function renderTeamStatsTabHtml(model, { isLoading = false } = {}) {
+function renderTeamStatsTabHtml(model, { isLoading = false, isMetaLive = false } = {}) {
   const away = model.away || {};
   const home = model.home || {};
   const groups = model.teamStatsGroups || [];
 
-  if (isLoading && groups.length === 0) {
+  if ((isLoading || (model.isPre && isMetaLive)) && groups.length === 0) {
     return `
-      <section class="card gc-empty-card">
+      <section class="card gc-empty-card" data-gamecast-kickoff-syncing>
+        ${
+          model.isPre && isMetaLive
+            ? `<div class="gc-empty-title">Kickoff underway — syncing live Team Stats…</div>`
+            : ''
+        }
         <div class="gc-skeleton-line wide"></div>
         <div class="gc-skeleton-line"></div>
         <div class="gc-skeleton-line"></div>
@@ -1062,9 +1088,9 @@ function renderTeamStatsTabHtml(model, { isLoading = false } = {}) {
   if (groups.length === 0) {
     return `
       <section class="card gc-empty-card">
-        <div class="gc-empty-title">Single-game team stats unavailable offline</div>
+        <div class="gc-empty-title">${model.isLive ? 'Game underway — team stats populate after the opening snap' : 'Single-game team stats unavailable offline'}</div>
         <div class="gc-empty-actions">
-          <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>Retry Load</span></button>
+          <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>${model.isLive ? 'Sync Now' : 'Retry Load'}</span></button>
           ${
             model.gameUrl
               ? `<a href="${esc(model.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Team Stats</span>${iconSvg('externalLink', 10)}</a>`
@@ -1164,7 +1190,8 @@ function renderPlayByPlayTabHtml(
     activeGamecastClipKey = '',
     rosterPlayers = [],
     userPrefs = null,
-    isLoading = false
+    isLoading = false,
+    isMetaLive = false
   } = {}
 ) {
   // Modern ESPN-inspired vertical order inside Play-by-Play:
@@ -1178,6 +1205,17 @@ function renderPlayByPlayTabHtml(
   const quarterCardHtml = !model.isPre ? renderQuarterScoreboardCard(model) : '';
   const winProbCardHtml = !model.isPre ? renderWinProbabilityCard(model) : '';
   const leadersCardHtml = !model.isPre ? renderGameLeadersCard(model, rosterPlayers) : '';
+
+  if (model.isPre && isMetaLive) {
+    return `
+      <section class="card gc-empty-card" data-gamecast-kickoff-syncing>
+        <div class="gc-empty-title">Kickoff underway — syncing live Play-by-Play…</div>
+        <div class="gc-skeleton-line wide"></div>
+        <div class="gc-skeleton-line"></div>
+        <div class="gc-skeleton-line"></div>
+      </section>
+    `;
+  }
 
   if (model.isPre) {
     return `
@@ -1269,9 +1307,9 @@ function renderPlayByPlayTabHtml(
         ${fieldHtml}
         ${quarterCardHtml}
         <section class="card gc-empty-card">
-          <div class="gc-empty-title">Drive play-by-play unavailable offline</div>
+          <div class="gc-empty-title">${model.isLive ? 'Game underway — plays populate after the opening kickoff' : 'Drive play-by-play unavailable offline'}</div>
           <div class="gc-empty-actions">
-            <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>Retry Load</span></button>
+            <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>${model.isLive ? 'Sync Now' : 'Retry Load'}</span></button>
             ${
               model.gameUrl
                 ? `<a href="${esc(model.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Play-by-Play</span>${iconSvg('externalLink', 10)}</a>`
@@ -1467,7 +1505,7 @@ export function renderGamecastViewHtml({
           <div class="gc-sb-team-meta">
             <div class="gc-sb-name">
               <span class="gc-sb-name-text">${esc(away.shortName || away.abbr)}</span>
-              ${model.isLive && away.hasPossession ? '<span class="gc-poss-dot" title="Possession" aria-label="Has possession">●</span>' : ''}
+              ${model.isLive && away.hasPossession ? renderPossessionFootballIconHtml() : ''}
             </div>
             ${away.record ? `<div class="gc-sb-sub mono">${esc(away.record)}</div>` : ''}
             ${model.isLive ? `<div class="gc-sb-to-row">${renderTimeoutDotsHtml(away.timeoutsRemaining ?? 3)}</div>` : ''}
@@ -1503,7 +1541,7 @@ export function renderGamecastViewHtml({
         <div class="gc-sb-team home">
           <div class="gc-sb-team-meta">
             <div class="gc-sb-name">
-              ${model.isLive && home.hasPossession ? '<span class="gc-poss-dot" title="Possession" aria-label="Has possession">●</span>' : ''}
+              ${model.isLive && home.hasPossession ? renderPossessionFootballIconHtml() : ''}
               <span class="gc-sb-name-text">${esc(home.shortName || home.abbr)}</span>
             </div>
             ${home.record ? `<div class="gc-sb-sub mono">${esc(home.record)}</div>` : ''}
@@ -1512,19 +1550,6 @@ export function renderGamecastViewHtml({
           ${renderTeamLogoHtml(home.abbr, home.logoUrl, 44, 'gc-logo-bare gc-sb-logo', { eager: true })}
         </div>
       </div>
-
-      ${
-        model.isLive && activeTab !== 'pbp'
-          ? `
-            <div class="gc-live-foot">
-              <span class="mono gc-live-foot-sit">${esc(model.situation?.downDistanceText || model.statusDetail || 'Live')}</span>
-              <button type="button" class="gc-inactives-link" data-action="set-season-sub" data-season-sub="health">
-                <span>Inactives</span>${iconSvg('arrowRight', 11)}
-              </button>
-            </div>
-          `
-          : ''
-      }
     </section>
   `;
 
@@ -1570,11 +1595,12 @@ export function renderGamecastViewHtml({
     </div>
   `;
 
+  const isMetaLive = Boolean(activeMeta.isLive);
   let bodyHtml = '';
   if (activeTab === 'box') {
-    bodyHtml = renderBoxScoreTabHtml(model, { boxTeam, boxUnit, rosterPlayers, isLoading });
+    bodyHtml = renderBoxScoreTabHtml(model, { boxTeam, boxUnit, rosterPlayers, isLoading, isMetaLive });
   } else if (activeTab === 'team') {
-    bodyHtml = renderTeamStatsTabHtml(model, { isLoading });
+    bodyHtml = renderTeamStatsTabHtml(model, { isLoading, isMetaLive });
   } else {
     bodyHtml = renderPlayByPlayTabHtml(model, {
       pbpFilter,
@@ -1585,7 +1611,8 @@ export function renderGamecastViewHtml({
       activeGamecastClipKey,
       rosterPlayers,
       userPrefs,
-      isLoading
+      isLoading,
+      isMetaLive
     });
   }
 

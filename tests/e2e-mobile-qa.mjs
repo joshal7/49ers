@@ -7458,6 +7458,16 @@ async function main() {
         await sleep(30);
         const boxHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
         const boxHasUnitPills = Boolean(document.querySelector('.gc-unit-pills'));
+        const boxHasLiveFoot = Boolean(document.querySelector('.gc-live-foot'));
+        const boxTabsTop = document.querySelector('[data-gamecast-tabs]')?.getBoundingClientRect().top ?? 0;
+        const scoreEl = document.querySelector('.gc-sb-score');
+        const clockEl = document.querySelector('.gc-sb-clock');
+        const scoreFontPx = scoreEl ? parseFloat(getComputedStyle(scoreEl).fontSize || '0') : 0;
+        const clockStackedBelowScore = Boolean(
+          scoreEl &&
+            clockEl &&
+            clockEl.getBoundingClientRect().top >= scoreEl.getBoundingClientRect().bottom - 2
+        );
         const teamSegEl = document.querySelector('.gc-team-seg');
         const boxControlsEl = document.querySelector('.gc-box-controls');
         const boxTeamSegFullWidth = Boolean(
@@ -7472,12 +7482,17 @@ async function main() {
         await sleep(30);
         const teamHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
         const teamHasRedundantLegend = Boolean(document.querySelector('.gc-ts-legend'));
+        const teamHasLiveFoot = Boolean(document.querySelector('.gc-live-foot'));
+        const teamTabsTop = document.querySelector('[data-gamecast-tabs]')?.getBoundingClientRect().top ?? 0;
         const teamOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
 
         // 4. Play-by-Play tab: Quarter Scoreboard MUST appear, and PBP toolbar (if present) stays single-line in All Plays -> Key Plays -> Scoring order
         document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="pbp"]')?.click();
         await sleep(30);
         const pbpHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const pbpTabsTop = document.querySelector('[data-gamecast-tabs]')?.getBoundingClientRect().top ?? 0;
+        const navTopConsistentAcrossTabs =
+          Math.abs(boxTabsTop - teamTabsTop) <= 1.5 && Math.abs(boxTabsTop - pbpTabsTop) <= 1.5;
         const pbpToolbarEl = document.querySelector('[data-gamecast-pbp-toolbar]');
         const pbpToolbarSingleLine = !pbpToolbarEl || pbpToolbarEl.getBoundingClientRect().height <= 42;
         const pbpModeKeys = Array.from(document.querySelectorAll('[data-action="set-gamecast-pbp-filter"]')).map(el =>
@@ -7500,14 +7515,19 @@ async function main() {
           hasStickyTabs,
           gameSelectOptions,
           sbLogoUnboxedAndLarge,
+          scoreFontPx,
+          clockStackedBelowScore,
           boxHasQuarter,
           boxHasUnitPills,
+          boxHasLiveFoot,
           boxTeamSegFullWidth,
           boxOverflow,
           teamHasQuarter,
           teamHasRedundantLegend,
+          teamHasLiveFoot,
           teamOverflow,
           pbpHasQuarter,
+          navTopConsistentAcrossTabs,
           pbpToolbarSingleLine,
           pbpModeKeys,
           pbpOverflow,
@@ -7518,6 +7538,8 @@ async function main() {
       assert(gcRes.hasSchedGamecastBtn, 'Schedule completed row must render in-app Box Score / Gamecast button');
       assert(gcRes.hasScorebug && !gcRes.hasOldSwitcherStrip && gcRes.hasWeekPickerPill && gcRes.hasStickyTabs && gcRes.gameSelectOptions >= 10, `Gamecast streamlined chrome incomplete: ${JSON.stringify(gcRes)}`);
       assert(gcRes.sbLogoUnboxedAndLarge, `Scorebug team logo must be unboxed (0px border) and >=40px at 375px: ${JSON.stringify(gcRes)}`);
+      assert(gcRes.clockStackedBelowScore && gcRes.scoreFontPx >= 24, `Scorebug must stack clock cleanly beneath large (>=24px) scores: ${JSON.stringify(gcRes)}`);
+      assert(!gcRes.boxHasLiveFoot && !gcRes.teamHasLiveFoot && gcRes.navTopConsistentAcrossTabs, `Gamecast sticky nav top must stay locked across Box Score / Team Stats / Play-by-Play with no .gc-live-foot row: ${JSON.stringify(gcRes)}`);
       assert(gcRes.hasBackBtn && gcRes.returnedToSchedule, `Schedule <-> Gamecast back navigation failed: ${JSON.stringify(gcRes)}`);
       assert(!gcRes.boxHasQuarter && !gcRes.boxHasUnitPills && gcRes.boxTeamSegFullWidth, `Box Score must omit unit pills and stretch Team A/B full-width: ${JSON.stringify(gcRes)}`);
       assert(!gcRes.teamHasQuarter && !gcRes.teamHasRedundantLegend, `Team Stats must omit Quarter scoreboard and redundant Single-Game Stats legend: ${JSON.stringify(gcRes)}`);

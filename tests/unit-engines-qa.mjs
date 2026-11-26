@@ -334,7 +334,9 @@ import {
   buildFallbackGamecastFromSchedule,
   buildPlayHeadline,
   yardsToEndzoneToFieldX,
-  parseSpotTextToFieldX
+  parseSpotTextToFieldX,
+  sanitizeDownDistanceText,
+  formatDownAndDistance
 } from '../src/engine/gamecastEngine.js';
 import { renderGamecastViewHtml } from '../src/views/gamecastView.js';
 import {
@@ -20914,6 +20916,280 @@ test('parseEspnSummaryToGamecast parses Box Score, Team Stats, Play-by-Play, Fie
   const parsedInferredTo = parseEspnSummaryToGamecast(noSitTimeoutsSummary);
   assert.equal(parsedInferredTo.away.timeoutsRemaining, 2, 'Live timeout inference must deduct MIN charged 2nd-half timeout (3 -> 2)');
   assert.equal(parsedInferredTo.home.timeoutsRemaining, 3, 'Live timeout inference must keep SF at 3 remaining timeouts');
+
+  // Verify Brown Football Possession Icon & Removal of .gc-live-foot strip on Box Score / Team Stats
+  assert.ok(pbpHtml.includes('data-possession-icon="football"') && pbpHtml.includes('gc-poss-football-svg'), 'Possession indicator must render inline SVG brown football icon');
+  assert.ok(!boxHtml.includes('gc-live-foot') && !teamHtml.includes('gc-live-foot'), 'Box Score and Team Stats must NOT render the .gc-live-foot row so nav bar stays vertically locked');
+
+  // Verify sanitizeDownDistanceText rejects corrupt "& Goal" / "0th & Goal" outputs
+  assert.equal(sanitizeDownDistanceText('& Goal'), '');
+  assert.equal(sanitizeDownDistanceText('0th & Goal'), '');
+  assert.equal(sanitizeDownDistanceText('& 10'), '');
+  assert.equal(sanitizeDownDistanceText('2nd & 5 at GB 27'), '2nd & 5');
+  assert.equal(formatDownAndDistance(0, 0, 65), '');
+  assert.equal(formatDownAndDistance(1, 7, 7), '1st & Goal');
+
+  // Helper to build live GB @ LAR test summaries reproducing real-world ESPN Gamecast lag & post-FG timeout edge cases
+  const makeGbLarSummary = ({ drives, situation = null, scoreAway = '0', scoreHome = '0', clock = '11:11', period = 1, state = 'in' }) => ({
+    header: {
+      id: '401873999',
+      competitions: [
+        {
+          id: '401873999',
+          status: {
+            displayClock: clock,
+            period,
+            type: { state, completed: false, shortDetail: `${clock} - ${period === 1 ? '1st' : `${period}th`}` }
+          },
+          competitors: [
+            {
+              id: '14',
+              homeAway: 'home',
+              score: scoreHome,
+              record: [{ type: 'total', summary: '6-4' }],
+              linescores: [{ displayValue: scoreHome }],
+              team: { id: '14', abbreviation: 'LAR', displayName: 'Los Angeles Rams', name: 'Rams', color: '003594' }
+            },
+            {
+              id: '9',
+              homeAway: 'away',
+              score: scoreAway,
+              record: [{ type: 'total', summary: '6-4' }],
+              linescores: [{ displayValue: scoreAway }],
+              team: { id: '9', abbreviation: 'GB', displayName: 'Green Bay Packers', name: 'Packers', color: '203731' }
+            }
+          ]
+        }
+      ]
+    },
+    situation,
+    drives
+  });
+
+  // 1. Immediate Post-Play Down & Ball On (Pass gain with STALE situation still showing play.start "1st & 10 at GB 32")
+  const passLagSummary = makeGbLarSummary({
+    situation: {
+      possession: '14',
+      down: 1,
+      distance: 10,
+      yardLine: 32,
+      yardsToEndzone: 32,
+      downDistanceText: '1st & 10 at GB 32',
+      shortDownDistanceText: '1st & 10',
+      possessionText: 'GB 32',
+      lastPlay: { id: 'p_older' }
+    },
+    drives: {
+      current: {
+        id: 'drv_lar_1',
+        team: { id: '14', abbreviation: 'LAR', shortDisplayName: 'Rams' },
+        description: '4 plays, 55 yards, 2:06',
+        plays: [
+          {
+            id: 'p_pass_5',
+            period: { number: 1 },
+            clock: { displayValue: '11:53' },
+            statYardage: 5,
+            type: { text: 'Pass Reception' },
+            start: { down: 1, distance: 10, shortDownDistanceText: '1st & 10', possessionText: 'GB 32', yardsToEndzone: 32 },
+            end: { possessionText: 'GB 27', yardsToEndzone: 27 },
+            text: '(Shotgun) M.Stafford pass short left to K.Williams to GB 27 for 5 yards (T.Hopper).'
+          }
+        ]
+      }
+    }
+  });
+  const parsedPassLag = parseEspnSummaryToGamecast(passLagSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedPassLag.situation.downOnlyText, '2nd & 5', 'Post-play down must advance immediately to 2nd & 5 after 5-yd pass');
+  assert.equal(parsedPassLag.situation.spotOnlyText, 'GB 27', 'Post-play Ball On must advance immediately to GB 27');
+  assert.equal(parsedPassLag.situation.ballPos0to100, 27);
+  assert.equal(parsedPassLag.situation.firstDownPos0to100, 22);
+
+  // 2. Immediate Post-Punt Flip: 4th & 4 at GB 29 -> D.Whelan punts 53 yards to LA 18 (must flip to LAR 1st & 10 at LAR 18, NOT Red Zone!)
+  const puntLagSummary = makeGbLarSummary({
+    situation: {
+      possession: '9',
+      down: 4,
+      distance: 4,
+      yardLine: 29,
+      yardsToEndzone: 71,
+      downDistanceText: '4th & 4 at GB 29',
+      shortDownDistanceText: '4th & 4',
+      possessionText: 'GB 29',
+      isRedZone: true,
+      lastPlay: { id: 'p_prev_3rd' }
+    },
+    drives: {
+      current: {
+        id: 'drv_gb_1',
+        team: { id: '9', abbreviation: 'GB', shortDisplayName: 'Packers' },
+        description: '3 plays, 6 yards, 1:01',
+        plays: [
+          {
+            id: 'p_punt_53',
+            period: { number: 1 },
+            clock: { displayValue: '13:59' },
+            statYardage: 53,
+            type: { text: 'Punt' },
+            start: { down: 4, distance: 4, shortDownDistanceText: '4th & 4', possessionText: 'GB 29', yardsToEndzone: 71 },
+            end: { possessionText: 'LA 18', yardsToEndzone: 82 },
+            text: 'D.Whelan punts 53 yards to LA 18, Center-M.Orzech, fair catch by X.Smith.'
+          }
+        ]
+      }
+    }
+  });
+  const parsedPunt = parseEspnSummaryToGamecast(puntLagSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedPunt.situation.possessionAbbr, 'LAR', 'Possession must flip immediately to LAR after GB punt');
+  assert.equal(parsedPunt.home.hasPossession, true);
+  assert.equal(parsedPunt.away.hasPossession, false);
+  assert.equal(parsedPunt.situation.downOnlyText, '1st & 10', 'Post-punt down must immediately reset to 1st & 10');
+  assert.equal(parsedPunt.situation.spotOnlyText, 'LAR 18', 'Post-punt spot must normalize LA 18 -> LAR 18');
+  assert.equal(parsedPunt.situation.ballPos0to100, 82);
+  assert.equal(parsedPunt.situation.isRedZone, false, 'LAR pinned at their own 18 after receiving a punt must NOT trigger Red Zone');
+
+  // 3. Field Goal -> Official Timeout (with corrupt ESPN "& Goal / LAR 35"): MUST remain FIELD GOAL across drive boundary too!
+  const fgPlay = {
+    id: 'p_fg_38',
+    period: { number: 1 },
+    clock: { displayValue: '09:55' },
+    statYardage: 38,
+    scoringPlay: true,
+    type: { text: 'Field Goal Good' },
+    start: { down: 4, distance: 5, shortDownDistanceText: '4th & 5', possessionText: 'GB 20', yardsToEndzone: 20 },
+    end: { possessionText: 'GB 20', yardsToEndzone: 20 },
+    awayScore: 0,
+    homeScore: 3,
+    text: 'J.Karty 38 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans.'
+  };
+  const tvTimeoutPlay = {
+    id: 'p_tv_to',
+    period: { number: 1 },
+    clock: { displayValue: '09:55' },
+    statYardage: 0,
+    scoringPlay: false,
+    type: { text: 'Official Timeout' },
+    start: { down: 0, distance: 0, shortDownDistanceText: '& Goal', possessionText: 'LAR 35' },
+    end: { down: 0, distance: 0, shortDownDistanceText: '& Goal', possessionText: 'LAR 35' },
+    awayScore: 0,
+    homeScore: 3,
+    text: 'Official Timeout at 09:55.'
+  };
+  const fgTimeoutSummary = makeGbLarSummary({
+    scoreHome: '3',
+    clock: '9:55',
+    situation: {
+      possession: '14',
+      down: 0,
+      distance: 0,
+      yardLine: 65,
+      shortDownDistanceText: '& Goal',
+      downDistanceText: '& Goal at LAR 35',
+      possessionText: 'LAR 35',
+      lastPlay: { id: 'p_tv_to', text: 'Official Timeout at 09:55.' }
+    },
+    drives: {
+      previous: [
+        {
+          id: 'drv_lar_fg',
+          team: { id: '14', abbreviation: 'LAR', shortDisplayName: 'Rams' },
+          description: '7 plays, 57 yards, 4:04',
+          isScore: true,
+          result: 'FG',
+          plays: [fgPlay]
+        }
+      ],
+      current: {
+        id: 'drv_post_fg_to',
+        team: { id: '14', abbreviation: 'LAR', shortDisplayName: 'Rams' },
+        plays: [tvTimeoutPlay]
+      }
+    }
+  });
+  const parsedFgTo = parseEspnSummaryToGamecast(fgTimeoutSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedFgTo.situation.scoringPlayType, 'field_goal', 'Field Goal banner must persist through subsequent Official Timeout');
+  assert.equal(parsedFgTo.situation.isFieldGoalGoodLastPlay, true);
+  assert.equal(parsedFgTo.situation.fgKickSpotPos0to100, 20, 'FG kick spot must remain at GB 20 (x=20), NOT LAR 35');
+  assert.ok(!parsedFgTo.situation.downOnlyText.includes('& Goal'), 'Corrupt "& Goal" must never leak into downOnlyText');
+  const gbLarAppData = {
+    meta: { seasonYear: 2026, teamAbbr: 'LAR' },
+    roster: { players: [] },
+    scheduleMatchup: {
+      schedule: [
+        {
+          id: '401873999',
+          week: 12,
+          seasonType: 'REG',
+          homeAway: 'home',
+          completed: false,
+          isLive: true,
+          statusState: 'in',
+          statusDetail: '9:55 - 1st',
+          sfScore: 3,
+          oppScore: 0,
+          opponent: { abbr: 'GB', name: 'Green Bay Packers' }
+        }
+      ]
+    }
+  };
+  const fgToHtml = renderGamecastViewHtml({ appData: gbLarAppData, selectedGameId: '401873999', gamecastTab: 'pbp', gamecastModel: parsedFgTo });
+  assert.ok(fgToHtml.includes('data-gamecast-scoring-banner="field_goal"') && fgToHtml.includes('FIELD GOAL'), 'UI must keep centered FIELD GOAL banner during post-FG timeout');
+  assert.ok(!fgToHtml.includes('&amp; Goal') && !fgToHtml.includes('& Goal'), 'UI must never render "& Goal"');
+
+  // 4. Kickoff arrives after FG + Timeout -> immediately shifts to receiving team's 1st & 10 at post-return spot!
+  const kickoffSummary = makeGbLarSummary({
+    scoreHome: '3',
+    clock: '9:50',
+    drives: {
+      previous: fgTimeoutSummary.drives.previous,
+      current: {
+        id: 'drv_gb_ko',
+        team: { id: '9', abbreviation: 'GB', shortDisplayName: 'Packers' },
+        plays: [
+          {
+            id: 'p_ko_ret',
+            period: { number: 1 },
+            clock: { displayValue: '09:50' },
+            statYardage: 26,
+            type: { text: 'Kickoff Return (Offense)' },
+            start: { down: 0, distance: 0, possessionText: 'LAR 35', yardsToEndzone: 65 },
+            end: { team: { id: '9' }, possessionText: 'GB 28', yardsToEndzone: 72 },
+            text: 'J.Karty kicks 63 yards from LAR 35 to GB 2. K.Nixon to GB 28 for 26 yards.'
+          }
+        ]
+      }
+    }
+  });
+  const parsedKo = parseEspnSummaryToGamecast(kickoffSummary, { activeTeam: 'LAR' });
+  assert.equal(parsedKo.situation.scoringPlayType, null, 'Kickoff must clear FIELD GOAL banner immediately');
+  assert.equal(parsedKo.situation.possessionAbbr, 'GB', 'Receiving team GB must immediately hold possession after kickoff');
+  assert.equal(parsedKo.away.hasPossession, true);
+  assert.equal(parsedKo.situation.downOnlyText, '1st & 10', 'Post-kickoff down must immediately be 1st & 10');
+  assert.equal(parsedKo.situation.spotOnlyText, 'GB 28', 'Post-kickoff Ball On must immediately reflect post-return spot GB 28');
+  assert.equal(parsedKo.situation.ballPos0to100, 28);
+
+  // 5. Kickoff underway syncing state: when live dot (meta.isLive) is ON while summary is still `pre`, never show "opens at kickoff"
+  const preModelWhileLiveMeta = buildFallbackGamecastFromSchedule(
+    { id: '401873077', oppAbbr: 'MIN', oppName: 'Minnesota Vikings', homeAway: 'home', completed: false, isLive: false, statusDetail: '11/25 - 8:00 PM EST' },
+    appDataMock
+  );
+  const liveMetaApp = structuredClone(appDataMock);
+  const liveSchedItem = liveMetaApp.scheduleMatchup.schedule.find(
+    g => !g.completed && !g.isByeWeek && /^\d+$/.test(String(g.id || ''))
+  );
+  if (liveSchedItem) {
+    liveSchedItem.completed = false;
+    liveSchedItem.isLive = true;
+    liveSchedItem.statusState = 'in';
+    preModelWhileLiveMeta.gameId = String(liveSchedItem.id);
+    const syncBoxHtml = renderGamecastViewHtml({
+      appData: liveMetaApp,
+      selectedGameId: String(liveSchedItem.id),
+      gamecastTab: 'box',
+      gamecastModel: preModelWhileLiveMeta
+    });
+    assert.ok(syncBoxHtml.includes('data-gamecast-kickoff-syncing') && !syncBoxHtml.includes('Box Score opens at kickoff'), 'When live dot is active while summary flips from pre->in, Box Score must show live kickoff-syncing state instead of pregame placeholder');
+  }
 });
 
 test('extractFastSituationFingerprint detects play/down/spot changes & folded Draft view supports legacy draft_class route', () => {
@@ -20985,6 +21261,21 @@ await testAsync('Worker GET /api/gamecast validates numeric event IDs/modes and 
           { status: 200 }
         );
       }
+      if (s.includes('event=401874111')) {
+        return new Response(
+          JSON.stringify({
+            header: {
+              competitions: [
+                {
+                  date: new Date(Date.now() - 60_000).toISOString(),
+                  status: { type: { state: 'pre' } }
+                }
+              ]
+            }
+          }),
+          { status: 200 }
+        );
+      }
       return new Response(
         JSON.stringify({ header: { competitions: [{ status: { type: { state: 'post' } } }] } }),
         { status: 200 }
@@ -21001,6 +21292,10 @@ await testAsync('Worker GET /api/gamecast validates numeric event IDs/modes and 
     const liveSumRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=summary'), {});
     assert.equal(liveSumRes.status, 200);
     assert.equal(liveSumRes.headers.get('X-Gamecast-TTL'), '3', 'Live summary must use 3s edge cache TTL');
+
+    const imminentPreRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401874111&mode=summary'), {});
+    assert.equal(imminentPreRes.status, 200);
+    assert.equal(imminentPreRes.headers.get('X-Gamecast-TTL'), '3', 'Imminent/past-kickoff pregame summary must use 3s TTL (not 30s) for instant kickoff transition');
 
     const finalSumRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401874392&mode=summary'), {});
     assert.equal(finalSumRes.status, 200);

@@ -3063,6 +3063,16 @@ function renderGamecastPreservingScroll({ isBackground = false } = {}) {
   }
 }
 
+function isGamecastKickoffOrLiveWindow(meta, model = null) {
+  if (model?.isFinal) return false;
+  if (model?.isLive || meta?.isLive) return true;
+  if (meta?.completed) return false;
+  const koMs = Date.parse(meta?.dateIso || '');
+  if (!Number.isFinite(koMs)) return false;
+  const nowMs = Date.now();
+  return nowMs >= koMs - 10 * 60_000 && nowMs <= koMs + 4.5 * 3_600_000;
+}
+
 async function hydrateGamecastById(meta, { forceRefresh = false, silent = false, pollSeq = null } = {}) {
   if (!meta?.id || !state.appData) return null;
   const gameId = String(meta.id);
@@ -3086,10 +3096,29 @@ async function hydrateGamecastById(meta, { forceRefresh = false, silent = false,
     if (fetched && fetched.gameId === gameId) {
       const prevPlayId = prevModel?.situation?.lastPlayId || '';
       const nextPlayId = fetched.situation?.lastPlayId || '';
-      const prevScoreSig = prevModel
-        ? `${prevModel.away?.score}-${prevModel.home?.score}-${prevModel.totalPlays}`
-        : '';
-      const nextScoreSig = `${fetched.away?.score}-${fetched.home?.score}-${fetched.totalPlays}`;
+      const buildStateSig = m => {
+        if (!m) return '';
+        const boxCnt = (m.boxScore?.team?.length || 0) + (m.boxScore?.opponent?.length || 0);
+        const tsCnt = m.teamStatsGroups?.length || 0;
+        const sit = m.situation || {};
+        return [
+          m.state || '',
+          m.statusDetail || '',
+          m.clock || '',
+          m.period || 0,
+          m.away?.score ?? '',
+          m.home?.score ?? '',
+          m.totalPlays || 0,
+          boxCnt,
+          tsCnt,
+          sit.possessionAbbr || '',
+          sit.downOnlyText || '',
+          sit.spotOnlyText || '',
+          sit.scoringPlayType || ''
+        ].join('|');
+      };
+      const prevScoreSig = buildStateSig(prevModel);
+      const nextScoreSig = buildStateSig(fetched);
       const changed = !prevModel || prevPlayId !== nextPlayId || prevScoreSig !== nextScoreSig || prevModel.isFallback !== fetched.isFallback;
 
       if (nextPlayId && prevPlayId && nextPlayId !== prevPlayId) {
@@ -3136,11 +3165,17 @@ function scheduleNextGamecastPoll(seq) {
   const { gameId, meta } = getActiveGamecastTarget();
   if (!gameId || !meta) return;
   const curModel = state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId);
-  const isLiveTarget = Boolean(curModel ? curModel.isLive : meta.isLive);
-  if (!isLiveTarget) return;
+  const isLiveSummary = Boolean(curModel?.isLive);
+  const isAwaitingKickoffFlip = Boolean(!isLiveSummary && isGamecastKickoffOrLiveWindow(meta, curModel));
+  if (!isLiveSummary && !isAwaitingKickoffFlip) return;
 
-  const activeTab = state.gamecastTab || 'pbp';
-  const intervalMs = activeTab === 'pbp' ? 2000 : 6000;
+  const activeTab = state.gamecastTab || (isLiveSummary || meta.isLive ? 'pbp' : 'box');
+  let intervalMs = activeTab === 'pbp' ? 2000 : 4000;
+  if (isAwaitingKickoffFlip) {
+    const koMs = Date.parse(meta.dateIso || '');
+    const pastOrNearKickoff = Boolean(meta.isLive) || (Number.isFinite(koMs) && Date.now() >= koMs - 2 * 60_000);
+    intervalMs = pastOrNearKickoff ? 3000 : 10_000;
+  }
 
   gamecastPollTimerId = setTimeout(async () => {
     if (seq !== gamecastPollSeq) return;
@@ -3154,7 +3189,10 @@ function scheduleNextGamecastPoll(seq) {
     const latest = getActiveGamecastTarget();
     if (!latest.meta || latest.gameId !== gameId) return;
 
-    if (activeTab === 'pbp') {
+    if (isAwaitingKickoffFlip) {
+      // Directly poll summary until ESPN flips `pre` -> `in` so Box Score, Team Stats & PBP populate immediately at kickoff
+      await hydrateGamecastById(latest.meta, { forceRefresh: true, silent: true, pollSeq: seq });
+    } else if (activeTab === 'pbp') {
       gamecastSituationTickCount += 1;
       const fp = await fetchLiveSituationFingerprint(gameId, { prefs: state.prefs });
       if (seq !== gamecastPollSeq) return;
@@ -3176,7 +3214,7 @@ function scheduleNextGamecastPoll(seq) {
           renderGamecastPreservingScroll({ isBackground: true });
         }
       }
-      if (fpChanged || gamecastSituationTickCount % 5 === 0) {
+      if (fpChanged || gamecastSituationTickCount % 4 === 0) {
         await hydrateGamecastById(latest.meta, { forceRefresh: true, silent: true, pollSeq: seq });
       }
     } else {
@@ -3197,13 +3235,16 @@ function ensureGamecastHydratedAndPolling({ forceRefresh = false, skipFetchIfLoa
   const seq = gamecastPollSeq;
   gamecastSituationTickCount = 0;
 
-  const hasLoadedModel = Boolean(state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId));
-  if (skipFetchIfLoaded && !forceRefresh && hasLoadedModel) {
+  const existingModel = state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId) || null;
+  const hasLoadedModel = Boolean(existingModel);
+  const needsKickoffUpgrade = Boolean(existingModel?.isPre && (meta.isLive || isGamecastKickoffOrLiveWindow(meta, existingModel)));
+  if (skipFetchIfLoaded && !forceRefresh && hasLoadedModel && !needsKickoffUpgrade) {
     scheduleNextGamecastPoll(seq);
     return;
   }
 
-  hydrateGamecastById(meta, { forceRefresh, silent: hasLoadedModel && !forceRefresh, pollSeq: seq }).then(() => {
+  const effectiveForce = Boolean(forceRefresh || needsKickoffUpgrade);
+  hydrateGamecastById(meta, { forceRefresh: effectiveForce, silent: hasLoadedModel && !forceRefresh, pollSeq: seq }).then(() => {
     if (seq === gamecastPollSeq) {
       scheduleNextGamecastPoll(seq);
     }
@@ -6129,6 +6170,19 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
         sheet: Boolean(state.sheetMode),
         preserveSheetScroll: true
       });
+    }
+    // If live ESPN overlay just detected kickoff while the user is on Gamecast, immediately upgrade Gamecast from `pre` -> `in`
+    if (
+      espnMutated &&
+      state.activeNavTab === 'season' &&
+      state.seasonSubTab === 'gamecast' &&
+      isActiveLiveGamePresent(state.appData)
+    ) {
+      const { gameId: liveGcId } = getActiveGamecastTarget();
+      const curGcModel = liveGcId ? state.gamecastModelsById.get(liveGcId) || getCachedGamecastModel(liveGcId) : null;
+      if (!curGcModel || curGcModel.isPre || !gamecastPollTimerId) {
+        ensureGamecastHydratedAndPolling({ forceRefresh: true });
+      }
     }
 
     if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {

@@ -233,6 +233,111 @@ export function parseSpotTextToFieldX(spotText, awayAbbr, homeAbbr) {
   return null;
 }
 
+/**
+ * Normalizes ESPN spot strings like "LA 18" -> "LAR 18" or "WSH 25" -> "WAS 25"
+ * while preserving "50". Returns '' for invalid/empty strings.
+ */
+export function normalizeSpotTextCanonical(spotText, awayAbbr = '', homeAbbr = '') {
+  const raw = String(spotText || '').trim().toUpperCase();
+  if (!raw) return '';
+  if (raw === '50' || raw === 'MIDFIELD') return '50';
+  const m = raw.match(/^([A-Z]{2,4})\s+(\d{1,2})$/);
+  if (!m) return '';
+  const canon = normalizeCanonicalTeamAbbr(m[1]);
+  const yd = Math.max(0, Math.min(50, Number(m[2])));
+  if (!Number.isFinite(yd)) return '';
+  if (yd === 50) return '50';
+  const aCanon = normalizeCanonicalTeamAbbr(awayAbbr);
+  const hCanon = normalizeCanonicalTeamAbbr(homeAbbr);
+  if (aCanon && hCanon && canon !== aCanon && canon !== hCanon) return '';
+  return `${canon} ${yd}`;
+}
+
+/**
+ * Validates and cleans ESPN down-and-distance strings so corrupt outputs like
+ * "& Goal", "0th & Goal", "& 0", or "0 & 10" (common during TV timeouts / kickoff setups)
+ * NEVER reach the UI.
+ */
+export function sanitizeDownDistanceText(raw = '') {
+  const clean = String(raw || '').trim();
+  if (!clean) return '';
+  const downPart = clean.split(/\s+(?:at|•|on)\s+/i)[0].trim();
+  const m = downPart.match(/^(1st|2nd|3rd|4th)\s*&\s*(Goal|Inches|[1-9]\d?)$/i);
+  if (!m) return '';
+  const ord = m[1].toLowerCase();
+  const dist = /^goal$/i.test(m[2]) ? 'Goal' : /^inches$/i.test(m[2]) ? 'Inches' : String(Number(m[2]));
+  return `${ord} & ${dist}`;
+}
+
+export function formatDownAndDistance(down, distance, yardsToEndzone = null) {
+  const d = Number(down);
+  if (!Number.isInteger(d) || d < 1 || d > 4) return '';
+  const ord = d === 1 ? '1st' : d === 2 ? '2nd' : d === 3 ? '3rd' : '4th';
+  const dist = Number(distance);
+  const yte = yardsToEndzone != null && Number.isFinite(Number(yardsToEndzone)) ? Number(yardsToEndzone) : null;
+  if (yte != null && yte > 0 && yte <= 10 && (!Number.isFinite(dist) || dist <= 0 || dist >= yte)) {
+    return `${ord} & Goal`;
+  }
+  if (Number.isFinite(dist) && dist > 0 && dist <= 99) {
+    return `${ord} & ${Math.round(dist)}`;
+  }
+  return '';
+}
+
+function parsePlayTextDestinationSpot(
+  text = '',
+  awayAbbr = '',
+  homeAbbr = '',
+  { isKickoff = false, isPunt = false, receivingSide = null } = {}
+) {
+  const raw = String(text || '').trim();
+  if (!raw) return null;
+
+  // Explicit or implicit touchback spot
+  const tbMatch = raw.match(/\btouchback(?:\s+to\s+(?:the\s+)?([A-Z]{2,4})\s+(\d{1,2}))?/i);
+  if (tbMatch) {
+    if (tbMatch[1] && tbMatch[2]) {
+      const explicitTb = parseSpotTextToFieldX(`${tbMatch[1]} ${tbMatch[2]}`, awayAbbr, homeAbbr);
+      if (explicitTb != null) return explicitTb;
+    }
+    if (isKickoff && receivingSide) return receivingSide === 'away' ? 30 : 70;
+    if (isPunt && receivingSide) return receivingSide === 'away' ? 20 : 80;
+  }
+
+  // Scan all destination phrases and take the final valid field spot mentioned
+  const spotRe =
+    /\b(?:to|at|pushed\s+ob\s+at|ran\s+ob\s+at|out\s+of\s+bounds\s+at|downed\s+at|fair\s+catch\b[^.]*?\bat|recovered\s+by\s+[A-Z]{2,4}-[^\s,]+\s+at)\s+(?:the\s+)?([A-Z]{2,4}\s+\d{1,2}|50)\b/gi;
+  let lastValid = null;
+  let m;
+  while ((m = spotRe.exec(raw)) !== null) {
+    const parsed = parseSpotTextToFieldX(m[1], awayAbbr, homeAbbr);
+    if (parsed != null) lastValid = parsed;
+  }
+  return lastValid;
+}
+
+function resolveKickoffReceivingSide(text = '', driveSide = 'away', endTeamId = '', away = {}, home = {}) {
+  const raw = String(text || '');
+  // Onside / muffed kickoff explicit recovery wins
+  const recMatch = raw.match(/\bRECOVERED\s+by\s+([A-Z]{2,4})-/i);
+  if (recMatch) {
+    const recAbbr = normalizeCanonicalTeamAbbr(recMatch[1]);
+    if (recAbbr === away.abbr) return 'away';
+    if (recAbbr === home.abbr) return 'home';
+  }
+  if (endTeamId) {
+    if (endTeamId === away.espnId) return 'away';
+    if (endTeamId === home.espnId) return 'home';
+  }
+  const fromMatch = raw.match(/\bfrom\s+([A-Z]{2,4})\s+\d{1,2}\b/i);
+  if (fromMatch) {
+    const kickAbbr = normalizeCanonicalTeamAbbr(fromMatch[1]);
+    if (kickAbbr === away.abbr) return 'home';
+    if (kickAbbr === home.abbr) return 'away';
+  }
+  return driveSide;
+}
+
 function normalizeDriveResultBadge(rawResult = '', isLiveDrive = false) {
   if (isLiveDrive) return { code: 'LIVE', tone: 'live' };
   const s = String(rawResult || '').trim().toUpperCase();
@@ -1121,16 +1226,18 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         if (pl?.end?.awayTimeouts != null) lastPlayRawTimeouts.away = Number(pl.end.awayTimeouts);
         if (pl?.end?.homeTimeouts != null) lastPlayRawTimeouts.home = Number(pl.end.homeTimeouts);
 
-        const downDist = String(pl?.start?.shortDownDistanceText || pl?.start?.downDistanceText || '').trim();
-        const spot = String(pl?.start?.possessionText || '').trim();
+        const kind = classifyPlayKind(pl);
+        const downDistRaw = String(pl?.start?.shortDownDistanceText || pl?.start?.downDistanceText || '').trim();
+        const downDist = kind.isAdminStoppage ? '' : sanitizeDownDistanceText(downDistRaw);
+        const spotRaw = String(pl?.start?.possessionText || '').trim();
+        const spot = kind.isAdminStoppage ? '' : normalizeSpotTextCanonical(spotRaw, away.abbr, home.abbr) || spotRaw;
         const downDistanceSpot =
           downDist && spot
             ? `${downDist} • ${spot}`
-            : downDist || spot || String(pl?.type?.text || '').trim();
+            : downDist || spot || (kind.isAdminStoppage ? qLbl : String(pl?.type?.text || '').trim());
         const yds = Number(pl?.statYardage);
         const yards = Number.isFinite(yds) ? yds : 0;
         const isScoring = Boolean(pl?.scoringPlay);
-        const kind = classifyPlayKind(pl);
         const { headline, tone: headlineTone } = buildPlayHeadline(pl, kind, yards);
         const downNum = Number(pl?.start?.down || 0);
         const isKeyPlay =
@@ -1143,6 +1250,28 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         const fgDistance = kind.isFieldGoal
           ? Number((text.match(/(\d{2})\s+yard\s+field\s+goal/i) || [])[1] || 0) || null
           : null;
+
+        const endDownNum = Number(pl?.end?.down || 0) || null;
+        const endDistanceNum = Number(pl?.end?.distance || 0) || null;
+        const endYardsToEndzone =
+          pl?.end?.yardsToEndzone != null && Number.isFinite(Number(pl.end.yardsToEndzone))
+            ? Number(pl.end.yardsToEndzone)
+            : null;
+        const endShortDownDist =
+          sanitizeDownDistanceText(pl?.end?.shortDownDistanceText || '') ||
+          sanitizeDownDistanceText(pl?.end?.downDistanceText || '') ||
+          formatDownAndDistance(endDownNum, endDistanceNum, endYardsToEndzone);
+        const endSpot = normalizeSpotTextCanonical(pl?.end?.possessionText || '', away.abbr, home.abbr);
+        const endTeamId = String(pl?.end?.team?.id || '').trim();
+        let endSideForYte = dTeamSide;
+        if (endTeamId) {
+          if (endTeamId === away.espnId) endSideForYte = 'away';
+          else if (endTeamId === home.espnId) endSideForYte = 'home';
+        } else if (kind.isKickoff) {
+          endSideForYte = resolveKickoffReceivingSide(text, dTeamSide, endTeamId, away, home);
+        } else if (kind.isPunt || kind.isTurnover || kind.isFieldGoalMissed) {
+          endSideForYte = dTeamSide === 'away' ? 'home' : 'away';
+        }
 
         let startPos = null;
         let endPos = null;
@@ -1160,15 +1289,25 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
           }
 
           const parsedEndSpot = parseSpotTextToFieldX(pl?.end?.possessionText || '', away.abbr, home.abbr);
-          const rawEndYte = pl?.end?.yardsToEndzone != null ? Number(pl.end.yardsToEndzone) : null;
+          const parsedTextDest =
+            parsedEndSpot == null
+              ? parsePlayTextDestinationSpot(text, away.abbr, home.abbr, {
+                  isKickoff: kind.isKickoff,
+                  isPunt: kind.isPunt,
+                  receivingSide: endSideForYte
+                })
+              : null;
           if (parsedEndSpot != null) {
             endPos = parsedEndSpot;
+          } else if (parsedTextDest != null && (kind.isKickoff || kind.isPunt || kind.isTurnover)) {
+            endPos = parsedTextDest;
           } else if (
-            rawEndYte != null &&
-            Number.isFinite(rawEndYte) &&
-            (rawEndYte > 0 || kind.isTouchdown || kind.isSafety || kind.isFieldGoal)
+            endYardsToEndzone != null &&
+            (endYardsToEndzone > 0 || kind.isTouchdown || kind.isSafety || kind.isFieldGoal)
           ) {
-            endPos = yardsToEndzoneToFieldX(rawEndYte, dTeamSide);
+            endPos = yardsToEndzoneToFieldX(endYardsToEndzone, endSideForYte);
+          } else if (parsedTextDest != null) {
+            endPos = parsedTextDest;
           }
         }
 
@@ -1184,6 +1323,12 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
           downOnly: downDist,
           spotOnly: spot,
           downDistanceSpot,
+          endDown: endDownNum,
+          endDistance: endDistanceNum,
+          endShortDownDist,
+          endSpot,
+          endYardsToEndzone,
+          endTeamId,
           headline,
           headlineTone,
           text,
@@ -1284,15 +1429,381 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
 
   // Live situation & animated field geometry
   const rawSit = summaryJson.situation || comp.situation || null;
+  const allPlayEntries = [];
+  for (const drv of parsedDrivesChrono) {
+    for (const pl of drv.plays || []) {
+      allPlayEntries.push({ play: pl, drive: drv });
+    }
+  }
   const latestDrive = parsedDrivesChrono.length > 0 ? parsedDrivesChrono[parsedDrivesChrono.length - 1] : null;
-  const latestPlay = latestDrive && latestDrive.plays.length > 0 ? latestDrive.plays[latestDrive.plays.length - 1] : null;
+  const latestEntry = allPlayEntries.length > 0 ? allPlayEntries[allPlayEntries.length - 1] : null;
+  const latestPlay = latestEntry?.play || null;
+  const latestPlayDrive = latestEntry?.drive || latestDrive;
 
+  // Walk backwards past trailing administrative stoppages (Official Timeout, TV Timeout, End Period,
+  // Two-Minute Warning) so scoring plays (e.g. Field Goal -> Official Timeout) and immediate post-play
+  // down/distance NEVER revert to "& Goal / LAR 35" before the kickoff or next snap occurs!
+  let effectiveEntry = latestEntry;
+  if (latestPlay?.isAdminStoppage) {
+    for (let i = allPlayEntries.length - 1; i >= 0; i -= 1) {
+      if (!allPlayEntries[i]?.play?.isAdminStoppage) {
+        effectiveEntry = allPlayEntries[i];
+        break;
+      }
+    }
+  }
+  const effectivePlay = effectiveEntry?.play || latestPlay;
+  const effectiveDrive = effectiveEntry?.drive || latestPlayDrive;
+  const hasTrailingAdminStoppage = Boolean(
+    latestPlay?.isAdminStoppage && effectivePlay && effectivePlay.id !== latestPlay.id
+  );
+
+  const formatFieldXToSpot = x => {
+    const rounded = Math.round(Math.max(0, Math.min(100, Number(x) || 50)));
+    if (rounded === 50) return '50';
+    if (rounded < 50) return `${away.abbr} ${rounded}`;
+    return `${home.abbr} ${100 - rounded}`;
+  };
+
+  const rawLastPlayKind = rawSit?.lastPlay ? classifyPlayKind(rawSit.lastPlay) : {};
+  const isFieldGoalLastPlay = Boolean(effectivePlay ? effectivePlay.isFieldGoal : rawLastPlayKind.isFieldGoal);
+  const isFieldGoalGoodLastPlay = Boolean(
+    effectivePlay ? effectivePlay.isFieldGoalGood : rawLastPlayKind.isFieldGoalGood
+  );
+  const isFieldGoalMissedLastPlay = Boolean(
+    effectivePlay ? effectivePlay.isFieldGoalMissed : rawLastPlayKind.isFieldGoalMissed
+  );
+  const isTouchdownLastPlay = Boolean(
+    effectivePlay
+      ? effectivePlay.isTouchdown || (effectivePlay.isScoring && /touchdown/i.test(effectivePlay.text || ''))
+      : rawLastPlayKind.isTouchdown
+  );
+  const isSafetyLastPlay = Boolean(effectivePlay ? effectivePlay.isSafety : rawLastPlayKind.isSafety);
+  const isExtraPointLastPlay = Boolean(effectivePlay ? effectivePlay.isExtraPoint : rawLastPlayKind.isExtraPoint);
+  const isExtraPointGoodLastPlay = Boolean(
+    effectivePlay
+      ? effectivePlay.isExtraPoint && (effectivePlay.isScoring || /is\s+good\b/i.test(effectivePlay.text || ''))
+      : rawLastPlayKind.isExtraPoint && Boolean(rawSit?.lastPlay?.scoringPlay)
+  );
+  const isTwoPointLastPlay = Boolean(effectivePlay ? effectivePlay.isTwoPoint : rawLastPlayKind.isTwoPoint);
+  const isTwoPointGoodLastPlay = Boolean(
+    effectivePlay
+      ? effectivePlay.isTwoPoint && (effectivePlay.isScoring || /succeeds|is\s+good\b/i.test(effectivePlay.text || ''))
+      : rawLastPlayKind.isTwoPoint && Boolean(rawSit?.lastPlay?.scoringPlay)
+  );
+  const isAdminStoppageLastPlay = Boolean(
+    latestPlay ? latestPlay.isAdminStoppage : rawLastPlayKind.isAdminStoppage
+  );
+
+  // Keep scoring banner active after TD, Field Goal Good, Safety, Extra Point, or 2-Pt attempt
+  // (including across any subsequent Official Timeout / TV Timeout) until the Kickoff or next live snap arrives!
+  let scoringPlayType = null;
+  if (isTouchdownLastPlay) scoringPlayType = 'touchdown';
+  else if (isFieldGoalGoodLastPlay) scoringPlayType = 'field_goal';
+  else if (isSafetyLastPlay) scoringPlayType = 'safety';
+  else if (isExtraPointGoodLastPlay || isExtraPointLastPlay) scoringPlayType = 'extra_point';
+  else if (isTwoPointGoodLastPlay || isTwoPointLastPlay) scoringPlayType = 'two_point';
+
+  // Initial possession resolution from rawSit / effectiveDrive
   let possessionTeamId = String(rawSit?.possession || '').trim();
-  let possessionSide = latestDrive?.teamSide || 'away';
+  let possessionSide = effectiveDrive?.teamSide || latestDrive?.teamSide || 'away';
   if (possessionTeamId) {
     if (possessionTeamId === away.espnId) possessionSide = 'away';
     else if (possessionTeamId === home.espnId) possessionSide = 'home';
   }
+
+  // Determine exact scoring team (crediting defense on safeties & defensive return TDs)
+  let scoringTeamSide = effectiveDrive?.teamSide || possessionSide;
+  if (scoringPlayType) {
+    const effIdx = effectiveEntry ? allPlayEntries.indexOf(effectiveEntry) : -1;
+    const prevPlayBeforeEff = effIdx >= 1 ? allPlayEntries[effIdx - 1]?.play || null : null;
+    if (
+      effectivePlay &&
+      prevPlayBeforeEff &&
+      effectivePlay.awayScoreAfter != null &&
+      prevPlayBeforeEff.awayScoreAfter != null &&
+      effectivePlay.homeScoreAfter != null &&
+      prevPlayBeforeEff.homeScoreAfter != null
+    ) {
+      if (effectivePlay.awayScoreAfter > prevPlayBeforeEff.awayScoreAfter) scoringTeamSide = 'away';
+      else if (effectivePlay.homeScoreAfter > prevPlayBeforeEff.homeScoreAfter) scoringTeamSide = 'home';
+    } else if (isSafetyLastPlay || (isTouchdownLastPlay && effectivePlay?.isTurnover)) {
+      scoringTeamSide = (effectiveDrive?.teamSide || possessionSide) === 'away' ? 'home' : 'away';
+    }
+  }
+  const scoringTeamObj = scoringTeamSide === 'away' ? away : home;
+
+  // Validate rawSit freshness vs. latestPlay / effectivePlay so lagged ESPN `situation` objects
+  // NEVER show a 1-to-2-play-old down & spot (e.g. showing "4th & 4 at GB 29" after a punt to LA 18,
+  // or showing "1st & 10 at GB 32" after a 5-yard pass to GB 27).
+  const rawSitLastPlayId = String(rawSit?.lastPlay?.id || '').trim();
+  const rawSitShortDown = sanitizeDownDistanceText(rawSit?.shortDownDistanceText || '');
+  const rawSitFullDown = sanitizeDownDistanceText(rawSit?.downDistanceText || '');
+  const rawSitDownClean =
+    rawSitShortDown ||
+    rawSitFullDown ||
+    formatDownAndDistance(rawSit?.down, rawSit?.distance, rawSit?.yardsToEndzone);
+  const rawSitSpotClean = normalizeSpotTextCanonical(rawSit?.possessionText || '', away.abbr, home.abbr);
+  const rawSitBallPos = (() => {
+    if (rawSitSpotClean) {
+      const p = parseSpotTextToFieldX(rawSitSpotClean, away.abbr, home.abbr);
+      if (p != null) return p;
+    }
+    if (rawSit?.yardLine != null && rawSit?.yardsToEndzone != null) {
+      const yte = Number(rawSit.yardsToEndzone);
+      if (Number.isFinite(yte) && (yte > 0 || isTouchdownLastPlay || isSafetyLastPlay)) {
+        return yardsToEndzoneToFieldX(yte, possessionSide);
+      }
+    }
+    return null;
+  })();
+
+  let rawSitIsStale = false;
+  if (rawSit && effectivePlay && !effectivePlay.isAdminStoppage && !scoringPlayType) {
+    if (rawSitLastPlayId && effectivePlay.id && rawSitLastPlayId !== effectivePlay.id && rawSitLastPlayId !== latestPlay?.id) {
+      rawSitIsStale = true;
+    }
+    const effStartDownClean = sanitizeDownDistanceText(effectivePlay.downOnly || '');
+    const effStartSpotClean = normalizeSpotTextCanonical(effectivePlay.spotOnly || '', away.abbr, home.abbr);
+    if (effectivePlay.isPunt || effectivePlay.isKickoff || effectivePlay.isTurnover || effectivePlay.isFieldGoalMissed) {
+      if (
+        (rawSitDownClean && effStartDownClean && rawSitDownClean === effStartDownClean && rawSitSpotClean === effStartSpotClean) ||
+        (effectivePlay.isPunt && /^4th\b/i.test(rawSitDownClean))
+      ) {
+        rawSitIsStale = true;
+      }
+    } else if (
+      rawSitDownClean &&
+      effStartDownClean &&
+      rawSitDownClean === effStartDownClean &&
+      rawSitSpotClean &&
+      effStartSpotClean &&
+      rawSitSpotClean === effStartSpotClean &&
+      (effectivePlay.yards !== 0 || effectivePlay.isIncomplete) &&
+      !/\bno\s+play\b/i.test(effectivePlay.text || '')
+    ) {
+      rawSitIsStale = true;
+    }
+  }
+  const canTrustRawSit = Boolean(rawSit && !rawSitIsStale && !scoringPlayType);
+
+  // Resolve immediate post-play possession, ballPos, down, distance, and spot
+  let ballPos = null;
+  let resolvedDownNum = null;
+  let resolvedDistanceYds = null;
+  let resolvedDownOnly = '';
+  let resolvedSpotOnly = '';
+
+  if (scoringPlayType) {
+    // Scoring state (TD / Field Goal / Safety / Extra Point / 2-Pt): keep clean scoring banner & kick geometry
+    possessionSide = isFieldGoalLastPlay ? effectiveDrive?.teamSide || scoringTeamSide : scoringTeamSide;
+    if (canTrustRawSit && rawSitBallPos != null) {
+      ballPos = rawSitBallPos;
+    } else if (rawSitBallPos != null && !isFieldGoalLastPlay && !hasTrailingAdminStoppage) {
+      ballPos = rawSitBallPos;
+    } else if (effectivePlay?.endPos != null) {
+      ballPos = effectivePlay.endPos;
+    } else if (effectivePlay?.startPos != null) {
+      ballPos = effectivePlay.startPos;
+    }
+    if (rawSit?.distance != null && Number.isFinite(Number(rawSit.distance)) && Number(rawSit.distance) > 0) {
+      resolvedDistanceYds = Number(rawSit.distance);
+    }
+  } else if (
+    effectivePlay &&
+    (effectivePlay.isKickoff || effectivePlay.isPunt || effectivePlay.isTurnover || effectivePlay.isFieldGoalMissed)
+  ) {
+    // Possession-change / special-teams plays: update possession, 1st & 10, and landing spot IMMEDIATELY!
+    const effDriveSide = effectiveDrive?.teamSide || possessionSide;
+    let postSide = effDriveSide;
+    if (effectivePlay.isKickoff) {
+      postSide = resolveKickoffReceivingSide(effectivePlay.text, effDriveSide, effectivePlay.endTeamId, away, home);
+    } else if (effectivePlay.endTeamId && effectivePlay.endTeamId === away.espnId) {
+      postSide = 'away';
+    } else if (effectivePlay.endTeamId && effectivePlay.endTeamId === home.espnId) {
+      postSide = 'home';
+    } else if (effectivePlay.isPunt) {
+      const recMatch = String(effectivePlay.text || '').match(/\bRECOVERED\s+by\s+([A-Z]{2,4})-/i);
+      const recAbbr = recMatch ? normalizeCanonicalTeamAbbr(recMatch[1]) : '';
+      const kickingAbbr = effDriveSide === 'away' ? away.abbr : home.abbr;
+      postSide = recAbbr && recAbbr === kickingAbbr ? effDriveSide : effDriveSide === 'away' ? 'home' : 'away';
+    } else {
+      postSide = effDriveSide === 'away' ? 'home' : 'away';
+    }
+
+    possessionSide = postSide;
+    if (effectivePlay.endPos != null) {
+      ballPos = effectivePlay.endPos;
+    } else if (canTrustRawSit && rawSitBallPos != null) {
+      ballPos = rawSitBallPos;
+    } else {
+      const parsedFromText = parsePlayTextDestinationSpot(effectivePlay.text, away.abbr, home.abbr, {
+        isKickoff: effectivePlay.isKickoff,
+        isPunt: effectivePlay.isPunt,
+        receivingSide: postSide
+      });
+      if (parsedFromText != null) ballPos = parsedFromText;
+      else if (effectivePlay.isFieldGoalMissed && effectivePlay.startPos != null) {
+        // NFL rule: missed FG spot is spot of kick (~7 yds behind LOS) or 20-yd line, whichever is farther from EZ
+        const opp20 = postSide === 'away' ? 20 : 80;
+        ballPos = postSide === 'away' ? Math.max(opp20, effectivePlay.startPos) : Math.min(opp20, effectivePlay.startPos);
+      }
+    }
+    if (ballPos == null) ballPos = 50;
+
+    const postYte = possessionSide === 'away' ? Math.round(100 - ballPos) : Math.round(ballPos);
+    resolvedDownNum = 1;
+    resolvedDistanceYds = Math.min(10, Math.max(1, postYte));
+    resolvedDownOnly =
+      (canTrustRawSit && /^1st\b/i.test(rawSitDownClean) ? rawSitDownClean : '') ||
+      (effectivePlay.endShortDownDist && /^1st\b/i.test(effectivePlay.endShortDownDist)
+        ? effectivePlay.endShortDownDist
+        : '') ||
+      formatDownAndDistance(1, resolvedDistanceYds, postYte);
+    resolvedSpotOnly =
+      effectivePlay.endSpot ||
+      (canTrustRawSit && rawSitSpotClean ? rawSitSpotClean : '') ||
+      formatFieldXToSpot(ballPos);
+  } else if (effectivePlay && !effectivePlay.isAdminStoppage) {
+    // Normal scrimmage play (Pass, Run, Sack, Incomplete, Penalty): compute immediate post-play down & ball spot!
+    const playSide = effectiveDrive?.teamSide || possessionSide;
+    const playDir = playSide === 'away' ? 1 : -1;
+    const effStartPos = effectivePlay.startPos != null ? effectivePlay.startPos : null;
+    const effEndPos =
+      effectivePlay.endPos != null
+        ? effectivePlay.endPos
+        : effectivePlay.isIncomplete && effStartPos != null
+          ? effStartPos
+          : effStartPos != null
+            ? Math.max(0, Math.min(100, effStartPos + playDir * Number(effectivePlay.yards || 0)))
+            : null;
+
+    const endMatchesStart =
+      effectivePlay.endShortDownDist &&
+      effectivePlay.downOnly &&
+      effectivePlay.endShortDownDist === sanitizeDownDistanceText(effectivePlay.downOnly) &&
+      (!effectivePlay.endSpot || effectivePlay.endSpot === effectivePlay.spotOnly) &&
+      (effectivePlay.yards !== 0 || effectivePlay.isIncomplete) &&
+      !/\bno\s+play\b/i.test(effectivePlay.text || '');
+
+    if (canTrustRawSit && rawSitDownClean && rawSitBallPos != null) {
+      ballPos = rawSitBallPos;
+      resolvedDownOnly = rawSitDownClean;
+      resolvedSpotOnly = rawSitSpotClean || formatFieldXToSpot(ballPos);
+      if (rawSit?.distance != null && Number.isFinite(Number(rawSit.distance)) && Number(rawSit.distance) > 0) {
+        resolvedDistanceYds = Number(rawSit.distance);
+      }
+    } else if (effectivePlay.endShortDownDist && !endMatchesStart && effEndPos != null) {
+      ballPos = effEndPos;
+      if (effectivePlay.endTeamId) {
+        if (effectivePlay.endTeamId === away.espnId) possessionSide = 'away';
+        else if (effectivePlay.endTeamId === home.espnId) possessionSide = 'home';
+      } else {
+        possessionSide = playSide;
+      }
+      resolvedDownOnly = effectivePlay.endShortDownDist;
+      resolvedDownNum = effectivePlay.endDown || null;
+      resolvedDistanceYds = effectivePlay.endDistance || null;
+      resolvedSpotOnly = effectivePlay.endSpot || formatFieldXToSpot(ballPos);
+    } else {
+      // Deterministic NFL rules post-play state calculation (zero 1-2 play lag!)
+      ballPos = effEndPos != null ? effEndPos : rawSitBallPos != null ? rawSitBallPos : 50;
+      possessionSide = playSide;
+      const startDown = Number(effectivePlay.down || 0);
+      const startDist = Number(effectivePlay.distance || 0);
+      const gained =
+        effEndPos != null && effStartPos != null
+          ? Math.round((effEndPos - effStartPos) * playDir)
+          : Number(effectivePlay.yards || 0);
+      const endYte = playDir === 1 ? Math.round(100 - ballPos) : Math.round(ballPos);
+      const playText = String(effectivePlay.text || '');
+
+      if (startDown >= 1 && startDown <= 4 && startDist > 0) {
+        const isNoPlayPenalty = effectivePlay.isPenalty && /\bno\s+play\b/i.test(playText);
+        const isAutoFirstDown = /\b(?:automatic\s+first\s+down|first\s+down)\b/i.test(playText);
+        const isLossOfDown = effectivePlay.isPenalty && /\bloss\s+of\s+down\b/i.test(playText);
+
+        if (isAutoFirstDown || (!isNoPlayPenalty && !effectivePlay.isIncomplete && gained >= startDist)) {
+          resolvedDownNum = 1;
+          resolvedDistanceYds = Math.min(10, Math.max(1, endYte));
+          resolvedDownOnly = formatDownAndDistance(1, resolvedDistanceYds, endYte);
+        } else if (isNoPlayPenalty) {
+          resolvedDownNum = isLossOfDown ? startDown + 1 : startDown;
+          resolvedDistanceYds = Math.max(1, startDist - gained);
+          if (resolvedDownNum > 4) {
+            possessionSide = playSide === 'away' ? 'home' : 'away';
+            const oppYte = possessionSide === 'away' ? Math.round(100 - ballPos) : Math.round(ballPos);
+            resolvedDownNum = 1;
+            resolvedDistanceYds = Math.min(10, Math.max(1, oppYte));
+            resolvedDownOnly = formatDownAndDistance(1, resolvedDistanceYds, oppYte);
+          } else {
+            resolvedDownOnly = formatDownAndDistance(resolvedDownNum, resolvedDistanceYds, endYte);
+          }
+        } else {
+          const nextD = startDown + 1;
+          const nextDist = effectivePlay.isIncomplete ? startDist : Math.max(1, startDist - gained);
+          if (nextD > 4) {
+            // Turnover on downs!
+            possessionSide = playSide === 'away' ? 'home' : 'away';
+            const oppYte = possessionSide === 'away' ? Math.round(100 - ballPos) : Math.round(ballPos);
+            resolvedDownNum = 1;
+            resolvedDistanceYds = Math.min(10, Math.max(1, oppYte));
+            resolvedDownOnly = formatDownAndDistance(1, resolvedDistanceYds, oppYte);
+          } else {
+            resolvedDownNum = nextD;
+            resolvedDistanceYds = nextDist;
+            resolvedDownOnly = formatDownAndDistance(nextD, nextDist, endYte);
+          }
+        }
+      } else if (rawSitDownClean) {
+        resolvedDownOnly = rawSitDownClean;
+      }
+      resolvedSpotOnly = effectivePlay.endSpot || formatFieldXToSpot(ballPos);
+    }
+  } else {
+    // Opening kickoff / no scrimmage plays yet
+    if (rawSitBallPos != null) ballPos = rawSitBallPos;
+    if (rawSitDownClean) resolvedDownOnly = rawSitDownClean;
+    if (rawSitSpotClean) resolvedSpotOnly = rawSitSpotClean;
+  }
+
+  // Fallback ballPos chain if still null
+  if (ballPos == null && latestDrive && Array.isArray(latestDrive.plays)) {
+    for (let i = latestDrive.plays.length - 1; i >= 0; i -= 1) {
+      if (latestDrive.plays[i]?.endPos != null) {
+        ballPos = latestDrive.plays[i].endPos;
+        break;
+      }
+      if (latestDrive.plays[i]?.startPos != null) {
+        ballPos = latestDrive.plays[i].startPos;
+        break;
+      }
+    }
+  }
+  if (ballPos == null) ballPos = 50;
+
+  // Field Goal kick spot (ball sits at the scrimmage kick spot, e.g. GB 20 for a 38-yd FG, NOT the goal line!)
+  let fgKickSpotPos0to100 = null;
+  if (isFieldGoalLastPlay) {
+    const fgSide = effectiveDrive?.teamSide || possessionSide;
+    if (effectivePlay?.startPos != null && effectivePlay.startPos > 0 && effectivePlay.startPos < 100) {
+      fgKickSpotPos0to100 = effectivePlay.startPos;
+    } else if (effectivePlay?.spotOnly) {
+      fgKickSpotPos0to100 = parseSpotTextToFieldX(effectivePlay.spotOnly, away.abbr, home.abbr);
+    }
+    if (fgKickSpotPos0to100 == null && rawSit?.possessionText && !hasTrailingAdminStoppage) {
+      fgKickSpotPos0to100 = parseSpotTextToFieldX(rawSit.possessionText, away.abbr, home.abbr);
+    }
+    if (fgKickSpotPos0to100 == null && effectivePlay?.fgDistance) {
+      const losYd = Math.max(1, Math.min(60, Number(effectivePlay.fgDistance) - 17));
+      fgKickSpotPos0to100 = fgSide === 'away' ? 100 - losYd : losYd;
+    }
+    if (fgKickSpotPos0to100 != null) {
+      ballPos = fgKickSpotPos0to100;
+    }
+  }
+
+  // Apply final resolved possession & live timeouts onto away/home scorebug objects
   const possessionAbbr = possessionSide === 'away' ? away.abbr : home.abbr;
   if (isLive) {
     away.hasPossession = possessionSide === 'away';
@@ -1314,119 +1825,17 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
     }
   }
 
-  const rawLastPlayKind = rawSit?.lastPlay ? classifyPlayKind(rawSit.lastPlay) : {};
-  const isFieldGoalLastPlay = Boolean(latestPlay ? latestPlay.isFieldGoal : rawLastPlayKind.isFieldGoal);
-  const isFieldGoalGoodLastPlay = Boolean(latestPlay ? latestPlay.isFieldGoalGood : rawLastPlayKind.isFieldGoalGood);
-  const isFieldGoalMissedLastPlay = Boolean(
-    latestPlay ? latestPlay.isFieldGoalMissed : rawLastPlayKind.isFieldGoalMissed
-  );
-  const isTouchdownLastPlay = Boolean(
-    latestPlay
-      ? latestPlay.isTouchdown || (latestPlay.isScoring && /touchdown/i.test(latestPlay.text || ''))
-      : rawLastPlayKind.isTouchdown
-  );
-  const isSafetyLastPlay = Boolean(latestPlay ? latestPlay.isSafety : rawLastPlayKind.isSafety);
-  const isExtraPointGoodLastPlay = Boolean(
-    latestPlay
-      ? latestPlay.isExtraPoint && (latestPlay.isScoring || /is\s+good\b/i.test(latestPlay.text || ''))
-      : rawLastPlayKind.isExtraPoint && Boolean(rawSit?.lastPlay?.scoringPlay)
-  );
-  const isTwoPointGoodLastPlay = Boolean(
-    latestPlay
-      ? latestPlay.isTwoPoint && (latestPlay.isScoring || /succeeds|is\s+good\b/i.test(latestPlay.text || ''))
-      : rawLastPlayKind.isTwoPoint && Boolean(rawSit?.lastPlay?.scoringPlay)
-  );
-  const isAdminStoppageLastPlay = Boolean(
-    latestPlay ? latestPlay.isAdminStoppage : rawLastPlayKind.isAdminStoppage
-  );
-
-  let scoringPlayType = null;
-  if (isTouchdownLastPlay) scoringPlayType = 'touchdown';
-  else if (isFieldGoalGoodLastPlay) scoringPlayType = 'field_goal';
-  else if (isSafetyLastPlay) scoringPlayType = 'safety';
-  else if (isExtraPointGoodLastPlay) scoringPlayType = 'extra_point';
-  else if (isTwoPointGoodLastPlay) scoringPlayType = 'two_point';
-
-  // Determine exact scoring team (crediting defense on safeties & defensive return TDs)
-  let scoringTeamSide = latestDrive?.teamSide || possessionSide;
-  if (scoringPlayType) {
-    const flatPlays = parsedDrivesChrono.flatMap(d => d.plays || []);
-    const prevPlayBeforeLatest = flatPlays.length >= 2 ? flatPlays[flatPlays.length - 2] : null;
-    if (
-      latestPlay &&
-      prevPlayBeforeLatest &&
-      latestPlay.awayScoreAfter != null &&
-      prevPlayBeforeLatest.awayScoreAfter != null &&
-      latestPlay.homeScoreAfter != null &&
-      prevPlayBeforeLatest.homeScoreAfter != null
-    ) {
-      if (latestPlay.awayScoreAfter > prevPlayBeforeLatest.awayScoreAfter) scoringTeamSide = 'away';
-      else if (latestPlay.homeScoreAfter > prevPlayBeforeLatest.homeScoreAfter) scoringTeamSide = 'home';
-    } else if (isSafetyLastPlay || (isTouchdownLastPlay && latestPlay?.isTurnover)) {
-      scoringTeamSide = (latestDrive?.teamSide || possessionSide) === 'away' ? 'home' : 'away';
-    }
-  }
-  const scoringTeamObj = scoringTeamSide === 'away' ? away : home;
-
-  let ballPos = null;
-  if (rawSit?.possessionText) {
-    ballPos = parseSpotTextToFieldX(rawSit.possessionText, away.abbr, home.abbr);
-  }
-  if (ballPos == null && rawSit?.yardLine != null) {
-    const yte = rawSit?.yardsToEndzone != null ? Number(rawSit.yardsToEndzone) : null;
-    if (yte != null && Number.isFinite(yte) && (yte > 0 || isTouchdownLastPlay || isSafetyLastPlay)) {
-      ballPos = yardsToEndzoneToFieldX(yte, possessionSide);
-    }
-  }
-  if (ballPos == null && latestPlay?.endPos != null) {
-    ballPos = latestPlay.endPos;
-  }
-  if (ballPos == null && latestDrive && Array.isArray(latestDrive.plays)) {
-    for (let i = latestDrive.plays.length - 1; i >= 0; i -= 1) {
-      if (latestDrive.plays[i]?.endPos != null) {
-        ballPos = latestDrive.plays[i].endPos;
-        break;
-      }
-      if (latestDrive.plays[i]?.startPos != null) {
-        ballPos = latestDrive.plays[i].startPos;
-        break;
-      }
-    }
-  }
-  if (ballPos == null) ballPos = 50;
-
-  // Field Goal kick spot (ball sits at the scrimmage kick spot, e.g. CIN 24 for a 41-yd FG, NOT the goal line!)
-  let fgKickSpotPos0to100 = null;
-  if (isFieldGoalLastPlay) {
-    const fgSide = latestDrive?.teamSide || possessionSide;
-    if (latestPlay?.startPos != null && latestPlay.startPos > 0 && latestPlay.startPos < 100) {
-      fgKickSpotPos0to100 = latestPlay.startPos;
-    } else if (latestPlay?.spotOnly) {
-      fgKickSpotPos0to100 = parseSpotTextToFieldX(latestPlay.spotOnly, away.abbr, home.abbr);
-    }
-    if (fgKickSpotPos0to100 == null && rawSit?.possessionText) {
-      fgKickSpotPos0to100 = parseSpotTextToFieldX(rawSit.possessionText, away.abbr, home.abbr);
-    }
-    if (fgKickSpotPos0to100 == null && latestPlay?.fgDistance) {
-      const losYd = Math.max(1, Math.min(60, Number(latestPlay.fgDistance) - 17));
-      fgKickSpotPos0to100 = fgSide === 'away' ? 100 - losYd : losYd;
-    }
-    if (fgKickSpotPos0to100 != null) {
-      ballPos = fgKickSpotPos0to100;
-    }
-  }
-
   // Compute directionally valid `prevPos` so arrows NEVER point backwards on timeouts or corrupted yardLine data
   let prevPos = ballPos;
-  if (isAdminStoppageLastPlay || isFieldGoalLastPlay) {
+  if (isFieldGoalLastPlay || (isAdminStoppageLastPlay && !hasTrailingAdminStoppage)) {
     prevPos = ballPos;
-  } else if (latestPlay) {
-    const playSide = latestDrive?.teamSide || possessionSide;
+  } else if (effectivePlay && !hasTrailingAdminStoppage) {
+    const playSide = effectiveDrive?.teamSide || possessionSide;
     const playDir = playSide === 'away' ? 1 : -1;
-    const rawPrev = latestPlay.startPos != null ? latestPlay.startPos : ballPos;
-    const yds = Number(latestPlay.yards || 0);
-    if (!latestPlay.isTurnover && !latestPlay.isPunt && !latestPlay.isKickoff) {
-      if (yds === 0 || latestPlay.isIncomplete) {
+    const rawPrev = effectivePlay.startPos != null ? effectivePlay.startPos : ballPos;
+    const yds = Number(effectivePlay.yards || 0);
+    if (!effectivePlay.isTurnover && !effectivePlay.isPunt && !effectivePlay.isKickoff) {
+      if (yds === 0 || effectivePlay.isIncomplete) {
         prevPos = ballPos;
       } else {
         const expectedPrev = Math.max(0, Math.min(100, ballPos - playDir * yds));
@@ -1440,43 +1849,48 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
     }
   }
 
-  const distanceYds = Number(rawSit?.distance ?? latestPlay?.distance ?? 10);
+  const distanceYds =
+    resolvedDistanceYds != null && Number.isFinite(resolvedDistanceYds) && resolvedDistanceYds > 0
+      ? resolvedDistanceYds
+      : canTrustRawSit && rawSit?.distance != null && Number(rawSit.distance) > 0
+        ? Number(rawSit.distance)
+        : 10;
   const firstDownPos =
     possessionSide === 'away'
-      ? Math.min(100, ballPos + (Number.isFinite(distanceYds) ? distanceYds : 10))
-      : Math.max(0, ballPos - (Number.isFinite(distanceYds) ? distanceYds : 10));
+      ? Math.min(100, ballPos + distanceYds)
+      : Math.max(0, ballPos - distanceYds);
 
+  // Red Zone must reflect the RESOLVED possessing team & ball position (never a punt to the opponent's 18!)
   const isRedZone =
-    Boolean(rawSit?.isRedZone) ||
+    !scoringPlayType &&
+    !isFieldGoalLastPlay &&
     (possessionSide === 'away' ? ballPos >= 80 && ballPos < 100 : ballPos <= 20 && ballPos > 0);
-  const downDistanceText =
-    String(rawSit?.downDistanceText || rawSit?.shortDownDistanceText || '').trim() ||
-    (isTouchdownLastPlay
+
+  const spotOnlyText = resolvedSpotOnly || formatFieldXToSpot(ballPos);
+  const scoringShortLabel =
+    scoringPlayType === 'touchdown'
       ? `TOUCHDOWN ${scoringTeamObj.abbr || possessionAbbr}!`
-      : isFieldGoalGoodLastPlay
+      : scoringPlayType === 'field_goal'
         ? `FIELD GOAL ${scoringTeamObj.abbr || possessionAbbr}`
-        : isSafetyLastPlay
+        : scoringPlayType === 'safety'
           ? `SAFETY ${scoringTeamObj.abbr || possessionAbbr}`
-          : latestPlay?.downDistanceSpot || '');
-
-  // Clean split of Down ("3rd & 3") and Ball On ("CIN 37") for ESPN-style Hero KPI bar
-  const rawShortDown = String(rawSit?.shortDownDistanceText || '').trim();
-  const downParts = downDistanceText.split(/\s+(?:at|•|on)\s+/i);
+          : scoringPlayType === 'extra_point'
+            ? `EXTRA POINT ${scoringTeamObj.abbr || possessionAbbr}`
+            : scoringPlayType === 'two_point'
+              ? `2-PT CONVERSION ${scoringTeamObj.abbr || possessionAbbr}`
+              : '';
   const downOnlyText =
-    rawShortDown ||
-    (downParts.length >= 2 ? downParts[0].trim() : latestPlay?.downOnly || downDistanceText);
-  const formatFieldXToSpot = x => {
-    const rounded = Math.round(Math.max(0, Math.min(100, Number(x) || 50)));
-    if (rounded === 50) return '50';
-    if (rounded < 50) return `${away.abbr} ${rounded}`;
-    return `${home.abbr} ${100 - rounded}`;
-  };
-  const spotOnlyText =
-    String(rawSit?.possessionText || '').trim() ||
-    (downParts.length >= 2 ? downParts[1].trim() : '') ||
-    formatFieldXToSpot(ballPos);
+    scoringPlayType
+      ? scoringShortLabel
+      : resolvedDownOnly || sanitizeDownDistanceText(rawSit?.shortDownDistanceText || '') || '1st & 10';
+  const downDistanceText =
+    scoringPlayType
+      ? scoringShortLabel
+      : downOnlyText && spotOnlyText
+        ? `${downOnlyText} at ${spotOnlyText}`
+        : downOnlyText || spotOnlyText || '';
 
-  const lastPlayText = String(rawSit?.lastPlay?.text || latestPlay?.text || '').trim();
+  const lastPlayText = String(latestPlay?.text || rawSit?.lastPlay?.text || '').trim();
   const lastPlayHeadlineObj = latestPlay
     ? { headline: latestPlay.headline, tone: latestPlay.headlineTone }
     : rawSit?.lastPlay
@@ -1484,15 +1898,16 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
       : { headline: '', tone: 'neu' };
 
   const possessingTeamObj = possessionSide === 'away' ? away : home;
+  const activeFieldDrive = isFieldGoalLastPlay && effectiveDrive ? effectiveDrive : latestDrive;
 
   const situation = {
     possessionSide,
     possessionAbbr,
     downDistanceText,
-    shortDownDistanceText: rawShortDown || downDistanceText,
+    shortDownDistanceText: downOnlyText,
     downOnlyText,
     spotOnlyText,
-    possessionText: String(rawSit?.possessionText || spotOnlyText).trim(),
+    possessionText: spotOnlyText,
     isRedZone,
     isTouchdownLastPlay,
     isFieldGoalLastPlay,
@@ -1507,25 +1922,25 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
     ballPos0to100: Math.max(0, Math.min(100, ballPos)),
     prevPos0to100: Math.max(0, Math.min(100, prevPos)),
     driveStartPos0to100:
-      latestDrive?.driveStartPos != null
-        ? Math.max(0, Math.min(100, latestDrive.driveStartPos))
+      activeFieldDrive?.driveStartPos != null
+        ? Math.max(0, Math.min(100, activeFieldDrive.driveStartPos))
         : Math.max(0, Math.min(100, prevPos)),
     firstDownPos0to100: Math.max(0, Math.min(100, firstDownPos)),
-    lastPlayId: String(rawSit?.lastPlay?.id || latestPlay?.id || ''),
+    lastPlayId: String(latestPlay?.id || rawSit?.lastPlay?.id || ''),
     lastPlayText,
     lastPlayHeadline: lastPlayHeadlineObj.headline,
     lastPlayHeadlineTone: lastPlayHeadlineObj.tone,
-    lastPlayIsPass: Boolean(latestPlay?.isPass),
-    lastPlayIsRun: Boolean(latestPlay?.isRun),
-    lastPlayIsSack: Boolean(latestPlay?.isSack),
-    lastPlayIsIncomplete: Boolean(latestPlay?.isIncomplete),
-    lastPlayIsTurnover: Boolean(latestPlay?.isTurnover),
+    lastPlayIsPass: Boolean(effectivePlay?.isPass && !hasTrailingAdminStoppage),
+    lastPlayIsRun: Boolean(effectivePlay?.isRun && !hasTrailingAdminStoppage),
+    lastPlayIsSack: Boolean(effectivePlay?.isSack && !hasTrailingAdminStoppage),
+    lastPlayIsIncomplete: Boolean(effectivePlay?.isIncomplete && !hasTrailingAdminStoppage),
+    lastPlayIsTurnover: Boolean(effectivePlay?.isTurnover && !hasTrailingAdminStoppage),
     lastPlayIsStoppage: isAdminStoppageLastPlay,
-    lastPlayYards: latestPlay?.yards ?? 0,
-    currentDriveSummary: latestDrive?.summary || '',
-    currentDriveTeamAbbr: latestDrive?.teamAbbr || possessingTeamObj.abbr || possessionAbbr,
-    currentDriveTeamLogo: latestDrive?.teamLogoUrl || possessingTeamObj.logoUrl || buildEspnTeamLogoUrl(possessionAbbr),
-    currentDriveTeamName: latestDrive?.teamName || possessingTeamObj.shortName || possessionAbbr
+    lastPlayYards: effectivePlay?.yards ?? 0,
+    currentDriveSummary: activeFieldDrive?.summary || '',
+    currentDriveTeamAbbr: activeFieldDrive?.teamAbbr || possessingTeamObj.abbr || possessionAbbr,
+    currentDriveTeamLogo: activeFieldDrive?.teamLogoUrl || possessingTeamObj.logoUrl || buildEspnTeamLogoUrl(possessionAbbr),
+    currentDriveTeamName: activeFieldDrive?.teamName || possessingTeamObj.shortName || possessionAbbr
   };
 
   // Quarter filter ordering
@@ -1592,6 +2007,10 @@ export function extractFastSituationFingerprint(situationJson) {
   const lastPlayRef = String(situationJson.lastPlay?.$ref || situationJson.lastPlay?.id || '');
   const lastPlayIdMatch = lastPlayRef.match(/\/plays\/(\d+)/) || lastPlayRef.match(/^(\d+)$/);
   const lastPlayId = lastPlayIdMatch ? lastPlayIdMatch[1] : lastPlayRef;
+  const state = String(situationJson.state || '').trim().toLowerCase();
+  const clock = String(situationJson.clock || '').trim();
+  const period = Number(situationJson.period ?? 0);
+  const totalPlays = Number(situationJson.totalPlays ?? -1);
   const down = Number(situationJson.down ?? -1);
   const distance = Number(situationJson.distance ?? -1);
   const yardLine = Number(situationJson.yardLine ?? -1);
@@ -1601,9 +2020,27 @@ export function extractFastSituationFingerprint(situationJson) {
   const isRedZone = Boolean(situationJson.isRedZone);
   const downDistanceText = String(situationJson.downDistanceText || situationJson.shortDownDistanceText || '').trim();
 
-  const fingerprint = [lastPlayId, down, distance, yardLine, possession, homeTo, awayTo, isRedZone ? 1 : 0, downDistanceText].join('|');
+  const fingerprint = [
+    state,
+    period,
+    clock,
+    totalPlays,
+    lastPlayId,
+    down,
+    distance,
+    yardLine,
+    possession,
+    homeTo,
+    awayTo,
+    isRedZone ? 1 : 0,
+    downDistanceText
+  ].join('|');
   return {
     fingerprint,
+    state,
+    clock,
+    period,
+    totalPlays: totalPlays >= 0 ? totalPlays : null,
     lastPlayId,
     down,
     distance,
