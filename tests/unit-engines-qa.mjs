@@ -21195,6 +21195,7 @@ test('parseEspnSummaryToGamecast parses Box Score, Team Stats, Play-by-Play, Fie
   assert.ok(koRevHtml.includes('data-gamecast-kickoff-arc') && koRevHtml.includes('data-kick-from-u="65.0"') && koRevHtml.includes('data-kick-recv-u="2.0"'), 'Kickoff arc must span kick origin (LAR 35) to receive spot (GB 2)');
   assert.ok(koRevHtml.includes('data-gamecast-kickoff-return-arrow') && koRevHtml.includes('data-return-start-u="2.0"') && koRevHtml.includes('data-return-end-u="28.0"'), 'Kickoff return arrow must span receive spot (GB 2) to return spot (GB 28)');
   assert.ok(koRevHtml.includes('gc-ball-leather') && koRevHtml.includes('gc-los-line') && koRevHtml.includes('gc-firstdown-line'), 'Kickoff graphic must maintain app aesthetic (football, blue LOS, yellow 1st-down line)');
+  assert.ok(koRevHtml.includes('class="gc-ez-label"') && koRevHtml.includes('font-size="16.4"') && koRevHtml.includes('font-size="18"') && koRevHtml.includes('textLength="61"') && koRevHtml.includes('textLength="45"'), 'Endzone labels must render bold condensed ESPN-proportioned lettering scaled cleanly by team name length');
   assert.ok(!koRevHtml.includes('gc-run-arrow'), 'Kickoff must not fall back to generic straight run arrow');
 
   // 4b. Forward Kickoff with blank start.possessionText (GB 35 -> LA 6 -> LA 30) & Touchback / Edge Cases

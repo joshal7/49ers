@@ -554,14 +554,25 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
   // Exact perspective-aligned endzone label centers & angles computed directly from trapezoid geometry
   const awayEzTop = proj(-5, 0);
   const awayEzBot = proj(-5, 1);
-  const awayEzMid = proj(-5, 0.52);
+  const awayEzMid = proj(-5, 0.51);
   const awayEzAngle = (Math.atan2(awayEzTop.y - awayEzBot.y, awayEzTop.x - awayEzBot.x) * 180) / Math.PI;
   const homeEzTop = proj(105, 0);
   const homeEzBot = proj(105, 1);
-  const homeEzMid = proj(105, 0.52);
+  const homeEzMid = proj(105, 0.51);
   const homeEzAngle = (Math.atan2(homeEzBot.y - homeEzTop.y, homeEzBot.x - homeEzTop.x) * 180) / Math.PI;
   const awayEzLabel = away.abbr === 'SF' ? '49ERS' : (away.shortName || away.abbr || '').toUpperCase().slice(0, 10);
   const homeEzLabel = home.abbr === 'SF' ? '49ERS' : (home.shortName || home.abbr || '').toUpperCase().slice(0, 10);
+  const resolveEndzoneTextMetrics = lbl => {
+    const len = String(lbl || '').length;
+    if (len <= 4) return { fontSize: 18.0, textLength: 45, letterSpacing: 0.9 };
+    if (len === 5) return { fontSize: 17.4, textLength: 52, letterSpacing: 0.7 };
+    if (len === 6) return { fontSize: 16.8, textLength: 57, letterSpacing: 0.5 };
+    if (len === 7) return { fontSize: 16.4, textLength: 61, letterSpacing: 0.4 };
+    if (len === 8) return { fontSize: 15.6, textLength: 64, letterSpacing: 0.3 };
+    return { fontSize: 14.6, textLength: 66, letterSpacing: 0.2 };
+  };
+  const awayEzMetrics = resolveEndzoneTextMetrics(awayEzLabel);
+  const homeEzMetrics = resolveEndzoneTextMetrics(homeEzLabel);
 
   // Goalposts anchored at back of each endzone (u = -10 and u = 110, v = 0.46)
   const gpLeftBase = proj(-10, 0.46);
@@ -691,22 +702,30 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
           <!-- Left 3D Endzone (Away) -->
           <polygon points="${quadPoints(-10, 0)}" fill="${esc(away.color || '#1E293B')}" class="${isTd && sit.possessionSide === 'home' ? 'gc-td-flash' : ''}" />
           <polygon points="${quadPoints(-10, 0)}" fill="url(#gc-field-depth)" />
-          <text x="${awayEzMid.x.toFixed(1)}" y="${awayEzMid.y.toFixed(1)}"
-                fill="${away.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.92"
-                font-size="${awayEzLabel.length > 7 ? '7.6' : '8.8'}" font-weight="900"
-                text-anchor="middle" dominant-baseline="middle"
-                transform="rotate(${awayEzAngle.toFixed(2)} ${awayEzMid.x.toFixed(1)} ${awayEzMid.y.toFixed(1)})"
-                letter-spacing="1.2">${esc(awayEzLabel)}</text>
+          <g transform="translate(${awayEzMid.x.toFixed(1)} ${awayEzMid.y.toFixed(1)})">
+            <text x="0" y="0"
+                  class="gc-ez-label"
+                  fill="${away.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.96"
+                  font-size="${awayEzMetrics.fontSize}" font-weight="900"
+                  textLength="${awayEzMetrics.textLength}" lengthAdjust="spacingAndGlyphs"
+                  text-anchor="middle" dominant-baseline="central"
+                  transform="rotate(${awayEzAngle.toFixed(2)}) skewX(-14)"
+                  letter-spacing="${awayEzMetrics.letterSpacing}">${esc(awayEzLabel)}</text>
+          </g>
 
           <!-- Right 3D Endzone (Home) -->
           <polygon points="${quadPoints(100, 110)}" fill="${esc(home.color || '#AA0000')}" class="${isTd && sit.possessionSide === 'away' ? 'gc-td-flash' : ''}" />
           <polygon points="${quadPoints(100, 110)}" fill="url(#gc-field-depth)" />
-          <text x="${homeEzMid.x.toFixed(1)}" y="${homeEzMid.y.toFixed(1)}"
-                fill="${home.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.92"
-                font-size="${homeEzLabel.length > 7 ? '7.6' : '8.8'}" font-weight="900"
-                text-anchor="middle" dominant-baseline="middle"
-                transform="rotate(${homeEzAngle.toFixed(2)} ${homeEzMid.x.toFixed(1)} ${homeEzMid.y.toFixed(1)})"
-                letter-spacing="1.2">${esc(homeEzLabel)}</text>
+          <g transform="translate(${homeEzMid.x.toFixed(1)} ${homeEzMid.y.toFixed(1)})">
+            <text x="0" y="0"
+                  class="gc-ez-label"
+                  fill="${home.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.96"
+                  font-size="${homeEzMetrics.fontSize}" font-weight="900"
+                  textLength="${homeEzMetrics.textLength}" lengthAdjust="spacingAndGlyphs"
+                  text-anchor="middle" dominant-baseline="central"
+                  transform="rotate(${homeEzAngle.toFixed(2)}) skewX(14)"
+                  letter-spacing="${homeEzMetrics.letterSpacing}">${esc(homeEzLabel)}</text>
+          </g>
 
           <!-- Perspective Yard Lines (10..90) + Subtle Hash Ticks -->
           ${[10, 20, 30, 40, 50, 60, 70, 80, 90]
