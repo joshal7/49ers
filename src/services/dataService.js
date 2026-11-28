@@ -141,7 +141,8 @@ function getTeamStorageKeys() {
 }
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
 const LEGACY_WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v1';
-const WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v2';
+const LEGACY_WEEKLY_PRACTICE_V2_CACHE_KEY = 'joshal_49ers_weekly_practice_v2';
+const WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v3';
 const GAMEDAY_INACTIVES_CACHE_KEY = 'joshal_49ers_gameday_inactives_v1';
 const GITHUB_RAW_DATA_BASE = 'https://raw.githubusercontent.com/joshal7/49ers/main/data';
 
@@ -1588,10 +1589,17 @@ export function persistWeeklyPracticeSnapshot(appData) {
       }
     } catch {}
 
-    const mergeCacheEntries = (prevMap, rows) => {
+    const mergeCacheEntries = (prevMap, rows, { pruneOmittedKeys = false } = {}) => {
       const merged = {};
+      const activeKeys = new Set();
+      for (const r of rows) {
+        const k = canonicalInjuryPlayerKey(r?.name || '');
+        if (k) activeKeys.add(k);
+      }
       for (const [k, rec] of Object.entries(prevMap || {})) {
-        if (rec && typeof rec === 'object') merged[k] = { ...rec };
+        if (rec && typeof rec === 'object' && (!pruneOmittedKeys || activeKeys.has(k))) {
+          merged[k] = { ...rec };
+        }
       }
       for (const r of rows) {
         const k = canonicalInjuryPlayerKey(r?.name || '');
@@ -1616,8 +1624,14 @@ export function persistWeeklyPracticeSnapshot(appData) {
       return merged;
     };
 
-    const sfEntries = mergeCacheEntries(prevSf, sfSourceRows);
-    const oppEntries = mergeCacheEntries(prevOpp, oppSourceRows);
+    const sfHasAuthoritativeReport = Boolean(
+      appData.health?._hasLiveOfficialCurrentWeekSfReport && !appData.health?.gameDayRoster?.isActive
+    );
+    const oppHasAuthoritativeReport = Boolean(
+      um.opponentHealth?._hasLiveOfficialCurrentWeekReport && !um.opponentHealth?.gameDayRoster?.isActive
+    );
+    const sfEntries = mergeCacheEntries(prevSf, sfSourceRows, { pruneOmittedKeys: sfHasAuthoritativeReport });
+    const oppEntries = mergeCacheEntries(prevOpp, oppSourceRows, { pruneOmittedKeys: oppHasAuthoritativeReport });
     if (Object.keys(sfEntries).length === 0 && Object.keys(oppEntries).length === 0) return;
 
     window.localStorage.setItem(
@@ -1669,6 +1683,7 @@ export function hydrateCachedWeeklyPracticeAndInactives(appData) {
   if (!store || !appData) return;
   const teamStorageKeys = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).storageKeys;
   const legacyWeeklyPracticeKey = teamStorageKeys?.weeklyPracticeLegacy || LEGACY_WEEKLY_PRACTICE_CACHE_KEY;
+  const legacyWeeklyPracticeV2Key = teamStorageKeys?.weeklyPracticeLegacyV2 || LEGACY_WEEKLY_PRACTICE_V2_CACHE_KEY;
   const weeklyPracticeKey = teamStorageKeys?.weeklyPractice || WEEKLY_PRACTICE_CACHE_KEY;
   const gdInactivesKey = teamStorageKeys?.gamedayInactives || GAMEDAY_INACTIVES_CACHE_KEY;
   const um = appData.scheduleMatchup?.upcomingMatchup || {};
@@ -1680,6 +1695,7 @@ export function hydrateCachedWeeklyPracticeAndInactives(appData) {
   try {
     try {
       window.localStorage.removeItem(legacyWeeklyPracticeKey);
+      window.localStorage.removeItem(legacyWeeklyPracticeV2Key);
     } catch {}
     const rawPrac = window.localStorage.getItem(weeklyPracticeKey);
     if (rawPrac && week > 0 && !isBeforeWeeklyPracticeWindow(kickoffIso)) {
@@ -8250,7 +8266,17 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
       : null;
 
   const espnLiveDesignatedSfKeys = new Set();
+  const espnLiveDesignatedOppKeys = new Set();
   if (sfTeamInj?.injuries || oppTeamInj?.injuries) {
+    if (oppTeamInj?.injuries) {
+      for (const item of oppTeamInj.injuries) {
+        const stL = String(item?.status || '').trim().toLowerCase();
+        if (['out', 'doubtful', 'questionable'].includes(stL)) {
+          const ck = canonicalInjuryPlayerKey(item?.athlete?.displayName || '');
+          if (ck) espnLiveDesignatedOppKeys.add(ck);
+        }
+      }
+    }
 
     if (sfTeamInj?.injuries && Array.isArray(appData.roster?.players)) {
       const rosterByNorm = new Map(appData.roster.players.map(p => [normPlayerNameKey(p.name), p]));
@@ -8298,6 +8324,8 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
       if (weekAdvancedFlag || earlyWeekBlankPractice) {
         if (appData.health) {
           appData.health._hasLiveOfficialCurrentWeekSfReport = false;
+          appData.health._officialCoveredSlots = {};
+          appData.health._hasOfficialGameDesignations = false;
         }
         const liveInjuredKeys = new Set();
         for (const item of sfTeamInj.injuries) {
@@ -8612,7 +8640,13 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
             wed: earlyWeekBlankPractice ? '-' : p.health.wed || '-',
             thu: earlyWeekBlankPractice ? '-' : p.health.thu || '-',
             fri: earlyWeekBlankPractice ? '-' : p.health.fri || '-',
-            injuryType: p.health.injuryType || 'Cleared — No Designation',
+            injuryType:
+              p.health.injuryType ||
+              (p.health.wed === 'Vet Rest'
+                ? 'NIR - Veteran Rest'
+                : /^(?:active|no designation)/i.test(String(p.health.status || '').trim())
+                  ? 'Cleared — No Designation'
+                  : 'Undisclosed'),
             gameStatus: p.health.status,
             playProbabilityPct: p.health.playProbabilityPct,
             playBadgeLabel: p.health.playBadgeLabel,
@@ -8837,14 +8871,19 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
     );
 
     if (liveOfficial.hasSfReport && Array.isArray(appData.roster?.players)) {
-      const hasAnyLiveSfPractice = [...liveOfficial.sfByKey.values()].some(
-        r => (r.wed && r.wed !== '-') || (r.thu && r.thu !== '-') || (r.fri && r.fri !== '-')
-      );
+      const hasSfWedOfficial = [...liveOfficial.sfByKey.values()].some(r => r.wed && r.wed !== '-');
+      const hasSfThuOfficial = [...liveOfficial.sfByKey.values()].some(r => r.thu && r.thu !== '-');
+      const hasSfFridayOfficial = [...liveOfficial.sfByKey.values()].some(r => r.fri && r.fri !== '-');
+      const hasAnyLiveSfPractice = hasSfWedOfficial || hasSfThuOfficial || hasSfFridayOfficial;
       if (appData.health) {
         appData.health._hasLiveOfficialCurrentWeekSfReport = Boolean(hasAnyLiveSfPractice);
+        appData.health._officialCoveredSlots = {
+          wed: hasSfWedOfficial,
+          thu: hasSfThuOfficial,
+          fri: hasSfFridayOfficial
+        };
+        appData.health._hasOfficialGameDesignations = Boolean(liveOfficial.hasSfGameDesignations);
       }
-      const hasSfFridayOfficial = [...liveOfficial.sfByKey.values()].some(r => r.fri && r.fri !== '-');
-      const hasSfThuOfficial = [...liveOfficial.sfByKey.values()].some(r => r.thu && r.thu !== '-');
       const sfRosterPlayerNames = appData.roster.players.map(p => p.name).filter(Boolean);
       const DOWNGRADE_PROSE_RE =
         /\b(?:downgraded\s+to\s+(?:out|doubtful|questionable)|ruled\s+out|did\s+not\s+travel|didn['’]?t\s+travel|added\s+to\s+(?:the\s+)?injury\s+report|suffered\s+a\s+setback|setback\s+(?:at|in|during)\s+practice|illness)\b/i;
@@ -9037,7 +9076,13 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
             wed: p.health.wed || '-',
             thu: p.health.thu || '-',
             fri: p.health.fri || '-',
-            injuryType: p.health.injuryType || 'Cleared — No Designation',
+            injuryType:
+              p.health.injuryType ||
+              (p.health.wed === 'Vet Rest'
+                ? 'NIR - Veteran Rest'
+                : /^(?:active|no designation)/i.test(String(p.health.status || '').trim())
+                  ? 'Cleared — No Designation'
+                  : 'Undisclosed'),
             gameStatus: p.health.status,
             playProbabilityPct: p.health.playProbabilityPct,
             playBadgeLabel: p.health.playBadgeLabel,
@@ -9057,7 +9102,17 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
 
     if (liveOfficial.hasOppReport && appData.scheduleMatchup.upcomingMatchup?.opponentHealth) {
       const oh = appData.scheduleMatchup.upcomingMatchup.opponentHealth;
+      const hasOppWedOfficial = [...liveOfficial.oppByKey.values()].some(r => r.wed && r.wed !== '-');
+      const hasOppThuOfficial = [...liveOfficial.oppByKey.values()].some(r => r.thu && r.thu !== '-');
       const hasOppFridayOfficial = [...liveOfficial.oppByKey.values()].some(r => r.fri && r.fri !== '-');
+      const hasAnyLiveOppPractice = hasOppWedOfficial || hasOppThuOfficial || hasOppFridayOfficial;
+      oh._hasLiveOfficialCurrentWeekReport = Boolean(hasAnyLiveOppPractice);
+      oh._officialCoveredSlots = {
+        wed: hasOppWedOfficial,
+        thu: hasOppThuOfficial,
+        fri: hasOppFridayOfficial
+      };
+      oh._hasOfficialGameDesignations = Boolean(liveOfficial.hasOppGameDesignations);
       const irKeySet = new Set((oh.irReserve || []).map(ir => canonicalInjuryPlayerKey(ir.name)));
       const rosterMetaByKey = new Map(
         [
@@ -9175,6 +9230,24 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
           oppFilledCnt === 1 && isMidWeekHealthyAdditionRow(nextOppRow)
         );
         oppReportByKey.set(oppKey, nextOppRow);
+      }
+
+      // Prune active opponent rows omitted from an authoritative official club practice report
+      // (mirroring active-team Step 4b logic so healthy backups never linger after official report publishes!)
+      if (hasAnyLiveOppPractice) {
+        for (const [existingKey, existingRow] of [...oppReportByKey.entries()]) {
+          if (liveOfficial.oppByKey.has(existingKey)) continue;
+          if (existingRow?.rosterBucket === 'ir' || existingRow?.isIrReturnWindow || existingRow?.isIrReturnQuestionable) {
+            continue;
+          }
+          const hasLiveOppEspnDesig = espnLiveDesignatedOppKeys.has(existingKey);
+          const hasNewerDayOppWire =
+            (!hasOppFridayOfficial && existingRow?.fri && existingRow.fri !== '-') ||
+            (!hasOppThuOfficial && !hasOppFridayOfficial && existingRow?.thu && existingRow.thu !== '-');
+          if (!hasLiveOppEspnDesig && !hasNewerDayOppWire) {
+            oppReportByKey.delete(existingKey);
+          }
+        }
       }
 
       const reconciledOppReport = [...oppReportByKey.values()].sort(

@@ -88,8 +88,11 @@ import {
   hasTrendingDownwardSignal,
   hasTrendingUpwardSignal,
   evaluateCorroboratedNewsInjurySignal,
+  extractLivePracticeParticipationFromWire,
+  rankPlayerInjuryNews,
   resolveOfficialReportGameStatus,
-  reconcileRosterAndHealthWithNews
+  reconcileRosterAndHealthWithNews,
+  scopeBeatTextToPlayer
 } from '../src/engine/injuryProbabilityModel.js';
 import {
   canonicalPlayerKey,
@@ -26212,6 +26215,262 @@ await testAsync(
     } finally {
       setActiveTeamConfig(sfTeam);
     }
+  }
+);
+
+test(
+  'Multi-player replacement/starter isolation: healthy backup named starter (e.g. Mac Jones for Brock Purdy, or any NFL club) NEVER inherits DNP/Out or spurious Injury News',
+  () => {
+    const friNowMs = Date.parse('2026-11-28T03:00:00Z'); // Fri Nov 27, 2026 7:00 PM PT
+    const sunKickoffIso = '2026-11-29T21:05:00Z';
+    const lastGameEndMs = Date.parse('2026-11-23T04:30:00Z');
+    const rosterNames = ['Brock Purdy', 'Mac Jones', 'Jordan Watkins', 'Mike Evans'];
+
+    // 1. Exact Week 12 ESPN / 49ers.com / Nick Wagoner headlines & blurbs
+    const espnStartArticle =
+      'Mac Jones to make first 49ers start since last season. Nick Wagoner on Mac Jones making his first start since last season after Brock Purdy was ruled out with an ankle injury.';
+    const officialPracticeReportTitle =
+      'Brock Purdy OUT, Mac Jones to Start vs. Seahawks | Practice Report #SEAvsSF. The San Francisco 49ers released their latest injury updates following Friday\'s practice headed into their contest against the Seattle Seahawks.';
+    const wagonerRuleOut =
+      '49ers rule QB Brock Purdy (ankle) out, Mac Jones to start vs. Seahawks.';
+    const fridayBeatDnp =
+      'Brock Purdy (ankle) and Jordan Watkins (groin) did not practice Friday, clearing the way for Mac Jones to start Sunday.';
+    const structuredWithTrail =
+      '49ers practice report: No practice: QB Brock Purdy (ankle), WR Jordan Watkins (groin). With Brock Purdy ruled out, Mac Jones will make his first start Sunday.';
+
+    const jonesEspnScoped = scopeBeatTextToPlayer(espnStartArticle, 'Mac Jones', rosterNames);
+    const purdyEspnScoped = scopeBeatTextToPlayer(espnStartArticle, 'Brock Purdy', rosterNames);
+    assert.ok(!/ruled out|ankle/i.test(jonesEspnScoped), `Mac Jones scope must strip Purdy ruled-out clause (got: ${jonesEspnScoped})`);
+    assert.ok(/first\s+49ers\s+start|first\s+start/i.test(jonesEspnScoped), 'Mac Jones scope must preserve his starter clause');
+    assert.ok(/ruled out/i.test(purdyEspnScoped), 'Brock Purdy scope must preserve his ruled-out clause');
+
+    const jonesOffScoped = scopeBeatTextToPlayer(officialPracticeReportTitle, 'Mac Jones', rosterNames);
+    assert.ok(!/\bOUT\b/.test(jonesOffScoped), `Mac Jones scope must strip "Brock Purdy OUT" (got: ${jonesOffScoped})`);
+    assert.ok(/Mac Jones to Start/i.test(jonesOffScoped), 'Mac Jones scope must preserve "Mac Jones to Start"');
+
+    const jonesWagonerScoped = scopeBeatTextToPlayer(wagonerRuleOut, 'Mac Jones', rosterNames);
+    assert.ok(!/rule\s+QB\s+Brock\s+Purdy|out/i.test(jonesWagonerScoped), `Mac Jones scope must strip Purdy ruling (got: ${jonesWagonerScoped})`);
+
+    // 2. extractLivePracticeParticipationFromWire must assign Fri=DNP ONLY to Purdy & Watkins — NEVER Mac Jones
+    const sfRoster = [
+      {
+        id: '4361741',
+        name: 'Brock Purdy',
+        position: 'QB',
+        rosterBucket: 'active',
+        health: { wed: 'DNP', thu: 'DNP', fri: '-', injuryType: 'Ankle', status: 'Questionable', isOnPracticeReport: true, playProbabilityPct: 24 }
+      },
+      {
+        id: '4431466',
+        name: 'Jordan Watkins',
+        position: 'WR',
+        rosterBucket: 'active',
+        health: { wed: 'DNP', thu: 'DNP', fri: '-', injuryType: 'Groin', status: 'Questionable', isOnPracticeReport: true, playProbabilityPct: 18 }
+      },
+      {
+        id: '4241464',
+        name: 'Mac Jones',
+        position: 'QB',
+        rosterBucket: 'active',
+        health: { wed: '-', thu: '-', fri: '-', injuryType: '', status: 'Active', isOnPracticeReport: false, playProbabilityPct: 95 }
+      }
+    ];
+    const week12Wire = [
+      {
+        id: 'espn_live_jones_start',
+        type: 'article',
+        author: 'Nick Wagoner',
+        outletName: 'ESPN',
+        trustTier: 1,
+        publishedAt: '2026-11-28T02:00:00Z',
+        title: 'Mac Jones to make first 49ers start since last season',
+        summary: 'Nick Wagoner on Mac Jones making his first start since last season after Brock Purdy was ruled out with an ankle injury.',
+        url: 'https://www.espn.com/nfl/story/_/id/9990001'
+      },
+      {
+        id: '49ers_official_fri_report',
+        type: 'article',
+        author: '49ers.com Official',
+        outletId: '49ers_official',
+        trustTier: 1,
+        publishedAt: '2026-11-28T00:00:00Z',
+        title: 'Brock Purdy OUT, Mac Jones to Start vs. Seahawks | Practice Report #SEAvsSF',
+        summary: "The San Francisco 49ers released their latest injury updates following Friday's practice headed into their contest against the Seattle Seahawks.",
+        url: 'https://www.49ers.com/news/practice-report-wk12'
+      },
+      {
+        id: 'wagoner_rule_out',
+        type: 'article',
+        author: 'Nick Wagoner',
+        outletName: 'ESPN',
+        trustTier: 1,
+        publishedAt: '2026-11-28T01:00:00Z',
+        title: wagonerRuleOut,
+        summary: fridayBeatDnp,
+        url: 'https://www.espn.com/nfl/story/_/id/9990002'
+      },
+      {
+        id: 'beat_structured_fri',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        trustTier: 1,
+        publishedAt: '2026-11-27T22:15:00Z',
+        fullText: structuredWithTrail,
+        url: 'https://x.com/MaioccoNBCS/status/2199000000000000099'
+      }
+    ];
+
+    const wirePracMap = extractLivePracticeParticipationFromWire({
+      newsItems: week12Wire,
+      rosterPlayers: sfRoster,
+      kickoffIso: sunKickoffIso,
+      lastCompletedGameEndMs: lastGameEndMs,
+      nowMs: friNowMs,
+      seasonYear: 2026
+    });
+    assert.equal(wirePracMap.get('4361741')?.fri, 'DNP', 'Brock Purdy must receive Fri=DNP from Friday beat/structured wire');
+    assert.equal(wirePracMap.get('4431466')?.fri, 'DNP', 'Jordan Watkins must receive Fri=DNP from shared-predicate list');
+    assert.equal(wirePracMap.get('4241464'), undefined, 'Healthy starter Mac Jones must NOT receive any practice-report DNP entry from Purdy stories');
+
+    // 3. evaluateCorroboratedNewsInjurySignal must NEVER mark Mac Jones as RULED_OUT_WEEK
+    const jonesSig = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Mac Jones',
+      playerId: '4241464',
+      rosterBucket: 'active',
+      newsItems: week12Wire,
+      rosterPlayerNames: rosterNames,
+      nowMs: friNowMs,
+      windowStartMs: lastGameEndMs
+    });
+    assert.notEqual(jonesSig.signalType, 'RULED_OUT_WEEK', 'Mac Jones must NEVER get RULED_OUT_WEEK from Purdy-out starter articles');
+    assert.ok(jonesSig.direction >= 0, `Mac Jones corroborated signal must be non-negative (got ${jonesSig.signalType} / ${jonesSig.direction})`);
+
+    const purdySig = evaluateCorroboratedNewsInjurySignal({
+      playerName: 'Brock Purdy',
+      playerId: '4361741',
+      rosterBucket: 'active',
+      newsItems: week12Wire,
+      rosterPlayerNames: rosterNames,
+      nowMs: friNowMs,
+      windowStartMs: lastGameEndMs
+    });
+    assert.equal(purdySig.signalType, 'RULED_OUT_WEEK', 'Brock Purdy must still receive RULED_OUT_WEEK');
+
+    // 4. Full reconcileRosterAndHealthWithNews across both active club (SF) and non-SF opponent (SEA)
+    const appMock = {
+      meta: { teamAbbr: 'SF', seasonYear: 2026, currentWeek: 12 },
+      roster: { players: sfRoster },
+      health: {
+        week: 12,
+        byeWeek: 8,
+        _hasLiveOfficialCurrentWeekSfReport: true,
+        _officialCoveredSlots: { wed: true, thu: true, fri: true },
+        practiceReport: []
+      },
+      news: { rawStream: week12Wire },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 12,
+          oppAbbr: 'SEA',
+          oppName: 'Seattle Seahawks',
+          kickoffIso: sunKickoffIso,
+          opponentHealth: {
+            _hasLiveOfficialCurrentWeekReport: true,
+            _officialCoveredSlots: { wed: true, thu: true, fri: true },
+            injuryReport: [
+              {
+                id: '3912547',
+                name: 'Sam Darnold',
+                position: 'QB',
+                wed: 'DNP',
+                thu: 'DNP',
+                fri: '-',
+                injuryType: 'Shoulder',
+                gameStatus: 'Questionable',
+                playProbabilityPct: 24
+              }
+            ],
+            keyStartersHealthy: [
+              { id: '3924327', name: 'Drew Lock', position: 'QB', isStarter: false }
+            ],
+            activeRoster: [
+              { id: '3912547', name: 'Sam Darnold', position: 'QB' },
+              { id: '3924327', name: 'Drew Lock', position: 'QB' }
+            ],
+            irReserve: []
+          }
+        },
+        schedule: [
+          { week: 11, dateIso: '2026-11-23T01:20:00Z', completed: true },
+          { week: 12, dateIso: sunKickoffIso, completed: false }
+        ]
+      },
+      _oppNewsWire: [
+        {
+          id: 'sea_qb_start',
+          type: 'article',
+          author: 'Adam Schefter',
+          outletName: 'ESPN',
+          trustTier: 1,
+          publishedAt: '2026-11-28T01:30:00Z',
+          title: 'Seahawks rule QB Sam Darnold (shoulder) out, Drew Lock to start vs. 49ers',
+          summary: 'Drew Lock will make his first start of the season Sunday after Sam Darnold did not practice Friday and was ruled out with a shoulder injury.',
+          url: 'https://www.espn.com/nfl/story/_/id/9990009'
+        },
+        {
+          id: 'sea_official_fri',
+          type: 'article',
+          author: 'Seahawks.com Official',
+          outletId: 'seahawks_official',
+          trustTier: 1,
+          publishedAt: '2026-11-28T01:45:00Z',
+          title: 'Sam Darnold OUT, Drew Lock to Start vs. 49ers | Practice Report',
+          summary: 'Head coach Mike Macdonald ruled Sam Darnold (shoulder) out for Sunday, naming Drew Lock the starting quarterback.',
+          url: 'https://www.seahawks.com/news/practice-report-wk12'
+        }
+      ]
+    };
+
+    reconcileRosterAndHealthWithNews(appMock, { nowMs: friNowMs });
+    const purdyAfter = appMock.roster.players.find(p => p.name === 'Brock Purdy');
+    const watkinsAfter = appMock.roster.players.find(p => p.name === 'Jordan Watkins');
+    const jonesAfter = appMock.roster.players.find(p => p.name === 'Mac Jones');
+    assert.equal(purdyAfter.health.status, 'Out', 'Brock Purdy must be Out after reconciliation');
+    assert.equal(purdyAfter.health.playProbabilityPct, 0, 'Brock Purdy must be 0% Out');
+    assert.equal(purdyAfter.health.fri, 'DNP', 'Brock Purdy must have Fri=DNP');
+    assert.equal(watkinsAfter.health.fri, 'DNP', 'Jordan Watkins must have Fri=DNP');
+    assert.equal(jonesAfter.health.isOnPracticeReport, false, 'Mac Jones must NOT be on the Week 12 injury report');
+    assert.equal(jonesAfter.health.status, 'Active', 'Mac Jones must remain Active');
+    assert.equal(jonesAfter.health.fri, '-', 'Mac Jones must NOT have Fri=DNP');
+    assert.equal(
+      appMock.health.practiceReport.some(r => r.name === 'Mac Jones'),
+      false,
+      'Mac Jones must NOT appear in health.practiceReport'
+    );
+
+    // Opponent (all-32-team parity): Sam Darnold Out + Fri=DNP, Drew Lock NEVER promoted to injuryReport!
+    const oppReport = appMock.scheduleMatchup.upcomingMatchup.opponentHealth.injuryReport;
+    const darnoldAfter = oppReport.find(r => r.name === 'Sam Darnold');
+    assert.equal(darnoldAfter?.fri, 'DNP', 'Opponent starter Sam Darnold must receive Fri=DNP');
+    assert.equal(darnoldAfter?.gameStatus, 'Out', 'Opponent starter Sam Darnold must be ruled Out');
+    assert.equal(
+      oppReport.some(r => r.name === 'Drew Lock'),
+      false,
+      'Healthy opponent backup QB Drew Lock starting for injured starter must NEVER be promoted onto injuryReport'
+    );
+
+    // 5. rankPlayerInjuryNews must NOT list Mac Jones's "to start" articles as injury news for healthy Mac Jones
+    const jonesInjNews = rankPlayerInjuryNews(jonesAfter, {
+      rawStream: week12Wire,
+      appData: appMock,
+      nowMs: friNowMs,
+      includeFallbackCard: false
+    });
+    assert.equal(
+      jonesInjNews.length,
+      0,
+      `Healthy starter Mac Jones must have 0 spurious injury news items from Purdy-out starter articles (got ${jonesInjNews.length})`
+    );
   }
 );
 

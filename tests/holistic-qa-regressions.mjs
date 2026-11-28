@@ -3182,7 +3182,7 @@ await testAsync(
       }
     };
     try {
-      // Seed poisoned legacy v1 cache containing bogus Evans thu='LP'
+      // Seed poisoned legacy v1 & v2 caches containing bogus Evans thu='LP' and healthy backup Mac Jones fri='DNP'
       memStore.set(
         'joshal_49ers_weekly_practice_v1',
         JSON.stringify({
@@ -3191,6 +3191,20 @@ await testAsync(
           oppAbbr: 'MIN',
           savedAtMs: Date.now(),
           sf: { mikeevans: { wed: 'DNP', thu: 'LP', fri: '-', injuryType: 'Achilles', gameStatus: 'Questionable' } },
+          opp: {}
+        })
+      );
+      memStore.set(
+        'joshal_49ers_weekly_practice_v2',
+        JSON.stringify({
+          seasonYear: 2026,
+          week: 11,
+          oppAbbr: 'MIN',
+          savedAtMs: Date.now(),
+          sf: {
+            mikeevans: { wed: 'DNP', thu: 'LP', fri: '-', injuryType: 'Achilles', gameStatus: 'Questionable' },
+            macjones: { wed: '-', thu: '-', fri: 'DNP', injuryType: '', gameStatus: 'Out' }
+          },
           opp: {}
         })
       );
@@ -3205,6 +3219,13 @@ await testAsync(
               position: 'WR',
               rosterBucket: 'active',
               health: { wed: 'DNP', thu: '-', fri: '-', injuryType: 'Achilles', status: 'Questionable', isOnPracticeReport: true }
+            },
+            {
+              id: '4241464',
+              name: 'Mac Jones',
+              position: 'QB',
+              rosterBucket: 'active',
+              health: { wed: '-', thu: '-', fri: '-', injuryType: '', status: 'Active', isOnPracticeReport: false }
             }
           ]
         },
@@ -3222,19 +3243,46 @@ await testAsync(
 
       hydrateCachedWeeklyPracticeAndInactives(appMock);
       assert.equal(memStore.has('joshal_49ers_weekly_practice_v1'), false, 'Legacy v1 practice cache must be purged automatically');
-      assert.equal(appMock.roster.players[0].health.thu, '-', 'Poisoned v1 thu=LP must NOT restore onto Mike Evans');
-      assert.equal(appMock.health.practiceReport[0].thu, '-', 'Poisoned v1 thu=LP must NOT restore onto practiceReport');
+      assert.equal(memStore.has('joshal_49ers_weekly_practice_v2'), false, 'Legacy v2 practice cache must be purged automatically');
+      assert.equal(appMock.roster.players[0].health.thu, '-', 'Poisoned legacy thu=LP must NOT restore onto Mike Evans');
+      assert.equal(appMock.roster.players[1].health.fri, '-', 'Poisoned v2 fri=DNP must NOT restore onto healthy Mac Jones');
+      assert.equal(appMock.roster.players[1].health.isOnPracticeReport, false, 'Healthy Mac Jones must remain off practice report after v2 purge');
+      assert.equal(appMock.health.practiceReport[0].thu, '-', 'Poisoned legacy thu=LP must NOT restore onto practiceReport');
 
-      // Now persist legitimate v2 snapshot and confirm v2 round-trip works
+      // Now persist legitimate v3 snapshot and confirm v3 round-trip works
       appMock.health.practiceReport[0].thu = 'LP';
       appMock.roster.players[0].health.thu = 'LP';
       persistWeeklyPracticeSnapshot(appMock);
-      assert.equal(memStore.has('joshal_49ers_weekly_practice_v2'), true, 'Legitimate snapshot must persist under v2 cache key');
+      assert.equal(memStore.has('joshal_49ers_weekly_practice_v3'), true, 'Legitimate snapshot must persist under v3 cache key');
 
       appMock.roster.players[0].health.thu = '-';
       appMock.health.practiceReport[0].thu = '-';
       hydrateCachedWeeklyPracticeAndInactives(appMock);
-      assert.equal(appMock.roster.players[0].health.thu, 'LP', 'Legitimate v2 snapshot must restore cleanly on reload');
+      assert.equal(appMock.roster.players[0].health.thu, 'LP', 'Legitimate v3 snapshot must restore cleanly on reload');
+
+      // Authoritative official report must prune omitted healthy players from v3 cache instead of retaining them forever
+      appMock.health.practiceReport.push({
+        playerId: '4241464',
+        name: 'Mac Jones',
+        position: 'QB',
+        wed: '-',
+        thu: '-',
+        fri: 'DNP',
+        injuryType: '',
+        gameStatus: 'Questionable',
+        playProbabilityPct: 20
+      });
+      persistWeeklyPracticeSnapshot(appMock);
+      assert.ok(JSON.parse(memStore.get('joshal_49ers_weekly_practice_v3')).sf.macjones, 'Pre-official cache temporarily held Mac Jones');
+
+      appMock.health.practiceReport = appMock.health.practiceReport.filter(r => r.name !== 'Mac Jones');
+      appMock.health._hasLiveOfficialCurrentWeekSfReport = true;
+      persistWeeklyPracticeSnapshot(appMock);
+      assert.equal(
+        Boolean(JSON.parse(memStore.get('joshal_49ers_weekly_practice_v3')).sf.macjones),
+        false,
+        'Authoritative official club report omitting Mac Jones must evict him from v3 weekly practice cache'
+      );
     } finally {
       globalThis.window = prevWin;
     }
